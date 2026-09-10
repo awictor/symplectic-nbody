@@ -1,0 +1,17 @@
+Magnetic mirror: trapped if sin^2(pitch) > B_min/B_max = 1/R_m
+
+    mirror ratio R_m   loss cone (deg)   20 deg   60 deg
+  ------------------------------------------------------
+                   2              45.0     lost     trap
+                   4              30.0     lost     trap
+                  10              18.4     trap     trap
+                  50               8.1     trap     trap
+                1000               1.8     trap     trap
+
+  A bigger mirror ratio means a narrower loss cone, so more particles are
+  held. Earth's dipole (R_m ~ tens between equator and pole) traps the Van
+  Allen belts: particles bounce pole to pole, reflected where the field
+  tightens, unless their pitch angle drops them into the loss cone and down
+  into the atmosphere -- which is what lights up the aurora.
+
+  wrote examples/output\magnetic_mirror.svg

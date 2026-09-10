@@ -104,6 +104,7 @@ ruins a long non-symplectic integration.
 | `src/rayleigh_benard.py` | Rayleigh-Benard convection: the Ra_c ~ 1708 onset & Nusselt transport |
 | `src/terminal_velocity.py` | Terminal velocity & drag: Stokes vs quadratic regimes |
 | `src/snr_phases.py` | Supernova-remnant evolution: free expansion, Sedov, snowplow, merge |
+| `src/magnetic_mirror.py` | The magnetic mirror & loss cone: trapping charged particles |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -199,6 +200,7 @@ ruins a long non-symplectic integration.
 | `examples/rayleigh_benard_demo.py` | Ra & state from lab cell to Sun + the Nu(Ra) onset curve |
 | `examples/terminal_velocity_demo.py` | Speeds fog-to-skydiver + the v(r) Stokes/quadratic bend |
 | `examples/snr_phases_demo.py` | R/v/phase from centuries to Myr + the radius-vs-age track |
+| `examples/magnetic_mirror_demo.py` | Loss-cone angle & trapping by mirror ratio + the alpha(R_m) curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2058,6 +2060,34 @@ by the `sedov` module). Once the shell cools it radiates efficiently and coasts 
 to the ~10 km/s turbulent velocity after ~10^6 yr -- seeding the galaxy with the elements it
 forged. The tests verify the few-pc sweep-up radius, the early end of free expansion, the
 `t^(2/5)` Sedov scaling and deceleration, the four-phase ordering, and the ~100 pc merge.
+
+## The magnetic mirror: trapping charged particles
+
+A charged particle spiraling along a field line conserves its magnetic moment
+`mu = m v_perp^2 / 2B`; drifting into stronger field forces `v_perp` up and `v_parallel`
+down until it reflects. `magnetic_mirror.py`:
+
+```
+$ python examples/magnetic_mirror_demo.py examples/output
+
+    mirror ratio R_m   loss cone (deg)   20 deg   60 deg
+  ------------------------------------------------------
+                   2              45.0     lost     trap
+                   4              30.0     lost     trap
+                  10              18.4     trap     trap
+                  50               8.1     trap     trap
+                1000               1.8     trap     trap
+```
+
+Trapping depends only on the equatorial pitch angle: a particle mirrors if
+`sin^2(alpha) > B_min/B_max = 1/R_m`, and otherwise falls into the loss cone and escapes
+through the throat. A larger mirror ratio gives a narrower loss cone and holds more
+particles. This is exactly how Earth's dipole traps the Van Allen belts -- particles bounce
+pole to pole, reflected where the field tightens -- and how mirror-machine fusion devices
+try to confine a plasma; particles scattered into the loss cone rain into the atmosphere and
+light the aurora. The tests verify moment conservation (`v_perp ~ sqrt(B)`), the 30-degree
+loss cone at `R_m=4`, its shrinking with ratio, the trapped/escaping pitch angles, and the
+`B_min/sin^2(alpha)` mirror point.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

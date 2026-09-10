@@ -146,6 +146,7 @@ def main():
     import rayleigh_benard_demo
     import terminal_velocity_demo
     import snr_phases_demo
+    import magnetic_mirror_demo
 
     import plot_orbits
 
@@ -261,6 +262,7 @@ def main():
     rb_txt = run("rayleigh_benard_demo", rayleigh_benard_demo.main, True)
     termv_txt = run("terminal_velocity_demo", terminal_velocity_demo.main, True)
     snr_txt = run("snr_phases_demo", snr_phases_demo.main, True)
+    mirror_txt = run("magnetic_mirror_demo", magnetic_mirror_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1131,6 +1133,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("snr_phases.svg"), "the radius-vs-age track with the phase transitions marked")
             + f'<div class="card">{pre(snr_txt)}</div>'
+            + '</div>'),
+        section(
+            "The magnetic mirror & loss cone",
+            "A charged particle spiraling along a field line conserves its magnetic "
+            "moment mu = m v_perp^2 / 2B. Drifting into stronger field, v_perp must "
+            "grow and v_parallel shrink until the particle reflects -- a magnetic "
+            "mirror. Trapping depends only on pitch angle: sin^2(alpha) > 1/R_m holds "
+            "the particle, else it falls into the loss cone and escapes. This traps "
+            "the Van Allen belts and lights the aurora.",
+            '<div class="grid">'
+            + svg_card(out("magnetic_mirror.svg"), "loss-cone angle shrinking as the mirror ratio grows")
+            + f'<div class="card">{pre(mirror_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
