@@ -120,6 +120,7 @@ def main():
     import habitable_zone_demo
     import faber_jackson_demo
     import focusing_demo
+    import bremsstrahlung_demo
 
     import plot_orbits
 
@@ -209,6 +210,7 @@ def main():
     hz_txt = run("habitable_zone_demo", habitable_zone_demo.main, True)
     fj_txt = run("faber_jackson_demo", faber_jackson_demo.main, True)
     focusing_txt = run("focusing_demo", focusing_demo.main, True)
+    brems_txt = run("bremsstrahlung_demo", bremsstrahlung_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -768,6 +770,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("sz.svg"), "the CMB temperature decrement vs Compton y")
             + f'<div class="card">{pre(sz_txt)}</div>'
+            + '</div>'),
+        section(
+            "Bremsstrahlung: the X-rays of cluster gas",
+            "Free electrons braking in ion fields radiate free-free X-rays with "
+            "emissivity ~ n^2 sqrt(T). The cooling time ~ sqrt(T)/n drops below a "
+            "Hubble time in dense cluster cores (cooling flows) but never in the "
+            "outskirts -- the emission whose CMB imprint is the SZ effect.",
+            '<div class="grid">'
+            + svg_card(out("bremsstrahlung.svg"), "cooling time crossing the Hubble threshold")
+            + f'<div class="card">{pre(brems_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

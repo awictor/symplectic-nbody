@@ -78,6 +78,7 @@ ruins a long non-symplectic integration.
 | `src/virial.py` | Virial theorem & violent relaxation of a self-gravitating cluster |
 | `src/cluster.py` | Galaxy-cluster virial temperature, M-T relation & X-ray scaling |
 | `src/sz.py` | Sunyaev-Zeldovich effect: Compton-y CMB distortion by cluster gas |
+| `src/bremsstrahlung.py` | Free-free X-ray emissivity & cluster-gas cooling time |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -147,6 +148,7 @@ ruins a long non-symplectic integration.
 | `examples/virial_demo.py` | Equilibrium vs cold cluster: running 2T/U converging on -1 |
 | `examples/cluster_demo.py` | Cluster M-T table + the kT ~ M^2/3 relation curve |
 | `examples/sz_demo.py` | Compton y & CMB decrement across cluster masses |
+| `examples/bremsstrahlung_demo.py` | Emissivity & cooling time vs density (cooling flows) |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1293,6 +1295,26 @@ tidal, the surviving bound fraction drops sharply as the orbit crosses inside th
 Roche limit. The demo renders a satellite stretching into a tidal stream -- the
 process behind planetary rings and the fragment chain of comet Shoemaker-Levy 9.
 The tests check the Roche formula's scaling and the disruption gradient.
+
+## Bremsstrahlung: the X-rays of cluster gas
+
+Free electrons braking in ion Coulomb fields radiate -- the free-free X-rays that
+make galaxy clusters glow. `bremsstrahlung.py`:
+
+```
+$ python examples/bremsstrahlung_demo.py examples/output   (T = 5e7 K)
+
+    n_e (/m^3)  emissivity (W/m^3)  t_cool (Gyr)   flow?
+         1e+03            9.9e-31          66.3      no
+         1e+04            9.9e-29           6.6      yes
+```
+
+Emissivity goes as `n^2 sqrt(T)`, so dense cores glow brightest, and the cooling
+time `~ sqrt(T)/n` drops below a Hubble time only in those cores -- the cooling
+flows -- while the tenuous outskirts effectively never cool. This is the X-ray
+emission whose CMB imprint is the SZ effect, and it's rooted in the same Larmor
+radiation as synchrotron. The tests verify the `n^2` and `sqrt(T)` scalings, the
+cooling-time scalings, and the cluster cooling-flow regime.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

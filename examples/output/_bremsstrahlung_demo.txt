@@ -1,0 +1,15 @@
+Thermal bremsstrahlung of cluster gas (T = 5e+07 K)
+
+    n_e (/m^3)  emissivity (W/m^3)  t_cool (Gyr)   flow?
+  ------------------------------------------------------
+         1e+02            9.90e-33         662.9      no
+         1e+03            9.90e-31          66.3      no
+         1e+04            9.90e-29           6.6     yes
+         1e+05            9.90e-27           0.7     yes
+
+  Emissivity goes as n^2, so dense cores glow brightest and cool fastest
+  (t_cool ~ sqrt(T)/n). A cooling flow develops where t_cool drops below
+  the Hubble time; the tenuous outskirts effectively never cool. This is
+  the X-ray emission whose CMB imprint is the SZ effect.
+
+  wrote examples/output/bremsstrahlung.svg
