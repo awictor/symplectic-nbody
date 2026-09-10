@@ -74,6 +74,7 @@ def main():
     import roche_demo
     import kozai_demo
     import resonance_demo
+    import coorbital_demo
 
     import plot_orbits
 
@@ -117,6 +118,7 @@ def main():
     roche_txt = run("roche_demo", roche_demo.main, True)
     kozai_txt = run("kozai_demo", kozai_demo.main, True)
     resonance_txt = run("resonance_demo", resonance_demo.main, True)
+    coorbital_txt = run("coorbital_demo", coorbital_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -218,6 +220,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("poincare_section.svg"), "tori and chaotic sea at one energy")
             + f'<div class="card">{pre(poincare_txt)}</div>'
+            + '</div>'),
+        section(
+            "Coorbital orbits: tadpoles & horseshoes",
+            "A body sharing a planet's orbit librates in the rotating frame: a "
+            "tadpole loops one Lagrange point (Jupiter's Trojans); a horseshoe "
+            "wraps around L3 enclosing both L4 and L5, turning back before it "
+            "reaches the planet (Saturn's Janus & Epimetheus, Earth's Cruithne).",
+            '<div class="grid">'
+            + svg_card(out("coorbital.svg"), "tadpole (teal) and horseshoe (grey) in the rotating frame")
+            + f'<div class="card">{pre(coorbital_txt)}</div>'
             + '</div>'),
         section(
             "Mean-motion resonance",

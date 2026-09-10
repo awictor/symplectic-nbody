@@ -1,0 +1,10 @@
+Coorbital motion in the CR3BP rotating frame (mu = 0.001)
+
+  tadpole   (near L4): angular range    78 deg -> tadpole
+  horseshoe (near L3): angular range   315 deg -> horseshoe
+
+  The tadpole loops one Lagrange point (like Jupiter's Trojans); the
+  horseshoe wraps around L3 enclosing both L4 and L5, turning back before
+  it reaches the planet (like Saturn's moons Janus & Epimetheus).
+
+  wrote examples/output\coorbital.svg

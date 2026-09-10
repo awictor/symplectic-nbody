@@ -48,6 +48,7 @@ ruins a long non-symplectic integration.
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/kozai.py` | Kozai-Lidov secular cycles: eccentricity <-> inclination in a triple |
 | `src/resonance.py` | Mean-motion resonance: period locks & librating resonant arguments |
+| `src/coorbital.py` | Tadpole & horseshoe coorbital orbits in the CR3BP |
 | `src/poincare.py` | Poincare surface-of-section for the CR3BP (tori vs chaos) |
 | `src/sitnikov.py` | The Sitnikov problem: on-axis test particle, integrable-to-chaotic |
 | `src/galaxy.py` | Disk-galaxy generator and two-galaxy tidal encounters |
@@ -71,6 +72,7 @@ ruins a long non-symplectic integration.
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/kozai_demo.py` | e/i oscillations vs analytic e_max, out-of-phase time series SVG |
 | `examples/resonance_demo.py` | 2:1 resonant argument: libration (locked) vs circulation (free) |
+| `examples/coorbital_demo.py` | Tadpole & horseshoe paths in the rotating frame (SVG) |
 | `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
 | `examples/sitnikov_demo.py` | Stroboscopic maps: circular binary (tori) vs eccentric (chaos) |
 | `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
@@ -206,6 +208,25 @@ diffuse dust. `poincare.py` reconstructs `vy` from the energy so each section
 point is a full initial condition, and the tests confirm the Jacobi constant is
 conserved along each orbit (faithful section), regular orbits stay on tight
 curves, and chaotic ones scatter more than 3x wider.
+
+## Coorbital orbits: tadpoles and horseshoes
+
+A body sharing a planet's orbit does not sit still in the rotating frame -- it
+slowly librates. `coorbital.py` (built on the CR3BP) produces both families:
+
+```
+$ python examples/coorbital_demo.py examples/output
+
+  tadpole   (near L4): angular range    78 deg -> tadpole
+  horseshoe (near L3): angular range   315 deg -> horseshoe
+```
+
+A **tadpole** loops a single triangular Lagrange point (Jupiter's Trojan
+asteroids); a **horseshoe** sweeps around L3, enclosing both L4 and L5 and
+turning back before it reaches the planet (Saturn's coorbital moons Janus and
+Epimetheus, Earth's companion 3753 Cruithne). The classifier keys off the
+angular range about the primary-secondary line -- under 180 deg for a tadpole,
+over 180 for a horseshoe. The demo renders both paths in the rotating frame.
 
 ## Mean-motion resonance: periods that lock
 
