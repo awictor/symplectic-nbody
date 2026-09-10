@@ -132,6 +132,7 @@ ruins a long non-symplectic integration.
 | `src/uncertainty.py` | The Heisenberg uncertainty principle & zero-point energy |
 | `src/tunneling.py` | Quantum tunneling: barrier transmission, WKB & the STM |
 | `src/particle_box.py` | The particle in a box: quantized levels & quantum-dot colour |
+| `src/harmonic_oscillator.py` | The quantum harmonic oscillator: evenly-spaced levels & zero-point energy |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -255,6 +256,7 @@ ruins a long non-symplectic integration.
 | `examples/uncertainty_demo.py` | Confinement energy by box size + the E(dx) electron/nucleon curves |
 | `examples/tunneling_demo.py` | Transmission by width/height + STM gap sensitivity + the T(L) curves |
 | `examples/particle_box_demo.py` | Levels & quantum-dot colours + the level/wavefunction diagram |
+| `examples/harmonic_oscillator_demo.py` | Vibrational quanta per molecule + the parabolic-well level diagram |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2857,6 +2859,31 @@ blue, exploited in displays and biological markers. The eigenfunctions
 `psi_n = sqrt(2/L) sin(n pi x/L)` are orthonormal with `n-1` nodes. The tests verify the
 `n^2` levels, the nonzero ground state, the `1/L^2` scaling, the smaller-dot-bluer trend, the
 wavefunction normalization, and the box-width-for-gap inversion.
+
+## The quantum harmonic oscillator: evenly-spaced rungs
+
+Near any potential minimum a system behaves as a spring, so the oscillator is the workhorse
+of quantum mechanics. `harmonic_oscillator.py`:
+
+```
+$ python examples/harmonic_oscillator_demo.py examples/output
+
+    molecule   k (N/m)   hbar omega (eV)   IR wavelength
+  ------------------------------------------------------
+          H2       570            0.5454         2.27 um
+          CO      1902            0.2690         4.61 um
+          N2      2294            0.2924         4.24 um
+         HCl       516            0.3721         3.33 um
+```
+
+`E_n = (n + 1/2) hbar omega` with `omega = sqrt(k/m)`: the levels are EVENLY spaced by
+`hbar omega` (unlike the box's `n^2` or the atom's `-1/n^2`), so a molecule absorbs one sharp
+infrared line per vibrational quantum -- CO at 4.6 microns, the workhorse of IR spectroscopy.
+The ground state is nonzero: the zero-point energy `(1/2) hbar omega` is forced by the
+uncertainty principle and is physically real -- it keeps helium liquid at absolute zero, shifts
+chemical bond energies, and sets each field mode's vacuum energy. The tests verify the equal
+level spacing, the nonzero zero-point energy, the CO vibrational quantum and 4.6-micron line,
+the `sqrt(k/m)` frequency, and the spring-constant round-trip.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

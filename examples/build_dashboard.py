@@ -174,6 +174,7 @@ def main():
     import uncertainty_demo
     import tunneling_demo
     import particle_box_demo
+    import harmonic_oscillator_demo
 
     import plot_orbits
 
@@ -317,6 +318,7 @@ def main():
     uncert_txt = run("uncertainty_demo", uncertainty_demo.main, True)
     tunnel_txt = run("tunneling_demo", tunneling_demo.main, True)
     pbox_txt = run("particle_box_demo", particle_box_demo.main, True)
+    sho_txt = run("harmonic_oscillator_demo", harmonic_oscillator_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1520,6 +1522,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("particle_box.svg"), "the first energy levels with their wavefunctions in the well")
             + f'<div class="card">{pre(pbox_txt)}</div>'
+            + '</div>'),
+        section(
+            "The quantum harmonic oscillator",
+            "Near any potential minimum a system is a spring, so the oscillator is "
+            "everywhere -- molecular vibrations, phonons, cavity photons. Its levels are "
+            "EVENLY spaced by hbar omega (unlike the box or atom), so a molecule absorbs "
+            "one sharp infrared line per vibrational quantum (CO at 4.6 um). The ground "
+            "state is nonzero: the zero-point energy (1/2) hbar omega is forced by "
+            "uncertainty and keeps helium liquid at absolute zero.",
+            '<div class="grid">'
+            + svg_card(out("harmonic_oscillator.svg"), "equally-spaced levels inside the parabolic well")
+            + f'<div class="card">{pre(sho_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

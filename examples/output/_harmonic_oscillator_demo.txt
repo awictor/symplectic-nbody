@@ -1,0 +1,16 @@
+Quantum harmonic oscillator: E_n = (n + 1/2) hbar omega
+
+    molecule   k (N/m)   hbar omega (eV)   IR wavelength
+  ------------------------------------------------------
+          H2       570            0.5454         2.27 um
+          CO      1902            0.2690         4.61 um
+          N2      2294            0.2924         4.24 um
+         HCl       516            0.3721         3.33 um
+
+  Unlike the box (n^2) or atom (-1/n^2), the oscillator's levels are EVENLY
+  spaced by hbar omega, so a molecule absorbs a single sharp infrared line
+  per vibrational quantum. The ground state is not zero -- the zero-point
+  energy (1/2) hbar omega is forced by the uncertainty principle, and it is
+  real: it keeps helium liquid at absolute zero and shifts bond energies.
+
+  wrote examples/output\harmonic_oscillator.svg
