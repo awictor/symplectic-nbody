@@ -119,6 +119,7 @@ ruins a long non-symplectic integration.
 | `src/bi_elliptic.py` | Bi-elliptic transfer: when three burns beat the Hohmann two |
 | `src/gravity_assist.py` | Gravity assist: the slingshot boost from a planetary flyby |
 | `src/synodic.py` | Synodic periods: how often planets line up |
+| `src/black_hole_shadow.py` | The black-hole shadow: the dark disk the EHT imaged |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -229,6 +230,7 @@ ruins a long non-symplectic integration.
 | `examples/bi_elliptic_demo.py` | Hohmann vs bi-elliptic delta-v by ratio + the crossover curves |
 | `examples/gravity_assist_demo.py` | Turn angle & boost by flyby depth/speed + the boost(r_p) curves |
 | `examples/synodic_demo.py` | Synodic period & conjunction cadence per planet + the S(P) curve |
+| `examples/black_hole_shadow_demo.py` | Shadow size for M87*/Sgr A* + the nested-radii diagram |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2497,6 +2499,29 @@ toward one Earth year (Earth does the lapping). Right at Earth's own orbit the s
 diverges: two bodies at the same distance never change their alignment. The tests verify the
 Mars/Venus/Mercury synodic periods, the 29.5-day synodic month, the divergence at equal
 periods, the one-year limit for distant planets, and the conjunction cadence.
+
+## The black-hole shadow: what the EHT imaged
+
+A black hole casts a dark disk larger than its horizon: light inside the critical impact
+parameter is captured, and lensing magnifies the boundary. `black_hole_shadow.py`:
+
+```
+$ python examples/black_hole_shadow_demo.py examples/output
+
+      object    mass (Msun)    distance   shadow (uas)
+  --------------------------------------------------
+        M87*      6.50e+09    16.8 Mpc          39.7
+      Sgr A*      4.15e+06    8.15 kpc          52.2
+  stellar BH      1.00e+01       3 kpc       3.4e-04
+```
+
+The unstable photon sphere sits at `1.5 r_s` and the shadow's apparent radius is
+`b_crit = 3 sqrt(3) GM/c^2`, so the dark disk is `3 sqrt(3) ~ 5.196 r_s` across -- larger than
+the `2 r_s` horizon because gravity bends the light around it. Plugging in M87* and Sgr A*
+gives ~40 and ~52 microarcseconds, the sizes the Event Horizon Telescope measured by linking
+radio dishes across the whole Earth (the shadow is the angular size of an orange on the Moon).
+The tests verify the 1.5 r_s photon sphere, the 5.196 r_s shadow, the M87* and Sgr A* angular
+sizes, the `b_crit` formula, and the M and 1/D scalings.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -161,6 +161,7 @@ def main():
     import bi_elliptic_demo
     import gravity_assist_demo
     import synodic_demo
+    import black_hole_shadow_demo
 
     import plot_orbits
 
@@ -291,6 +292,7 @@ def main():
     biell_txt = run("bi_elliptic_demo", bi_elliptic_demo.main, True)
     gassist_txt = run("gravity_assist_demo", gravity_assist_demo.main, True)
     synodic_txt = run("synodic_demo", synodic_demo.main, True)
+    shadow_txt = run("black_hole_shadow_demo", black_hole_shadow_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1340,6 +1342,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("synodic.svg"), "synodic period diverging at Earth's orbit and settling to one year")
             + f'<div class="card">{pre(synodic_txt)}</div>'
+            + '</div>'),
+        section(
+            "The black-hole shadow",
+            "A black hole casts a dark disk larger than its horizon: light inside the "
+            "critical impact parameter b = 3 sqrt(3) GM/c^2 is captured, so lensing "
+            "magnifies the shadow to 5.2 Schwarzschild radii across (vs 2 r_s for the "
+            "horizon). M87* and Sgr A* each subtend only ~40-50 microarcseconds -- the "
+            "angular size of an orange on the Moon -- which is why the Event Horizon "
+            "Telescope had to link radio dishes across the whole Earth.",
+            '<div class="grid">'
+            + svg_card(out("black_hole_shadow.svg"), "horizon, photon sphere and lensed shadow edge to scale")
+            + f'<div class="card">{pre(shadow_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
