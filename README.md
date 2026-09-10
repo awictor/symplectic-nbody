@@ -76,6 +76,7 @@ ruins a long non-symplectic integration.
 | `src/cluster.py` | Galaxy-cluster virial temperature, M-T relation & X-ray scaling |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
+| `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
 | `src/kozai.py` | Kozai-Lidov secular cycles: eccentricity <-> inclination in a triple |
 | `src/resonance.py` | Mean-motion resonance: period locks & librating resonant arguments |
 | `src/coorbital.py` | Tadpole & horseshoe coorbital orbits in the CR3BP |
@@ -128,6 +129,7 @@ ruins a long non-symplectic integration.
 | `examples/cluster_demo.py` | Cluster M-T table + the kT ~ M^2/3 relation curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
+| `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
 | `examples/kozai_demo.py` | e/i oscillations vs analytic e_max, out-of-phase time series SVG |
 | `examples/resonance_demo.py` | 2:1 resonant argument: libration (locked) vs circulation (free) |
 | `examples/coorbital_demo.py` | Tadpole & horseshoe paths in the rotating frame (SVG) |
@@ -934,6 +936,28 @@ deg` the eccentricity is driven to `e_max = sqrt(1 - (5/3) cos^2 i0)`; below it,
 nothing happens. This mechanism drives hot-Jupiter migration and merges compact
 binaries. The tests verify the conserved quantity, the critical angle, the
 analytic `e_max`, and the e-i anticorrelation.
+
+## Roche lobes: how close binaries feed each other
+
+Each star in a binary owns a Roche lobe; the lobes meet at the inner Lagrange
+point L1. `roche_lobe.py` gives the Eggleton lobe radius and the mass-transfer
+stability:
+
+```
+$ python examples/roche_lobe_demo.py examples/output
+
+   q = M_donor/M_acc    R_L/a   d ln a/d ln M    transfer
+                 0.5    0.321            -1.0      stable
+                 1.0    0.379             0.0    unstable
+                 2.0    0.440             2.0    unstable
+```
+
+When a star fills its lobe (by swelling or orbital shrinkage), gas spills through
+L1 onto its companion. From a lighter donor conservative transfer widens the
+orbit and is stable -- the steady accretion of cataclysmic variables and X-ray
+binaries; from a heavier donor the orbit shrinks and runs away, a path to mergers
+and type-Ia supernovae. The tests verify the ~0.38 a equal-mass lobe, the L1
+midpoint, and the stability flip at `q = 1`.
 
 ## Tidal heating: why Io has volcanoes
 

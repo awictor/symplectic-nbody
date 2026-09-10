@@ -103,6 +103,7 @@ def main():
     import cmb_demo
     import bbn_demo
     import cluster_demo
+    import roche_lobe_demo
 
     import plot_orbits
 
@@ -175,6 +176,7 @@ def main():
     cmb_txt = run("cmb_demo", cmb_demo.main, True)
     bbn_txt = run("bbn_demo", bbn_demo.main, True)
     cluster_txt = run("cluster_demo", cluster_demo.main, True)
+    rochelobe_txt = run("roche_lobe_demo", roche_lobe_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -565,6 +567,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("tidal_heating.svg"), "heating vs eccentricity, with Io marked")
             + f'<div class="card">{pre(tidalheat_txt)}</div>'
+            + '</div>'),
+        section(
+            "Roche lobes: binary mass transfer",
+            "Each star in a binary owns a Roche lobe meeting its companion's at L1. "
+            "When a star fills its lobe, gas pours through L1 onto the companion. "
+            "From a lighter donor the orbit widens (stable transfer); from a heavier "
+            "one it runs away -- the physics of X-ray binaries and type-Ia progenitors.",
+            '<div class="grid">'
+            + svg_card(out("roche_lobe.svg"), "Eggleton lobe radius vs mass ratio, with the stability line")
+            + f'<div class="card">{pre(rochelobe_txt)}</div>'
             + '</div>'),
         section(
             "Virial theorem & violent relaxation",

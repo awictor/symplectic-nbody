@@ -1,0 +1,16 @@
+Roche lobes and binary mass transfer
+
+   q = M_donor/M_acc    R_L/a   d ln a/d ln M    transfer
+  -------------------------------------------------------
+                 0.2    0.252            -1.6      stable
+                 0.5    0.321            -1.0      stable
+                 1.0    0.379             0.0    unstable
+                 2.0    0.440             2.0    unstable
+                 5.0    0.521             8.0    unstable
+
+  When a star fills its Roche lobe, gas pours through L1 onto its
+  companion. From a lighter donor the orbit widens and transfer is stable
+  (cataclysmic variables, X-ray binaries); from a heavier donor it runs
+  away -- the path to mergers and type-Ia supernovae.
+
+  wrote examples/output\roche_lobe.svg
