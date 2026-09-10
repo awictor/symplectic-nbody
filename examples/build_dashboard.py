@@ -225,6 +225,7 @@ def main():
     import rabi_demo
     import franck_hertz_demo
     import moseley_demo
+    import stark_demo
 
     import plot_orbits
 
@@ -419,6 +420,7 @@ def main():
     rabi_txt = run("rabi_demo", rabi_demo.main, True)
     franck_hertz_txt = run("franck_hertz_demo", franck_hertz_demo.main, True)
     moseley_txt = run("moseley_demo", moseley_demo.main, True)
+    stark_txt = run("stark_demo", stark_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2276,6 +2278,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("moseley.svg"), "the Moseley plot: sqrt(K-alpha frequency) a straight line in atomic number")
             + f'<div class="card">{pre(moseley_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Stark effect: electric fields on atoms",
+            "The electric analogue of Zeeman: a field shifts atomic levels and splits lines. "
+            "Hydrogen's degenerate levels give a LINEAR Stark effect -- a shift proportional to "
+            "the field, since they mix into a permanent dipole -- fanning level n into 2n-1 "
+            "equally spaced components. Most atoms have no permanent dipole and shift "
+            "quadratically, -1/2 alpha E^2, always lowering the energy. Push hard enough and "
+            "the field strips the electron: the ionization threshold scales as 1/n^4, so a "
+            "Rydberg atom ionizes in a field ten billion times weaker than the ground state.",
+            '<div class="grid">'
+            + svg_card(out("stark.svg"), "the linear Stark fan of hydrogen n=4, and the ionizing field plummeting with n")
+            + f'<div class="card">{pre(stark_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

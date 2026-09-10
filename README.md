@@ -183,6 +183,7 @@ ruins a long non-symplectic integration.
 | `src/rabi.py` | Rabi oscillations: two-level flopping, generalized Rabi, pi/pi-2 pulses |
 | `src/franck_hertz.py` | Franck-Hertz: quantized excitation dips, emission wavelength |
 | `src/moseley.py` | Moseley's law: K-alpha X-ray energy vs Z, elemental identification |
+| `src/stark.py` | Stark effect: linear/quadratic line shifts, field ionization of Rydberg atoms |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -357,6 +358,7 @@ ruins a long non-symplectic integration.
 | `examples/rabi_demo.py` | Pulse/detuning table + the flopping & Lorentzian-resonance figure |
 | `examples/franck_hertz_demo.py` | Dip/excitation table + the current-vs-voltage sawtooth figure |
 | `examples/moseley_demo.py` | Per-element K-alpha table + the Moseley sqrt(f)-vs-Z line |
+| `examples/stark_demo.py` | Splitting/ionization table + the Stark fan & ionization-field figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4201,6 +4203,31 @@ Inverting the relation identifies an element from a measured line -- still how X
 electron microprobes read a sample's composition. The tests reproduce copper's 8 keV K-alpha
 and 0.154 nm wavelength, the linear `sqrt(f)`-vs-`Z` law, the `(Z-1)^2` scaling, molybdenum's
 17 keV line, the element identification, and the general K-beta/L-series transitions.
+
+## The Stark effect: electric fields on atoms
+
+The electric counterpart of Zeeman splitting. `stark.py`:
+
+```
+$ python examples/stark_demo.py examples/output
+
+  n=4: 7 lines  [-4763, -3175, -1588, 0, +1588, +3175, +4763] ueV @ 5 MV/m
+
+  n     binding (eV)   ionizing field
+  1     13.61          3.21e10 V/m
+  30    0.015          3.97e4 V/m
+```
+
+Hydrogen's degenerate levels give the **linear** Stark effect -- shift `(3/2) n k q E a0`,
+proportional to the field, fanning level `n` into `2n-1` equally spaced components -- because
+the states mix into a permanent electric dipole. Atoms without one shift **quadratically**,
+`-1/2 alpha E^2`, always lowering the energy as the field induces a dipole. Crank the field up
+and it field-ionizes the atom; since binding energy scales as `1/n^2`, the ionizing field
+scales as `1/n^4`, so a Rydberg atom (`n=30`) ionizes in ~40 kV/m versus ground hydrogen's
+~3e10 V/m -- the basis of Rydberg-atom field and single-microwave-photon detectors. The tests
+verify the linear shift's field/`k` proportionality and symmetric `2n-1` pattern, the negative
+`E^2` quadratic shift, the induced dipole, and the `1/n^4` ionization threshold (ground H
+~3e10 V/m, Rydberg tiny).
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

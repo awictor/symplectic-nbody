@@ -1,0 +1,21 @@
+Stark effect: an electric field splits (hydrogen: linearly) and ionizes atoms
+
+  Linear Stark components of hydrogen at 5 MV/m (energy shift, ueV):
+    n=2: 3 lines  [-793.8, +0.0, +793.8]
+    n=3: 5 lines  [-2381.3, -1190.6, +0.0, +1190.6, +2381.3]
+    n=4: 7 lines  [-4762.6, -3175.1, -1587.5, +0.0, +1587.5, +3175.1, +4762.6]
+
+  Field-ionization threshold vs principal quantum number:
+     n    binding (eV)    ionizing field
+     1       13.6057      3.21e+10 V/m
+     5        0.5442      5.14e+07 V/m
+    10        0.1361      3.21e+06 V/m
+    30        0.0151      3.97e+04 V/m
+    50        0.0054      5.14e+03 V/m
+
+  Hydrogen's degenerate levels give the LINEAR Stark effect (a permanent dipole);
+  most atoms shift quadratically as -1/2 alpha E^2. And because binding ~ 1/n^2, a
+  Rydberg atom ionizes in a field ten billion times weaker than the ground state --
+  which is how Rydberg-atom detectors sense tiny fields and single microwave photons.
+
+  wrote examples/output\stark.svg
