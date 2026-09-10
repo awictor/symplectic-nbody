@@ -73,6 +73,7 @@ def main():
     import virial_demo
     import roche_demo
     import kozai_demo
+    import resonance_demo
 
     import plot_orbits
 
@@ -115,6 +116,7 @@ def main():
     virial_txt = run("virial_demo", virial_demo.main, True)
     roche_txt = run("roche_demo", roche_demo.main, True)
     kozai_txt = run("kozai_demo", kozai_demo.main, True)
+    resonance_txt = run("resonance_demo", resonance_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -216,6 +218,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("poincare_section.svg"), "tori and chaotic sea at one energy")
             + f'<div class="card">{pre(poincare_txt)}</div>'
+            + '</div>'),
+        section(
+            "Mean-motion resonance",
+            "Two planets at the 2:1 spacing lock into resonance: the resonant "
+            "argument phi librates in a bounded band instead of circulating. "
+            "This is what carves the Kirkwood gaps and binds the Laplace "
+            "resonance of Io-Europa-Ganymede.",
+            '<div class="grid">'
+            + svg_card(out("resonance.svg"), "phi librates when locked (red), circulates when free (grey)")
+            + f'<div class="card">{pre(resonance_txt)}</div>'
             + '</div>'),
         section(
             "Kozai-Lidov cycles",

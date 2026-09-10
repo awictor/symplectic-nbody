@@ -1,0 +1,13 @@
+Mean-motion resonance: 2:1 resonant argument phi
+
+  resonant (2:1 spacing) : phi range 2.10 rad -> LIBRATES (locked)
+  off-resonance          : phi range 6.27 rad -> circulates (2pi=6.28)
+
+  resonant phi  : ====++=====-----:-----======+====---::-----===+======------::-----======
+  off-res  phi  : -.#+-.*=: *=:#+-.*=: *=:#+-.*+: *=: +-.#=: *=:#+-.#+: *=: +=.#+- *=: *-.
+
+  A librating resonant argument IS the lock: the pair's periods stay
+  commensurate. This carves the Kirkwood gaps and builds the Laplace
+  resonance of Io-Europa-Ganymede.
+
+  wrote examples/output\resonance.svg

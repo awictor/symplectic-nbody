@@ -47,6 +47,7 @@ ruins a long non-symplectic integration.
 | `src/virial.py` | Virial theorem & violent relaxation of a self-gravitating cluster |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/kozai.py` | Kozai-Lidov secular cycles: eccentricity <-> inclination in a triple |
+| `src/resonance.py` | Mean-motion resonance: period locks & librating resonant arguments |
 | `src/poincare.py` | Poincare surface-of-section for the CR3BP (tori vs chaos) |
 | `src/sitnikov.py` | The Sitnikov problem: on-axis test particle, integrable-to-chaotic |
 | `src/galaxy.py` | Disk-galaxy generator and two-galaxy tidal encounters |
@@ -69,6 +70,7 @@ ruins a long non-symplectic integration.
 | `examples/virial_demo.py` | Equilibrium vs cold cluster: running 2T/U converging on -1 |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/kozai_demo.py` | e/i oscillations vs analytic e_max, out-of-phase time series SVG |
+| `examples/resonance_demo.py` | 2:1 resonant argument: libration (locked) vs circulation (free) |
 | `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
 | `examples/sitnikov_demo.py` | Stroboscopic maps: circular binary (tori) vs eccentric (chaos) |
 | `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
@@ -204,6 +206,28 @@ diffuse dust. `poincare.py` reconstructs `vy` from the energy so each section
 point is a full initial condition, and the tests confirm the Jacobi constant is
 conserved along each orbit (faithful section), regular orbits stay on tight
 curves, and chaotic ones scatter more than 3x wider.
+
+## Mean-motion resonance: periods that lock
+
+When two planets' orbital periods approach an integer ratio `p:q`, they can lock
+into resonance. `resonance.py` integrates a Sun + two-planet system and tracks
+the resonant argument `phi = p*theta_out - q*theta_in - (p-q)*varpi_in`:
+
+```
+$ python examples/resonance_demo.py examples/output
+
+  resonant (2:1 spacing) : phi range 2.10 rad -> LIBRATES (locked)
+  off-resonance          : phi range 6.27 rad -> circulates (2pi=6.28)
+  resonant phi  : ====++=====-----:-----======+====---::-----===
+  off-res  phi  : -.#+-.*=: *=:#+-.*=: *=:#+-.*+: *=: +-.#=: *=:#
+```
+
+At the `2:1` spacing `a_out = a_in * 2^{2/3}` the measured period ratio comes out
+to ~2 and `phi` librates in a bounded band -- the definition of a resonance lock.
+Move the outer planet off that spacing and `phi` circulates through the full
+`2*pi`. This is the mechanism behind the Kirkwood gaps and the Laplace 4:2:1
+resonance of Io-Europa-Ganymede. The tests verify the Kepler spacing, the period
+ratio, and the libration-vs-circulation distinction.
 
 ## Kozai-Lidov cycles: trading eccentricity for inclination
 
