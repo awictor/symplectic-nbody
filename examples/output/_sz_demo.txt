@@ -1,0 +1,13 @@
+The Sunyaev-Zeldovich effect: hot clusters distorting the CMB
+
+  cluster           n_e (/m^3)  kT (keV)           y     dT (uK)
+  --------------------------------------------------------------
+  group                  3e+02       2.0    1.21e-06        -6.6
+  Coma-like              1e+03       8.0    3.21e-05      -175.1
+  massive                3e+03      12.0    2.89e-04     -1576.3
+
+  In the Rayleigh-Jeans band a cluster is a COLD spot: dT/T = -2y.
+  redshift-independent? True -- the SZ signal does not dim
+  with distance, so SZ surveys find clusters clear across the universe.
+
+  wrote examples/output\sz.svg

@@ -74,6 +74,7 @@ ruins a long non-symplectic integration.
 | `src/stability_map.py` | Three-body escape-time scan over a grid of initial conditions |
 | `src/virial.py` | Virial theorem & violent relaxation of a self-gravitating cluster |
 | `src/cluster.py` | Galaxy-cluster virial temperature, M-T relation & X-ray scaling |
+| `src/sz.py` | Sunyaev-Zeldovich effect: Compton-y CMB distortion by cluster gas |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -134,6 +135,7 @@ ruins a long non-symplectic integration.
 | `examples/stability_map_demo.py` | Parallel escape-time heatmap revealing the fractal chaos boundary |
 | `examples/virial_demo.py` | Equilibrium vs cold cluster: running 2T/U converging on -1 |
 | `examples/cluster_demo.py` | Cluster M-T table + the kT ~ M^2/3 relation curve |
+| `examples/sz_demo.py` | Compton y & CMB decrement across cluster masses |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1171,6 +1173,27 @@ tidal, the surviving bound fraction drops sharply as the orbit crosses inside th
 Roche limit. The demo renders a satellite stretching into a tidal stream -- the
 process behind planetary rings and the fragment chain of comet Shoemaker-Levy 9.
 The tests check the Roche formula's scaling and the disruption gradient.
+
+## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
+
+The same hot cluster gas that glows in X-rays also inverse-Compton scatters
+passing CMB photons, imprinting a tiny spectral distortion. `sz.py`:
+
+```
+$ python examples/sz_demo.py examples/output
+
+  cluster        n_e (/m^3)  kT (keV)         y     dT (uK)
+  Coma-like           1e+03       8.0  3.21e-05      -175.1
+  massive             3e+03      12.0  2.89e-04     -1576.3
+```
+
+The Compton `y = integral (k_B T_e/m_e c^2) sigma_T n_e dl` is the line-of-sight
+electron pressure; in the Rayleigh-Jeans band the cluster is a cold spot,
+`dT/T = -2y`, a few hundred microkelvin. Crucially the SZ signal is a fractional
+distortion of the CMB, so it is **redshift-independent** -- it does not dim with
+distance, which is why SZ surveys find clusters clear across the universe. The
+tests verify the y-parameter scale, its linearity in density/temperature/path,
+the RJ decrement, and the microkelvin signal.
 
 ## Galaxy clusters: virial temperature and X-rays
 

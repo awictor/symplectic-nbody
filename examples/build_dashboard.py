@@ -111,6 +111,7 @@ def main():
     import cosmic_velocities_demo
     import compton_demo
     import synchrotron_demo
+    import sz_demo
 
     import plot_orbits
 
@@ -191,6 +192,7 @@ def main():
     cosmicv_txt = run("cosmic_velocities_demo", cosmic_velocities_demo.main, True)
     compton_txt = run("compton_demo", compton_demo.main, True)
     synchrotron_txt = run("synchrotron_demo", synchrotron_demo.main, True)
+    sz_txt = run("sz_demo", sz_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -670,6 +672,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("cluster.svg"), "the kT ~ M^2/3 mass-temperature relation")
             + f'<div class="card">{pre(cluster_txt)}</div>'
+            + '</div>'),
+        section(
+            "Sunyaev-Zeldovich effect: clusters shadowing the CMB",
+            "The same hot cluster gas inverse-Compton scatters CMB photons, "
+            "imprinting a Compton-y distortion: a cold spot dT/T = -2y in the "
+            "radio. It is redshift-independent, so SZ surveys find clusters clear "
+            "across the universe.",
+            '<div class="grid">'
+            + svg_card(out("sz.svg"), "the CMB temperature decrement vs Compton y")
+            + f'<div class="card">{pre(sz_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
