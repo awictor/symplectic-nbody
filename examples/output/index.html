@@ -93,6 +93,22 @@ bounded forever, which rk4 does not (see energy_drift_demo.py).</pre>
   </section>
 
   <section>
+    <h2>Hermite: 4th order at one force call per step</h2>
+    <p class="blurb">RK4 and Forest-Ruth reach 4th order at 4 and 3 force calls per step; the Hermite predictor-corrector reaches it with a single force+jerk call, so for a fixed force budget it takes more steps and lands far more accurate. It's the integrator real star-cluster codes use.</p>
+    <pre>Accuracy vs force-evaluation budget (exact Kepler orbit, e=0.5)
+
+method           steps   f-evals     end error   order
+------------------------------------------------------
+rk4               6000     24000     4.230e-12    4.10
+forest_ruth       8000     24000     1.242e-11    4.00
+hermite          24000     24000     1.964e-13    4.01
+
+All three are 4th order, but for the SAME force-evaluation budget
+Hermite takes 4x as many steps as RK4 (1 call/step vs 4), so it reaches
+a much smaller error. That efficiency is why Hermite runs star clusters.</pre>
+  </section>
+
+  <section>
     <h2>Adaptive stepping: same accuracy, far less work</h2>
     <p class="blurb">Dormand-Prince RK45 spends tiny steps at pericenter and long steps at apocenter, matching fixed-RK4 accuracy with ~9x fewer force evals.</p>
     <pre>Eccentric two-body (e=0.7), one full period T=4.4429, G=1
@@ -116,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.73       13.21      0.7x
-   400          39.58       41.41      1.0x
-   800         158.71      147.77      1.1x
-  1600         642.37      385.17      1.7x
-  3200        2594.34     1073.41      2.4x
+   200           9.42       13.62      0.7x
+   400          38.02       38.49      1.0x
+   800         153.81      115.32      1.3x
+  1600         606.55      342.85      1.8x
+  3200        2510.45      946.01      2.7x
 
-empirical scaling exponent  direct ~ N^2.01   barnes-hut ~ N^1.59
+empirical scaling exponent  direct ~ N^2.01   barnes-hut ~ N^1.54
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>

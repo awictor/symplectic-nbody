@@ -37,6 +37,7 @@ ruins a long non-symplectic integration.
 | `src/nbody.py` | Newtonian forces, kinetic/potential energy, linear & angular momentum, softening |
 | `src/barnes_hut.py` | O(N log N) octree force solver with opening-angle theta criterion |
 | `src/adaptive.py` | Dormand-Prince RK45 with PI error-controlled adaptive step size |
+| `src/hermite.py` | 4th-order Hermite predictor-corrector with analytic jerk (1 force call/step) |
 | `src/kepler.py` | Exact analytic two-body orbit (Kepler-equation solver) -- the ground truth |
 | `src/cr3bp.py` | Circular restricted 3-body problem: Lagrange points, Jacobi constant |
 | `src/solar_system.py` | The real 8-planet solar system from published orbital elements |
@@ -53,6 +54,7 @@ ruins a long non-symplectic integration.
 | `examples/scaling_benchmark.py` | Direct vs Barnes-Hut timing & empirical scaling exponent |
 | `examples/plot_orbits.py` | Render figure-eight / eccentric / pythagorean orbits to SVG |
 | `examples/adaptive_demo.py` | Adaptive DP45 vs fixed RK4: step adaptation & force-eval savings |
+| `examples/hermite_demo.py` | Hermite vs RK4/Forest-Ruth accuracy at a fixed force budget |
 | `examples/convergence_demo.py` | Measured convergence order of each method vs the exact orbit |
 | `examples/lagrange_demo.py` | Lagrange points + zero-velocity curves rendered to SVG |
 | `examples/solar_system_demo.py` | Integrate the real solar system, recover Kepler's third law |
@@ -280,6 +282,29 @@ Halving the step cuts verlet's error 4x (order 2) and forest_ruth/rk4's error
 and rk4 share an order, but only forest_ruth is symplectic, so only it also keeps
 energy bounded forever. Order buys short-term accuracy; symplecticity buys
 long-term stability. This repo measures both.
+
+## Hermite: fourth order for one force call
+
+RK4 and Forest-Ruth reach 4th order but pay 4 and 3 force evaluations per step.
+The Hermite predictor-corrector (`hermite.py`) reaches 4th order with a *single*
+force+jerk evaluation, by computing the analytic jerk `da/dt` and Hermite-
+interpolating acceleration and jerk. It's the integrator of real collisional
+star-cluster codes.
+
+```
+$ python examples/hermite_demo.py
+
+method           steps   f-evals     end error   order
+------------------------------------------------------
+rk4               6000     24000     4.230e-12    4.10
+forest_ruth       8000     24000     1.242e-11    4.00
+hermite          24000     24000     1.964e-13    4.01
+```
+
+For the same force-evaluation budget, Hermite takes 4x as many steps as RK4 and
+lands ~20x more accurate. The tests confirm the analytic jerk matches a finite-
+difference of the acceleration, the scheme is 4th order against the exact Kepler
+orbit, and energy stays well controlled.
 
 ## Adaptive stepping: same accuracy, far less work
 

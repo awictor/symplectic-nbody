@@ -66,6 +66,7 @@ def main():
     import chaos_demo
     import poincare_demo
     import galaxy_collision_demo
+    import hermite_demo
 
     # make sure all SVGs exist
     import plot_orbits
@@ -104,6 +105,7 @@ def main():
     sys.argv = ["galaxy_collision_demo", outdir]
     galaxy_txt = capture(galaxy_collision_demo.main)
     sys.argv = _old_argv
+    hermite_txt = capture(hermite_demo.main)
     # scaling benchmark is slow; run a lighter inline version
     scale_txt = capture(scaling_benchmark.main)
 
@@ -121,6 +123,13 @@ def main():
             "Halving the step cuts verlet's error 4x (order 2) and "
             "forest_ruth/rk4's error 16x (order 4) -- measured, not assumed.",
             pre(conv_txt)),
+        section(
+            "Hermite: 4th order at one force call per step",
+            "RK4 and Forest-Ruth reach 4th order at 4 and 3 force calls per step; "
+            "the Hermite predictor-corrector reaches it with a single force+jerk "
+            "call, so for a fixed force budget it takes more steps and lands far "
+            "more accurate. It's the integrator real star-cluster codes use.",
+            pre(hermite_txt)),
         section(
             "Adaptive stepping: same accuracy, far less work",
             "Dormand-Prince RK45 spends tiny steps at pericenter and long steps "
