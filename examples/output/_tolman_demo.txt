@@ -1,0 +1,19 @@
+Tolman test: surface brightness ~ (1+z)^-4 if the universe expands
+
+       z     expanding     mag   tired-light  ratio E/T
+  -----------------------------------------------------
+     0.2           1/2    0.79         1/1.2      0.579
+     0.5           1/5    1.76         1/1.5      0.296
+     1.0          1/16    3.01         1/2.0      0.125
+     2.0          1/81    4.77         1/3.0      0.037
+     3.0         1/256    6.02         1/4.0      0.016
+     5.0        1/1296    7.78         1/6.0      0.005
+
+  Surface brightness is distance-independent in a static Euclidean universe
+  -- flux and angular area fall together. Expansion breaks that with four
+  factors of (1+z): redshift, time dilation, and the D_A/D_L geometry. So a
+  z=1 galaxy is dimmed 16x per square arcsecond, a z=3 galaxy 256x. A
+  tired-light universe would dim only as (1+z); observations back the (1+z)^4,
+  direct evidence the redshift is genuine expansion, not photons tiring out.
+
+  wrote examples/output\tolman.svg

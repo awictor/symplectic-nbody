@@ -114,6 +114,7 @@ ruins a long non-symplectic integration.
 | `src/parallax.py` | Parallax, proper motion & space velocity: the geometry of stellar distance |
 | `src/standard_candle.py` | Standard candles: distance modulus, Cepheids & the distance ladder |
 | `src/tully_fisher.py` | Tully-Fisher: a spiral galaxy's luminosity from its rotation speed |
+| `src/tolman.py` | Tolman surface-brightness dimming: the (1+z)^4 test of expansion |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -219,6 +220,7 @@ ruins a long non-symplectic integration.
 | `examples/parallax_demo.py` | Distances & space velocities of nearby stars + the parallax geometry |
 | `examples/standard_candle_demo.py` | Moduli of landmark objects + the ladder-rung modulus curve |
 | `examples/tully_fisher_demo.py` | L/M_abs/M_baryon by rotation speed + the slope-4 log-log line |
+| `examples/tolman_demo.py` | Dimming vs z (expanding vs tired-light) + the magnitude curves |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2349,6 +2351,32 @@ Tully-Fisher is a redshift-independent distance indicator that reaches far beyon
 Cepheids -- the spiral-galaxy cousin of the Faber-Jackson relation for ellipticals. The tests
 verify the `v^4` luminosity and baryonic-mass scalings, the Milky-Way luminosity and mass, the
 faster-is-brighter trend, and the luminosity/rotation-speed inversion.
+
+## The Tolman test: surface-brightness dimming
+
+Surface brightness -- flux per unit solid angle -- is distance-independent in a static
+Euclidean universe: flux and angular area fall together. `tolman.py`:
+
+```
+$ python examples/tolman_demo.py examples/output
+
+       z     expanding     mag    tired-light   ratio E/T
+  -----------------------------------------------------
+     0.5           1/5    1.76         1/1.5      0.296
+     1.0          1/16    3.01         1/2.0      0.125
+     2.0          1/81    4.77         1/3.0      0.037
+     3.0         1/256    6.02         1/4.0      0.016
+     5.0        1/1296    7.78         1/6.0      0.005
+```
+
+Expansion breaks the static invariance with four factors of `(1+z)` -- photon redshift, time
+dilation, and the `D_A/D_L` geometry -- so `SB ~ (1+z)^-4`: a z=1 galaxy is dimmed 16x per
+square arcsecond, a z=3 galaxy 256x. A static "tired-light" universe would dim only as
+`(1+z)^-1`, so the expanding prediction is `(1+z)^-3` fainter. Observations confirm the
+`(1+z)^4` exponent, one of the most direct pieces of evidence that the cosmological redshift
+is genuine expansion rather than photons losing energy en route. The tests verify the 1/16
+dimming at z=1, the 1/256 at z=3, the ~3 mag magnitude form, the single tired-light factor,
+the expanding-vs-tired ratio, and the exponent recovery from an observed ratio.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

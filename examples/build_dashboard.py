@@ -156,6 +156,7 @@ def main():
     import parallax_demo
     import standard_candle_demo
     import tully_fisher_demo
+    import tolman_demo
 
     import plot_orbits
 
@@ -281,6 +282,7 @@ def main():
     parallax_txt = run("parallax_demo", parallax_demo.main, True)
     candle_txt = run("standard_candle_demo", standard_candle_demo.main, True)
     tf_txt = run("tully_fisher_demo", tully_fisher_demo.main, True)
+    tolman_txt = run("tolman_demo", tolman_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1270,6 +1272,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("tully_fisher.svg"), "luminosity vs rotation speed with slope 4 on a log-log plot")
             + f'<div class="card">{pre(tf_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Tolman dimming test",
+            "Surface brightness is distance-independent in a static universe -- flux "
+            "and angular area fall together. Expansion breaks that with four factors "
+            "of (1+z), so SB ~ (1+z)^-4: a z=1 galaxy is dimmed 16x per square "
+            "arcsecond, a z=3 galaxy 256x. A static tired-light universe would dim "
+            "only as (1+z); observations back the (1+z)^4 law -- direct evidence the "
+            "redshift is real expansion, not photons losing energy en route.",
+            '<div class="grid">'
+            + svg_card(out("tolman.svg"), "expanding (1+z)^4 dimming diverging from the tired-light (1+z)^1 line")
+            + f'<div class="card">{pre(tolman_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
