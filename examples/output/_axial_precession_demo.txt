@@ -1,0 +1,18 @@
+Precession of the equinoxes (luni-solar torque on Earth's bulge)
+
+      source     arcsec/yr     period (yr)
+  ----------------------------------------
+         Sun         15.95           81269
+        Moon         34.70           37352
+    Sun+Moon         50.64           25591
+
+  Moon/Sun torque ratio: 2.18 (nearby body wins: torque ~ M / r^3)
+  obliquity: 23.44 deg
+  measured luni-solar precession: 50.29 arcsec/yr, period ~25772 yr
+
+  The pole traces a 47-deg-wide circle on the sky, so Polaris is only
+  our temporary North Star -- Vega held the title ~12000 BC and will
+  again ~14000 AD. The same drift slips the equinox one zodiac sign
+  every ~2150 years (the astrological 'ages').
+
+  wrote examples/output\axial_precession.svg

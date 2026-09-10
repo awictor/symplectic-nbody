@@ -80,6 +80,7 @@ ruins a long non-symplectic integration.
 | `src/sz.py` | Sunyaev-Zeldovich effect: Compton-y CMB distortion by cluster gas |
 | `src/bremsstrahlung.py` | Free-free X-ray emissivity & cluster-gas cooling time |
 | `src/pair_production.py` | Photon-photon pair production & the gamma-ray horizon |
+| `src/axial_precession.py` | Precession of the equinoxes: the 26,000-year luni-solar wobble |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -151,6 +152,7 @@ ruins a long non-symplectic integration.
 | `examples/sz_demo.py` | Compton y & CMB decrement across cluster masses |
 | `examples/bremsstrahlung_demo.py` | Emissivity & cooling time vs density (cooling flows) |
 | `examples/pair_production_demo.py` | Threshold gamma energy vs background photon energy |
+| `examples/axial_precession_demo.py` | Sun/Moon precession rates + the wandering-pole circle |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1343,6 +1345,33 @@ The universe is opaque to gamma rays beyond a horizon that shrinks as their ener
 rises -- the same `m_e c^2` scale that sets Compton scattering, run in reverse.
 The tests verify the 511 keV threshold, the `(m_e c^2)^2 / E_bg` partner energy,
 the angle dependence, and the TeV-EBL / PeV-CMB absorption cases.
+
+## Precession of the equinoxes: the 26,000-year wobble
+
+Earth is an oblate spheroid whose equatorial bulge is tilted 23.4 degrees to the
+ecliptic, so the Sun and Moon pull harder on the near side than the far side. That
+torque makes the spin axis sweep out a cone -- a leaning gyroscope, not a toppling
+one. `axial_precession.py`:
+
+```
+$ python examples/axial_precession_demo.py examples/output
+
+      source     arcsec/yr     period (yr)
+  ----------------------------------------
+         Sun         15.95           81269
+        Moon         34.70           37352
+    Sun+Moon         50.64           25591
+```
+
+Torque scales as `M / r^3`, so the nearby Moon out-torques the vastly heavier Sun by
+`(M_moon/M_sun)(AU/r_moon)^3 ~ 2.2`. Their sum, ~50.6 arcsec/yr (measured 50.29),
+carries the celestial pole around a 47-degree circle once every ~25,600 years
+(measured ~25,772) -- the "Great Year." That is why Polaris is only a temporary North
+Star (Vega had the job ~12,000 BC and gets it back ~14,000 AD), why the tropical year
+is ~20 minutes shorter than the sidereal year, and why the equinox has slipped a whole
+zodiac sign since the constellations were named. The tests verify the arcsec rate, the
+period, the Moon-beats-Sun ratio, the `M/r^3` scaling, and the `cos(obliquity)`
+dependence.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

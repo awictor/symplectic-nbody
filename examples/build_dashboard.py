@@ -122,6 +122,7 @@ def main():
     import focusing_demo
     import bremsstrahlung_demo
     import pair_production_demo
+    import axial_precession_demo
 
     import plot_orbits
 
@@ -213,6 +214,7 @@ def main():
     focusing_txt = run("focusing_demo", focusing_demo.main, True)
     brems_txt = run("bremsstrahlung_demo", bremsstrahlung_demo.main, True)
     pairprod_txt = run("pair_production_demo", pair_production_demo.main, True)
+    axprec_txt = run("axial_precession_demo", axial_precession_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -794,6 +796,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("pair_production.svg"), "threshold gamma energy vs background photon energy")
             + f'<div class="card">{pre(pairprod_txt)}</div>'
+            + '</div>'),
+        section(
+            "Precession of the equinoxes",
+            "Earth's equatorial bulge, tilted 23.4 deg to the ecliptic, feels an "
+            "uneven Sun+Moon pull that torques the spin axis into a 26,000-year "
+            "cone -- like a leaning gyroscope. Torque scales as M/r^3, so the "
+            "nearby Moon beats the Sun ~2.2 to 1; the sum is ~50.3 arcsec/yr. "
+            "That is why Polaris is only a temporary North Star and why zodiac "
+            "dates have slipped a whole sign since antiquity.",
+            '<div class="grid">'
+            + svg_card(out("axial_precession.svg"), "the circle the celestial pole traces over a Great Year")
+            + f'<div class="card">{pre(axprec_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
