@@ -83,6 +83,7 @@ ruins a long non-symplectic integration.
 | `src/schwarzschild.py` | Black-hole orbits: effective potential, ISCO, photon sphere, plunge |
 | `src/kerr.py` | Rotating black holes: horizons, ergosphere, spin-dependent ISCO |
 | `src/hawking.py` | Black-hole thermodynamics: Hawking temperature, entropy, evaporation |
+| `src/eddington.py` | Eddington luminosity, accretion rate & Salpeter black-hole growth |
 | `src/friedmann.py` | Friedmann cosmology: scale factor a(t), expansion eras, age of the universe |
 | `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
 | `src/distances.py` | Cosmological distances: luminosity/angular-diameter, cosmic acceleration |
@@ -120,6 +121,7 @@ ruins a long non-symplectic integration.
 | `examples/schwarzschild_demo.py` | Precessing & plunging black-hole orbits with ISCO/photon sphere |
 | `examples/kerr_demo.py` | ISCO-vs-spin curves + horizon/ergosphere diagram |
 | `examples/hawking_demo.py` | Temperature & evaporation time across black-hole masses |
+| `examples/eddington_demo.py` | L_Edd across masses + Eddington-limited growth to a quasar |
 | `examples/friedmann_demo.py` | Scale-factor curves for radiation/matter/dark-energy/LCDM |
 | `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
 | `examples/distances_demo.py` | Hubble diagram (LCDM vs decelerating) + D_A turnover |
@@ -423,6 +425,28 @@ through radiation, matter, and dark-energy eras with distinct power laws. The
 age comes out as a look-back integral to `~0.96/H0`, the measured ~13.8 Gyr. The
 tests verify each era's exponent, the exponential dark-energy growth, and the
 LCDM age.
+
+## The Eddington luminosity: the brightness limit of accretion
+
+Radiation carries momentum, so an accreting object cannot outshine the point
+where radiation pressure balances gravity. `eddington.py` gives that limit:
+
+```
+$ python examples/eddington_demo.py examples/output
+
+  Salpeter e-folding time: 45.0 Myr
+  object          M (Msun)   L_Edd (L_sun)  Mdot (Msun/yr)
+  Sun                    1        3.28e+04        2.22e-08
+  quasar               1e9        3.28e+13        2.22e+01
+```
+
+`L_Edd = 4 pi G M m_p c / sigma_T` is linear in mass and independent of radius.
+It caps the steady accretion rate and hence the growth rate: an Eddington-limited
+black hole e-folds its mass every ~45 Myr (the Salpeter time), so growing a
+10-solar-mass seed into a billion-solar-mass quasar takes ~0.8 Gyr -- just barely
+possible in the early universe, which is why the first quasars are a puzzle. The
+tests verify the solar value, the mass linearity, the 45 Myr Salpeter time, and
+the quasar growth time.
 
 ## Hawking radiation: black holes are not black
 

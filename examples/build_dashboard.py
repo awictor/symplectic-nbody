@@ -88,6 +88,7 @@ def main():
     import sedov_demo
     import kerr_demo
     import hawking_demo
+    import eddington_demo
 
     import plot_orbits
 
@@ -145,6 +146,7 @@ def main():
     sedov_txt = run("sedov_demo", sedov_demo.main, True)
     kerr_txt = run("kerr_demo", kerr_demo.main, True)
     hawking_txt = run("hawking_demo", hawking_demo.main, True)
+    eddington_txt = run("eddington_demo", eddington_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -316,6 +318,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("friedmann.svg"), "scale factor for radiation, matter, dark energy, LCDM")
             + f'<div class="card">{pre(friedmann_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Eddington luminosity & black-hole growth",
+            "Radiation pressure caps how bright -- and how fast-growing -- an "
+            "accreting object can be: L_Edd = 4 pi G M m_p c / sigma_T, linear in "
+            "mass. The e-folding growth time is ~45 Myr, so building a billion-"
+            "solar-mass quasar from a seed takes ~0.8 Gyr.",
+            '<div class="grid">'
+            + svg_card(out("eddington.svg"), "Eddington-limited exponential growth to a quasar")
+            + f'<div class="card">{pre(eddington_txt)}</div>'
             + '</div>'),
         section(
             "Hawking radiation & black-hole thermodynamics",

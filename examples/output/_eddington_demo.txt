@@ -1,0 +1,16 @@
+The Eddington luminosity: the brightness limit of accretion
+
+  Salpeter e-folding time: 45.0 Myr (eta=0.1, Eddington-limited)
+
+  object                    M (Msun)   L_Edd (L_sun)  Mdot (Msun/yr)
+  ------------------------------------------------------------------
+  Sun                          1e+00        3.28e+04        2.22e-08
+  stellar BH                   1e+01        3.28e+05        2.22e-07
+  Sgr A*                       4e+06        1.31e+11        8.88e-02
+  quasar                       1e+09        3.28e+13        2.22e+01
+
+  L_Edd is linear in mass and radius-independent. Above it, radiation
+  pressure blows the accreting gas away, so it caps how fast a black
+  hole can grow -- the exponential Salpeter track below.
+
+  wrote examples/output\eddington.svg

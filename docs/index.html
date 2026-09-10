@@ -132,11 +132,11 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.10       12.07      0.8x
-   400          36.86       37.49      1.0x
-   800         142.95      110.34      1.3x
-  1600         610.04      385.99      1.6x
-  3200        2681.11     1048.54      2.6x
+   200           9.05       12.21      0.7x
+   400          36.36       38.28      0.9x
+   800         148.55      113.43      1.3x
+  1600         620.82      387.14      1.6x
+  3200        2645.71     1055.34      2.5x
 
 empirical scaling exponent  direct ~ N^2.05   barnes-hut ~ N^1.62
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
@@ -3272,6 +3272,37 @@ wrote examples/output\poincare_section.svg</pre></div></div>
   entering the accelerating dark-energy era.
 
   wrote examples/output\friedmann.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>The Eddington luminosity &amp; black-hole growth</h2>
+    <p class="blurb">Radiation pressure caps how bright -- and how fast-growing -- an accreting object can be: L_Edd = 4 pi G M m_p c / sigma_T, linear in mass. The e-folding growth time is ~45 Myr, so building a billion-solar-mass quasar from a seed takes ~0.8 Gyr.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<line x1="64" y1="656" x2="656" y2="656" stroke="#30363d"/>
+<line x1="64" y1="64" x2="64" y2="656" stroke="#30363d"/>
+<polyline points="64.0,656.0 67.0,653.0 69.9,650.1 72.9,647.1 75.8,644.2 78.8,641.2 81.8,638.2 84.7,635.3 87.7,632.3 90.6,629.4 93.6,626.4 96.6,623.4 99.5,620.5 102.5,617.5 105.4,614.6 108.4,611.6 111.4,608.6 114.3,605.7 117.3,602.7 120.2,599.8 123.2,596.8 126.2,593.8 129.1,590.9 132.1,587.9 135.0,585.0 138.0,582.0 141.0,579.0 143.9,576.1 146.9,573.1 149.8,570.2 152.8,567.2 155.8,564.2 158.7,561.3 161.7,558.3 164.6,555.4 167.6,552.4 170.6,549.4 173.5,546.5 176.5,543.5 179.4,540.6 182.4,537.6 185.4,534.6 188.3,531.7 191.3,528.7 194.2,525.8 197.2,522.8 200.2,519.8 203.1,516.9 206.1,513.9 209.0,511.0 212.0,508.0 215.0,505.0 217.9,502.1 220.9,499.1 223.8,496.2 226.8,493.2 229.8,490.2 232.7,487.3 235.7,484.3 238.6,481.4 241.6,478.4 244.6,475.4 247.5,472.5 250.5,469.5 253.4,466.6 256.4,463.6 259.4,460.6 262.3,457.7 265.3,454.7 268.2,451.8 271.2,448.8 274.2,445.8 277.1,442.9 280.1,439.9 283.0,437.0 286.0,434.0 289.0,431.0 291.9,428.1 294.9,425.1 297.8,422.2 300.8,419.2 303.8,416.2 306.7,413.3 309.7,410.3 312.6,407.4 315.6,404.4 318.6,401.4 321.5,398.5 324.5,395.5 327.4,392.6 330.4,389.6 333.4,386.6 336.3,383.7 339.3,380.7 342.2,377.8 345.2,374.8 348.2,371.8 351.1,368.9 354.1,365.9 357.0,363.0 360.0,360.0 363.0,357.0 365.9,354.1 368.9,351.1 371.8,348.2 374.8,345.2 377.8,342.2 380.7,339.3 383.7,336.3 386.6,333.4 389.6,330.4 392.6,327.4 395.5,324.5 398.5,321.5 401.4,318.6 404.4,315.6 407.4,312.6 410.3,309.7 413.3,306.7 416.2,303.8 419.2,300.8 422.2,297.8 425.1,294.9 428.1,291.9 431.0,289.0 434.0,286.0 437.0,283.0 439.9,280.1 442.9,277.1 445.8,274.2 448.8,271.2 451.8,268.2 454.7,265.3 457.7,262.3 460.6,259.4 463.6,256.4 466.6,253.4 469.5,250.5 472.5,247.5 475.4,244.6 478.4,241.6 481.4,238.6 484.3,235.7 487.3,232.7 490.2,229.8 493.2,226.8 496.2,223.8 499.1,220.9 502.1,217.9 505.0,215.0 508.0,212.0 511.0,209.0 513.9,206.1 516.9,203.1 519.8,200.2 522.8,197.2 525.8,194.2 528.7,191.3 531.7,188.3 534.6,185.4 537.6,182.4 540.6,179.4 543.5,176.5 546.5,173.5 549.4,170.6 552.4,167.6 555.4,164.6 558.3,161.7 561.3,158.7 564.2,155.8 567.2,152.8 570.2,149.8 573.1,146.9 576.1,143.9 579.0,141.0 582.0,138.0 585.0,135.0 587.9,132.1 590.9,129.1 593.8,126.2 596.8,123.2 599.8,120.2 602.7,117.3 605.7,114.3 608.6,111.4 611.6,108.4 614.6,105.4 617.5,102.5 620.5,99.5 623.4,96.6 626.4,93.6 629.4,90.6 632.3,87.7 635.3,84.7 638.2,81.8 641.2,78.8 644.2,75.8 647.1,72.9 650.1,69.9 653.0,67.0 656.0,64.0" fill="none" stroke="#ffbe0b" stroke-width="2"/>
+<line x1="64" y1="64.0" x2="656" y2="64.0" stroke="#ff006e" stroke-dasharray="5,4"/>
+<text x="652" y="58.0" fill="#ff006e" font-size="12" text-anchor="end">1e9 M_sun quasar</text>
+<text x="64" y="34" fill="#e6edf3" font-size="18">Eddington-limited black-hole growth</text>
+<text x="64" y="680" fill="#8b949e" font-size="11">time (Myr); reaching a quasar mass takes ~830 Myr</text>
+<text x="54" y="56" fill="#8b949e" font-size="11">log10 mass (M_sun)</text>
+</svg><figcaption>Eddington-limited exponential growth to a quasar</figcaption></figure><div class="card"><pre>The Eddington luminosity: the brightness limit of accretion
+
+  Salpeter e-folding time: 45.0 Myr (eta=0.1, Eddington-limited)
+
+  object                    M (Msun)   L_Edd (L_sun)  Mdot (Msun/yr)
+  ------------------------------------------------------------------
+  Sun                          1e+00        3.28e+04        2.22e-08
+  stellar BH                   1e+01        3.28e+05        2.22e-07
+  Sgr A*                       4e+06        1.31e+11        8.88e-02
+  quasar                       1e+09        3.28e+13        2.22e+01
+
+  L_Edd is linear in mass and radius-independent. Above it, radiation
+  pressure blows the accreting gas away, so it caps how fast a black
+  hole can grow -- the exponential Salpeter track below.
+
+  wrote examples/output\eddington.svg</pre></div></div>
   </section>
 
   <section>
