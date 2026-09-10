@@ -1,0 +1,18 @@
+Rabi oscillations: P_e(t) = (O^2/O_R^2) sin^2(O_R t/2), O = 2pi x 1 MHz
+
+  Pulses on resonance:
+    pi pulse  (full inversion, X gate): 500 ns
+    pi/2 pulse (equal superposition):   250 ns
+
+  Detuning kills contrast (peak excitation P_max = O^2/(O^2+d^2)):
+          detuning     gen. Rabi    peak P_e
+         0.0 MHz      1.00 MHz       1.000
+         0.5 MHz      1.12 MHz       0.800
+         1.0 MHz      1.41 MHz       0.500
+         2.0 MHz      2.24 MHz       0.200
+
+  On resonance the atom swings all the way to the excited state and back; detuned,
+  it oscillates faster but only part-way. A pi pulse flips a qubit, a pi/2 pulse
+  builds a superposition -- the elementary gates of atomic clocks and quantum bits.
+
+  wrote examples/output\rabi.svg

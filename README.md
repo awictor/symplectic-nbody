@@ -180,6 +180,7 @@ ruins a long non-symplectic integration.
 | `src/malus.py` | Malus's law: polarizer transmission, three-polarizer trick, wave plates |
 | `src/cherenkov.py` | Cherenkov radiation: threshold, cone angle, velocity from the ring |
 | `src/zeeman.py` | Zeeman effect: normal/anomalous line splitting, Lande g-factor, field readout |
+| `src/rabi.py` | Rabi oscillations: two-level flopping, generalized Rabi, pi/pi-2 pulses |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -351,6 +352,7 @@ ruins a long non-symplectic integration.
 | `examples/malus_demo.py` | Transmission/rescue/stack table + cos^2 & three-polarizer figure |
 | `examples/cherenkov_demo.py` | Per-radiator threshold table + cone-angle & cone-geometry figure |
 | `examples/zeeman_demo.py` | Splitting/g-factor table + the triplet-fan & sublevel-ladder figure |
+| `examples/rabi_demo.py` | Pulse/detuning table + the flopping & Lorentzian-resonance figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4128,6 +4130,30 @@ more lines, unevenly spaced -- a puzzle whose resolution required electron spin.
 splitting backwards gives the field (`B = h delta_nu/mu_B`), which is how solar magnetograms
 map sunspots. The tests reproduce the Bohr magneton, the 14 GHz/T normal shift, the sodium
 D-line g-factors (2/3, 4/3, 2), the sign-flipping sublevel shifts, and the field inversion.
+
+## Rabi oscillations: a two-level atom flopping
+
+A driven two-level system cycles coherently between its states. `rabi.py`:
+
+```
+$ python examples/rabi_demo.py examples/output
+
+  pi pulse (X gate): 500 ns    pi/2 pulse: 250 ns   (Omega = 2pi x 1 MHz)
+
+  detuning   gen. Rabi   peak P_e
+  0.0 MHz    1.00 MHz    1.000
+  1.0 MHz    1.41 MHz    0.500
+```
+
+A near-resonant field flops the atom at the Rabi frequency `Omega = dE/hbar`. On resonance
+`P_e(t) = sin^2(Omega t/2)` swings the full 0-to-1, so a **pi pulse** inverts the population (a
+qubit X gate) and a **pi/2 pulse** builds an equal superposition. Detuned by `delta` the
+oscillation speeds up to the generalized Rabi frequency `sqrt(Omega^2 + delta^2)` but only
+reaches `Omega^2/(Omega^2 + delta^2)` -- a Lorentzian resonance of width `Omega` (power
+broadening). These are the elementary gates of atomic clocks and quantum computers. The tests
+verify the ground start, the pi/2pi/pi-2 pulse populations, the `d E/hbar` Rabi frequency, the
+generalized Rabi speed-up, the Lorentzian peak (half-max at `delta = Omega`), the
+never-fully-inverts-off-resonance bound, and the pulse-time scaling.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

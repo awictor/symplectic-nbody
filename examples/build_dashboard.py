@@ -222,6 +222,7 @@ def main():
     import malus_demo
     import cherenkov_demo
     import zeeman_demo
+    import rabi_demo
 
     import plot_orbits
 
@@ -413,6 +414,7 @@ def main():
     malus_txt = run("malus_demo", malus_demo.main, True)
     cherenkov_txt = run("cherenkov_demo", cherenkov_demo.main, True)
     zeeman_txt = run("zeeman_demo", zeeman_demo.main, True)
+    rabi_txt = run("rabi_demo", rabi_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2231,6 +2233,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("zeeman.svg"), "the normal triplet fanning out with field, and an anomalous sublevel ladder")
             + f'<div class="card">{pre(zeeman_txt)}</div>'
+            + '</div>'),
+        section(
+            "Rabi oscillations: a two-level atom flopping",
+            "A near-resonant field does not just excite a two-level system once -- it cycles it "
+            "coherently between ground and excited at the Rabi frequency Omega = dE/hbar. On "
+            "resonance P_e(t) = sin^2(Omega t/2) swings fully 0 to 1, so a pi pulse inverts the "
+            "population (a qubit X gate) and a pi/2 pulse builds an equal superposition. Detuned "
+            "by delta the flopping runs faster, at sqrt(Omega^2 + delta^2), but only reaches "
+            "Omega^2/(Omega^2 + delta^2) -- a Lorentzian resonance of width Omega. These are the "
+            "elementary operations of atomic clocks and quantum bits.",
+            '<div class="grid">'
+            + svg_card(out("rabi.svg"), "excited-state probability flopping in time for several detunings, and the Lorentzian resonance")
+            + f'<div class="card">{pre(rabi_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
