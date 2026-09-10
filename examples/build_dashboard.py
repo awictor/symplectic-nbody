@@ -194,6 +194,7 @@ def main():
     import equipartition_demo
     import osmosis_demo
     import diffusion_demo
+    import peclet_demo
 
     import plot_orbits
 
@@ -357,6 +358,7 @@ def main():
     equipartition_txt = run("equipartition_demo", equipartition_demo.main, True)
     osmosis_txt = run("osmosis_demo", osmosis_demo.main, True)
     diffusion_txt = run("diffusion_demo", diffusion_demo.main, True)
+    peclet_txt = run("peclet_demo", peclet_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1804,6 +1806,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("diffusion.svg"), "a point release spreading into wider, lower Gaussians at t, 4t, 16t, 64t")
             + f'<div class="card">{pre(diffusion_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Peclet number: carried vs spreading",
+            "Heat and solutes move both by being carried in the flow (advection) and by "
+            "spreading down their gradient (diffusion); the Peclet number Pe = U L / D says "
+            "which wins. Pe << 1 (a cell, a still cup) is diffusion-controlled; Pe >> 1 (a "
+            "river, an artery) is swept along in thin plumes. It factors as Pe = Re*Pr for "
+            "heat and Re*Sc for mass, so water's Pr ~ 7, air's Pr ~ 0.7 and an aqueous "
+            "solute's Sc ~ 1000 set boundary-layer thicknesses, and the crossover Pe = 1 "
+            "sits at the length L = D/U.",
+            '<div class="grid">'
+            + svg_card(out("peclet.svg"), "regime map over flow speed and length, shaded by Peclet with the Pe=1 crossover")
+            + f'<div class="card">{pre(peclet_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

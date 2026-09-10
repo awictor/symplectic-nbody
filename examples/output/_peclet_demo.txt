@@ -1,0 +1,19 @@
+Peclet number Pe = U L / D: advection (carried) vs diffusion (spreads)
+
+  system                           U (m/s)     L (m)            Pe        regime
+  inside a cell                    1.0e-07   1.0e-05      1.00e-03     diffusion
+  blood in a capillary             5.0e-04   8.0e-06      4.00e+00     advection
+  slowly stirred cup               5.0e-02   5.0e-02      2.50e+06     advection
+  stream / small river             5.0e-01   1.0e+00      5.00e+08     advection
+
+  Fluid diffusivity ratios:
+    water:  Pr = nu/alpha = 7.0   Sc = nu/D = 1000   Le = alpha/D = 144
+    air:    Pr = 0.70   (heat and momentum spread alike)
+
+  Pe = Re*Pr for heat and Re*Sc for mass. The crossover Pe=1 sits at L = D/U:
+    U =    1e-06 m/s  ->  crossover length = 1.00e-03 m
+    U =    1e-03 m/s  ->  crossover length = 1.00e-06 m
+    U =    1e+00 m/s  ->  crossover length = 1.00e-09 m
+  Below that length diffusion wins; above it the flow carries faster than spreading.
+
+  wrote examples/output\peclet.svg

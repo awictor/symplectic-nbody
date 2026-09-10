@@ -152,6 +152,7 @@ ruins a long non-symplectic integration.
 | `src/equipartition.py` | Equipartition: (1/2)kT per DOF, gas C_V/C_P/gamma, the H2 heat-capacity staircase |
 | `src/osmosis.py` | Osmotic pressure: van't Hoff Pi=icRT, tonicity, osmometry, reverse osmosis |
 | `src/diffusion.py` | Fick's laws: Gaussian/erfc profiles, sqrt(t) spread, diffusion length, Stokes-Einstein |
+| `src/peclet.py` | Peclet number Pe=UL/D + Prandtl/Schmidt/Lewis: advection vs diffusion |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -295,6 +296,7 @@ ruins a long non-symplectic integration.
 | `examples/equipartition_demo.py` | Gas heat-capacity table + the H2 C_V staircase plot |
 | `examples/osmosis_demo.py` | Everyday-solution pressure table + Pi-vs-concentration plot |
 | `examples/diffusion_demo.py` | Diffusion length/time table + the spreading-Gaussian fan |
+| `examples/peclet_demo.py` | Per-system Peclet table + the advection-diffusion regime map |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3403,6 +3405,31 @@ while large systems need flow. Stokes-Einstein `D = k_B T/(6 pi eta r)` ties the
 to temperature and drag (~2e-10 m^2/s for a nm sphere in water). The tests verify the
 `sqrt(t)` spreading, conservation of the released amount, the erfc interface value, the
 `L^2/D` scaling, and the Stokes-Einstein size trend.
+
+## The Peclet number: carried vs spreading
+
+Whether transport is dominated by the flow or by diffusion is one ratio. `peclet.py`:
+
+```
+$ python examples/peclet_demo.py examples/output
+
+  system                  U (m/s)    L (m)        Pe      regime
+  inside a cell           1.0e-07   1.0e-05   1.0e-03    diffusion
+  blood in a capillary    5.0e-04   8.0e-06   4.0e+00    advection
+  stream / small river    5.0e-01   1.0e+00   5.0e+08    advection
+
+  water: Pr=7  Sc=1000  Le=144      air: Pr=0.70
+```
+
+The Peclet number `Pe = U L / D` compares advection to diffusion: below 1 (a cell, a still
+cup) a substance spreads faster than it is carried; above 1 (a river, an artery) the flow
+sweeps it along in thin plumes and boundary layers. It factors as `Pe = Re*Pr` for heat and
+`Re*Sc` for mass, where the Prandtl number `Pr = nu/alpha` (~7 for water, ~0.7 for air) and
+Schmidt number `Sc = nu/D` (~1000 for an aqueous solute) are pure fluid properties setting
+the relative thickness of the velocity, thermal and concentration boundary layers; their
+ratio is the Lewis number `Le = alpha/D`. The crossover `Pe = 1` sits at `L = D/U`. The
+tests reproduce water's and air's Prandtl numbers, the aqueous Schmidt number, the
+`Le = Sc/Pr` identity, the `Pe = Re*Sc` factoring, and the crossover length.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
