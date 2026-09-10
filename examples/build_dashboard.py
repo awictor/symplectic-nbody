@@ -166,6 +166,7 @@ def main():
     import j2_precession_demo
     import solar_sail_demo
     import beaming_demo
+    import relativistic_rocket_demo
 
     import plot_orbits
 
@@ -301,6 +302,7 @@ def main():
     j2_txt = run("j2_precession_demo", j2_precession_demo.main, True)
     sail_txt = run("solar_sail_demo", solar_sail_demo.main, True)
     beaming_txt = run("beaming_demo", beaming_demo.main, True)
+    rocket_txt = run("relativistic_rocket_demo", relativistic_rocket_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1410,6 +1412,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("beaming.svg"), "Doppler factor vs viewing angle for several Lorentz factors")
             + f'<div class="card">{pre(beaming_txt)}</div>'
+            + '</div>'),
+        section(
+            "The relativistic rocket",
+            "A ship at constant 1 g follows a hyperbolic worldline: velocity "
+            "c tanh(a tau/c) saturates just short of c, but proper time uses cosh/sinh, "
+            "so the crew clock falls ever further behind Earth's. The galactic centre "
+            "is ~10 crew-years away (27,000 pass on Earth), Andromeda ~15 -- ship time "
+            "grows only logarithmically with distance. The catch is fuel: a photon "
+            "drive needs exp(2 phi) times the payload mass.",
+            '<div class="grid">'
+            + svg_card(out("relativistic_rocket.svg"), "ship time vs Earth time diverging with distance at 1 g")
+            + f'<div class="card">{pre(rocket_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

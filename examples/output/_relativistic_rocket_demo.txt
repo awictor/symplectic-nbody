@@ -1,0 +1,17 @@
+Relativistic rocket at constant 1 g (acceleration only)
+
+           destination    distance  ship (yr)   Earth (yr)  v_peak/c
+  ------------------------------------------------------------------
+      Proxima Centauri     4.37 ly        2.3         5.25    0.9834
+                  Vega    25.00 ly        3.9           26    0.9993
+       Galactic centre      27 kly       10.6      2.7e+04    1.0000
+       Andromeda (M31)     2.5 Mly       15.0      2.5e+06    1.0000
+    edge of observable 4.6e+04 Mly       24.5      4.6e+10    1.0000
+
+  Velocity is c tanh(a tau/c) -- it saturates just short of c -- but proper
+  time uses cosh/sinh, so the crew's clock falls ever further behind Earth's.
+  A 1-g ship reaches the galactic centre in ~10 crew-years (27,000 pass on
+  Earth) and could cross to Andromeda in ~15. The impossible part is fuel: a
+  photon drive needs exp(2 phi) times the payload mass, astronomically much.
+
+  wrote examples/output\relativistic_rocket.svg

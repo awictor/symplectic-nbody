@@ -124,6 +124,7 @@ ruins a long non-symplectic integration.
 | `src/j2_precession.py` | J2 orbital precession: nodal regression, apsidal drift & sun-synchronous orbits |
 | `src/solar_sail.py` | Solar sails & radiation pressure: the lightness number beta |
 | `src/beaming.py` | Relativistic beaming: Doppler boosting & one-sided jets |
+| `src/relativistic_rocket.py` | The relativistic rocket: interstellar travel at constant 1 g |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -239,6 +240,7 @@ ruins a long non-symplectic integration.
 | `examples/j2_precession_demo.py` | Nodal/apsidal rates per orbit + the rate-vs-inclination curves |
 | `examples/solar_sail_demo.py` | Pressure/accel/beta per sail + the beta-vs-area/mass curve |
 | `examples/beaming_demo.py` | Doppler/boost/jet-ratio per gamma & angle + the D(theta) curves |
+| `examples/relativistic_rocket_demo.py` | Ship/Earth time & v to each destination + the divergence plot |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2636,6 +2638,31 @@ one-sided, its counter-jet beamed away. The same geometry gives apparent superlu
 faster-than-light speed. The tests verify the `1/gamma` cone, the approaching boost and
 receding dimming, the enormous jet/counter-jet ratio, superluminal motion, and the
 `gamma*beta` peak.
+
+## The relativistic rocket: the Galaxy in a lifetime
+
+A ship at constant proper acceleration follows a hyperbolic worldline. `relativistic_rocket.py`:
+
+```
+$ python examples/relativistic_rocket_demo.py examples/output
+
+           destination     distance   ship (yr)   Earth (yr)   v_peak/c
+  ------------------------------------------------------------------
+      Proxima Centauri      4.37 ly        2.3         5.25    0.9834
+                  Vega     25.00 ly        3.9           26    0.9993
+       Galactic centre       27 kly       10.6      2.7e+04    1.0000
+       Andromeda (M31)      2.5 Mly       15.0      2.5e+06    1.0000
+    edge of observable   4.6e+04 Mly       24.5      4.6e+10    1.0000
+```
+
+Velocity `c tanh(a tau/c)` saturates just short of `c`, but distance and Earth time use
+`cosh`/`sinh`, so proper time grows only logarithmically with distance -- a 1-g ship reaches
+the galactic centre in ~10 crew-years (27,000 pass on Earth), Andromeda in ~15, and the edge
+of the observable universe in ~25. Rapidity `phi = a tau/c` is the additive velocity whose
+`tanh` is `v/c`. The impossible part is fuel: an ideal photon drive needs `exp(2 phi)` times
+the payload mass to accelerate and stop. The tests verify the ~0.77c after one year at 1 g,
+that velocity never reaches c, the distance/proper-time inversion, the ~10-crew-year galactic
+centre with ~27,000 Earth-years, and the exponential mass ratio.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
