@@ -108,6 +108,7 @@ def main():
     import blackbody_demo
     import main_sequence_demo
     import bondi_demo
+    import cosmic_velocities_demo
 
     import plot_orbits
 
@@ -185,6 +186,7 @@ def main():
     blackbody_txt = run("blackbody_demo", blackbody_demo.main, True)
     ms_txt = run("main_sequence_demo", main_sequence_demo.main, True)
     bondi_txt = run("bondi_demo", bondi_demo.main, True)
+    cosmicv_txt = run("cosmic_velocities_demo", cosmic_velocities_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -699,6 +701,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("oberth.svg"), "escape speed from a fixed burn vs burn radius")
             + f'<div class="card">{pre(oberth_txt)}</div>'
+            + '</div>'),
+        section(
+            "Escape & cosmic velocities",
+            "The speed thresholds of spaceflight: orbital v1 = sqrt(GM/r), escape "
+            "v2 = sqrt(2) v1 (11.2 km/s from Earth), and ~42 km/s to leave the "
+            "Solar System. Push v2 to the speed of light and you recover the "
+            "Schwarzschild radius -- 3 km for the Sun.",
+            '<div class="grid">'
+            + svg_card(out("cosmic_velocities.svg"), "escape velocity from Moon to a white dwarf")
+            + f'<div class="card">{pre(cosmicv_txt)}</div>'
             + '</div>'),
     ]
 

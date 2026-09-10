@@ -1,0 +1,16 @@
+Escape and cosmic velocities
+
+  body            v_orbit (km/s)  v_escape (km/s)
+  -----------------------------------------------
+  Moon                      1.68             2.38
+  Mars                      3.55             5.03
+  Earth                     7.91            11.19
+  Jupiter                  42.57            60.20
+  Sun                     436.82           617.75
+  white dwarf            5000.33          7071.53
+
+  escape / orbital = sqrt(2) always.
+  leaving the Solar System from Earth's orbit: 42.1 km/s
+  set v_escape = c and you get the Schwarzschild radius: 2954 m for the Sun.
+
+  wrote examples/output/cosmic_velocities.svg

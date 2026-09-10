@@ -92,6 +92,7 @@ ruins a long non-symplectic integration.
 | `src/bondi.py` | Bondi accretion: spherical feeding rate onto a compact object |
 | `src/hohmann.py` | Hohmann transfer: mission delta-v budgets & launch windows |
 | `src/oberth.py` | Oberth effect: why rockets burn deep in a gravity well |
+| `src/cosmic_velocities.py` | Orbital/escape/Solar-System speeds & the Schwarzschild link |
 | `src/gr_time.py` | Gravitational redshift, GPS clock correction, Shapiro delay |
 | `src/lense_thirring.py` | Frame-dragging & geodetic precession (Gravity Probe B) |
 | `src/pulsar.py` | Hulse-Taylor binary-pulsar orbital decay (first GW evidence) |
@@ -149,6 +150,7 @@ ruins a long non-symplectic integration.
 | `examples/bondi_demo.py` | Accretion rate vs gas temperature and mass |
 | `examples/hohmann_demo.py` | LEO->GEO & Earth->Mars delta-v budgets + transfer diagram |
 | `examples/oberth_demo.py` | Periapsis-vs-apoapsis burn: escape speed vs burn radius |
+| `examples/cosmic_velocities_demo.py` | Orbital/escape speeds from the Moon to a white dwarf |
 | `examples/gr_time_demo.py` | Pound-Rebka, GPS gain, Sun redshift + Shapiro-delay curve |
 | `examples/lense_thirring_demo.py` | GP-B geodetic & frame-drag rates vs orbit radius |
 | `examples/pulsar_demo.py` | Hulse-Taylor dP/dt vs measured + the periastron-shift parabola |
@@ -661,6 +663,28 @@ through radiation, matter, and dark-energy eras with distinct power laws. The
 age comes out as a look-back integral to `~0.96/H0`, the measured ~13.8 Gyr. The
 tests verify each era's exponent, the exponential dark-energy growth, and the
 LCDM age.
+
+## Escape and cosmic velocities
+
+The speed thresholds of spaceflight, from one formula. `cosmic_velocities.py`:
+
+```
+$ python examples/cosmic_velocities_demo.py examples/output
+
+  body          v_orbit (km/s)  v_escape (km/s)
+  Earth                   7.91            11.19
+  Sun                   436.82           617.75
+  white dwarf          5000.33          7071.53
+  leaving the Solar System from Earth's orbit: 42.1 km/s
+  set v_escape = c -> Schwarzschild radius: 2954 m for the Sun.
+```
+
+The circular-orbit speed is `v1 = sqrt(GM/r)`, escape is `v2 = sqrt(2) v1`
+(11.2 km/s from Earth), and ~42 km/s leaves the Solar System from Earth's orbit.
+Pushing the escape speed to `c` in `sqrt(2GM/r) = c` recovers the Schwarzschild
+radius `2GM/c^2` -- the point where not even light escapes. The tests reproduce
+the Earth values, the universal `sqrt(2)` ratio, the Solar-System speed, and the
+Schwarzschild radii of the Sun (~3 km) and Earth (~9 mm).
 
 ## The Oberth effect: burn low and fast
 
