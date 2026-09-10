@@ -104,6 +104,7 @@ ruins a long non-symplectic integration.
 | `src/galaxy.py` | Disk-galaxy generator and two-galaxy tidal encounters |
 | `src/dynamical_friction.py` | Chandrasekhar friction: satellites sinking into galaxies |
 | `src/gravwave.py` | 2.5PN radiation reaction: gravitational-wave inspiral & chirp |
+| `src/gw_strain.py` | GW strain amplitude, chirp mass & LIGO arm-length change |
 | `src/systems.py` | Test systems: two-body, figure-eight, pythagorean 3-body, **Plummer-sphere star cluster** (any N) |
 | `tests/test_conservation.py` | Automated checks of every conservation claim |
 | `tests/test_barnes_hut.py` | Tree force validated against exact O(N^2) summation |
@@ -151,6 +152,7 @@ ruins a long non-symplectic integration.
 | `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
 | `examples/dynamical_friction_demo.py` | Sinking times by mass + drag-vs-speed curve |
 | `examples/gravwave_demo.py` | Inspiral chirp, energy loss validated against Peters (1964) |
+| `examples/gw_strain_demo.py` | GW150914 strain & arm change + strain-vs-distance curve |
 | `examples/circularization_demo.py` | Peters (a, e) tracks: all binaries circularize before merger |
 | `examples/build_dashboard.py` | Assemble all demos into one self-contained `index.html` |
 
@@ -200,6 +202,26 @@ periastron time traces a parabola whose data points fall on the general-
 relativity curve -- the plot that won the 1993 Nobel Prize. The tests confirm the
 dP/dt match to under 1%, the `t^2` cumulative shift, the eccentricity and
 period dependence, and the ~370 Myr decay timescale.
+
+## GW strain: the number LIGO measures
+
+The wave that reaches Earth stretches space by a fractional strain `h`.
+`gw_strain.py` computes it from the chirp mass:
+
+```
+$ python examples/gw_strain_demo.py examples/output
+
+  GW150914 (36 + 29 M_sun, 410 Mpc, f_gw~150 Hz):
+    chirp mass    = 28.1 M_sun
+    strain h      = 2.13e-21
+    LIGO arm move = 8.50e-18 m (1.1% of a proton width)
+```
+
+`h ~ (G M_c/c^2)^{5/3}(pi f/c)^{2/3}/d`, falling as `1/d` and rising as `f^{2/3}`.
+For GW150914 it is ~1e-21, which moves LIGO's 4 km arms by ~1e-18 m -- a
+thousandth of a proton's width, and why LIGO is among the most sensitive
+instruments ever built. The tests reproduce the ~28 M_sun chirp mass, the ~1e-21
+strain, the sub-proton arm change, and the distance/frequency scalings.
 
 ## Gravitational waves: the LIGO chirp from first principles
 

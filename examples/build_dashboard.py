@@ -98,6 +98,7 @@ def main():
     import lense_thirring_demo
     import oberth_demo
     import dynamical_friction_demo
+    import gw_strain_demo
 
     import plot_orbits
 
@@ -165,6 +166,7 @@ def main():
     lt_txt = run("lense_thirring_demo", lense_thirring_demo.main, True)
     oberth_txt = run("oberth_demo", oberth_demo.main, True)
     df_txt = run("dynamical_friction_demo", dynamical_friction_demo.main, True)
+    gwstrain_txt = run("gw_strain_demo", gw_strain_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -234,6 +236,15 @@ def main():
             '<div class="grid">'
             + svg_card(out("gw_inspiral.svg"), "relative orbit spiralling to merger")
             + f'<div class="card">{pre(gw_txt)}</div>'
+            + '</div>'),
+        section(
+            "GW strain: the number LIGO measures",
+            "The wave's amplitude h ~ (G M_c/c^2)^{5/3}(pi f/c)^{2/3}/d. For "
+            "GW150914 (chirp mass ~28 M_sun, 410 Mpc) that is h ~ 1e-21, moving "
+            "LIGO's 4 km arms by ~1e-18 m -- a thousandth of a proton's width.",
+            '<div class="grid">'
+            + svg_card(out("gw_strain.svg"), "strain vs distance, with GW150914 marked")
+            + f'<div class="card">{pre(gwstrain_txt)}</div>'
             + '</div>'),
         section(
             "Gravitational waves circularize binaries (Peters 1964)",

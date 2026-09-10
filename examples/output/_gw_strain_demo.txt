@@ -1,0 +1,18 @@
+Gravitational-wave strain: measuring a proton-width in kilometers
+
+  GW150914 (36 + 29 M_sun, 410 Mpc, f_gw~150 Hz):
+    chirp mass    = 28.1 M_sun
+    strain h      = 2.13e-21
+    LIGO arm move = 8.50e-18 m (1.1% of a proton width)
+
+  binary                        distance    strain h
+  --------------------------------------------------
+  GW150914 (36+29)                410 Mpc     2.1e-21
+  neutron stars (1.4+1.4)         130 Mpc     3.6e-23
+  supermassive (1e6+1e6)        10000 Mpc     2.7e-15
+
+  A strain of 1e-21 moves LIGO's 4 km arms by ~1e-18 m -- a thousandth
+  of a proton's width. Detecting it is why LIGO is one of the most
+  sensitive instruments ever built.
+
+  wrote examples/output\gw_strain.svg
