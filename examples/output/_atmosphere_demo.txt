@@ -1,0 +1,14 @@
+Atmospheric escape: which worlds keep which gases (lambda >= 36 = keep)
+
+  body            H2      He     H2O      N2     CO2
+  --------------------------------------------------
+  Moon          lose    lose    lose    lose    keep
+  Mars          lose    lose    keep    keep    keep
+  Earth         lose    lose    keep    keep    keep
+  Jupiter       keep    keep    keep    keep    keep
+
+  Earth loses H2/He but keeps N2/O2/CO2; the Moon and Mars lose the
+  light gases; Jupiter keeps everything. Retention needs the escape
+  speed to beat ~6x the molecules' thermal speed.
+
+  wrote examples/output\atmosphere.svg

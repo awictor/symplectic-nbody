@@ -94,6 +94,7 @@ ruins a long non-symplectic integration.
 | `src/hohmann.py` | Hohmann transfer: mission delta-v budgets & launch windows |
 | `src/oberth.py` | Oberth effect: why rockets burn deep in a gravity well |
 | `src/cosmic_velocities.py` | Orbital/escape/Solar-System speeds & the Schwarzschild link |
+| `src/atmosphere.py` | Jeans atmospheric escape: which worlds keep which gases |
 | `src/gr_time.py` | Gravitational redshift, GPS clock correction, Shapiro delay |
 | `src/lense_thirring.py` | Frame-dragging & geodetic precession (Gravity Probe B) |
 | `src/pulsar.py` | Hulse-Taylor binary-pulsar orbital decay (first GW evidence) |
@@ -156,6 +157,7 @@ ruins a long non-symplectic integration.
 | `examples/hohmann_demo.py` | LEO->GEO & Earth->Mars delta-v budgets + transfer diagram |
 | `examples/oberth_demo.py` | Periapsis-vs-apoapsis burn: escape speed vs burn radius |
 | `examples/cosmic_velocities_demo.py` | Orbital/escape speeds from the Moon to a white dwarf |
+| `examples/atmosphere_demo.py` | Gas-retention grid across bodies + escape-vs-thermal plot |
 | `examples/gr_time_demo.py` | Pound-Rebka, GPS gain, Sun redshift + Shapiro-delay curve |
 | `examples/lense_thirring_demo.py` | GP-B geodetic & frame-drag rates vs orbit radius |
 | `examples/pulsar_demo.py` | Hulse-Taylor dP/dt vs measured + the periastron-shift parabola |
@@ -738,6 +740,27 @@ through radiation, matter, and dark-energy eras with distinct power laws. The
 age comes out as a look-back integral to `~0.96/H0`, the measured ~13.8 Gyr. The
 tests verify each era's exponent, the exponential dark-energy growth, and the
 LCDM age.
+
+## Atmospheric escape: which worlds keep air
+
+Whether a planet holds a gas is a race between gravity and heat. `atmosphere.py`
+uses the Jeans escape parameter `lambda = v_esc^2 / v_th^2`:
+
+```
+$ python examples/atmosphere_demo.py examples/output
+
+  body            H2      He     H2O      N2     CO2
+  Moon          lose    lose    lose    lose    keep
+  Earth         lose    lose    keep    keep    keep
+  Jupiter       keep    keep    keep    keep    keep
+```
+
+A species is retained over the age of the Solar System when the escape speed
+exceeds ~6x the molecules' most-probable thermal speed (`lambda >~ 36`). That is
+why Earth keeps `N2`/`O2` but slowly loses `H2` and `He`, the Moon and Mars lose
+the light gases, and Jupiter keeps even hydrogen -- exactly the atmospheres we
+observe. The tests reproduce those cases and the mass/temperature scalings of the
+escape parameter.
 
 ## Escape and cosmic velocities
 

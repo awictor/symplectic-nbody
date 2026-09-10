@@ -113,6 +113,7 @@ def main():
     import synchrotron_demo
     import sz_demo
     import kelvin_helmholtz_demo
+    import atmosphere_demo
 
     import plot_orbits
 
@@ -195,6 +196,7 @@ def main():
     synchrotron_txt = run("synchrotron_demo", synchrotron_demo.main, True)
     sz_txt = run("sz_demo", sz_demo.main, True)
     kh_txt = run("kelvin_helmholtz_demo", kelvin_helmholtz_demo.main, True)
+    atm_txt = run("atmosphere_demo", atmosphere_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -759,6 +761,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("cosmic_velocities.svg"), "escape velocity from Moon to a white dwarf")
             + f'<div class="card">{pre(cosmicv_txt)}</div>'
+            + '</div>'),
+        section(
+            "Atmospheric escape: which worlds keep air",
+            "A planet keeps a gas only if its escape speed beats ~6x the molecules' "
+            "thermal speed (Jeans parameter lambda >= 36). Earth loses H2 and He but "
+            "keeps N2/O2; the Moon and Mars lose the light gases; Jupiter keeps "
+            "even hydrogen -- exactly the atmospheres we observe.",
+            '<div class="grid">'
+            + svg_card(out("atmosphere.svg"), "retained (blue) vs lost (red) across bodies and gases")
+            + f'<div class="card">{pre(atm_txt)}</div>'
             + '</div>'),
     ]
 
