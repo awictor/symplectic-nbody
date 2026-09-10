@@ -1,0 +1,22 @@
+Semi-empirical mass formula: B/A peaks at iron (~8.8 MeV/nucleon)
+
+       nucleus    Z    A   B/A (MeV)
+  ----------------------------------
+          He-4    2    4       5.710
+          C-12    6   12       7.468
+          O-16    8   16       7.873
+         Fe-56   26   56       8.846
+         Ni-62   28   62       8.863
+         Kr-84   36   84       8.781
+        Sn-120   50  120       8.548
+        Pb-208   82  208       7.857
+         U-238   92  238       7.625
+
+  peak of the curve: A = 58, 8.86 MeV/nucleon
+
+  Light nuclei fuse toward the peak, releasing energy; heavy nuclei fission
+  toward it, also releasing energy. Iron-56 sits at the summit -- the ash of
+  stellar fusion and the end of the line for energy release, which is why a
+  massive star's iron core cannot burn and collapses into a supernova.
+
+  wrote examples/output\mass_formula.svg

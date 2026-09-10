@@ -135,6 +135,7 @@ ruins a long non-symplectic integration.
 | `src/harmonic_oscillator.py` | The quantum harmonic oscillator: evenly-spaced levels & zero-point energy |
 | `src/rutherford.py` | Rutherford scattering: the Coulomb cross section that found the nucleus |
 | `src/radioactive_decay.py` | Radioactive decay: half-lives, dating & Bateman decay chains |
+| `src/mass_formula.py` | Semi-empirical mass formula: nuclear binding & the iron peak |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -261,6 +262,7 @@ ruins a long non-symplectic integration.
 | `examples/harmonic_oscillator_demo.py` | Vibrational quanta per molecule + the parabolic-well level diagram |
 | `examples/rutherford_demo.py` | Cross section & impact parameter by angle + the 1/sin^4 curve |
 | `examples/radioactive_decay_demo.py` | Dating ages + a parent/daughter chain and Bateman curve |
+| `examples/mass_formula_demo.py` | B/A for landmark nuclei + the binding-energy curve peaking at iron |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2941,6 +2943,33 @@ equals parent activity independent of the daughter's half-life. That balance run
 radioisotope generators (Mo-99/Tc-99m) and the radon that seeps from long-lived uranium. The
 tests verify the one-half-life halving, the C-14 dating age, the number of half-lives, the
 Bateman rise-and-fall from zero, and secular equilibrium.
+
+## Nuclear binding: the semi-empirical mass formula
+
+Weizsacker's liquid-drop model sums competing terms into the nuclear binding energy.
+`mass_formula.py`:
+
+```
+$ python examples/mass_formula_demo.py examples/output
+
+       nucleus    Z    A   B/A (MeV)
+  --------------------------------
+          He-4    2    4       5.710
+         Fe-56   26   56       8.846
+         Ni-62   28   62       8.863
+        Pb-208   82  208       7.857
+         U-238   92  238       7.625
+```
+
+`B = a_V A - a_S A^(2/3) - a_C Z(Z-1)/A^(1/3) - a_A (A-2Z)^2/A + delta`: the volume term
+wants a big nucleus, surface and Coulomb penalize it, asymmetry wants N=Z, and pairing
+favours even-even nuclei. Their balance gives the binding-energy-per-nucleon curve, peaking
+near iron/nickel at ~8.8 MeV/nucleon -- which is exactly why fusion releases energy up to
+iron and fission releases it beyond, and why a massive star's iron core cannot burn and
+collapses into a supernova. Minimizing over Z traces the valley of stability, drifting to
+neutron excess in heavy nuclei (U-238 at Z=92, Pb-208 at Z=82). The tests verify the ~8.8
+MeV iron binding, the iron-group peak, light-rises/heavy-falls, the valley of stability, the
+growing neutron excess, and the pairing signs.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
