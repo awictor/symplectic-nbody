@@ -195,6 +195,7 @@ ruins a long non-symplectic integration.
 | `src/langevin_para.py` | Langevin paramagnetism: L(x), Curie-law susceptibility, saturation |
 | `src/buffon.py` | Buffon's needle: crossing probability, Monte Carlo pi, 1/sqrt(N) convergence |
 | `src/metropolis.py` | Metropolis MCMC on the 2D Ising model: acceptance rule, Onsager T_c |
+| `src/logistic_map.py` | Logistic map: period doubling, attractor, Lyapunov exponent, Feigenbaum |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -381,6 +382,7 @@ ruins a long non-symplectic integration.
 | `examples/langevin_para_demo.py` | Alignment/Curie table + the L(x) & 1/T susceptibility figure |
 | `examples/buffon_demo.py` | Convergence table + the needle-scatter & pi-estimate figure |
 | `examples/metropolis_demo.py` | Simulated m(T) table + the transition curve & spin-snapshot figure |
+| `examples/logistic_map_demo.py` | Period/Lyapunov table + the bifurcation diagram & Lyapunov figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4497,6 +4499,28 @@ theory only approximates: spins order below the exact Onsager `T_c = 2J/(k_B ln(
 near `T_c`). The tests verify the accept-all-downhill / Boltzmann-uphill rule, the ground-state
 energy and magnetization, the exact `T_c`, and a full run ordered below and disordered above
 the transition.
+
+## The logistic map: period doubling into chaos
+
+One line iterates its way into chaos. `logistic_map.py`:
+
+```
+$ python examples/logistic_map_demo.py examples/output
+
+  r      period   Lyapunov   regime       Feigenbaum delta = 4.669
+  2.50   1        -0.693     period-1
+  3.50   4        -0.873     period-4
+  3.90   many     +0.492     chaos
+```
+
+The map `x' = r x(1-x)` settles to one value for `1 < r < 3`, splits into a 2-cycle at `r=3`,
+then 4, 8, 16, ... in a period-doubling cascade accumulating at `r ~ 3.5699`, the onset of
+chaos -- aperiodic and sensitive to initial conditions -- broken by periodic windows (the
+famous period-3 near 3.83). The bifurcation spacings shrink by the universal **Feigenbaum
+constant** `4.669`, the same for any smooth unimodal map, and the Lyapunov exponent
+`<ln|r(1-2x)|>` is negative in the periodic regime and positive in chaos (reaching `ln 2` at
+`r=4`). The tests reproduce the `1-1/r` fixed point and its stability, the period 1/2/4 and
+period-3 window, the negative-to-positive Lyapunov crossover, and the Feigenbaum constant.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

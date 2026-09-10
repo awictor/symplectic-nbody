@@ -237,6 +237,7 @@ def main():
     import langevin_para_demo
     import buffon_demo
     import metropolis_demo
+    import logistic_map_demo
 
     import plot_orbits
 
@@ -443,6 +444,7 @@ def main():
     langevin_para_txt = run("langevin_para_demo", langevin_para_demo.main, True)
     buffon_txt = run("buffon_demo", buffon_demo.main, True)
     metropolis_txt = run("metropolis_demo", metropolis_demo.main, True)
+    logistic_map_txt = run("logistic_map_demo", logistic_map_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2458,6 +2460,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("metropolis.svg"), "the simulated magnetization dropping to zero at the Onsager T_c, and a near-critical spin snapshot")
             + f'<div class="card">{pre(metropolis_txt)}</div>'
+            + '</div>'),
+        section(
+            "The logistic map: period doubling into chaos",
+            "The one-line map x' = r x(1-x) is the textbook birth of chaos. As the growth rate "
+            "r rises, a stable population splits into a 2-cycle at r=3, then 4, 8, 16, ... in a "
+            "cascade that accumulates at r ~ 3.5699 -- the onset of aperiodic, "
+            "initial-condition-sensitive chaos, interrupted by periodic windows (the famous "
+            "period-3 near 3.83). The bifurcation spacings shrink by the universal Feigenbaum "
+            "constant 4.669, the same for any smooth single-humped map, and a positive Lyapunov "
+            "exponent marks the chaotic regime.",
+            '<div class="grid">'
+            + svg_card(out("logistic_map.svg"), "the bifurcation diagram doubling into chaos, above the Lyapunov exponent turning positive")
+            + f'<div class="card">{pre(logistic_map_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

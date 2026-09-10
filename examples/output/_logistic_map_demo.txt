@@ -1,0 +1,17 @@
+Logistic map x' = r x (1-x): the route to chaos (Feigenbaum delta = 4.6692)
+
+         r    period    Lyapunov        regime
+      2.50         1      -0.693      period-1
+      3.20         2      -0.916      period-2
+      3.50         4      -0.873      period-4
+      3.55         8      -0.100      period-8
+      3.83         3      -0.369      period-3
+      3.90        64       0.492         chaos
+      4.00         1       0.693         chaos
+
+  Period doublings 2,4,8,... accumulate at r ~ 3.5699, then chaos -- broken by
+  periodic windows (the period-3 near 3.83 is the most famous). The bifurcation
+  spacings shrink by the universal Feigenbaum ratio 4.669, the same for any smooth
+  unimodal map -- one of the deepest facts in nonlinear dynamics.
+
+  wrote examples/output\logistic_map.svg
