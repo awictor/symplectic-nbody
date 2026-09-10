@@ -15,7 +15,7 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 from systems import figure_eight, two_body_eccentric, pythagorean  # noqa: E402
-from render_svg import render  # noqa: E402
+from render_svg import render, render_animated  # noqa: E402
 from nbody import NBody  # noqa: E402
 
 
@@ -51,7 +51,10 @@ def main():
         subtitle = f"{sub}   |   {method}, dt={dt}, {steps} steps, net dE/E={net:.1e}"
         path = os.path.join(outdir, f"{name}.svg")
         render(traj, path, plane="xy", title=title, subtitle=subtitle)
-        print(f"wrote {path}  ({len(traj)} bodies, {len(traj[0])} samples, drift {net:.1e})")
+        apath = os.path.join(outdir, f"{name}_animated.svg")
+        render_animated(traj, apath, plane="xy", title=title, subtitle=subtitle)
+        print(f"wrote {path} + {apath}  "
+              f"({len(traj)} bodies, {len(traj[0])} samples, drift {net:.1e})")
 
 
 if __name__ == "__main__":

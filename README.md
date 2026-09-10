@@ -82,6 +82,11 @@ path as a polyline (hollow marker = start, filled = end), and stamps the net
 energy drift. The figure-eight closes on itself to 1 part in 1e13; the softened
 pythagorean 3-body stays energy-stable (drift ~1e-9) through its close encounters.
 
+It also writes an `*_animated.svg` for each system: the bodies actually **orbit**
+along their computed paths using SMIL `<animateMotion>` -- pure declarative SVG
+animation, no JavaScript, no dependencies. Open `figure_eight_animated.svg` in a
+browser and watch three masses chase each other around the shared figure-eight.
+
 ## The claims, checked automatically
 
 Run:

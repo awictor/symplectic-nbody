@@ -7,7 +7,7 @@ import tempfile
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 from systems import figure_eight  # noqa: E402
-from render_svg import render, _project  # noqa: E402
+from render_svg import render, render_animated, _project  # noqa: E402
 
 
 def test_projection_planes():
@@ -29,6 +29,20 @@ def test_render_writes_valid_svg():
         # one polyline per body
         assert svg.count("<polyline") == len(traj)
         # no numerical garbage
+        low = svg.lower()
+        assert "nan" not in low and "inf" not in low
+
+
+def test_render_animated_has_motion():
+    sys_ = figure_eight()
+    traj = sys_.record("forest_ruth", 0.005, 1000, sample_every=5)
+    with tempfile.TemporaryDirectory() as d:
+        svg = render_animated(traj, os.path.join(d, "a.svg"), duration=8.0)
+        assert svg.startswith("<svg") and svg.rstrip().endswith("</svg>")
+        # two animateMotion (body + ghost) per body
+        assert svg.count("<animateMotion") == 2 * len(traj)
+        assert 'dur="8.0s"' in svg
+        assert "repeatCount=\"indefinite\"" in svg
         low = svg.lower()
         assert "nan" not in low and "inf" not in low
 

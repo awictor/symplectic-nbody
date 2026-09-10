@@ -90,3 +90,75 @@ def render(traj: Traj, path: str, plane: str = "xy", size: int = 720,
 
 def _esc(s: str) -> str:
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def render_animated(traj: Traj, path: str, plane: str = "xy", size: int = 720,
+                    pad: int = 40, title: str = "", subtitle: str = "",
+                    background: str = "#0d1117", duration: float = 12.0) -> str:
+    """Write an *animated* SVG: each body moves along its orbit via SMIL
+    <animateMotion> (pure declarative animation, no JavaScript). Opens and plays
+    in any modern browser. `duration` is the loop length in seconds."""
+    xs, ys = [], []
+    for body in traj:
+        for p in body:
+            u, v = _project(p, plane)
+            xs.append(u); ys.append(v)
+    if not xs:
+        raise ValueError("no trajectory data")
+    minx, maxx = min(xs), max(xs)
+    miny, maxy = min(ys), max(ys)
+    spanx = (maxx - minx) or 1.0
+    spany = (maxy - miny) or 1.0
+    span = max(spanx, spany)
+    inner = size - 2 * pad
+
+    def sx(u):
+        return pad + (u - minx + (span - spanx) * 0.5) / span * inner
+
+    def sy(v):
+        return size - (pad + (v - miny + (span - spany) * 0.5) / span * inner)
+
+    parts = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{size}" height="{size}" '
+        f'viewBox="0 0 {size} {size}" font-family="monospace">',
+        f'<rect width="{size}" height="{size}" fill="{background}"/>',
+    ]
+
+    for i, body in enumerate(traj):
+        color = _PALETTE[i % len(_PALETTE)]
+        screen = [(sx(u), sy(v)) for u, v in (_project(p, plane) for p in body)]
+        pts = " ".join(f"{x:.2f},{y:.2f}" for x, y in screen)
+        # faint full orbit path for context
+        parts.append(
+            f'<polyline points="{pts}" fill="none" stroke="{color}" '
+            f'stroke-width="1" stroke-opacity="0.35"/>'
+        )
+        # motion path: absolute M/L polyline the body follows over `duration`
+        d = "M " + " L ".join(f"{x:.2f} {y:.2f}" for x, y in screen)
+        # moving body: glowing dot animated along the path
+        parts.append(
+            f'<circle r="5" fill="{color}">'
+            f'<animateMotion dur="{duration}s" repeatCount="indefinite" '
+            f'path="{d}" rotate="0" calcMode="linear"/>'
+            f'</circle>'
+        )
+        # a trailing ghost, slightly delayed, for a comet-tail feel
+        parts.append(
+            f'<circle r="3" fill="{color}" fill-opacity="0.5">'
+            f'<animateMotion dur="{duration}s" repeatCount="indefinite" '
+            f'path="{d}" begin="-0.15s" calcMode="linear"/>'
+            f'</circle>'
+        )
+
+    if title:
+        parts.append(f'<text x="{pad}" y="28" fill="#e6edf3" font-size="18">{_esc(title)}</text>')
+    if subtitle:
+        parts.append(f'<text x="{pad}" y="48" fill="#8b949e" font-size="12">{_esc(subtitle)}</text>')
+    parts.append(f'<text x="{size - pad}" y="{size - 16}" fill="#8b949e" '
+                 f'font-size="11" text-anchor="end">plane={plane}  animated (SMIL, no JS)</text>')
+    parts.append("</svg>")
+
+    svg = "\n".join(parts)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(svg)
+    return svg
