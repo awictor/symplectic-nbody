@@ -129,6 +129,7 @@ def main():
     import tidal_locking_demo
     import jeans_escape_demo
     import snow_line_demo
+    import poynting_robertson_demo
 
     import plot_orbits
 
@@ -227,6 +228,7 @@ def main():
     tidelock_txt = run("tidal_locking_demo", tidal_locking_demo.main, True)
     jeansesc_txt = run("jeans_escape_demo", jeans_escape_demo.main, True)
     snowline_txt = run("snow_line_demo", snow_line_demo.main, True)
+    prdrag_txt = run("poynting_robertson_demo", poynting_robertson_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -893,6 +895,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("snow_line.svg"), "the disk temperature profile with frost lines and planets")
             + f'<div class="card">{pre(snowline_txt)}</div>'
+            + '</div>'),
+        section(
+            "Poynting-Robertson drag",
+            "A dust grain re-radiates absorbed sunlight isotropically in its own "
+            "frame, but aberration turns that into a faint forward headwind in the "
+            "Sun's frame -- draining angular momentum so the grain spirals in. The "
+            "inspiral time goes as r^2 and grain size, so micron grains at 1 AU fall "
+            "in within a few thousand years; grains below the ~0.4 micron blow-out "
+            "size are unbound and ejected. The zodiacal dust must be resupplied.",
+            '<div class="grid">'
+            + svg_card(out("poynting_robertson.svg"), "inspiral time vs grain size, blow-out and solar age marked")
+            + f'<div class="card">{pre(prdrag_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

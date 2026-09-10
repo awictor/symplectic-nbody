@@ -87,6 +87,7 @@ ruins a long non-symplectic integration.
 | `src/tidal_locking.py` | Tidal locking timescale: why the Moon shows one face |
 | `src/jeans_escape.py` | Jeans escape: which gases a world keeps, which leak to space |
 | `src/snow_line.py` | The snow line: disk temperature & the rocky/icy divide at ~3 AU |
+| `src/poynting_robertson.py` | Poynting-Robertson drag: dust spiralling into the Sun |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -165,6 +166,7 @@ ruins a long non-symplectic integration.
 | `examples/tidal_locking_demo.py` | Locking times across the solar system + the a^6 curve |
 | `examples/jeans_escape_demo.py` | Gas-retention table + the escape-vs-thermal-speed shoreline |
 | `examples/snow_line_demo.py` | Disk T at each planet + the frost-line temperature profile |
+| `examples/poynting_robertson_demo.py` | Inspiral time vs grain size with blow-out & solar age |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1555,6 +1557,36 @@ CO2 near ~16 AU, CO out past ~190 AU -- sorting the disk by composition, and a b
 star pushes the whole pattern outward as `sqrt(L)`. The tests verify the ~280 K
 temperature at 1 AU, the `r^(-1/2)` profile, the ~3 AU water line, the frost-line ordering,
 and the `sqrt(L)` scaling.
+
+## Poynting-Robertson drag: dust spiralling into the Sun
+
+A dust grain absorbs radially-incoming sunlight and re-emits it isotropically in its own
+frame, but aberration makes those photons carry off a little forward momentum in the Sun's
+frame -- a headwind of the grain's own thermal radiation that drains orbital angular
+momentum. `poynting_robertson.py`:
+
+```
+$ python examples/poynting_robertson_demo.py examples/output
+
+    grain size     beta     fate / t_PR from 1 AU
+  ------------------------------------------------
+        0.1 um    1.914       blown out (unbound)
+        0.3 um    0.638       blown out (unbound)
+        0.5 um    0.383                  1,046 yr
+          1 um    0.191                  2,092 yr
+         10 um    0.019                 20,923 yr
+        100 um    0.002                209,231 yr
+          1 mm    0.000              2,092,311 yr
+```
+
+The size-dependent `beta = 3 L / (16 pi G M c rho s)` is the ratio of radiation pressure to
+gravity; grains with `beta > 1/2` (below ~0.4 micron here) are unbound the moment they are
+released and blown out as "beta meteoroids." Bound grains spiral in on `t_PR ~ r^2 s`, so
+micron dust at 1 AU is gone in a few thousand years -- thousands of times less than the age
+of the solar system. The zodiacal cloud therefore cannot be primordial; it must be
+continuously resupplied by comet trails and asteroid collisions. The tests verify the
+`beta ~ 1/s` law, the ~0.1-0.5 micron blow-out size, the `r^2` and `s` inspiral scalings,
+and the fast micron-grain infall.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

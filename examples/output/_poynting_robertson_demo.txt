@@ -1,0 +1,21 @@
+Poynting-Robertson drag: dust's own re-radiated light is a headwind
+
+  blow-out size (beta = 1/2): 0.38 micron (smaller grains are blown straight out)
+
+    grain size     beta     fate / t_PR from 1 AU
+  ------------------------------------------------
+        0.1 um    1.914       blown out (unbound)
+        0.3 um    0.638       blown out (unbound)
+        0.5 um    0.383                  1,046 yr
+          1 um    0.191                  2,092 yr
+         10 um    0.019                 20,923 yr
+        100 um    0.002                209,231 yr
+          1 mm    0.000              2,092,311 yr
+
+  Micron grains at 1 AU spiral into the Sun in a few thousand years --
+  thousands of times shorter than the solar system's age. So the
+  zodiacal dust cloud cannot be primordial; it is continuously
+  resupplied by comet trails and asteroid collisions. Grains below the
+  blow-out size never orbit at all -- they leave as beta meteoroids.
+
+  wrote examples/output\poynting_robertson.svg
