@@ -1,0 +1,21 @@
+Josephson junction: I = I_c sin(phi), f = 2eV/h = 483.6 GHz/mV
+
+  Josephson constant K_J = 2e/h = 4.8360e+14 Hz/V
+
+     voltage    Josephson freq
+       10 uV           4.84 GHz
+      100 uV          48.36 GHz
+     1000 uV         483.60 GHz
+
+  Shapiro steps under 70 GHz irradiation (the volt standard):
+    step  1:   144.75 uV
+    step  2:   289.50 uV
+    step  5:   723.74 uV
+    step 10:  1447.48 uV
+
+  A 1 uA junction has coupling energy E_J = 3.29e-22 J (496.7 GHz x h).
+  Cooper pairs tunnel the barrier with zero voltage (DC effect); a DC voltage makes
+  the phase wind and the current oscillate (AC effect). The exact V<->f link, tied
+  only to e and h, is how the volt is now defined and how quantum voltmeters work.
+
+  wrote examples/output\josephson.svg

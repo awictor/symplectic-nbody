@@ -185,6 +185,7 @@ ruins a long non-symplectic integration.
 | `src/moseley.py` | Moseley's law: K-alpha X-ray energy vs Z, elemental identification |
 | `src/stark.py` | Stark effect: linear/quadratic line shifts, field ionization of Rydberg atoms |
 | `src/aharonov_bohm.py` | Aharonov-Bohm phase, flux quantum, SQUID field sensitivity |
+| `src/josephson.py` | Josephson junction: DC/AC supercurrent, Shapiro steps, volt standard |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -361,6 +362,7 @@ ruins a long non-symplectic integration.
 | `examples/moseley_demo.py` | Per-element K-alpha table + the Moseley sqrt(f)-vs-Z line |
 | `examples/stark_demo.py` | Splitting/ionization table + the Stark fan & ionization-field figure |
 | `examples/aharonov_bohm_demo.py` | Flux/phase table + the fringe-shift & phase-winding figure |
+| `examples/josephson_demo.py` | V-f/Shapiro table + the I-phi sine & Shapiro-staircase figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4252,6 +4254,30 @@ superconducting ring and runs SQUID magnetometers: one flux quantum through a 1 
 needs only ~2 nT, letting them sense fields a billion times weaker than Earth's. The tests
 reproduce the `h/e` and `h/2e` quanta, the `2 pi`-per-quantum phase, the linear-in-flux phase,
 the periodic fringe shift, the Cooper-pair doubling, and the tiny per-quantum field.
+
+## The Josephson junction: a supercurrent that defines the volt
+
+Cooper pairs tunnel a barrier with no voltage, and the effect defines the volt.
+`josephson.py`:
+
+```
+$ python examples/josephson_demo.py examples/output
+
+  voltage   Josephson freq       Shapiro steps @ 70 GHz:
+  100 uV    48.36 GHz            step 1:  144.75 uV
+  1000 uV   483.60 GHz           step 2:  289.50 uV
+```
+
+The DC Josephson effect is a zero-voltage supercurrent `I = I_c sin(phi)` set only by the
+phase difference across the junction; the AC effect winds that phase under a DC voltage so the
+current oscillates at `f = 2eV/h = 483.6 GHz` per millivolt -- an exact voltage-to-frequency
+link through only `e` and `h`. Irradiate the junction and it locks onto quantized **Shapiro
+steps** `V_n = n h f/2e`, each an exact, constants-only voltage; this is how the SI volt is
+defined and how quantum voltmeters achieve parts-per-billion accuracy. The Josephson constant
+`K_J = 2e/h` and coupling energy `E_J = hbar I_c/2e` (the qubit/oscillator scale) round it out.
+The tests verify the `sin(phi)` current and its critical bound, the `K_J` constant, the
+483.6 GHz/mV conversion and its inverse, the evenly spaced Shapiro steps, the `2 pi f` phase
+rate, and the coupling energy.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

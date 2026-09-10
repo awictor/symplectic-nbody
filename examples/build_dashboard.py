@@ -227,6 +227,7 @@ def main():
     import moseley_demo
     import stark_demo
     import aharonov_bohm_demo
+    import josephson_demo
 
     import plot_orbits
 
@@ -423,6 +424,7 @@ def main():
     moseley_txt = run("moseley_demo", moseley_demo.main, True)
     stark_txt = run("stark_demo", stark_demo.main, True)
     aharonov_bohm_txt = run("aharonov_bohm_demo", aharonov_bohm_demo.main, True)
+    josephson_txt = run("josephson_demo", josephson_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2307,6 +2309,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("aharonov_bohm.svg"), "interference fringes sliding with enclosed flux, and the phase winding per flux quantum")
             + f'<div class="card">{pre(aharonov_bohm_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Josephson junction: a supercurrent that defines the volt",
+            "Cooper pairs tunnel through a thin barrier between superconductors with zero "
+            "voltage, a supercurrent I = I_c sin(phi) set only by the quantum phase difference "
+            "(DC effect). Apply a DC voltage and the phase winds, so the current oscillates at "
+            "the Josephson frequency f = 2eV/h = 483.6 GHz per millivolt -- an exact voltage-"
+            "to-frequency conversion through only e and h. Irradiating the junction locks it "
+            "onto quantized Shapiro voltage steps n h f/2e, which is how the SI volt is now "
+            "defined and how the most accurate voltmeters work.",
+            '<div class="grid">'
+            + svg_card(out("josephson.svg"), "the DC I = I_c sin(phi) supercurrent, and the irradiated I-V climbing in Shapiro steps")
+            + f'<div class="card">{pre(josephson_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
