@@ -1,0 +1,16 @@
+Shakura-Sunyaev disk: T(r) ~ r^(-3/4), L = eta Mdot c^2
+
+  radiative efficiency eta = 0.057 (vs ~0.007 for H fusion)
+
+              object    r_in (km)   peak T (K)     peak kT   L_Edd (Lsun)
+  -----------------------------------------------------------------------
+     stellar-mass BH         88.6     8.64e+06    0.74 keV       3.28e+05
+     supermassive BH  886237966.5     1.54e+05       13 eV       3.28e+12
+
+  The stellar-mass disk peaks around a keV -- soft X-rays, which is how
+  black-hole binaries are found. The billion-times-heavier supermassive
+  disk is a thousand times cooler at its edge (T_* ~ M^(-1/4)), peaking
+  in the ultraviolet: the 'big blue bump' of quasar spectra. Both convert
+  ~6% of infalling rest mass to light -- ~8x more than fusion manages.
+
+  wrote examples/output\accretion_disk.svg

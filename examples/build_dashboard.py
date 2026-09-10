@@ -131,6 +131,7 @@ def main():
     import snow_line_demo
     import poynting_robertson_demo
     import toomre_demo
+    import accretion_disk_demo
 
     import plot_orbits
 
@@ -231,6 +232,7 @@ def main():
     snowline_txt = run("snow_line_demo", snow_line_demo.main, True)
     prdrag_txt = run("poynting_robertson_demo", poynting_robertson_demo.main, True)
     toomre_txt = run("toomre_demo", toomre_demo.main, True)
+    accdisk_txt = run("accretion_disk_demo", accretion_disk_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -921,6 +923,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("toomre.svg"), "gas Q across the galactic disk with the unstable band shaded")
             + f'<div class="card">{pre(toomre_txt)}</div>'
+            + '</div>'),
+        section(
+            "Accretion disks: why black holes glow",
+            "Gas with angular momentum settles into a disk and spirals in only as "
+            "viscosity carries momentum outward, dissipating gravitational energy as "
+            "heat radiated as a blackbody. The Shakura-Sunyaev profile T ~ r^(-3/4) "
+            "makes the inner edge hottest: a 10-solar-mass hole peaks in soft X-rays "
+            "(~keV), a billion-solar-mass one in the UV (the quasar 'big blue bump'). "
+            "Both convert ~6% of rest mass to light -- ~8x fusion.",
+            '<div class="grid">'
+            + svg_card(out("accretion_disk.svg"), "T(r) for a stellar-mass and a supermassive disk, wavebands marked")
+            + f'<div class="card">{pre(accdisk_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

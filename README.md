@@ -89,6 +89,7 @@ ruins a long non-symplectic integration.
 | `src/snow_line.py` | The snow line: disk temperature & the rocky/icy divide at ~3 AU |
 | `src/poynting_robertson.py` | Poynting-Robertson drag: dust spiralling into the Sun |
 | `src/toomre.py` | Toomre Q: when a rotating disk fragments into clumps and arms |
+| `src/accretion_disk.py` | Shakura-Sunyaev disk: the X-ray/UV glow of accreting black holes |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -169,6 +170,7 @@ ruins a long non-symplectic integration.
 | `examples/snow_line_demo.py` | Disk T at each planet + the frost-line temperature profile |
 | `examples/poynting_robertson_demo.py` | Inspiral time vs grain size with blow-out & solar age |
 | `examples/toomre_demo.py` | Q across the galactic disk with the unstable band shaded |
+| `examples/accretion_disk_demo.py` | T(r) for stellar-mass vs supermassive disks + wavebands |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1619,6 +1621,32 @@ chance: a disk cooling toward `Q < 1` forms stars that heat it back up, so disks
 self-regulate to the stability line. The tests verify the marginally-stable solar
 neighbourhood, the stability verdict, the `c_s` and `Sigma` scalings, the critical
 dispersion at `Q = 1`, and the kpc-scale Toomre wavelength.
+
+## Accretion disks: why black holes glow in X-rays
+
+Gas carrying angular momentum cannot fall straight in -- it forms a disk and spirals inward
+only as viscosity ferries momentum outward, dissipating gravitational energy as heat that
+each ring radiates as a blackbody. `accretion_disk.py`:
+
+```
+$ python examples/accretion_disk_demo.py examples/output
+
+              object    r_in (km)   peak T (K)     peak kT   L_Edd (Lsun)
+  -----------------------------------------------------------------------
+     stellar-mass BH         88.6     8.64e+06    0.74 keV       3.28e+05
+     supermassive BH  886237966.5     1.54e+05       13 eV       3.28e+12
+```
+
+The Shakura-Sunyaev profile `T ~ r^(-3/4)` makes the inner edge (the ISCO at 3 Schwarzschild
+radii) hottest, and because the characteristic scale goes as `M^(-1/4)` a heavier hole runs
+a cooler disk: a 10-solar-mass black hole peaks around a keV in soft X-rays (how X-ray
+binaries are found) while a billion-solar-mass one peaks in the ultraviolet -- the quasar
+"big blue bump." Both cap out at the Eddington luminosity `L_Edd = 4 pi G M m_p c / sigma_T`
+and convert `eta ~ 6%` of infalling rest mass to light via `L = eta Mdot c^2`, about eight
+times more efficient than hydrogen fusion, which is why accreting black holes are the
+brightest steady engines in the universe. The tests verify the ISCO radius, the `r^(-3/4)`
+profile vanishing at the inner edge, the X-ray-hot stellar disk and UV quasar disk, the
+Eddington scaling, and the efficiency advantage over fusion.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
