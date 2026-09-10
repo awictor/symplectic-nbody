@@ -169,6 +169,7 @@ ruins a long non-symplectic integration.
 | `src/kutta_joukowski.py` | Kutta-Joukowski lift: circulation, 2 pi lift-slope, Magnus force, induced drag |
 | `src/knudsen.py` | Knudsen number: mean free path, flow regimes, continuum-to-free-molecular |
 | `src/richardson.py` | Richardson number: stratified-shear stability, Kelvin-Helmholtz onset |
+| `src/kolmogorov.py` | Kolmogorov cascade: -5/3 spectrum, dissipation microscales, Re^(3/4) range |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -329,6 +330,7 @@ ruins a long non-symplectic integration.
 | `examples/kutta_joukowski_demo.py` | Lift/Magnus tables + the lift-slope & induced-drag figure |
 | `examples/knudsen_demo.py` | Per-system regime table + the size-pressure regime map |
 | `examples/richardson_demo.py` | Per-layer stability table + the Ri map & KH-billow sketch |
+| `examples/kolmogorov_demo.py` | Per-flow microscale table + the -5/3 energy-spectrum figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3849,6 +3851,29 @@ in cloud edges and river surfaces. It sets clear-air turbulence that jolts aircr
 fog top; the bulk form `Ri_b = g (drho/rho) L/U^2` is the finite-difference version. The tests
 verify the `N^2`/shear ratio, the `1/4` threshold, the bulk-Ri density/velocity trends, the
 critical shear that brings `Ri` to `1/4`, and the stratification sign from a density gradient.
+
+## The Kolmogorov cascade: turbulence shredding into heat
+
+Turbulence carries energy down a cascade of ever-smaller eddies. `kolmogorov.py`:
+
+```
+$ python examples/kolmogorov_demo.py examples/output
+
+  flow               Re       eta        tau_eta    L/eta
+  stirred coffee     5e3      0.084 mm   7.1e-3 s   5.9e2
+  atmosphere (km)    6.7e8    0.241 mm   3.9e-3 s   4.1e6
+```
+
+Big eddies break into smaller ones until viscosity smears the smallest into heat. In the
+inertial range between, the statistics depend only on the dissipation rate `epsilon`, giving
+Kolmogorov's spectrum `E(k) = C epsilon^(2/3) k^(-5/3)` -- the -5/3 law measured everywhere
+from wind tunnels to the ocean to interstellar gas. The cascade ends at the Kolmogorov scale
+`eta = (nu^3/epsilon)^(1/4)`, where the eddy Reynolds number drops to 1 (with time
+`(nu/epsilon)^(1/2)` and velocity `(nu epsilon)^(1/4)`), and the span `L/eta ~ Re^(3/4)` sets
+why a weather-scale flow holds millions of eddy sizes and costs `~Re^(9/4)` grid points to
+simulate in 3-D. The tests verify `epsilon = u^3/L`, the microscales and their unit eddy
+Reynolds number, the -5/3 spectral slope, the `l^(2/3)` eddy-turnover scaling, and the
+`Re^(3/4)` scale separation.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -211,6 +211,7 @@ def main():
     import kutta_joukowski_demo
     import knudsen_demo
     import richardson_demo
+    import kolmogorov_demo
 
     import plot_orbits
 
@@ -391,6 +392,7 @@ def main():
     kutta_joukowski_txt = run("kutta_joukowski_demo", kutta_joukowski_demo.main, True)
     knudsen_txt = run("knudsen_demo", knudsen_demo.main, True)
     richardson_txt = run("richardson_demo", richardson_demo.main, True)
+    kolmogorov_txt = run("kolmogorov_demo", kolmogorov_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2065,6 +2067,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("richardson.svg"), "stability map over stratification and shear with the Ri=1/4 threshold and KH billows")
             + f'<div class="card">{pre(richardson_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Kolmogorov cascade: turbulence shredding into heat",
+            "Turbulence hands energy down a cascade: big eddies break into smaller ones until "
+            "viscosity smears the tiniest into heat. In the inertial range between, statistics "
+            "depend only on the dissipation rate epsilon, giving Kolmogorov's E(k) ~ "
+            "epsilon^(2/3) k^(-5/3) -- the -5/3 law seen from wind tunnels to interstellar gas. "
+            "The cascade ends at the Kolmogorov scale eta = (nu^3/epsilon)^(1/4), where the "
+            "eddy Reynolds number is 1, and the span L/eta ~ Re^(3/4) makes turbulence cost "
+            "~Re^(9/4) grid points to simulate in 3-D.",
+            '<div class="grid">'
+            + svg_card(out("kolmogorov.svg"), "the E(k) spectrum with its -5/3 inertial range between injection and dissipation")
+            + f'<div class="card">{pre(kolmogorov_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

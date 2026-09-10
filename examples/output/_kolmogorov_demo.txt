@@ -1,0 +1,15 @@
+Kolmogorov cascade: big eddies -> small eddies -> heat, E(k) ~ k^(-5/3)
+
+  flow                            Re         eta    tau_eta     L/eta
+  stirred coffee             5.0e+03     0.084mm  7.07e-03s   5.9e+02
+  room air current           1.0e+05     0.533mm  1.90e-02s   5.6e+03
+  river reach                1.0e+07     0.056mm  3.16e-03s   1.8e+05
+  atmosphere (km)            6.7e+08     0.241mm  3.87e-03s   4.1e+06
+
+  Energy is fed in at the large scale, cascades untouched through the inertial
+  range as E(k) ~ k^(-5/3), and is dissipated only at the Kolmogorov scale eta
+  where the eddy Reynolds number drops to 1. The range widens as Re^(3/4), so a
+  weather-scale flow spans millions of eddy sizes -- why turbulence is so costly
+  to simulate (~Re^(9/4) grid points in 3-D).
+
+  wrote examples/output\kolmogorov.svg
