@@ -132,11 +132,11 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.08       12.29      0.7x
-   400          36.66       37.87      1.0x
-   800         145.03      112.89      1.3x
-  1600         614.31      391.82      1.6x
-  3200        2679.46     1062.57      2.5x
+   200           9.10       12.07      0.8x
+   400          36.86       37.49      1.0x
+   800         142.95      110.34      1.3x
+  1600         610.04      385.99      1.6x
+  3200        2681.11     1048.54      2.6x
 
 empirical scaling exponent  direct ~ N^2.05   barnes-hut ~ N^1.62
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
@@ -3272,6 +3272,40 @@ wrote examples/output\poincare_section.svg</pre></div></div>
   entering the accelerating dark-energy era.
 
   wrote examples/output\friedmann.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Hawking radiation &amp; black-hole thermodynamics</h2>
+    <p class="blurb">Quantum effects at the horizon give a black hole a temperature T ~ 1/M and an entropy = 1/4 its area in Planck units. Big holes are colder and live longer (t_evap ~ M^3); a ~1.7e11 kg primordial hole evaporates in a Hubble time, while a solar-mass one is ~60 nK and eternal.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<line x1="64" y1="656" x2="656" y2="656" stroke="#30363d"/>
+<line x1="64" y1="64" x2="64" y2="656" stroke="#30363d"/>
+<polyline points="64.0,483.3 73.3,486.0 82.5,488.7 91.7,491.4 101.0,494.1 110.2,496.8 119.5,499.5 128.8,502.2 138.0,504.9 147.2,507.6 156.5,510.3 165.8,513.0 175.0,515.7 184.2,518.4 193.5,521.1 202.8,523.8 212.0,526.4 221.2,529.1 230.5,531.8 239.8,534.5 249.0,537.2 258.2,539.9 267.5,542.6 276.8,545.3 286.0,548.0 295.2,550.7 304.5,553.4 313.8,556.1 323.0,558.8 332.3,561.5 341.5,564.2 350.7,566.9 360.0,569.6 369.3,572.3 378.5,575.0 387.8,577.7 397.0,580.4 406.2,583.1 415.5,585.8 424.8,588.5 434.0,591.2 443.2,593.9 452.5,596.6 461.7,599.3 471.0,602.0 480.2,604.7 489.5,607.4 498.8,610.1 508.0,612.8 517.2,615.5 526.5,618.2 535.8,620.9 545.0,623.6 554.2,626.3 563.5,629.0 572.8,631.7 582.0,634.4 591.2,637.1 600.5,639.8 609.8,642.5 619.0,645.2 628.3,647.9 637.5,650.6 646.8,653.3 656.0,656.0" fill="none" stroke="#ff006e" stroke-width="2"/>
+<polyline points="64.0,582.2 73.3,574.1 82.5,566.0 91.7,557.9 101.0,549.8 110.2,541.7 119.5,533.6 128.8,525.5 138.0,517.4 147.2,509.3 156.5,501.2 165.8,493.1 175.0,485.0 184.2,476.9 193.5,468.8 202.8,460.7 212.0,452.7 221.2,444.6 230.5,436.5 239.8,428.4 249.0,420.3 258.2,412.2 267.5,404.1 276.8,396.0 286.0,387.9 295.2,379.8 304.5,371.7 313.8,363.6 323.0,355.5 332.3,347.4 341.5,339.3 350.7,331.2 360.0,323.1 369.3,315.0 378.5,306.9 387.8,298.8 397.0,290.7 406.2,282.6 415.5,274.5 424.8,266.4 434.0,258.3 443.2,250.2 452.5,242.1 461.7,234.0 471.0,225.9 480.2,217.8 489.5,209.7 498.8,201.6 508.0,193.6 517.2,185.5 526.5,177.4 535.8,169.3 545.0,161.2 554.2,153.1 563.5,145.0 572.8,136.9 582.0,128.8 591.2,120.7 600.5,112.6 609.8,104.5 619.0,96.4 628.3,88.3 637.5,80.2 646.8,72.1 656.0,64.0" fill="none" stroke="#4cc9f0" stroke-width="2"/>
+<line x1="579.7" y1="64" x2="579.7" y2="656" stroke="#e9c46a" stroke-dasharray="4,4"/>
+<text x="585.7" y="78" fill="#e9c46a" font-size="11">1 M_sun</text>
+<text x="64" y="34" fill="#e6edf3" font-size="18">Black-hole thermodynamics vs mass (log-log)</text>
+<text x="78" y="72" fill="#ff006e" font-size="12">log T (K): colder for bigger holes</text>
+<text x="78" y="90" fill="#4cc9f0" font-size="12">log t_evap (yr): longer for bigger holes</text>
+<text x="656" y="678" fill="#8b949e" font-size="11" text-anchor="end">log10 mass (kg) -&gt;</text>
+</svg><figcaption>temperature and evaporation time vs black-hole mass</figcaption></figure><div class="card"><pre>Hawking radiation: black holes are not black
+
+  primordial mass evaporating in a Hubble time: 1.73e+11 kg
+    (about the mass of a large asteroid, in a horizon ~1e-16 m across)
+
+  object                       T (K)   t_evap (yr)       S/k_B
+  ------------------------------------------------------------
+  primordial (now)          7.09e+11      1.38e+10    7.94e+38
+  1 solar mass              6.17e-08      2.10e+67    1.05e+77
+  Sgr A* (4e6 Msun)         1.54e-14      1.34e+87    1.68e+90
+  M87* (6.5e9 Msun)         9.49e-18      5.76e+96    4.43e+96
+
+  Bigger holes are COLDER and live longer (T ~ 1/M, t_evap ~ M^3).
+  A stellar black hole is nanokelvin-cold and effectively eternal;
+  its entropy exceeds that of everything else in the observable universe.
+
+  wrote examples/output\hawking.svg</pre></div></div>
   </section>
 
   <section>

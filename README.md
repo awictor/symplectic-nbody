@@ -82,6 +82,7 @@ ruins a long non-symplectic integration.
 | `src/rotation_curve.py` | Galaxy rotation curves: Keplerian disk vs flat dark-halo curve |
 | `src/schwarzschild.py` | Black-hole orbits: effective potential, ISCO, photon sphere, plunge |
 | `src/kerr.py` | Rotating black holes: horizons, ergosphere, spin-dependent ISCO |
+| `src/hawking.py` | Black-hole thermodynamics: Hawking temperature, entropy, evaporation |
 | `src/friedmann.py` | Friedmann cosmology: scale factor a(t), expansion eras, age of the universe |
 | `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
 | `src/distances.py` | Cosmological distances: luminosity/angular-diameter, cosmic acceleration |
@@ -118,6 +119,7 @@ ruins a long non-symplectic integration.
 | `examples/rotation_curve_demo.py` | Visible (declining) vs disk+halo (flat) rotation curves |
 | `examples/schwarzschild_demo.py` | Precessing & plunging black-hole orbits with ISCO/photon sphere |
 | `examples/kerr_demo.py` | ISCO-vs-spin curves + horizon/ergosphere diagram |
+| `examples/hawking_demo.py` | Temperature & evaporation time across black-hole masses |
 | `examples/friedmann_demo.py` | Scale-factor curves for radiation/matter/dark-energy/LCDM |
 | `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
 | `examples/distances_demo.py` | Hubble diagram (LCDM vs decelerating) + D_A turnover |
@@ -421,6 +423,27 @@ through radiation, matter, and dark-energy eras with distinct power laws. The
 age comes out as a look-back integral to `~0.96/H0`, the measured ~13.8 Gyr. The
 tests verify each era's exponent, the exponential dark-energy growth, and the
 LCDM age.
+
+## Hawking radiation: black holes are not black
+
+Quantum effects at the horizon give a black hole a temperature and an entropy.
+`hawking.py` computes both from fundamental constants:
+
+```
+$ python examples/hawking_demo.py examples/output
+
+  primordial mass evaporating in a Hubble time: 1.73e11 kg
+  object                       T (K)   t_evap (yr)       S/k_B
+  1 solar mass              6.17e-08      2.10e+67    1.05e+77
+  M87* (6.5e9 Msun)         9.49e-18      5.76e+96    4.43e+96
+```
+
+`T_H ~ 1/M` (big holes are colder), the Bekenstein-Hawking entropy is one
+quarter of the horizon area in Planck units, and the evaporation time scales as
+`M^3`. A solar-mass hole is ~60 nanokelvin and lives ~10^67 years -- effectively
+eternal -- while a ~1.7e11 kg primordial hole is ending its life in a burst right
+now. The tests verify the `1/M` temperature, the `M^3` lifetime, the primordial
+mass, and the quarter-area entropy law.
 
 ## Kerr black holes: spin drags spacetime
 

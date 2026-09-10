@@ -1,0 +1,17 @@
+Hawking radiation: black holes are not black
+
+  primordial mass evaporating in a Hubble time: 1.73e+11 kg
+    (about the mass of a large asteroid, in a horizon ~1e-16 m across)
+
+  object                       T (K)   t_evap (yr)       S/k_B
+  ------------------------------------------------------------
+  primordial (now)          7.09e+11      1.38e+10    7.94e+38
+  1 solar mass              6.17e-08      2.10e+67    1.05e+77
+  Sgr A* (4e6 Msun)         1.54e-14      1.34e+87    1.68e+90
+  M87* (6.5e9 Msun)         9.49e-18      5.76e+96    4.43e+96
+
+  Bigger holes are COLDER and live longer (T ~ 1/M, t_evap ~ M^3).
+  A stellar black hole is nanokelvin-cold and effectively eternal;
+  its entropy exceeds that of everything else in the observable universe.
+
+  wrote examples/output\hawking.svg

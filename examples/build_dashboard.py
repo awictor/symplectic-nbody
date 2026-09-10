@@ -87,6 +87,7 @@ def main():
     import jeans_demo
     import sedov_demo
     import kerr_demo
+    import hawking_demo
 
     import plot_orbits
 
@@ -143,6 +144,7 @@ def main():
     jeans_txt = run("jeans_demo", jeans_demo.main, True)
     sedov_txt = run("sedov_demo", sedov_demo.main, True)
     kerr_txt = run("kerr_demo", kerr_demo.main, True)
+    hawking_txt = run("hawking_demo", hawking_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -314,6 +316,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("friedmann.svg"), "scale factor for radiation, matter, dark energy, LCDM")
             + f'<div class="card">{pre(friedmann_txt)}</div>'
+            + '</div>'),
+        section(
+            "Hawking radiation & black-hole thermodynamics",
+            "Quantum effects at the horizon give a black hole a temperature "
+            "T ~ 1/M and an entropy = 1/4 its area in Planck units. Big holes are "
+            "colder and live longer (t_evap ~ M^3); a ~1.7e11 kg primordial hole "
+            "evaporates in a Hubble time, while a solar-mass one is ~60 nK and eternal.",
+            '<div class="grid">'
+            + svg_card(out("hawking.svg"), "temperature and evaporation time vs black-hole mass")
+            + f'<div class="card">{pre(hawking_txt)}</div>'
             + '</div>'),
         section(
             "Kerr black holes: spin & frame-dragging",
