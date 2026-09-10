@@ -183,6 +183,7 @@ def main():
     import debye_heat_demo
     import carnot_demo
     import adiabatic_demo
+    import van_der_waals_demo
 
     import plot_orbits
 
@@ -335,6 +336,7 @@ def main():
     debye_txt = run("debye_heat_demo", debye_heat_demo.main, True)
     carnot_txt = run("carnot_demo", carnot_demo.main, True)
     adiab_txt = run("adiabatic_demo", adiabatic_demo.main, True)
+    vdw_txt = run("van_der_waals_demo", van_der_waals_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1646,6 +1648,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("adiabatic.svg"), "an adiabat steeper than the isotherm through the same point")
             + f'<div class="card">{pre(adiab_txt)}</div>'
+            + '</div>'),
+        section(
+            "The van der Waals gas",
+            "Give the ideal gas molecules a finite size (b) and mutual attraction (a) "
+            "and it can condense: (P + a n^2/V^2)(V - nb) = nRT. Below the critical "
+            "temperature the isotherm develops an unstable loop where gas turns to "
+            "liquid. The critical constants follow from a and b alone -- CO2's 304 K, "
+            "7.4 MPa -- and the compressibility Pc Vc / R Tc = 3/8 is universal, the law "
+            "of corresponding states.",
+            '<div class="grid">'
+            + svg_card(out("van_der_waals.svg"), "reduced isotherms with the sub-critical condensation loop")
+            + f'<div class="card">{pre(vdw_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

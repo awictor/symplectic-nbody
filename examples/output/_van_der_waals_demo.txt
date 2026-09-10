@@ -1,0 +1,15 @@
+Van der Waals: (P + a n^2/V^2)(V - nb) = nRT -- a gas that can condense
+
+         gas   T_c (K)   P_c (MPa)   Pc Vc / R Tc
+  ------------------------------------------------
+      helium       5.2        0.23         0.3750
+         CO2     304.0        7.40         0.3750
+       water     647.0       22.06         0.3750
+
+  The finite-size (b) and attraction (a) terms give the ideal gas something
+  it lacks: a liquid-vapour transition. Above T_c the isotherm is smooth, but
+  below it a wiggle appears -- pressure would rise with volume, which is
+  unstable, so the gas condenses across it. At the critical point that wiggle
+  is an inflection, and Pc Vc / R Tc = 3/8 for EVERY van der Waals gas.
+
+  wrote examples/output\van_der_waals.svg

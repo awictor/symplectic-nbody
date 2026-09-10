@@ -141,6 +141,7 @@ ruins a long non-symplectic integration.
 | `src/debye_heat.py` | Debye specific heat: the T^3 law & the Dulong-Petit plateau |
 | `src/carnot.py` | The Carnot cycle: the efficiency limit & heat-pump COP |
 | `src/adiabatic.py` | Adiabatic processes: PV^gamma, compression heating & the speed of sound |
+| `src/van_der_waals.py` | The van der Waals gas: real-gas EOS, critical point & corresponding states |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -273,6 +274,7 @@ ruins a long non-symplectic integration.
 | `examples/debye_heat_demo.py` | C_V per material + the universal C_V/3R vs T/Theta_D curve |
 | `examples/carnot_demo.py` | Engine efficiencies & COP + the efficiency-vs-temperature-ratio curve |
 | `examples/adiabatic_demo.py` | Compression temperatures + the adiabat-vs-isotherm P-V diagram |
+| `examples/van_der_waals_demo.py` | Critical constants per gas + the reduced isotherms with the loop |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3112,6 +3114,31 @@ sound is `c = sqrt(gamma R T / M)` -- Laplace's `sqrt(gamma)` factor that fixed 
 error (343 vs 290 m/s). The tests verify the ~343 m/s air sound speed, the Laplace-over-Newton
 ratio, diesel-compression ignition, the `PV^gamma` and `TV^(gamma-1)` invariants, the P/V
 temperature consistency, and the positive expansion work.
+
+## The van der Waals gas: a real gas that condenses
+
+Give the ideal gas molecules a finite size and mutual attraction and it can condense.
+`van_der_waals.py`:
+
+```
+$ python examples/van_der_waals_demo.py examples/output
+
+         gas   T_c (K)   P_c (MPa)   Pc Vc / R Tc
+  ------------------------------------------------
+      helium       5.2        0.23         0.3750
+         CO2     304.0        7.40         0.3750
+       water     647.0       22.06         0.3750
+```
+
+The correction `(P + a n^2/V^2)(V - nb) = nRT` -- attraction `a` lowering the pressure, size
+`b` shrinking the volume -- gives the gas a liquid-vapour transition the ideal law can never
+have. Below the critical temperature the isotherm develops an unstable loop where pressure
+would rise with volume, and the gas condenses across it. The critical constants follow from
+`a` and `b` alone (`T_c = 8a/27Rb`, `P_c = a/27b^2`, `V_c = 3nb`), reproducing CO2's 304 K and
+water's 647 K, and the compressibility `Pc Vc / R Tc = 3/8` is universal -- the law of
+corresponding states, under which every gas collapses onto one reduced curve. The tests verify
+CO2's critical temperature and pressure, the universal 3/8 compressibility, the ideal-gas
+large-volume limit, attraction lowering Z, and the reduced critical point.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
