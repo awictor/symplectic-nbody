@@ -1,0 +1,15 @@
+Perihelion precession of Mercury (1PN general relativity)
+
+  analytic advance at the real speed of light: 42.98 arcsec/century
+  observed / GR-predicted value:               ~43 arcsec/century
+
+numeric integration reproduces the closed form 6*pi*GM/(c^2 a(1-e^2)):
+    c factor   numeric/orbit  analytic/orbit    ratio
+  ---------------------------------------------------
+  c/300         4.514734e-02    4.517161e-02   0.9995
+  c/400         8.019446e-02    8.030509e-02   0.9986
+  c/600         1.798247e-01    1.806865e-01   0.9952
+
+wrote examples/output\precession_rosette.svg
+At the true speed of light the same rotation is a mere 43 arcsec/century --
+undetectable in one orbit, unmistakable over a century of Mercury's.

@@ -1,0 +1,11 @@
+Two-galaxy encounter: 1002 bodies, Barnes-Hut forces
+
+  wrote examples/output\galaxy_t0.svg  (t=0.0)
+  wrote examples/output\galaxy_t1.svg  (t=4.0)
+  wrote examples/output\galaxy_t2.svg  (t=8.0)
+  wrote examples/output\galaxy_t3.svg  (t=12.0)
+  wrote examples/output\galaxy_t4.svg  (t=16.0)
+
+487 tracer particles pulled into tidal bridges/tails.
+Same physics as the Antennae and the Mice: differential gravity
+stretches a cold disk into long tails during a close passage.

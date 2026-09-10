@@ -72,62 +72,45 @@ def main():
     import sitnikov_demo
     import virial_demo
 
-    # make sure all SVGs exist
     import plot_orbits
-    plot_orbits.main.__globals__  # noqa: silence linter
-    _old_argv = sys.argv
-    sys.argv = ["plot_orbits", outdir]
-    plot_orbits.main()
-    sys.argv = ["lagrange_demo", outdir]
-    lagrange_demo.main()
-    sys.argv = ["solar_system_demo", outdir]
-    solar_system_demo.main()
-    sys.argv = ["precession_demo", outdir]
-    precession_demo.main()
-    sys.argv = ["chaos_demo", outdir]
-    chaos_demo.main()
-    sys.argv = ["poincare_demo", outdir]
-    poincare_demo.main()
-    sys.argv = ["galaxy_collision_demo", outdir]
-    galaxy_collision_demo.main()
-    sys.argv = ["gravwave_demo", outdir]
-    gravwave_demo.main()
-    sys.argv = ["circularization_demo", outdir]
-    circularization_demo.main()
-    sys.argv = ["sitnikov_demo", outdir]
-    sitnikov_demo.main()
-    sys.argv = ["virial_demo", outdir]
-    virial_demo.main()
-    sys.argv = _old_argv
 
-    print("capturing demo outputs...")
-    energy_txt = capture(energy_drift_demo.main)
-    conv_txt = capture(convergence_demo.main)
-    adapt_txt = capture(adaptive_demo.main)
-    sys.argv = ["lagrange_demo", outdir]
-    lagr_txt = capture(lagrange_demo.main)
-    sys.argv = ["solar_system_demo", outdir]
-    solar_txt = capture(solar_system_demo.main)
-    sys.argv = ["precession_demo", outdir]
-    prec_txt = capture(precession_demo.main)
-    sys.argv = ["chaos_demo", outdir]
-    chaos_txt = capture(chaos_demo.main)
-    sys.argv = ["poincare_demo", outdir]
-    poincare_txt = capture(poincare_demo.main)
-    sys.argv = ["galaxy_collision_demo", outdir]
-    galaxy_txt = capture(galaxy_collision_demo.main)
-    sys.argv = ["gravwave_demo", outdir]
-    gw_txt = capture(gravwave_demo.main)
-    sys.argv = ["circularization_demo", outdir]
-    circ_txt = capture(circularization_demo.main)
-    sys.argv = ["sitnikov_demo", outdir]
-    sitnikov_txt = capture(sitnikov_demo.main)
-    sys.argv = ["virial_demo", outdir]
-    virial_txt = capture(virial_demo.main)
-    sys.argv = _old_argv
-    hermite_txt = capture(hermite_demo.main)
-    # scaling benchmark is slow; run a lighter inline version
-    scale_txt = capture(scaling_benchmark.main)
+    fast = "--fast" in sys.argv
+    _old_argv = sys.argv
+
+    # Each demo runs ONCE. Demos that render SVGs take an output dir via argv and
+    # write their figures as a side effect of the same call we capture text from.
+    # Captured text is cached to <name>.txt so a --fast rebuild can reuse it and
+    # skip the (sometimes minute-long) simulation entirely.
+    def run(name, fn, needs_dir):
+        cache = os.path.join(outdir, f"_{name}.txt")
+        if fast and os.path.exists(cache):
+            with open(cache, encoding="utf-8") as f:
+                return f.read()
+        if needs_dir:
+            sys.argv = [name, outdir]
+        txt = capture(fn)
+        sys.argv = _old_argv
+        with open(cache, "w", encoding="utf-8") as f:
+            f.write(txt)
+        return txt
+
+    print("fast rebuild (cached)" if fast else "running demos...")
+    energy_txt = run("energy_drift_demo", energy_drift_demo.main, False)
+    conv_txt = run("convergence_demo", convergence_demo.main, False)
+    adapt_txt = run("adaptive_demo", adaptive_demo.main, False)
+    hermite_txt = run("hermite_demo", hermite_demo.main, False)
+    scale_txt = run("scaling_benchmark", scaling_benchmark.main, False)
+    run("plot_orbits", plot_orbits.main, True)  # SVGs only, no text card
+    lagr_txt = run("lagrange_demo", lagrange_demo.main, True)
+    solar_txt = run("solar_system_demo", solar_system_demo.main, True)
+    prec_txt = run("precession_demo", precession_demo.main, True)
+    chaos_txt = run("chaos_demo", chaos_demo.main, True)
+    poincare_txt = run("poincare_demo", poincare_demo.main, True)
+    galaxy_txt = run("galaxy_collision_demo", galaxy_collision_demo.main, True)
+    gw_txt = run("gravwave_demo", gravwave_demo.main, True)
+    circ_txt = run("circularization_demo", circularization_demo.main, True)
+    sitnikov_txt = run("sitnikov_demo", sitnikov_demo.main, True)
+    virial_txt = run("virial_demo", virial_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)

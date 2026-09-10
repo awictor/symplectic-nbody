@@ -1,0 +1,12 @@
+Chaos in the three-body problem: the largest Lyapunov exponent
+
+  pythagorean 3-body : lambda = 0.523   Lyapunov time ~ 1.9 time units
+  regular two-body   : lambda = 0.035   (decays toward 0 with T)
+
+  => the chaotic system's exponent is 15x larger.
+
+separation of two trajectories started 1e-9 apart (log scale):
+           ..::::----------------===============+=======++++++++++++************************************#################@
+  grew from 1e-9 to ~1.3e-03 -- 6 orders of magnitude. That's why the long-term 3-body problem is unpredictable.
+
+wrote examples/output\chaos_divergence.svg

@@ -322,6 +322,17 @@ no build step. Open it in a browser or point GitHub Pages at `examples/output/`.
 It's the whole library on one page: energy conservation, convergence order,
 adaptive stepping, Barnes-Hut scaling, the orbit gallery, and the Lagrange points.
 
+A full build re-runs every simulation (~4 min, several are O(N^2)). Each demo's
+text output is cached to `examples/output/_<name>.txt`, so a rebuild that only
+touched the page layout can reuse them:
+
+```
+python examples/build_dashboard.py examples/output --fast   # ~0.1s, uses caches
+```
+
+`--fast` reuses the cached text and the already-rendered SVGs and just
+re-assembles the HTML. Delete a `_<name>.txt` to force that one demo to re-run.
+
 ## Lagrange points: where spacecraft park
 
 Move to the frame co-rotating with two orbiting primaries and five equilibrium

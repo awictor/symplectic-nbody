@@ -1,0 +1,10 @@
+Eccentric two-body (e=0.7), dt=0.01, 40k steps, G=1
+
+method        max |dE/E|      net dE/E        drift shape
+------------------------------------------------------------------------
+verlet        4.916e-03       -1.112e-07       # @ # # * * + = = - : : . . .                               
+forest_ruth   1.080e-05       1.114e-11        # @ # # * * + + = - - : : : . . . .                         
+rk4           1.379e-04       1.379e-04               ........:::::::-------========++++++++*******#######@
+
+Symplectic methods (verlet, forest_ruth) oscillate around 0.
+RK4's error walks off in one direction -- that's secular energy drift.

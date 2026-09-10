@@ -1,0 +1,18 @@
+Solar system in AU / years / solar masses (G = 4*pi^2)
+
+planet      a [AU]  T measured   T Kepler    T real   T^2/a^3
+-------------------------------------------------------------
+Mercury      0.387      0.2410     0.2408    0.2408    1.0010
+Venus        0.723      0.6155     0.6152    0.6152    1.0010
+Earth        1.000      1.0005     1.0000    1.0000    1.0010
+Mars         1.524      1.8817     1.8808    1.8808    1.0010
+Jupiter      5.204     11.9080    11.8724   11.8620    1.0060
+Saturn       9.582     29.6906    29.6610   29.4570    1.0020
+Uranus      19.189     84.1010    84.0589   84.0210    1.0010
+Neptune     30.070    164.9740   164.8916  164.7900    1.0010
+
+T^2/a^3 is constant across all planets -- that constant is 1 in these
+units, which IS Kepler's third law. It falls straight out of Newtonian
+gravity + a symplectic integrator, no fitting.
+
+wrote examples/output\inner_planets.svg

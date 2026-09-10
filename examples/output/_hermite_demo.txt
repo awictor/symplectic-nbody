@@ -1,0 +1,11 @@
+Accuracy vs force-evaluation budget (exact Kepler orbit, e=0.5)
+
+method           steps   f-evals     end error   order
+------------------------------------------------------
+rk4               6000     24000     4.230e-12    4.10
+forest_ruth       8000     24000     1.242e-11    4.00
+hermite          24000     24000     1.964e-13    4.01
+
+All three are 4th order, but for the SAME force-evaluation budget
+Hermite takes 4x as many steps as RK4 (1 call/step vs 4), so it reaches
+a much smaller error. That efficiency is why Hermite runs star clusters.

@@ -2,32 +2,37 @@
 
 import os
 import sys
-import tempfile
 
 HERE = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(HERE, "..", "src"))
 sys.path.insert(0, os.path.join(HERE, "..", "examples"))
 
 
+OUTDIR = os.path.join(HERE, "..", "examples", "output")
+
+
 def test_dashboard_builds():
+    # Rebuild in --fast mode against the committed output dir: reuses the cached
+    # demo text and pre-rendered SVGs so the smoke test is instant. It checks the
+    # generator's HTML assembly (structure, substitution), not the physics --
+    # each demo's own test suite covers correctness.
     import build_dashboard
-    with tempfile.TemporaryDirectory() as d:
-        argv = sys.argv
-        sys.argv = ["build_dashboard", d]
-        try:
-            build_dashboard.main()
-        finally:
-            sys.argv = argv
-        index = os.path.join(d, "index.html")
-        assert os.path.exists(index)
-        html = open(index, encoding="utf-8").read()
-        assert html.startswith("<!DOCTYPE html>")
-        assert "</html>" in html
-        assert html.count("<section>") == 17
-        assert "<svg" in html  # at least one figure inlined
-        low = html.lower()
-        # the placeholder must be fully substituted
-        assert "{{sections}}" not in low
+    argv = sys.argv
+    sys.argv = ["build_dashboard", OUTDIR, "--fast"]
+    try:
+        build_dashboard.main()
+    finally:
+        sys.argv = argv
+    index = os.path.join(OUTDIR, "index.html")
+    assert os.path.exists(index)
+    html = open(index, encoding="utf-8").read()
+    assert html.startswith("<!DOCTYPE html>")
+    assert "</html>" in html
+    assert html.count("<section>") == 17
+    assert "<svg" in html  # at least one figure inlined
+    low = html.lower()
+    # the placeholder must be fully substituted
+    assert "{{sections}}" not in low
 
 
 if __name__ == "__main__":

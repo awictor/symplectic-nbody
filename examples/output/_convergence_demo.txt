@@ -1,0 +1,31 @@
+Convergence to the exact Kepler orbit (e=0.5, one period, G=1)
+error = max position error at t=T vs analytic solution
+
+verlet:
+    steps         error    ratio   order
+      500     4.500e-04       --      --
+     1000     1.125e-04     4.00    2.00
+     2000     2.813e-05     4.00    2.00
+     4000     7.034e-06     4.00    2.00
+     8000     1.758e-06     4.00    2.00
+
+forest_ruth:
+    steps         error    ratio   order
+      500     8.095e-07       --      --
+     1000     5.069e-08    15.97    4.00
+     2000     3.170e-09    15.99    4.00
+     4000     1.981e-10    16.00    4.00
+     8000     1.242e-11    15.95    4.00
+
+rk4:
+    steps         error    ratio   order
+      500     9.910e-08       --      --
+     1000     5.798e-09    17.09    4.10
+     2000     3.498e-10    16.57    4.05
+     4000     2.146e-11    16.30    4.03
+     8000     1.350e-12    15.90    3.99
+
+verlet doubles-steps -> ~4x smaller error (order 2).
+forest_ruth & rk4 -> ~16x smaller error (order 4).
+Same order, but forest_ruth is symplectic: it ALSO keeps energy
+bounded forever, which rk4 does not (see energy_drift_demo.py).

@@ -1,0 +1,13 @@
+Earth-Moon CR3BP (mu = 0.01215), nondimensional units
+
+point            x           y      Jacobi C
+--------------------------------------------
+L1        0.836918    0.000000      3.188336
+L2        1.155680    0.000000      3.172156
+L3       -1.005062    0.000000      3.012147
+L4        0.487850    0.866025      2.987998
+L5        0.487850   -0.866025      2.987998
+
+wrote examples/output\lagrange.svg
+L4/L5 (equilateral points) are stable for the Earth-Moon mass ratio;
+that's why Trojan asteroids cluster at the Sun-Jupiter L4/L5.

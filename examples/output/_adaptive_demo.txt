@@ -1,0 +1,12 @@
+Eccentric two-body (e=0.7), one full period T=4.4429, G=1
+
+adaptive step size over the orbit (small=pericenter, large=apocenter):
+    .=+**###@##*+==---::..::::::........ ...                           .............::::::::::--===++*#######*-
+  steps accepted=109  rejected=13  h_min=1.00e-03  h_max=1.17e-01  ratio=117x
+
+method                     force evals     end error
+----------------------------------------------------
+adaptive DP45                      854      3.95e-08
+fixed RK4 (2000 steps)            8000      8.02e-09
+
+adaptive reaches the same accuracy with 9.4x fewer force evaluations.

@@ -1,0 +1,11 @@
+Gravitational-wave inspiral (equal-mass binary, GR amplified: v/c~0.20)
+
+  energy-loss rate  dE/dt: measured -1.426e-04  Peters -1.243e-04  ratio 1.147
+
+  separation: 1.00 -> 0.38  (orbit shrinks as it radiates)
+  orbital frequency chirps up 4.2x:
+                                            ...............:::::::---==+*@
+
+  wrote examples/output\gw_inspiral.svg
+  Same mechanism as GW150914: the binary radiates orbital energy as
+  gravitational waves and spirals to merger, chirping as it goes.
