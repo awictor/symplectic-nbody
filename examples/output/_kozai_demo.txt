@@ -1,0 +1,15 @@
+Kozai-Lidov cycles in a hierarchical triple
+
+  critical inclination      : 39.23 deg
+  start                     : e=0.01, i=80 deg
+  e_max measured / analytic : 0.975 / 0.975
+  inclination swings        : 39.3 - 80.0 deg
+
+  eccentricity :  # #  :+*=.  =: # # -: :#.  .:---:.   =#. -= -- # * * # -- +: -*. :#=.  .:=+
+  inclination  : @ #=####*#######-#.#####=##############+########:#*#*#:########*###-########
+
+  e peaks exactly when i dips: they trade the conserved
+  Theta = sqrt(1-e^2) cos i. This drives hot-Jupiter migration
+  and compact-binary mergers.
+
+  wrote examples/output\kozai.svg

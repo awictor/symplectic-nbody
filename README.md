@@ -46,6 +46,7 @@ ruins a long non-symplectic integration.
 | `src/stability_map.py` | Three-body escape-time scan over a grid of initial conditions |
 | `src/virial.py` | Virial theorem & violent relaxation of a self-gravitating cluster |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
+| `src/kozai.py` | Kozai-Lidov secular cycles: eccentricity <-> inclination in a triple |
 | `src/poincare.py` | Poincare surface-of-section for the CR3BP (tori vs chaos) |
 | `src/sitnikov.py` | The Sitnikov problem: on-axis test particle, integrable-to-chaotic |
 | `src/galaxy.py` | Disk-galaxy generator and two-galaxy tidal encounters |
@@ -67,6 +68,7 @@ ruins a long non-symplectic integration.
 | `examples/stability_map_demo.py` | Parallel escape-time heatmap revealing the fractal chaos boundary |
 | `examples/virial_demo.py` | Equilibrium vs cold cluster: running 2T/U converging on -1 |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
+| `examples/kozai_demo.py` | e/i oscillations vs analytic e_max, out-of-phase time series SVG |
 | `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
 | `examples/sitnikov_demo.py` | Stroboscopic maps: circular binary (tori) vs eccentric (chaos) |
 | `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
@@ -202,6 +204,31 @@ diffuse dust. `poincare.py` reconstructs `vy` from the energy so each section
 point is a full initial condition, and the tests confirm the Jacobi constant is
 conserved along each orbit (faithful section), regular orbits stay on tight
 curves, and chaotic ones scatter more than 3x wider.
+
+## Kozai-Lidov cycles: trading eccentricity for inclination
+
+In a hierarchical triple -- a tight inner binary orbited by a distant third body
+-- the inner orbit's eccentricity and inclination undergo large coupled
+oscillations. `kozai.py` integrates the secular (doubly-averaged) quadrupole
+Hamiltonian flow:
+
+```
+$ python examples/kozai_demo.py examples/output
+
+  critical inclination      : 39.23 deg
+  e_max measured / analytic : 0.975 / 0.975   (start e=0.01, i=80 deg)
+  inclination swings        : 39.3 - 80.0 deg
+  eccentricity :  # #  :+*=.  =: ...
+  inclination  : @ #=####*#######- ...   (out of phase with e)
+```
+
+The conserved quantity `Theta = sqrt(1-e^2) cos i` (the inner orbit's z-angular
+momentum) is held to machine precision, so the orbit trades eccentricity for
+inclination and back. Above the critical inclination `arccos(sqrt(3/5)) ~ 39.2
+deg` the eccentricity is driven to `e_max = sqrt(1 - (5/3) cos^2 i0)`; below it,
+nothing happens. This mechanism drives hot-Jupiter migration and merges compact
+binaries. The tests verify the conserved quantity, the critical angle, the
+analytic `e_max`, and the e-i anticorrelation.
 
 ## The Roche limit: tearing a moon into a ring
 

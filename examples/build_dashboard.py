@@ -72,6 +72,7 @@ def main():
     import sitnikov_demo
     import virial_demo
     import roche_demo
+    import kozai_demo
 
     import plot_orbits
 
@@ -113,6 +114,7 @@ def main():
     sitnikov_txt = run("sitnikov_demo", sitnikov_demo.main, True)
     virial_txt = run("virial_demo", virial_demo.main, True)
     roche_txt = run("roche_demo", roche_demo.main, True)
+    kozai_txt = run("kozai_demo", kozai_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -214,6 +216,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("poincare_section.svg"), "tori and chaotic sea at one energy")
             + f'<div class="card">{pre(poincare_txt)}</div>'
+            + '</div>'),
+        section(
+            "Kozai-Lidov cycles",
+            "In a hierarchical triple the inner orbit trades eccentricity for "
+            "inclination and back, conserving sqrt(1-e^2) cos i. Above a critical "
+            "inclination (~39.2 deg) the eccentricity is driven to large values -- "
+            "the mechanism behind hot-Jupiter migration and compact-binary mergers.",
+            '<div class="grid">'
+            + svg_card(out("kozai.svg"), "e (red) and inclination (blue) oscillating out of phase")
+            + f'<div class="card">{pre(kozai_txt)}</div>'
             + '</div>'),
         section(
             "Roche limit & tidal disruption",
