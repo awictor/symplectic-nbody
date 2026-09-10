@@ -1,0 +1,18 @@
+Cosmic distances: the Hubble diagram and cosmic acceleration
+
+      z     mu LCDM      mu EdS    Delta mu (fainter)
+  ---------------------------------------------------
+    0.2      39.956      39.760                +0.196
+    0.5      42.261      41.862                +0.399
+    1.0      44.100      43.502                +0.598
+    1.5      45.189      44.480                +0.709
+
+  Type-Ia supernovae at z~0.5 sit ~0.4 mag ABOVE the decelerating
+  prediction -- fainter, hence farther, hence the expansion is
+  accelerating. That is the 1998 result (2011 Nobel Prize).
+
+  angular-diameter distance peaks at z = 1.61
+  (past it, more distant objects look angularly LARGER -- why the CMB
+  acoustic spots subtend about a degree).
+
+  wrote examples/output\distances.svg

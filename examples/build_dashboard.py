@@ -81,6 +81,7 @@ def main():
     import schwarzschild_demo
     import friedmann_demo
     import lane_emden_demo
+    import distances_demo
 
     import plot_orbits
 
@@ -131,6 +132,7 @@ def main():
     schwarz_txt = run("schwarzschild_demo", schwarzschild_demo.main, True)
     friedmann_txt = run("friedmann_demo", friedmann_demo.main, True)
     laneemden_txt = run("lane_emden_demo", lane_emden_demo.main, True)
+    distances_txt = run("distances_demo", distances_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -242,6 +244,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("lane_emden.svg"), "density profiles for several polytropic indices")
             + f'<div class="card">{pre(laneemden_txt)}</div>'
+            + '</div>'),
+        section(
+            "Cosmic distances & the discovery of acceleration",
+            "Every cosmological distance is one integral of 1/E(z). A dark-energy "
+            "universe puts a given redshift farther away, so distant type-Ia "
+            "supernovae look ~0.4 mag fainter -- the 1998 acceleration result. "
+            "The angular-diameter distance also turns over near z~1.6.",
+            '<div class="grid">'
+            + svg_card(out("distances.svg"), "Hubble diagram: LCDM vs decelerating, plus D_A turnover")
+            + f'<div class="card">{pre(distances_txt)}</div>'
             + '</div>'),
         section(
             "Expansion of the universe (Friedmann)",

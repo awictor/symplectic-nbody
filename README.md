@@ -55,6 +55,7 @@ ruins a long non-symplectic integration.
 | `src/schwarzschild.py` | Black-hole orbits: effective potential, ISCO, photon sphere, plunge |
 | `src/friedmann.py` | Friedmann cosmology: scale factor a(t), expansion eras, age of the universe |
 | `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
+| `src/distances.py` | Cosmological distances: luminosity/angular-diameter, cosmic acceleration |
 | `src/poincare.py` | Poincare surface-of-section for the CR3BP (tori vs chaos) |
 | `src/sitnikov.py` | The Sitnikov problem: on-axis test particle, integrable-to-chaotic |
 | `src/galaxy.py` | Disk-galaxy generator and two-galaxy tidal encounters |
@@ -85,6 +86,7 @@ ruins a long non-symplectic integration.
 | `examples/schwarzschild_demo.py` | Precessing & plunging black-hole orbits with ISCO/photon sphere |
 | `examples/friedmann_demo.py` | Scale-factor curves for radiation/matter/dark-energy/LCDM |
 | `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
+| `examples/distances_demo.py` | Hubble diagram (LCDM vs decelerating) + D_A turnover |
 | `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
 | `examples/sitnikov_demo.py` | Stroboscopic maps: circular binary (tori) vs eccentric (chaos) |
 | `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
@@ -242,6 +244,29 @@ Three indices have closed forms the integrator reproduces to ~1e-9: `n=0`
 and `n=5` (`1/sqrt(1 + xi^2/3)`, which never reaches zero -- finite mass, infinite
 radius). `n=3` is the Eddington standard model with the tabulated `xi_1 = 6.897`
 and mass factor `2.018`. The tests check all four against their known values.
+
+## Cosmic distances: how dark energy was found
+
+Every cosmological distance is one integral of `1/E(z)` over redshift.
+`distances.py` builds the comoving, luminosity, and angular-diameter distances
+and the distance modulus:
+
+```
+$ python examples/distances_demo.py examples/output
+
+      z     mu LCDM      mu EdS    Delta mu (fainter)
+    0.5      42.261      41.862                +0.399
+    1.0      44.100      43.502                +0.598
+  angular-diameter distance peaks at z = 1.61
+```
+
+A dark-energy universe (LCDM) puts a given redshift at a larger distance than a
+decelerating Einstein-de Sitter universe, so type-Ia supernovae look ~0.4 mag
+**fainter** at `z~0.5` -- exactly the excess faintness Riess and Perlmutter found
+in 1998 (2011 Nobel Prize). The angular-diameter distance is non-monotonic,
+peaking near `z~1.6`, which is why the CMB's acoustic spots subtend about a
+degree. The tests check the low-z Hubble law, the acceleration signal, the
+turnover, and the Etherington duality `D_L = (1+z)^2 D_A`.
 
 ## Friedmann cosmology: the expanding universe
 
