@@ -93,6 +93,7 @@ def main():
     import gr_time_demo
     import pulsar_demo
     import mond_demo
+    import penrose_demo
 
     import plot_orbits
 
@@ -155,6 +156,7 @@ def main():
     grtime_txt = run("gr_time_demo", gr_time_demo.main, True)
     pulsar_txt = run("pulsar_demo", pulsar_demo.main, True)
     mond_txt = run("mond_demo", mond_demo.main, True)
+    penrose_txt = run("penrose_demo", penrose_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -366,6 +368,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("kerr.svg"), "ISCO vs spin (prograde/retrograde) + horizon & ergosphere")
             + f'<div class="card">{pre(kerr_txt)}</div>'
+            + '</div>'),
+        section(
+            "Penrose process: mining spin energy",
+            "Inside the ergosphere a fragment can carry negative energy, so the "
+            "escaping piece leaves with more than it entered -- energy mined from "
+            "the hole's spin. Up to 29% of an extremal hole's mass-energy is "
+            "extractable, and removing it only grows the horizon area (area theorem).",
+            '<div class="grid">'
+            + svg_card(out("penrose.svg"), "extractable rotational-energy fraction vs spin")
+            + f'<div class="card">{pre(penrose_txt)}</div>'
             + '</div>'),
         section(
             "Schwarzschild black-hole orbits",

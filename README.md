@@ -83,6 +83,7 @@ ruins a long non-symplectic integration.
 | `src/mond.py` | MOND: modified gravity, flat curves & baryonic Tully-Fisher |
 | `src/schwarzschild.py` | Black-hole orbits: effective potential, ISCO, photon sphere, plunge |
 | `src/kerr.py` | Rotating black holes: horizons, ergosphere, spin-dependent ISCO |
+| `src/penrose.py` | Penrose process: irreducible mass & extractable spin energy |
 | `src/hawking.py` | Black-hole thermodynamics: Hawking temperature, entropy, evaporation |
 | `src/eddington.py` | Eddington luminosity, accretion rate & Salpeter black-hole growth |
 | `src/hohmann.py` | Hohmann transfer: mission delta-v budgets & launch windows |
@@ -125,6 +126,7 @@ ruins a long non-symplectic integration.
 | `examples/mond_demo.py` | MOND (flat) vs Newton-on-baryons (declining) + Tully-Fisher |
 | `examples/schwarzschild_demo.py` | Precessing & plunging black-hole orbits with ISCO/photon sphere |
 | `examples/kerr_demo.py` | ISCO-vs-spin curves + horizon/ergosphere diagram |
+| `examples/penrose_demo.py` | Extractable-energy fraction vs spin + the area theorem |
 | `examples/hawking_demo.py` | Temperature & evaporation time across black-hole masses |
 | `examples/eddington_demo.py` | L_Edd across masses + Eddington-limited growth to a quasar |
 | `examples/hohmann_demo.py` | LEO->GEO & Earth->Mars delta-v budgets + transfer diagram |
@@ -516,6 +518,29 @@ quarter of the horizon area in Planck units, and the evaporation time scales as
 eternal -- while a ~1.7e11 kg primordial hole is ending its life in a burst right
 now. The tests verify the `1/M` temperature, the `M^3` lifetime, the primordial
 mass, and the quarter-area entropy law.
+
+## The Penrose process: mining a black hole's spin
+
+Inside a Kerr ergosphere an object can have negative energy as seen from
+infinity, so splitting one there lets a fragment escape with more energy than
+went in -- extracted from the hole's rotation. `penrose.py` does the bookkeeping
+with the irreducible mass:
+
+```
+$ python examples/penrose_demo.py examples/output
+
+     a/M   M_irr/M  E_rot fraction  horizon area
+    0.00    1.0000            0.0%         50.27
+    0.90    0.8473           15.3%         36.09
+    1.00    0.7071           29.3%         25.13
+```
+
+`M_irr = sqrt((M + sqrt(M^2 - a^2))/2)` is the Schwarzschild-equivalent mass you
+are left with; the rest, up to **29% of Mc^2** for an extremal hole, is
+extractable rotational energy. Crucially, extracting spin only ever GROWS the
+irreducible mass and the horizon area -- Hawking's area theorem, the second law
+of black-hole mechanics. The tests verify the extremal `1/sqrt(2)` mass, the
+29.3% ceiling, the monotonic spin dependence, and the area theorem.
 
 ## Kerr black holes: spin drags spacetime
 

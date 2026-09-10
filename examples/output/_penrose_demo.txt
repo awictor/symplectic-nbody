@@ -1,0 +1,18 @@
+The Penrose process: extracting a black hole's rotational energy
+
+  maximum extractable fraction (extremal a=M): 29.3% of M c^2
+
+     a/M   M_irr/M  E_rot fraction  horizon area
+  ----------------------------------------------
+    0.00    1.0000            0.0%         50.27
+    0.30    0.9884            1.2%         49.11
+    0.60    0.9487            5.1%         45.24
+    0.90    0.8473           15.3%         36.09
+    0.99    0.7553           24.5%         28.68
+    1.00    0.7071           29.3%         25.13
+
+  Up to ~29% of an extremal hole's mass-energy can be mined from its
+  spin. Doing so raises the irreducible mass and horizon area -- the
+  area never shrinks (Hawking), which is the second law for black holes.
+
+  wrote examples/output\penrose.svg
