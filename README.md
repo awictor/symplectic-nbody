@@ -40,6 +40,7 @@ ruins a long non-symplectic integration.
 | `src/kepler.py` | Exact analytic two-body orbit (Kepler-equation solver) -- the ground truth |
 | `src/cr3bp.py` | Circular restricted 3-body problem: Lagrange points, Jacobi constant |
 | `src/solar_system.py` | The real 8-planet solar system from published orbital elements |
+| `src/relativity.py` | First post-Newtonian gravity & Mercury's perihelion precession |
 | `src/systems.py` | Test systems: two-body, figure-eight, pythagorean 3-body, **Plummer-sphere star cluster** (any N) |
 | `tests/test_conservation.py` | Automated checks of every conservation claim |
 | `tests/test_barnes_hut.py` | Tree force validated against exact O(N^2) summation |
@@ -51,6 +52,7 @@ ruins a long non-symplectic integration.
 | `examples/convergence_demo.py` | Measured convergence order of each method vs the exact orbit |
 | `examples/lagrange_demo.py` | Lagrange points + zero-velocity curves rendered to SVG |
 | `examples/solar_system_demo.py` | Integrate the real solar system, recover Kepler's third law |
+| `examples/precession_demo.py` | Mercury's 43"/century precession + a relativistic rosette SVG |
 | `examples/build_dashboard.py` | Assemble all demos into one self-contained `index.html` |
 
 ## Barnes-Hut: scaling to many bodies
@@ -78,6 +80,31 @@ Tightening `theta` provably reduces the error — all checked in the tests. The
 `plummer_sphere(n=...)` generator builds an equilibrium cluster (positions from
 the Plummer inverse-CDF, velocities by rejection sampling the exact distribution
 function) using a tiny built-in LCG, so it's deterministic and dependency-free.
+
+## Mercury's perihelion: the first triumph of general relativity
+
+Newtonian two-body orbits are closed ellipses -- they never precess. The 43
+arcsec/century advance of Mercury's perihelion was the anomaly that general
+relativity explained. `relativity.py` adds the first post-Newtonian correction
+to the acceleration and both derives and integrates the result:
+
+```
+$ python examples/precession_demo.py examples/output
+
+  analytic advance at the real speed of light: 42.98 arcsec/century
+  observed / GR-predicted value:               ~43 arcsec/century
+
+numeric integration reproduces 6*pi*GM/(c^2 a(1-e^2)):
+    c factor   numeric/orbit  analytic/orbit    ratio
+  c/300         4.514734e-02    4.517161e-02   0.9995
+  c/600         1.798247e-01    1.806865e-01   0.9952
+```
+
+The famous number comes straight out of the closed form. To *see* the effect,
+the demo amplifies GR (shrinks c) so the ellipse visibly rotates into a rosette
+and renders it to SVG. The tests confirm the 43"/century value, that numeric
+integration matches the analytic advance, that Newtonian orbits don't precess,
+and that the precession scales as 1/c^2.
 
 ## The real solar system, and Kepler's third law for free
 

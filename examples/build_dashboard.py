@@ -62,6 +62,7 @@ def main():
     import adaptive_demo
     import lagrange_demo
     import solar_system_demo
+    import precession_demo
 
     # make sure all SVGs exist
     import plot_orbits
@@ -73,6 +74,8 @@ def main():
     lagrange_demo.main()
     sys.argv = ["solar_system_demo", outdir]
     solar_system_demo.main()
+    sys.argv = ["precession_demo", outdir]
+    precession_demo.main()
     sys.argv = _old_argv
 
     print("capturing demo outputs...")
@@ -83,6 +86,8 @@ def main():
     lagr_txt = capture(lagrange_demo.main)
     sys.argv = ["solar_system_demo", outdir]
     solar_txt = capture(solar_system_demo.main)
+    sys.argv = ["precession_demo", outdir]
+    prec_txt = capture(precession_demo.main)
     sys.argv = _old_argv
     # scaling benchmark is slow; run a lighter inline version
     scale_txt = capture(scaling_benchmark.main)
@@ -128,6 +133,15 @@ def main():
             '<div class="grid">'
             + svg_card(out("inner_planets.svg"), "inner solar system (2 Mars years)")
             + f'<div class="card">{pre(solar_txt)}</div>'
+            + '</div>'),
+        section(
+            "Mercury's perihelion precession (general relativity)",
+            "A first post-Newtonian correction makes the orbit slowly rotate "
+            "instead of closing. The closed form gives Mercury's famous 43 "
+            "arcsec/century; direct integration reproduces it.",
+            '<div class="grid">'
+            + svg_card(out("precession_rosette.svg"), "GR amplified ~8000x: a precessing rosette")
+            + f'<div class="card">{pre(prec_txt)}</div>'
             + '</div>'),
         section(
             "Lagrange points & zero-velocity curves",
