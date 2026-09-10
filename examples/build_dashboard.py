@@ -165,6 +165,7 @@ def main():
     import hill_sphere_demo
     import j2_precession_demo
     import solar_sail_demo
+    import beaming_demo
 
     import plot_orbits
 
@@ -299,6 +300,7 @@ def main():
     hill_txt = run("hill_sphere_demo", hill_sphere_demo.main, True)
     j2_txt = run("j2_precession_demo", j2_precession_demo.main, True)
     sail_txt = run("solar_sail_demo", solar_sail_demo.main, True)
+    beaming_txt = run("beaming_demo", beaming_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1396,6 +1398,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("solar_sail.svg"), "lightness number vs area-to-mass with the beta=1 line and missions")
             + f'<div class="card">{pre(sail_txt)}</div>'
+            + '</div>'),
+        section(
+            "Relativistic beaming",
+            "Radiation from a source moving near light speed is swept forward into a "
+            "cone of half-angle ~1/gamma and Doppler-boosted, so the observed flux "
+            "scales as D^(3+alpha). An approaching jet is brightened hundreds of times "
+            "while its receding twin is dimmed by the same powers -- why M87's jet "
+            "looks one-sided. The same geometry makes blobs appear to move faster than "
+            "light, an illusion of light-travel time.",
+            '<div class="grid">'
+            + svg_card(out("beaming.svg"), "Doppler factor vs viewing angle for several Lorentz factors")
+            + f'<div class="card">{pre(beaming_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

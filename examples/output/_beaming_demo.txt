@@ -1,0 +1,18 @@
+Relativistic beaming: D = 1/(gamma(1 - beta cos theta)); flux ~ D^(3+a)
+
+    gamma   theta  Doppler D  flux boost      jet/cj   v_app/c
+  ------------------------------------------------------------
+        2      5d       3.64         119     1.6e+04       0.5
+        2     20d       2.69        38.7     4.5e+03       1.6
+        5      5d       8.36    2.58e+03     1.2e+07       3.6
+        5     20d       2.52        30.7     1.3e+05       4.2
+       10      5d      11.37    8.05e+03     5.2e+08       9.9
+       10     20d       1.54        4.92     2.8e+05       5.2
+
+  Aberration sweeps the emission into a cone of half-angle ~1/gamma, and the
+  Doppler shift boosts the flux by D^(3+alpha). An approaching jet is brightened
+  hundreds of times while its receding twin is dimmed by the same powers, which
+  is why M87's jet looks one-sided. The same geometry makes blobs appear to move
+  faster than light -- superluminal motion, an illusion of light-travel time.
+
+  wrote examples/output\beaming.svg

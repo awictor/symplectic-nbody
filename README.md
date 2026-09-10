@@ -123,6 +123,7 @@ ruins a long non-symplectic integration.
 | `src/hill_sphere.py` | The Hill sphere: how far a planet's gravity keeps its moons |
 | `src/j2_precession.py` | J2 orbital precession: nodal regression, apsidal drift & sun-synchronous orbits |
 | `src/solar_sail.py` | Solar sails & radiation pressure: the lightness number beta |
+| `src/beaming.py` | Relativistic beaming: Doppler boosting & one-sided jets |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -237,6 +238,7 @@ ruins a long non-symplectic integration.
 | `examples/hill_sphere_demo.py` | Hill radius & stable-moon limit per planet + the r_H(a) plot |
 | `examples/j2_precession_demo.py` | Nodal/apsidal rates per orbit + the rate-vs-inclination curves |
 | `examples/solar_sail_demo.py` | Pressure/accel/beta per sail + the beta-vs-area/mass curve |
+| `examples/beaming_demo.py` | Doppler/boost/jet-ratio per gamma & angle + the D(theta) curves |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2608,6 +2610,32 @@ like IKAROS and LightSail 2 sit at beta ~ 0.01: a gentle push, but propellant-fr
 endless. The tests verify the ~1361 W/m^2 flux and ~9 uPa mirror pressure, the mirror-is-twice-black
 force, the `1/r^2` falloff, the ~1.5 g/m^2 critical loading giving beta = 1, and the
 area-to-mass scaling.
+
+## Relativistic beaming: why one jet is bright
+
+Radiation from a source moving near light speed is swept forward and Doppler-boosted.
+`beaming.py`:
+
+```
+$ python examples/beaming_demo.py examples/output
+
+    gamma   theta   Doppler D   flux boost      jet/cj   v_app/c
+  ------------------------------------------------------------
+        2      5d       3.64         119     1.6e+04       0.5
+        5      5d       8.36    2.58e+03     1.2e+07       3.6
+       10      5d      11.37    8.05e+03     5.2e+08       9.9
+       10     20d       1.54        4.92     2.8e+05       5.2
+```
+
+Aberration sweeps the emission into a cone of half-angle `~1/gamma`, and the Doppler factor
+`D = 1/(gamma(1 - beta cos theta))` boosts the observed flux by `D^(3+alpha)` (a discrete
+blob) or `D^(2+alpha)` (a steady jet). An approaching jet is brightened hundreds of times
+while its receding twin is dimmed by the same powers -- which is why M87's jet looks
+one-sided, its counter-jet beamed away. The same geometry gives apparent superluminal motion
+(`v_app` peaks near `gamma*beta`), an illusion of light-travel time, not a real
+faster-than-light speed. The tests verify the `1/gamma` cone, the approaching boost and
+receding dimming, the enormous jet/counter-jet ratio, superluminal motion, and the
+`gamma*beta` peak.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
