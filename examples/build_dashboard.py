@@ -445,7 +445,14 @@ def main():
     with open(index, "w", encoding="utf-8") as f:
         f.write(page)
     print(f"wrote {index}")
-    print("open it in a browser, or enable GitHub Pages on examples/output/")
+
+    # Also publish a copy to docs/index.html so GitHub Pages can serve it. The
+    # dashboard is fully self-contained (all SVGs inlined), so one file suffices.
+    docs = os.path.join(HERE, "..", "docs")
+    os.makedirs(docs, exist_ok=True)
+    with open(os.path.join(docs, "index.html"), "w", encoding="utf-8") as f:
+        f.write(page)
+    print(f"wrote {os.path.join(docs, 'index.html')} (GitHub Pages)")
 
 
 _TEMPLATE = """<!DOCTYPE html>

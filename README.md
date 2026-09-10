@@ -1,14 +1,42 @@
 # symplectic-nbody
 
-A dependency-free (pure-Python stdlib) N-body gravitational simulator built to
-make one deep fact of numerical physics *observable and testable*:
+A dependency-free (pure-Python stdlib) **computational-gravity library**. It
+began as an N-body integrator built to make one deep fact observable —
 
 > **Symplectic integrators conserve energy over exponentially long times.
 > Higher local accuracy (RK4) does not save you — its energy drifts secularly.**
 
-This is why real celestial-mechanics codes integrate the solar system for
-billions of years with a humble 2nd-order leapfrog instead of a fancy
-adaptive Runge-Kutta.
+— and grew into a tour of gravity across every regime, from the leapfrog that
+keeps the solar system stable for billions of years to black-hole geodesics,
+gravitational waves, dark matter, and the expansion of the universe. Every claim
+is produced by code here and checked against an analytic result or a famous
+measured value (1.75″ light bending, Mercury's 43″/century, the 1.44 M☉ white-
+dwarf limit, ξ₁ = π, a 13.5 Gyr universe).
+
+**No dependencies** — pure Python stdlib, no numpy, no matplotlib. All figures
+are hand-built SVG; the whole thing runs anywhere Python does.
+
+### Live dashboard
+
+Every result on one self-contained page (no JavaScript, all SVG):
+**https://awictor.github.io/symplectic-nbody/** — or `python examples/build_dashboard.py`.
+
+### What's in it
+
+| Domain | Modules |
+|--------|---------|
+| **Numerics** | 5 integrators (Verlet, Forest-Ruth, RK4, adaptive Dormand-Prince, Hermite), Barnes-Hut O(N log N) tree, exact-Kepler convergence tests |
+| **Celestial mechanics** | real solar system + Kepler's 3rd law, Lagrange points, coorbital tadpole/horseshoe orbits, mean-motion resonance, Kozai-Lidov cycles, Tisserand & gravity assists |
+| **Chaos** | Lyapunov exponents, Poincaré sections, three-body stability maps, the Sitnikov route to chaos |
+| **General relativity** | Mercury perihelion precession, Schwarzschild orbits (ISCO, photon sphere), gravitational lensing |
+| **Gravitational waves** | inspiral chirp (Peters energy loss), eccentric-binary circularization |
+| **Galaxies & cosmology** | galaxy-collision tidal tails, rotation curves & dark matter, Friedmann expansion, cosmic distances & acceleration |
+| **Stellar physics** | Jeans collapse, Lane-Emden structure, Chandrasekhar mass, TOV neutron stars, Sedov-Taylor blast waves, the virial theorem |
+| **Visualization** | dependency-free SVG renderer (static + SMIL-animated), one-page HTML dashboard |
+
+The rest of this README walks through each result. This is also the reason real
+celestial-mechanics codes integrate the solar system for billions of years with
+a humble 2nd-order leapfrog instead of a fancy adaptive Runge-Kutta.
 
 ## Quick look
 
