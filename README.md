@@ -37,6 +37,7 @@ ruins a long non-symplectic integration.
 | `src/nbody.py` | Newtonian forces, kinetic/potential energy, linear & angular momentum, softening |
 | `src/barnes_hut.py` | O(N log N) octree force solver with opening-angle theta criterion |
 | `src/adaptive.py` | Dormand-Prince RK45 with PI error-controlled adaptive step size |
+| `src/kepler.py` | Exact analytic two-body orbit (Kepler-equation solver) -- the ground truth |
 | `src/systems.py` | Test systems: two-body, figure-eight, pythagorean 3-body, **Plummer-sphere star cluster** (any N) |
 | `tests/test_conservation.py` | Automated checks of every conservation claim |
 | `tests/test_barnes_hut.py` | Tree force validated against exact O(N^2) summation |
@@ -45,6 +46,7 @@ ruins a long non-symplectic integration.
 | `examples/scaling_benchmark.py` | Direct vs Barnes-Hut timing & empirical scaling exponent |
 | `examples/plot_orbits.py` | Render figure-eight / eccentric / pythagorean orbits to SVG |
 | `examples/adaptive_demo.py` | Adaptive DP45 vs fixed RK4: step adaptation & force-eval savings |
+| `examples/convergence_demo.py` | Measured convergence order of each method vs the exact orbit |
 
 ## Barnes-Hut: scaling to many bodies
 
@@ -71,6 +73,29 @@ Tightening `theta` provably reduces the error — all checked in the tests. The
 `plummer_sphere(n=...)` generator builds an equilibrium cluster (positions from
 the Plummer inverse-CDF, velocities by rejection sampling the exact distribution
 function) using a tiny built-in LCG, so it's deterministic and dependency-free.
+
+## Ground truth: convergence against the exact Kepler orbit
+
+The two-body problem has a closed-form solution (solve Kepler's equation
+`M = E - e sin E` for the eccentric anomaly). `kepler.py` gives the *exact*
+position at any time, so we can measure an integrator's true error -- and read
+its convergence order straight off the data by halving the step:
+
+```
+$ python examples/convergence_demo.py
+
+verlet:                      forest_ruth:                 rk4:
+   steps     error  order       steps     error  order      steps     error  order
+    1000  1.13e-04   2.00        1000  5.07e-08   4.00       1000  5.80e-09   4.10
+    2000  2.81e-05   2.00        2000  3.17e-09   4.00       2000  3.50e-10   4.05
+    4000  7.03e-06   2.00        4000  1.98e-10   4.00       4000  2.15e-11   4.03
+```
+
+Halving the step cuts verlet's error 4x (order 2) and forest_ruth/rk4's error
+16x (order 4) -- exactly as theory predicts, confirmed empirically. forest_ruth
+and rk4 share an order, but only forest_ruth is symplectic, so only it also keeps
+energy bounded forever. Order buys short-term accuracy; symplecticity buys
+long-term stability. This repo measures both.
 
 ## Adaptive stepping: same accuracy, far less work
 
