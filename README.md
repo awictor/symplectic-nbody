@@ -176,6 +176,7 @@ ruins a long non-symplectic integration.
 | `src/bragg.py` | Bragg diffraction: n lambda = 2 d sin(theta), Miller spacings, max order |
 | `src/diffraction_limit.py` | Diffraction limit: Rayleigh resolution, Abbe limit, grating resolving power |
 | `src/snell.py` | Snell's law: refraction, critical angle/TIR, Brewster, fibre numerical aperture |
+| `src/thin_film.py` | Thin-film interference: bubble colours, AR coatings, Newton's rings |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -343,6 +344,7 @@ ruins a long non-symplectic integration.
 | `examples/bragg_demo.py` | Per-plane Bragg-angle table + the reflection-geometry figure |
 | `examples/diffraction_limit_demo.py` | Per-instrument resolution table + the Rayleigh-limit figure |
 | `examples/snell_demo.py` | Per-medium critical/Brewster table + the refraction/TIR ray figure |
+| `examples/thin_film_demo.py` | Soap-colour/AR-coating table + colour-vs-thickness & Newton's-rings figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4027,6 +4029,31 @@ angle `arctan(n2/n1)` the reflected beam is perfectly polarized (polarizing sung
 fibre's numerical aperture `sqrt(n_core^2 - n_clad^2)` sets its acceptance cone. The tests
 reproduce the air-water bend, water's 48.6-degree and diamond's 24-degree critical angles, the
 TIR onset and refraction raise, Brewster's angle, and the fibre NA and acceptance angle.
+
+## Thin-film interference: bubble colours and lens coatings
+
+A film only nanometres thick paints itself in colour. `thin_film.py`:
+
+```
+$ python examples/thin_film_demo.py examples/output
+
+  thickness   2 n t     bright lambda   colour     (soap film, n = 1.33)
+  80 nm       213 nm    426 nm          violet
+  110 nm      293 nm    585 nm          yellow
+
+  MgF2 AR coating for glass at 550 nm: 100 nm thick, ideal index sqrt(1.52) = 1.233
+```
+
+Light reflects off both surfaces of a transparent film and the two waves interfere by the
+round-trip optical path `2 n t`, so thickness sets colour -- the sheen of a soap bubble or oil
+slick. A half-wave phase flip on the denser-medium reflection decides which colours brighten
+or cancel, and drives a soap film black just before it bursts (`2 n t -> 0` is destructive at
+every wavelength). Engineered as a quarter-wave layer `t = lambda/(4n)` of index
+`sqrt(n_substrate)`, the interference cancels reflection instead -- the anti-glare coating on
+every lens (MgF2, ~100 nm). Newton's rings are the same fringes in the air gap under a lens,
+with dark-ring radii `sqrt(m lambda R)`. The tests reproduce the 100 nm soap film's green
+reflection, the destructive condition, the MgF2 quarter-wave thickness and ideal index, and
+the `sqrt(m)` Newton's-ring spacing.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

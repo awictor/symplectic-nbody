@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<text x="20" y="34" fill="#e6edf3" font-size="18">Thin-film interference</text>
+<text x="20" y="52" fill="#8b949e" font-size="12">soap-film bright colour vs thickness (left); Newton&#39;s rings under a lens (right)</text>
+<rect x="54.0" y="618.8" width="12" height="5" fill="#8338ec" opacity="0.8"/>
+<rect x="54.0" y="607.5" width="12" height="5" fill="#8338ec" opacity="0.8"/>
+<rect x="54.0" y="596.2" width="12" height="5" fill="#8338ec" opacity="0.8"/>
+<rect x="54.0" y="584.9" width="12" height="5" fill="#8338ec" opacity="0.8"/>
+<rect x="54.0" y="573.7" width="12" height="5" fill="#8338ec" opacity="0.8"/>
+<rect x="54.0" y="562.4" width="12" height="5" fill="#4dabf7" opacity="0.8"/>
+<rect x="54.0" y="551.1" width="12" height="5" fill="#4dabf7" opacity="0.8"/>
+<rect x="54.0" y="539.8" width="12" height="5" fill="#4dabf7" opacity="0.8"/>
+<rect x="54.0" y="528.5" width="12" height="5" fill="#4dabf7" opacity="0.8"/>
+<rect x="54.0" y="517.2" width="12" height="5" fill="#4dabf7" opacity="0.8"/>
+<rect x="54.0" y="505.9" width="12" height="5" fill="#4dabf7" opacity="0.8"/>
+<rect x="54.0" y="494.7" width="12" height="5" fill="#4dabf7" opacity="0.8"/>
+<rect x="54.0" y="483.4" width="12" height="5" fill="#06d6a0" opacity="0.8"/>
+<rect x="54.0" y="472.1" width="12" height="5" fill="#06d6a0" opacity="0.8"/>
+<rect x="54.0" y="460.8" width="12" height="5" fill="#06d6a0" opacity="0.8"/>
+<rect x="54.0" y="449.5" width="12" height="5" fill="#06d6a0" opacity="0.8"/>
+<rect x="54.0" y="438.2" width="12" height="5" fill="#06d6a0" opacity="0.8"/>
+<rect x="54.0" y="427.0" width="12" height="5" fill="#06d6a0" opacity="0.8"/>
+<rect x="54.0" y="415.7" width="12" height="5" fill="#06d6a0" opacity="0.8"/>
+<rect x="54.0" y="404.4" width="12" height="5" fill="#06d6a0" opacity="0.8"/>
+<rect x="54.0" y="393.1" width="12" height="5" fill="#ffd43b" opacity="0.8"/>
+<rect x="54.0" y="381.8" width="12" height="5" fill="#ffd43b" opacity="0.8"/>
+<rect x="54.0" y="370.5" width="12" height="5" fill="#ffd43b" opacity="0.8"/>
+<rect x="54.0" y="359.3" width="12" height="5" fill="#ffd43b" opacity="0.8"/>
+<rect x="54.0" y="348.0" width="12" height="5" fill="#ff922b" opacity="0.8"/>
+<rect x="54.0" y="336.7" width="12" height="5" fill="#ff922b" opacity="0.8"/>
+<rect x="54.0" y="325.4" width="12" height="5" fill="#ff922b" opacity="0.8"/>
+<rect x="54.0" y="314.1" width="12" height="5" fill="#ff922b" opacity="0.8"/>
+<rect x="54.0" y="302.8" width="12" height="5" fill="#ff922b" opacity="0.8"/>
+<rect x="54.0" y="291.5" width="12" height="5" fill="#ff922b" opacity="0.8"/>
+<rect x="54.0" y="280.3" width="12" height="5" fill="#ff6b6b" opacity="0.8"/>
+<rect x="54.0" y="269.0" width="12" height="5" fill="#ff6b6b" opacity="0.8"/>
+<rect x="54.0" y="257.7" width="12" height="5" fill="#ff6b6b" opacity="0.8"/>
+<rect x="54.0" y="246.4" width="12" height="5" fill="#ff6b6b" opacity="0.8"/>
+<rect x="54.0" y="235.1" width="12" height="5" fill="#ff6b6b" opacity="0.8"/>
+<rect x="54.0" y="223.8" width="12" height="5" fill="#ff6b6b" opacity="0.8"/>
+<rect x="54.0" y="212.6" width="12" height="5" fill="#ff6b6b" opacity="0.8"/>
+<rect x="54.0" y="201.3" width="12" height="5" fill="#ff6b6b" opacity="0.8"/>
+<rect x="54.0" y="190.0" width="12" height="5" fill="#ff6b6b" opacity="0.8"/>
+<rect x="54.0" y="178.7" width="12" height="5" fill="#ff6b6b" opacity="0.8"/>
+<rect x="54.0" y="167.4" width="12" height="5" fill="#ff6b6b" opacity="0.8"/>
+<rect x="54.0" y="156.1" width="12" height="5" fill="#ff6b6b" opacity="0.8"/>
+<rect x="54.0" y="144.9" width="12" height="5" fill="#ff6b6b" opacity="0.8"/>
+<rect x="54.0" y="133.6" width="12" height="5" fill="#ff6b6b" opacity="0.8"/>
+<rect x="54.0" y="122.3" width="12" height="5" fill="#7a2020" opacity="0.8"/>
+<line x1="70" y1="650" x2="374.40000000000003" y2="650" stroke="#8b949e" stroke-width="1.4"/>
+<line x1="70" y1="650" x2="70" y2="114" stroke="#8b949e" stroke-width="1.4"/>
+<polyline points="85.2,638.2 87.8,621.9 90.3,605.7 92.8,589.4 95.4,573.2 97.9,556.9 100.4,540.7 103.0,524.4 105.5,508.1 108.0,491.9 110.6,475.6 113.1,459.4 115.7,443.1 118.2,426.8 120.7,410.6 123.3,394.3 125.8,378.1 128.3,361.8 130.9,345.6 133.4,329.3 136.0,313.0 138.5,296.8 141.0,280.5 143.6,264.3 146.1,248.0 148.6,231.7 151.2,215.5 153.7,199.2 156.2,183.0 158.8,166.7 161.3,150.4 163.9,134.2 166.4,117.9" fill="none" stroke="#e6edf3" stroke-width="2.4"/>
+<circle cx="105.1" cy="510.6" r="5" fill="#4dabf7"/>
+<circle cx="140.2" cy="285.5" r="5" fill="#ff922b"/>
+<text x="222.2" y="668.0" fill="#8b949e" font-size="10" text-anchor="middle">film thickness (60-320 nm)</text>
+<text x="48.0" y="382.0" fill="#8b949e" font-size="10" transform="rotate(-90 48.0 382.0)" text-anchor="middle">bright wavelength</text>
+<circle cx="561.6" cy="374.4" r="151.2" fill="#111820"/>
+<circle cx="561.6" cy="374.4" r="58.8" fill="none" stroke="#4dabf7" stroke-width="2" opacity="0.85"/>
+<circle cx="561.6" cy="374.4" r="83.1" fill="none" stroke="#4dabf7" stroke-width="2" opacity="0.85"/>
+<circle cx="561.6" cy="374.4" r="101.8" fill="none" stroke="#4dabf7" stroke-width="2" opacity="0.85"/>
+<circle cx="561.6" cy="374.4" r="117.6" fill="none" stroke="#4dabf7" stroke-width="2" opacity="0.85"/>
+<circle cx="561.6" cy="374.4" r="131.5" fill="none" stroke="#4dabf7" stroke-width="2" opacity="0.85"/>
+<circle cx="561.6" cy="374.4" r="144.0" fill="none" stroke="#4dabf7" stroke-width="2" opacity="0.85"/>
+<circle cx="561.6" cy="374.4" r="2.5" fill="#8b949e"/>
+<text x="561.6" y="547.2" fill="#8b949e" font-size="10" text-anchor="middle">dark rings r = sqrt(m lambda R)</text>
+<text x="561.6" y="208.8" fill="#8b949e" font-size="11" text-anchor="middle">Newton&#39;s rings</text>
+</svg>

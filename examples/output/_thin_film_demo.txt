@@ -1,0 +1,19 @@
+Thin-film interference: a film nm-thick paints itself in colour
+
+  Soap film (n = 1.33) -- first-order bright reflected wavelength:
+     thickness       2 n t   bright lambda      colour
+         80 nm      213 nm          426 nm      violet
+        110 nm      293 nm          585 nm      yellow
+        150 nm      399 nm          798 nm    infrared
+        200 nm      532 nm         1064 nm    infrared
+        250 nm      665 nm         1330 nm    infrared
+
+  Anti-reflection coating for a glass lens (n_glass = 1.52) at 550 nm:
+    ideal index = sqrt(1.52) = 1.233 (MgF2 at 1.38 is the practical pick)
+    quarter-wave MgF2 thickness = 100 nm
+    -> the two reflections cancel, killing glare and boosting transmission.
+
+  A soap film thins to near-zero before it bursts: 2 n t -> 0 is destructive at
+  every colour, so the film looks BLACK -- the classic sign it is about to pop.
+
+  wrote examples/output\thin_film.svg

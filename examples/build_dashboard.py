@@ -218,6 +218,7 @@ def main():
     import bragg_demo
     import diffraction_limit_demo
     import snell_demo
+    import thin_film_demo
 
     import plot_orbits
 
@@ -405,6 +406,7 @@ def main():
     bragg_txt = run("bragg_demo", bragg_demo.main, True)
     diffraction_limit_txt = run("diffraction_limit_demo", diffraction_limit_demo.main, True)
     snell_txt = run("snell_demo", snell_demo.main, True)
+    thin_film_txt = run("thin_film_demo", thin_film_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2170,6 +2172,20 @@ def main():
             '<div class="grid">'
             + svg_card(out("snell.svg"), "rays leaving water bending away from the normal, then flipping to total internal reflection")
             + f'<div class="card">{pre(snell_txt)}</div>'
+            + '</div>'),
+        section(
+            "Thin-film interference: bubble colours and lens coatings",
+            "A transparent film reflects light off both surfaces, and the two waves interfere by "
+            "the round-trip path 2 n t -- so a film only nanometres thick paints itself in "
+            "colour, the sheen of a soap bubble or an oil slick. A half-wave phase flip on the "
+            "denser-medium reflection sets which colours brighten or cancel, and is why a soap "
+            "film goes black just before it bursts (2 n t -> 0, destructive everywhere). "
+            "Engineered as a quarter-wave layer t = lambda/(4n) of index sqrt(n_substrate), the "
+            "same interference cancels reflection -- the anti-glare coating on every lens. "
+            "Newton's rings are its fringes in an air gap.",
+            '<div class="grid">'
+            + svg_card(out("thin_film.svg"), "soap-film bright colour vs thickness, and Newton's rings under a lens")
+            + f'<div class="card">{pre(thin_film_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
