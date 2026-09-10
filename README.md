@@ -83,6 +83,7 @@ ruins a long non-symplectic integration.
 | `src/axial_precession.py` | Precession of the equinoxes: the 26,000-year luni-solar wobble |
 | `src/alfven.py` | Alfven waves, plasma beta & the Alfven surface of the solar wind |
 | `src/parker_spiral.py` | The Parker spiral: the Sun's field wound up by its rotation |
+| `src/magnetic_braking.py` | Magnetic braking & gyrochronology: a star's age from its spin |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -157,6 +158,7 @@ ruins a long non-symplectic integration.
 | `examples/axial_precession_demo.py` | Sun/Moon precession rates + the wandering-pole circle |
 | `examples/alfven_demo.py` | v_A & beta across environments + the Alfven-surface crossing |
 | `examples/parker_spiral_demo.py` | Garden-hose angle Sun->Saturn + spiral field lines |
+| `examples/magnetic_braking_demo.py` | Gyro ages for clusters + the Skumanich age-period curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1433,6 +1435,35 @@ why solar energetic particles from a western-limb flare reach Earth best (they a
 magnetically connected along the spiral). The tests verify the ~45-degree angle at 1 AU,
 the radial/azimuthal regimes near the Sun and at Jupiter, the `1/r^2` and `1/r` scalings,
 and that a faster wind winds the spiral less tightly.
+
+## Magnetic braking & gyrochronology: a star's age from its spin
+
+That magnetized wind is also a superb brake. Plasma leaving the star stays locked to
+the field out to the Alfven radius (~15 R_sun), so it is forced to corotate on a long
+lever arm and carries off angular momentum -- a feeble ~1e-14 Msun/yr mass loss bleeds
+a large spin. Fast rotators brake hardest, so a broad spread of young spins converges
+onto one age-period sequence. `magnetic_braking.py`:
+
+```
+$ python examples/magnetic_braking_demo.py examples/output
+
+                 rotator  P (days)  gyro age (Gyr)
+  ------------------------------------------------
+         Pleiades member       3.0            0.06
+        young field star       6.0            0.25
+           Hyades member       8.5            0.51
+                 the Sun      25.4            4.57
+     old thick-disk star      35.0            8.67
+```
+
+Skumanich's empirical law has the surface rotation decay as `Omega ~ t^(-1/2)`, so the
+period grows as `P ~ t^(1/2)` and inverts to an age: `t = t_sun (P/P_sun)^2`. That is
+gyrochronology -- the Sun's 25-day spin reads 4.6 Gyr, a 3-day Pleiad reads ~60 Myr, and
+a single rotation measurement dates a field star or open cluster. Underneath sits the
+Weber-Davis wind torque `dJ/dt = (2/3) Mdot Omega r_A^2` with the Alfven radius as the
+lever arm. The tests verify the `t^(1/2)` period law, the solar recovery, the young
+fast-rotator, the many-radii Alfven lever arm, and the torque's `Omega` and `r_A^2`
+scalings.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

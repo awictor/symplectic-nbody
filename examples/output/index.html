@@ -4755,6 +4755,44 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   </section>
 
   <section>
+    <h2>Magnetic braking &amp; gyrochronology</h2>
+    <p class="blurb">That same magnetized wind is a brake. Plasma stays locked to the field out to the Alfven radius (~15 R_sun), so it corotates on a long lever arm and bleeds angular momentum -- fast rotators brake hardest, so stellar spins converge onto one sequence. Skumanich's law P ~ t^(1/2) then turns a measured rotation period into an age: the Sun's 25-day spin reads 4.6 Gyr, a 3-day Pleiad reads ~60 Myr.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<line x1="64" y1="656" x2="656" y2="656" stroke="#30363d"/>
+<line x1="64" y1="64" x2="64" y2="656" stroke="#30363d"/>
+<polyline points="64.0,656.0 77.2,642.8 90.3,629.7 103.5,616.5 116.6,603.4 129.8,590.2 142.9,577.1 156.1,563.9 169.2,550.8 182.4,537.6 195.6,524.4 208.7,511.3 221.9,498.1 235.0,485.0 248.2,471.8 261.3,458.7 274.5,445.5 287.6,432.4 300.8,419.2 314.0,406.0 327.1,392.9 340.3,379.7 353.4,366.6 366.6,353.4 379.7,340.3 392.9,327.1 406.0,314.0 419.2,300.8 432.4,287.6 445.5,274.5 458.7,261.3 471.8,248.2 485.0,235.0 498.1,221.9 511.3,208.7 524.4,195.6 537.6,182.4 550.8,169.2 563.9,156.1 577.1,142.9 590.2,129.8 603.4,116.6 616.5,103.5 629.7,90.3 642.8,77.2 656.0,64.0" fill="none" stroke="#8338ec" stroke-width="2.4"/>
+<circle cx="165.6" cy="554.4" r="5" fill="#4dabf7"/>
+<text x="173.6" y="558.4" fill="#4dabf7" font-size="11">Pleiades (4 d)</text>
+<circle cx="361.7" cy="358.3" r="5" fill="#06d6a0"/>
+<text x="369.7" y="362.3" fill="#06d6a0" font-size="11">Hyades (10 d)</text>
+<circle cx="588.1" cy="131.9" r="5" fill="#ffd43b"/>
+<text x="596.1" y="135.9" fill="#ffd43b" font-size="11">Sun (25 d)</text>
+<text x="64" y="34" fill="#e6edf3" font-size="18">Gyrochronology: rotation period vs stellar age</text>
+<text x="64" y="52" fill="#8b949e" font-size="12">Skumanich P ~ t^(1/2): a slow spin means an old star</text>
+<text x="656" y="678" fill="#8b949e" font-size="11" text-anchor="end">log10 age (Gyr) -&gt;</text>
+<text x="54" y="56" fill="#8b949e" font-size="11">log10 rotation period (days)</text>
+</svg><figcaption>the Skumanich age-period sequence, Sun and clusters marked</figcaption></figure><div class="card"><pre>Magnetic braking &amp; gyrochronology: a star&#x27;s spin is its clock
+
+  Skumanich law: P(t) = P_sun sqrt(t / t_sun), so t = t_sun (P/P_sun)^2
+
+                 rotator  P (days)  gyro age (Gyr)
+  ------------------------------------------------
+         Pleiades member       3.0            0.06
+        young field star       6.0            0.25
+           Hyades member       8.5            0.51
+                 the Sun      25.4            4.57
+     old thick-disk star      35.0            8.67
+
+  solar-wind Alfven radius ~ 16 R_sun -- the long lever arm that
+  lets a feeble ~1e-14 Msun/yr mass loss brake the whole star. Fast
+  rotators brake hardest, so a broad spread of young spins converges
+  onto one age-period sequence -- which is what makes the clock work.
+
+  wrote examples/output\magnetic_braking.svg</pre></div></div>
+  </section>
+
+  <section>
     <h2>Three-body stability map</h2>
     <p class="blurb">Every pixel is a full three-body integration; colour is the time until a body escapes. The fractal boundary between long-lived and quickly-ionized initial conditions is chaos drawn in IC space. (Generated separately by stability_map_demo.py -- it's compute-heavy.)</p>
     <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">

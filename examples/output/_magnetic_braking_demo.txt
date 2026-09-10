@@ -1,0 +1,18 @@
+Magnetic braking & gyrochronology: a star's spin is its clock
+
+  Skumanich law: P(t) = P_sun sqrt(t / t_sun), so t = t_sun (P/P_sun)^2
+
+                 rotator  P (days)  gyro age (Gyr)
+  ------------------------------------------------
+         Pleiades member       3.0            0.06
+        young field star       6.0            0.25
+           Hyades member       8.5            0.51
+                 the Sun      25.4            4.57
+     old thick-disk star      35.0            8.67
+
+  solar-wind Alfven radius ~ 16 R_sun -- the long lever arm that
+  lets a feeble ~1e-14 Msun/yr mass loss brake the whole star. Fast
+  rotators brake hardest, so a broad spread of young spins converges
+  onto one age-period sequence -- which is what makes the clock work.
+
+  wrote examples/output\magnetic_braking.svg

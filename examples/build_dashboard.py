@@ -125,6 +125,7 @@ def main():
     import axial_precession_demo
     import alfven_demo
     import parker_spiral_demo
+    import magnetic_braking_demo
 
     import plot_orbits
 
@@ -219,6 +220,7 @@ def main():
     axprec_txt = run("axial_precession_demo", axial_precession_demo.main, True)
     alfven_txt = run("alfven_demo", alfven_demo.main, True)
     parker_txt = run("parker_spiral_demo", parker_spiral_demo.main, True)
+    magbrake_txt = run("magnetic_braking_demo", magnetic_braking_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -837,6 +839,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("parker_spiral.svg"), "field lines spiralling out through the ecliptic")
             + f'<div class="card">{pre(parker_txt)}</div>'
+            + '</div>'),
+        section(
+            "Magnetic braking & gyrochronology",
+            "That same magnetized wind is a brake. Plasma stays locked to the field "
+            "out to the Alfven radius (~15 R_sun), so it corotates on a long lever "
+            "arm and bleeds angular momentum -- fast rotators brake hardest, so "
+            "stellar spins converge onto one sequence. Skumanich's law P ~ t^(1/2) "
+            "then turns a measured rotation period into an age: the Sun's 25-day "
+            "spin reads 4.6 Gyr, a 3-day Pleiad reads ~60 Myr.",
+            '<div class="grid">'
+            + svg_card(out("magnetic_braking.svg"), "the Skumanich age-period sequence, Sun and clusters marked")
+            + f'<div class="card">{pre(magbrake_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
