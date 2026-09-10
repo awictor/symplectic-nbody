@@ -51,6 +51,7 @@ ruins a long non-symplectic integration.
 | `src/coorbital.py` | Tadpole & horseshoe coorbital orbits in the CR3BP |
 | `src/tisserand.py` | Tisserand parameter: the near-invariant of a gravity assist |
 | `src/lensing.py` | Gravitational lensing: deflection, Einstein ring, microlensing |
+| `src/rotation_curve.py` | Galaxy rotation curves: Keplerian disk vs flat dark-halo curve |
 | `src/poincare.py` | Poincare surface-of-section for the CR3BP (tori vs chaos) |
 | `src/sitnikov.py` | The Sitnikov problem: on-axis test particle, integrable-to-chaotic |
 | `src/galaxy.py` | Disk-galaxy generator and two-galaxy tidal encounters |
@@ -77,6 +78,7 @@ ruins a long non-symplectic integration.
 | `examples/coorbital_demo.py` | Tadpole & horseshoe paths in the rotating frame (SVG) |
 | `examples/tisserand_demo.py` | a & e jump across a flyby while Tisserand stays flat |
 | `examples/lensing_demo.py` | Microlensing light curve + Einstein-ring image diagram (SVG) |
+| `examples/rotation_curve_demo.py` | Visible (declining) vs disk+halo (flat) rotation curves |
 | `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
 | `examples/sitnikov_demo.py` | Stroboscopic maps: circular binary (tori) vs eccentric (chaos) |
 | `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
@@ -212,6 +214,28 @@ diffuse dust. `poincare.py` reconstructs `vy` from the energy so each section
 point is a full initial condition, and the tests confirm the Jacobi constant is
 conserved along each orbit (faithful section), regular orbits stay on tight
 curves, and chaotic ones scatter more than 3x wider.
+
+## Galaxy rotation curves: the case for dark matter
+
+A star orbits on the mass enclosed within its radius, so `v_c(r) = sqrt(G
+M(<r)/r)`. `rotation_curve.py` builds the curve from an exponential disk and an
+optional NFW dark halo:
+
+```
+$ python examples/rotation_curve_demo.py examples/output
+
+  visible disk only : outer slope -0.490  (Keplerian decline = -0.50)
+  disk + dark halo  : outer slope -0.000  (flat = 0.00)
+  visible-only v(r): .::-------------------::::::::::::::::::::::::......
+  disk+halo   v(r): :-=+++*****#############################@##########
+```
+
+Past the visible edge the disk's enclosed mass saturates, so the disk-only curve
+falls off Keplerian (slope -1/2). An NFW halo's enclosed mass keeps growing as
+`~r`, which holds the total curve flat -- exactly what observations show. The gap
+between the two curves is the dark matter. The tests verify the Keplerian
+decline, the halo-flattened curve, and that disk mass saturates while halo mass
+keeps climbing.
 
 ## Gravitational lensing: bending light with gravity
 

@@ -77,6 +77,7 @@ def main():
     import coorbital_demo
     import tisserand_demo
     import lensing_demo
+    import rotation_curve_demo
 
     import plot_orbits
 
@@ -123,6 +124,7 @@ def main():
     coorbital_txt = run("coorbital_demo", coorbital_demo.main, True)
     tisserand_txt = run("tisserand_demo", tisserand_demo.main, True)
     lensing_txt = run("lensing_demo", lensing_demo.main, True)
+    rotcurve_txt = run("rotation_curve_demo", rotation_curve_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -224,6 +226,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("poincare_section.svg"), "tori and chaotic sea at one energy")
             + f'<div class="card">{pre(poincare_txt)}</div>'
+            + '</div>'),
+        section(
+            "Galaxy rotation curves & dark matter",
+            "A visible disk alone gives a Keplerian decline (v ~ r^-1/2) past its "
+            "edge; real galaxies stay flat. Adding an NFW dark halo, whose "
+            "enclosed mass keeps growing as ~r, flattens the curve -- the classic "
+            "evidence for dark matter.",
+            '<div class="grid">'
+            + svg_card(out("rotation_curve.svg"), "visible declines (red), disk+halo stays flat (blue)")
+            + f'<div class="card">{pre(rotcurve_txt)}</div>'
             + '</div>'),
         section(
             "Gravitational lensing",

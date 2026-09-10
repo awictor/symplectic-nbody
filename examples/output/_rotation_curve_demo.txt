@@ -1,0 +1,12 @@
+Galaxy rotation curves: the case for dark matter
+
+  visible disk only : outer slope -0.490 (Keplerian decline = -0.50)
+  disk + dark halo  : outer slope -0.000 (flat = 0.00)
+
+  visible-only v(r): .::--------------------::::::::::::::::::::::::::::::::.....
+  disk+halo  v(r): :-=+++*****################################@################
+
+  The visible curve falls off; the observed curve is flat. The gap is
+  the dark-matter halo, whose enclosed mass keeps growing as ~ r.
+
+  wrote examples/output\rotation_curve.svg
