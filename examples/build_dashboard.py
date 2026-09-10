@@ -192,6 +192,7 @@ def main():
     import ekman_demo
     import milankovitch_demo
     import equipartition_demo
+    import osmosis_demo
 
     import plot_orbits
 
@@ -353,6 +354,7 @@ def main():
     ekman_txt = run("ekman_demo", ekman_demo.main, True)
     milankovitch_txt = run("milankovitch_demo", milankovitch_demo.main, True)
     equipartition_txt = run("equipartition_demo", equipartition_demo.main, True)
+    osmosis_txt = run("osmosis_demo", osmosis_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1774,6 +1776,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("equipartition.svg"), "H2 molar C_V/R vs temperature: plateaus at 3/2, 5/2, 7/2 as modes thaw")
             + f'<div class="card">{pre(equipartition_txt)}</div>'
+            + '</div>'),
+        section(
+            "Osmotic pressure: van't Hoff across a membrane",
+            "Water crosses a semipermeable membrane into a solution until the built-up head "
+            "balances it. For dilute solutions the equilibrium pressure follows van't Hoff's "
+            "law Pi = i c R T -- the ideal-gas law with solute particles as the gas, so a "
+            "salt that splits into i ions pushes i times as hard. It reproduces seawater's "
+            "~27 atm (the wall reverse-osmosis desalination must beat) and blood plasma's "
+            "~7.6 atm (which sets isotonic IV fluids), and it weighs macromolecules by the "
+            "tiny pressure they raise.",
+            '<div class="grid">'
+            + svg_card(out("osmosis.svg"), "osmotic pressure vs concentration for glucose, NaCl and CaCl2, seawater & blood marked")
+            + f'<div class="card">{pre(osmosis_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

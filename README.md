@@ -150,6 +150,7 @@ ruins a long non-symplectic integration.
 | `src/ekman.py` | The Ekman spiral: wind-driven rotating boundary layer, transport & depth |
 | `src/milankovitch.py` | Milankovitch cycles: daily insolation, obliquity/eccentricity/precession forcing |
 | `src/equipartition.py` | Equipartition: (1/2)kT per DOF, gas C_V/C_P/gamma, the H2 heat-capacity staircase |
+| `src/osmosis.py` | Osmotic pressure: van't Hoff Pi=icRT, tonicity, osmometry, reverse osmosis |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -291,6 +292,7 @@ ruins a long non-symplectic integration.
 | `examples/ekman_demo.py` | Current-vs-depth table + the Ekman spiral hodograph |
 | `examples/milankovitch_demo.py` | 65N-summer sensitivity table + seasonal insolation map |
 | `examples/equipartition_demo.py` | Gas heat-capacity table + the H2 C_V staircase plot |
+| `examples/osmosis_demo.py` | Everyday-solution pressure table + Pi-vs-concentration plot |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3349,6 +3351,30 @@ vibration only near `theta_vib ~ 6000 K`. The module uses the Einstein two-state
 factor for the freeze-out, and the tests verify the monatomic/diatomic capacities, Mayer's
 relation, Dulong-Petit, the N2 rms speed, and the monotonic H2 staircase from 3R/2 through
 5R/2 toward 7R/2.
+
+## Osmotic pressure: van't Hoff across a membrane
+
+Dissolved particles push solvent across a semipermeable membrane. `osmosis.py`:
+
+```
+$ python examples/osmosis_demo.py examples/output
+
+  solution                          conc   i   Pi (atm)
+  blood plasma (~0.30 osmol/L)     0.30 M   1     7.63
+  normal saline 0.9%               0.15 M   2     7.63   (isotonic)
+  seawater (~0.6 M NaCl-equiv)     0.60 M   2    28.36
+```
+
+Van't Hoff's law `Pi = i c R T` is the ideal-gas law with solute particles playing the gas,
+so a salt that dissociates into `i` ions pushes `i` times as hard as an equal molarity of
+sugar. It reproduces seawater's ~27 atm -- the pressure reverse-osmosis desalination must
+overcome to force water back out -- and blood plasma's ~7.6 atm, which is why IV fluids and
+0.9% saline are formulated isotonic (get it wrong and red cells swell and burst or shrivel).
+Because the pressure is colligative, measuring it weighs macromolecules: the module inverts
+`Pi` to a molar mass (osmometry), and also reports concentration, osmolarity, tonicity of one
+solution against another, and the minimum reverse-osmosis pressure. The tests check seawater
+and blood, the `i`-scaling, the osmometry round-trip (60 kg/mol protein), and the saline
+isotonic point.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
