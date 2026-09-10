@@ -1,0 +1,25 @@
+Fermi acceleration: shocks stamp a power law N(E) ~ E^(-p)
+
+  strong-shock (M -> inf) index: p = 2.00 -> the universal E^(-2) spectrum
+
+     Mach  compression r   index p
+  --------------------------------
+      1.5          1.714     5.200
+        2          2.286     3.333
+        3          3.000     2.500
+        5          3.571     2.167
+       10          3.883     2.040
+       50          3.995     2.002
+     1000          4.000     2.000
+
+  per-cycle energy gain at beta = 0.03:
+    first-order (shock): 0.0400  (~4/3 beta)
+    second-order (clouds): 0.00120  (~4/3 beta^2)
+    first-order wins by 1/beta ~ 33x -- why shocks dominate.
+
+  The magic of diffusive shock acceleration: the index depends only on
+  the compression ratio, p = (r+2)/(r-1), not on the messy microphysics.
+  Every strong shock converges to r=4, p=2 -- so supernova remnants across
+  the Galaxy all inject nearly the same E^(-2) cosmic-ray spectrum.
+
+  wrote examples/output\fermi_acceleration.svg

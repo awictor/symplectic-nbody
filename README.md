@@ -90,6 +90,7 @@ ruins a long non-symplectic integration.
 | `src/poynting_robertson.py` | Poynting-Robertson drag: dust spiralling into the Sun |
 | `src/toomre.py` | Toomre Q: when a rotating disk fragments into clumps and arms |
 | `src/accretion_disk.py` | Shakura-Sunyaev disk: the X-ray/UV glow of accreting black holes |
+| `src/fermi_acceleration.py` | Diffusive shock acceleration & the universal E^(-2) cosmic-ray spectrum |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -171,6 +172,7 @@ ruins a long non-symplectic integration.
 | `examples/poynting_robertson_demo.py` | Inspiral time vs grain size with blow-out & solar age |
 | `examples/toomre_demo.py` | Q across the galactic disk with the unstable band shaded |
 | `examples/accretion_disk_demo.py` | T(r) for stellar-mass vs supermassive disks + wavebands |
+| `examples/fermi_acceleration_demo.py` | Spectral index vs Mach + power-law spectra toward p=2 |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1647,6 +1649,36 @@ times more efficient than hydrogen fusion, which is why accreting black holes ar
 brightest steady engines in the universe. The tests verify the ISCO radius, the `r^(-3/4)`
 profile vanishing at the inner edge, the X-ray-hot stellar disk and UV quasar disk, the
 Eddington scaling, and the efficiency advantage over fusion.
+
+## Fermi acceleration: the universal cosmic-ray spectrum
+
+Fermi's answer to how cosmic rays reach vast energies was repeated small kicks: a charged
+particle crossing a shock front gains energy each round trip and has a fixed escape chance,
+and "multiply the energy by a constant per cycle, lose a constant fraction per cycle"
+produces a scale-free power law `N(E) ~ E^(-p)`. `fermi_acceleration.py`:
+
+```
+$ python examples/fermi_acceleration_demo.py examples/output
+
+     Mach   compression r   index p
+  --------------------------------
+        2          2.286     3.333
+        3          3.000     2.500
+        5          3.571     2.167
+       10          3.883     2.040
+       50          3.995     2.002
+     1000          4.000     2.000
+```
+
+The beauty of *first-order* (diffusive shock) acceleration is that the index depends only
+on the shock compression ratio, `p = (r+2)/(r-1)`, not on the messy microphysics. Every
+strong shock hits the Rankine-Hugoniot limit `r -> 4` (gamma=5/3), so `p -> 2` -- the
+near-universal `E^(-2)` spectrum injected by supernova remnants across the Galaxy. And
+because the per-cycle gain is `~(4/3) beta` at a shock versus `~(4/3) beta^2` for Fermi's
+original random magnetic clouds, shocks win by a factor `1/beta`, which is why they, not
+clouds, are the cosmic-ray engines. The tests verify the `r -> 4` strong-shock limit, the
+`p = 2` universal index, steeper spectra from weaker shocks, and the first- over
+second-order advantage.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

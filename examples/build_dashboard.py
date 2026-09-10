@@ -132,6 +132,7 @@ def main():
     import poynting_robertson_demo
     import toomre_demo
     import accretion_disk_demo
+    import fermi_acceleration_demo
 
     import plot_orbits
 
@@ -233,6 +234,7 @@ def main():
     prdrag_txt = run("poynting_robertson_demo", poynting_robertson_demo.main, True)
     toomre_txt = run("toomre_demo", toomre_demo.main, True)
     accdisk_txt = run("accretion_disk_demo", accretion_disk_demo.main, True)
+    fermi_txt = run("fermi_acceleration_demo", fermi_acceleration_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -935,6 +937,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("accretion_disk.svg"), "T(r) for a stellar-mass and a supermassive disk, wavebands marked")
             + f'<div class="card">{pre(accdisk_txt)}</div>'
+            + '</div>'),
+        section(
+            "Fermi acceleration & cosmic rays",
+            "A charged particle repeatedly crossing a shock front gains energy at "
+            "first order in the shock speed each time and has a fixed escape chance, "
+            "producing a scale-free power-law spectrum N(E) ~ E^(-p). The index "
+            "depends only on the compression ratio, p = (r+2)/(r-1), and every "
+            "strong shock converges to r = 4, p = 2 -- the near-universal E^(-2) "
+            "spectrum injected by supernova remnants across the Galaxy.",
+            '<div class="grid">'
+            + svg_card(out("fermi_acceleration.svg"), "power-law spectra steepening as the shock weakens toward p=2")
+            + f'<div class="card">{pre(fermi_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
