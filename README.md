@@ -106,6 +106,7 @@ ruins a long non-symplectic integration.
 | `src/bbn.py` | Big Bang nucleosynthesis: n/p freeze-out & primordial helium |
 | `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
 | `src/main_sequence.py` | Main sequence: mass-luminosity relation, lifetimes, HR diagram |
+| `src/kelvin_helmholtz.py` | Kelvin-Helmholtz thermal timescale (gravity vs fusion) |
 | `src/distances.py` | Cosmological distances: luminosity/angular-diameter, cosmic acceleration |
 | `src/degeneracy.py` | Fermi degeneracy pressure: the quantum support of dead stars |
 | `src/chandrasekhar.py` | White-dwarf structure & the Chandrasekhar mass (~1.44 M_sun) |
@@ -167,6 +168,7 @@ ruins a long non-symplectic integration.
 | `examples/bbn_demo.py` | n/p freeze-out chain and the Y_p ~ 0.25 helium fraction |
 | `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
 | `examples/main_sequence_demo.py` | Mass-L-lifetime table + the main sequence on an HR diagram |
+| `examples/kelvin_helmholtz_demo.py` | Kelvin-Helmholtz vs nuclear timescale by mass |
 | `examples/distances_demo.py` | Hubble diagram (LCDM vs decelerating) + D_A turnover |
 | `examples/degeneracy_demo.py` | Degeneracy-pressure laws vs density with the relativistic transition |
 | `examples/chandrasekhar_demo.py` | White-dwarf mass-radius curve approaching 1.44 M_sun |
@@ -489,6 +491,28 @@ its mass climbs toward `~1.44 M_sun` but never past it. Above the limit no stabl
 white dwarf exists -- it collapses, the trigger for type-Ia supernovae. The tests
 verify the 1.44 value, the `1/mu_e^2` scaling, and that a denser dwarf is smaller
 and more massive, approaching the limit from below.
+
+## Kelvin-Helmholtz time: why the Sun can't run on gravity
+
+Before fusion was known, Kelvin and Helmholtz argued the Sun shines by
+contracting. `kelvin_helmholtz.py` shows why that fails:
+
+```
+$ python examples/kelvin_helmholtz_demo.py examples/output
+
+  Sun's KH time: 31 Myr -- vs Earth's 4500 Myr age.
+  mass (M_sun)    t_KH (Myr)   t_nuclear (Myr)
+           1.0         31.42           10000.0
+          10.0          0.16              31.6
+```
+
+The thermal time `t_KH = G M^2 / (R L)` -- how long a star could shine by
+radiating its gravitational binding energy -- is only ~30 Myr for the Sun,
+hundreds of times shorter than the geological age of the Earth. That mismatch was
+the historic proof that stars must be powered by nuclear fusion (whose
+main-sequence lifetime is ~10 Gyr). `t_KH` survives as the timescale on which a
+protostar contracts before ignition. The tests reproduce the 30 Myr solar value,
+the mismatch with Earth's age, the `M^2/(RL)` scaling, and the binding energy.
 
 ## The main sequence and the HR diagram
 

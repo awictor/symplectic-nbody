@@ -112,6 +112,7 @@ def main():
     import compton_demo
     import synchrotron_demo
     import sz_demo
+    import kelvin_helmholtz_demo
 
     import plot_orbits
 
@@ -193,6 +194,7 @@ def main():
     compton_txt = run("compton_demo", compton_demo.main, True)
     synchrotron_txt = run("synchrotron_demo", synchrotron_demo.main, True)
     sz_txt = run("sz_demo", sz_demo.main, True)
+    kh_txt = run("kelvin_helmholtz_demo", kelvin_helmholtz_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -393,6 +395,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("main_sequence.svg"), "the main sequence on an HR diagram")
             + f'<div class="card">{pre(ms_txt)}</div>'
+            + '</div>'),
+        section(
+            "Kelvin-Helmholtz time: why gravity can't power the Sun",
+            "Gravitational contraction (t_KH = G M^2 / R L) could light the Sun for "
+            "only ~30 Myr -- far short of Earth's 4.5 Gyr age, the historic proof "
+            "that stars need nuclear fusion. It is instead how long a protostar "
+            "contracts before fusion ignites.",
+            '<div class="grid">'
+            + svg_card(out("kelvin_helmholtz.svg"), "Kelvin-Helmholtz vs nuclear timescale by mass")
+            + f'<div class="card">{pre(kh_txt)}</div>'
             + '</div>'),
         section(
             "Cosmic distances & the discovery of acceleration",

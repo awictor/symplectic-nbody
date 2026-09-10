@@ -1,0 +1,18 @@
+Kelvin-Helmholtz (gravity) vs nuclear timescales
+
+  Sun's KH time: 31 Myr -- vs Earth's 4500 Myr age.
+  Gravity alone runs the Sun for only ~30 Myr, so it MUST fuse hydrogen.
+
+  mass (M_sun)    t_KH (Myr)   t_nuclear (Myr)
+  --------------------------------------------
+           0.5        154.71           56568.5
+           1.0         31.42           10000.0
+           2.0          6.38            1767.8
+           5.0          0.78             178.9
+          10.0          0.16              31.6
+
+  The nuclear lifetime dwarfs the KH time at every mass -- fusion, not
+  contraction, powers stars. The KH time is instead how long a
+  protostar contracts before fusion ignites.
+
+  wrote examples/output\kelvin_helmholtz.svg
