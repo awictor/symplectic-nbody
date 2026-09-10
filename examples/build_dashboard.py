@@ -150,6 +150,7 @@ def main():
     import debye_demo
     import line_broadening_demo
     import curve_of_growth_demo
+    import sackur_tetrode_demo
 
     import plot_orbits
 
@@ -269,6 +270,7 @@ def main():
     debye_txt = run("debye_demo", debye_demo.main, True)
     linebroad_txt = run("line_broadening_demo", line_broadening_demo.main, True)
     cog_txt = run("curve_of_growth_demo", curve_of_growth_demo.main, True)
+    sackur_txt = run("sackur_tetrode_demo", sackur_tetrode_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1187,6 +1189,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("curve_of_growth.svg"), "the linear rise, saturated plateau and square-root damping tail")
             + f'<div class="card">{pre(cog_txt)}</div>'
+            + '</div>'),
+        section(
+            "Sackur-Tetrode entropy",
+            "Quantum state-counting fixes the absolute entropy of an ideal gas: "
+            "S = N k_B [ln((V/N)(4 pi m U / 3 N h^2)^(3/2)) + 5/2]. Planck's constant "
+            "enters explicitly (a phase-space cell is h^3) and the 1/N! for "
+            "indistinguishable atoms resolves the Gibbs paradox. Evaluated for the "
+            "noble gases at STP it reproduces the measured standard molar entropies to "
+            "under a fifth of a percent -- entropy really is log of microstates.",
+            '<div class="grid">'
+            + svg_card(out("sackur_tetrode.svg"), "molar entropy vs temperature with measured STP values ringed")
+            + f'<div class="card">{pre(sackur_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

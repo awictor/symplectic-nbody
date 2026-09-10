@@ -108,6 +108,7 @@ ruins a long non-symplectic integration.
 | `src/debye.py` | Debye shielding & the plasma frequency: what makes a plasma |
 | `src/line_broadening.py` | Spectral line broadening: Doppler, natural & pressure widths |
 | `src/curve_of_growth.py` | Curve of growth: equivalent width vs column density in three regimes |
+| `src/sackur_tetrode.py` | Sackur-Tetrode equation: the absolute entropy of an ideal gas |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -207,6 +208,7 @@ ruins a long non-symplectic integration.
 | `examples/debye_demo.py` | lambda_D/N_D/f_p by environment + the f_p(n) radio-cutoff curve |
 | `examples/line_broadening_demo.py` | Doppler/pressure widths by environment + Gaussian vs Lorentzian profiles |
 | `examples/curve_of_growth_demo.py` | W & regime vs optical depth + the three-segment curve |
+| `examples/sackur_tetrode_demo.py` | Predicted vs measured noble-gas entropy + S(T) curves |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2176,6 +2178,33 @@ segment of this curve is exactly how stellar and interstellar abundances are rea
 absorption spectra. The tests verify the linear `W ~ N` rise, the flat saturated plateau, the
 `sqrt(N)` damping tail (100x column -> 10x W), the monotonic overall growth, the regime
 ordering, and the linear-regime column inversion.
+
+## Sackur-Tetrode: the absolute entropy of a gas
+
+Quantum state-counting fixes the entropy constant that classical thermodynamics leaves free.
+`sackur_tetrode.py`:
+
+```
+$ python examples/sackur_tetrode_demo.py examples/output
+
+     gas  mass (amu)   S predicted   S measured    error
+  ------------------------------------------------------
+      He       4.003         126.0        126.2   -0.12%
+      Ne      20.180         146.2        146.3   -0.06%
+      Ar      39.948         154.7        154.8   -0.04%
+      Kr      83.798         164.0        164.1   -0.08%
+      Xe     131.290         169.6        169.7   -0.07%
+```
+
+Counting the microstates of `N` indistinguishable atoms with phase-space cells of size `h^3`
+gives `S = N k_B [ln((V/N)(4 pi m U / 3 N h^2)^(3/2)) + 5/2]`. Planck's constant appears
+explicitly -- without it the log's argument would be dimensional -- and the `1/N!` for
+indistinguishable atoms makes entropy extensive and resolves the Gibbs paradox. Predicted
+from nothing but atomic mass, temperature and pressure, it matches the calorimetric standard
+molar entropies of the noble gases to under a fifth of a percent, a direct confirmation that
+entropy is the logarithm of countable microstates. The tests verify argon's and helium's
+measured molar entropies, the heavier-is-higher trend, the picometre thermal wavelength, the
+classical (non-degenerate) STP gas, and the rise with temperature and volume.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

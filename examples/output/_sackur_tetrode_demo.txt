@@ -1,0 +1,19 @@
+Sackur-Tetrode: absolute entropy from counting quantum microstates
+
+  standard molar entropy at STP (298.15 K, 1 atm):
+
+     gas  mass (amu)   S predicted   S measured    error
+  ------------------------------------------------------
+      He       4.003         126.0        126.2   -0.12%
+      Ne      20.180         146.2        146.3   -0.06%
+      Ar      39.948         154.7        154.8   -0.04%
+      Kr      83.798         164.0        164.1   -0.08%
+      Xe     131.290         169.6        169.7   -0.07%
+
+  Predicted from nothing but atomic mass, T and P -- and matching the
+  calorimetric values to a fraction of a percent. The quantum of action h
+  appears explicitly (a phase-space cell is h^3), and the 1/N! for
+  indistinguishable atoms is what makes entropy extensive and resolves the
+  Gibbs paradox. Entropy really is the logarithm of countable microstates.
+
+  wrote examples/output\sackur_tetrode.svg
