@@ -1,0 +1,18 @@
+de Broglie wavelength: lambda = h / p -- everything is a wave
+
+                      object          lambda
+  --------------------------------------------
+       100 keV microscope e-         3.88 pm
+               1 eV electron         1.23 nm
+     thermal neutron (300 K)          100 pm
+     thermal He atom (300 K)         50.2 pm
+         100 m/s N2 molecule          141 pm
+           baseball (40 m/s)      1.14e-34 m
+
+  Momentum sets the wavelength, so heavy or fast things have vanishingly
+  short waves -- a baseball's is 10^-34 m, undetectable. But a 100 keV
+  electron's 4 pm is thousands of times finer than visible light, which is
+  why electron microscopes resolve atoms, and a thermal neutron's ~0.1 nm
+  matches crystal spacing, making neutron diffraction a structural probe.
+
+  wrote examples/output\de_broglie.svg

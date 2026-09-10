@@ -168,6 +168,7 @@ def main():
     import beaming_demo
     import relativistic_rocket_demo
     import relativistic_doppler_demo
+    import de_broglie_demo
 
     import plot_orbits
 
@@ -305,6 +306,7 @@ def main():
     beaming_txt = run("beaming_demo", beaming_demo.main, True)
     rocket_txt = run("relativistic_rocket_demo", relativistic_rocket_demo.main, True)
     rdopp_txt = run("relativistic_doppler_demo", relativistic_doppler_demo.main, True)
+    debroglie_txt = run("de_broglie_demo", de_broglie_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1438,6 +1440,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("relativistic_doppler.svg"), "redshift vs speed for receding, approaching and transverse cases")
             + f'<div class="card">{pre(rdopp_txt)}</div>'
+            + '</div>'),
+        section(
+            "de Broglie matter waves",
+            "Every particle has a wavelength lambda = h/p, inversely proportional to its "
+            "momentum. A baseball's is 10^-34 m -- undetectable -- but a 100 keV electron's "
+            "is ~4 pm, thousands of times finer than light, which is why electron "
+            "microscopes resolve atoms; a thermal neutron's ~0.1 nm matches crystal "
+            "spacing for diffraction. The wave nature takes over once lambda rivals the "
+            "interparticle spacing -- the onset of quantum degeneracy.",
+            '<div class="grid">'
+            + svg_card(out("de_broglie.svg"), "wavelength vs energy for electron/proton/neutron with reference scales")
+            + f'<div class="card">{pre(debroglie_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

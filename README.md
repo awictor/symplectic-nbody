@@ -126,6 +126,7 @@ ruins a long non-symplectic integration.
 | `src/beaming.py` | Relativistic beaming: Doppler boosting & one-sided jets |
 | `src/relativistic_rocket.py` | The relativistic rocket: interstellar travel at constant 1 g |
 | `src/relativistic_doppler.py` | Relativistic Doppler: longitudinal, transverse & redshift-velocity |
+| `src/de_broglie.py` | The de Broglie wavelength: matter as waves |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -243,6 +244,7 @@ ruins a long non-symplectic integration.
 | `examples/beaming_demo.py` | Doppler/boost/jet-ratio per gamma & angle + the D(theta) curves |
 | `examples/relativistic_rocket_demo.py` | Ship/Earth time & v to each destination + the divergence plot |
 | `examples/relativistic_doppler_demo.py` | Receding/approaching/transverse z per speed + the z(beta) curves |
+| `examples/de_broglie_demo.py` | Matter wavelengths electron-to-baseball + the lambda(E) curves |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2692,6 +2694,33 @@ speed, `beta = ((1+z)^2-1)/((1+z)^2+1)`. The tests verify the receding redshift 
 approaching blueshift, the frequency/wavelength reciprocity, the `1/gamma` transverse
 time-dilation shift, the reduction of the general angle to the radial and transverse cases,
 and the redshift-velocity round-trip.
+
+## de Broglie: matter as waves
+
+Every particle has a wavelength inversely proportional to its momentum. `de_broglie.py`:
+
+```
+$ python examples/de_broglie_demo.py examples/output
+
+                    object          lambda
+  --------------------------------------------
+     100 keV microscope e-         3.88 pm
+             1 eV electron         1.23 nm
+   thermal neutron (300 K)          100 pm
+   thermal He atom (300 K)         50.2 pm
+       100 m/s N2 molecule          141 pm
+         baseball (40 m/s)      1.14e-34 m
+```
+
+`lambda = h/p`, so heavy or fast objects have vanishingly short waves -- a baseball's
+`10^-34 m` is undetectable. But a 100 keV electron's ~4 pm is thousands of times finer than
+visible light, which is why electron microscopes resolve atoms, and a thermal neutron's
+~0.1 nm matches crystal spacing, making neutron diffraction a structural probe. Non-relativistically
+`lambda = h/sqrt(2 m E)`, and the thermal de Broglie wavelength `h/sqrt(2 pi m k_B T)` marks
+where quantum statistics take over -- the same condition behind degeneracy pressure and
+Bose-Einstein condensation. The tests verify the 100 keV electron and thermal-neutron
+wavelengths, the negligible baseball, the `1/p` and `1/sqrt(E)` scalings, the energy/momentum
+form agreement, and the momentum-wavelength inversion.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
