@@ -140,6 +140,7 @@ def main():
     import shock_jump_demo
     import stromgren_demo
     import relaxation_time_demo
+    import parker_wind_demo
 
     import plot_orbits
 
@@ -249,6 +250,7 @@ def main():
     shock_txt = run("shock_jump_demo", shock_jump_demo.main, True)
     stromgren_txt = run("stromgren_demo", stromgren_demo.main, True)
     relax_txt = run("relaxation_time_demo", relaxation_time_demo.main, True)
+    pwind_txt = run("parker_wind_demo", parker_wind_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1047,6 +1049,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("relaxation_time.svg"), "relaxation time vs N crossing the Hubble-time line")
             + f'<div class="card">{pre(relax_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Parker wind",
+            "Parker showed a hot corona cannot stay static: an isothermal atmosphere "
+            "keeps a finite pressure at infinity, far above interstellar space, so it "
+            "must expand. The correct steady solution passes smoothly through Mach 1 "
+            "at the sonic critical radius r_c = GM/2c_s^2 (a few solar radii), staying "
+            "subsonic inside and supersonic out, and reaches a few hundred km/s by 1 "
+            "AU -- the solar wind Mariner 2 confirmed.",
+            '<div class="grid">'
+            + svg_card(out("parker_wind.svg"), "transonic velocity profiles through the Mach-1 critical point")
+            + f'<div class="card">{pre(pwind_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

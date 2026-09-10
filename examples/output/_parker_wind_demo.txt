@@ -1,0 +1,16 @@
+Parker wind: the transonic solution through the sonic critical point
+
+    T (MK)  c_s (km/s)  r_c (R_sun)   v(1 AU) km/s  Mach(1 AU)
+  ------------------------------------------------------------
+       1.0       117.3         6.94            430        3.67
+       1.5       143.7         4.62            559        3.89
+       2.0       165.9         3.47            671        4.05
+       3.0       203.2         2.31            864        4.25
+
+  A hotter corona has a larger sound speed but a SMALLER critical radius
+  (r_c ~ 1/c_s^2), so the wind goes supersonic sooner and reaches a higher
+  terminal speed. Parker's key point: the only solution that stays finite
+  at both ends passes smoothly through Mach 1 -- a static corona is
+  impossible, and the supersonic solar wind confirmed by Mariner 2 follows.
+
+  wrote examples/output\parker_wind.svg

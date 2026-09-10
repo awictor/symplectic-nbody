@@ -98,6 +98,7 @@ ruins a long non-symplectic integration.
 | `src/shock_jump.py` | Sound speed & the Rankine-Hugoniot shock jumps |
 | `src/stromgren.py` | The Stromgren sphere: the ionized HII bubble around a hot star |
 | `src/relaxation_time.py` | Two-body relaxation & evaporation: collisional clusters vs collisionless galaxies |
+| `src/parker_wind.py` | The Parker transonic solar wind through the sonic critical point |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -187,6 +188,7 @@ ruins a long non-symplectic integration.
 | `examples/shock_jump_demo.py` | Jump ratios vs Mach + the density-4 ceiling and M^2 divergence |
 | `examples/stromgren_demo.py` | Radius & ionized mass by star/density + the R ~ n^(-2/3) curves |
 | `examples/relaxation_time_demo.py` | Crossing/relax/evap times by system + t_relax(N) vs Hubble time |
+| `examples/parker_wind_demo.py` | Sound speed/critical radius/1 AU speed + transonic profiles |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1888,6 +1890,32 @@ time is millions of Hubble times -- it is effectively collisionless, which is wh
 keep their spiral arms, tidal streams and cold disks intact for a Hubble time. The tests
 verify the ~1 Gyr globular relaxation, the collisionless galaxy, the near-linear `N`
 dependence, the large evaporation multiple, and faster relaxation for shorter crossing times.
+
+## The Parker wind: why the corona cannot stay still
+
+Parker showed a hot corona cannot sit in hydrostatic equilibrium -- an isothermal atmosphere
+keeps a finite pressure at infinity, far above interstellar space, so it must expand.
+`parker_wind.py`:
+
+```
+$ python examples/parker_wind_demo.py examples/output
+
+    T (MK)  c_s (km/s)  r_c (R_sun)   v(1 AU) km/s  Mach(1 AU)
+  ------------------------------------------------------------
+       1.0       117.3         6.94            430        3.67
+       1.5       143.7         4.62            559        3.89
+       2.0       165.9         3.47            671        4.05
+       3.0       203.2         2.31            864        4.25
+```
+
+The physically-correct solution passes smoothly through Mach 1 at the sonic critical radius
+`r_c = GM/2c_s^2` (a few solar radii), staying subsonic inside and supersonic outside, and is
+solved here from the Parker integral by bisection on the right branch. A hotter corona has a
+larger sound speed but a smaller critical radius (`r_c ~ 1/c_s^2`), so its wind goes supersonic
+sooner and reaches a higher terminal speed -- a few hundred km/s by 1 AU, the solar wind that
+Mariner 2 confirmed over the static-corona camp. The tests verify the ~140 km/s coronal sound
+speed, the few-solar-radii critical radius, exact Mach 1 at `r_c`, the subsonic/supersonic
+branches, monotonic outward acceleration, the 1 AU speed, and the hotter-faster trend.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
