@@ -69,6 +69,7 @@ def main():
     import hermite_demo
     import gravwave_demo
     import circularization_demo
+    import sitnikov_demo
 
     # make sure all SVGs exist
     import plot_orbits
@@ -92,6 +93,8 @@ def main():
     gravwave_demo.main()
     sys.argv = ["circularization_demo", outdir]
     circularization_demo.main()
+    sys.argv = ["sitnikov_demo", outdir]
+    sitnikov_demo.main()
     sys.argv = _old_argv
 
     print("capturing demo outputs...")
@@ -114,6 +117,8 @@ def main():
     gw_txt = capture(gravwave_demo.main)
     sys.argv = ["circularization_demo", outdir]
     circ_txt = capture(circularization_demo.main)
+    sys.argv = ["sitnikov_demo", outdir]
+    sitnikov_txt = capture(sitnikov_demo.main)
     sys.argv = _old_argv
     hermite_txt = capture(hermite_demo.main)
     # scaling benchmark is slow; run a lighter inline version
@@ -199,6 +204,17 @@ def main():
             + svg_card(out("galaxy_t2.svg"), "close passage")
             + svg_card(out("galaxy_t4.svg"), "tidal tails")
             + f'<div class="card">{pre(galaxy_txt)}</div>'
+            + '</div>'),
+        section(
+            "Sitnikov problem: a clean route to chaos",
+            "A massless body on the z-axis through a binary. For a circular "
+            "binary the stroboscopic map is smooth nested curves (integrable); "
+            "give the binary eccentricity and the inner curves shred into a "
+            "chaotic layer -- the system Moser used to prove chaos exists.",
+            '<div class="grid">'
+            + svg_card(out("sitnikov_circ.svg"), "e=0: nested tori (integrable)")
+            + svg_card(out("sitnikov_ecc.svg"), "e=0.3: chaotic layer")
+            + f'<div class="card">{pre(sitnikov_txt)}</div>'
             + '</div>'),
         section(
             "Poincare surface-of-section",

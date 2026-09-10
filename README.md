@@ -45,6 +45,7 @@ ruins a long non-symplectic integration.
 | `src/lyapunov.py` | Largest Lyapunov exponent (Benettin shadow-trajectory method) |
 | `src/stability_map.py` | Three-body escape-time scan over a grid of initial conditions |
 | `src/poincare.py` | Poincare surface-of-section for the CR3BP (tori vs chaos) |
+| `src/sitnikov.py` | The Sitnikov problem: on-axis test particle, integrable-to-chaotic |
 | `src/galaxy.py` | Disk-galaxy generator and two-galaxy tidal encounters |
 | `src/gravwave.py` | 2.5PN radiation reaction: gravitational-wave inspiral & chirp |
 | `src/systems.py` | Test systems: two-body, figure-eight, pythagorean 3-body, **Plummer-sphere star cluster** (any N) |
@@ -63,6 +64,7 @@ ruins a long non-symplectic integration.
 | `examples/chaos_demo.py` | Lyapunov exponent + two trajectories diverging 6 orders of magnitude |
 | `examples/stability_map_demo.py` | Parallel escape-time heatmap revealing the fractal chaos boundary |
 | `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
+| `examples/sitnikov_demo.py` | Stroboscopic maps: circular binary (tori) vs eccentric (chaos) |
 | `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
 | `examples/gravwave_demo.py` | Inspiral chirp, energy loss validated against Peters (1964) |
 | `examples/circularization_demo.py` | Peters (a, e) tracks: all binaries circularize before merger |
@@ -156,6 +158,26 @@ The demo writes a time sequence of SVG snapshots (approach -> close passage ->
 tails). The tests confirm an isolated disk is stable (cold circular orbits don't
 fly apart), the tracers are massless with all mass in the two cores, and a close
 passage strips a substantial fraction of the disk into tails.
+
+## The Sitnikov problem: a dial from order to chaos
+
+The cleanest chaos in celestial mechanics. Two equal masses orbit on a Kepler
+ellipse; a massless body sits on the axis through their barycentre, and its whole
+dynamics is one equation, `z'' = -z / (z^2 + r(t)^2)^{3/2}`. The binary's
+eccentricity `e` is the only knob:
+
+```
+python examples/sitnikov_demo.py examples/output
+# e=0.0: 10 orbits, mean z-spread   1.83   (integrable -- nested tori)
+# e=0.3: 10 orbits, mean z-spread 198.81   (chaotic -- orbits diffuse outward)
+```
+
+At `e = 0` the forcing is constant, energy is conserved, and the stroboscopic
+`(z, vz)` map is a set of smooth nested curves. Turn `e` up and the periodic
+forcing tears the inner curves into a chaotic layer -- this is the system Moser
+used to prove that chaotic (symbolic-dynamics) orbits exist. The tests verify
+energy conservation at `e=0`, that `z=0` is an equilibrium, the force is odd in
+`z`, and that sensitivity to initial conditions explodes 100x+ once `e > 0`.
 
 ## Poincare sections: order and chaos at the same energy
 
