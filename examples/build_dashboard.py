@@ -231,6 +231,7 @@ def main():
     import quantum_hall_demo
     import bcs_demo
     import london_demo
+    import ising_mft_demo
 
     import plot_orbits
 
@@ -431,6 +432,7 @@ def main():
     quantum_hall_txt = run("quantum_hall_demo", quantum_hall_demo.main, True)
     bcs_txt = run("bcs_demo", bcs_demo.main, True)
     london_txt = run("london_demo", london_demo.main, True)
+    ising_mft_txt = run("ising_mft_demo", ising_mft_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2367,6 +2369,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("london.svg"), "the Meissner field decaying into the surface, and materials across the type-I/II boundary")
             + f'<div class="card">{pre(london_txt)}</div>'
+            + '</div>'),
+        section(
+            "Mean-field ferromagnetism: order from disorder",
+            "Below a Curie temperature a magnet spontaneously aligns -- countless spins tip "
+            "into one direction with no applied field. Weiss mean-field theory of the Ising "
+            "model captures it: each spin feels the average of its neighbours, m = "
+            "tanh((z J m + B)/T), with T_c = z J. Above T_c the only zero-field solution is "
+            "m = 0 (paramagnet); below it a nonzero magnetization appears, vanishing near T_c "
+            "as (1 - T/Tc)^(1/2) (the mean-field beta = 1/2), while the susceptibility diverges "
+            "as the Curie-Weiss 1/(T - T_c) -- the hallmarks of a second-order phase transition.",
+            '<div class="grid">'
+            + svg_card(out("ising_mft.svg"), "magnetization collapsing to zero at the Curie point, and the diverging susceptibility")
+            + f'<div class="card">{pre(ising_mft_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

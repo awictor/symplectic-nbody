@@ -189,6 +189,7 @@ ruins a long non-symplectic integration.
 | `src/quantum_hall.py` | Quantum Hall effect: von Klitzing constant, plateaus, Landau levels |
 | `src/bcs.py` | BCS superconductivity: gap-to-Tc ratio, gap(T), Tc from coupling, isotope effect |
 | `src/london.py` | London/Meissner: penetration depth, field expulsion, type I/II classification |
+| `src/ising_mft.py` | Mean-field Ising: Curie temperature, spontaneous magnetization, Curie-Weiss |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -369,6 +370,7 @@ ruins a long non-symplectic integration.
 | `examples/quantum_hall_demo.py` | Plateau/Landau table + the R_xy staircase figure |
 | `examples/bcs_demo.py` | Gap/isotope/Tc table + the gap(T) & Tc-vs-coupling figure |
 | `examples/london_demo.py` | Penetration/type table + the Meissner-decay & type-boundary figure |
+| `examples/ising_mft_demo.py` | Magnetization/susceptibility table + the m(T) & chi figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4354,6 +4356,28 @@ goes normal, while type II (`kappa > 1/sqrt2`) admits field as quantized flux vo
 enormous fields of MRI and fusion. The tests reproduce the ~20-60 nm penetration depth, the
 `1/sqrt(n)` scaling, the `exp(-x/lambda)` screening, the type I/II boundary at `1/sqrt2`, the
 vortex flux quantum, and the critical-field ratio growing with kappa.
+
+## Mean-field ferromagnetism: order from disorder
+
+Spins align spontaneously below the Curie point. `ising_mft.py`:
+
+```
+$ python examples/ising_mft_demo.py examples/output
+
+  T / T_c   magnetization   phase          chi above T_c:
+  0.50      0.958           ferromagnet    1.05 T_c -> 3.33
+  1.00      0.010           paramagnet     2.00 T_c -> 0.17
+```
+
+Weiss mean-field theory of the Ising model solves the self-consistent
+`m = tanh((z J m + B)/T)`, where each spin feels the average alignment of its `z` neighbours.
+Above the Curie temperature `T_c = z J` the only zero-field solution is `m = 0` (a disordered
+paramagnet); below it a nonzero magnetization appears spontaneously -- symmetry breaking with
+no applied field. Near `T_c` it vanishes as `(1 - T/Tc)^(1/2)`, the mean-field critical
+exponent `beta = 1/2`, while the zero-field susceptibility diverges as the Curie-Weiss law
+`chi ~ 1/(T - T_c)` -- the signatures of a second-order phase transition. The tests reproduce
+`T_c = z J`, the `m=0` paramagnet above and `m->1` ferromagnet below, the field-induced
+magnetization, the `beta=1/2` scaling, and the diverging Curie-Weiss susceptibility.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

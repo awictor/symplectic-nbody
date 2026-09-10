@@ -1,0 +1,21 @@
+Mean-field Ising: m = tanh((z J m + B)/T), T_c = z J = 6
+
+     T / T_c   magnetization           phase
+        0.20           1.000     ferromagnet
+        0.50           0.958     ferromagnet
+        0.80           0.710     ferromagnet
+        0.95           0.379     ferromagnet
+        1.00           0.010      paramagnet
+        1.20           0.000      paramagnet
+
+  Curie-Weiss susceptibility above T_c (chi = C/(T - T_c)):
+    T = 1.05 T_c  ->  chi = 3.333
+    T = 1.20 T_c  ->  chi = 0.833
+    T = 1.50 T_c  ->  chi = 0.333
+    T = 2.00 T_c  ->  chi = 0.167
+
+  Below T_c countless spins tip collectively into one direction with no applied
+  field -- spontaneous symmetry breaking. The magnetization vanishes as (1-T/Tc)^1/2
+  (mean-field beta=1/2) and the susceptibility diverges at T_c: a phase transition.
+
+  wrote examples/output\ising_mft.svg
