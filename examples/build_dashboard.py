@@ -67,6 +67,7 @@ def main():
     import poincare_demo
     import galaxy_collision_demo
     import hermite_demo
+    import gravwave_demo
 
     # make sure all SVGs exist
     import plot_orbits
@@ -86,6 +87,8 @@ def main():
     poincare_demo.main()
     sys.argv = ["galaxy_collision_demo", outdir]
     galaxy_collision_demo.main()
+    sys.argv = ["gravwave_demo", outdir]
+    gravwave_demo.main()
     sys.argv = _old_argv
 
     print("capturing demo outputs...")
@@ -104,6 +107,8 @@ def main():
     poincare_txt = capture(poincare_demo.main)
     sys.argv = ["galaxy_collision_demo", outdir]
     galaxy_txt = capture(galaxy_collision_demo.main)
+    sys.argv = ["gravwave_demo", outdir]
+    gw_txt = capture(gravwave_demo.main)
     sys.argv = _old_argv
     hermite_txt = capture(hermite_demo.main)
     # scaling benchmark is slow; run a lighter inline version
@@ -157,6 +162,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("inner_planets.svg"), "inner solar system (2 Mars years)")
             + f'<div class="card">{pre(solar_txt)}</div>'
+            + '</div>'),
+        section(
+            "Gravitational-wave inspiral (the LIGO chirp)",
+            "A 2.5PN radiation-reaction force bleeds orbital energy into "
+            "gravitational waves. The binary spirals inward and its frequency "
+            "chirps upward -- the same mechanism as GW150914. The energy-loss "
+            "rate matches Peters (1964) to a few percent.",
+            '<div class="grid">'
+            + svg_card(out("gw_inspiral.svg"), "relative orbit spiralling to merger")
+            + f'<div class="card">{pre(gw_txt)}</div>'
             + '</div>'),
         section(
             "Galaxy collision & tidal tails",

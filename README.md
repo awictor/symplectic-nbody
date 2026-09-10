@@ -46,6 +46,7 @@ ruins a long non-symplectic integration.
 | `src/stability_map.py` | Three-body escape-time scan over a grid of initial conditions |
 | `src/poincare.py` | Poincare surface-of-section for the CR3BP (tori vs chaos) |
 | `src/galaxy.py` | Disk-galaxy generator and two-galaxy tidal encounters |
+| `src/gravwave.py` | 2.5PN radiation reaction: gravitational-wave inspiral & chirp |
 | `src/systems.py` | Test systems: two-body, figure-eight, pythagorean 3-body, **Plummer-sphere star cluster** (any N) |
 | `tests/test_conservation.py` | Automated checks of every conservation claim |
 | `tests/test_barnes_hut.py` | Tree force validated against exact O(N^2) summation |
@@ -63,6 +64,7 @@ ruins a long non-symplectic integration.
 | `examples/stability_map_demo.py` | Parallel escape-time heatmap revealing the fractal chaos boundary |
 | `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
 | `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
+| `examples/gravwave_demo.py` | Inspiral chirp, energy loss validated against Peters (1964) |
 | `examples/build_dashboard.py` | Assemble all demos into one self-contained `index.html` |
 
 ## Barnes-Hut: scaling to many bodies
@@ -90,6 +92,27 @@ Tightening `theta` provably reduces the error — all checked in the tests. The
 `plummer_sphere(n=...)` generator builds an equilibrium cluster (positions from
 the Plummer inverse-CDF, velocities by rejection sampling the exact distribution
 function) using a tiny built-in LCG, so it's deterministic and dependency-free.
+
+## Gravitational waves: the LIGO chirp from first principles
+
+`gravwave.py` adds the 2.5PN radiation-reaction force to a binary. Orbital energy
+bleeds into gravitational waves, the orbit shrinks, and the frequency sweeps up
+-- the chirp LIGO heard from GW150914.
+
+```
+$ python examples/gravwave_demo.py examples/output
+
+  energy-loss rate dE/dt: measured ...  Peters ...  ratio ~1.0
+  separation: 1.00 -> 0.38  (orbit shrinks as it radiates)
+  orbital frequency chirps up 4.2x:
+    ...............:::::::---==+*@
+```
+
+The energy-loss rate matches Peters' (1964) circular formula
+`dE/dt = -(32/5) G^4 mu^2 M^3 / (c^5 a^5)` to a few percent, and the tests verify
+the orbit only ever shrinks, the frequency chirps upward, the loss scales as
+`1/c^5`, and switching radiation off leaves a closed orbit. As with the
+perihelion demo, `c` is shrunk to bring the effect into view.
 
 ## Galaxy collisions: tidal tails from gravity alone
 
