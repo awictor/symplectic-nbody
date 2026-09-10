@@ -148,6 +148,7 @@ def main():
     import snr_phases_demo
     import magnetic_mirror_demo
     import debye_demo
+    import line_broadening_demo
 
     import plot_orbits
 
@@ -265,6 +266,7 @@ def main():
     snr_txt = run("snr_phases_demo", snr_phases_demo.main, True)
     mirror_txt = run("magnetic_mirror_demo", magnetic_mirror_demo.main, True)
     debye_txt = run("debye_demo", debye_demo.main, True)
+    linebroad_txt = run("line_broadening_demo", line_broadening_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1159,6 +1161,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("debye.svg"), "plasma frequency vs density with the radio bands marked")
             + f'<div class="card">{pre(debye_txt)}</div>'
+            + '</div>'),
+        section(
+            "Spectral line broadening",
+            "Atomic lines have width from three causes. Thermal Doppler motion gives a "
+            "Gaussian of width ~ sqrt(T/m) -- the standard plasma thermometer. The "
+            "finite excited-state lifetime gives an irreducible natural (Lorentzian) "
+            "width A/4pi. Collisions add a pressure (Lorentzian) width that grows with "
+            "density, so dense dwarf photospheres show broad wings absent in thin gas. "
+            "The observed profile is their Voigt convolution.",
+            '<div class="grid">'
+            + svg_card(out("line_broadening.svg"), "a thermal Gaussian core beside a collisional Lorentzian with broad wings")
+            + f'<div class="card">{pre(linebroad_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

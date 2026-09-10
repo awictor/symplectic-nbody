@@ -1,0 +1,19 @@
+Line broadening of H-alpha (656.3 nm): Doppler / natural / pressure
+
+  natural width (fixed): 5.2 MHz
+
+             environment    T (K)     Doppler    pressure    dominant
+  -------------------------------------------------------------------
+              HII region    10000     19.57G      0.000G     Doppler
+       solar photosphere     6000     15.16G      0.159G     Doppler
+               red giant     4000     12.38G      0.002G     Doppler
+       white-dwarf atmos    10000     19.57G   1591.549G    pressure
+          cool ISM cloud      100      1.96G      0.000G     Doppler
+
+  Doppler width ~ sqrt(T/m) reads the temperature (and, from the ratio of
+  species widths, tells light atoms from heavy). Pressure width grows with
+  density, so a dense white-dwarf photosphere has hugely broadened,
+  Lorentzian-winged lines while a thin HII region is purely Doppler. The
+  observed shape is the Voigt convolution of the Gaussian and Lorentzian.
+
+  wrote examples/output\line_broadening.svg

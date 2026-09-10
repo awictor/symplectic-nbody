@@ -106,6 +106,7 @@ ruins a long non-symplectic integration.
 | `src/snr_phases.py` | Supernova-remnant evolution: free expansion, Sedov, snowplow, merge |
 | `src/magnetic_mirror.py` | The magnetic mirror & loss cone: trapping charged particles |
 | `src/debye.py` | Debye shielding & the plasma frequency: what makes a plasma |
+| `src/line_broadening.py` | Spectral line broadening: Doppler, natural & pressure widths |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -203,6 +204,7 @@ ruins a long non-symplectic integration.
 | `examples/snr_phases_demo.py` | R/v/phase from centuries to Myr + the radius-vs-age track |
 | `examples/magnetic_mirror_demo.py` | Loss-cone angle & trapping by mirror ratio + the alpha(R_m) curve |
 | `examples/debye_demo.py` | lambda_D/N_D/f_p by environment + the f_p(n) radio-cutoff curve |
+| `examples/line_broadening_demo.py` | Doppler/pressure widths by environment + Gaussian vs Lorentzian profiles |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2117,6 +2119,33 @@ curve of the Earth while FM (~100 MHz) and TV pass straight through to space. Th
 verify the ~9 MHz ionospheric plasma frequency, the millimetre Debye length, the well-
 populated Debye sphere, the `lambda_D ~ sqrt(T/n)` and `omega_p ~ sqrt(n)` scalings, and the
 critical-density inversion.
+
+## Spectral line broadening: why lines have width
+
+An atomic line is never infinitely sharp; three mechanisms give it width, and their sizes
+read out the gas. `line_broadening.py`:
+
+```
+$ python examples/line_broadening_demo.py examples/output
+
+              environment    T (K)     Doppler     pressure    dominant
+  -------------------------------------------------------------------
+              HII region    10000     19.57G      0.000G     Doppler
+       solar photosphere     6000     15.16G      0.159G     Doppler
+               red giant     4000     12.38G      0.002G     Doppler
+       white-dwarf atmos    10000     19.57G   1591.549G    pressure
+          cool ISM cloud      100      1.96G      0.000G     Doppler
+```
+
+Thermal Doppler motion gives a Gaussian of width `(nu0/c) sqrt(2kT/m)` -- widening with
+temperature and favouring light atoms, the standard plasma thermometer. The finite
+excited-state lifetime gives an irreducible natural (Lorentzian) width `A/4pi`, and
+collisions add a pressure (Lorentzian) width that grows with density -- so a dense
+white-dwarf photosphere shows hugely broadened, Lorentzian-winged lines while a thin HII
+region is purely Doppler, letting line shape diagnose surface gravity. The observed profile
+is the Voigt convolution of the Gaussian core and Lorentzian wings. The tests verify the
+~20 pm H-alpha Doppler width, the `sqrt(T)` and `1/sqrt(m)` scalings, the density-driven
+switch from Doppler to pressure dominance, and the linear addition of Lorentzian widths.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
