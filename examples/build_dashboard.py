@@ -155,6 +155,7 @@ def main():
     import gamow_demo
     import parallax_demo
     import standard_candle_demo
+    import tully_fisher_demo
 
     import plot_orbits
 
@@ -279,6 +280,7 @@ def main():
     gamow_txt = run("gamow_demo", gamow_demo.main, True)
     parallax_txt = run("parallax_demo", parallax_demo.main, True)
     candle_txt = run("standard_candle_demo", standard_candle_demo.main, True)
+    tf_txt = run("tully_fisher_demo", tully_fisher_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1256,6 +1258,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("standard_candle.svg"), "distance modulus vs distance with the ladder rungs marked")
             + f'<div class="card">{pre(candle_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Tully-Fisher relation",
+            "Spiral galaxies obey a tight L ~ v_flat^4 scaling: because v^2 = GM/R and "
+            "spirals hold roughly constant surface brightness, mass, spin and light "
+            "rise together. A Milky-Way-like spiral (v ~ 220 km/s) shines ~3x10^10 "
+            "L_sun. Since the rotation width is easy to measure from the 21-cm line, "
+            "Tully-Fisher is a redshift-independent distance indicator reaching far "
+            "beyond resolvable Cepheids -- the spiral cousin of Faber-Jackson.",
+            '<div class="grid">'
+            + svg_card(out("tully_fisher.svg"), "luminosity vs rotation speed with slope 4 on a log-log plot")
+            + f'<div class="card">{pre(tf_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

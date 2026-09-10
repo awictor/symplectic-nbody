@@ -113,6 +113,7 @@ ruins a long non-symplectic integration.
 | `src/gamow.py` | The Gamow peak: the narrow energy window where stars fuse |
 | `src/parallax.py` | Parallax, proper motion & space velocity: the geometry of stellar distance |
 | `src/standard_candle.py` | Standard candles: distance modulus, Cepheids & the distance ladder |
+| `src/tully_fisher.py` | Tully-Fisher: a spiral galaxy's luminosity from its rotation speed |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -217,6 +218,7 @@ ruins a long non-symplectic integration.
 | `examples/gamow_demo.py` | Peak energy by reaction + the tail x tunnelling = peak curves |
 | `examples/parallax_demo.py` | Distances & space velocities of nearby stars + the parallax geometry |
 | `examples/standard_candle_demo.py` | Moduli of landmark objects + the ladder-rung modulus curve |
+| `examples/tully_fisher_demo.py` | L/M_abs/M_baryon by rotation speed + the slope-4 log-log line |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2321,6 +2323,32 @@ revealed cosmic acceleration. Chaining parallax to Cepheids to supernovae is the
 ladder. The tests verify the 10 pc zero point, the LMC's ~18.5 modulus, the modulus/distance
 inversion, the 100-per-5-magnitudes rule, the Cepheid period-luminosity trend, and a Cepheid
 distance round-trip.
+
+## Tully-Fisher: a spiral's brightness from its spin
+
+Spiral galaxies obey a tight scaling between luminosity and flat rotation speed.
+`tully_fisher.py`:
+
+```
+$ python examples/tully_fisher_demo.py examples/output
+
+       galaxy type   v_flat    L (Lsun)    M_abs    M_baryon
+  ------------------------------------------------------------
+        dwarf spiral       80    5.12e+08   -14.38    2.05e+09
+        small spiral      120    2.59e+09   -16.05    1.04e+10
+      Milky Way-like      220    2.93e+10   -18.55    1.17e+11
+      massive spiral      300    1.01e+11   -19.83    4.05e+11
+        giant spiral      400    3.20e+11   -21.02    1.28e+12
+```
+
+The relation is `L ~ v_flat^4`: because `v^2 = GM/R` and spirals hold roughly constant surface
+brightness and mass-to-light ratio, mass, spin and light all rise together, so a doubling of
+rotation speed brightens a spiral 16-fold. The baryonic version `M_baryon ~ v^4` is tighter
+still and probes dark matter. Since the rotation width is easy to measure from the 21-cm line,
+Tully-Fisher is a redshift-independent distance indicator that reaches far beyond resolvable
+Cepheids -- the spiral-galaxy cousin of the Faber-Jackson relation for ellipticals. The tests
+verify the `v^4` luminosity and baryonic-mass scalings, the Milky-Way luminosity and mass, the
+faster-is-brighter trend, and the luminosity/rotation-speed inversion.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

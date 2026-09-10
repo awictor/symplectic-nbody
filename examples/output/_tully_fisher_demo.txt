@@ -1,0 +1,17 @@
+Tully-Fisher: L ~ v_flat^4 -- spirals that spin faster shine brighter
+
+         galaxy type   v_flat    L (Lsun)    M_abs    M_baryon
+  ------------------------------------------------------------
+        dwarf spiral       80    5.12e+08   -14.38    2.05e+09
+        small spiral      120    2.59e+09   -16.05    1.04e+10
+      Milky Way-like      220    2.93e+10   -18.55    1.17e+11
+      massive spiral      300    1.01e+11   -19.83    4.05e+11
+        giant spiral      400    3.20e+11   -21.02    1.28e+12
+
+  A four-fold jump in luminosity for every doubling of rotation speed --
+  because v^2 = GM/R and spirals hold roughly constant surface brightness,
+  so mass, spin and light rise together. Since the rotation width is easy
+  to measure (the 21-cm line), Tully-Fisher gives redshift-independent
+  distances far beyond where individual Cepheids can be resolved.
+
+  wrote examples/output\tully_fisher.svg
