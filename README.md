@@ -146,6 +146,7 @@ ruins a long non-symplectic integration.
 | `src/clausius_clapeyron.py` | Clausius-Clapeyron: vapor pressure, boiling point & latent heat |
 | `src/reynolds.py` | The Reynolds number: laminar vs turbulent flow & Hagen-Poiseuille |
 | `src/bernoulli.py` | Bernoulli's principle: the Venturi effect, Pitot airspeed & Torricelli |
+| `src/surface_tension.py` | Surface tension: capillary rise (Jurin), Young-Laplace droplet/bubble pressure |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -283,6 +284,7 @@ ruins a long non-symplectic integration.
 | `examples/clausius_clapeyron_demo.py` | Boiling point vs altitude + the vapor-pressure curve |
 | `examples/reynolds_demo.py` | Re & regime from bacterium to whale + the log-Re transition chart |
 | `examples/bernoulli_demo.py` | Pitot/Torricelli speeds + the Venturi velocity/pressure diagram |
+| `examples/surface_tension_demo.py` | Capillary rise table + rise-vs-radius log-log plot |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3244,6 +3246,28 @@ measurable stagnation pressure, giving `v = sqrt(2(P_stag - P_static)/rho)`; Tor
 from that depth. The tests verify faster-flow-lower-pressure, the Pitot round-trip, the
 Torricelli/free-fall identity, the Venturi throat velocity, and conservation of the Bernoulli
 constant along a streamline.
+
+## Surface tension: why water climbs and beads
+
+A liquid surface costs energy per unit area (`gamma`), so it acts like a stretched skin.
+`surface_tension.py`:
+
+```
+$ python examples/surface_tension_demo.py examples/output
+
+  Capillary rise (Jurin's law):        Young-Laplace overpressure:
+    0.500 mm tube  ->  2.98 cm           1.0 mm droplet  ->  145.6 Pa
+    0.001 mm tube  ->  14.9 m            1.0 mm bubble   ->  291.2 Pa
+```
+
+In a thin tube surface tension lifts water against gravity by Jurin's law
+`h = 2 gamma cos(theta) / (rho g r)` -- a 1 mm bore climbs ~1.5 cm, a 1 micron root pore
+tens of metres, which is how sap and groundwater wick upward. A curved surface also holds a
+pressure jump `2 gamma/r` across a droplet, or `4 gamma/r` across a soap bubble's two films,
+so smaller drops sit at higher pressure and empty into larger ones when connected. Mercury,
+whose contact angle exceeds 90 deg, is pushed *down* instead. The tests reproduce water's
+~1.5 cm rise in a 1 mm tube, the `1/r` scaling, mercury depression, the bubble-is-twice-a-
+droplet relation, and a water strider's weight held on the surface.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

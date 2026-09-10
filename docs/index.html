@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.35       12.88      0.7x
-   400          37.54       39.61      0.9x
-   800         147.38      118.00      1.2x
-  1600         615.63      367.91      1.7x
-  3200        2586.34     1510.30      1.7x
+   200           9.09       12.10      0.8x
+   400          35.91       38.00      0.9x
+   800         145.06      113.32      1.3x
+  1600         657.04      396.62      1.7x
+  3200        2784.23     1111.29      2.5x
 
-empirical scaling exponent  direct ~ N^2.03   barnes-hut ~ N^1.70
+empirical scaling exponent  direct ~ N^2.07   barnes-hut ~ N^1.64
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -7529,6 +7529,75 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   to turn its speed into a pressure an aircraft reads as airspeed.
 
   wrote examples/output\bernoulli.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Surface tension: capillary rise &amp; Laplace pressure</h2>
+    <p class="blurb">A liquid surface costs energy per unit area (gamma), so it behaves like a stretched skin. In a thin tube that pull lifts water against gravity by Jurin's law h = 2 gamma cos(theta) / (rho g r) -- a 1 mm bore climbs ~1.5 cm, a 1 micron root pore tens of metres. A curved surface also holds a pressure jump 2 gamma/r (a droplet) or 4 gamma/r (a soap bubble's two films), so smaller drops run at higher pressure and empty into larger ones.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<text x="20" y="34" fill="#e6edf3" font-size="18">Capillary rise vs tube radius (Jurin&#39;s law)</text>
+<text x="20" y="52" fill="#8b949e" font-size="12">water at 20 C -- narrower bore climbs higher, rise proportional to 1/r</text>
+<line x1="80" y1="640" x2="640" y2="640" stroke="#8b949e" stroke-width="1.5"/>
+<line x1="80" y1="640" x2="80" y2="120" stroke="#8b949e" stroke-width="1.5"/>
+<line x1="80.0" y1="640" x2="80.0" y2="120" stroke="#21262d" stroke-width="1"/>
+<text x="80.0" y="656.0" fill="#8b949e" font-size="10" text-anchor="middle">10^-8 m</text>
+<line x1="173.3" y1="640" x2="173.3" y2="120" stroke="#21262d" stroke-width="1"/>
+<text x="173.3" y="656.0" fill="#8b949e" font-size="10" text-anchor="middle">10^-7 m</text>
+<line x1="266.7" y1="640" x2="266.7" y2="120" stroke="#21262d" stroke-width="1"/>
+<text x="266.7" y="656.0" fill="#8b949e" font-size="10" text-anchor="middle">10^-6 m</text>
+<line x1="360.0" y1="640" x2="360.0" y2="120" stroke="#21262d" stroke-width="1"/>
+<text x="360.0" y="656.0" fill="#8b949e" font-size="10" text-anchor="middle">10^-5 m</text>
+<line x1="453.3" y1="640" x2="453.3" y2="120" stroke="#21262d" stroke-width="1"/>
+<text x="453.3" y="656.0" fill="#8b949e" font-size="10" text-anchor="middle">10^-4 m</text>
+<line x1="546.7" y1="640" x2="546.7" y2="120" stroke="#21262d" stroke-width="1"/>
+<text x="546.7" y="656.0" fill="#8b949e" font-size="10" text-anchor="middle">10^-3 m</text>
+<line x1="640.0" y1="640" x2="640.0" y2="120" stroke="#21262d" stroke-width="1"/>
+<text x="640.0" y="656.0" fill="#8b949e" font-size="10" text-anchor="middle">10^-2 m</text>
+<line x1="80" y1="655.0" x2="640" y2="655.0" stroke="#21262d" stroke-width="1"/>
+<text x="72.0" y="659.0" fill="#8b949e" font-size="10" text-anchor="end">10^-3 m</text>
+<line x1="80" y1="568.3" x2="640" y2="568.3" stroke="#21262d" stroke-width="1"/>
+<text x="72.0" y="572.3" fill="#8b949e" font-size="10" text-anchor="end">10^-2 m</text>
+<line x1="80" y1="481.6" x2="640" y2="481.6" stroke="#21262d" stroke-width="1"/>
+<text x="72.0" y="485.6" fill="#8b949e" font-size="10" text-anchor="end">10^-1 m</text>
+<line x1="80" y1="395.0" x2="640" y2="395.0" stroke="#21262d" stroke-width="1"/>
+<text x="72.0" y="399.0" fill="#8b949e" font-size="10" text-anchor="end">10^0 m</text>
+<line x1="80" y1="308.3" x2="640" y2="308.3" stroke="#21262d" stroke-width="1"/>
+<text x="72.0" y="312.3" fill="#8b949e" font-size="10" text-anchor="end">10^1 m</text>
+<line x1="80" y1="221.6" x2="640" y2="221.6" stroke="#21262d" stroke-width="1"/>
+<text x="72.0" y="225.6" fill="#8b949e" font-size="10" text-anchor="end">10^2 m</text>
+<line x1="80" y1="135.0" x2="640" y2="135.0" stroke="#21262d" stroke-width="1"/>
+<text x="72.0" y="139.0" fill="#8b949e" font-size="10" text-anchor="end">10^3 m</text>
+<line x1="80" y1="48.3" x2="640" y2="48.3" stroke="#21262d" stroke-width="1"/>
+<text x="72.0" y="52.3" fill="#8b949e" font-size="10" text-anchor="end">10^4 m</text>
+<polyline points="80.0,120.0 83.5,123.3 87.0,126.5 90.6,129.8 94.1,133.1 97.6,136.4 101.1,139.6 104.7,142.9 108.2,146.2 111.7,149.4 115.2,152.7 118.7,156.0 122.3,159.2 125.8,162.5 129.3,165.8 132.8,169.1 136.4,172.3 139.9,175.6 143.4,178.9 146.9,182.1 150.4,185.4 154.0,188.7 157.5,191.9 161.0,195.2 164.5,198.5 168.1,201.8 171.6,205.0 175.1,208.3 178.6,211.6 182.1,214.8 185.7,218.1 189.2,221.4 192.7,224.7 196.2,227.9 199.7,231.2 203.3,234.5 206.8,237.7 210.3,241.0 213.8,244.3 217.4,247.5 220.9,250.8 224.4,254.1 227.9,257.4 231.4,260.6 235.0,263.9 238.5,267.2 242.0,270.4 245.5,273.7 249.1,277.0 252.6,280.3 256.1,283.5 259.6,286.8 263.1,290.1 266.7,293.3 270.2,296.6 273.7,299.9 277.2,303.1 280.8,306.4 284.3,309.7 287.8,313.0 291.3,316.2 294.8,319.5 298.4,322.8 301.9,326.0 305.4,329.3 308.9,332.6 312.5,335.8 316.0,339.1 319.5,342.4 323.0,345.7 326.5,348.9 330.1,352.2 333.6,355.5 337.1,358.7 340.6,362.0 344.2,365.3 347.7,368.6 351.2,371.8 354.7,375.1 358.2,378.4 361.8,381.6 365.3,384.9 368.8,388.2 372.3,391.4 375.8,394.7 379.4,398.0 382.9,401.3 386.4,404.5 389.9,407.8 393.5,411.1 397.0,414.3 400.5,417.6 404.0,420.9 407.5,424.2 411.1,427.4 414.6,430.7 418.1,434.0 421.6,437.2 425.2,440.5 428.7,443.8 432.2,447.0 435.7,450.3 439.2,453.6 442.8,456.9 446.3,460.1 449.8,463.4 453.3,466.7 456.9,469.9 460.4,473.2 463.9,476.5 467.4,479.7 470.9,483.0 474.5,486.3 478.0,489.6 481.5,492.8 485.0,496.1 488.6,499.4 492.1,502.6 495.6,505.9 499.1,509.2 502.6,512.5 506.2,515.7 509.7,519.0 513.2,522.3 516.7,525.5 520.3,528.8 523.8,532.1 527.3,535.3 530.8,538.6 534.3,541.9 537.9,545.2 541.4,548.4 544.9,551.7 548.4,555.0 551.9,558.2 555.5,561.5 559.0,564.8 562.5,568.1 566.0,571.3 569.6,574.6 573.1,577.9 576.6,581.1 580.1,584.4 583.6,587.7 587.2,590.9 590.7,594.2 594.2,597.5 597.7,600.8 601.3,604.0 604.8,607.3 608.3,610.6 611.8,613.8 615.3,617.1 618.9,620.4 622.4,623.6 625.9,626.9 629.4,630.2 633.0,633.5 636.5,636.7 640.0,640.0" fill="none" stroke="#4dabf7" stroke-width="2.6"/>
+<circle cx="518.6" cy="527.2" r="5" fill="#ffd43b"/>
+<text x="528.6" y="519.2" fill="#ffd43b" font-size="11">0.5 mm tube: 3.0 cm</text>
+<circle cx="266.7" cy="293.3" r="5" fill="#06d6a0"/>
+<text x="276.7" y="285.3" fill="#06d6a0" font-size="11">1 um pore: 15 m</text>
+<text x="640.0" y="112.0" fill="#8b949e" font-size="11" text-anchor="end">a slope of -1 on log-log: rise doubles when radius halves</text>
+</svg><figcaption>capillary rise vs tube radius on log-log axes: narrower climbs higher</figcaption></figure><div class="card"><pre>Surface tension: gamma = 0.0728 N/m for water at 20 C
+
+  Capillary rise (Jurin&#x27;s law  h = 2 gamma cos(theta) / (rho g r)):
+     tube radius            rise
+       5.000 mm         2.98 mm
+       1.000 mm         1.49 cm
+       0.500 mm         2.98 cm
+       0.100 mm        14.88 cm
+       0.010 mm           1.5 m
+       0.001 mm          14.9 m
+
+  Young-Laplace overpressure  (droplet 2 gamma/r,  bubble 4 gamma/r):
+        radius       droplet     soap bubble
+       5.0 mm      29.1 Pa         58.2 Pa
+       1.0 mm     145.6 Pa        291.2 Pa
+       0.1 mm    1456.0 Pa       2912.0 Pa
+
+  Narrower bore -&gt; higher climb (rise ~ 1/r): a 1 micron root pore lifts
+  water tens of metres. Smaller drops hold higher pressure, so when a small
+  bubble meets a big one through a tube, the small one empties into the big.
+
+  wrote examples/output\surface_tension.svg</pre></div></div>
   </section>
 
   <section>

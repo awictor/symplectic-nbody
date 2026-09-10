@@ -188,6 +188,7 @@ def main():
     import clausius_clapeyron_demo
     import reynolds_demo
     import bernoulli_demo
+    import surface_tension_demo
 
     import plot_orbits
 
@@ -345,6 +346,7 @@ def main():
     cc_txt = run("clausius_clapeyron_demo", clausius_clapeyron_demo.main, True)
     reynolds_txt = run("reynolds_demo", reynolds_demo.main, True)
     bernoulli_txt = run("bernoulli_demo", bernoulli_demo.main, True)
+    surface_tension_txt = run("surface_tension_demo", surface_tension_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1716,6 +1718,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("bernoulli.svg"), "a Venturi tube: velocity peaks and pressure dips at the throat")
             + f'<div class="card">{pre(bernoulli_txt)}</div>'
+            + '</div>'),
+        section(
+            "Surface tension: capillary rise & Laplace pressure",
+            "A liquid surface costs energy per unit area (gamma), so it behaves like a "
+            "stretched skin. In a thin tube that pull lifts water against gravity by "
+            "Jurin's law h = 2 gamma cos(theta) / (rho g r) -- a 1 mm bore climbs ~1.5 cm, a "
+            "1 micron root pore tens of metres. A curved surface also holds a pressure jump "
+            "2 gamma/r (a droplet) or 4 gamma/r (a soap bubble's two films), so smaller drops "
+            "run at higher pressure and empty into larger ones.",
+            '<div class="grid">'
+            + svg_card(out("surface_tension.svg"), "capillary rise vs tube radius on log-log axes: narrower climbs higher")
+            + f'<div class="card">{pre(surface_tension_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

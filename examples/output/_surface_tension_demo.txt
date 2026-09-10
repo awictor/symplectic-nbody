@@ -1,0 +1,22 @@
+Surface tension: gamma = 0.0728 N/m for water at 20 C
+
+  Capillary rise (Jurin's law  h = 2 gamma cos(theta) / (rho g r)):
+     tube radius            rise
+       5.000 mm         2.98 mm
+       1.000 mm         1.49 cm
+       0.500 mm         2.98 cm
+       0.100 mm        14.88 cm
+       0.010 mm           1.5 m
+       0.001 mm          14.9 m
+
+  Young-Laplace overpressure  (droplet 2 gamma/r,  bubble 4 gamma/r):
+        radius       droplet     soap bubble
+       5.0 mm      29.1 Pa         58.2 Pa
+       1.0 mm     145.6 Pa        291.2 Pa
+       0.1 mm    1456.0 Pa       2912.0 Pa
+
+  Narrower bore -> higher climb (rise ~ 1/r): a 1 micron root pore lifts
+  water tens of metres. Smaller drops hold higher pressure, so when a small
+  bubble meets a big one through a tube, the small one empties into the big.
+
+  wrote examples/output\surface_tension.svg
