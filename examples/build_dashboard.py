@@ -86,6 +86,7 @@ def main():
     import tov_demo
     import jeans_demo
     import sedov_demo
+    import kerr_demo
 
     import plot_orbits
 
@@ -141,6 +142,7 @@ def main():
     tov_txt = run("tov_demo", tov_demo.main, True)
     jeans_txt = run("jeans_demo", jeans_demo.main, True)
     sedov_txt = run("sedov_demo", sedov_demo.main, True)
+    kerr_txt = run("kerr_demo", kerr_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -312,6 +314,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("friedmann.svg"), "scale factor for radiation, matter, dark energy, LCDM")
             + f'<div class="card">{pre(friedmann_txt)}</div>'
+            + '</div>'),
+        section(
+            "Kerr black holes: spin & frame-dragging",
+            "A rotating black hole drags spacetime around it. Its horizon shrinks "
+            "with spin, an ergosphere appears outside it, and the ISCO splits: "
+            "prograde orbits reach down toward 1M at extremal spin while "
+            "retrograde ones recede to 9M -- how black-hole spins are measured.",
+            '<div class="grid">'
+            + svg_card(out("kerr.svg"), "ISCO vs spin (prograde/retrograde) + horizon & ergosphere")
+            + f'<div class="card">{pre(kerr_txt)}</div>'
             + '</div>'),
         section(
             "Schwarzschild black-hole orbits",

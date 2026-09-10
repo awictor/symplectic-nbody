@@ -81,6 +81,7 @@ ruins a long non-symplectic integration.
 | `src/lensing.py` | Gravitational lensing: deflection, Einstein ring, microlensing |
 | `src/rotation_curve.py` | Galaxy rotation curves: Keplerian disk vs flat dark-halo curve |
 | `src/schwarzschild.py` | Black-hole orbits: effective potential, ISCO, photon sphere, plunge |
+| `src/kerr.py` | Rotating black holes: horizons, ergosphere, spin-dependent ISCO |
 | `src/friedmann.py` | Friedmann cosmology: scale factor a(t), expansion eras, age of the universe |
 | `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
 | `src/distances.py` | Cosmological distances: luminosity/angular-diameter, cosmic acceleration |
@@ -116,6 +117,7 @@ ruins a long non-symplectic integration.
 | `examples/lensing_demo.py` | Microlensing light curve + Einstein-ring image diagram (SVG) |
 | `examples/rotation_curve_demo.py` | Visible (declining) vs disk+halo (flat) rotation curves |
 | `examples/schwarzschild_demo.py` | Precessing & plunging black-hole orbits with ISCO/photon sphere |
+| `examples/kerr_demo.py` | ISCO-vs-spin curves + horizon/ergosphere diagram |
 | `examples/friedmann_demo.py` | Scale-factor curves for radiation/matter/dark-energy/LCDM |
 | `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
 | `examples/distances_demo.py` | Hubble diagram (LCDM vs decelerating) + D_A turnover |
@@ -419,6 +421,28 @@ through radiation, matter, and dark-energy eras with distinct power laws. The
 age comes out as a look-back integral to `~0.96/H0`, the measured ~13.8 Gyr. The
 tests verify each era's exponent, the exponential dark-energy growth, and the
 LCDM age.
+
+## Kerr black holes: spin drags spacetime
+
+A rotating black hole is richer than a static one. `kerr.py` gives the exact
+horizon, ergosphere, and Bardeen-Press-Teukolsky ISCO as functions of spin `a`:
+
+```
+$ python examples/kerr_demo.py examples/output
+
+     a/M   horizon   ISCO pro  ISCO retro   Omega_H
+    0.00     2.000      6.000       6.000     0.000
+    0.90     1.436      2.321       8.717     0.313
+    1.00     1.000      1.000       9.000     0.500
+```
+
+Spinning the hole up shrinks the horizon (2M → M), opens an ergosphere where
+frame-dragging forbids standing still (the region behind the Penrose process and
+Blandford-Znajek jets), and splits the ISCO: prograde orbits reach down toward
+`1M` while retrograde ones recede to `9M`. Because the ISCO sets the inner edge
+of the accretion disk, measuring it is how astronomers weigh black-hole spin.
+The tests check the Schwarzschild limit, the extremal `1M`/`9M` values, the
+monotonic spin dependence, and cosmic censorship (`a > M` is rejected).
 
 ## Schwarzschild orbits: strong-field general relativity
 

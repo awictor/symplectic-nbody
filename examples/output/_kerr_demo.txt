@@ -1,0 +1,16 @@
+Kerr black hole: spin sets the horizon and the ISCO (units of M)
+
+     a/M   horizon   ISCO pro  ISCO retro   Omega_H
+  -------------------------------------------------
+    0.00     2.000      6.000       6.000     0.000
+    0.30     1.954      4.979       6.949     0.077
+    0.60     1.800      3.829       7.851     0.167
+    0.90     1.436      2.321       8.717     0.313
+    0.99     1.141      1.454       8.972     0.434
+    1.00     1.000      1.000       9.000     0.500
+
+  A fast-spinning hole drags its prograde ISCO down toward the horizon
+  (1M at extremal spin), so its accretion disk reaches deeper and radiates
+  more efficiently. Measuring the disk's inner edge is how spins are found.
+
+  wrote examples/output\kerr.svg
