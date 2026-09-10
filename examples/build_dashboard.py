@@ -214,6 +214,7 @@ def main():
     import kolmogorov_demo
     import casimir_demo
     import hall_effect_demo
+    import wiedemann_franz_demo
 
     import plot_orbits
 
@@ -397,6 +398,7 @@ def main():
     kolmogorov_txt = run("kolmogorov_demo", kolmogorov_demo.main, True)
     casimir_txt = run("casimir_demo", casimir_demo.main, True)
     hall_effect_txt = run("hall_effect_demo", hall_effect_demo.main, True)
+    wiedemann_franz_txt = run("wiedemann_franz_demo", wiedemann_franz_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2110,6 +2112,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("hall_effect.svg"), "a Hall bar: current, field, deflected carriers and the transverse Hall voltage")
             + f'<div class="card">{pre(hall_effect_txt)}</div>'
+            + '</div>'),
+        section(
+            "Wiedemann-Franz: good conductors of charge and heat",
+            "In a metal the same free electrons carry charge and heat, so their conductivities "
+            "are locked together: kappa/(sigma T) = L, the Lorenz number pi^2 k_B^2/(3 e^2) = "
+            "2.44e-8 W ohm/K^2. The material-specific mean free path and carrier density cancel "
+            "in the ratio, leaving only fundamental constants -- so you can read a metal's "
+            "thermal conductivity off an easy resistance measurement (copper's ~400 W/(m K) "
+            "from its sigma). A measured Lorenz number well below L flags heat and charge "
+            "decoupling, the signature of exotic 'strange metals'.",
+            '<div class="grid">'
+            + svg_card(out("wiedemann_franz.svg"), "predicted vs measured thermal conductivity: metals hug the Lorenz-number line")
+            + f'<div class="card">{pre(wiedemann_franz_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -172,6 +172,7 @@ ruins a long non-symplectic integration.
 | `src/kolmogorov.py` | Kolmogorov cascade: -5/3 spectrum, dissipation microscales, Re^(3/4) range |
 | `src/casimir.py` | Casimir effect: vacuum pressure/force/energy between plates, d^-4 law |
 | `src/hall_effect.py` | Hall effect: Hall voltage, coefficient, carrier density/sign/mobility |
+| `src/wiedemann_franz.py` | Wiedemann-Franz law: Lorenz number, thermal-from-electrical conductivity |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -335,6 +336,7 @@ ruins a long non-symplectic integration.
 | `examples/kolmogorov_demo.py` | Per-flow microscale table + the -5/3 energy-spectrum figure |
 | `examples/casimir_demo.py` | Pressure/force-vs-gap table + the d^-4 pressure figure |
 | `examples/hall_effect_demo.py` | Per-material Hall table + the Hall-bar schematic |
+| `examples/wiedemann_franz_demo.py` | Predicted-vs-measured kappa table + the Lorenz-line figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3926,6 +3928,30 @@ far the field tilts the current. Sparse-carrier semiconductors give millivolt si
 microvolts in a metal. The tests reproduce copper's tiny electron Hall voltage and `|R_H|`,
 the `I`/`B`/`1/t` scalings, the density inversion, the electron/hole sign, the mobility, and
 the Hall-angle limits.
+
+## Wiedemann-Franz: good conductors of charge and heat
+
+The same electrons carry both currents, so their conductivities are locked. `wiedemann_franz.py`:
+
+```
+$ python examples/wiedemann_franz_demo.py examples/output
+
+  metal      sigma (S/m)   kappa pred   kappa meas   L_eff/L
+  copper     5.96e7        437          401          0.92
+  gold       4.10e7        300          318          1.06
+```
+
+Dividing the electronic thermal conductivity by the electrical conductivity leaves only
+fundamental constants: `kappa/(sigma T) = L = pi^2 k_B^2/(3 e^2) = 2.44e-8 W ohm/K^2`, the
+Lorenz number. Each electron carries a charge `e` and a thermal energy `~k_B T` and the same
+scattering limits both currents, so the material-specific mean free path and carrier density
+cancel. This lets you read a metal's thermal conductivity off an easy resistance measurement
+(copper's ~400 W/(m K) from its `sigma`), and its breakdown is diagnostic -- a Lorenz number
+well below `L` signals heat and charge decoupling ("strange metals"), while a huge effective
+`L` (an insulator conducting heat by phonons, not electrons) means the electronic law does
+not apply. The tests reproduce the Lorenz number, copper's thermal conductivity, the
+`sigma`/`T` scalings, the conductivity inversion, and the obey/violate classification for
+metals, suppressed-`kappa` cases, and phonon insulators.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.17       11.87      0.8x
-   400          36.90       37.41      1.0x
-   800         145.22      110.70      1.3x
-  1600         662.26      372.57      1.8x
-  3200        2697.07     1034.11      2.6x
+   200           9.23       11.96      0.8x
+   400          35.28       37.15      0.9x
+   800         141.49      110.68      1.3x
+  1600         648.42      409.99      1.6x
+  3200        2669.50     1030.95      2.6x
 
-empirical scaling exponent  direct ~ N^2.06   barnes-hut ~ N^1.62
+empirical scaling exponent  direct ~ N^2.06   barnes-hut ~ N^1.63
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -45958,6 +45958,59 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   mu = |R_H| sigma -- n-Si here: mu = 0.624 m^2/Vs, Hall angle 32.0 deg at 1 T.
 
   wrote examples/output\hall_effect.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Wiedemann-Franz: good conductors of charge and heat</h2>
+    <p class="blurb">In a metal the same free electrons carry charge and heat, so their conductivities are locked together: kappa/(sigma T) = L, the Lorenz number pi^2 k_B^2/(3 e^2) = 2.44e-8 W ohm/K^2. The material-specific mean free path and carrier density cancel in the ratio, leaving only fundamental constants -- so you can read a metal's thermal conductivity off an easy resistance measurement (copper's ~400 W/(m K) from its sigma). A measured Lorenz number well below L flags heat and charge decoupling, the signature of exotic 'strange metals'.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<text x="20" y="34" fill="#e6edf3" font-size="18">Wiedemann-Franz: predicted vs measured</text>
+<text x="20" y="52" fill="#8b949e" font-size="12">metals fall on the L = 2.44e-8 line; heat and charge ride the same electrons</text>
+<line x1="82" y1="638" x2="638" y2="638" stroke="#8b949e" stroke-width="1.5"/>
+<line x1="82" y1="638" x2="82" y2="126" stroke="#8b949e" stroke-width="1.5"/>
+<text x="82.0" y="654.0" fill="#8b949e" font-size="10" text-anchor="middle">0</text>
+<text x="74.0" y="642.0" fill="#8b949e" font-size="10" text-anchor="end">0</text>
+<text x="197.8" y="654.0" fill="#8b949e" font-size="10" text-anchor="middle">100</text>
+<text x="74.0" y="535.3" fill="#8b949e" font-size="10" text-anchor="end">100</text>
+<text x="313.7" y="654.0" fill="#8b949e" font-size="10" text-anchor="middle">200</text>
+<text x="74.0" y="428.7" fill="#8b949e" font-size="10" text-anchor="end">200</text>
+<text x="429.5" y="654.0" fill="#8b949e" font-size="10" text-anchor="middle">300</text>
+<text x="74.0" y="322.0" fill="#8b949e" font-size="10" text-anchor="end">300</text>
+<text x="545.3" y="654.0" fill="#8b949e" font-size="10" text-anchor="middle">400</text>
+<text x="74.0" y="215.3" fill="#8b949e" font-size="10" text-anchor="end">400</text>
+<text x="360.0" y="668.0" fill="#8b949e" font-size="11" text-anchor="middle">predicted kappa = L sigma T (W/m K)</text>
+<text x="24" y="382.0" fill="#8b949e" font-size="11" transform="rotate(-90 24 382.0)" text-anchor="middle">measured kappa (W/m K)</text>
+<line x1="82.0" y1="638.0" x2="638.0" y2="126.0" stroke="#ffd43b" stroke-width="1.6" stroke-dasharray="6 4"/>
+<text x="499.0" y="246.0" fill="#ffd43b" font-size="11">WF law (L = 2.44e-8)</text>
+<circle cx="616.8" cy="180.4" r="5" fill="#4dabf7"/>
+<text x="624.8" y="184.4" fill="#8b949e" font-size="10">silver</text>
+<circle cx="588.0" cy="210.3" r="5" fill="#4dabf7"/>
+<text x="596.0" y="214.3" fill="#8b949e" font-size="10">copper</text>
+<circle cx="430.1" cy="298.8" r="5" fill="#4dabf7"/>
+<text x="438.1" y="302.8" fill="#8b949e" font-size="10">gold</text>
+<circle cx="402.1" cy="385.2" r="5" fill="#4dabf7"/>
+<text x="410.1" y="389.2" fill="#8b949e" font-size="10">aluminium</text>
+<circle cx="166.9" cy="552.7" r="5" fill="#4dabf7"/>
+<text x="174.9" y="556.7" fill="#8b949e" font-size="10">iron</text>
+<circle cx="120.6" cy="600.7" r="5" fill="#4dabf7"/>
+<text x="128.6" y="604.7" fill="#8b949e" font-size="10">lead</text>
+</svg><figcaption>predicted vs measured thermal conductivity: metals hug the Lorenz-number line</figcaption></figure><div class="card"><pre>Wiedemann-Franz: kappa / (sigma T) = L = 2.443e-08 W ohm / K^2 (T = 300 K)
+
+  metal         sigma (S/m)  kappa pred  kappa meas  L_eff/L
+  silver           6.30e+07       462         429     0.93
+  copper           5.96e+07       437         401     0.92
+  gold             4.10e+07       300         318     1.06
+  aluminium        3.77e+07       276         237     0.86
+  iron             1.00e+07        73          80     1.09
+  lead             4.55e+06        33          35     1.05
+
+  The same free electrons carry both currents, so the material-specific mean free
+  path and carrier density cancel: kappa/(sigma T) is a near-universal constant. That
+  lets you read a metal&#x27;s heat conductivity off an easy resistance measurement -- and
+  a measured L well below 2.44e-8 flags heat and charge decoupling (strange metals).
+
+  wrote examples/output\wiedemann_franz.svg</pre></div></div>
   </section>
 
   <section>
