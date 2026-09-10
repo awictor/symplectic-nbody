@@ -86,6 +86,7 @@ ruins a long non-symplectic integration.
 | `src/magnetic_braking.py` | Magnetic braking & gyrochronology: a star's age from its spin |
 | `src/tidal_locking.py` | Tidal locking timescale: why the Moon shows one face |
 | `src/jeans_escape.py` | Jeans escape: which gases a world keeps, which leak to space |
+| `src/snow_line.py` | The snow line: disk temperature & the rocky/icy divide at ~3 AU |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -163,6 +164,7 @@ ruins a long non-symplectic integration.
 | `examples/magnetic_braking_demo.py` | Gyro ages for clusters + the Skumanich age-period curve |
 | `examples/tidal_locking_demo.py` | Locking times across the solar system + the a^6 curve |
 | `examples/jeans_escape_demo.py` | Gas-retention table + the escape-vs-thermal-speed shoreline |
+| `examples/snow_line_demo.py` | Disk T at each planet + the frost-line temperature profile |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1523,6 +1525,36 @@ itself. Plotting escape speed against thermal speed draws the "cosmic shoreline"
 separates worlds with atmospheres from airless ones. The tests verify Earth's keep/lose
 split, the airless Moon, the `lambda` scalings with mass/gravity/temperature, and the
 exponential suppression of heavy-gas escape.
+
+## The snow line: why the inner solar system is rocky
+
+A protoplanetary disk is heated by its star, so for a grain in radiative equilibrium the
+temperature falls as `T(r) = (L / 16 pi sigma r^2)^(1/4) ~ r^(-1/2)`. The snow line is
+where the disk cools past water ice's ~160 K condensation point. `snow_line.py`:
+
+```
+$ python examples/snow_line_demo.py examples/output
+
+      planet   r (AU)    T (K)     state
+  --------------------------------------
+     Mercury     0.39    445.7      rock
+       Venus     0.72    328.0      rock
+       Earth     1.00    278.3      rock
+        Mars     1.52    225.8      rock
+     Jupiter     5.20    122.1  rock+ice
+      Saturn     9.58     89.9  rock+ice
+      Uranus    19.20     63.5  rock+ice
+     Neptune    30.10     50.7  rock+ice
+```
+
+The water snow line lands at ~3 AU, right between Mars and Jupiter. Inside it water is
+vapour, so only rock and metal condense and the terrestrial planets stayed small and dry;
+outside it ice roughly triples the solid surface density, letting Jupiter's core grow fast
+enough to seize nebular gas before the disk dissipated. Each ice has its own frost line --
+CO2 near ~16 AU, CO out past ~190 AU -- sorting the disk by composition, and a brighter
+star pushes the whole pattern outward as `sqrt(L)`. The tests verify the ~280 K
+temperature at 1 AU, the `r^(-1/2)` profile, the ~3 AU water line, the frost-line ordering,
+and the `sqrt(L)` scaling.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

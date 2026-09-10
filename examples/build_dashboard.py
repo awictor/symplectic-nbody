@@ -128,6 +128,7 @@ def main():
     import magnetic_braking_demo
     import tidal_locking_demo
     import jeans_escape_demo
+    import snow_line_demo
 
     import plot_orbits
 
@@ -225,6 +226,7 @@ def main():
     magbrake_txt = run("magnetic_braking_demo", magnetic_braking_demo.main, True)
     tidelock_txt = run("tidal_locking_demo", tidal_locking_demo.main, True)
     jeansesc_txt = run("jeans_escape_demo", jeans_escape_demo.main, True)
+    snowline_txt = run("snow_line_demo", snow_line_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -879,6 +881,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("jeans_escape.svg"), "worlds and gases sorted by the v_esc = 6 v_th retention line")
             + f'<div class="card">{pre(jeansesc_txt)}</div>'
+            + '</div>'),
+        section(
+            "The snow line",
+            "A protoplanetary disk cools with distance as T ~ r^(-1/2), so ice "
+            "condenses only beyond the point where it drops past ~160 K -- the snow "
+            "line, at ~3 AU for the young Sun. Inside, water is vapour and planets "
+            "grow small and dry; outside, ice roughly triples the solid density and "
+            "lets giant cores grow fast enough to grab gas. Water, CO2 and CO each "
+            "have their own frost line, sorting the disk by composition.",
+            '<div class="grid">'
+            + svg_card(out("snow_line.svg"), "the disk temperature profile with frost lines and planets")
+            + f'<div class="card">{pre(snowline_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
