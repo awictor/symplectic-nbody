@@ -7401,6 +7401,46 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   </section>
 
   <section>
+    <h2>Clausius-Clapeyron: vapor pressure</h2>
+    <p class="blurb">Along a liquid-vapour line, pressure and temperature are locked by dP/dT = L/(T dV), integrating to P(T) = P0 exp(-(L/R)(1/T - 1/T0)) -- vapor pressure climbs exponentially, roughly doubling every ~15 K. Boiling is where it meets the ambient pressure, so water boils at 72 C atop Everest (thin air) and 121 C in a pressure cooker. The same curve sets atmospheric humidity and cloud formation.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<line x1="72" y1="648" x2="648" y2="648" stroke="#30363d"/>
+<line x1="72" y1="72" x2="72" y2="648" stroke="#30363d"/>
+<line x1="72" y1="429.8" x2="648" y2="429.8" stroke="#8b949e" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="80" y="423.8" fill="#8b949e" font-size="10">1 atm -> boils at 100 C</text>
+<polyline points="72.0,646.2 80.9,646.0 89.7,645.7 98.6,645.4 107.4,645.0 116.3,644.6 125.2,644.2 134.0,643.7 142.9,643.2 151.8,642.6 160.6,641.9 169.5,641.2 178.3,640.4 187.2,639.5 196.1,638.6 204.9,637.5 213.8,636.3 222.6,635.0 231.5,633.6 240.4,632.1 249.2,630.4 258.1,628.6 267.0,626.6 275.8,624.4 284.7,622.0 293.5,619.5 302.4,616.7 311.3,613.7 320.1,610.4 329.0,606.9 337.8,603.1 346.7,598.9 355.6,594.5 364.4,589.7 373.3,584.6 382.2,579.0 391.0,573.1 399.9,566.7 408.7,559.9 417.6,552.6 426.5,544.7 435.3,536.4 444.2,527.4 453.0,517.8 461.9,507.6 470.8,496.7 479.6,485.2 488.5,472.8 497.4,459.7 506.2,445.8 515.1,430.9 523.9,415.2 532.8,398.6 541.7,380.9 550.5,362.2 559.4,342.3 568.2,321.4 577.1,299.2 586.0,275.8 594.8,251.1 603.7,225.0 612.6,197.5 621.4,168.5 630.3,138.0 639.1,105.8 648.0,72.0" fill="none" stroke="#4dabf7" stroke-width="2.6"/>
+<circle cx="392.7" cy="571.9" r="4.5" fill="#ff6b6b"/>
+<text x="398.7" y="575.9" fill="#ff6b6b" font-size="10">Everest (72 C)</text>
+<circle cx="491.9" cy="467.8" r="4.5" fill="#ffd43b"/>
+<text x="497.9" y="471.8" fill="#ffd43b" font-size="10">Denver (95 C)</text>
+<circle cx="608.1" cy="211.6" r="4.5" fill="#06d6a0"/>
+<text x="614.1" y="215.6" fill="#06d6a0" font-size="10">cooker 2atm (121 C)</text>
+<text x="72" y="34" fill="#e6edf3" font-size="18">Water vapor pressure vs temperature</text>
+<text x="72" y="52" fill="#8b949e" font-size="12">boiling is where the curve meets the ambient pressure</text>
+<text x="648" y="672" fill="#8b949e" font-size="11" text-anchor="end">temperature (C) -&gt;</text>
+<text x="54" y="64" fill="#8b949e" font-size="11">vapor pressure (kPa)</text>
+</svg><figcaption>the exponential vapor-pressure curve with altitude markers</figcaption></figure><div class="card"><pre>Clausius-Clapeyron: P(T) = P0 exp(-(L/R)(1/T - 1/T0))
+
+  water boiling point vs altitude:
+            location  altitude (m)  pressure (kPa)  boils at (C)
+  --------------------------------------------------------------
+           sea level             0           101.3         100.0
+              Denver          1609            83.7          94.6
+              La Paz          3640            65.7          88.1
+        Everest base          5364            53.5          82.7
+      Everest summit          8848            35.3          72.2
+
+  Vapor pressure climbs exponentially with temperature -- roughly doubling
+  every ~15 K -- so water boils when its vapor pressure reaches the ambient
+  air pressure. Up a mountain the thinner air lets it boil cooler (72 C on
+  Everest, too cold to cook an egg), while a pressure cooker raises the
+  boiling point to ~121 C. The same curve sets humidity and cloud formation.
+
+  wrote examples/output\clausius_clapeyron.svg</pre></div></div>
+  </section>
+
+  <section>
     <h2>Three-body stability map</h2>
     <p class="blurb">Every pixel is a full three-body integration; colour is the time until a body escapes. The fractal boundary between long-lived and quickly-ionized initial conditions is chaos drawn in IC space. (Generated separately by stability_map_demo.py -- it's compute-heavy.)</p>
     <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">

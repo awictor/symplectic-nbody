@@ -185,6 +185,7 @@ def main():
     import adiabatic_demo
     import van_der_waals_demo
     import joule_thomson_demo
+    import clausius_clapeyron_demo
 
     import plot_orbits
 
@@ -339,6 +340,7 @@ def main():
     adiab_txt = run("adiabatic_demo", adiabatic_demo.main, True)
     vdw_txt = run("van_der_waals_demo", van_der_waals_demo.main, True)
     jt_txt = run("joule_thomson_demo", joule_thomson_demo.main, True)
+    cc_txt = run("clausius_clapeyron_demo", clausius_clapeyron_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1674,6 +1676,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("joule_thomson.svg"), "the JT coefficient crossing zero at each gas's inversion temperature")
             + f'<div class="card">{pre(jt_txt)}</div>'
+            + '</div>'),
+        section(
+            "Clausius-Clapeyron: vapor pressure",
+            "Along a liquid-vapour line, pressure and temperature are locked by "
+            "dP/dT = L/(T dV), integrating to P(T) = P0 exp(-(L/R)(1/T - 1/T0)) -- vapor "
+            "pressure climbs exponentially, roughly doubling every ~15 K. Boiling is "
+            "where it meets the ambient pressure, so water boils at 72 C atop Everest "
+            "(thin air) and 121 C in a pressure cooker. The same curve sets atmospheric "
+            "humidity and cloud formation.",
+            '<div class="grid">'
+            + svg_card(out("clausius_clapeyron.svg"), "the exponential vapor-pressure curve with altitude markers")
+            + f'<div class="card">{pre(cc_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

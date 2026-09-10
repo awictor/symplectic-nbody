@@ -143,6 +143,7 @@ ruins a long non-symplectic integration.
 | `src/adiabatic.py` | Adiabatic processes: PV^gamma, compression heating & the speed of sound |
 | `src/van_der_waals.py` | The van der Waals gas: real-gas EOS, critical point & corresponding states |
 | `src/joule_thomson.py` | The Joule-Thomson effect: throttling cooling & gas liquefaction |
+| `src/clausius_clapeyron.py` | Clausius-Clapeyron: vapor pressure, boiling point & latent heat |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -277,6 +278,7 @@ ruins a long non-symplectic integration.
 | `examples/adiabatic_demo.py` | Compression temperatures + the adiabat-vs-isotherm P-V diagram |
 | `examples/van_der_waals_demo.py` | Critical constants per gas + the reduced isotherms with the loop |
 | `examples/joule_thomson_demo.py` | Inversion temperatures per gas + the mu_JT(T) crossings |
+| `examples/clausius_clapeyron_demo.py` | Boiling point vs altitude + the vapor-pressure curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3167,6 +3169,31 @@ have low inversion temperatures and *warm* on throttling, so they must be pre-co
 nitrogen cooling and hydrogen/helium warming at room temperature, the `(27/4) T_c` inversion
 ratio, the sign flip at the inversion temperature, the vanishing ideal-gas coefficient, and
 the inversion-temperature ordering.
+
+## Clausius-Clapeyron: vapor pressure and boiling
+
+Along a liquid-vapour coexistence line pressure and temperature are locked together.
+`clausius_clapeyron.py`:
+
+```
+$ python examples/clausius_clapeyron_demo.py examples/output
+
+          location   altitude (m)   pressure (kPa)   boils at (C)
+  --------------------------------------------------------------
+         sea level             0           101.3          100.0
+            Denver          1609            83.7           94.6
+            La Paz          3640            65.7           88.1
+    Everest summit          8848            35.3           72.2
+```
+
+Integrating `dP/dT = L/(T dV)` with an ideal vapour gives `P(T) = P0 exp(-(L/R)(1/T - 1/T0))`,
+a steep exponential -- vapor pressure roughly doubles every ~15 K. Boiling happens where the
+vapor pressure equals the ambient pressure, so the thinner air atop Everest lets water boil
+at 72 C (too cold to cook an egg) while a pressure cooker raises it to ~121 C. Two measured
+`(P, T)` points recover the latent heat, and the same saturation curve governs atmospheric
+humidity and cloud formation. The tests verify the 100 C sea-level boiling, the Everest and
+pressure-cooker points, the steep exponential rise, the latent-heat recovery, and the
+boiling/vapor-pressure inversion.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
