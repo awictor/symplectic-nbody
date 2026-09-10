@@ -1,0 +1,23 @@
+Quantum tunneling: T ~ exp(-2 kappa L), kappa = sqrt(2m(V-E))/hbar
+
+    V - E (eV)  width (nm)    transmission
+  ----------------------------------------
+             1         0.2        1.29e-01
+             1         0.5        5.96e-03
+             1         1.0        3.55e-05
+             4         0.2        1.66e-02
+             4         0.5        3.55e-05
+             4         1.0        1.26e-09
+
+  STM tip-surface gap sensitivity (4 eV work function):
+    +0.1 nm gap  ->  current x 1.29e-01  (1/8)
+    +0.2 nm gap  ->  current x 1.66e-02  (1/60)
+    +0.3 nm gap  ->  current x 2.14e-03  (1/468)
+
+  Transmission plunges exponentially with width, so a barrier a nanometre
+  thick is essentially opaque -- yet shave off an Angstrom and the current
+  jumps ~8x. That razor sensitivity is how a scanning tunneling microscope
+  feels individual atoms, and the same barrier penetration drives alpha
+  decay (tunneling out) and stellar fusion (tunneling in).
+
+  wrote examples/output\tunneling.svg

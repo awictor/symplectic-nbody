@@ -130,6 +130,7 @@ ruins a long non-symplectic integration.
 | `src/bohr.py` | The Bohr model: the hydrogen spectrum from a quantized orbit |
 | `src/photoelectric.py` | The photoelectric effect: light quantized into photons |
 | `src/uncertainty.py` | The Heisenberg uncertainty principle & zero-point energy |
+| `src/tunneling.py` | Quantum tunneling: barrier transmission, WKB & the STM |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -251,6 +252,7 @@ ruins a long non-symplectic integration.
 | `examples/bohr_demo.py` | Energy levels & series wavelengths + the level diagram |
 | `examples/photoelectric_demo.py` | Threshold & stopping voltage per metal + the V_stop(f) lines |
 | `examples/uncertainty_demo.py` | Confinement energy by box size + the E(dx) electron/nucleon curves |
+| `examples/tunneling_demo.py` | Transmission by width/height + STM gap sensitivity + the T(L) curves |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2801,6 +2803,34 @@ carries MeV, the nuclear energy scale. The same `dE dt >= hbar/2` gives a short-
 broad natural line width. The tests verify the `dx dp = hbar/2` bound, the eV atomic and MeV
 nuclear confinement energies, the 13.6 eV hydrogen estimate, and the lifetime-linewidth
 relation.
+
+## Quantum tunneling: through a barrier you cannot climb
+
+A particle with `E < V` can still leak through a barrier -- its wavefunction decays as
+`exp(-kappa x)` inside. `tunneling.py`:
+
+```
+$ python examples/tunneling_demo.py examples/output
+
+    V - E (eV)   width (nm)     transmission
+  ----------------------------------------
+             4          0.2        1.66e-02
+             4          0.5        3.55e-05
+             4          1.0        1.26e-09
+
+  STM tip-surface gap sensitivity (4 eV work function):
+    +0.1 nm gap  ->  current x 1.29e-01  (1/8)
+    +0.2 nm gap  ->  current x 1.66e-02  (1/60)
+```
+
+Transmission `T ~ exp(-2 kappa L)` with `kappa = sqrt(2m(V-E))/hbar` plunges exponentially
+with width and with `sqrt(V-E)`, so a nanometre barrier is essentially opaque -- yet shaving
+an Angstrom raises the tunneling current ~8x. That razor sensitivity is how a scanning
+tunneling microscope feels individual atoms, and the same barrier penetration drives alpha
+decay (tunneling out of the nuclear Coulomb barrier) and stellar fusion (tunneling in, the
+Gamow module). The WKB integral extends it to a general barrier shape. The tests verify the
+exponential width dependence, the exact-to-thick-limit reduction, the WKB match on a
+rectangular barrier, and the ~order-of-magnitude-per-Angstrom STM sensitivity.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -172,6 +172,7 @@ def main():
     import bohr_demo
     import photoelectric_demo
     import uncertainty_demo
+    import tunneling_demo
 
     import plot_orbits
 
@@ -313,6 +314,7 @@ def main():
     bohr_txt = run("bohr_demo", bohr_demo.main, True)
     photoel_txt = run("photoelectric_demo", photoelectric_demo.main, True)
     uncert_txt = run("uncertainty_demo", uncertainty_demo.main, True)
+    tunnel_txt = run("tunneling_demo", tunneling_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1493,6 +1495,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("uncertainty.svg"), "confinement energy vs box size for an electron and a nucleon")
             + f'<div class="card">{pre(uncert_txt)}</div>'
+            + '</div>'),
+        section(
+            "Quantum tunneling",
+            "A particle with too little energy to climb a barrier can still leak "
+            "through: its wavefunction decays as exp(-kappa x) inside, so transmission "
+            "is T ~ exp(-2 kappa L), plunging exponentially with barrier width. A "
+            "nanometre barrier is essentially opaque, yet shaving an Angstrom raises "
+            "the current ~8x -- the razor sensitivity that lets a scanning tunneling "
+            "microscope feel individual atoms, and the physics of alpha decay and fusion.",
+            '<div class="grid">'
+            + svg_card(out("tunneling.svg"), "transmission falling exponentially with barrier width")
+            + f'<div class="card">{pre(tunnel_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
