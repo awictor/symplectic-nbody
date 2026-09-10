@@ -210,6 +210,7 @@ def main():
     import marangoni_demo
     import kutta_joukowski_demo
     import knudsen_demo
+    import richardson_demo
 
     import plot_orbits
 
@@ -389,6 +390,7 @@ def main():
     marangoni_txt = run("marangoni_demo", marangoni_demo.main, True)
     kutta_joukowski_txt = run("kutta_joukowski_demo", kutta_joukowski_demo.main, True)
     knudsen_txt = run("knudsen_demo", knudsen_demo.main, True)
+    richardson_txt = run("richardson_demo", richardson_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2050,6 +2052,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("knudsen.svg"), "regime map over system size and pressure: continuum to free-molecular")
             + f'<div class="card">{pre(knudsen_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Richardson number: shear vs stratification",
+            "A stably stratified fluid resists overturning, but fast enough shear can rip the "
+            "interface into billows anyway. The gradient Richardson number Ri = N^2/(du/dz)^2 "
+            "weighs the buoyant stiffness against the squared shear: the Miles-Howard theorem "
+            "guarantees stability where Ri > 1/4, and below it the Kelvin-Helmholtz instability "
+            "curls the interface into cat's-eye billows. It governs clear-air turbulence that "
+            "jolts aircraft, mixing in the ocean thermocline (Ri ~ 4, layered) and the "
+            "entrainment atop a fog layer.",
+            '<div class="grid">'
+            + svg_card(out("richardson.svg"), "stability map over stratification and shear with the Ri=1/4 threshold and KH billows")
+            + f'<div class="card">{pre(richardson_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

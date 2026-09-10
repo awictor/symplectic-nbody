@@ -168,6 +168,7 @@ ruins a long non-symplectic integration.
 | `src/marangoni.py` | Marangoni effect: surface-tension-gradient flow, onset, dynamic Bond number |
 | `src/kutta_joukowski.py` | Kutta-Joukowski lift: circulation, 2 pi lift-slope, Magnus force, induced drag |
 | `src/knudsen.py` | Knudsen number: mean free path, flow regimes, continuum-to-free-molecular |
+| `src/richardson.py` | Richardson number: stratified-shear stability, Kelvin-Helmholtz onset |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -327,6 +328,7 @@ ruins a long non-symplectic integration.
 | `examples/marangoni_demo.py` | Onset/regime table + the Marangoni-vs-buoyancy regime map |
 | `examples/kutta_joukowski_demo.py` | Lift/Magnus tables + the lift-slope & induced-drag figure |
 | `examples/knudsen_demo.py` | Per-system regime table + the size-pressure regime map |
+| `examples/richardson_demo.py` | Per-layer stability table + the Ri map & KH-billow sketch |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3825,6 +3827,28 @@ orbital altitude, and `Kn` climbs past 1, so the gas slips at walls, thermal cre
 and drag must be computed molecule by molecule. The tests reproduce air's ~68 nm mean free
 path, the `T`/`1/P` scalings, the four regime thresholds, the continuum breakdown in vacuum,
 the pressure/size inversions, and the ~468 m/s mean molecular speed.
+
+## The Richardson number: shear vs stratification
+
+A stratified fluid resists overturning until shear overwhelms it. `richardson.py`:
+
+```
+$ python examples/richardson_demo.py examples/output
+
+  layer                N (rad/s)  shear    Ri      state
+  ocean thermocline    0.010      0.005    4.00    layered (stable)
+  jet-stream shear     0.012      0.030    0.16    KH billows
+```
+
+The gradient Richardson number `Ri = N^2/(du/dz)^2` weighs the buoyant restoring stiffness
+`N^2` (the Brunt-Vaisala frequency squared) against the squared velocity shear. The
+Miles-Howard theorem guarantees stability wherever `Ri > 1/4`; below that threshold the
+Kelvin-Helmholtz instability grows, curling the interface into the "cat's-eye" billows seen
+in cloud edges and river surfaces. It sets clear-air turbulence that jolts aircraft, mixing
+(or its absence) in the ocean thermocline and atmospheric inversions, and entrainment at a
+fog top; the bulk form `Ri_b = g (drho/rho) L/U^2` is the finite-difference version. The tests
+verify the `N^2`/shear ratio, the `1/4` threshold, the bulk-Ri density/velocity trends, the
+critical shear that brings `Ri` to `1/4`, and the stratification sign from a density gradient.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

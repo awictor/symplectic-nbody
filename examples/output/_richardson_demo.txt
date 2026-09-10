@@ -1,0 +1,13 @@
+Richardson number Ri = N^2 / (du/dz)^2: buoyant stiffness vs shear (KH at Ri<1/4)
+
+  layer                       N (rad/s)     shear       Ri         state
+  ocean thermocline               0.010     0.005     4.00layered (stable)
+  nocturnal inversion             0.020     0.020     1.00layered (stable)
+  jet-stream shear zone           0.012     0.030     0.16    KH billows
+  breaking billows                0.008     0.050     0.03    KH billows
+
+  For N = 0.012 rad/s the critical shear is 0.0240 /s: steeper than that drops Ri
+  below 1/4 and the interface rolls up into Kelvin-Helmholtz cat's-eye billows --
+  the same physics behind clear-air turbulence that jolts aircraft and cloud-edge waves.
+
+  wrote examples/output\richardson.svg
