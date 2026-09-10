@@ -133,6 +133,7 @@ def main():
     import toomre_demo
     import accretion_disk_demo
     import fermi_acceleration_demo
+    import opacity_demo
 
     import plot_orbits
 
@@ -235,6 +236,7 @@ def main():
     toomre_txt = run("toomre_demo", toomre_demo.main, True)
     accdisk_txt = run("accretion_disk_demo", accretion_disk_demo.main, True)
     fermi_txt = run("fermi_acceleration_demo", fermi_acceleration_demo.main, True)
+    opacity_txt = run("opacity_demo", opacity_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -949,6 +951,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("fermi_acceleration.svg"), "power-law spectra steepening as the shock weakens toward p=2")
             + f'<div class="card">{pre(fermi_txt)}</div>'
+            + '</div>'),
+        section(
+            "Stellar opacity",
+            "Opacity kappa sets the photon mean free path 1/(kappa rho) and so how "
+            "slowly a star leaks its light. Electron scattering is a flat floor in "
+            "hot ionized gas; Kramers bound-free/free-free absorption rises with "
+            "density and falls as T^(-7/2), making cool outer layers far more opaque "
+            "than the core. That steep temperature dependence is what flips stellar "
+            "envelopes from radiative to convective energy transport.",
+            '<div class="grid">'
+            + svg_card(out("opacity.svg"), "Kramers T^-3.5 fall-off flattening onto the electron-scattering floor")
+            + f'<div class="card">{pre(opacity_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

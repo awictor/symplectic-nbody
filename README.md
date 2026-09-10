@@ -91,6 +91,7 @@ ruins a long non-symplectic integration.
 | `src/toomre.py` | Toomre Q: when a rotating disk fragments into clumps and arms |
 | `src/accretion_disk.py` | Shakura-Sunyaev disk: the X-ray/UV glow of accreting black holes |
 | `src/fermi_acceleration.py` | Diffusive shock acceleration & the universal E^(-2) cosmic-ray spectrum |
+| `src/opacity.py` | Stellar opacity: electron scattering, Kramers law & the photon mean free path |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -173,6 +174,7 @@ ruins a long non-symplectic integration.
 | `examples/toomre_demo.py` | Q across the galactic disk with the unstable band shaded |
 | `examples/accretion_disk_demo.py` | T(r) for stellar-mass vs supermassive disks + wavebands |
 | `examples/fermi_acceleration_demo.py` | Spectral index vs Mach + power-law spectra toward p=2 |
+| `examples/opacity_demo.py` | Opacity by region + the Kramers/electron-floor T profile |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1679,6 +1681,32 @@ original random magnetic clouds, shocks win by a factor `1/beta`, which is why t
 clouds, are the cosmic-ray engines. The tests verify the `r -> 4` strong-shock limit, the
 `p = 2` universal index, steeper spectra from weaker shocks, and the first- over
 second-order advantage.
+
+## Stellar opacity: how slowly light escapes
+
+Opacity `kappa` (m^2/kg) sets the photon mean free path `1/(kappa rho)` and so how slowly a
+star leaks its luminosity. `opacity.py`:
+
+```
+$ python examples/opacity_demo.py examples/output
+
+            region       rho     T (K)  kappa_es   Kramers    total
+  -----------------------------------------------------------------
+      solar centre   1.5e+05   1.5e+07     0.034     0.074    0.108
+    radiative zone   2.0e+04   5.0e+06     0.034     0.461    0.494
+      near surface   1.0e-03   1.0e+05     0.034     0.020    0.054
+       photosphere   1.0e-04   6.0e+03     0.034    38.468   38.502
+```
+
+Electron (Thomson) scattering is a flat floor, `~0.034 m^2/kg`, independent of density and
+temperature -- the opacity the Eddington luminosity rests on. Kramers bound-free and
+free-free absorption follow `kappa ~ rho T^(-7/2)`, so the cool outer layers are hundreds of
+times more opaque than the blazing core; that steep fall-off is what flips a stellar
+envelope from radiative diffusion to convection. At the solar centre the total is ~0.1
+m^2/kg and the photon mean free path is only ~60 microns, so light random-walks out over
+~100,000 years. The tests verify the electron-scattering value and constancy, the `T^(-7/2)`
+and density scalings, the solar-centre magnitude, the high-T approach to the floor, and the
+sub-millimetre mean free path.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
