@@ -1,0 +1,19 @@
+Free-fall time t_ff = sqrt(3 pi / 32 G rho): the clock of gravity
+
+                    system   rho (kg/m^3)              t_ff
+  ---------------------------------------------------------
+     giant molecular cloud       3.85e-19          3.39 Myr
+          dense cloud core       3.85e-17         339.4 kyr
+         protostellar core       3.85e-13           3.4 kyr
+            the Sun (mean)       1.41e+03          29.5 min
+                 the Earth       5.51e+03          14.9 min
+               white dwarf       1.00e+09             2.1 s
+              neutron star       5.00e+17           0.09 ms
+
+  Notice: t_ff depends only on density, not size or mass. A galaxy and a
+  raindrop of the same mean density collapse in the same time. That is why
+  low Earth orbit is always ~90 minutes, why a molecular cloud core forms
+  stars in a few hundred kyr, and why a neutron star's dynamical time is
+  well under a millisecond -- denser means faster, universally.
+
+  wrote examples/output\free_fall.svg

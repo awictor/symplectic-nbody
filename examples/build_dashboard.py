@@ -136,6 +136,7 @@ def main():
     import opacity_demo
     import brunt_vaisala_demo
     import ram_pressure_demo
+    import free_fall_demo
 
     import plot_orbits
 
@@ -241,6 +242,7 @@ def main():
     opacity_txt = run("opacity_demo", opacity_demo.main, True)
     brunt_txt = run("brunt_vaisala_demo", brunt_vaisala_demo.main, True)
     rampress_txt = run("ram_pressure_demo", ram_pressure_demo.main, True)
+    freefall_txt = run("free_fall_demo", free_fall_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -991,6 +993,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("ram_pressure.svg"), "surviving gas radius vs infall speed for a range of ICM densities")
             + f'<div class="card">{pre(rampress_txt)}</div>'
+            + '</div>'),
+        section(
+            "Free-fall: the universal clock of gravity",
+            "Remove a body's pressure support and it collapses in the free-fall time "
+            "t_ff = sqrt(3 pi / 32 G rho) -- which depends only on mean density, not "
+            "size or mass. So a galaxy and a raindrop of equal density collapse in "
+            "the same time. The Sun would free-fall in ~30 minutes, a molecular-cloud "
+            "core in a few hundred kyr, a neutron star in under a millisecond: one "
+            "1/sqrt(G rho) line spanning 37 decades of density.",
+            '<div class="grid">'
+            + svg_card(out("free_fall.svg"), "free-fall time vs mean density from clouds to neutron stars")
+            + f'<div class="card">{pre(freefall_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

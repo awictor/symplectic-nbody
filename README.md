@@ -94,6 +94,7 @@ ruins a long non-symplectic integration.
 | `src/opacity.py` | Stellar opacity: electron scattering, Kramers law & the photon mean free path |
 | `src/brunt_vaisala.py` | Brunt-Vaisala buoyancy frequency & the Schwarzschild convection criterion |
 | `src/ram_pressure.py` | Ram-pressure stripping: how clusters strip spirals of their gas |
+| `src/free_fall.py` | Free-fall & dynamical time: the 1/sqrt(G rho) clock of gravity |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -179,6 +180,7 @@ ruins a long non-symplectic integration.
 | `examples/opacity_demo.py` | Opacity by region + the Kramers/electron-floor T profile |
 | `examples/brunt_vaisala_demo.py` | N & buoyancy period by layer + the N^2-vs-lapse-rate curve |
 | `examples/ram_pressure_demo.py` | Surviving gas radius by environment + the R_strip(v) curves |
+| `examples/free_fall_demo.py` | Free-fall time from clouds to neutron stars + the rho^(-1/2) line |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1768,6 +1770,35 @@ into the gas-poor S0 and elliptical galaxies that crowd cluster cores. The tests
 `rho v^2` scaling, a finite partial-strip radius in a cluster, inner gas surviving while the
 outskirts go, deeper stripping in harsher environments, and full stripping (R=0) in extreme
 conditions.
+
+## Free-fall: the universal clock of gravity
+
+Take away a body's pressure support and it collapses in the free-fall time
+`t_ff = sqrt(3 pi / 32 G rho)`, which depends only on mean density -- not size or mass.
+`free_fall.py`:
+
+```
+$ python examples/free_fall_demo.py examples/output
+
+                  system   rho (kg/m^3)              t_ff
+  ---------------------------------------------------------
+   giant molecular cloud       3.85e-19          3.39 Myr
+        dense cloud core       3.85e-17         339.4 kyr
+       protostellar core       3.85e-13           3.4 kyr
+          the Sun (mean)       1.41e+03          29.5 min
+               the Earth       5.51e+03          14.9 min
+             white dwarf       1.00e+09             2.1 s
+            neutron star       5.00e+17           0.09 ms
+```
+
+Because size and mass drop out, a galaxy and a raindrop of equal density collapse in the
+same time, and the dynamical time and surface-orbit period share the identical
+`1/sqrt(G rho)` scaling -- which is why every low Earth orbit is ~90 minutes regardless of
+altitude, a cloud core forms stars in a few hundred kyr, and a neutron star's dynamical time
+is under a millisecond. The Sun would free-fall in ~30 minutes if fusion switched off; that
+it shines for billions of years instead is the whole point of the Kelvin-Helmholtz and
+main-sequence modules. The tests verify the ~30-minute solar free-fall, the `rho^(-1/2)`
+scaling, size-independence, the cloud-core collapse time, and the ~84-minute surface orbit.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
