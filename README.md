@@ -164,6 +164,7 @@ ruins a long non-symplectic integration.
 | `src/cluster_mass.py` | Virial cluster mass from velocity dispersion, M/L ratio, dark-matter fraction |
 | `src/sersic.py` | Sersic surface-brightness profile: b_n, total luminosity, enclosed light |
 | `src/grashof.py` | Grashof number: natural convection, Rayleigh Nu correlations, buoyancy vs forced |
+| `src/womersley.py` | Womersley number: pulsatile flow, penetration depth, phase lag, pulse-wave speed |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -319,6 +320,7 @@ ruins a long non-symplectic integration.
 | `examples/cluster_mass_demo.py` | Per-cluster virial-mass table + the mass-to-light ladder |
 | `examples/sersic_demo.py` | Per-index profile table + the surface-brightness curves |
 | `examples/grashof_demo.py` | Natural-convection table + the h-vs-height / transition figure |
+| `examples/womersley_demo.py` | Vascular-tree alpha table + the parabola-to-plug profile figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3723,6 +3725,30 @@ still room -- an order of magnitude below forced convection. The ratio `Gr/Re^2`
 wins: `>>1` buoyancy (natural), `<<1` forced. The tests reproduce the `L^3`/`dT`/`1/nu^2`
 scalings, the `Ra = Gr Pr` relation, the laminar/turbulent branch switch, the few-`W/(m^2 K)`
 coefficient, and the natural-vs-forced crossover.
+
+## The Womersley number: why blood flow lags the pulse
+
+A pulsating pressure does not make a pulsating parabola. `womersley.py`:
+
+```
+$ python examples/womersley_demo.py examples/output
+
+  vessel        radius   alpha   phase lag   regime
+  aorta         11 mm    14.7    86 deg      plug (inertial)
+  arteriole     0.15 mm  0.20     0 deg      quasi-steady
+```
+
+The Womersley number `alpha = R sqrt(omega/nu)` compares the heartbeat frequency to the rate
+viscosity diffuses momentum across a vessel (`alpha = R/delta`, the viscous penetration depth
+`delta = sqrt(nu/omega)`). Small `alpha` (< ~1: arterioles, capillaries) is quasi-steady --
+the instantaneous profile is the in-phase Poiseuille parabola. Large `alpha` (> ~10: the
+aorta at `alpha ~ 15`) has too much core inertia to follow the forcing, so the flow lags the
+pressure gradient by up to 90 degrees and flattens into a blunt plug with the shear confined
+to a thin oscillating wall layer. The pressure pulse itself travels far faster than the blood,
+at the Moens-Korteweg speed `c = sqrt(E h/(2 rho R))` (~6-10 m/s, rising as arteries stiffen).
+The tests reproduce the aorta's `alpha ~ 15` and a capillary's `alpha << 1`, the
+`R`/`sqrt(omega)` scalings, `alpha = R/delta`, the phase-lag trend to 90 degrees, the
+`R^4` Poiseuille flow, and the pulse-wave speed.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

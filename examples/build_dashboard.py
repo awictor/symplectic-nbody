@@ -206,6 +206,7 @@ def main():
     import cluster_mass_demo
     import sersic_demo
     import grashof_demo
+    import womersley_demo
 
     import plot_orbits
 
@@ -381,6 +382,7 @@ def main():
     cluster_mass_txt = run("cluster_mass_demo", cluster_mass_demo.main, True)
     sersic_txt = run("sersic_demo", sersic_demo.main, True)
     grashof_txt = run("grashof_demo", grashof_demo.main, True)
+    womersley_txt = run("womersley_demo", womersley_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1986,6 +1988,20 @@ def main():
             '<div class="grid">'
             + svg_card(out("grashof.svg"), "natural-convection h vs wall height, tripping from laminar to turbulent at Ra ~ 1e9")
             + f'<div class="card">{pre(grashof_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Womersley number: why blood flow lags the pulse",
+            "A pulsating pressure does not make a pulsating parabola. The Womersley number "
+            "alpha = R sqrt(omega/nu) compares the heartbeat frequency to how fast viscosity "
+            "diffuses momentum across a vessel. Small alpha (arterioles, capillaries) stays "
+            "quasi-steady -- an in-phase Poiseuille parabola; large alpha (the aorta at "
+            "alpha ~ 15) has too much core inertia to follow, so the flow lags the pressure "
+            "by up to 90 degrees and flattens into a blunt plug with the shear squeezed into a "
+            "thin wall layer. The pressure pulse itself races ahead at the Moens-Korteweg "
+            "speed.",
+            '<div class="grid">'
+            + svg_card(out("womersley.svg"), "velocity profiles from quasi-steady parabola to inertial plug as alpha grows")
+            + f'<div class="card">{pre(womersley_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

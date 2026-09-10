@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.17       12.12      0.8x
-   400          36.64       37.92      1.0x
-   800         147.84      114.27      1.3x
-  1600         653.19      400.25      1.6x
-  3200        2649.70     1088.42      2.4x
+   200           9.33       12.46      0.7x
+   400          37.07       38.68      1.0x
+   800         145.01      115.24      1.3x
+  1600         638.68      381.43      1.7x
+  3200        2725.72     1080.21      2.5x
 
-empirical scaling exponent  direct ~ N^2.05   barnes-hut ~ N^1.64
+empirical scaling exponent  direct ~ N^2.05   barnes-hut ~ N^1.62
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -21905,6 +21905,64 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   layer stays laminar until Ra ~ 1e9 (around a metre here), then trips turbulent.
 
   wrote examples/output\grashof.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>The Womersley number: why blood flow lags the pulse</h2>
+    <p class="blurb">A pulsating pressure does not make a pulsating parabola. The Womersley number alpha = R sqrt(omega/nu) compares the heartbeat frequency to how fast viscosity diffuses momentum across a vessel. Small alpha (arterioles, capillaries) stays quasi-steady -- an in-phase Poiseuille parabola; large alpha (the aorta at alpha ~ 15) has too much core inertia to follow, so the flow lags the pressure by up to 90 degrees and flattens into a blunt plug with the shear squeezed into a thin wall layer. The pressure pulse itself races ahead at the Moens-Korteweg speed.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<text x="20" y="34" fill="#e6edf3" font-size="18">Pulsatile velocity profiles vs Womersley number</text>
+<text x="20" y="52" fill="#8b949e" font-size="12">low alpha follows the pressure as a parabola; high alpha lags it and flattens into a plug</text>
+<line x1="88.7" y1="223.2" x2="244.7" y2="223.2" stroke="#8b949e" stroke-width="2"/>
+<line x1="88.7" y1="525.6" x2="244.7" y2="525.6" stroke="#8b949e" stroke-width="2"/>
+<line x1="166.7" y1="223.2" x2="166.7" y2="525.6" stroke="#21262d" stroke-width="1"/>
+<polyline points="166.7,223.2 172.2,230.8 177.5,238.3 182.4,245.9 187.1,253.4 191.6,261.0 195.7,268.6 199.5,276.1 203.1,283.7 206.4,291.2 209.4,298.8 212.1,306.4 214.5,313.9 216.7,321.5 218.6,329.0 220.2,336.6 221.5,344.2 222.5,351.7 223.2,359.3 223.7,366.8 223.9,374.4 223.7,382.0 223.2,389.5 222.5,397.1 221.5,404.6 220.2,412.2 218.6,419.8 216.7,427.3 214.5,434.9 212.1,442.4 209.4,450.0 206.4,457.6 203.1,465.1 199.5,472.7 195.7,480.2 191.6,487.8 187.1,495.4 182.4,502.9 177.5,510.5 172.2,518.0 166.7,525.6" fill="none" stroke="#4dabf7" stroke-width="2.6"/>
+<line x1="166.7" y1="283.7" x2="203.1" y2="283.7" stroke="#4dabf7" stroke-width="1.2" opacity="0.55"/>
+<line x1="166.7" y1="329.0" x2="218.6" y2="329.0" stroke="#4dabf7" stroke-width="1.2" opacity="0.55"/>
+<line x1="166.7" y1="374.4" x2="223.9" y2="374.4" stroke="#4dabf7" stroke-width="1.2" opacity="0.55"/>
+<line x1="166.7" y1="419.8" x2="218.6" y2="419.8" stroke="#4dabf7" stroke-width="1.2" opacity="0.55"/>
+<line x1="166.7" y1="465.1" x2="203.1" y2="465.1" stroke="#4dabf7" stroke-width="1.2" opacity="0.55"/>
+<text x="166.7" y="547.6" fill="#4dabf7" font-size="11" text-anchor="middle">alpha=0.5 (parabola)</text>
+<text x="166.7" y="563.6" fill="#8b949e" font-size="10" text-anchor="middle">lag ~ 2 deg</text>
+<line x1="282.0" y1="223.2" x2="438.0" y2="223.2" stroke="#8b949e" stroke-width="2"/>
+<line x1="282.0" y1="525.6" x2="438.0" y2="525.6" stroke="#8b949e" stroke-width="2"/>
+<line x1="360.0" y1="223.2" x2="360.0" y2="525.6" stroke="#21262d" stroke-width="1"/>
+<polyline points="360.0,223.2 367.2,230.8 374.2,238.3 381.1,245.9 387.8,253.4 394.4,261.0 400.9,268.6 405.7,276.1 407.6,283.7 409.2,291.2 410.8,298.8 412.1,306.4 413.4,313.9 414.4,321.5 415.4,329.0 416.2,336.6 416.8,344.2 417.3,351.7 417.7,359.3 417.9,366.8 418.0,374.4 417.9,382.0 417.7,389.5 417.3,397.1 416.8,404.6 416.2,412.2 415.4,419.8 414.4,427.3 413.4,434.9 412.1,442.4 410.8,450.0 409.2,457.6 407.6,465.1 405.7,472.7 400.9,480.2 394.4,487.8 387.8,495.4 381.1,502.9 374.2,510.5 367.2,518.0 360.0,525.6" fill="none" stroke="#06d6a0" stroke-width="2.6"/>
+<line x1="360.0" y1="283.7" x2="407.6" y2="283.7" stroke="#06d6a0" stroke-width="1.2" opacity="0.55"/>
+<line x1="360.0" y1="329.0" x2="415.4" y2="329.0" stroke="#06d6a0" stroke-width="1.2" opacity="0.55"/>
+<line x1="360.0" y1="374.4" x2="418.0" y2="374.4" stroke="#06d6a0" stroke-width="1.2" opacity="0.55"/>
+<line x1="360.0" y1="419.8" x2="415.4" y2="419.8" stroke="#06d6a0" stroke-width="1.2" opacity="0.55"/>
+<line x1="360.0" y1="465.1" x2="407.6" y2="465.1" stroke="#06d6a0" stroke-width="1.2" opacity="0.55"/>
+<text x="360.0" y="547.6" fill="#06d6a0" font-size="11" text-anchor="middle">alpha=3 (transitional)</text>
+<text x="360.0" y="563.6" fill="#8b949e" font-size="10" text-anchor="middle">lag ~ 45 deg</text>
+<line x1="475.3" y1="223.2" x2="631.3" y2="223.2" stroke="#8b949e" stroke-width="2"/>
+<line x1="475.3" y1="525.6" x2="631.3" y2="525.6" stroke="#8b949e" stroke-width="2"/>
+<line x1="553.3" y1="223.2" x2="553.3" y2="525.6" stroke="#21262d" stroke-width="1"/>
+<polyline points="553.3,223.2 595.4,230.8 609.5,238.3 609.7,245.9 609.9,253.4 610.1,261.0 610.2,268.6 610.4,276.1 610.5,283.7 610.7,291.2 610.8,298.8 610.9,306.4 611.0,313.9 611.1,321.5 611.1,329.0 611.2,336.6 611.2,344.2 611.3,351.7 611.3,359.3 611.3,366.8 611.3,374.4 611.3,382.0 611.3,389.5 611.3,397.1 611.2,404.6 611.2,412.2 611.1,419.8 611.1,427.3 611.0,434.9 610.9,442.4 610.8,450.0 610.7,457.6 610.5,465.1 610.4,472.7 610.2,480.2 610.1,487.8 609.9,495.4 609.7,502.9 609.5,510.5 595.4,518.0 553.3,525.6" fill="none" stroke="#ff922b" stroke-width="2.6"/>
+<line x1="553.3" y1="283.7" x2="610.5" y2="283.7" stroke="#ff922b" stroke-width="1.2" opacity="0.55"/>
+<line x1="553.3" y1="329.0" x2="611.1" y2="329.0" stroke="#ff922b" stroke-width="1.2" opacity="0.55"/>
+<line x1="553.3" y1="374.4" x2="611.3" y2="374.4" stroke="#ff922b" stroke-width="1.2" opacity="0.55"/>
+<line x1="553.3" y1="419.8" x2="611.1" y2="419.8" stroke="#ff922b" stroke-width="1.2" opacity="0.55"/>
+<line x1="553.3" y1="465.1" x2="610.5" y2="465.1" stroke="#ff922b" stroke-width="1.2" opacity="0.55"/>
+<text x="553.3" y="547.6" fill="#ff922b" font-size="11" text-anchor="middle">alpha=15 aorta (plug)</text>
+<text x="553.3" y="563.6" fill="#8b949e" font-size="10" text-anchor="middle">lag ~ 87 deg</text>
+<text x="360.0" y="696.0" fill="#8b949e" font-size="11" text-anchor="middle">flow (arrow length = velocity across the tube diameter)</text>
+</svg><figcaption>velocity profiles from quasi-steady parabola to inertial plug as alpha grows</figcaption></figure><div class="card"><pre>Womersley number alpha = R sqrt(omega/nu): does flow keep up with the heartbeat?
+
+  Blood nu = 3.5e-6 m^2/s, heart rate 60 bpm
+
+  vessel              radius    alpha   phase lag          regime
+  aorta              11.00mm    14.74        86 deg plug (inertial)
+  large artery        4.00mm     5.36        69 deg    transitional
+  arteriole           0.15mm     0.20         0 deg    quasi-steady
+  capillary           0.00mm     0.01         0 deg    quasi-steady
+
+  Aortic pulse-wave speed (Moens-Korteweg): 6.5 m/s -- the pressure pulse races
+  down the arterial tree far faster than the blood itself moves. High alpha in the
+  aorta flattens the profile to a plug and makes the flow lag the pressure by ~90 deg.
+
+  wrote examples/output\womersley.svg</pre></div></div>
   </section>
 
   <section>

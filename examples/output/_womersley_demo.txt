@@ -1,0 +1,15 @@
+Womersley number alpha = R sqrt(omega/nu): does flow keep up with the heartbeat?
+
+  Blood nu = 3.5e-6 m^2/s, heart rate 60 bpm
+
+  vessel              radius    alpha   phase lag          regime
+  aorta              11.00mm    14.74        86 deg plug (inertial)
+  large artery        4.00mm     5.36        69 deg    transitional
+  arteriole           0.15mm     0.20         0 deg    quasi-steady
+  capillary           0.00mm     0.01         0 deg    quasi-steady
+
+  Aortic pulse-wave speed (Moens-Korteweg): 6.5 m/s -- the pressure pulse races
+  down the arterial tree far faster than the blood itself moves. High alpha in the
+  aorta flattens the profile to a plug and makes the flow lag the pressure by ~90 deg.
+
+  wrote examples/output\womersley.svg
