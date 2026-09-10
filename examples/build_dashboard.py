@@ -126,6 +126,7 @@ def main():
     import alfven_demo
     import parker_spiral_demo
     import magnetic_braking_demo
+    import tidal_locking_demo
 
     import plot_orbits
 
@@ -221,6 +222,7 @@ def main():
     alfven_txt = run("alfven_demo", alfven_demo.main, True)
     parker_txt = run("parker_spiral_demo", parker_spiral_demo.main, True)
     magbrake_txt = run("magnetic_braking_demo", magnetic_braking_demo.main, True)
+    tidelock_txt = run("tidal_locking_demo", tidal_locking_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -851,6 +853,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("magnetic_braking.svg"), "the Skumanich age-period sequence, Sun and clusters marked")
             + f'<div class="card">{pre(magbrake_txt)}</div>'
+            + '</div>'),
+        section(
+            "Tidal locking",
+            "Internal friction drags a body's tidal bulge out of line with its "
+            "primary; the misaligned bulge feels a torque that despins it toward "
+            "synchronous rotation. The locking time goes as a^6, so close-in moons "
+            "lock in a geological blink (Phobos, Io) while distant ones never do -- "
+            "the Moon locked to Earth long ago, but the Earth needs far longer than "
+            "the universe is old to lock back to the Moon's weaker tide.",
+            '<div class="grid">'
+            + svg_card(out("tidal_locking.svg"), "the a^6 locking time crossing the age of the solar system")
+            + f'<div class="card">{pre(tidelock_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -84,6 +84,7 @@ ruins a long non-symplectic integration.
 | `src/alfven.py` | Alfven waves, plasma beta & the Alfven surface of the solar wind |
 | `src/parker_spiral.py` | The Parker spiral: the Sun's field wound up by its rotation |
 | `src/magnetic_braking.py` | Magnetic braking & gyrochronology: a star's age from its spin |
+| `src/tidal_locking.py` | Tidal locking timescale: why the Moon shows one face |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -159,6 +160,7 @@ ruins a long non-symplectic integration.
 | `examples/alfven_demo.py` | v_A & beta across environments + the Alfven-surface crossing |
 | `examples/parker_spiral_demo.py` | Garden-hose angle Sun->Saturn + spiral field lines |
 | `examples/magnetic_braking_demo.py` | Gyro ages for clusters + the Skumanich age-period curve |
+| `examples/tidal_locking_demo.py` | Locking times across the solar system + the a^6 curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1464,6 +1466,33 @@ Weber-Davis wind torque `dJ/dt = (2/3) Mdot Omega r_A^2` with the Alfven radius 
 lever arm. The tests verify the `t^(1/2)` period law, the solar recovery, the young
 fast-rotator, the many-radii Alfven lever arm, and the torque's `Omega` and `r_A^2`
 scalings.
+
+## Tidal locking: why the Moon shows one face
+
+Internal friction drags a body's tidal bulge slightly out of line with its primary, and
+that misaligned bulge feels a torque that despins the body toward synchronous rotation.
+`tidal_locking.py`:
+
+```
+$ python examples/tidal_locking_demo.py examples/output
+
+           body -> primary  t_lock (Gyr)   locked?
+  ------------------------------------------------
+             Moon -> Earth       0.00933       yes
+            Phobos -> Mars      7.87e-11       yes
+             Io -> Jupiter      1.01e-07       yes
+             Earth -> Moon          17.5        no
+            Mercury -> Sun         0.349       yes
+```
+
+The locking time `t ~ a^6 I Q / (G M_p^2 k2 R^5)` is dominated by the brutal `a^6`
+distance factor, so close-in moons lock in a geological blink while distant bodies never
+do. The Moon locked to Earth long ago (~9 Myr from a fast primordial spin), but the Earth,
+braking only on the Moon's far weaker tide, needs ~17 Gyr -- longer than the universe is
+old -- which is why our days are still lengthening (~1.8 ms/century) rather than frozen.
+Mercury dodged full locking into a 3:2 spin-orbit resonance, and hot Jupiters at a few
+stellar radii are all assumed synchronous. The tests verify the Moon-locked / Earth-free
+contrast, the `a^6` and `1/M_p^2` scalings, and the locking-zone boundary.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

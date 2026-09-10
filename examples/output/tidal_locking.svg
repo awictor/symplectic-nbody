@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<line x1="64" y1="656" x2="656" y2="656" stroke="#30363d"/>
+<line x1="64" y1="64" x2="64" y2="656" stroke="#30363d"/>
+<line x1="64" y1="154.7" x2="656" y2="154.7" stroke="#ff6b6b" stroke-width="1.3" stroke-dasharray="5 4"/>
+<text x="72" y="148.7" fill="#ff6b6b" font-size="11">age of the solar system (4.57 Gyr)</text>
+<polyline points="64.0,656.0 74.8,645.2 85.5,634.5 96.3,623.7 107.1,612.9 117.8,602.2 128.6,591.4 139.3,580.7 150.1,569.9 160.9,559.1 171.6,548.4 182.4,537.6 193.2,526.8 203.9,516.1 214.7,505.3 225.5,494.5 236.2,483.8 247.0,473.0 257.7,462.3 268.5,451.5 279.3,440.7 290.0,430.0 300.8,419.2 311.6,408.4 322.3,397.7 333.1,386.9 343.9,376.1 354.6,365.4 365.4,354.6 376.1,343.9 386.9,333.1 397.7,322.3 408.4,311.6 419.2,300.8 430.0,290.0 440.7,279.3 451.5,268.5 462.3,257.7 473.0,247.0 483.8,236.2 494.5,225.5 505.3,214.7 516.1,203.9 526.8,193.2 537.6,182.4 548.4,171.6 559.1,160.9 569.9,150.1 580.7,139.3 591.4,128.6 602.2,117.8 612.9,107.1 623.7,96.3 634.5,85.5 645.2,74.8 656.0,64.0" fill="none" stroke="#8338ec" stroke-width="2.4"/>
+<circle cx="448.1" cy="271.9" r="5" fill="#ffd43b"/>
+<text x="456.1" y="275.9" fill="#ffd43b" font-size="11">Moon (60 R_earth)</text>
+<text x="64" y="34" fill="#e6edf3" font-size="18">Tidal locking time ~ a^6</text>
+<text x="64" y="52" fill="#8b949e" font-size="12">below the red line: locked; above it: still spinning freely</text>
+<text x="656" y="678" fill="#8b949e" font-size="11" text-anchor="end">log10 distance (R_earth) -&gt;</text>
+<text x="54" y="56" fill="#8b949e" font-size="11">log10 locking time (Gyr)</text>
+</svg>

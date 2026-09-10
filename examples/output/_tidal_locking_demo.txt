@@ -1,0 +1,18 @@
+Tidal locking: t_lock ~ a^6 I Q / (G M_p^2 k2 R^5)
+
+  age of the solar system: 4.57 Gyr
+
+           body -> primary  t_lock (Gyr)   locked?
+  ------------------------------------------------
+             Moon -> Earth       0.00933       yes
+            Phobos -> Mars      7.87e-11       yes
+             Io -> Jupiter      1.01e-07       yes
+             Earth -> Moon          17.5        no
+            Mercury -> Sun         0.349       yes
+
+  The a^6 dependence is everything: close-in moons lock in a geological
+  blink, while the Earth (braking only on the Moon's weak tide) needs far
+  longer than the universe is old. Mercury dodged full locking into a 3:2
+  spin-orbit resonance; hot Jupiters at a few stellar radii are all locked.
+
+  wrote examples/output\tidal_locking.svg
