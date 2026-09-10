@@ -1,0 +1,21 @@
+Fick diffusion: a random walk spreads as sqrt(t), not t
+
+  Small molecule in water, D = 1e-9 m^2/s
+
+        distance      diffusion time
+  1 um (organelle)              1.0 ms
+    10 um (cell)            100.0 ms
+   1 mm (tissue)           1000.00 s
+            1 cm             27.8 hr
+      1 m (room)               32 yr
+
+  Spread of a point release (sigma = sqrt(2 D t)):
+    t =        1 s  ->  sigma = 0.045 mm
+    t =      100 s  ->  sigma = 0.447 mm
+    t =    10000 s  ->  sigma = 4.472 mm
+
+  Stokes-Einstein for a 1 nm sphere in water at 25 C: D = 2.18e-10 m^2/s
+  Diffusion is quick across a cell but takes ~30 years across a room, since time
+  scales as L^2/D -- why microscopic life relies on it and large bodies need flow.
+
+  wrote examples/output\diffusion.svg

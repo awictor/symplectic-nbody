@@ -193,6 +193,7 @@ def main():
     import milankovitch_demo
     import equipartition_demo
     import osmosis_demo
+    import diffusion_demo
 
     import plot_orbits
 
@@ -355,6 +356,7 @@ def main():
     milankovitch_txt = run("milankovitch_demo", milankovitch_demo.main, True)
     equipartition_txt = run("equipartition_demo", equipartition_demo.main, True)
     osmosis_txt = run("osmosis_demo", osmosis_demo.main, True)
+    diffusion_txt = run("diffusion_demo", diffusion_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1789,6 +1791,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("osmosis.svg"), "osmotic pressure vs concentration for glucose, NaCl and CaCl2, seawater & blood marked")
             + f'<div class="card">{pre(osmosis_txt)}</div>'
+            + '</div>'),
+        section(
+            "Fick diffusion: spreading as the root of time",
+            "A random walk spreads a concentration downhill: Fick's first law J = -D dC/dx and "
+            "the diffusion equation dC/dt = D d^2C/dx^2. A point release stays a Gaussian whose "
+            "rms width grows as sqrt(2 D t) -- the diffusive sqrt(t), never the ballistic t -- "
+            "and a step interface relaxes through an error-function profile. Because the time "
+            "to cross a length scales as L^2/D, diffusion is fast across a cell (~0.1 s) but "
+            "hopeless across a room (~30 years), which is why life is small and large systems "
+            "need flow. Stokes-Einstein ties D to temperature and drag.",
+            '<div class="grid">'
+            + svg_card(out("diffusion.svg"), "a point release spreading into wider, lower Gaussians at t, 4t, 16t, 64t")
+            + f'<div class="card">{pre(diffusion_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

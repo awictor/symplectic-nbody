@@ -151,6 +151,7 @@ ruins a long non-symplectic integration.
 | `src/milankovitch.py` | Milankovitch cycles: daily insolation, obliquity/eccentricity/precession forcing |
 | `src/equipartition.py` | Equipartition: (1/2)kT per DOF, gas C_V/C_P/gamma, the H2 heat-capacity staircase |
 | `src/osmosis.py` | Osmotic pressure: van't Hoff Pi=icRT, tonicity, osmometry, reverse osmosis |
+| `src/diffusion.py` | Fick's laws: Gaussian/erfc profiles, sqrt(t) spread, diffusion length, Stokes-Einstein |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -293,6 +294,7 @@ ruins a long non-symplectic integration.
 | `examples/milankovitch_demo.py` | 65N-summer sensitivity table + seasonal insolation map |
 | `examples/equipartition_demo.py` | Gas heat-capacity table + the H2 C_V staircase plot |
 | `examples/osmosis_demo.py` | Everyday-solution pressure table + Pi-vs-concentration plot |
+| `examples/diffusion_demo.py` | Diffusion length/time table + the spreading-Gaussian fan |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3375,6 +3377,32 @@ Because the pressure is colligative, measuring it weighs macromolecules: the mod
 solution against another, and the minimum reverse-osmosis pressure. The tests check seawater
 and blood, the `i`-scaling, the osmometry round-trip (60 kg/mol protein), and the saline
 isotonic point.
+
+## Fick diffusion: spreading as the root of time
+
+A random walk carries concentration downhill by Fick's laws. `diffusion.py`:
+
+```
+$ python examples/diffusion_demo.py examples/output
+
+  distance          diffusion time      (D = 1e-9 m^2/s)
+  10 um (cell)      100.0 ms
+  1 mm  (tissue)    1000 s
+  1 m   (room)      32 yr
+
+  sigma = sqrt(2 D t):  t=1 s -> 0.045 mm   t=10000 s -> 4.47 mm
+```
+
+Fick's first law `J = -D dC/dx` plus conservation gives the diffusion equation
+`dC/dt = D d^2C/dx^2`. A point release stays a Gaussian whose rms width grows as
+`sqrt(2 D t)` -- the diffusive `sqrt(t)`, never the ballistic `t` of directed motion -- and a
+step interface relaxes through an error-function profile (how a doped junction or a quenched
+front smooths). Since the time to cross a length scales as `L^2/D`, diffusion is quick across
+a cell (~0.1 s) but takes ~30 years across a room, the reason microscopic life leans on it
+while large systems need flow. Stokes-Einstein `D = k_B T/(6 pi eta r)` ties the coefficient
+to temperature and drag (~2e-10 m^2/s for a nm sphere in water). The tests verify the
+`sqrt(t)` spreading, conservation of the released amount, the erfc interface value, the
+`L^2/D` scaling, and the Stokes-Einstein size trend.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
