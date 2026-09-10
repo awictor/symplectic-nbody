@@ -43,6 +43,7 @@ ruins a long non-symplectic integration.
 | `src/relativity.py` | First post-Newtonian gravity & Mercury's perihelion precession |
 | `src/lyapunov.py` | Largest Lyapunov exponent (Benettin shadow-trajectory method) |
 | `src/stability_map.py` | Three-body escape-time scan over a grid of initial conditions |
+| `src/poincare.py` | Poincare surface-of-section for the CR3BP (tori vs chaos) |
 | `src/systems.py` | Test systems: two-body, figure-eight, pythagorean 3-body, **Plummer-sphere star cluster** (any N) |
 | `tests/test_conservation.py` | Automated checks of every conservation claim |
 | `tests/test_barnes_hut.py` | Tree force validated against exact O(N^2) summation |
@@ -57,6 +58,7 @@ ruins a long non-symplectic integration.
 | `examples/precession_demo.py` | Mercury's 43"/century precession + a relativistic rosette SVG |
 | `examples/chaos_demo.py` | Lyapunov exponent + two trajectories diverging 6 orders of magnitude |
 | `examples/stability_map_demo.py` | Parallel escape-time heatmap revealing the fractal chaos boundary |
+| `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
 | `examples/build_dashboard.py` | Assemble all demos into one self-contained `index.html` |
 
 ## Barnes-Hut: scaling to many bodies
@@ -84,6 +86,26 @@ Tightening `theta` provably reduces the error — all checked in the tests. The
 `plummer_sphere(n=...)` generator builds an equilibrium cluster (positions from
 the Plummer inverse-CDF, velocities by rejection sampling the exact distribution
 function) using a tiny built-in LCG, so it's deterministic and dependency-free.
+
+## Poincare sections: order and chaos at the same energy
+
+The tool Poincare invented for the three-body problem. A CR3BP trajectory lives
+on a 3-D energy surface in 4-D phase space; slice it with the plane `y = 0` and
+record `(x, vx)` at each upward crossing. The 4-D flow collapses to a 2-D map
+whose structure is unmistakable:
+
+```
+python examples/poincare_demo.py examples/output
+# integrated 19 orbits; 2 trace tight closed curves (KAM tori),
+# the rest fill chaotic regions.
+```
+
+A quasi-periodic orbit pierces the plane on a smooth closed loop -- an invariant
+KAM torus. A chaotic orbit at the *same Jacobi energy* sprinkles the plane with
+diffuse dust. `poincare.py` reconstructs `vy` from the energy so each section
+point is a full initial condition, and the tests confirm the Jacobi constant is
+conserved along each orbit (faithful section), regular orbits stay on tight
+curves, and chaotic ones scatter more than 3x wider.
 
 ## Stability maps: chaos drawn in initial-condition space
 

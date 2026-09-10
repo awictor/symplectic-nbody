@@ -64,6 +64,7 @@ def main():
     import solar_system_demo
     import precession_demo
     import chaos_demo
+    import poincare_demo
 
     # make sure all SVGs exist
     import plot_orbits
@@ -79,6 +80,8 @@ def main():
     precession_demo.main()
     sys.argv = ["chaos_demo", outdir]
     chaos_demo.main()
+    sys.argv = ["poincare_demo", outdir]
+    poincare_demo.main()
     sys.argv = _old_argv
 
     print("capturing demo outputs...")
@@ -93,6 +96,8 @@ def main():
     prec_txt = capture(precession_demo.main)
     sys.argv = ["chaos_demo", outdir]
     chaos_txt = capture(chaos_demo.main)
+    sys.argv = ["poincare_demo", outdir]
+    poincare_txt = capture(poincare_demo.main)
     sys.argv = _old_argv
     # scaling benchmark is slow; run a lighter inline version
     scale_txt = capture(scaling_benchmark.main)
@@ -138,6 +143,15 @@ def main():
             '<div class="grid">'
             + svg_card(out("inner_planets.svg"), "inner solar system (2 Mars years)")
             + f'<div class="card">{pre(solar_txt)}</div>'
+            + '</div>'),
+        section(
+            "Poincare surface-of-section",
+            "Many orbits at the SAME Jacobi energy, their y=0 crossings overlaid "
+            "on the (x, vx) plane. Smooth closed loops are quasi-periodic KAM "
+            "tori; the scattered dust is chaos -- coexisting at one energy.",
+            '<div class="grid">'
+            + svg_card(out("poincare_section.svg"), "tori and chaotic sea at one energy")
+            + f'<div class="card">{pre(poincare_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
