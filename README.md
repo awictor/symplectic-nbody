@@ -148,6 +148,7 @@ ruins a long non-symplectic integration.
 | `src/bernoulli.py` | Bernoulli's principle: the Venturi effect, Pitot airspeed & Torricelli |
 | `src/surface_tension.py` | Surface tension: capillary rise (Jurin), Young-Laplace droplet/bubble pressure |
 | `src/ekman.py` | The Ekman spiral: wind-driven rotating boundary layer, transport & depth |
+| `src/milankovitch.py` | Milankovitch cycles: daily insolation, obliquity/eccentricity/precession forcing |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -287,6 +288,7 @@ ruins a long non-symplectic integration.
 | `examples/bernoulli_demo.py` | Pitot/Torricelli speeds + the Venturi velocity/pressure diagram |
 | `examples/surface_tension_demo.py` | Capillary rise table + rise-vs-radius log-log plot |
 | `examples/ekman_demo.py` | Current-vs-depth table + the Ekman spiral hodograph |
+| `examples/milankovitch_demo.py` | 65N-summer sensitivity table + seasonal insolation map |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3293,6 +3295,32 @@ depth, the net *Ekman transport* points 90 degrees to the right of the wind with
 coastal upwelling and helps spin the ocean gyres. The tests verify the 45-degree surface
 angle (and its hemisphere flip), the `e^-pi` decay at one Ekman depth, the clockwise
 rotation, and the viscosity-independent transport.
+
+## Milankovitch cycles: orbits and the ice ages
+
+Earth's orbit slowly reshapes, redistributing sunlight and pacing the glacial cycles.
+`milankovitch.py`:
+
+```
+$ python examples/milankovitch_demo.py examples/output
+
+  orbital state                            65N June (W/m^2)
+  present day                                    477.8
+  low obliquity 22.1 deg (cool summers)          456.5   (-21.4)
+  high ecc 0.05, summer at aphelion              446.6   (-31.2)
+  high ecc 0.05, summer at perihelion            545.6   (+67.8)
+```
+
+From the standard astronomical insolation formula -- declination
+`delta = arcsin(sin eps sin lambda)`, distance factor `(1 + e cos nu)^2/(1 - e^2)`, and the
+sunrise hour angle `H0 = arccos(-tan phi tan delta)` -- the module computes daily top-of-
+atmosphere sunlight anywhere, giving the polar midnight-sun and polar-night limits for free.
+The Milankovitch control knob is Northern-Hemisphere high-latitude *summer* insolation (the
+famous 65N June value, ~478 W/m^2 today): weak summers let winter snow survive and ice
+sheets grow. Obliquity (~41 kyr) sets season strength, and climatic precession `e sin(omega)`
+(~23 kyr) sets which season falls at perihelion, all modulated by the ~100 kyr eccentricity
+envelope. The tests check the 65N peak, the solstice/equinox declinations, the polar
+day/night limits, and the obliquity and precession sensitivities.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

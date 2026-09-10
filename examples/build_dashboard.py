@@ -190,6 +190,7 @@ def main():
     import bernoulli_demo
     import surface_tension_demo
     import ekman_demo
+    import milankovitch_demo
 
     import plot_orbits
 
@@ -349,6 +350,7 @@ def main():
     bernoulli_txt = run("bernoulli_demo", bernoulli_demo.main, True)
     surface_tension_txt = run("surface_tension_demo", surface_tension_demo.main, True)
     ekman_txt = run("ekman_demo", ekman_demo.main, True)
+    milankovitch_txt = run("milankovitch_demo", milankovitch_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1745,6 +1747,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("ekman.svg"), "hodograph: the current vector turns clockwise and shrinks with depth")
             + f'<div class="card">{pre(ekman_txt)}</div>'
+            + '</div>'),
+        section(
+            "Milankovitch cycles: orbits and the ice ages",
+            "Slow changes in Earth's orbit -- eccentricity (~100 kyr), obliquity (~41 kyr) and "
+            "precession (~23 kyr) -- redistribute sunlight between seasons and latitudes even "
+            "though the annual total barely moves. Computing daily top-of-atmosphere "
+            "insolation from the astronomical formula reproduces the ~478 W/m^2 65N midsummer "
+            "peak; that high-latitude summer sun is the knob that decides whether winter snow "
+            "survives to build ice sheets, so cool summers (low tilt, summer at aphelion) grow "
+            "the glaciers.",
+            '<div class="grid">'
+            + svg_card(out("milankovitch.svg"), "daily insolation over latitude and season, polar day/night and the 65N target marked")
+            + f'<div class="card">{pre(milankovitch_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -1,0 +1,16 @@
+Milankovitch: 65N midsummer insolation drives ice sheets (grow when it's weak)
+
+  Present orbit: e=0.0167, obliquity=23.44 deg, perihelion in NH winter
+
+  orbital state                             65N June (W/m^2)
+  present day                                     477.8   (+0.0)
+  low obliquity 22.1 deg (cool summers)           456.5   (-21.4)
+  high obliquity 24.5 deg (warm summers)          495.7   (+17.8)
+  high ecc 0.05, summer at aphelion               446.6   (-31.2)
+  high ecc 0.05, summer at perihelion             545.6   (+67.8)
+
+  Cool NH summers (low obliquity + summer at aphelion) let winter snow survive
+  and ice sheets grow -- the ~41 kyr tilt and ~23 kyr precession beats, modulated
+  by the ~100 kyr eccentricity envelope, that pace the Pleistocene glacial cycles.
+
+  wrote examples/output\milankovitch.svg
