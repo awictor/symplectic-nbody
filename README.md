@@ -74,6 +74,7 @@ ruins a long non-symplectic integration.
 | `src/stability_map.py` | Three-body escape-time scan over a grid of initial conditions |
 | `src/virial.py` | Virial theorem & violent relaxation of a self-gravitating cluster |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
+| `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/kozai.py` | Kozai-Lidov secular cycles: eccentricity <-> inclination in a triple |
 | `src/resonance.py` | Mean-motion resonance: period locks & librating resonant arguments |
 | `src/coorbital.py` | Tadpole & horseshoe coorbital orbits in the CR3BP |
@@ -117,6 +118,7 @@ ruins a long non-symplectic integration.
 | `examples/stability_map_demo.py` | Parallel escape-time heatmap revealing the fractal chaos boundary |
 | `examples/virial_demo.py` | Equilibrium vs cold cluster: running 2T/U converging on -1 |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
+| `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/kozai_demo.py` | e/i oscillations vs analytic e_max, out-of-phase time series SVG |
 | `examples/resonance_demo.py` | 2:1 resonant argument: libration (locked) vs circulation (free) |
 | `examples/coorbital_demo.py` | Tadpole & horseshoe paths in the rotating frame (SVG) |
@@ -766,6 +768,28 @@ deg` the eccentricity is driven to `e_max = sqrt(1 - (5/3) cos^2 i0)`; below it,
 nothing happens. This mechanism drives hot-Jupiter migration and merges compact
 binaries. The tests verify the conserved quantity, the critical angle, the
 analytic `e_max`, and the e-i anticorrelation.
+
+## Tidal heating: why Io has volcanoes
+
+A moon on an eccentric orbit is flexed by the changing tide, and an imperfectly
+elastic body dissipates that flexing as heat. `tidal_heating.py`:
+
+```
+$ python examples/tidal_heating_demo.py examples/output
+
+  moon         power (W)  flux (W/m^2)
+  Io            9.33e+13         2.238
+  Europa        6.37e+12         0.208
+  Ganymede      5.48e+10         0.001
+```
+
+`dE/dt = (21/2)(k2/Q) G M_p^2 R^5 n e^2 / a^6` -- it scales as `e^2`, `R^5`, and
+`a^{-15/2}`. For Io it comes to ~1e14 W, about 40x Earth's internal heat flux,
+which is why Io is the most volcanically active body in the Solar System; Europa's
+lower but real heating keeps a subsurface ocean liquid. The eccentricity that
+powers it is maintained by the Laplace 4:2:1 resonance (see the resonance
+section), so orbital resonance and volcanism are the same story. The tests verify
+the ~1e14 W scale, the surface flux, and all three power-law scalings.
 
 ## The Roche limit: tearing a moon into a ring
 

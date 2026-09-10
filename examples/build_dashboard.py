@@ -94,6 +94,7 @@ def main():
     import pulsar_demo
     import mond_demo
     import penrose_demo
+    import tidal_heating_demo
 
     import plot_orbits
 
@@ -157,6 +158,7 @@ def main():
     pulsar_txt = run("pulsar_demo", pulsar_demo.main, True)
     mond_txt = run("mond_demo", mond_demo.main, True)
     penrose_txt = run("penrose_demo", penrose_demo.main, True)
+    tidalheat_txt = run("tidal_heating_demo", tidal_heating_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -478,6 +480,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("roche_disruption.svg"), "satellite shredding into a tidal stream")
             + f'<div class="card">{pre(roche_txt)}</div>'
+            + '</div>'),
+        section(
+            "Tidal heating: why Io erupts",
+            "A moon on an eccentric orbit is flexed by the varying tide and "
+            "dissipates the energy as heat: dE/dt ~ (k2/Q) e^2 R^5 / a^{15/2}. "
+            "For Io this is ~1e14 W (40x Earth's heat flux), and the eccentricity "
+            "is forced by the Laplace resonance -- resonance and volcanoes linked.",
+            '<div class="grid">'
+            + svg_card(out("tidal_heating.svg"), "heating vs eccentricity, with Io marked")
+            + f'<div class="card">{pre(tidalheat_txt)}</div>'
             + '</div>'),
         section(
             "Virial theorem & violent relaxation",

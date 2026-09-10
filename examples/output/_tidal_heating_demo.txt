@@ -1,0 +1,15 @@
+Tidal heating of the Galilean moons (k2/Q ~ 0.015)
+
+  moon         power (W)  flux (W/m^2)
+  ------------------------------------
+  Io            9.33e+13         2.238
+  Europa        6.37e+12         0.208
+  Ganymede      5.48e+10         0.001
+  Callisto      1.65e+10         0.000
+
+  Io: 9.3e+13 W ~ 40x Earth's internal heat flux, which is why
+  it is the most volcanic body known. The heating goes as e^2, and Io's
+  eccentricity is forced by the Laplace 4:2:1 resonance -- no resonance,
+  no eccentricity, no volcanoes.
+
+  wrote examples/output\tidal_heating.svg
