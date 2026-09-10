@@ -152,6 +152,7 @@ def main():
     import curve_of_growth_demo
     import sackur_tetrode_demo
     import maxwell_boltzmann_demo
+    import gamow_demo
 
     import plot_orbits
 
@@ -273,6 +274,7 @@ def main():
     cog_txt = run("curve_of_growth_demo", curve_of_growth_demo.main, True)
     sackur_txt = run("sackur_tetrode_demo", sackur_tetrode_demo.main, True)
     mb_txt = run("maxwell_boltzmann_demo", maxwell_boltzmann_demo.main, True)
+    gamow_txt = run("gamow_demo", gamow_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1215,6 +1217,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("maxwell_boltzmann.svg"), "speed distributions for several gases with the three speeds marked")
             + f'<div class="card">{pre(mb_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Gamow peak",
+            "Nuclei must beat an MeV Coulomb barrier to fuse, yet the Sun's core is only "
+            "~1.3 keV. Two factors save it: the Maxwell-Boltzmann tail exp(-E/kT) falls "
+            "with energy while quantum tunnelling exp(-sqrt(E_G/E)) rises, and their "
+            "product is sharply peaked at the Gamow energy E0 = (E_G (kT)^2/4)^(1/3). "
+            "Solar p-p fusion happens in a narrow window at ~6 keV; heavier nuclei need "
+            "far hotter cores, the thermostat of stellar burning.",
+            '<div class="grid">'
+            + svg_card(out("gamow.svg"), "the Boltzmann tail and tunnelling probability multiplying to the Gamow peak")
+            + f'<div class="card">{pre(gamow_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

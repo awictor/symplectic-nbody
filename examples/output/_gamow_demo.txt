@@ -1,0 +1,18 @@
+Gamow peak: Boltzmann tail x quantum tunnelling = fusion window
+
+  solar core kT = 1.29 keV; barrier ~ MeV -- yet stars burn
+
+      reaction  Z1 Z2     T (K)   E_G (keV)    peak E0
+  ----------------------------------------------------
+         p + p      1   1.5e+07         493       5.9k
+       p + N14      7   1.5e+07       45105      26.6k
+       He + He      4   1.0e+08       31560      83.7k
+         C + C     36   5.0e+08     7669118    1526.8k
+
+  Fusion lives in a narrow window far out on the thermal tail: the Sun's
+  p-p peak sits at ~6 keV, several times the mean 1.3 keV, where enough
+  fast protons meet a high-enough tunnelling chance. Because the peak
+  climbs steeply with nuclear charge, carbon burning needs ~500 million K
+  while hydrogen ignites at 15 million -- the thermostat of stellar life.
+
+  wrote examples/output\gamow.svg

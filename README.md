@@ -110,6 +110,7 @@ ruins a long non-symplectic integration.
 | `src/curve_of_growth.py` | Curve of growth: equivalent width vs column density in three regimes |
 | `src/sackur_tetrode.py` | Sackur-Tetrode equation: the absolute entropy of an ideal gas |
 | `src/maxwell_boltzmann.py` | Maxwell-Boltzmann speed distribution & the three characteristic speeds |
+| `src/gamow.py` | The Gamow peak: the narrow energy window where stars fuse |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -211,6 +212,7 @@ ruins a long non-symplectic integration.
 | `examples/curve_of_growth_demo.py` | W & regime vs optical depth + the three-segment curve |
 | `examples/sackur_tetrode_demo.py` | Predicted vs measured noble-gas entropy + S(T) curves |
 | `examples/maxwell_boltzmann_demo.py` | Characteristic speeds by gas + the f(v) distributions |
+| `examples/gamow_demo.py` | Peak energy by reaction + the tail x tunnelling = peak curves |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2234,6 +2236,33 @@ and the high-speed `exp(-v^2)` tail leaves only ~0.04% of molecules above `3 v_p
 exactly that thin tail that governs Jeans escape and lets nuclei overcome the Coulomb barrier
 to fuse. The tests verify the universal speed ratios, the ~500 m/s nitrogen `v_rms`, the
 `1/sqrt(m)` and `sqrt(T)` scalings, the unit normalization, and the smallness of the tail.
+
+## The Gamow peak: where stars fuse
+
+Nuclei must beat an ~MeV Coulomb barrier to fuse, yet the Sun's core is only ~1.3 keV.
+`gamow.py`:
+
+```
+$ python examples/gamow_demo.py examples/output
+
+      reaction  Z1 Z2     T (K)   E_G (keV)    peak E0
+  ----------------------------------------------------
+         p + p      1   1.5e+07         493       5.9k
+       p + N14      7   1.5e+07       45105      26.6k
+       He + He      4   1.0e+08       31560      83.7k
+         C + C     36   5.0e+08     7669118    1526.8k
+```
+
+Two factors save fusion, pulling opposite ways in energy: the Maxwell-Boltzmann tail
+`exp(-E/kT)` supplies fewer particles as `E` rises, while quantum tunnelling
+`exp(-sqrt(E_G/E))` becomes far more likely. Their product peaks sharply at the Gamow energy
+`E0 = (E_G (kT)^2/4)^(1/3)`, far out on the thermal tail but well below the barrier -- for
+solar p-p fusion, ~6 keV, several times the mean 1.3 keV. Because the Gamow energy scales as
+`(Z1 Z2)^2`, higher-charge reactions need dramatically hotter cores (carbon burning at
+~5x10^8 K versus hydrogen at 1.5x10^7 K), which is the thermostat that orders the stages of
+stellar nucleosynthesis. The tests verify the ~6 keV solar p-p peak, that it sits well above
+`kT`, that the reaction integrand is maximal at `E0`, the `T^(2/3)` and `(Z1 Z2)^2` scalings,
+and that heavier nuclei need higher temperatures.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
