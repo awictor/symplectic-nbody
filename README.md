@@ -167,6 +167,7 @@ ruins a long non-symplectic integration.
 | `src/womersley.py` | Womersley number: pulsatile flow, penetration depth, phase lag, pulse-wave speed |
 | `src/marangoni.py` | Marangoni effect: surface-tension-gradient flow, onset, dynamic Bond number |
 | `src/kutta_joukowski.py` | Kutta-Joukowski lift: circulation, 2 pi lift-slope, Magnus force, induced drag |
+| `src/knudsen.py` | Knudsen number: mean free path, flow regimes, continuum-to-free-molecular |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -325,6 +326,7 @@ ruins a long non-symplectic integration.
 | `examples/womersley_demo.py` | Vascular-tree alpha table + the parabola-to-plug profile figure |
 | `examples/marangoni_demo.py` | Onset/regime table + the Marangoni-vs-buoyancy regime map |
 | `examples/kutta_joukowski_demo.py` | Lift/Magnus tables + the lift-slope & induced-drag figure |
+| `examples/knudsen_demo.py` | Per-system regime table + the size-pressure regime map |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3800,6 +3802,29 @@ vortices, so a finite wing pays induced drag `c_di = c_l^2/(pi AR e)` that falls
 ratio, the reason gliders and albatrosses have long thin wings. The tests verify the
 `rho U Gamma` lift, the `2 pi` slope, the circulation/coefficient consistency, the `U^2`
 scaling, the Magnus force, and the induced-drag `c_l^2`/aspect-ratio trends.
+
+## The Knudsen number: when a gas stops being a fluid
+
+Fluid dynamics assumes a continuum; the Knudsen number says when that holds. `knudsen.py`:
+
+```
+$ python examples/knudsen_demo.py examples/output
+
+  system              L        P         Kn        regime
+  airliner wing       3 m      1e5 Pa    2e-8       continuum
+  MEMS microchannel   1 um     1e5 Pa    7e-2       slip
+  nanopore filter     5 nm     1e5 Pa    13         free molecular
+```
+
+The mean free path `lambda = k_B T/(sqrt(2) pi d^2 P)` is ~68 nm for air at sea level, and
+`Kn = lambda/L` sorts every gas flow: continuum (`Kn < 0.01`, ordinary Navier-Stokes with
+no-slip walls), slip (`0.01-0.1`), transitional (`0.1-10`), and free molecular (`Kn > 10`,
+molecules fly wall-to-wall). Everything we touch is a perfect fluid because `lambda` is
+minuscule -- but shrink `L` to a microchip cooling channel or a nanopore, or thin the air to
+orbital altitude, and `Kn` climbs past 1, so the gas slips at walls, thermal creep sets in,
+and drag must be computed molecule by molecule. The tests reproduce air's ~68 nm mean free
+path, the `T`/`1/P` scalings, the four regime thresholds, the continuum breakdown in vacuum,
+the pressure/size inversions, and the ~468 m/s mean molecular speed.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

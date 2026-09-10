@@ -209,6 +209,7 @@ def main():
     import womersley_demo
     import marangoni_demo
     import kutta_joukowski_demo
+    import knudsen_demo
 
     import plot_orbits
 
@@ -387,6 +388,7 @@ def main():
     womersley_txt = run("womersley_demo", womersley_demo.main, True)
     marangoni_txt = run("marangoni_demo", marangoni_demo.main, True)
     kutta_joukowski_txt = run("kutta_joukowski_demo", kutta_joukowski_demo.main, True)
+    knudsen_txt = run("knudsen_demo", knudsen_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2034,6 +2036,20 @@ def main():
             '<div class="grid">'
             + svg_card(out("kutta_joukowski.svg"), "the 2 pi lift-slope with stall, and the induced-drag penalty vs aspect ratio")
             + f'<div class="card">{pre(kutta_joukowski_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Knudsen number: when a gas stops being a fluid",
+            "A gas behaves as a smooth continuum only while its mean free path lambda is tiny "
+            "next to the system size L. Their ratio, the Knudsen number Kn = lambda/L, sorts "
+            "flows into continuum (Kn<0.01, ordinary Navier-Stokes), slip, transitional and "
+            "free-molecular (Kn>10, molecules fly wall-to-wall) regimes. Air's sea-level "
+            "lambda ~ 68 nm makes everything macroscopic a perfect fluid -- but shrink L to a "
+            "MEMS channel or a nanopore, or thin the air at orbital altitude, and Kn climbs "
+            "past 1, so the gas slips at walls and finally must be computed molecule by "
+            "molecule.",
+            '<div class="grid">'
+            + svg_card(out("knudsen.svg"), "regime map over system size and pressure: continuum to free-molecular")
+            + f'<div class="card">{pre(knudsen_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
