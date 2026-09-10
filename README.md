@@ -100,6 +100,7 @@ ruins a long non-symplectic integration.
 | `src/blackbody.py` | Blackbody radiation: Planck law, Wien peak, Stefan-Boltzmann |
 | `src/bbn.py` | Big Bang nucleosynthesis: n/p freeze-out & primordial helium |
 | `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
+| `src/main_sequence.py` | Main sequence: mass-luminosity relation, lifetimes, HR diagram |
 | `src/distances.py` | Cosmological distances: luminosity/angular-diameter, cosmic acceleration |
 | `src/degeneracy.py` | Fermi degeneracy pressure: the quantum support of dead stars |
 | `src/chandrasekhar.py` | White-dwarf structure & the Chandrasekhar mass (~1.44 M_sun) |
@@ -155,6 +156,7 @@ ruins a long non-symplectic integration.
 | `examples/blackbody_demo.py` | Peak wavelengths (CMB->B-star) + Planck spectra |
 | `examples/bbn_demo.py` | n/p freeze-out chain and the Y_p ~ 0.25 helium fraction |
 | `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
+| `examples/main_sequence_demo.py` | Mass-L-lifetime table + the main sequence on an HR diagram |
 | `examples/distances_demo.py` | Hubble diagram (LCDM vs decelerating) + D_A turnover |
 | `examples/degeneracy_demo.py` | Degeneracy-pressure laws vs density with the relativistic transition |
 | `examples/chandrasekhar_demo.py` | White-dwarf mass-radius curve approaching 1.44 M_sun |
@@ -477,6 +479,29 @@ its mass climbs toward `~1.44 M_sun` but never past it. Above the limit no stabl
 white dwarf exists -- it collapses, the trigger for type-Ia supernovae. The tests
 verify the 1.44 value, the `1/mu_e^2` scaling, and that a denser dwarf is smaller
 and more massive, approaching the limit from below.
+
+## The main sequence and the HR diagram
+
+Mass sets a star's whole life. `main_sequence.py` encodes the empirical
+relations:
+
+```
+$ python examples/main_sequence_demo.py examples/output
+
+  mass (M_sun)   L (L_sun)  T_eff (K)      lifetime
+           0.3         0.0       3258     202.9 Gyr
+           1.0         1.0       5772      10.0 Gyr
+          10.0      3162.3      17232        32 Myr
+          30.0    147885.1      29037         2 Myr
+```
+
+`L ~ M^{3.5}` makes massive stars blindingly bright, so they exhaust their fuel
+in a few Myr (`t ~ M/L ~ M^{-2.5}`), while a red dwarf sips hydrogen for hundreds
+of Gyr -- far longer than the current age of the universe. Coupling
+`L = 4 pi R^2 sigma T^4` places each star on the Hertzsprung-Russell diagram; the
+plot of luminosity vs temperature is the main sequence. The tests verify the
+mass-luminosity slope, the 10 Gyr solar lifetime, the `M^{-2.5}` lifetime
+scaling, and the temperature ordering.
 
 ## Lane-Emden: the structure of a star
 

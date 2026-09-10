@@ -1,0 +1,17 @@
+The main sequence: mass sets luminosity, temperature, and lifetime
+
+  mass (M_sun)   L (L_sun)  T_eff (K)      lifetime
+  -------------------------------------------------
+           0.3         0.0       3258     202.9 Gyr
+           0.5         0.1       4153      56.6 Gyr
+           1.0         1.0       5772      10.0 Gyr
+           2.0        11.3       8023       1.8 Gyr
+           5.0       279.5      12398       179 Myr
+          10.0      3162.3      17232        32 Myr
+          30.0    147885.1      29037         2 Myr
+
+  L ~ M^3.5, so massive O/B stars are millions of times brighter but
+  burn out in a few Myr, while red dwarfs sip fuel for hundreds of Gyr.
+  Plotting L vs T gives the main sequence -- the backbone of the HR diagram.
+
+  wrote examples/output\main_sequence.svg

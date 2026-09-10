@@ -106,6 +106,7 @@ def main():
     import roche_lobe_demo
     import degeneracy_demo
     import blackbody_demo
+    import main_sequence_demo
 
     import plot_orbits
 
@@ -181,6 +182,7 @@ def main():
     rochelobe_txt = run("roche_lobe_demo", roche_lobe_demo.main, True)
     degeneracy_txt = run("degeneracy_demo", degeneracy_demo.main, True)
     blackbody_txt = run("blackbody_demo", blackbody_demo.main, True)
+    ms_txt = run("main_sequence_demo", main_sequence_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -371,6 +373,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("lane_emden.svg"), "density profiles for several polytropic indices")
             + f'<div class="card">{pre(laneemden_txt)}</div>'
+            + '</div>'),
+        section(
+            "The main sequence & the HR diagram",
+            "Mass rules a star's life: L ~ M^3.5, so massive blue stars are "
+            "millions of times brighter but burn out in a few Myr, while red "
+            "dwarfs live hundreds of Gyr. Luminosity vs temperature traces the "
+            "main sequence -- the backbone of the Hertzsprung-Russell diagram.",
+            '<div class="grid">'
+            + svg_card(out("main_sequence.svg"), "the main sequence on an HR diagram")
+            + f'<div class="card">{pre(ms_txt)}</div>'
             + '</div>'),
         section(
             "Cosmic distances & the discovery of acceleration",
