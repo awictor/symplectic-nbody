@@ -1,0 +1,25 @@
+Standard candles: m - M = 5 log10(d/10 pc); brightness gives distance
+
+                  object      distance   modulus
+  ----------------------------------------------
+           10 pc (M = m)         10 pc      0.00
+          Hyades cluster         47 pc      3.36
+         Galactic centre       8200 pc     14.57
+                     LMC        50 kpc     18.49
+         Andromeda (M31)       778 kpc     24.45
+           Virgo cluster      16.5 Mpc     31.09
+           SN Ia horizon    1000.0 Mpc     40.00
+
+  Cepheid period-luminosity (Leavitt's law): longer period = brighter
+      period (d)       M_V
+               3     -2.77
+              10     -4.24
+              30     -5.58
+             100     -7.05
+
+  Five magnitudes is exactly 100x in flux. Knowing M -- from a Cepheid's
+  pulsation period or a Type Ia's standardizable peak (M ~ -19.3) -- turns
+  the apparent brightness into a distance. Chaining parallax to Cepheids to
+  supernovae is the ladder that measures the expanding universe.
+
+  wrote examples/output\standard_candle.svg

@@ -112,6 +112,7 @@ ruins a long non-symplectic integration.
 | `src/maxwell_boltzmann.py` | Maxwell-Boltzmann speed distribution & the three characteristic speeds |
 | `src/gamow.py` | The Gamow peak: the narrow energy window where stars fuse |
 | `src/parallax.py` | Parallax, proper motion & space velocity: the geometry of stellar distance |
+| `src/standard_candle.py` | Standard candles: distance modulus, Cepheids & the distance ladder |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -215,6 +216,7 @@ ruins a long non-symplectic integration.
 | `examples/maxwell_boltzmann_demo.py` | Characteristic speeds by gas + the f(v) distributions |
 | `examples/gamow_demo.py` | Peak energy by reaction + the tail x tunnelling = peak curves |
 | `examples/parallax_demo.py` | Distances & space velocities of nearby stars + the parallax geometry |
+| `examples/standard_candle_demo.py` | Moduli of landmark objects + the ladder-rung modulus curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2291,6 +2293,34 @@ Barnard's Star, with the largest known proper motion (10.4"/yr at 1.83 pc), race
 sky at ~90 km/s tangential and 142 km/s through space. The tests verify the 1 pc = 1"
 definition, Proxima's 1.30 pc / 4.24 ly, the inverse parallax-distance relation, Barnard's
 ~90 km/s tangential velocity, and the quadrature space velocity.
+
+## Standard candles: the cosmic distance ladder
+
+Know an object's true luminosity and its apparent brightness gives its distance -- it is a
+standard candle. `standard_candle.py`:
+
+```
+$ python examples/standard_candle_demo.py examples/output
+
+                object      distance   modulus
+  ----------------------------------------------
+           10 pc (M = m)         10 pc      0.00
+          Hyades cluster         47 pc      3.36
+         Galactic centre       8200 pc     14.57
+                     LMC        50 kpc     18.49
+         Andromeda (M31)       778 kpc     24.45
+           Virgo cluster      16.5 Mpc     31.09
+           SN Ia horizon    1000.0 Mpc     40.00
+```
+
+The distance modulus `m - M = 5 log10(d/10 pc)` inverts to distance, and five magnitudes is
+exactly a factor of 100 in flux. The trick is knowing `M`: Cepheid variables supply it
+through Leavitt's period-luminosity law (`M_V ~ -2.81 log10 P - 1.43`, longer period =
+brighter), and Type Ia supernovae (`M ~ -19.3`) extend the same logic to hundreds of Mpc and
+revealed cosmic acceleration. Chaining parallax to Cepheids to supernovae is the distance
+ladder. The tests verify the 10 pc zero point, the LMC's ~18.5 modulus, the modulus/distance
+inversion, the 100-per-5-magnitudes rule, the Cepheid period-luminosity trend, and a Cepheid
+distance round-trip.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

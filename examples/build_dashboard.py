@@ -154,6 +154,7 @@ def main():
     import maxwell_boltzmann_demo
     import gamow_demo
     import parallax_demo
+    import standard_candle_demo
 
     import plot_orbits
 
@@ -277,6 +278,7 @@ def main():
     mb_txt = run("maxwell_boltzmann_demo", maxwell_boltzmann_demo.main, True)
     gamow_txt = run("gamow_demo", gamow_demo.main, True)
     parallax_txt = run("parallax_demo", parallax_demo.main, True)
+    candle_txt = run("standard_candle_demo", standard_candle_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1243,6 +1245,17 @@ def main():
             '<div class="grid">'
             + svg_card(out("parallax.svg"), "the Earth-orbit baseline and the angle a nearby star subtends")
             + f'<div class="card">{pre(parallax_txt)}</div>'
+            + '</div>'),
+        section(
+            "Standard candles & the distance ladder",
+            "Know an object's true luminosity and its apparent brightness gives its "
+            "distance: m - M = 5 log10(d/10 pc). Cepheids supply M through Leavitt's "
+            "period-luminosity law, Type Ia supernovae (M ~ -19.3) extend it to "
+            "hundreds of Mpc, and chaining parallax -> Cepheids -> supernovae is the "
+            "cosmic distance ladder. Five magnitudes is exactly 100x in flux.",
+            '<div class="grid">'
+            + svg_card(out("standard_candle.svg"), "distance modulus vs distance with the ladder rungs marked")
+            + f'<div class="card">{pre(candle_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
