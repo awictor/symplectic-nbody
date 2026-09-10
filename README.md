@@ -194,6 +194,7 @@ ruins a long non-symplectic integration.
 | `src/polya.py` | Polya random walk: return probability by dimension, recurrence, simulation |
 | `src/langevin_para.py` | Langevin paramagnetism: L(x), Curie-law susceptibility, saturation |
 | `src/buffon.py` | Buffon's needle: crossing probability, Monte Carlo pi, 1/sqrt(N) convergence |
+| `src/metropolis.py` | Metropolis MCMC on the 2D Ising model: acceptance rule, Onsager T_c |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -379,6 +380,7 @@ ruins a long non-symplectic integration.
 | `examples/polya_demo.py` | Return/escape/visits table + the return-probability-vs-dimension figure |
 | `examples/langevin_para_demo.py` | Alignment/Curie table + the L(x) & 1/T susceptibility figure |
 | `examples/buffon_demo.py` | Convergence table + the needle-scatter & pi-estimate figure |
+| `examples/metropolis_demo.py` | Simulated m(T) table + the transition curve & spin-snapshot figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4472,6 +4474,29 @@ angle. The convergence is the slow Monte Carlo `1/sqrt(N)`: 1% accuracy needs ~1
 0.1% about a million. The tests reproduce the `2/pi` crossing probability, the pi-estimate
 inversion, the `1/error^2` needle count, the `1/sqrt(N)` error scaling, and a seeded
 simulation converging to pi within a few percent.
+
+## Metropolis Monte Carlo: sampling the Ising transition
+
+Systems too large to sum exactly are sampled by biased random walks. `metropolis.py`:
+
+```
+$ python examples/metropolis_demo.py examples/output
+
+  T (J/kB)   avg |m|   phase          exact Onsager T_c = 2.269 J/k_B
+  1.00       0.999     ordered
+  2.60       0.543     ordered
+  3.50       0.084     disordered
+```
+
+The Metropolis rule accepts a proposed spin flip with probability `min(1, exp(-dE/T))` --
+always downhill, Boltzmann-weighted uphill -- which satisfies detailed balance, so the chain
+of configurations it visits is distributed as `exp(-E/T)` and thermal averages are just walk
+averages. Run on the 2D Ising ferromagnet it reproduces the true phase transition mean-field
+theory only approximates: spins order below the exact Onsager `T_c = 2J/(k_B ln(1+sqrt2)) ~
+2.269 J/k_B` and disorder above it, with genuine critical fluctuations (domains at every scale
+near `T_c`). The tests verify the accept-all-downhill / Boltzmann-uphill rule, the ground-state
+energy and magnetization, the exact `T_c`, and a full run ordered below and disordered above
+the transition.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

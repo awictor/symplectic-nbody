@@ -236,6 +236,7 @@ def main():
     import polya_demo
     import langevin_para_demo
     import buffon_demo
+    import metropolis_demo
 
     import plot_orbits
 
@@ -441,6 +442,7 @@ def main():
     polya_txt = run("polya_demo", polya_demo.main, True)
     langevin_para_txt = run("langevin_para_demo", langevin_para_demo.main, True)
     buffon_txt = run("buffon_demo", buffon_demo.main, True)
+    metropolis_txt = run("metropolis_demo", metropolis_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2443,6 +2445,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("buffon.svg"), "needles dropped across ruled lines (crossings red), and the pi estimate converging")
             + f'<div class="card">{pre(buffon_txt)}</div>'
+            + '</div>'),
+        section(
+            "Metropolis Monte Carlo: sampling the Ising transition",
+            "Systems too large to sum are sampled: propose a change and accept it with "
+            "probability min(1, exp(-dE/T)) -- always downhill, Boltzmann-weighted uphill -- and "
+            "the chain visits states with exactly the thermal probability exp(-E/T). Run on the "
+            "2D Ising ferromagnet it reproduces the real phase transition that mean-field theory "
+            "only approximates: spins order below the exact Onsager T_c ~ 2.269 J/k_B and "
+            "disorder above it, with genuine critical fluctuations -- domains at every scale near "
+            "T_c -- that mean field cannot capture.",
+            '<div class="grid">'
+            + svg_card(out("metropolis.svg"), "the simulated magnetization dropping to zero at the Onsager T_c, and a near-critical spin snapshot")
+            + f'<div class="card">{pre(metropolis_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
