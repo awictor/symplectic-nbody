@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<text x="20" y="34" fill="#e6edf3" font-size="18">The hydraulic jump</text>
+<text x="20" y="52" fill="#8b949e" font-size="12">fast shallow (supercritical) water leaps to a deep slow (subcritical) pool below a weir</text>
+<line x1="60.0" y1="576.0" x2="660.0" y2="576.0" stroke="#8b949e" stroke-width="2"/>
+<rect x="70.0" y="476.7" width="261.2" height="99.3" fill="#4dabf7" opacity="0.55"/>
+<polygon points="331.2,476.7 371.2,201.6 650.0,201.6 650.0,576.0 331.2,576.0" fill="#4dabf7" opacity="0.55"/>
+<circle cx="349.2" cy="213.6" r="12" fill="none" stroke="#e6edf3" stroke-width="1.5" opacity="0.6"/>
+<circle cx="365.2" cy="223.6" r="8" fill="none" stroke="#e6edf3" stroke-width="1.2" opacity="0.5"/>
+<line x1="100.0" y1="526.4" x2="301.2" y2="526.4" stroke="#ffd43b" stroke-width="2.5"/>
+<polygon points="301.2,526.4 289.2,521.4 289.2,531.4" fill="#ffd43b"/>
+<text x="200.6" y="466.7" fill="#4dabf7" font-size="12" text-anchor="middle">Fr1 = 3.0 (supercritical)</text>
+<text x="200.6" y="594.0" fill="#8b949e" font-size="10" text-anchor="middle">h1 = 0.20 m, U1 = 4.2 m/s</text>
+<text x="490.6" y="191.6" fill="#06d6a0" font-size="12" text-anchor="middle">Fr2 = 0.41 (subcritical)</text>
+<text x="490.6" y="594.0" fill="#8b949e" font-size="10" text-anchor="middle">h2 = 0.75 m, U2 = 1.1 m/s</text>
+<text x="64.0" y="205.6" fill="#8b949e" font-size="10" text-anchor="end">0.75 m</text>
+</svg>

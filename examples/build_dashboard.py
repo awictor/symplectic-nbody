@@ -198,6 +198,7 @@ def main():
     import convection_demo
     import stefan_demo
     import capillary_demo
+    import froude_demo
 
     import plot_orbits
 
@@ -365,6 +366,7 @@ def main():
     convection_txt = run("convection_demo", convection_demo.main, True)
     stefan_txt = run("stefan_demo", stefan_demo.main, True)
     capillary_txt = run("capillary_demo", capillary_demo.main, True)
+    froude_txt = run("froude_demo", froude_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1865,6 +1867,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("capillary.svg"), "drops morphing from round spheres to flat puddles as size crosses the capillary length")
             + f'<div class="card">{pre(capillary_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Froude number: racing your own waves",
+            "A surface disturbance travels at the shallow-water wave speed sqrt(g h), and the "
+            "Froude number Fr = U/sqrt(g h) compares the flow to it. Fr < 1 is tranquil "
+            "(subcritical) flow whose ripples run upstream; Fr > 1 is shooting (supercritical) "
+            "flow that outruns its waves, so a sudden slowing throws up a hydraulic jump. For a "
+            "ship the hull Froude number Fr = U/sqrt(g L) sets wave-making drag, walling a "
+            "displacement hull near Fr ~ 0.4 (the 1.34 sqrt(L_ft) knots rule), and its wake "
+            "wedge holds a fixed 19.47-degree half-angle at any speed.",
+            '<div class="grid">'
+            + svg_card(out("froude.svg"), "a hydraulic jump: thin fast supercritical water leaping to a deep slow pool")
+            + f'<div class="card">{pre(froude_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

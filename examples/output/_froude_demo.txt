@@ -1,0 +1,21 @@
+Froude number Fr = U / sqrt(g h): flow speed vs its own wave speed
+
+  flow                            U (m/s)   h (m)     Fr          regime
+  lazy river                         0.50   2.000   0.11     subcritical
+  brisk stream                       1.50   0.500   0.68     subcritical
+  below a spillway                   6.00   0.200   4.28   supercritical
+  kitchen-sink disc                  1.00   0.001  10.10   supercritical
+
+  Hull speed (displacement wall at Fr ~ 0.40):
+  boat / waterline               L (m)  V_hull (m/s)    knots
+  kayak                            4.0          2.52      4.9
+  day-sailer                       7.0          3.34      6.5
+  yacht                           12.0          4.37      8.5
+  clipper                         60.0          9.77     19.0
+
+  Kelvin ship-wake half-angle: 19.47 deg -- fixed, whatever the speed.
+
+  A hydraulic jump: supercritical Fr1=3 water 0.2 m deep leaps to 0.75 m and goes
+  subcritical, dumping its excess energy into turbulence -- the step below a weir.
+
+  wrote examples/output\froude.svg

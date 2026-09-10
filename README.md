@@ -156,6 +156,7 @@ ruins a long non-symplectic integration.
 | `src/convection.py` | Convective heat transfer: Newton cooling, Nusselt correlations, Biot, lumped cooling |
 | `src/stefan.py` | The Stefan problem: melting/freezing front X=2 lambda sqrt(alpha t), latent heat |
 | `src/capillary.py` | Capillary length, Bond & Weber numbers: surface tension vs gravity vs inertia |
+| `src/froude.py` | Froude number: flow regime, hull speed, hydraulic jump, Kelvin wake |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -303,6 +304,7 @@ ruins a long non-symplectic integration.
 | `examples/convection_demo.py` | Cooling-regime table + the Newtonian cooling curves |
 | `examples/stefan_demo.py` | Ice-growth table by frost severity + the sqrt(t) front curves |
 | `examples/capillary_demo.py` | Per-liquid capillary length + the drop-shape crossover figure |
+| `examples/froude_demo.py` | Flow-regime & hull-speed tables + the hydraulic-jump profile |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3512,6 +3514,32 @@ while a thin jet pinches into drops spaced ~9 radii apart by the Rayleigh-Platea
 instability. The tests reproduce water's and mercury's capillary lengths, the `Bo = (L/l_c)^2`
 crossover, the Weber breakup threshold, the `2 l_c` puddle cap, and the Rayleigh-Plateau
 spacing.
+
+## The Froude number: racing your own waves
+
+Whether a flow is tranquil or shooting -- and how fast a hull can go -- is one ratio.
+`froude.py`:
+
+```
+$ python examples/froude_demo.py examples/output
+
+  flow                U (m/s)   h (m)     Fr        regime
+  lazy river             0.50   2.000   0.11    subcritical
+  below a spillway       6.00   0.200   4.28    supercritical
+
+  hull speed: 7 m day-sailer -> 3.34 m/s (6.5 kn)   Kelvin wedge 19.47 deg
+```
+
+A surface disturbance travels at the shallow-water wave speed `sqrt(g h)`, and the Froude
+number `Fr = U/sqrt(g h)` compares the flow to it. Below 1 (subcritical, tranquil) ripples
+outrun the current and travel upstream; above 1 (supercritical, shooting) the water beats its
+own waves and a sudden slowing throws up a **hydraulic jump** -- the turbulent step below a
+weir, whose conjugate depth follows Belanger's `h2/h1 = 1/2(sqrt(1+8 Fr1^2)-1)` and conserves
+momentum flux. For a ship the hull Froude number `U/sqrt(g L)` governs wave-making drag and
+walls a displacement hull near `Fr ~ 0.4` (the `1.34 sqrt(L_ft)` knots rule), while the
+Kelvin wake wedge holds a fixed 19.47-degree half-angle at any speed. The tests verify the
+wave speed, the regime classification, the critical depth, the hull-speed wall, the Belanger
+jump with momentum conservation, and the Kelvin angle.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
