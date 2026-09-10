@@ -1,0 +1,22 @@
+Curve of growth: equivalent width vs central optical depth
+
+          tau0     W / dnu_D        regime
+  ----------------------------------------
+          0.01          0.01        linear
+           0.1           0.1        linear
+             1             1     saturated
+            10         3.097     saturated
+           100         4.297     saturated
+          1000         5.257     saturated
+        100000         17.72        damped
+         1e+07         177.2        damped
+         1e+09          1772        damped
+
+  Weak lines grow linearly (W ~ N): every atom adds absorption. Once the
+  core saturates the line is already black, so W barely moves over decades
+  of column density -- the flat part where abundances are hardest to pin
+  down. At enormous columns the Lorentzian damping wings go optically thick
+  and W ~ sqrt(N) again. Matching a measured W to this curve is how stellar
+  abundances are read off absorption spectra.
+
+  wrote examples/output\curve_of_growth.svg

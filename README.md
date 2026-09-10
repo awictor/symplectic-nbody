@@ -107,6 +107,7 @@ ruins a long non-symplectic integration.
 | `src/magnetic_mirror.py` | The magnetic mirror & loss cone: trapping charged particles |
 | `src/debye.py` | Debye shielding & the plasma frequency: what makes a plasma |
 | `src/line_broadening.py` | Spectral line broadening: Doppler, natural & pressure widths |
+| `src/curve_of_growth.py` | Curve of growth: equivalent width vs column density in three regimes |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -205,6 +206,7 @@ ruins a long non-symplectic integration.
 | `examples/magnetic_mirror_demo.py` | Loss-cone angle & trapping by mirror ratio + the alpha(R_m) curve |
 | `examples/debye_demo.py` | lambda_D/N_D/f_p by environment + the f_p(n) radio-cutoff curve |
 | `examples/line_broadening_demo.py` | Doppler/pressure widths by environment + Gaussian vs Lorentzian profiles |
+| `examples/curve_of_growth_demo.py` | W & regime vs optical depth + the three-segment curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2146,6 +2148,34 @@ region is purely Doppler, letting line shape diagnose surface gravity. The obser
 is the Voigt convolution of the Gaussian core and Lorentzian wings. The tests verify the
 ~20 pm H-alpha Doppler width, the `sqrt(T)` and `1/sqrt(m)` scalings, the density-driven
 switch from Doppler to pressure dominance, and the linear addition of Lorentzian widths.
+
+## The curve of growth: reading abundances from line strength
+
+How an absorption line's equivalent width `W` grows with the column density `N` of
+absorbing atoms follows three distinct regimes. `curve_of_growth.py`:
+
+```
+$ python examples/curve_of_growth_demo.py examples/output
+
+            tau0     W / dnu_D        regime
+  ----------------------------------------
+            0.01          0.01        linear
+             0.1           0.1        linear
+               1             1     saturated
+              10         3.097     saturated
+            1000         5.257     saturated
+          100000         17.72        damped
+           1e+09          1772        damped
+```
+
+Weak lines are optically thin and grow linearly (`W ~ N`). Once the core saturates the line
+is already black, so `W` creeps up only as `sqrt(ln N)` -- the flat plateau where abundances
+are hardest to pin down. At enormous columns the Lorentzian damping wings go optically thick
+and growth revives as `W ~ sqrt(N)`. Matching a measured equivalent width to the appropriate
+segment of this curve is exactly how stellar and interstellar abundances are read from
+absorption spectra. The tests verify the linear `W ~ N` rise, the flat saturated plateau, the
+`sqrt(N)` damping tail (100x column -> 10x W), the monotonic overall growth, the regime
+ordering, and the linear-regime column inversion.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

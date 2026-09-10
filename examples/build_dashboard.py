@@ -149,6 +149,7 @@ def main():
     import magnetic_mirror_demo
     import debye_demo
     import line_broadening_demo
+    import curve_of_growth_demo
 
     import plot_orbits
 
@@ -267,6 +268,7 @@ def main():
     mirror_txt = run("magnetic_mirror_demo", magnetic_mirror_demo.main, True)
     debye_txt = run("debye_demo", debye_demo.main, True)
     linebroad_txt = run("line_broadening_demo", line_broadening_demo.main, True)
+    cog_txt = run("curve_of_growth_demo", curve_of_growth_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1173,6 +1175,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("line_broadening.svg"), "a thermal Gaussian core beside a collisional Lorentzian with broad wings")
             + f'<div class="card">{pre(linebroad_txt)}</div>'
+            + '</div>'),
+        section(
+            "The curve of growth",
+            "How an absorption line's equivalent width grows with column density has "
+            "three regimes: linear (W ~ N) for weak lines, a flat saturated plateau "
+            "once the core goes black (W barely moves over decades of N), and a "
+            "square-root damping tail (W ~ sqrt(N)) when the Lorentzian wings go thick. "
+            "Matching a measured equivalent width to this curve is how stellar "
+            "abundances are read from spectra.",
+            '<div class="grid">'
+            + svg_card(out("curve_of_growth.svg"), "the linear rise, saturated plateau and square-root damping tail")
+            + f'<div class="card">{pre(cog_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
