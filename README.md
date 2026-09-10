@@ -105,6 +105,7 @@ ruins a long non-symplectic integration.
 | `src/terminal_velocity.py` | Terminal velocity & drag: Stokes vs quadratic regimes |
 | `src/snr_phases.py` | Supernova-remnant evolution: free expansion, Sedov, snowplow, merge |
 | `src/magnetic_mirror.py` | The magnetic mirror & loss cone: trapping charged particles |
+| `src/debye.py` | Debye shielding & the plasma frequency: what makes a plasma |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -201,6 +202,7 @@ ruins a long non-symplectic integration.
 | `examples/terminal_velocity_demo.py` | Speeds fog-to-skydiver + the v(r) Stokes/quadratic bend |
 | `examples/snr_phases_demo.py` | R/v/phase from centuries to Myr + the radius-vs-age track |
 | `examples/magnetic_mirror_demo.py` | Loss-cone angle & trapping by mirror ratio + the alpha(R_m) curve |
+| `examples/debye_demo.py` | lambda_D/N_D/f_p by environment + the f_p(n) radio-cutoff curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2088,6 +2090,33 @@ try to confine a plasma; particles scattered into the loss cone rain into the at
 light the aurora. The tests verify moment conservation (`v_perp ~ sqrt(B)`), the 30-degree
 loss cone at `R_m=4`, its shrinking with ratio, the trapped/escaping pitch angles, and the
 `B_min/sin^2(alpha)` mirror point.
+
+## Debye shielding: what makes a plasma a plasma
+
+Drop a test charge into ionized gas and the electrons rearrange to screen it, cutting the
+potential off beyond the Debye length. `debye.py`:
+
+```
+$ python examples/debye_demo.py examples/output
+
+         environment    n (/m^3)    T (K)    lambda_D       N_D        f_p
+  -------------------------------------------------------------------------
+    solar wind (1 AU)      5e+06    1e+05       9.8 m   1.9e+10     20 kHz
+           ionosphere      1e+12    1e+03     2.18 mm   4.4e+04    9.0 MHz
+         solar corona      1e+15    2e+06     3.09 mm   1.2e+08  283.9 MHz
+   lab (tokamak edge)      1e+18    1e+05     0.02 mm   4.4e+04    9.0 GHz
+          fusion core      1e+20    1e+08     0.07 mm   1.4e+08   89.8 GHz
+```
+
+The screening length is `lambda_D = sqrt(eps0 kT / n e^2)`, and the gas behaves as a
+collective plasma only when the system is larger than `lambda_D` and many particles sit
+inside a Debye sphere (`N_D >> 1`). Disturb the electrons and they ring at the plasma
+frequency `omega_p = sqrt(n e^2 / eps0 m_e)`; EM waves below it cannot propagate and are
+reflected. That is why the ionosphere's ~9 MHz cutoff bounces AM radio (~1 MHz) around the
+curve of the Earth while FM (~100 MHz) and TV pass straight through to space. The tests
+verify the ~9 MHz ionospheric plasma frequency, the millimetre Debye length, the well-
+populated Debye sphere, the `lambda_D ~ sqrt(T/n)` and `omega_p ~ sqrt(n)` scalings, and the
+critical-density inversion.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -147,6 +147,7 @@ def main():
     import terminal_velocity_demo
     import snr_phases_demo
     import magnetic_mirror_demo
+    import debye_demo
 
     import plot_orbits
 
@@ -263,6 +264,7 @@ def main():
     termv_txt = run("terminal_velocity_demo", terminal_velocity_demo.main, True)
     snr_txt = run("snr_phases_demo", snr_phases_demo.main, True)
     mirror_txt = run("magnetic_mirror_demo", magnetic_mirror_demo.main, True)
+    debye_txt = run("debye_demo", debye_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1145,6 +1147,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("magnetic_mirror.svg"), "loss-cone angle shrinking as the mirror ratio grows")
             + f'<div class="card">{pre(mirror_txt)}</div>'
+            + '</div>'),
+        section(
+            "Debye shielding & the plasma frequency",
+            "Ionized gas screens any test charge within the Debye length "
+            "lambda_D = sqrt(eps0 kT / n e^2), and behaves as a collective plasma only "
+            "when many particles sit inside a Debye sphere. Disturb the electrons and "
+            "they ring at the plasma frequency omega_p = sqrt(n e^2 / eps0 m_e); waves "
+            "below it are reflected -- which is why the ionosphere's ~9 MHz cutoff "
+            "bounces AM radio around the Earth but lets FM escape to space.",
+            '<div class="grid">'
+            + svg_card(out("debye.svg"), "plasma frequency vs density with the radio bands marked")
+            + f'<div class="card">{pre(debye_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

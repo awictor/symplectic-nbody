@@ -1,0 +1,17 @@
+Debye shielding: lambda_D = sqrt(eps0 kT / n e^2); plasma if N_D >> 1
+
+           environment   n (/m^3)    T (K)    lambda_D       N_D        f_p
+  -------------------------------------------------------------------------
+     solar wind (1 AU)      5e+06    1e+05       9.8 m   1.9e+10     20 kHz
+            ionosphere      1e+12    1e+03     2.18 mm   4.4e+04    9.0 MHz
+          solar corona      1e+15    2e+06     3.09 mm   1.2e+08  283.9 MHz
+    lab (tokamak edge)      1e+18    1e+05     0.02 mm   4.4e+04    9.0 GHz
+           fusion core      1e+20    1e+08     0.07 mm   1.4e+08   89.8 GHz
+
+  Below the plasma frequency, EM waves are reflected. The ionosphere's
+  ~9 MHz cutoff is why AM radio (~1 MHz) bounces around the curve of the
+  Earth while FM (~100 MHz) and TV punch straight through to space. The
+  Debye length is the screening radius, and with thousands of particles
+  inside a Debye sphere the shielding is a smooth collective effect.
+
+  wrote examples/output\debye.svg
