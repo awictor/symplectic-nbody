@@ -116,6 +116,7 @@ def main():
     import atmosphere_demo
     import larmor_demo
     import optical_depth_demo
+    import exoplanet_demo
 
     import plot_orbits
 
@@ -201,6 +202,7 @@ def main():
     atm_txt = run("atmosphere_demo", atmosphere_demo.main, True)
     larmor_txt = run("larmor_demo", larmor_demo.main, True)
     optdepth_txt = run("optical_depth_demo", optical_depth_demo.main, True)
+    exoplanet_txt = run("exoplanet_demo", exoplanet_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -250,6 +252,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("inner_planets.svg"), "inner solar system (2 Mars years)")
             + f'<div class="card">{pre(solar_txt)}</div>'
+            + '</div>'),
+        section(
+            "Exoplanet detection: transits & radial velocity",
+            "Two methods, both simple geometry + Kepler: a transit dims the star by "
+            "(R_p/R_star)^2 (Jupiter ~1%, Earth 0.008%), and the star wobbles by a "
+            "radial-velocity K (Jupiter 12 m/s, Earth 9 cm/s). Hot Jupiters give "
+            "the biggest signals -- which is why they were found first.",
+            '<div class="grid">'
+            + svg_card(out("exoplanet.svg"), "a transit light-curve dip")
+            + f'<div class="card">{pre(exoplanet_txt)}</div>'
             + '</div>'),
         section(
             "Hulse-Taylor binary pulsar (GW before LIGO)",

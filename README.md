@@ -69,6 +69,7 @@ ruins a long non-symplectic integration.
 | `src/kepler.py` | Exact analytic two-body orbit (Kepler-equation solver) -- the ground truth |
 | `src/cr3bp.py` | Circular restricted 3-body problem: Lagrange points, Jacobi constant |
 | `src/solar_system.py` | The real 8-planet solar system from published orbital elements |
+| `src/exoplanet.py` | Exoplanet detection: transit depth & radial-velocity wobble |
 | `src/relativity.py` | First post-Newtonian gravity & Mercury's perihelion precession |
 | `src/lyapunov.py` | Largest Lyapunov exponent (Benettin shadow-trajectory method) |
 | `src/stability_map.py` | Three-body escape-time scan over a grid of initial conditions |
@@ -134,6 +135,7 @@ ruins a long non-symplectic integration.
 | `examples/convergence_demo.py` | Measured convergence order of each method vs the exact orbit |
 | `examples/lagrange_demo.py` | Lagrange points + zero-velocity curves rendered to SVG |
 | `examples/solar_system_demo.py` | Integrate the real solar system, recover Kepler's third law |
+| `examples/exoplanet_demo.py` | Transit depths & RV wobbles + a transit light-curve dip |
 | `examples/precession_demo.py` | Mercury's 43"/century precession + a relativistic rosette SVG |
 | `examples/chaos_demo.py` | Lyapunov exponent + two trajectories diverging 6 orders of magnitude |
 | `examples/stability_map_demo.py` | Parallel escape-time heatmap revealing the fractal chaos boundary |
@@ -1392,6 +1394,26 @@ the demo amplifies GR (shrinks c) so the ellipse visibly rotates into a rosette
 and renders it to SVG. The tests confirm the 43"/century value, that numeric
 integration matches the analytic advance, that Newtonian orbits don't precess,
 and that the precession scales as 1/c^2.
+
+## Exoplanet detection: transits and radial velocity
+
+The two workhorse methods, both simple geometry plus Kepler. `exoplanet.py`:
+
+```
+$ python examples/exoplanet_demo.py examples/output
+
+  planet          a (AU)    depth   RV K (m/s)   period
+  hot Jupiter      0.050  1.01e-02      127.07    4.1 d
+  Jupiter          5.204  1.01e-02       12.46   11.9 yr
+  Earth            1.000  8.39e-05        0.09  365.2 d
+```
+
+A transit dims the star by `(R_p/R_star)^2` -- ~1% for Jupiter, 0.008% for Earth
+-- and the star wobbles at a radial-velocity semi-amplitude `K` (12 m/s for
+Jupiter, 9 cm/s for Earth). Hot Jupiters, being big, close, and fast, give the
+strongest signals in both channels, which is why they were the first exoplanets
+found. The tests reproduce the Jupiter/Earth transit depths, the RV amplitudes,
+and Jupiter's 11.9-year period.
 
 ## The real solar system, and Kepler's third law for free
 

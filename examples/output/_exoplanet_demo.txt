@@ -1,0 +1,13 @@
+Exoplanet detection: transit depth and radial-velocity wobble
+
+  planet            a (AU)       depth   RV K (m/s)      period
+  -------------------------------------------------------------
+  hot Jupiter        0.050    1.01e-02       127.07       4.1 d
+  Jupiter            5.204    1.01e-02        12.46     11.9 yr
+  Earth              1.000    8.39e-05         0.09     365.2 d
+
+  A transiting Jupiter dims its star ~1%; an Earth only 0.008%. Jupiter
+  wobbles the Sun 12 m/s, Earth just 9 cm/s. Hot Jupiters -- big, close,
+  fast -- give the strongest signals, which is why they were found first.
+
+  wrote examples/output\exoplanet.svg
