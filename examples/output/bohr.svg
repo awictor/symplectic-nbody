@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<line x1="132.0" y1="648.2" x2="608.0" y2="648.2" stroke="#8b949e" stroke-width="1.2"/>
+<text x="124.0" y="652.2" fill="#8b949e" font-size="11" text-anchor="end">n=1</text>
+<text x="614.0" y="652.2" fill="#484f58" font-size="9">-13.61 eV</text>
+<line x1="132.0" y1="231.4" x2="608.0" y2="231.4" stroke="#8b949e" stroke-width="1.2"/>
+<text x="124.0" y="235.4" fill="#8b949e" font-size="11" text-anchor="end">n=2</text>
+<text x="614.0" y="235.4" fill="#484f58" font-size="9">-3.40 eV</text>
+<line x1="132.0" y1="154.2" x2="608.0" y2="154.2" stroke="#8b949e" stroke-width="1.2"/>
+<text x="124.0" y="158.2" fill="#8b949e" font-size="11" text-anchor="end">n=3</text>
+<text x="614.0" y="158.2" fill="#484f58" font-size="9">-1.51 eV</text>
+<line x1="132.0" y1="127.2" x2="608.0" y2="127.2" stroke="#8b949e" stroke-width="1.2"/>
+<text x="124.0" y="131.2" fill="#8b949e" font-size="11" text-anchor="end">n=4</text>
+<text x="614.0" y="131.2" fill="#484f58" font-size="9">-0.85 eV</text>
+<line x1="132.0" y1="114.7" x2="608.0" y2="114.7" stroke="#8b949e" stroke-width="1.2"/>
+<text x="124.0" y="118.7" fill="#8b949e" font-size="11" text-anchor="end">n=5</text>
+<text x="614.0" y="118.7" fill="#484f58" font-size="9">-0.54 eV</text>
+<line x1="132.0" y1="107.9" x2="608.0" y2="107.9" stroke="#8b949e" stroke-width="1.2"/>
+<text x="124.0" y="111.9" fill="#8b949e" font-size="11" text-anchor="end">n=6</text>
+<text x="614.0" y="111.9" fill="#484f58" font-size="9">-0.38 eV</text>
+<line x1="132.0" y1="92.4" x2="608.0" y2="92.4" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="124.0" y="96.4" fill="#ff6b6b" font-size="10" text-anchor="end">ionized</text>
+<line x1="189.1" y1="231.4" x2="189.1" y2="648.2" stroke="#b197fc" stroke-width="1.6"/>
+<polygon points="186.1,642.2 192.1,642.2 189.1,648.2" fill="#b197fc"/>
+<line x1="212.9" y1="154.2" x2="212.9" y2="648.2" stroke="#b197fc" stroke-width="1.6"/>
+<polygon points="209.9,642.2 215.9,642.2 212.9,648.2" fill="#b197fc"/>
+<line x1="236.7" y1="127.2" x2="236.7" y2="648.2" stroke="#b197fc" stroke-width="1.6"/>
+<polygon points="233.7,642.2 239.7,642.2 236.7,648.2" fill="#b197fc"/>
+<line x1="322.4" y1="154.2" x2="322.4" y2="231.4" stroke="#4dabf7" stroke-width="1.6"/>
+<polygon points="319.4,225.4 325.4,225.4 322.4,231.4" fill="#4dabf7"/>
+<line x1="346.2" y1="127.2" x2="346.2" y2="231.4" stroke="#4dabf7" stroke-width="1.6"/>
+<polygon points="343.2,225.4 349.2,225.4 346.2,231.4" fill="#4dabf7"/>
+<line x1="370.0" y1="114.7" x2="370.0" y2="231.4" stroke="#4dabf7" stroke-width="1.6"/>
+<polygon points="367.0,225.4 373.0,225.4 370.0,231.4" fill="#4dabf7"/>
+<line x1="450.9" y1="127.2" x2="450.9" y2="154.2" stroke="#ff922b" stroke-width="1.6"/>
+<polygon points="447.9,148.2 453.9,148.2 450.9,154.2" fill="#ff922b"/>
+<line x1="474.7" y1="114.7" x2="474.7" y2="154.2" stroke="#ff922b" stroke-width="1.6"/>
+<polygon points="471.7,148.2 477.7,148.2 474.7,154.2" fill="#ff922b"/>
+<line x1="498.5" y1="107.9" x2="498.5" y2="154.2" stroke="#ff922b" stroke-width="1.6"/>
+<polygon points="495.5,148.2 501.5,148.2 498.5,154.2" fill="#ff922b"/>
+<text x="72" y="34" fill="#e6edf3" font-size="18">Hydrogen energy levels and spectral series</text>
+<text x="72" y="52" fill="#8b949e" font-size="12">purple: Lyman (UV, to n=1); blue: Balmer (visible, to n=2); orange: Paschen (IR, to n=3)</text>
+</svg>

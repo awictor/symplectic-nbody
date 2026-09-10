@@ -127,6 +127,7 @@ ruins a long non-symplectic integration.
 | `src/relativistic_rocket.py` | The relativistic rocket: interstellar travel at constant 1 g |
 | `src/relativistic_doppler.py` | Relativistic Doppler: longitudinal, transverse & redshift-velocity |
 | `src/de_broglie.py` | The de Broglie wavelength: matter as waves |
+| `src/bohr.py` | The Bohr model: the hydrogen spectrum from a quantized orbit |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -245,6 +246,7 @@ ruins a long non-symplectic integration.
 | `examples/relativistic_rocket_demo.py` | Ship/Earth time & v to each destination + the divergence plot |
 | `examples/relativistic_doppler_demo.py` | Receding/approaching/transverse z per speed + the z(beta) curves |
 | `examples/de_broglie_demo.py` | Matter wavelengths electron-to-baseball + the lambda(E) curves |
+| `examples/bohr_demo.py` | Energy levels & series wavelengths + the level diagram |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2721,6 +2723,30 @@ where quantum statistics take over -- the same condition behind degeneracy press
 Bose-Einstein condensation. The tests verify the 100 keV electron and thermal-neutron
 wavelengths, the negligible baseball, the `1/p` and `1/sqrt(E)` scalings, the energy/momentum
 form agreement, and the momentum-wavelength inversion.
+
+## The Bohr model: the hydrogen spectrum
+
+Quantizing angular momentum (`L = n hbar`) forces the electron onto discrete orbits.
+`bohr.py`:
+
+```
+$ python examples/bohr_demo.py examples/output
+
+  spectral series (to lower level n1):
+          Lyman (UV) to n=1:  121.5, 102.5, 97.2 nm ...
+    Balmer (visible) to n=2:  656.1, 486.0, 433.9 nm ...
+        Paschen (IR) to n=3:  1874.6, 1281.5, 1093.5 nm ...
+```
+
+Balancing Coulomb attraction against the quantized orbit fixes `E_n = -13.6/n^2 eV`,
+`r_n = n^2 a_0` (`a_0 ~ 52.9 pm`), and the Rydberg formula `1/lambda = R_H(1/n1^2 - 1/n2^2)`.
+The ground state at -13.6 eV is the ionization energy; transitions emit fixed-energy photons,
+the sharp hydrogen lines -- Lyman in the UV, Balmer in the visible (H-alpha at 656 nm, the red
+of nebulae), Paschen in the infrared. The n=1 orbital speed is `alpha*c`, giving the
+fine-structure constant `v/c ~ 1/137`. Though superseded by full quantum mechanics, the model
+gets the hydrogen energies exactly right. The tests verify the -13.6 eV ground state, the
+52.9 pm Bohr radius, the 656.3 nm H-alpha and 121.6 nm Lyman-alpha lines, the `-1/n^2` and
+`n^2` scalings, and the 1/137 fine-structure constant.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

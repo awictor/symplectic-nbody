@@ -169,6 +169,7 @@ def main():
     import relativistic_rocket_demo
     import relativistic_doppler_demo
     import de_broglie_demo
+    import bohr_demo
 
     import plot_orbits
 
@@ -307,6 +308,7 @@ def main():
     rocket_txt = run("relativistic_rocket_demo", relativistic_rocket_demo.main, True)
     rdopp_txt = run("relativistic_doppler_demo", relativistic_doppler_demo.main, True)
     debroglie_txt = run("de_broglie_demo", de_broglie_demo.main, True)
+    bohr_txt = run("bohr_demo", bohr_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1452,6 +1454,17 @@ def main():
             '<div class="grid">'
             + svg_card(out("de_broglie.svg"), "wavelength vs energy for electron/proton/neutron with reference scales")
             + f'<div class="card">{pre(debroglie_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Bohr model of hydrogen",
+            "Quantizing angular momentum (L = n hbar) forces the electron onto discrete "
+            "orbits: energy E_n = -13.6/n^2 eV, radius n^2 a_0 (a_0 ~ 52.9 pm). "
+            "Transitions emit fixed-energy photons -- the sharp hydrogen lines: Lyman "
+            "in the UV, Balmer in the visible (H-alpha at 656 nm, the red of nebulae), "
+            "Paschen in the infrared. The n=1 orbital speed is alpha*c, v/c ~ 1/137.",
+            '<div class="grid">'
+            + svg_card(out("bohr.svg"), "the hydrogen energy levels with the Lyman/Balmer/Paschen transitions")
+            + f'<div class="card">{pre(bohr_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
