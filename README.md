@@ -139,6 +139,7 @@ ruins a long non-symplectic integration.
 | `src/q_value.py` | Nuclear Q-value: the energy released when nuclei rearrange |
 | `src/quantum_stats.py` | Quantum statistics: Fermi-Dirac, Bose-Einstein & the classical limit |
 | `src/debye_heat.py` | Debye specific heat: the T^3 law & the Dulong-Petit plateau |
+| `src/carnot.py` | The Carnot cycle: the efficiency limit & heat-pump COP |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -269,6 +270,7 @@ ruins a long non-symplectic integration.
 | `examples/q_value_demo.py` | Reaction Q-values + the chemical-to-annihilation energy-density chart |
 | `examples/quantum_stats_demo.py` | Occupation vs (E-mu)/kT + the FD/BE/MB distribution curves |
 | `examples/debye_heat_demo.py` | C_V per material + the universal C_V/3R vs T/Theta_D curve |
+| `examples/carnot_demo.py` | Engine efficiencies & COP + the efficiency-vs-temperature-ratio curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3057,6 +3059,31 @@ follows one universal curve in `T/Theta_D`, so a stiff light lattice like diamon
 lead has long reached the plateau. The tests verify the high-T Dulong-Petit limit, the low-T
 `T^3` law and its scaling, copper's ~94% at room temperature, diamond staying below 3R, and
 the monotonic rise.
+
+## The Carnot cycle: the limit on heat engines
+
+No heat engine between reservoirs at T_h and T_c can beat `eta = 1 - T_c/T_h`. `carnot.py`:
+
+```
+$ python examples/carnot_demo.py examples/output
+
+                engine   T_hot (K)   T_cold (K)   max eta
+  -------------------------------------------------------
+            car engine        2000          300     0.850
+     steam power plant         800          300     0.625
+            geothermal         450          300     0.333
+  ocean thermal (OTEC)         298          278     0.067
+```
+
+The second law forces some heat to be dumped to the cold reservoir, so no engine reaches
+100% -- a steam plant is capped at 62% (real losses cut it to ~40%), and an ocean-thermal
+gradient of only 20 K yields 7%. Work plus rejected heat equals the input, and over a full
+reversible cycle the total entropy change is zero. Reversed, the cycle is a fridge or heat
+pump with `COP_fridge = T_c/(T_h-T_c)` and `COP_heatpump = COP_fridge + 1`, both large for a
+small gap -- a heat pump delivers several times the heat of the work it draws, which is why
+it beats resistive heating. The tests verify the 62.5% plant efficiency, efficiency below
+one, energy conservation, always-rejected heat, the heat-pump-is-fridge-plus-one relation,
+and the zero-entropy reversible cycle.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

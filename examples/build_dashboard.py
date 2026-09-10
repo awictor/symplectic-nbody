@@ -181,6 +181,7 @@ def main():
     import q_value_demo
     import quantum_stats_demo
     import debye_heat_demo
+    import carnot_demo
 
     import plot_orbits
 
@@ -331,6 +332,7 @@ def main():
     qval_txt = run("q_value_demo", q_value_demo.main, True)
     qstats_txt = run("quantum_stats_demo", quantum_stats_demo.main, True)
     debye_txt = run("debye_heat_demo", debye_heat_demo.main, True)
+    carnot_txt = run("carnot_demo", carnot_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1618,6 +1620,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("debye_heat.svg"), "the universal C_V/3R vs T/Theta_D curve")
             + f'<div class="card">{pre(debye_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Carnot cycle",
+            "No heat engine between reservoirs at T_h and T_c can beat eta = 1 - T_c/T_h "
+            "-- the second law forces some heat to be dumped to the cold side. A steam "
+            "plant at 800 K exhausting to 300 K is capped at 62%; ocean-thermal at a "
+            "20 K gap only 7%. Reversed, the cycle is a heat pump with COP >> 1, "
+            "delivering many times the heat of the work it draws -- why heat pumps beat "
+            "resistive heaters.",
+            '<div class="grid">'
+            + svg_card(out("carnot.svg"), "efficiency vs reservoir temperature ratio with real engines marked")
+            + f'<div class="card">{pre(carnot_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

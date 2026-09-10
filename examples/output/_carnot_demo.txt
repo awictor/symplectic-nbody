@@ -1,0 +1,20 @@
+Carnot: no engine beats eta = 1 - T_c/T_h
+
+                  engine  T_hot (K)  T_cold (K)   max eta
+  -------------------------------------------------------
+              car engine       2000         300     0.850
+       steam power plant        800         300     0.625
+              geothermal        450         300     0.333
+    ocean thermal (OTEC)        298         278     0.067
+
+  running the cycle backwards (T_hot=293 K room, T_cold=273 K):
+    refrigerator COP = 13.7 (heat removed per unit work)
+    heat pump COP    = 14.7 (heat delivered per unit work)
+
+  Some heat must always be dumped to the cold reservoir, so no engine hits
+  100% -- a steam plant at 800 K exhausting to 300 K is capped at 62%, and
+  real losses cut it to ~40%. Reversed, the same cycle is a heat pump that
+  delivers many times the heat of the work it draws (COP >> 1), which is why
+  heat pumps beat resistive heaters -- they move heat rather than make it.
+
+  wrote examples/output\carnot.svg
