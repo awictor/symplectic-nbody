@@ -101,6 +101,7 @@ def main():
     import gw_strain_demo
     import saha_demo
     import cmb_demo
+    import bbn_demo
 
     import plot_orbits
 
@@ -171,6 +172,7 @@ def main():
     gwstrain_txt = run("gw_strain_demo", gw_strain_demo.main, True)
     saha_txt = run("saha_demo", saha_demo.main, True)
     cmb_txt = run("cmb_demo", cmb_demo.main, True)
+    bbn_txt = run("bbn_demo", bbn_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -391,6 +393,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("cmb.svg"), "schematic acoustic peaks with the first at l~220")
             + f'<div class="card">{pre(cmb_txt)}</div>'
+            + '</div>'),
+        section(
+            "Big Bang nucleosynthesis: the primordial 25% helium",
+            "In the first minutes the neutron/proton ratio freezes at ~1/6, decays "
+            "to ~1/7, and nearly all surviving neutrons lock into helium-4, giving "
+            "Y_p ~ 0.25. That quarter-helium, seen everywhere, is a triumph of the "
+            "hot Big Bang.",
+            '<div class="grid">'
+            + svg_card(out("bbn.svg"), "n/p ratio freezing out vs temperature")
+            + f'<div class="card">{pre(bbn_txt)}</div>'
             + '</div>'),
         section(
             "The Eddington luminosity & black-hole growth",

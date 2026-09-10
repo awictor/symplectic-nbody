@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.36       12.50      0.7x
-   400          38.05       39.16      1.0x
-   800         148.10      127.59      1.2x
-  1600         609.11      366.60      1.7x
-  3200        2529.90      980.67      2.6x
+   200           9.51       12.49      0.8x
+   400          36.92       38.04      1.0x
+   800         148.68      114.21      1.3x
+  1600         612.54      345.81      1.8x
+  3200        2600.01      969.01      2.7x
 
-empirical scaling exponent  direct ~ N^2.02   barnes-hut ~ N^1.58
+empirical scaling exponent  direct ~ N^2.02   barnes-hut ~ N^1.57
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -3438,6 +3438,37 @@ wrote examples/output\poincare_section.svg</pre></div></div>
   acoustic peaks, and their position pins the geometry to flat.
 
   wrote examples/output\cmb.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Big Bang nucleosynthesis: the primordial 25% helium</h2>
+    <p class="blurb">In the first minutes the neutron/proton ratio freezes at ~1/6, decays to ~1/7, and nearly all surviving neutrons lock into helium-4, giving Y_p ~ 0.25. That quarter-helium, seen everywhere, is a triumph of the hot Big Bang.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<line x1="64" y1="656" x2="656" y2="656" stroke="#30363d"/>
+<line x1="64" y1="64" x2="64" y2="656" stroke="#30363d"/>
+<polyline points="64.0,101.1 69.4,102.8 74.9,104.6 80.3,106.4 85.7,108.4 91.2,110.4 96.6,112.5 102.0,114.7 107.4,116.9 112.9,119.3 118.3,121.8 123.7,124.4 129.2,127.1 134.6,129.9 140.0,132.8 145.5,135.8 150.9,139.0 156.3,142.3 161.8,145.7 167.2,149.2 172.6,152.9 178.1,156.8 183.5,160.8 188.9,164.9 194.3,169.2 199.8,173.7 205.2,178.3 210.6,183.1 216.1,188.1 221.5,193.3 226.9,198.6 232.4,204.1 237.8,209.9 243.2,215.8 248.7,221.9 254.1,228.2 259.5,234.7 265.0,241.4 270.4,248.3 275.8,255.4 281.2,262.7 286.7,270.2 292.1,277.9 297.5,285.8 303.0,293.9 308.4,302.2 313.8,310.7 319.3,319.3 324.7,328.2 330.1,337.2 335.6,346.3 341.0,355.7 346.4,365.1 351.9,374.7 357.3,384.4 362.7,394.2 368.1,404.1 373.6,414.0 379.0,424.0 384.4,434.0 389.9,444.0 395.3,454.0 400.7,464.0 406.2,474.0 411.6,483.8 417.0,493.5 422.5,503.1 427.9,512.6 433.3,521.9 438.8,530.9 444.2,539.8 449.6,548.3 455.0,556.6 460.5,564.7 465.9,572.4 471.3,579.7 476.8,586.8 482.2,593.4 487.6,599.7 493.1,605.6 498.5,611.1 503.9,616.3 509.4,621.0 514.8,625.4 520.2,629.4 525.7,633.0 531.1,636.3 536.5,639.2 541.9,641.8 547.4,644.1 552.8,646.1 558.2,647.8 563.7,649.3 569.1,650.6 574.5,651.7 580.0,652.6 585.4,653.3 590.8,653.9 596.3,654.4 601.7,654.8 607.1,655.1 612.6,655.3 618.0,655.5 623.4,655.7 628.8,655.8 634.3,655.8 639.7,655.9 645.1,655.9 650.6,655.9 656.0,656.0" fill="none" stroke="#4cc9f0" stroke-width="2.2"/>
+<line x1="443.3" y1="64" x2="443.3" y2="656" stroke="#e63946" stroke-dasharray="4,4"/>
+<text x="449.3" y="80" fill="#e63946" font-size="12">freeze-out (0.8 MeV, n/p~1/6)</text>
+<text x="64" y="34" fill="#e6edf3" font-size="18">Neutron/proton ratio vs temperature</text>
+<text x="64" y="680" fill="#8b949e" font-size="11">log10 temperature (MeV), hot to the left -- freezing sets the helium yield</text>
+<text x="54" y="56" fill="#8b949e" font-size="11">n/p ratio</text>
+</svg><figcaption>n/p ratio freezing out vs temperature</figcaption></figure><div class="card"><pre>Big Bang nucleosynthesis: the origin of primordial helium
+
+  stage                                  n/p
+  ------------------------------------------
+  equilibrium at 10 MeV (t~0.01 s)     0.879
+  freeze-out at 0.8 MeV (t~1 s)        0.199
+  after neutron decay (t~200 s)        0.152
+
+  primordial helium mass fraction Y_p = 0.264
+  (observed ~0.245-0.25 -- a triumph of the hot Big Bang)
+
+  Neutrons and protons start nearly equal, the ratio freezes at ~1/6
+  as the weak interaction shuts off, decays to ~1/7, and nearly all
+  surviving neutrons end up in helium-4: about a quarter of all mass.
+
+  wrote examples/output\bbn.svg</pre></div></div>
   </section>
 
   <section>

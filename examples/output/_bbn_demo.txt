@@ -1,0 +1,16 @@
+Big Bang nucleosynthesis: the origin of primordial helium
+
+  stage                                  n/p
+  ------------------------------------------
+  equilibrium at 10 MeV (t~0.01 s)     0.879
+  freeze-out at 0.8 MeV (t~1 s)        0.199
+  after neutron decay (t~200 s)        0.152
+
+  primordial helium mass fraction Y_p = 0.264
+  (observed ~0.245-0.25 -- a triumph of the hot Big Bang)
+
+  Neutrons and protons start nearly equal, the ratio freezes at ~1/6
+  as the weak interaction shuts off, decays to ~1/7, and nearly all
+  surviving neutrons end up in helium-4: about a quarter of all mass.
+
+  wrote examples/output\bbn.svg

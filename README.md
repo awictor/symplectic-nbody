@@ -95,6 +95,7 @@ ruins a long non-symplectic integration.
 | `src/friedmann.py` | Friedmann cosmology: scale factor a(t), expansion eras, age of the universe |
 | `src/saha.py` | Saha equation & cosmic recombination (the CMB release) |
 | `src/cmb.py` | CMB acoustic scale: sound horizon & the l~220 first peak |
+| `src/bbn.py` | Big Bang nucleosynthesis: n/p freeze-out & primordial helium |
 | `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
 | `src/distances.py` | Cosmological distances: luminosity/angular-diameter, cosmic acceleration |
 | `src/chandrasekhar.py` | White-dwarf structure & the Chandrasekhar mass (~1.44 M_sun) |
@@ -145,6 +146,7 @@ ruins a long non-symplectic integration.
 | `examples/friedmann_demo.py` | Scale-factor curves for radiation/matter/dark-energy/LCDM |
 | `examples/saha_demo.py` | Ionization fraction plunging to zero at recombination |
 | `examples/cmb_demo.py` | Sound horizon, acoustic angle & the l~220 peak comb |
+| `examples/bbn_demo.py` | n/p freeze-out chain and the Y_p ~ 0.25 helium fraction |
 | `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
 | `examples/distances_demo.py` | Hubble diagram (LCDM vs decelerating) + D_A turnover |
 | `examples/chandrasekhar_demo.py` | White-dwarf mass-radius curve approaching 1.44 M_sun |
@@ -489,6 +491,29 @@ in 1998 (2011 Nobel Prize). The angular-diameter distance is non-monotonic,
 peaking near `z~1.6`, which is why the CMB's acoustic spots subtend about a
 degree. The tests check the low-z Hubble law, the acceleration signal, the
 turnover, and the Etherington duality `D_L = (1+z)^2 D_A`.
+
+## Big Bang nucleosynthesis: the primordial helium
+
+In the first few minutes the universe forged the light elements. `bbn.py` gets
+the headline number -- the ~25% helium -- from a short chain:
+
+```
+$ python examples/bbn_demo.py examples/output
+
+  stage                              n/p
+  equilibrium at 10 MeV (t~0.01 s)  0.879
+  freeze-out at 0.8 MeV (t~1 s)     0.199
+  after neutron decay (t~200 s)     0.152
+  primordial helium mass fraction Y_p = 0.264
+```
+
+Neutrons and protons start nearly equal (`n/p = exp(-Delta m/kT)`), the ratio
+freezes at ~1/6 when the weak interaction shuts off, decays toward ~1/7 as free
+neutrons beta-decay, and then almost every surviving neutron is locked into
+helium-4, giving `Y_p = 2(n/p)/(1+n/p) ~ 0.25`. That quarter-helium abundance,
+observed everywhere in the universe, is one of the strongest confirmations of the
+hot Big Bang. The tests verify the equilibrium limits, the freeze-out ratio, the
+decay, and the ~0.25 helium fraction.
 
 ## The CMB acoustic scale: the 1-degree spots
 
