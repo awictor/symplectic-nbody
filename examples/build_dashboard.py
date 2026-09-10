@@ -158,6 +158,7 @@ def main():
     import tully_fisher_demo
     import tolman_demo
     import olbers_demo
+    import bi_elliptic_demo
 
     import plot_orbits
 
@@ -285,6 +286,7 @@ def main():
     tf_txt = run("tully_fisher_demo", tully_fisher_demo.main, True)
     tolman_txt = run("tolman_demo", tolman_demo.main, True)
     olbers_txt = run("olbers_demo", olbers_demo.main, True)
+    biell_txt = run("bi_elliptic_demo", bi_elliptic_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1298,6 +1300,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("olbers.svg"), "sky-covering fraction vs distance with the horizon far short of tiling")
             + f'<div class="card">{pre(olbers_txt)}</div>'
+            + '</div>'),
+        section(
+            "Bi-elliptic transfer",
+            "The Hohmann two-burn transfer is cheapest for modest orbit changes, but "
+            "for large radius ratios a three-burn bi-elliptic transfer -- flinging the "
+            "craft far beyond the target and dropping back -- costs less total delta-v, "
+            "because the mid-course burn happens where orbital speeds are tiny. Below "
+            "R = 11.94 Hohmann always wins; above R = 15.58 bi-elliptic always does. "
+            "The saving is paid for with a much longer, sometimes years-long, transfer.",
+            '<div class="grid">'
+            + svg_card(out("bi_elliptic.svg"), "Hohmann and bi-elliptic delta-v crossing near R = 12")
+            + f'<div class="card">{pre(biell_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

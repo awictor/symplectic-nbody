@@ -116,6 +116,7 @@ ruins a long non-symplectic integration.
 | `src/tully_fisher.py` | Tully-Fisher: a spiral galaxy's luminosity from its rotation speed |
 | `src/tolman.py` | Tolman surface-brightness dimming: the (1+z)^4 test of expansion |
 | `src/olbers.py` | Olbers' paradox: why the dark night sky reveals a finite-age universe |
+| `src/bi_elliptic.py` | Bi-elliptic transfer: when three burns beat the Hohmann two |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -223,6 +224,7 @@ ruins a long non-symplectic integration.
 | `examples/tully_fisher_demo.py` | L/M_abs/M_baryon by rotation speed + the slope-4 log-log line |
 | `examples/tolman_demo.py` | Dimming vs z (expanding vs tired-light) + the magnitude curves |
 | `examples/olbers_demo.py` | Mean free path/horizon/covered fraction + the covering-vs-distance curve |
+| `examples/bi_elliptic_demo.py` | Hohmann vs bi-elliptic delta-v by ratio + the crossover curves |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2408,6 +2410,34 @@ line *would* eventually hit a star -- but "eventually" lies far beyond the horiz
 finite age of the universe, not infinite space, is the resolution. The tests verify the
 astronomically large mean free path, the `1 - 1/e` covering at one mfp and its saturation,
 the horizon scale, and the tiny sky fraction covered within the observable universe.
+
+## Bi-elliptic transfer: when three burns beat two
+
+The Hohmann two-burn transfer is cheapest for modest orbit changes, but for large radius
+ratios a three-burn bi-elliptic transfer wins. `bi_elliptic.py`:
+
+```
+$ python examples/bi_elliptic_demo.py examples/output
+
+     R = r2/r1   Hohmann dv   bi-elliptic       winner
+  ---------------------------------------------------
+          5.00        3622m        4482m      Hohmann
+         10.00        3998m        4120m      Hohmann
+         11.94        4030m        4050m      Hohmann
+         13.00        4039m        4020m  bi-elliptic
+         16.00        4046m        3953m  bi-elliptic
+         30.00        3980m        3810m  bi-elliptic
+         60.00        3836m        3735m  bi-elliptic
+```
+
+Flinging the craft far beyond the target and dropping back costs less total delta-v because
+the mid-course burn happens where orbital speeds -- and so the cost of changing them -- are
+tiny. Below the exact crossover `R = 11.94` the Hohmann transfer always wins; above
+`R = 15.58` bi-elliptic always does; between them it depends on the detour radius. The
+saving is paid for with a far longer, sometimes years-long, transfer, so bi-elliptic is
+reserved for the most extreme orbit raises. The tests verify Hohmann winning below the
+crossover, bi-elliptic winning above it, the intermediate band needing a large detour, the
+11.94 crossover value, and agreement with the vis-viva Hohmann result.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

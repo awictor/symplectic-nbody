@@ -6257,6 +6257,46 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   </section>
 
   <section>
+    <h2>Bi-elliptic transfer</h2>
+    <p class="blurb">The Hohmann two-burn transfer is cheapest for modest orbit changes, but for large radius ratios a three-burn bi-elliptic transfer -- flinging the craft far beyond the target and dropping back -- costs less total delta-v, because the mid-course burn happens where orbital speeds are tiny. Below R = 11.94 Hohmann always wins; above R = 15.58 bi-elliptic always does. The saving is paid for with a much longer, sometimes years-long, transfer.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<line x1="72" y1="648" x2="648" y2="648" stroke="#30363d"/>
+<line x1="72" y1="72" x2="72" y2="648" stroke="#30363d"/>
+<line x1="168.4" y1="72" x2="168.4" y2="648" stroke="#8b949e" stroke-width="1.2" stroke-dasharray="4 4"/>
+<text x="173.4" y="112.0" fill="#8b949e" font-size="11">R = 11.94 crossover</text>
+<polyline points="72.0,640.4 77.8,539.8 83.6,475.8 89.5,432.4 95.3,401.6 101.1,379.1 106.9,362.3 112.7,349.4 118.5,339.4 124.4,331.6 130.2,325.4 136.0,320.5 141.8,316.6 147.6,313.5 153.5,311.0 159.3,309.1 165.1,307.6 170.9,306.4 176.7,305.5 182.5,304.9 188.4,304.4 194.2,304.1 200.0,304.0 205.8,304.0 211.6,304.1 217.5,304.2 223.3,304.5 229.1,304.8 234.9,305.2 240.7,305.6 246.5,306.0 252.4,306.5 258.2,307.0 264.0,307.5 269.8,308.1 275.6,308.7 281.5,309.2 287.3,309.8 293.1,310.4 298.9,311.0 304.7,311.6 310.5,312.3 316.4,312.9 322.2,313.5 328.0,314.1 333.8,314.8 339.6,315.4 345.5,316.0 351.3,316.6 357.1,317.2 362.9,317.8 368.7,318.5 374.5,319.1 380.4,319.7 386.2,320.3 392.0,320.9 397.8,321.4 403.6,322.0 409.5,322.6 415.3,323.2 421.1,323.8 426.9,324.3 432.7,324.9 438.5,325.4 444.4,326.0 450.2,326.5 456.0,327.1 461.8,327.6 467.6,328.1 473.5,328.7 479.3,329.2 485.1,329.7 490.9,330.2 496.7,330.7 502.5,331.2 508.4,331.7 514.2,332.2 520.0,332.7 525.8,333.2 531.6,333.7 537.5,334.1 543.3,334.6 549.1,335.1 554.9,335.5 560.7,336.0 566.5,336.4 572.4,336.9 578.2,337.3 584.0,337.7 589.8,338.2 595.6,338.6 601.5,339.0 607.3,339.4 613.1,339.8 618.9,340.3 624.7,340.7 630.5,341.1 636.4,341.5 642.2,341.9 648.0,342.3" fill="none" stroke="#4dabf7" stroke-width="2.4"/>
+<polyline points="72.0,90.6 77.8,133.9 83.6,164.8 89.5,188.4 95.3,207.1 101.1,222.4 106.9,235.3 112.7,246.4 118.5,255.9 124.4,264.3 130.2,271.8 136.0,278.5 141.8,284.5 147.6,290.0 153.5,295.0 159.3,299.7 165.1,303.9 170.9,307.9 176.7,311.5 182.5,314.9 188.4,318.2 194.2,321.2 200.0,324.0 205.8,326.7 211.6,329.2 217.5,331.6 223.3,333.9 229.1,336.0 234.9,338.1 240.7,340.0 246.5,341.9 252.4,343.7 258.2,345.4 264.0,347.1 269.8,348.7 275.6,350.2 281.5,351.6 287.3,353.1 293.1,354.4 298.9,355.7 304.7,357.0 310.5,358.2 316.4,359.4 322.2,360.5 328.0,361.7 333.8,362.7 339.6,363.8 345.5,364.8 351.3,365.8 357.1,366.7 362.9,367.7 368.7,368.6 374.5,369.4 380.4,370.3 386.2,371.1 392.0,371.9 397.8,372.7 403.6,373.5 409.5,374.2 415.3,375.0 421.1,375.7 426.9,376.4 432.7,377.1 438.5,377.8 444.4,378.4 450.2,379.1 456.0,379.7 461.8,380.3 467.6,380.9 473.5,381.5 479.3,382.1 485.1,382.6 490.9,383.2 496.7,383.7 502.5,384.3 508.4,384.8 514.2,385.3 520.0,385.8 525.8,386.3 531.6,386.8 537.5,387.2 543.3,387.7 549.1,388.2 554.9,388.6 560.7,389.1 566.5,389.5 572.4,389.9 578.2,390.4 584.0,390.8 589.8,391.2 595.6,391.6 601.5,392.0 607.3,392.4 613.1,392.8 618.9,393.1 624.7,393.5 630.5,393.9 636.4,394.2 642.2,394.6 648.0,394.9" fill="none" stroke="#ff922b" stroke-width="2.4"/>
+<text x="82" y="94" fill="#4dabf7" font-size="12">Hohmann (2 burns)</text>
+<text x="82" y="110" fill="#ff922b" font-size="12">bi-elliptic (3 burns, r_b = 50 r2)</text>
+<text x="72" y="34" fill="#e6edf3" font-size="18">Transfer delta-v vs orbit radius ratio</text>
+<text x="72" y="52" fill="#8b949e" font-size="12">bi-elliptic dips below Hohmann past R ~ 12</text>
+<text x="648" y="672" fill="#8b949e" font-size="11" text-anchor="end">radius ratio R = r2 / r1 -&gt;</text>
+<text x="54" y="64" fill="#8b949e" font-size="11">total delta-v / circular speed</text>
+</svg><figcaption>Hohmann and bi-elliptic delta-v crossing near R = 12</figcaption></figure><div class="card"><pre>Hohmann vs bi-elliptic transfer (r_b = 100 r1 detour)
+
+  crossover ratio R = r2/r1 = 11.94
+
+     R = r2/r1   Hohmann dv  bi-elliptic       winner
+  ---------------------------------------------------
+          5.00        3622m        4482m      Hohmann
+         10.00        3998m        4120m      Hohmann
+         11.94        4030m        4050m      Hohmann
+         13.00        4039m        4020m  bi-elliptic
+         16.00        4046m        3953m  bi-elliptic
+         30.00        3980m        3810m  bi-elliptic
+         60.00        3836m        3735m  bi-elliptic
+
+  For modest orbit changes the Hohmann two-burn is unbeatable. Past R ~ 12,
+  flinging the craft far beyond the target and dropping back costs less
+  total delta-v, because the mid-course burn happens where orbital speeds
+  are tiny. The catch: the detour can take years, so bi-elliptic is used
+  only for the most extreme orbit raises. The 11.94 crossover is exact.
+
+  wrote examples/output\bi_elliptic.svg</pre></div></div>
+  </section>
+
+  <section>
     <h2>Three-body stability map</h2>
     <p class="blurb">Every pixel is a full three-body integration; colour is the time until a body escapes. The fractal boundary between long-lived and quickly-ionized initial conditions is chaos drawn in IC space. (Generated separately by stability_map_demo.py -- it's compute-heavy.)</p>
     <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">

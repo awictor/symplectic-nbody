@@ -1,0 +1,21 @@
+Hohmann vs bi-elliptic transfer (r_b = 100 r1 detour)
+
+  crossover ratio R = r2/r1 = 11.94
+
+     R = r2/r1   Hohmann dv  bi-elliptic       winner
+  ---------------------------------------------------
+          5.00        3622m        4482m      Hohmann
+         10.00        3998m        4120m      Hohmann
+         11.94        4030m        4050m      Hohmann
+         13.00        4039m        4020m  bi-elliptic
+         16.00        4046m        3953m  bi-elliptic
+         30.00        3980m        3810m  bi-elliptic
+         60.00        3836m        3735m  bi-elliptic
+
+  For modest orbit changes the Hohmann two-burn is unbeatable. Past R ~ 12,
+  flinging the craft far beyond the target and dropping back costs less
+  total delta-v, because the mid-course burn happens where orbital speeds
+  are tiny. The catch: the detour can take years, so bi-elliptic is used
+  only for the most extreme orbit raises. The 11.94 crossover is exact.
+
+  wrote examples/output\bi_elliptic.svg
