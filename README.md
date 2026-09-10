@@ -54,6 +54,7 @@ ruins a long non-symplectic integration.
 | `src/rotation_curve.py` | Galaxy rotation curves: Keplerian disk vs flat dark-halo curve |
 | `src/schwarzschild.py` | Black-hole orbits: effective potential, ISCO, photon sphere, plunge |
 | `src/friedmann.py` | Friedmann cosmology: scale factor a(t), expansion eras, age of the universe |
+| `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
 | `src/poincare.py` | Poincare surface-of-section for the CR3BP (tori vs chaos) |
 | `src/sitnikov.py` | The Sitnikov problem: on-axis test particle, integrable-to-chaotic |
 | `src/galaxy.py` | Disk-galaxy generator and two-galaxy tidal encounters |
@@ -83,6 +84,7 @@ ruins a long non-symplectic integration.
 | `examples/rotation_curve_demo.py` | Visible (declining) vs disk+halo (flat) rotation curves |
 | `examples/schwarzschild_demo.py` | Precessing & plunging black-hole orbits with ISCO/photon sphere |
 | `examples/friedmann_demo.py` | Scale-factor curves for radiation/matter/dark-energy/LCDM |
+| `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
 | `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
 | `examples/sitnikov_demo.py` | Stroboscopic maps: circular binary (tori) vs eccentric (chaos) |
 | `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
@@ -218,6 +220,28 @@ diffuse dust. `poincare.py` reconstructs `vy` from the energy so each section
 point is a full initial condition, and the tests confirm the Jacobi constant is
 conserved along each orbit (faithful section), regular orbits stay on tight
 curves, and chaotic ones scatter more than 3x wider.
+
+## Lane-Emden: the structure of a star
+
+A star in hydrostatic equilibrium with a polytropic equation of state
+`P = K rho^{1+1/n}` has a density profile set by the Lane-Emden equation.
+`lane_emden.py` integrates it for any index n:
+
+```
+$ python examples/lane_emden_demo.py examples/output
+
+     n    surface xi_1    mass -xi1^2 theta'    meaning
+   0.0           2.449                 4.899    uniform-density sphere
+   1.0           3.142 (pi)            3.142    analytic sin(xi)/xi
+   3.0           6.897                 2.018    Eddington standard model
+   5.0             inf                   n/a    infinite radius
+```
+
+Three indices have closed forms the integrator reproduces to ~1e-9: `n=0`
+(`theta = 1 - xi^2/6`, surface `sqrt(6)`), `n=1` (`sin(xi)/xi`, surface `pi`),
+and `n=5` (`1/sqrt(1 + xi^2/3)`, which never reaches zero -- finite mass, infinite
+radius). `n=3` is the Eddington standard model with the tabulated `xi_1 = 6.897`
+and mass factor `2.018`. The tests check all four against their known values.
 
 ## Friedmann cosmology: the expanding universe
 

@@ -80,6 +80,7 @@ def main():
     import rotation_curve_demo
     import schwarzschild_demo
     import friedmann_demo
+    import lane_emden_demo
 
     import plot_orbits
 
@@ -129,6 +130,7 @@ def main():
     rotcurve_txt = run("rotation_curve_demo", rotation_curve_demo.main, True)
     schwarz_txt = run("schwarzschild_demo", schwarzschild_demo.main, True)
     friedmann_txt = run("friedmann_demo", friedmann_demo.main, True)
+    laneemden_txt = run("lane_emden_demo", lane_emden_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -230,6 +232,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("poincare_section.svg"), "tori and chaotic sea at one energy")
             + f'<div class="card">{pre(poincare_txt)}</div>'
+            + '</div>'),
+        section(
+            "Stellar structure (Lane-Emden)",
+            "A self-gravitating polytropic gas sphere obeys the Lane-Emden "
+            "equation. Its density profile and surface radius depend on the "
+            "index n: n=1 is the exact sin(xi)/xi, n=3 the Eddington standard "
+            "model, n=5 has finite mass but infinite radius.",
+            '<div class="grid">'
+            + svg_card(out("lane_emden.svg"), "density profiles for several polytropic indices")
+            + f'<div class="card">{pre(laneemden_txt)}</div>'
             + '</div>'),
         section(
             "Expansion of the universe (Friedmann)",
