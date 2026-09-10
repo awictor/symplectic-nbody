@@ -1,0 +1,16 @@
+Convective heat transfer: q = h (T_s - T_inf),  Nu = h L / k
+
+  Forced water in a pipe (Dittus-Boelter Nu = 0.023 Re^0.8 Pr^0.4):
+    Re=2e4, Pr=7  ->  Nu = 138,  h = 4147 W/(m^2 K)
+
+  1 cm aluminium cube cooling from 100 C in 20 C surroundings:
+  regime            h (W/m^2K)      Biot         tau   t to 30 C
+  still air                  8    0.0002     8.4 min    17.5 min
+  breeze / fan              40    0.0010     1.7 min     3.5 min
+  forced water            2000    0.0488       2.0 s       4.2 s
+
+  All three stay near-isothermal inside (Bi << 1), so cooling is a clean
+  exponential T(t) = T_inf + (T0 - T_inf) e^(-t/tau). Stiffer convection = bigger h
+  = shorter tau: still air takes ~an hour, forced water seconds. Newton's law again.
+
+  wrote examples/output\convection.svg

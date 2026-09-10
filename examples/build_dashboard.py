@@ -195,6 +195,7 @@ def main():
     import osmosis_demo
     import diffusion_demo
     import peclet_demo
+    import convection_demo
 
     import plot_orbits
 
@@ -359,6 +360,7 @@ def main():
     osmosis_txt = run("osmosis_demo", osmosis_demo.main, True)
     diffusion_txt = run("diffusion_demo", diffusion_demo.main, True)
     peclet_txt = run("peclet_demo", peclet_demo.main, True)
+    convection_txt = run("convection_demo", convection_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1819,6 +1821,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("peclet.svg"), "regime map over flow speed and length, shaded by Peclet with the Pe=1 crossover")
             + f'<div class="card">{pre(peclet_txt)}</div>'
+            + '</div>'),
+        section(
+            "Convective heat transfer & Newton cooling",
+            "A moving fluid strips heat off a surface at q = h (T_s - T_inf), and the "
+            "coefficient h follows from the Nusselt number Nu = h L / k -- the ratio of "
+            "convective to conductive transport. Correlations give it: Dittus-Boelter "
+            "Nu = 0.023 Re^0.8 Pr^0.4 for turbulent pipe flow, 0.664 Re^0.5 Pr^(1/3) for a "
+            "laminar plate. A lumped object then cools exponentially with tau = rho c_p V/(h A) "
+            "provided the Biot number Bi = h L/k_solid stays below ~0.1, so an aluminium block "
+            "cools in an hour in still air but seconds in forced water.",
+            '<div class="grid">'
+            + svg_card(out("convection.svg"), "a hot block cooling: time constant shrinks from still air to forced water")
+            + f'<div class="card">{pre(convection_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

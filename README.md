@@ -153,6 +153,7 @@ ruins a long non-symplectic integration.
 | `src/osmosis.py` | Osmotic pressure: van't Hoff Pi=icRT, tonicity, osmometry, reverse osmosis |
 | `src/diffusion.py` | Fick's laws: Gaussian/erfc profiles, sqrt(t) spread, diffusion length, Stokes-Einstein |
 | `src/peclet.py` | Peclet number Pe=UL/D + Prandtl/Schmidt/Lewis: advection vs diffusion |
+| `src/convection.py` | Convective heat transfer: Newton cooling, Nusselt correlations, Biot, lumped cooling |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -297,6 +298,7 @@ ruins a long non-symplectic integration.
 | `examples/osmosis_demo.py` | Everyday-solution pressure table + Pi-vs-concentration plot |
 | `examples/diffusion_demo.py` | Diffusion length/time table + the spreading-Gaussian fan |
 | `examples/peclet_demo.py` | Per-system Peclet table + the advection-diffusion regime map |
+| `examples/convection_demo.py` | Cooling-regime table + the Newtonian cooling curves |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3430,6 +3432,31 @@ the relative thickness of the velocity, thermal and concentration boundary layer
 ratio is the Lewis number `Le = alpha/D`. The crossover `Pe = 1` sits at `L = D/U`. The
 tests reproduce water's and air's Prandtl numbers, the aqueous Schmidt number, the
 `Le = Sc/Pr` identity, the `Pe = Re*Sc` factoring, and the crossover length.
+
+## Convective heat transfer: Newton's law of cooling
+
+Once you know the Nusselt number, you know how fast a fluid carries heat away. `convection.py`:
+
+```
+$ python examples/convection_demo.py examples/output
+
+  1 cm aluminium cube cooling from 100 C in 20 C air:
+  regime          h (W/m^2K)    Biot        tau     t to 30 C
+  still air                8   0.0002   8.4 min      17.5 min
+  breeze / fan            40   0.0010   1.7 min       3.5 min
+  forced water          2000   0.0488     2.0 s        4.2 s
+```
+
+Convection off a surface obeys Newton's law `q = h (T_s - T_inf)`, and the coefficient `h`
+comes from the Nusselt number `Nu = h L / k` -- the ratio of convective to conductive
+transport across the boundary layer. Standard correlations supply Nu: Dittus-Boelter
+`Nu = 0.023 Re^0.8 Pr^n` for turbulent pipe flow, `Nu = 0.664 Re^0.5 Pr^(1/3)` for a laminar
+plate. A lumped object then cools exponentially with time constant `tau = rho c_p V/(h A)`,
+valid when the Biot number `Bi = h L/k_solid` stays below ~0.1 (the interior is nearly
+isothermal). So an aluminium block sheds heat in an hour in still air but in seconds under
+forced water -- same law, hundred-fold `h`. The tests check the Dittus-Boelter and flat-plate
+correlations, the `Re^0.8`/`sqrt(Re)` scalings, the lumped/non-lumped Biot split, and the
+`1/e`-per-tau exponential decay.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
