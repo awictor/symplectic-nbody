@@ -1,0 +1,19 @@
+Hill sphere: r_H = a (m/3M)^(1/3) -- how far a planet holds its moons
+
+      planet   a (AU)  mass (Me)   r_H (Mkm)  stable limit
+  --------------------------------------------------------
+     Mercury    0.387      0.055        0.22        0.11M
+       Venus    0.723      0.815        1.01        0.51M
+       Earth    1.000      1.000        1.50        0.75M
+        Mars    1.524      0.107        1.08        0.54M
+     Jupiter    5.203    317.800       53.13       26.57M
+      Saturn    9.537     95.200       65.16       32.58M
+     Neptune   30.070     17.100      115.93       57.96M
+
+  A bigger orbit or heavier planet widens the Hill sphere (r_H ~ a m^1/3),
+  so Jupiter commands a ~53-million-km domain while a hot Jupiter tucked
+  against its star could barely hold a moon. Real moons survive out to only
+  ~1/2 r_H prograde -- the Moon at 0.384 Mkm sits well inside Earth's 0.75
+  Mkm limit, and the same math sets the mutual spacing of planetary orbits.
+
+  wrote examples/output\hill_sphere.svg

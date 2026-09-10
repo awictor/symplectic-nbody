@@ -162,6 +162,7 @@ def main():
     import gravity_assist_demo
     import synodic_demo
     import black_hole_shadow_demo
+    import hill_sphere_demo
 
     import plot_orbits
 
@@ -293,6 +294,7 @@ def main():
     gassist_txt = run("gravity_assist_demo", gravity_assist_demo.main, True)
     synodic_txt = run("synodic_demo", synodic_demo.main, True)
     shadow_txt = run("black_hole_shadow_demo", black_hole_shadow_demo.main, True)
+    hill_txt = run("hill_sphere_demo", hill_sphere_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1354,6 +1356,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("black_hole_shadow.svg"), "horizon, photon sphere and lensed shadow edge to scale")
             + f'<div class="card">{pre(shadow_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Hill sphere",
+            "A moon is held by its planet only inside the Hill sphere, "
+            "r_H = a (m/3M)^(1/3), where the planet's pull beats the star's tide. "
+            "Earth's is ~1.5 million km, four times the Moon's distance; Jupiter's "
+            "reaches ~53 million km. Real moons survive out to ~1/2 r_H prograde, and "
+            "the same balance sets the feeding zone of a forming planet and the mutual "
+            "Hill spacing that keeps planetary orbits stable.",
+            '<div class="grid">'
+            + svg_card(out("hill_sphere.svg"), "Hill radius vs orbital distance for the planets")
+            + f'<div class="card">{pre(hill_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

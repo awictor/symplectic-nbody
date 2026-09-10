@@ -120,6 +120,7 @@ ruins a long non-symplectic integration.
 | `src/gravity_assist.py` | Gravity assist: the slingshot boost from a planetary flyby |
 | `src/synodic.py` | Synodic periods: how often planets line up |
 | `src/black_hole_shadow.py` | The black-hole shadow: the dark disk the EHT imaged |
+| `src/hill_sphere.py` | The Hill sphere: how far a planet's gravity keeps its moons |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -231,6 +232,7 @@ ruins a long non-symplectic integration.
 | `examples/gravity_assist_demo.py` | Turn angle & boost by flyby depth/speed + the boost(r_p) curves |
 | `examples/synodic_demo.py` | Synodic period & conjunction cadence per planet + the S(P) curve |
 | `examples/black_hole_shadow_demo.py` | Shadow size for M87*/Sgr A* + the nested-radii diagram |
+| `examples/hill_sphere_demo.py` | Hill radius & stable-moon limit per planet + the r_H(a) plot |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2522,6 +2524,33 @@ gives ~40 and ~52 microarcseconds, the sizes the Event Horizon Telescope measure
 radio dishes across the whole Earth (the shadow is the angular size of an orange on the Moon).
 The tests verify the 1.5 r_s photon sphere, the 5.196 r_s shadow, the M87* and Sgr A* angular
 sizes, the `b_crit` formula, and the M and 1/D scalings.
+
+## The Hill sphere: how far a planet holds its moons
+
+A moon is bound to its planet only inside the Hill sphere, where the planet's pull beats the
+star's tide. `hill_sphere.py`:
+
+```
+$ python examples/hill_sphere_demo.py examples/output
+
+      planet   a (AU)  mass (Me)   r_H (Mkm)  stable limit
+  --------------------------------------------------------
+     Mercury    0.387      0.055        0.22        0.11M
+       Venus    0.723      0.815        1.01        0.51M
+       Earth    1.000      1.000        1.50        0.75M
+        Mars    1.524      0.107        1.08        0.54M
+     Jupiter    5.203    317.800       53.13       26.57M
+      Saturn    9.537     95.200       65.16       32.58M
+     Neptune   30.070     17.100      115.93       57.96M
+```
+
+With `r_H = a (m/3M)^(1/3)`, a bigger orbit or heavier planet widens the domain, so Jupiter
+commands ~53 million km while Mercury holds barely 0.22. Real moons survive out to only
+~1/2 r_H prograde -- the Moon at 0.384 Mkm sits well inside Earth's 0.75 Mkm limit, and the
+Moon's own ~60,000 km Hill sphere is why it has no sub-moons. The same balance sets the
+feeding zone of a forming planet and the mutual Hill spacing (systems need roughly >10) that
+keeps planetary orbits stable. The tests verify Earth's ~1.5 Mkm Hill radius, the bound Moon,
+the `a` and `m^(1/3)` scalings, the Moon's own Hill sphere, and the Earth-Venus mutual spacing.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

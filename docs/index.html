@@ -6414,6 +6414,54 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   </section>
 
   <section>
+    <h2>The Hill sphere</h2>
+    <p class="blurb">A moon is held by its planet only inside the Hill sphere, r_H = a (m/3M)^(1/3), where the planet's pull beats the star's tide. Earth's is ~1.5 million km, four times the Moon's distance; Jupiter's reaches ~53 million km. Real moons survive out to ~1/2 r_H prograde, and the same balance sets the feeding zone of a forming planet and the mutual Hill spacing that keeps planetary orbits stable.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<line x1="72" y1="648" x2="648" y2="648" stroke="#30363d"/>
+<line x1="72" y1="72" x2="72" y2="648" stroke="#30363d"/>
+<polyline points="72.0,582.5 81.1,575.5 90.3,568.4 99.4,561.3 108.6,554.2 117.7,547.2 126.9,540.1 136.0,533.0 145.1,525.9 154.3,518.9 163.4,511.8 172.6,504.7 181.7,497.6 190.9,490.6 200.0,483.5 209.1,476.4 218.3,469.3 227.4,462.3 236.6,455.2 245.7,448.1 254.9,441.0 264.0,434.0 273.1,426.9 282.3,419.8 291.4,412.7 300.6,405.7 309.7,398.6 318.9,391.5 328.0,384.4 337.1,377.4 346.3,370.3 355.4,363.2 364.6,356.1 373.7,349.1 382.9,342.0 392.0,334.9 401.1,327.8 410.3,320.8 419.4,313.7 428.6,306.6 437.7,299.6 446.9,292.5 456.0,285.4 465.1,278.3 474.3,271.3 483.4,264.2 492.6,257.1 501.7,250.0 510.9,243.0 520.0,235.9 529.1,228.8 538.3,221.7 547.4,214.7 556.6,207.6 565.7,200.5 574.9,193.4 584.0,186.4 593.1,179.3 602.3,172.2 611.4,165.1 620.6,158.1 629.7,151.0 638.9,143.9 648.0,136.8" fill="none" stroke="#30363d" stroke-width="1.6" stroke-dasharray="4 4"/>
+<text x="602.3" y="166.2" fill="#8b949e" font-size="10">Earth-mass reference (r_H ~ a)</text>
+<circle cx="102.3" cy="648.0" r="5" fill="#ff6b6b"/>
+<text x="109.3" y="652.0" fill="#ff6b6b" font-size="10">Mercury</text>
+<circle cx="176.5" cy="507.9" r="5" fill="#4dabf7"/>
+<text x="183.5" y="511.9" fill="#4dabf7" font-size="10">Venus</text>
+<circle cx="215.0" cy="471.9" r="5" fill="#4dabf7"/>
+<text x="222.0" y="475.9" fill="#4dabf7" font-size="10">Earth</text>
+<circle cx="265.1" cy="501.6" r="5" fill="#ff6b6b"/>
+<text x="272.1" y="505.6" fill="#ff6b6b" font-size="10">Mars</text>
+<circle cx="411.0" cy="143.7" r="5" fill="#ffd43b"/>
+<text x="418.0" y="147.7" fill="#ffd43b" font-size="10">Jupiter</text>
+<circle cx="482.9" cy="125.0" r="5" fill="#ffd43b"/>
+<text x="489.9" y="129.0" fill="#ffd43b" font-size="10">Saturn</text>
+<circle cx="619.4" cy="72.0" r="5" fill="#4dabf7"/>
+<text x="626.4" y="76.0" fill="#4dabf7" font-size="10">Neptune</text>
+<text x="72" y="34" fill="#e6edf3" font-size="18">Hill radius across the solar system</text>
+<text x="72" y="52" fill="#8b949e" font-size="12">r_H ~ a m^(1/3): the giants (yellow) command the widest domains</text>
+<text x="648" y="672" fill="#8b949e" font-size="11" text-anchor="end">log10 orbital distance (AU) -&gt;</text>
+<text x="54" y="64" fill="#8b949e" font-size="11">log10 Hill radius (million km)</text>
+</svg><figcaption>Hill radius vs orbital distance for the planets</figcaption></figure><div class="card"><pre>Hill sphere: r_H = a (m/3M)^(1/3) -- how far a planet holds its moons
+
+      planet   a (AU)  mass (Me)   r_H (Mkm)  stable limit
+  --------------------------------------------------------
+     Mercury    0.387      0.055        0.22        0.11M
+       Venus    0.723      0.815        1.01        0.51M
+       Earth    1.000      1.000        1.50        0.75M
+        Mars    1.524      0.107        1.08        0.54M
+     Jupiter    5.203    317.800       53.13       26.57M
+      Saturn    9.537     95.200       65.16       32.58M
+     Neptune   30.070     17.100      115.93       57.96M
+
+  A bigger orbit or heavier planet widens the Hill sphere (r_H ~ a m^1/3),
+  so Jupiter commands a ~53-million-km domain while a hot Jupiter tucked
+  against its star could barely hold a moon. Real moons survive out to only
+  ~1/2 r_H prograde -- the Moon at 0.384 Mkm sits well inside Earth&#x27;s 0.75
+  Mkm limit, and the same math sets the mutual spacing of planetary orbits.
+
+  wrote examples/output\hill_sphere.svg</pre></div></div>
+  </section>
+
+  <section>
     <h2>Three-body stability map</h2>
     <p class="blurb">Every pixel is a full three-body integration; colour is the time until a body escapes. The fractal boundary between long-lived and quickly-ionized initial conditions is chaos drawn in IC space. (Generated separately by stability_map_demo.py -- it's compute-heavy.)</p>
     <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
