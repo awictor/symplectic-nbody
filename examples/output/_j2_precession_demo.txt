@@ -1,0 +1,17 @@
+J2 orbital precession (Earth, 700 km circular orbit)
+
+                   orbit  incl (deg)  nodal (deg/d)  apsidal (deg/d)
+  ------------------------------------------------------------------
+              equatorial        0.00         -6.921           13.842
+                ISS-like       51.60         -4.299            3.215
+      critical (Molniya)       63.43         -3.095            0.000
+         sun-synchronous       98.19          0.986           -3.110
+                   polar       90.00         -0.000           -3.461
+
+  The equatorial bulge (J2) drags orbit planes and rotates ellipses. Tune
+  the inclination so the nodal drift equals the Sun's 0.9856 deg/day and the
+  orbit stays fixed relative to the Sun -- a sun-synchronous orbit crossing
+  the equator at the same local time daily. At 63.4 deg the apsides freeze
+  (Molniya), parking apogee over the far north for long dwell times.
+
+  wrote examples/output\j2_precession.svg

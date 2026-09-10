@@ -163,6 +163,7 @@ def main():
     import synodic_demo
     import black_hole_shadow_demo
     import hill_sphere_demo
+    import j2_precession_demo
 
     import plot_orbits
 
@@ -295,6 +296,7 @@ def main():
     synodic_txt = run("synodic_demo", synodic_demo.main, True)
     shadow_txt = run("black_hole_shadow_demo", black_hole_shadow_demo.main, True)
     hill_txt = run("hill_sphere_demo", hill_sphere_demo.main, True)
+    j2_txt = run("j2_precession_demo", j2_precession_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1368,6 +1370,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("hill_sphere.svg"), "Hill radius vs orbital distance for the planets")
             + f'<div class="card">{pre(hill_txt)}</div>'
+            + '</div>'),
+        section(
+            "J2 orbital precession",
+            "A planet's equatorial bulge (coefficient J2) makes satellite orbits "
+            "precess: the node line regresses and the ellipse rotates in-plane. Tune "
+            "the inclination so the nodal drift matches the Sun's 0.9856 deg/day and "
+            "you get a sun-synchronous orbit (~98 deg) crossing the equator at fixed "
+            "local time; at the 63.4-degree critical inclination the apsides freeze -- "
+            "the Molniya orbit that parks apogee over the far north.",
+            '<div class="grid">'
+            + svg_card(out("j2_precession.svg"), "nodal and apsidal rates vs inclination with the special angles marked")
+            + f'<div class="card">{pre(j2_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -121,6 +121,7 @@ ruins a long non-symplectic integration.
 | `src/synodic.py` | Synodic periods: how often planets line up |
 | `src/black_hole_shadow.py` | The black-hole shadow: the dark disk the EHT imaged |
 | `src/hill_sphere.py` | The Hill sphere: how far a planet's gravity keeps its moons |
+| `src/j2_precession.py` | J2 orbital precession: nodal regression, apsidal drift & sun-synchronous orbits |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -233,6 +234,7 @@ ruins a long non-symplectic integration.
 | `examples/synodic_demo.py` | Synodic period & conjunction cadence per planet + the S(P) curve |
 | `examples/black_hole_shadow_demo.py` | Shadow size for M87*/Sgr A* + the nested-radii diagram |
 | `examples/hill_sphere_demo.py` | Hill radius & stable-moon limit per planet + the r_H(a) plot |
+| `examples/j2_precession_demo.py` | Nodal/apsidal rates per orbit + the rate-vs-inclination curves |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2551,6 +2553,32 @@ Moon's own ~60,000 km Hill sphere is why it has no sub-moons. The same balance s
 feeding zone of a forming planet and the mutual Hill spacing (systems need roughly >10) that
 keeps planetary orbits stable. The tests verify Earth's ~1.5 Mkm Hill radius, the bound Moon,
 the `a` and `m^(1/3)` scalings, the Moon's own Hill sphere, and the Earth-Venus mutual spacing.
+
+## J2 orbital precession: reading the equatorial bulge
+
+A planet's oblateness (coefficient J2) makes satellite orbits precess in two ways.
+`j2_precession.py`:
+
+```
+$ python examples/j2_precession_demo.py examples/output
+
+                 orbit  incl (deg)  nodal (deg/d)  apsidal (deg/d)
+  ------------------------------------------------------------------
+            equatorial        0.00         -6.921           13.842
+              ISS-like       51.60         -4.299            3.215
+    critical (Molniya)       63.43         -3.095            0.000
+       sun-synchronous       98.19          0.986           -3.110
+                 polar       90.00         -0.000           -3.461
+```
+
+The line of nodes regresses at `-(3/2) J2 (R/p)^2 n cos i` and the apsides advance at
+`(3/4) J2 (R/p)^2 n (5 cos^2 i - 1)`. Tuning the inclination so the nodal drift equals the
+Sun's `0.9856 deg/day` gives a sun-synchronous orbit (~98 deg, retrograde) that crosses the
+equator at the same local time each pass -- the workhorse of imaging and weather satellites.
+Setting `5 cos^2 i - 1 = 0` (i = 63.4 deg) freezes the apsides, the Molniya orbit that parks
+apogee over high latitudes for long dwell. The tests verify the ISS nodal drift, the ~98-deg
+retrograde sun-synchronous inclination and its Sun-matching drift, the 63.43-deg critical
+inclination with zero apsidal rate, and the vanishing nodal drift of a polar orbit.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
