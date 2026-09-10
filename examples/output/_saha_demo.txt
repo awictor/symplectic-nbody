@@ -1,0 +1,20 @@
+Cosmic recombination: when the universe went neutral
+
+  naive guess (kT = 13.6 eV)     : 157821 K
+  actual recombination (x = 0.5) : z = 1379, T = 3760 K
+  ~40x cooler than the naive value, because there are ~1.6 billion
+  photons per baryon -- the hot tail keeps hydrogen ionized.
+
+    redshift    temp (K)   ionized x
+  ----------------------------------
+        1600        4363      0.9925
+        1400        3818      0.6037
+        1300        3545      0.1867
+        1200        3273      0.0339
+        1100        3000      0.0041
+        1000        2728      0.0003
+
+  Below z~1100 the universe is neutral and transparent: the photons
+  free-stream to us as the cosmic microwave background.
+
+  wrote examples/output\saha.svg

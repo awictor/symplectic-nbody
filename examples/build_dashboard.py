@@ -99,6 +99,7 @@ def main():
     import oberth_demo
     import dynamical_friction_demo
     import gw_strain_demo
+    import saha_demo
 
     import plot_orbits
 
@@ -167,6 +168,7 @@ def main():
     oberth_txt = run("oberth_demo", oberth_demo.main, True)
     df_txt = run("dynamical_friction_demo", dynamical_friction_demo.main, True)
     gwstrain_txt = run("gw_strain_demo", gw_strain_demo.main, True)
+    saha_txt = run("saha_demo", saha_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -367,6 +369,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("friedmann.svg"), "scale factor for radiation, matter, dark energy, LCDM")
             + f'<div class="card">{pre(friedmann_txt)}</div>'
+            + '</div>'),
+        section(
+            "Cosmic recombination (Saha equation)",
+            "The universe went neutral -- releasing the cosmic microwave "
+            "background -- at z~1400, T~3700 K, NOT at kT = 13.6 eV (~158000 K). "
+            "The ~1.6 billion photons per baryon keep hydrogen ionized far below "
+            "its binding energy; the Saha equation pins the transition.",
+            '<div class="grid">'
+            + svg_card(out("saha.svg"), "ionization fraction plunging to zero at recombination")
+            + f'<div class="card">{pre(saha_txt)}</div>'
             + '</div>'),
         section(
             "The Eddington luminosity & black-hole growth",

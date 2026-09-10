@@ -93,6 +93,7 @@ ruins a long non-symplectic integration.
 | `src/lense_thirring.py` | Frame-dragging & geodetic precession (Gravity Probe B) |
 | `src/pulsar.py` | Hulse-Taylor binary-pulsar orbital decay (first GW evidence) |
 | `src/friedmann.py` | Friedmann cosmology: scale factor a(t), expansion eras, age of the universe |
+| `src/saha.py` | Saha equation & cosmic recombination (the CMB release) |
 | `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
 | `src/distances.py` | Cosmological distances: luminosity/angular-diameter, cosmic acceleration |
 | `src/chandrasekhar.py` | White-dwarf structure & the Chandrasekhar mass (~1.44 M_sun) |
@@ -141,6 +142,7 @@ ruins a long non-symplectic integration.
 | `examples/lense_thirring_demo.py` | GP-B geodetic & frame-drag rates vs orbit radius |
 | `examples/pulsar_demo.py` | Hulse-Taylor dP/dt vs measured + the periastron-shift parabola |
 | `examples/friedmann_demo.py` | Scale-factor curves for radiation/matter/dark-energy/LCDM |
+| `examples/saha_demo.py` | Ionization fraction plunging to zero at recombination |
 | `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
 | `examples/distances_demo.py` | Hubble diagram (LCDM vs decelerating) + D_A turnover |
 | `examples/chandrasekhar_demo.py` | White-dwarf mass-radius curve approaching 1.44 M_sun |
@@ -485,6 +487,29 @@ in 1998 (2011 Nobel Prize). The angular-diameter distance is non-monotonic,
 peaking near `z~1.6`, which is why the CMB's acoustic spots subtend about a
 degree. The tests check the low-z Hubble law, the acceleration signal, the
 turnover, and the Etherington duality `D_L = (1+z)^2 D_A`.
+
+## Cosmic recombination: the birth of the CMB
+
+The universe became neutral and transparent -- releasing the cosmic microwave
+background -- when electrons and protons combined into hydrogen. `saha.py` finds
+when, via the Saha equation:
+
+```
+$ python examples/saha_demo.py examples/output
+
+  naive guess (kT = 13.6 eV)     : 157821 K
+  actual recombination (x = 0.5) : z = 1379, T = 3760 K
+    redshift    temp (K)   ionized x
+        1600        4363      0.9925
+        1200        3273      0.0339
+```
+
+Recombination happens at ~3700 K, ~40x cooler than the naive `kT = 13.6 eV`
+estimate, because there are ~1.6 billion photons per baryon and the hot tail of
+that bath keeps hydrogen ionized far below its binding energy. The ionization
+fraction plunges from 1 to 0 across `z ~ 1400`; below it, photons free-stream to
+us as the CMB. The tests verify the recombination redshift and temperature, that
+it is far below the naive value, and the monotonic ionization curve.
 
 ## Friedmann cosmology: the expanding universe
 
