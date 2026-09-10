@@ -188,6 +188,7 @@ ruins a long non-symplectic integration.
 | `src/josephson.py` | Josephson junction: DC/AC supercurrent, Shapiro steps, volt standard |
 | `src/quantum_hall.py` | Quantum Hall effect: von Klitzing constant, plateaus, Landau levels |
 | `src/bcs.py` | BCS superconductivity: gap-to-Tc ratio, gap(T), Tc from coupling, isotope effect |
+| `src/london.py` | London/Meissner: penetration depth, field expulsion, type I/II classification |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -367,6 +368,7 @@ ruins a long non-symplectic integration.
 | `examples/josephson_demo.py` | V-f/Shapiro table + the I-phi sine & Shapiro-staircase figure |
 | `examples/quantum_hall_demo.py` | Plateau/Landau table + the R_xy staircase figure |
 | `examples/bcs_demo.py` | Gap/isotope/Tc table + the gap(T) & Tc-vs-coupling figure |
+| `examples/london_demo.py` | Penetration/type table + the Meissner-decay & type-boundary figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4327,6 +4329,31 @@ Because `wD ~ 1/sqrt(M)`, `T_c ~ M^(-1/2)` -- the isotope effect that proved pho
 pairing. The tests reproduce the 3.53 ratio and Al/Nb gaps, the gap-Tc inversion, the
 `sqrt(1-T/Tc)` closing, the exponential `T_c(lambda)`, the isotope shift, and the sub-THz
 pair-breaking frequency.
+
+## London & Meissner: expelling the magnetic field
+
+A superconductor pushes field out of itself, and the length scale sets its type.
+`london.py`:
+
+```
+$ python examples/london_demo.py examples/output
+
+  material      lambda (nm)  xi (nm)   kappa    type
+  aluminium     16           1600      0.01     I
+  Nb-Ti         300          4         75.0     II    (vortex flux 2.07e-15 Wb)
+```
+
+The Meissner effect is active field expulsion, not just frozen flux, and it is why a magnet
+levitates over a superconductor. The London equations give the field decaying into the surface
+as `B(x) = B0 exp(-x/lambda_L)` over the penetration depth
+`lambda_L = sqrt(m/(mu0 n_s q^2))` -- tens of nanometres, so thin films never fully expel the
+field. The Ginzburg-Landau parameter `kappa = lambda_L/xi` (penetration depth over coherence
+length) classifies the material: type I (`kappa < 1/sqrt2`) expels field until it abruptly
+goes normal, while type II (`kappa > 1/sqrt2`) admits field as quantized flux vortices (each
+`h/2e`) between two critical fields -- which is how Nb-Ti and high-Tc magnets tolerate the
+enormous fields of MRI and fusion. The tests reproduce the ~20-60 nm penetration depth, the
+`1/sqrt(n)` scaling, the `exp(-x/lambda)` screening, the type I/II boundary at `1/sqrt2`, the
+vortex flux quantum, and the critical-field ratio growing with kappa.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

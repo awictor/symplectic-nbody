@@ -230,6 +230,7 @@ def main():
     import josephson_demo
     import quantum_hall_demo
     import bcs_demo
+    import london_demo
 
     import plot_orbits
 
@@ -429,6 +430,7 @@ def main():
     josephson_txt = run("josephson_demo", josephson_demo.main, True)
     quantum_hall_txt = run("quantum_hall_demo", quantum_hall_demo.main, True)
     bcs_txt = run("bcs_demo", bcs_demo.main, True)
+    london_txt = run("london_demo", london_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2352,6 +2354,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("bcs.svg"), "the gap closing as sqrt(1-T/Tc), and T_c rising with electron-phonon coupling")
             + f'<div class="card">{pre(bcs_txt)}</div>'
+            + '</div>'),
+        section(
+            "London & Meissner: expelling the magnetic field",
+            "A superconductor doesn't just conduct perfectly -- it actively pushes magnetic "
+            "field out (the Meissner effect), which is why magnets levitate above one. The "
+            "London equations give the field decaying into the surface as exp(-x/lambda_L) "
+            "over the penetration depth lambda_L = sqrt(m/(mu0 n_s q^2)), tens of nanometres. "
+            "The ratio kappa = lambda_L/xi to the coherence length splits superconductors into "
+            "type I (kappa < 1/sqrt2, full expulsion) and type II (kappa > 1/sqrt2, quantized "
+            "flux vortices) -- the latter surviving the huge fields of MRI and fusion magnets.",
+            '<div class="grid">'
+            + svg_card(out("london.svg"), "the Meissner field decaying into the surface, and materials across the type-I/II boundary")
+            + f'<div class="card">{pre(london_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
