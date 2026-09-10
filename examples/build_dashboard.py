@@ -145,6 +145,7 @@ def main():
     import rossby_demo
     import rayleigh_benard_demo
     import terminal_velocity_demo
+    import snr_phases_demo
 
     import plot_orbits
 
@@ -259,6 +260,7 @@ def main():
     rossby_txt = run("rossby_demo", rossby_demo.main, True)
     rb_txt = run("rayleigh_benard_demo", rayleigh_benard_demo.main, True)
     termv_txt = run("terminal_velocity_demo", terminal_velocity_demo.main, True)
+    snr_txt = run("snr_phases_demo", snr_phases_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1117,6 +1119,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("terminal_velocity.svg"), "terminal velocity vs radius bending from Stokes r^2 to quadratic sqrt(r)")
             + f'<div class="card">{pre(termv_txt)}</div>'
+            + '</div>'),
+        section(
+            "Supernova remnant phases",
+            "A supernova dumps ~10^51 erg into the ISM, and the shell ages through "
+            "four phases: ballistic free expansion for a few centuries, then the long "
+            "adiabatic Sedov-Taylor phase (R ~ t^2/5) for tens of thousands of years, "
+            "then a radiative snowplow coasting on momentum, finally merging into the "
+            "ISM near 100 pc after ~10^6 yr -- seeding the galaxy with the elements it "
+            "forged along the way.",
+            '<div class="grid">'
+            + svg_card(out("snr_phases.svg"), "the radius-vs-age track with the phase transitions marked")
+            + f'<div class="card">{pre(snr_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

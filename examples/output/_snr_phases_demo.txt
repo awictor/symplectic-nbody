@@ -1,0 +1,25 @@
+Supernova remnant: free expansion -> Sedov -> snowplow -> merge
+
+  E = 1e51 erg, M_ej = 5 Msun, n = 1 /cc
+
+  sweep-up radius (free expansion ends): 3.3 pc at 318 yr
+  merge radius (~10 km/s): 167 pc
+
+      age (yr)    R (pc)    v (km/s)           phase
+  --------------------------------------------------
+           100       1.0       10000  free expansion
+           300       3.1       10000  free expansion
+          1000       5.0        1947    Sedov-Taylor
+          5000       9.5         741    Sedov-Taylor
+         20000      16.5         323    Sedov-Taylor
+         50000      23.8         186        snowplow
+        200000      41.4          81        snowplow
+       1000000      78.9          31          merged
+
+  The blast coasts ballistically for a few centuries, then sweeps up
+  enough gas to enter the long adiabatic Sedov phase (R ~ t^2/5) for tens
+  of thousands of years. When the shell cools it radiates and coasts on
+  momentum (snowplow), finally merging into the ISM near 100 pc after a
+  million years -- seeding the galaxy with the elements it forged.
+
+  wrote examples/output\snr_phases.svg

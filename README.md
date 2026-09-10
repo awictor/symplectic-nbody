@@ -103,6 +103,7 @@ ruins a long non-symplectic integration.
 | `src/rossby.py` | Rossby number & geostrophic balance: why weather spins |
 | `src/rayleigh_benard.py` | Rayleigh-Benard convection: the Ra_c ~ 1708 onset & Nusselt transport |
 | `src/terminal_velocity.py` | Terminal velocity & drag: Stokes vs quadratic regimes |
+| `src/snr_phases.py` | Supernova-remnant evolution: free expansion, Sedov, snowplow, merge |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -197,6 +198,7 @@ ruins a long non-symplectic integration.
 | `examples/rossby_demo.py` | Ro & regime for tornado-to-gyre flows + the Ro(L) curve |
 | `examples/rayleigh_benard_demo.py` | Ra & state from lab cell to Sun + the Nu(Ra) onset curve |
 | `examples/terminal_velocity_demo.py` | Speeds fog-to-skydiver + the v(r) Stokes/quadratic bend |
+| `examples/snr_phases_demo.py` | R/v/phase from centuries to Myr + the radius-vs-age track |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2028,6 +2030,34 @@ settles at ~9 m/s and a belly-down skydiver tops out near 50 m/s. The regime bou
 `Re ~ 1`. The tests verify the skydiver speed, the raindrop speed and its quadratic regime,
 the Stokes fog droplet, the `r^2` and `sqrt(r)` scalings, and that drag balances weight at
 terminal velocity.
+
+## Supernova-remnant phases: the four ages of a blast wave
+
+A supernova dumps ~10^51 erg into the ISM, and the shell evolves through four distinct
+phases as it sweeps up mass and radiates. `snr_phases.py`:
+
+```
+$ python examples/snr_phases_demo.py examples/output
+
+      age (yr)    R (pc)    v (km/s)           phase
+  --------------------------------------------------
+           100       1.0       10000  free expansion
+           300       3.1       10000  free expansion
+          1000       5.0        1947    Sedov-Taylor
+          5000       9.5         741    Sedov-Taylor
+         20000      16.5         323    Sedov-Taylor
+         50000      23.8         186        snowplow
+        200000      41.4          81        snowplow
+       1000000      78.9          31          merged
+```
+
+The blast coasts ballistically (`R ~ t`) until it sweeps up its own ejecta mass at a few
+parsecs, then enters the long adiabatic Sedov-Taylor phase (`R ~ t^(2/5)`, covered in detail
+by the `sedov` module). Once the shell cools it radiates efficiently and coasts on momentum
+(the snowplow, `R ~ t^(2/7)`), finally merging into the ISM near 100 pc when the shock slows
+to the ~10 km/s turbulent velocity after ~10^6 yr -- seeding the galaxy with the elements it
+forged. The tests verify the few-pc sweep-up radius, the early end of free expansion, the
+`t^(2/5)` Sedov scaling and deceleration, the four-phase ordering, and the ~100 pc merge.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
