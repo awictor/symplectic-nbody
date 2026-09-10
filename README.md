@@ -162,6 +162,7 @@ ruins a long non-symplectic integration.
 | `src/blasius.py` | Blasius boundary layer: delta~sqrt(x), skin friction, plate drag, transition |
 | `src/strouhal.py` | Strouhal number: vortex-shedding frequency, Roshko fit, aeolian tone, lock-in |
 | `src/cluster_mass.py` | Virial cluster mass from velocity dispersion, M/L ratio, dark-matter fraction |
+| `src/sersic.py` | Sersic surface-brightness profile: b_n, total luminosity, enclosed light |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -315,6 +316,7 @@ ruins a long non-symplectic integration.
 | `examples/blasius_demo.py` | Thickness/skin-friction table + the growing-boundary-layer figure |
 | `examples/strouhal_demo.py` | Shedding-frequency table + the von Karman vortex-street figure |
 | `examples/cluster_mass_demo.py` | Per-cluster virial-mass table + the mass-to-light ladder |
+| `examples/sersic_demo.py` | Per-index profile table + the surface-brightness curves |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3674,6 +3676,29 @@ and the module also reports the escape velocity, the (sub-Hubble) crossing time 
 the system is relaxed, and the dark-matter fraction. The tests reproduce Coma's mass and M/L,
 the `sigma^2`/`R`/`alpha` scalings, the `3x` line-of-sight factor, and the ~0.95 dark-matter
 fraction.
+
+## The Sersic profile: the shape of a galaxy's light
+
+A galaxy's brightness fades from the centre in one regular family. `sersic.py`:
+
+```
+$ python examples/sersic_demo.py examples/output
+
+  profile                 b_n    I(0.1 R_e)/I_e   R(90% light)/R_e
+  n=1 exponential disk    1.677       4.5              2.32
+  n=4 de Vaucouleurs      7.669      28.7              5.55
+```
+
+The Sersic law `I(R) = I_e exp{-b_n[(R/R_e)^(1/n)-1]}` describes surface brightness with a
+single index `n`: `n=1` is the exponential disk of a spiral (scale length `R_e/1.678`) and
+`n=4` the de Vaucouleurs law of a giant elliptical -- a bright cusped core with enormous faint
+wings. The constant `b_n ~ 2n - 1/3 + 0.009876/n` is set by the half-light definition, so
+exactly half the luminosity sits inside the effective radius `R_e` for every `n`. Integrating
+the profile gives the total luminosity in closed form, `L = I_e R_e^2 2 pi n e^{b_n}
+Gamma(2n)/b_n^{2n}`, and the enclosed-light fraction follows from the incomplete gamma
+function. The tests verify `b_1 ~ 1.678` and `b_4 ~ 7.669`, the `I(R_e)=I_e` normalization,
+the exponential `n=1` limit, the half-light property, and that the numeric integral matches
+the closed-form luminosity.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

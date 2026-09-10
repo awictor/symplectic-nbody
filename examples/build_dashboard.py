@@ -204,6 +204,7 @@ def main():
     import blasius_demo
     import strouhal_demo
     import cluster_mass_demo
+    import sersic_demo
 
     import plot_orbits
 
@@ -377,6 +378,7 @@ def main():
     blasius_txt = run("blasius_demo", blasius_demo.main, True)
     strouhal_txt = run("strouhal_demo", strouhal_demo.main, True)
     cluster_mass_txt = run("cluster_mass_demo", cluster_mass_demo.main, True)
+    sersic_txt = run("sersic_demo", sersic_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1956,6 +1958,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("cluster_mass.svg"), "the mass-to-light ladder climbing from a star to a cluster")
             + f'<div class="card">{pre(cluster_mass_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Sersic profile: the shape of a galaxy's light",
+            "A galaxy's surface brightness falls off as I(R) = I_e exp{-b_n[(R/R_e)^(1/n)-1]}, "
+            "the Sersic law, with the index n setting the concentration. n=1 is the exponential "
+            "disk of a spiral (scale length R_e/1.678); n=4 is the de Vaucouleurs law of a "
+            "giant elliptical -- a bright cusped core and enormous faint wings. Half the light "
+            "always sits inside the effective radius R_e (that is its definition), and "
+            "integrating the profile gives the total luminosity in closed form via the gamma "
+            "function, so I_e, R_e and n weigh a galaxy's stars.",
+            '<div class="grid">'
+            + svg_card(out("sersic.svg"), "surface brightness vs radius for n=1, 2, 4 -- all crossing at the effective radius")
+            + f'<div class="card">{pre(sersic_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
