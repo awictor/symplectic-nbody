@@ -1,0 +1,19 @@
+Maxwell-Boltzmann speeds at T = 300 K (mean KE = 0.039 eV)
+
+  v_p : <v> : v_rms = 1 : 1.128 : 1.225 (universal)
+
+       gas  mass (amu)      v_p      <v>    v_rms    >3 v_p
+  ---------------------------------------------------------
+        H2           2     1579     1782     1934   4.4e-04
+        He           4     1117     1260     1368   4.4e-04
+        N2          28      422      476      517   4.4e-04
+        O2          32      395      446      484   4.4e-04
+       CO2          44      337      380      412   4.4e-04
+
+  Speeds scale as 1/sqrt(m), so hydrogen zips along four times faster than
+  nitrogen at the same temperature -- which is why light gases escape
+  atmospheres and why sound (set by ~v_rms) travels faster in helium. The
+  fraction above 3 v_p is only ~0.04%: the exp(-v^2) tail is thin, but it
+  is exactly that tail that lets atoms escape gravity and nuclei fuse.
+
+  wrote examples/output\maxwell_boltzmann.svg

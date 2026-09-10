@@ -151,6 +151,7 @@ def main():
     import line_broadening_demo
     import curve_of_growth_demo
     import sackur_tetrode_demo
+    import maxwell_boltzmann_demo
 
     import plot_orbits
 
@@ -271,6 +272,7 @@ def main():
     linebroad_txt = run("line_broadening_demo", line_broadening_demo.main, True)
     cog_txt = run("curve_of_growth_demo", curve_of_growth_demo.main, True)
     sackur_txt = run("sackur_tetrode_demo", sackur_tetrode_demo.main, True)
+    mb_txt = run("maxwell_boltzmann_demo", maxwell_boltzmann_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1201,6 +1203,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("sackur_tetrode.svg"), "molar entropy vs temperature with measured STP values ringed")
             + f'<div class="card">{pre(sackur_txt)}</div>'
+            + '</div>'),
+        section(
+            "Maxwell-Boltzmann speeds",
+            "Molecular speeds in a gas follow f(v) ~ v^2 exp(-mv^2/2kT), whose three "
+            "characteristic speeds keep a fixed ratio v_p : <v> : v_rms = "
+            "1 : 1.128 : 1.225. Speeds scale as 1/sqrt(m), so hydrogen moves ~4x "
+            "faster than nitrogen at the same temperature, and the thin exp(-v^2) "
+            "tail -- only ~0.04% above 3 v_p -- is exactly what governs atmospheric "
+            "escape and the onset of nuclear fusion.",
+            '<div class="grid">'
+            + svg_card(out("maxwell_boltzmann.svg"), "speed distributions for several gases with the three speeds marked")
+            + f'<div class="card">{pre(mb_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

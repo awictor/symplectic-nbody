@@ -109,6 +109,7 @@ ruins a long non-symplectic integration.
 | `src/line_broadening.py` | Spectral line broadening: Doppler, natural & pressure widths |
 | `src/curve_of_growth.py` | Curve of growth: equivalent width vs column density in three regimes |
 | `src/sackur_tetrode.py` | Sackur-Tetrode equation: the absolute entropy of an ideal gas |
+| `src/maxwell_boltzmann.py` | Maxwell-Boltzmann speed distribution & the three characteristic speeds |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -209,6 +210,7 @@ ruins a long non-symplectic integration.
 | `examples/line_broadening_demo.py` | Doppler/pressure widths by environment + Gaussian vs Lorentzian profiles |
 | `examples/curve_of_growth_demo.py` | W & regime vs optical depth + the three-segment curve |
 | `examples/sackur_tetrode_demo.py` | Predicted vs measured noble-gas entropy + S(T) curves |
+| `examples/maxwell_boltzmann_demo.py` | Characteristic speeds by gas + the f(v) distributions |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2205,6 +2207,33 @@ molar entropies of the noble gases to under a fifth of a percent, a direct confi
 entropy is the logarithm of countable microstates. The tests verify argon's and helium's
 measured molar entropies, the heavier-is-higher trend, the picometre thermal wavelength, the
 classical (non-degenerate) STP gas, and the rise with temperature and volume.
+
+## Maxwell-Boltzmann: how fast gas molecules move
+
+Molecular speeds in a gas follow `f(v) = 4 pi (m/2 pi kT)^(3/2) v^2 exp(-mv^2/2kT)`.
+`maxwell_boltzmann.py`:
+
+```
+$ python examples/maxwell_boltzmann_demo.py examples/output
+
+       gas  mass (amu)     v_p     <v>    v_rms    >3 v_p
+  ---------------------------------------------------------
+        H2           2     1579    1782     1934   4.4e-04
+        He           4     1117    1260     1368   4.4e-04
+        N2          28      422     476      517   4.4e-04
+        O2          32      395     446      484   4.4e-04
+       CO2          44      337     380      412   4.4e-04
+```
+
+Three characteristic speeds fall out and always keep the same ratio,
+`v_p : <v> : v_rms = 1 : 1.128 : 1.225`, independent of gas or temperature. Because they all
+scale as `1/sqrt(m)`, hydrogen zips along about four times faster than nitrogen at the same
+temperature -- which is why light gases escape atmospheres and why sound (set by `~v_rms`)
+travels faster in helium. The mean translational kinetic energy is `(3/2) k_B T` for any gas,
+and the high-speed `exp(-v^2)` tail leaves only ~0.04% of molecules above `3 v_p` -- yet it is
+exactly that thin tail that governs Jeans escape and lets nuclei overcome the Coulomb barrier
+to fuse. The tests verify the universal speed ratios, the ~500 m/s nitrogen `v_rms`, the
+`1/sqrt(m)` and `sqrt(T)` scalings, the unit normalization, and the smallness of the tail.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
