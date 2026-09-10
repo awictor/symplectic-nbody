@@ -1,0 +1,18 @@
+Cherenkov radiation: cos(theta) = 1/(n beta), emit only if beta > 1/n
+
+  medium                beta_thr  gamma_thr    max cone
+  water (n=1.33)           0.750       1.51     41.4 deg
+  glass (n=1.52)           0.658       1.33     48.9 deg
+  aerogel (n=1.05)         0.952       3.28     17.8 deg
+
+  Cone angle vs speed in water:
+    beta = 0.76   ->  theta =  9.2 deg,  rel. photon yield 0.026
+    beta = 0.85   ->  theta = 28.0 deg,  rel. photon yield 0.221
+    beta = 0.95   ->  theta = 37.8 deg,  rel. photon yield 0.376
+    beta = 0.999  ->  theta = 41.3 deg,  rel. photon yield 0.436
+
+  A charged particle outrunning light-in-medium sheds an EM shock cone -- the
+  optical sonic boom that glows blue in a reactor pool. The cone angle reads off
+  the velocity, so ring-imaging Cherenkov detectors use it to identify particles.
+
+  wrote examples/output\cherenkov.svg

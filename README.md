@@ -178,6 +178,7 @@ ruins a long non-symplectic integration.
 | `src/snell.py` | Snell's law: refraction, critical angle/TIR, Brewster, fibre numerical aperture |
 | `src/thin_film.py` | Thin-film interference: bubble colours, AR coatings, Newton's rings |
 | `src/malus.py` | Malus's law: polarizer transmission, three-polarizer trick, wave plates |
+| `src/cherenkov.py` | Cherenkov radiation: threshold, cone angle, velocity from the ring |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -347,6 +348,7 @@ ruins a long non-symplectic integration.
 | `examples/snell_demo.py` | Per-medium critical/Brewster table + the refraction/TIR ray figure |
 | `examples/thin_film_demo.py` | Soap-colour/AR-coating table + colour-vs-thickness & Newton's-rings figure |
 | `examples/malus_demo.py` | Transmission/rescue/stack table + cos^2 & three-polarizer figure |
+| `examples/cherenkov_demo.py` | Per-radiator threshold table + cone-angle & cone-geometry figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4079,6 +4081,29 @@ rotate polarization losslessly by retarding one component (`2 pi delta_n t/lambd
 half-wave plate, `pi/2` a quarter-wave). The tests reproduce the cos^2 values, the
 half-through-one and crossed-to-zero results, the `I0/8` three-polarizer rescue, the rotating-
 stack throughput, the crossed-polarizer extinction, and the half/quarter-wave retardances.
+
+## Cherenkov radiation: the blue glow of going too fast
+
+A charged particle outrunning light-in-medium sheds a glowing shock cone. `cherenkov.py`:
+
+```
+$ python examples/cherenkov_demo.py examples/output
+
+  medium            beta_thr   gamma_thr   max cone
+  water (n=1.33)    0.750      1.51        41.4 deg
+  aerogel (n=1.05)  0.952      3.28        17.8 deg
+```
+
+Light travels at `c/n` in a medium, so a particle with `beta > 1/n` is superluminal there and
+drags an electromagnetic shock cone behind it -- the optical analogue of a sonic boom, the
+eerie blue of a reactor pool. The cone half-angle obeys `cos(theta) = 1/(n beta)` exactly like
+a Mach cone, opening from the threshold toward a maximum `arccos(1/n)` (~41 deg in water) as
+`beta -> 1`, and the Frank-Tamm photon yield rises as `sin^2(theta)`. Because the angle
+encodes the velocity, ring-imaging Cherenkov detectors read it to identify particles and
+neutrino observatories (IceCube, Super-Kamiokande) watch for the faint rings. The tests
+reproduce water's 0.75 threshold and 41-degree maximum cone, the threshold Lorentz factor, the
+emission test, the cone opening with speed, the velocity-from-cone inversion, and the photon-
+yield trend, plus aerogel's high 0.95 threshold.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

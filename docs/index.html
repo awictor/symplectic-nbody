@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           8.95       12.16      0.7x
-   400          36.15       37.79      1.0x
-   800         145.48      109.91      1.3x
-  1600         684.12      414.49      1.7x
-  3200        2662.77     1135.56      2.3x
+   200           9.23       12.16      0.8x
+   400          35.37       37.35      0.9x
+   800         142.39      111.39      1.3x
+  1600         688.85      403.75      1.7x
+  3200        2680.72     1015.85      2.6x
 
-empirical scaling exponent  direct ~ N^2.07   barnes-hut ~ N^1.65
+empirical scaling exponent  direct ~ N^2.06   barnes-hut ~ N^1.62
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -46338,6 +46338,63 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   survives -- each cos^2 is nearly 1, so the polarization is dragged around intact.
 
   wrote examples/output\malus.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Cherenkov radiation: the blue glow of going too fast</h2>
+    <p class="blurb">Light slows to c/n in a medium, and a charged particle can outrun it. When beta > 1/n it drags an electromagnetic shock cone behind it -- an optical sonic boom -- radiating the blue glow of a reactor pool. The cone half-angle obeys cos(theta) = 1/(n beta), just like a Mach cone, opening from threshold toward a maximum arccos(1/n) (~41 deg in water) as the particle nears beta = 1. Because the angle reads off the velocity, ring-imaging Cherenkov detectors use it to identify particles, and neutrino observatories watch for the faint cones.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<text x="20" y="34" fill="#e6edf3" font-size="18">Cherenkov radiation</text>
+<text x="20" y="52" fill="#8b949e" font-size="12">cone half-angle vs speed (top); the radiation cone trailing a superluminal particle (bottom)</text>
+<line x1="72" y1="362.8" x2="648" y2="362.8" stroke="#8b949e" stroke-width="1.4"/>
+<line x1="72" y1="362.8" x2="72" y2="116" stroke="#8b949e" stroke-width="1.4"/>
+<text x="72.0" y="376.8" fill="#8b949e" font-size="9" text-anchor="middle">0.6</text>
+<text x="216.0" y="376.8" fill="#8b949e" font-size="9" text-anchor="middle">0.7</text>
+<text x="360.0" y="376.8" fill="#8b949e" font-size="9" text-anchor="middle">0.8</text>
+<text x="504.0" y="376.8" fill="#8b949e" font-size="9" text-anchor="middle">0.9</text>
+<text x="648.0" y="376.8" fill="#8b949e" font-size="9" text-anchor="middle">1.0</text>
+<text x="66.0" y="365.8" fill="#8b949e" font-size="9" text-anchor="end">0</text>
+<text x="66.0" y="276.1" fill="#8b949e" font-size="9" text-anchor="end">20</text>
+<text x="66.0" y="186.3" fill="#8b949e" font-size="9" text-anchor="end">40</text>
+<polyline points="288.4,358.6 294.2,336.0 299.9,325.2 305.7,316.9 311.5,310.0 317.2,303.9 323.0,298.5 328.7,293.5 334.5,288.9 340.3,284.6 346.0,280.5 351.8,276.7 357.5,273.1 363.3,269.6 369.1,266.3 374.8,263.2 380.6,260.1 386.3,257.2 392.1,254.3 397.9,251.6 403.6,248.9 409.4,246.4 415.1,243.9 420.9,241.4 426.7,239.1 432.4,236.8 438.2,234.6 443.9,232.4 449.7,230.2 455.5,228.2 461.2,226.1 467.0,224.1 472.7,222.2 478.5,220.3 484.3,218.4 490.0,216.6 495.8,214.8 501.5,213.1 507.3,211.3 513.1,209.6 518.8,208.0 524.6,206.4 530.3,204.8 536.1,203.2 541.9,201.6 547.6,200.1 553.4,198.6 559.1,197.2 564.9,195.7 570.7,194.3 576.4,192.9 582.2,191.5 587.9,190.1 593.7,188.8 599.5,187.5 605.2,186.2 611.0,184.9 616.7,183.6 622.5,182.4 628.3,181.1 634.0,179.9 639.8,178.7 645.5,177.6" fill="none" stroke="#4dabf7" stroke-width="2.4"/>
+<circle cx="288.3" cy="362.8" r="3.5" fill="#4dabf7"/>
+<text x="644.0" y="173.1" fill="#4dabf7" font-size="10" text-anchor="end">water</text>
+<polyline points="155.5,358.3 161.3,334.2 167.0,322.7 172.8,313.9 178.6,306.5 184.3,300.0 190.1,294.2 195.8,289.0 201.6,284.1 207.4,279.5 213.1,275.2 218.9,271.2 224.6,267.3 230.4,263.7 236.2,260.2 241.9,256.9 247.7,253.6 253.4,250.6 259.2,247.6 265.0,244.7 270.7,241.9 276.5,239.2 282.2,236.6 288.0,234.0 293.8,231.6 299.5,229.2 305.3,226.8 311.0,224.6 316.8,222.3 322.6,220.2 328.3,218.0 334.1,216.0 339.8,213.9 345.6,212.0 351.4,210.0 357.1,208.1 362.9,206.3 368.6,204.5 374.4,202.7 380.2,200.9 385.9,199.2 391.7,197.5 397.4,195.9 403.2,194.2 409.0,192.6 414.7,191.1 420.5,189.5 426.2,188.0 432.0,186.5 437.8,185.0 443.5,183.6 449.3,182.2 455.0,180.8 460.8,179.4 466.6,178.1 472.3,176.7 478.1,175.4 483.8,174.1 489.6,172.8 495.4,171.6 501.1,170.3 506.9,169.1 512.6,167.9 518.4,166.7 524.2,165.5 529.9,164.4 535.7,163.2 541.4,162.1 547.2,161.0 553.0,159.9 558.7,158.8 564.5,157.7 570.2,156.7 576.0,155.6 581.8,154.6 587.5,153.6 593.3,152.6 599.0,151.6 604.8,150.6 610.6,149.6 616.3,148.6 622.1,147.7 627.8,146.8 633.6,145.8 639.4,144.9 645.1,144.0" fill="none" stroke="#06d6a0" stroke-width="2.4"/>
+<circle cx="155.4" cy="362.8" r="3.5" fill="#06d6a0"/>
+<text x="644.0" y="139.5" fill="#06d6a0" font-size="10" text-anchor="end">glass</text>
+<polyline points="579.6,359.1 585.3,339.0 591.1,329.4 596.9,322.0 602.6,315.9 608.4,310.4 614.1,305.6 619.9,301.1 625.7,297.0 631.4,293.1 637.2,289.5 642.9,286.0" fill="none" stroke="#ff922b" stroke-width="2.4"/>
+<circle cx="579.4" cy="362.8" r="3.5" fill="#ff922b"/>
+<text x="644.0" y="279.1" fill="#ff922b" font-size="10" text-anchor="end">aerogel</text>
+<text x="360.0" y="390.8" fill="#8b949e" font-size="10" text-anchor="middle">particle speed beta = v/c</text>
+<text x="48.0" y="239.4" fill="#8b949e" font-size="10" transform="rotate(-90 48.0 239.4)" text-anchor="middle">cone angle (deg)</text>
+<line x1="100.0" y1="590.4" x2="400.0" y2="590.4" stroke="#21262d" stroke-width="1"/>
+<circle cx="360.0" cy="590.4" r="6" fill="#e6edf3"/>
+<polygon points="390.0,590.4 374.0,585.4 374.0,595.4" fill="#e6edf3"/>
+<text x="394.0" y="582.4" fill="#e6edf3" font-size="11">particle, beta 0.95</text>
+<line x1="360.0" y1="590.4" x2="202.1" y2="467.7" stroke="#4dabf7" stroke-width="2.4"/>
+<line x1="360.0" y1="590.4" x2="202.1" y2="713.1" stroke="#4dabf7" stroke-width="2.4"/>
+<path d="M 300.0 590.4 A 60 60 0 0 0 312.6 553.6" fill="none" stroke="#ffd43b" stroke-width="1.4"/>
+<text x="268.0" y="574.4" fill="#ffd43b" font-size="12">theta_c = 38 deg</text>
+<text x="202.1" y="459.7" fill="#4dabf7" font-size="11">blue Cherenkov wavefront</text>
+</svg><figcaption>cone angle vs speed for several radiators, and the cone trailing a superluminal particle</figcaption></figure><div class="card"><pre>Cherenkov radiation: cos(theta) = 1/(n beta), emit only if beta &gt; 1/n
+
+  medium                beta_thr  gamma_thr    max cone
+  water (n=1.33)           0.750       1.51     41.4 deg
+  glass (n=1.52)           0.658       1.33     48.9 deg
+  aerogel (n=1.05)         0.952       3.28     17.8 deg
+
+  Cone angle vs speed in water:
+    beta = 0.76   -&gt;  theta =  9.2 deg,  rel. photon yield 0.026
+    beta = 0.85   -&gt;  theta = 28.0 deg,  rel. photon yield 0.221
+    beta = 0.95   -&gt;  theta = 37.8 deg,  rel. photon yield 0.376
+    beta = 0.999  -&gt;  theta = 41.3 deg,  rel. photon yield 0.436
+
+  A charged particle outrunning light-in-medium sheds an EM shock cone -- the
+  optical sonic boom that glows blue in a reactor pool. The cone angle reads off
+  the velocity, so ring-imaging Cherenkov detectors use it to identify particles.
+
+  wrote examples/output\cherenkov.svg</pre></div></div>
   </section>
 
   <section>

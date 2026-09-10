@@ -220,6 +220,7 @@ def main():
     import snell_demo
     import thin_film_demo
     import malus_demo
+    import cherenkov_demo
 
     import plot_orbits
 
@@ -409,6 +410,7 @@ def main():
     snell_txt = run("snell_demo", snell_demo.main, True)
     thin_film_txt = run("thin_film_demo", thin_film_demo.main, True)
     malus_txt = run("malus_demo", malus_demo.main, True)
+    cherenkov_txt = run("cherenkov_demo", cherenkov_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2201,6 +2203,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("malus.svg"), "the cos^2 transmission law and the three-polarizer rescue vs middle angle")
             + f'<div class="card">{pre(malus_txt)}</div>'
+            + '</div>'),
+        section(
+            "Cherenkov radiation: the blue glow of going too fast",
+            "Light slows to c/n in a medium, and a charged particle can outrun it. When "
+            "beta > 1/n it drags an electromagnetic shock cone behind it -- an optical sonic "
+            "boom -- radiating the blue glow of a reactor pool. The cone half-angle obeys "
+            "cos(theta) = 1/(n beta), just like a Mach cone, opening from threshold toward a "
+            "maximum arccos(1/n) (~41 deg in water) as the particle nears beta = 1. Because the "
+            "angle reads off the velocity, ring-imaging Cherenkov detectors use it to identify "
+            "particles, and neutrino observatories watch for the faint cones.",
+            '<div class="grid">'
+            + svg_card(out("cherenkov.svg"), "cone angle vs speed for several radiators, and the cone trailing a superluminal particle")
+            + f'<div class="card">{pre(cherenkov_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
