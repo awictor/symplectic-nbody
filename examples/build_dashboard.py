@@ -82,6 +82,7 @@ def main():
     import friedmann_demo
     import lane_emden_demo
     import distances_demo
+    import chandrasekhar_demo
 
     import plot_orbits
 
@@ -133,6 +134,7 @@ def main():
     friedmann_txt = run("friedmann_demo", friedmann_demo.main, True)
     laneemden_txt = run("lane_emden_demo", lane_emden_demo.main, True)
     distances_txt = run("distances_demo", distances_demo.main, True)
+    chandra_txt = run("chandrasekhar_demo", chandrasekhar_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -234,6 +236,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("poincare_section.svg"), "tori and chaotic sea at one energy")
             + f'<div class="card">{pre(poincare_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Chandrasekhar mass",
+            "White dwarfs are held up by electron degeneracy pressure. Integrating "
+            "the full relativistic degenerate equation of state, the mass climbs "
+            "toward a hard limit ~1.44 M_sun as the star shrinks -- above it no "
+            "white dwarf is stable, the trigger for type-Ia supernovae.",
+            '<div class="grid">'
+            + svg_card(out("chandrasekhar.svg"), "mass-radius curve approaching the 1.44 M_sun limit")
+            + f'<div class="card">{pre(chandra_txt)}</div>'
             + '</div>'),
         section(
             "Stellar structure (Lane-Emden)",

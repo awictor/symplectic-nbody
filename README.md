@@ -56,6 +56,7 @@ ruins a long non-symplectic integration.
 | `src/friedmann.py` | Friedmann cosmology: scale factor a(t), expansion eras, age of the universe |
 | `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
 | `src/distances.py` | Cosmological distances: luminosity/angular-diameter, cosmic acceleration |
+| `src/chandrasekhar.py` | White-dwarf structure & the Chandrasekhar mass (~1.44 M_sun) |
 | `src/poincare.py` | Poincare surface-of-section for the CR3BP (tori vs chaos) |
 | `src/sitnikov.py` | The Sitnikov problem: on-axis test particle, integrable-to-chaotic |
 | `src/galaxy.py` | Disk-galaxy generator and two-galaxy tidal encounters |
@@ -87,6 +88,7 @@ ruins a long non-symplectic integration.
 | `examples/friedmann_demo.py` | Scale-factor curves for radiation/matter/dark-energy/LCDM |
 | `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
 | `examples/distances_demo.py` | Hubble diagram (LCDM vs decelerating) + D_A turnover |
+| `examples/chandrasekhar_demo.py` | White-dwarf mass-radius curve approaching 1.44 M_sun |
 | `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
 | `examples/sitnikov_demo.py` | Stroboscopic maps: circular binary (tori) vs eccentric (chaos) |
 | `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
@@ -222,6 +224,30 @@ diffuse dust. `poincare.py` reconstructs `vy` from the energy so each section
 point is a full initial condition, and the tests confirm the Jacobi constant is
 conserved along each orbit (faithful section), regular orbits stay on tight
 curves, and chaotic ones scatter more than 3x wider.
+
+## The Chandrasekhar mass: the limit of a white dwarf
+
+Electron degeneracy pressure holds up a white dwarf -- but only up to a point.
+`chandrasekhar.py` computes the limit from fundamental constants (via the n=3
+Lane-Emden mass factor) and integrates the full relativistic degenerate
+equation of state to trace the mass-radius relation:
+
+```
+$ python examples/chandrasekhar_demo.py examples/output
+
+  Chandrasekhar mass (mu_e=2): 1.435 M_sun (the famous 1.44)
+    rho_c (kg/m^3)   radius (km)  mass (M_sun)
+           1.0e+09         10780         0.395
+           1.0e+11          4140         1.157
+           1.0e+13          1080         1.357
+```
+
+As the central density rises the electrons turn relativistic, the equation of
+state softens to `P ~ rho^{4/3}` (a polytrope of index 3), the star shrinks, and
+its mass climbs toward `~1.44 M_sun` but never past it. Above the limit no stable
+white dwarf exists -- it collapses, the trigger for type-Ia supernovae. The tests
+verify the 1.44 value, the `1/mu_e^2` scaling, and that a denser dwarf is smaller
+and more massive, approaching the limit from below.
 
 ## Lane-Emden: the structure of a star
 
