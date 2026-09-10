@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.23       12.18      0.8x
-   400          35.89       37.62      1.0x
-   800         142.71      112.07      1.3x
-  1600         668.64      381.85      1.8x
-  3200        2634.44     1065.66      2.5x
+   200           9.13       12.19      0.7x
+   400          36.62       37.58      1.0x
+   800         146.84      110.98      1.3x
+  1600         639.09      370.38      1.7x
+  3200        2586.32     1022.02      2.5x
 
-empirical scaling exponent  direct ~ N^2.05   barnes-hut ~ N^1.62
+empirical scaling exponent  direct ~ N^2.04   barnes-hut ~ N^1.61
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -21553,6 +21553,57 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   subcritical, dumping its excess energy into turbulence -- the step below a weir.
 
   wrote examples/output\froude.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>The Mach cone: the geometry of going supersonic</h2>
+    <p class="blurb">When a source outruns sound, its wavelets pile into a trailing cone whose half-angle obeys sin(mu) = 1/M -- 90 degrees at Mach 1, tightening to 30 at Mach 2 and 11.5 at Mach 5. That cone is the shock a ground observer hears as a sonic boom, laid down behind the overhead point and sweeping a continuous carpet along the track. Below Mach 1, thin-airfoil lift diverges by the Prandtl-Glauert factor 1/sqrt(1-M^2) toward the sound barrier; above it, a flow turning a corner expands through the Prandtl-Meyer angle.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<text x="20" y="34" fill="#e6edf3" font-size="18">The Mach cone at M = 2</text>
+<text x="20" y="52" fill="#8b949e" font-size="12">each wavelet expands at the sound speed; the source outruns them, leaving a cone of half-angle arcsin(1/M)</text>
+<line x1="50.0" y1="288.0" x2="670.0" y2="288.0" stroke="#21262d" stroke-width="1"/>
+<circle cx="490.0" cy="288.0" r="65.0" fill="none" stroke="#4dabf7" stroke-width="1.6" opacity="0.7"/>
+<circle cx="360.0" cy="288.0" r="130.0" fill="none" stroke="#4dabf7" stroke-width="1.6" opacity="0.7"/>
+<circle cx="230.0" cy="288.0" r="195.0" fill="none" stroke="#4dabf7" stroke-width="1.6" opacity="0.7"/>
+<circle cx="100.0" cy="288.0" r="260.0" fill="none" stroke="#4dabf7" stroke-width="1.6" opacity="0.7"/>
+<line x1="620.0" y1="288.0" x2="147.2" y2="15.0" stroke="#ff6b6b" stroke-width="2.4"/>
+<line x1="620.0" y1="288.0" x2="147.2" y2="561.0" stroke="#ff6b6b" stroke-width="2.4"/>
+<path d="M 560.0 288.0 A 60 60 0 0 0 568.0 258.0" fill="none" stroke="#ffd43b" stroke-width="1.5"/>
+<text x="528.0" y="268.0" fill="#ffd43b" font-size="13">mu = 30 deg</text>
+<polygon points="632.0,288.0 612.0,282.0 612.0,294.0" fill="#e6edf3"/>
+<text x="616.0" y="274.0" fill="#e6edf3" font-size="11" text-anchor="end">source at Mach 2</text>
+<line x1="50.0" y1="612.0" x2="670.0" y2="612.0" stroke="#8b949e" stroke-width="2"/>
+<text x="60.0" y="632.0" fill="#8b949e" font-size="11">the cone sweeps the ground as a continuous sonic-boom carpet along the flight track</text>
+<circle cx="58.8" cy="612.0" r="5" fill="#ff6b6b"/>
+<line x1="620.0" y1="288.0" x2="58.8" y2="612.0" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="4 4" opacity="0.6"/>
+</svg><figcaption>a supersonic source, its expanding wavelets, and the trailing Mach cone</figcaption></figure><div class="card"><pre>Mach cone: sin(mu) = 1/M -- faster flight, tighter cone
+
+    Mach   cone half-angle    boom lag @ 12 km
+     1.0          90.00 deg              0.0 s
+     1.2          56.44 deg             22.5 s
+     2.0          30.00 deg             35.2 s
+     3.0          19.47 deg             38.4 s
+     5.0          11.54 deg             39.9 s
+
+  Subsonic compressibility (Prandtl-Glauert lift factor 1/sqrt(1-M^2)):
+    M = 0.30  -&gt;  x1.05
+    M = 0.60  -&gt;  x1.25
+    M = 0.80  -&gt;  x1.67
+    M = 0.90  -&gt;  x2.29
+    M = 0.95  -&gt;  x3.20
+
+  Supersonic turning (Prandtl-Meyer angle, gamma=1.4):
+    M = 1.5  -&gt;  nu = 11.9 deg
+    M = 2.0  -&gt;  nu = 26.4 deg
+    M = 3.0  -&gt;  nu = 49.8 deg
+    M = 5.0  -&gt;  nu = 76.9 deg
+
+  At Mach 2 and 12 km, the boom carpet lands 20.8 km behind the overhead point,
+  reaching the ground seconds after the jet has already gone by -- and because the
+  cone trails at a fixed angle, it sweeps a continuous &#x27;boom carpet&#x27; along the track.
+
+  wrote examples/output\mach_cone.svg</pre></div></div>
   </section>
 
   <section>

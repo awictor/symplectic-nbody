@@ -199,6 +199,7 @@ def main():
     import stefan_demo
     import capillary_demo
     import froude_demo
+    import mach_cone_demo
 
     import plot_orbits
 
@@ -367,6 +368,7 @@ def main():
     stefan_txt = run("stefan_demo", stefan_demo.main, True)
     capillary_txt = run("capillary_demo", capillary_demo.main, True)
     froude_txt = run("froude_demo", froude_demo.main, True)
+    mach_cone_txt = run("mach_cone_demo", mach_cone_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1880,6 +1882,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("froude.svg"), "a hydraulic jump: thin fast supercritical water leaping to a deep slow pool")
             + f'<div class="card">{pre(froude_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Mach cone: the geometry of going supersonic",
+            "When a source outruns sound, its wavelets pile into a trailing cone whose "
+            "half-angle obeys sin(mu) = 1/M -- 90 degrees at Mach 1, tightening to 30 at Mach "
+            "2 and 11.5 at Mach 5. That cone is the shock a ground observer hears as a sonic "
+            "boom, laid down behind the overhead point and sweeping a continuous carpet along "
+            "the track. Below Mach 1, thin-airfoil lift diverges by the Prandtl-Glauert factor "
+            "1/sqrt(1-M^2) toward the sound barrier; above it, a flow turning a corner expands "
+            "through the Prandtl-Meyer angle.",
+            '<div class="grid">'
+            + svg_card(out("mach_cone.svg"), "a supersonic source, its expanding wavelets, and the trailing Mach cone")
+            + f'<div class="card">{pre(mach_cone_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

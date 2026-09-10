@@ -157,6 +157,7 @@ ruins a long non-symplectic integration.
 | `src/stefan.py` | The Stefan problem: melting/freezing front X=2 lambda sqrt(alpha t), latent heat |
 | `src/capillary.py` | Capillary length, Bond & Weber numbers: surface tension vs gravity vs inertia |
 | `src/froude.py` | Froude number: flow regime, hull speed, hydraulic jump, Kelvin wake |
+| `src/mach_cone.py` | Mach cone: cone angle, sonic-boom timing, Prandtl-Glauert & Prandtl-Meyer |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -305,6 +306,7 @@ ruins a long non-symplectic integration.
 | `examples/stefan_demo.py` | Ice-growth table by frost severity + the sqrt(t) front curves |
 | `examples/capillary_demo.py` | Per-liquid capillary length + the drop-shape crossover figure |
 | `examples/froude_demo.py` | Flow-regime & hull-speed tables + the hydraulic-jump profile |
+| `examples/mach_cone_demo.py` | Cone-angle & boom-timing tables + the Mach-cone figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3540,6 +3542,31 @@ walls a displacement hull near `Fr ~ 0.4` (the `1.34 sqrt(L_ft)` knots rule), wh
 Kelvin wake wedge holds a fixed 19.47-degree half-angle at any speed. The tests verify the
 wave speed, the regime classification, the critical depth, the hull-speed wall, the Belanger
 jump with momentum conservation, and the Kelvin angle.
+
+## The Mach cone: the geometry of going supersonic
+
+When a source outruns its own sound, the geometry is fixed by one relation. `mach_cone.py`:
+
+```
+$ python examples/mach_cone_demo.py examples/output
+
+  Mach   cone half-angle   boom lag @ 12 km
+   1.0        90.00 deg          0.0 s
+   2.0        30.00 deg         35.2 s
+   5.0        11.54 deg         39.9 s
+
+  Prandtl-Glauert: M=0.8 -> x1.67 lift    Prandtl-Meyer: M=2 -> nu=26.4 deg
+```
+
+The Mach cone's half-angle obeys `sin(mu) = 1/M` -- 90 degrees at Mach 1, tightening to 30 at
+Mach 2 and 11.5 at Mach 5 -- and that cone is the shock front heard on the ground as a sonic
+boom, landing `H/tan(mu)` behind the overhead point and arriving `H sqrt(M^2-1)/(M c)` after
+the aircraft has already passed (approaching the vertical sound-travel time `H/c` as `M`
+grows). Below Mach 1 the Prandtl-Glauert factor `1/sqrt(1-M^2)` tracks how thin-airfoil lift
+stiffens toward the sound barrier; above it the Prandtl-Meyer function `nu(M)` gives the angle
+a supersonic flow turns through in an expansion fan. The tests reproduce the 90/30/11.5-degree
+cone angles, the boom offset and delay, the Prandtl-Glauert divergence, and the Prandtl-Meyer
+angle (26.4 degrees at Mach 2).
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

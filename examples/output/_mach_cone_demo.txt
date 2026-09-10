@@ -1,0 +1,27 @@
+Mach cone: sin(mu) = 1/M -- faster flight, tighter cone
+
+    Mach   cone half-angle    boom lag @ 12 km
+     1.0          90.00 deg              0.0 s
+     1.2          56.44 deg             22.5 s
+     2.0          30.00 deg             35.2 s
+     3.0          19.47 deg             38.4 s
+     5.0          11.54 deg             39.9 s
+
+  Subsonic compressibility (Prandtl-Glauert lift factor 1/sqrt(1-M^2)):
+    M = 0.30  ->  x1.05
+    M = 0.60  ->  x1.25
+    M = 0.80  ->  x1.67
+    M = 0.90  ->  x2.29
+    M = 0.95  ->  x3.20
+
+  Supersonic turning (Prandtl-Meyer angle, gamma=1.4):
+    M = 1.5  ->  nu = 11.9 deg
+    M = 2.0  ->  nu = 26.4 deg
+    M = 3.0  ->  nu = 49.8 deg
+    M = 5.0  ->  nu = 76.9 deg
+
+  At Mach 2 and 12 km, the boom carpet lands 20.8 km behind the overhead point,
+  reaching the ground seconds after the jet has already gone by -- and because the
+  cone trails at a fixed angle, it sweeps a continuous 'boom carpet' along the track.
+
+  wrote examples/output\mach_cone.svg
