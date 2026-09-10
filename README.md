@@ -80,6 +80,7 @@ ruins a long non-symplectic integration.
 | `src/tisserand.py` | Tisserand parameter: the near-invariant of a gravity assist |
 | `src/lensing.py` | Gravitational lensing: deflection, Einstein ring, microlensing |
 | `src/rotation_curve.py` | Galaxy rotation curves: Keplerian disk vs flat dark-halo curve |
+| `src/mond.py` | MOND: modified gravity, flat curves & baryonic Tully-Fisher |
 | `src/schwarzschild.py` | Black-hole orbits: effective potential, ISCO, photon sphere, plunge |
 | `src/kerr.py` | Rotating black holes: horizons, ergosphere, spin-dependent ISCO |
 | `src/hawking.py` | Black-hole thermodynamics: Hawking temperature, entropy, evaporation |
@@ -121,6 +122,7 @@ ruins a long non-symplectic integration.
 | `examples/tisserand_demo.py` | a & e jump across a flyby while Tisserand stays flat |
 | `examples/lensing_demo.py` | Microlensing light curve + Einstein-ring image diagram (SVG) |
 | `examples/rotation_curve_demo.py` | Visible (declining) vs disk+halo (flat) rotation curves |
+| `examples/mond_demo.py` | MOND (flat) vs Newton-on-baryons (declining) + Tully-Fisher |
 | `examples/schwarzschild_demo.py` | Precessing & plunging black-hole orbits with ISCO/photon sphere |
 | `examples/kerr_demo.py` | ISCO-vs-spin curves + horizon/ergosphere diagram |
 | `examples/hawking_demo.py` | Temperature & evaporation time across black-hole masses |
@@ -583,6 +585,28 @@ precessing rosette and a plunging geodesic with the horizon, photon sphere, and
 ISCO marked. The tests verify the ISCO/photon-sphere radii, the circular-orbit
 angular momentum `sqrt(12) M` at the ISCO, the plunge, and that the weak-field
 precession recovers the classic `6*pi*M/(a(1-e^2))`.
+
+## MOND: flat curves without dark matter
+
+The rival explanation to the dark halo. Rather than add unseen mass, MOND
+(Milgrom 1983) modifies gravity below `a0 ~ 1.2e-10 m/s^2`. `mond.py`:
+
+```
+$ python examples/mond_demo.py examples/output
+
+  asymptotic flat speed v = (G M a0)^1/4 = 175.8 km/s   (baryons = 6e10 M_sun)
+   r (kpc)   Newton (km/s)   MOND (km/s)
+        10           160.7         215.4
+        80            56.8         180.5
+```
+
+Solving `g mu(g/a0) = g_N` makes a bare baryonic galaxy's rotation curve flatten
+on its own -- no dark matter -- and yields the baryonic Tully-Fisher relation
+`v_flat^4 = G M a0`, which ties a galaxy's flat speed to its visible mass with
+remarkably little scatter. This is the same flat-curve observation as the dark-
+matter section, explained the opposite way; the repo lets you compare them side
+by side. The tests check the interpolating-function limits, the deep-MOND
+`sqrt(g_N a0)` law, the flattening, and the `v ~ M^{1/4}` Tully-Fisher slope.
 
 ## Galaxy rotation curves: the case for dark matter
 

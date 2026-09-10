@@ -92,6 +92,7 @@ def main():
     import hohmann_demo
     import gr_time_demo
     import pulsar_demo
+    import mond_demo
 
     import plot_orbits
 
@@ -153,6 +154,7 @@ def main():
     hohmann_txt = run("hohmann_demo", hohmann_demo.main, True)
     grtime_txt = run("gr_time_demo", gr_time_demo.main, True)
     pulsar_txt = run("pulsar_demo", pulsar_demo.main, True)
+    mond_txt = run("mond_demo", mond_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -394,6 +396,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("rotation_curve.svg"), "visible declines (red), disk+halo stays flat (blue)")
             + f'<div class="card">{pre(rotcurve_txt)}</div>'
+            + '</div>'),
+        section(
+            "MOND: flat curves without dark matter",
+            "The rival to the dark halo: instead of adding unseen mass, MOND "
+            "modifies gravity below a0 ~ 1.2e-10 m/s^2. A bare baryonic mass then "
+            "has a naturally flat rotation curve and obeys the tight baryonic "
+            "Tully-Fisher law v^4 = G M a0 -- MOND's sharpest prediction.",
+            '<div class="grid">'
+            + svg_card(out("mond.svg"), "MOND (flat) vs Newton on visible mass (declining)")
+            + f'<div class="card">{pre(mond_txt)}</div>'
             + '</div>'),
         section(
             "Gravitational lensing",

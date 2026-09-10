@@ -1,0 +1,19 @@
+MOND: modified gravity instead of dark matter
+
+  a0 = 1.20e-10 m/s^2   baryonic mass = 6e10 M_sun
+  asymptotic flat speed v = (G M a0)^1/4 = 175.8 km/s
+
+   r (kpc)   Newton (km/s)   MOND (km/s)
+  --------------------------------------
+         2           359.2         368.9
+         5           227.2         257.1
+        10           160.7         215.4
+        20           113.6         195.0
+        40            80.3         185.2
+        80            56.8         180.5
+
+  Newtonian gravity on the visible mass alone falls off (Keplerian);
+  MOND flattens the curve with no dark matter. Its sharpest prediction is
+  the baryonic Tully-Fisher law v^4 = G M a0, tight across real galaxies.
+
+  wrote examples/output\mond.svg

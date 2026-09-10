@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.52       12.49      0.8x
-   400          37.69       39.12      1.0x
-   800         151.24      115.89      1.3x
-  1600         662.91      416.56      1.6x
-  3200        2734.53     1128.75      2.4x
+   200           9.26       12.12      0.8x
+   400          37.16       37.85      1.0x
+   800         146.80      112.79      1.3x
+  1600         725.06      471.30      1.5x
+  3200        2489.23      972.11      2.6x
 
-empirical scaling exponent  direct ~ N^2.05   barnes-hut ~ N^1.64
+empirical scaling exponent  direct ~ N^2.04   barnes-hut ~ N^1.63
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -3495,6 +3495,41 @@ wrote examples/output\poincare_section.svg</pre></div></div>
   the dark-matter halo, whose enclosed mass keeps growing as ~ r.
 
   wrote examples/output\rotation_curve.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>MOND: flat curves without dark matter</h2>
+    <p class="blurb">The rival to the dark halo: instead of adding unseen mass, MOND modifies gravity below a0 ~ 1.2e-10 m/s^2. A bare baryonic mass then has a naturally flat rotation curve and obeys the tight baryonic Tully-Fisher law v^4 = G M a0 -- MOND's sharpest prediction.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<line x1="64" y1="656" x2="656" y2="656" stroke="#30363d"/>
+<line x1="64" y1="64" x2="64" y2="656" stroke="#30363d"/>
+<line x1="64" y1="399.5" x2="656" y2="399.5" stroke="#8b949e" stroke-dasharray="4,4"/>
+<polyline points="78.1,131.9 99.2,324.5 134.5,421.6 205.0,490.3 345.9,538.8 627.8,573.1" fill="none" stroke="#e63946" stroke-width="2"/>
+<polyline points="78.1,117.8 99.2,281.0 134.5,341.7 205.0,371.5 345.9,385.8 627.8,392.7" fill="none" stroke="#4cc9f0" stroke-width="2"/>
+<text x="64" y="34" fill="#e6edf3" font-size="18">MOND (blue, flat) vs Newton on visible mass (red, declining)</text>
+<text x="78" y="72" fill="#4cc9f0" font-size="12">MOND: modified gravity, no dark matter</text>
+<text x="78" y="90" fill="#e63946" font-size="12">Newton (baryons only): Keplerian decline</text>
+<text x="656" y="678" fill="#8b949e" font-size="11" text-anchor="end">radius (kpc) -&gt;</text>
+</svg><figcaption>MOND (flat) vs Newton on visible mass (declining)</figcaption></figure><div class="card"><pre>MOND: modified gravity instead of dark matter
+
+  a0 = 1.20e-10 m/s^2   baryonic mass = 6e10 M_sun
+  asymptotic flat speed v = (G M a0)^1/4 = 175.8 km/s
+
+   r (kpc)   Newton (km/s)   MOND (km/s)
+  --------------------------------------
+         2           359.2         368.9
+         5           227.2         257.1
+        10           160.7         215.4
+        20           113.6         195.0
+        40            80.3         185.2
+        80            56.8         180.5
+
+  Newtonian gravity on the visible mass alone falls off (Keplerian);
+  MOND flattens the curve with no dark matter. Its sharpest prediction is
+  the baryonic Tully-Fisher law v^4 = G M a0, tight across real galaxies.
+
+  wrote examples/output\mond.svg</pre></div></div>
   </section>
 
   <section>
