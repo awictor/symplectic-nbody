@@ -159,6 +159,7 @@ def main():
     import tolman_demo
     import olbers_demo
     import bi_elliptic_demo
+    import gravity_assist_demo
 
     import plot_orbits
 
@@ -287,6 +288,7 @@ def main():
     tolman_txt = run("tolman_demo", tolman_demo.main, True)
     olbers_txt = run("olbers_demo", olbers_demo.main, True)
     biell_txt = run("bi_elliptic_demo", bi_elliptic_demo.main, True)
+    gassist_txt = run("gravity_assist_demo", gravity_assist_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1312,6 +1314,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("bi_elliptic.svg"), "Hohmann and bi-elliptic delta-v crossing near R = 12")
             + f'<div class="card">{pre(biell_txt)}</div>'
+            + '</div>'),
+        section(
+            "Gravity assist",
+            "A spacecraft flying past a planet follows a hyperbola: it leaves at the "
+            "same speed relative to the planet but bent by the turn angle "
+            "sin(delta/2) = 1/e. In the Sun's frame the planet is moving, so that "
+            "rotation adds up to 2 v_inf of free heliocentric speed. A slower, deeper "
+            "pass bends more and steals more; Voyager chained Jupiter-Saturn-Uranus-"
+            "Neptune this way to reach escape speed for almost no fuel.",
+            '<div class="grid">'
+            + svg_card(out("gravity_assist.svg"), "slingshot boost vs flyby periapsis for several approach speeds")
+            + f'<div class="card">{pre(gassist_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

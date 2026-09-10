@@ -1,0 +1,20 @@
+Gravity assist: bend v_inf in the planet's frame, gain in the Sun's
+
+  Jupiter orbital speed 13.1 km/s; max possible gain = 2 v_inf
+
+   v_inf (km/s)   periapsis  turn (deg)  boost (km/s)
+  ---------------------------------------------------
+              5     2 R_jup       153.1          9.73
+              5     5 R_jup       138.2          9.34
+             10     2 R_jup       127.9         17.97
+             10     5 R_jup       102.5         15.60
+             15     2 R_jup       105.8         23.92
+             15     5 R_jup        75.4         18.35
+
+  A slower, deeper pass swings the velocity vector through a bigger angle
+  and adds more of Jupiter's 13 km/s orbital motion -- up to 2 v_inf for a
+  near-reversal. Voyager 2 chained Jupiter, Saturn, Uranus and Neptune this
+  way to reach Solar-System escape speed on a fraction of the fuel a direct
+  burn would need, while the planets lost a laughably tiny bit of energy.
+
+  wrote examples/output\gravity_assist.svg

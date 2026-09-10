@@ -117,6 +117,7 @@ ruins a long non-symplectic integration.
 | `src/tolman.py` | Tolman surface-brightness dimming: the (1+z)^4 test of expansion |
 | `src/olbers.py` | Olbers' paradox: why the dark night sky reveals a finite-age universe |
 | `src/bi_elliptic.py` | Bi-elliptic transfer: when three burns beat the Hohmann two |
+| `src/gravity_assist.py` | Gravity assist: the slingshot boost from a planetary flyby |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -225,6 +226,7 @@ ruins a long non-symplectic integration.
 | `examples/tolman_demo.py` | Dimming vs z (expanding vs tired-light) + the magnitude curves |
 | `examples/olbers_demo.py` | Mean free path/horizon/covered fraction + the covering-vs-distance curve |
 | `examples/bi_elliptic_demo.py` | Hohmann vs bi-elliptic delta-v by ratio + the crossover curves |
+| `examples/gravity_assist_demo.py` | Turn angle & boost by flyby depth/speed + the boost(r_p) curves |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2438,6 +2440,34 @@ saving is paid for with a far longer, sometimes years-long, transfer, so bi-elli
 reserved for the most extreme orbit raises. The tests verify Hohmann winning below the
 crossover, bi-elliptic winning above it, the intermediate band needing a large detour, the
 11.94 crossover value, and agreement with the vis-viva Hohmann result.
+
+## Gravity assist: the slingshot
+
+A spacecraft flying past a planet follows a hyperbola in the planet's frame: it leaves at the
+same speed but bent by the turn angle. `gravity_assist.py`:
+
+```
+$ python examples/gravity_assist_demo.py examples/output
+
+    v_inf (km/s)   periapsis   turn (deg)   boost (km/s)
+  ---------------------------------------------------
+              5     2 R_jup       153.1          9.73
+              5     5 R_jup       138.2          9.34
+             10     2 R_jup       127.9         17.97
+             10     5 R_jup       102.5         15.60
+             15     2 R_jup       105.8         23.92
+             15     5 R_jup        75.4         18.35
+```
+
+With `sin(delta/2) = 1/e` and `e = 1 + r_p v_inf^2 / mu`, a slower or deeper pass bends the
+trajectory more. Energy is conserved in the planet's frame, but in the Sun's frame the planet
+is moving, so rotating the excess-velocity vector adds up to `2 v_inf` of free heliocentric
+speed -- a slow deep pass steals the most of the planet's orbital motion. Voyager 2 chained
+Jupiter, Saturn, Uranus and Neptune this way to reach Solar-System-escape speed on a fraction
+of the fuel a direct burn would need, while the planets lost a laughably tiny bit of orbital
+energy. The tests verify that deeper and slower passes bend more, the Voyager-scale Jupiter
+boost, that the gain never exceeds `2 v_inf`, the near-180-degree limit, and that a trailing
+pass adds speed.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
