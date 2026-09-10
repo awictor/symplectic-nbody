@@ -158,6 +158,7 @@ ruins a long non-symplectic integration.
 | `src/capillary.py` | Capillary length, Bond & Weber numbers: surface tension vs gravity vs inertia |
 | `src/froude.py` | Froude number: flow regime, hull speed, hydraulic jump, Kelvin wake |
 | `src/mach_cone.py` | Mach cone: cone angle, sonic-boom timing, Prandtl-Glauert & Prandtl-Meyer |
+| `src/nozzle.py` | de Laval nozzle: isentropic ratios, area-Mach, choked flow, exhaust velocity |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -307,6 +308,7 @@ ruins a long non-symplectic integration.
 | `examples/capillary_demo.py` | Per-liquid capillary length + the drop-shape crossover figure |
 | `examples/froude_demo.py` | Flow-regime & hull-speed tables + the hydraulic-jump profile |
 | `examples/mach_cone_demo.py` | Cone-angle & boom-timing tables + the Mach-cone figure |
+| `examples/nozzle_demo.py` | Area-ratio/exit-Mach table + the converging-diverging bell figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3567,6 +3569,33 @@ stiffens toward the sound barrier; above it the Prandtl-Meyer function `nu(M)` g
 a supersonic flow turns through in an expansion fan. The tests reproduce the 90/30/11.5-degree
 cone angles, the boom offset and delay, the Prandtl-Glauert divergence, and the Prandtl-Meyer
 angle (26.4 degrees at Mach 2).
+
+## The de Laval nozzle: making exhaust supersonic
+
+A converging-diverging throat is the only way to push gas past Mach 1. `nozzle.py`:
+
+```
+$ python examples/nozzle_demo.py examples/output
+
+  area ratio A_e/A*   exit Mach    P_e/P0
+              1.0        1.00      0.5283   (choked throat)
+              4.0        2.94      0.0298
+             25.0        5.00      0.0019
+
+  chamber 5 MPa / 3000 K, A* = 10 cm^2 -> 3.69 kg/s, exit M 5, exhaust 2241 m/s
+```
+
+Subsonic flow accelerates as area shrinks, but a supersonic stream accelerates as area
+*grows*, so the flow must reach Mach 1 exactly at a minimum-area throat and then expand
+through a widening bell. The isentropic relations give the stagnation ratios from the local
+Mach number (`T0/T = 1 + (gamma-1)/2 M^2`, etc.), and the area-Mach relation `A/A*` fixes the
+wall shape -- minimal at the throat, larger on both sides. Once the back-pressure ratio drops
+below the critical `~0.528` (air), the throat **chokes**: mass flow saturates at
+`mdot = A* P0 sqrt(gamma/(R T0)) (2/(gamma+1))^((gamma+1)/(2(gamma-1)))` and the exit Mach
+number depends only on the bell's area ratio. The tests reproduce the M=1 isentropic ratios,
+the `0.528` choking ratio, the `A/A*` values at Mach 2 and 3, the sub/supersonic inversion of
+the area-Mach relation, and the linear scaling of choked flow with chamber pressure and
+throat area.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

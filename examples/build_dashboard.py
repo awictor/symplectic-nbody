@@ -200,6 +200,7 @@ def main():
     import capillary_demo
     import froude_demo
     import mach_cone_demo
+    import nozzle_demo
 
     import plot_orbits
 
@@ -369,6 +370,7 @@ def main():
     capillary_txt = run("capillary_demo", capillary_demo.main, True)
     froude_txt = run("froude_demo", froude_demo.main, True)
     mach_cone_txt = run("mach_cone_demo", mach_cone_demo.main, True)
+    nozzle_txt = run("nozzle_demo", nozzle_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1895,6 +1897,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("mach_cone.svg"), "a supersonic source, its expanding wavelets, and the trailing Mach cone")
             + f'<div class="card">{pre(mach_cone_txt)}</div>'
+            + '</div>'),
+        section(
+            "The de Laval nozzle: making exhaust supersonic",
+            "Subsonic flow speeds up as a pipe narrows, but supersonic flow speeds up as it "
+            "widens -- so to push exhaust past Mach 1 you squeeze the gas to a sonic throat "
+            "and then expand it through a diverging bell. The isentropic relations fix "
+            "everything from the local Mach number: the area-Mach relation A/A* is minimal at "
+            "the throat, the flow chokes there once the pressure ratio drops below ~0.528 "
+            "(air), and the exit Mach number is then set purely by the bell's area ratio -- 25 "
+            "gives Mach 5. It is how every rocket and supersonic tunnel works.",
+            '<div class="grid">'
+            + svg_card(out("nozzle.svg"), "a converging-diverging nozzle with Mach rising through 1 and pressure falling")
+            + f'<div class="card">{pre(nozzle_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -1,0 +1,21 @@
+de Laval nozzle: converge to sonic throat, diverge to supersonic exhaust
+
+  Air (gamma=1.4). Choking pressure ratio P*/P0 = 0.5283
+
+   area ratio A_e/A*   exit Mach      P_e/P0
+                 1.0        1.00      0.5283
+                 2.0        2.20      0.0939
+                 4.0        2.94      0.0298
+                10.0        3.92      0.0073
+                25.0        5.00      0.0019
+               100.0        6.94      0.0003
+
+  Rocket-ish chamber: P0 = 5 MPa, T0 = 3000 K, throat A* = 10 cm^2:
+    choked mass flow  = 3.69 kg/s
+    area ratio 25 -> exit Mach 5.00, exhaust 2241 m/s
+
+  Subsonic flow accelerates as area shrinks, but past Mach 1 it reverses: a
+  supersonic stream speeds up as the area GROWS, so the throat must sit exactly at
+  Mach 1. Once choked, mass flow is capped by the throat and only the bell sets M_e.
+
+  wrote examples/output\nozzle.svg
