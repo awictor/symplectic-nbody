@@ -193,6 +193,7 @@ ruins a long non-symplectic integration.
 | `src/percolation.py` | Site percolation: union-find clusters, spanning test, threshold sweep |
 | `src/polya.py` | Polya random walk: return probability by dimension, recurrence, simulation |
 | `src/langevin_para.py` | Langevin paramagnetism: L(x), Curie-law susceptibility, saturation |
+| `src/buffon.py` | Buffon's needle: crossing probability, Monte Carlo pi, 1/sqrt(N) convergence |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -377,6 +378,7 @@ ruins a long non-symplectic integration.
 | `examples/percolation_demo.py` | Spanning/cluster table + the threshold curve & lattice snapshots |
 | `examples/polya_demo.py` | Return/escape/visits table + the return-probability-vs-dimension figure |
 | `examples/langevin_para_demo.py` | Alignment/Curie table + the L(x) & 1/T susceptibility figure |
+| `examples/buffon_demo.py` | Convergence table + the needle-scatter & pi-estimate figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4449,6 +4451,27 @@ fingerprint; strong field or low temperature saturates every moment at `L = 1`. 
 reproduce `L(0)=0`, the `x/3` slope and `L(1) ~ 0.313`, saturation to 1, the `1/T` Curie
 susceptibility and constant, the small-field linear response, and the field-for-saturation
 inversion.
+
+## Buffon's needle: estimating pi by dropping sticks
+
+pi falls out of a purely mechanical experiment. `buffon.py`:
+
+```
+$ python examples/buffon_demo.py examples/output
+
+  drops N     crossings   pi estimate   error
+  1000        645         3.10078       0.041
+  1000000     636951      3.13996       0.0016
+```
+
+Drop a needle of length `L <= d` on a floor ruled with lines spacing `d` apart: it crosses a
+line with probability `2 L/(pi d)`. So counting crossings estimates pi -- `pi ~ 2 L N/(d C)`
+for `N` drops and `C` crossings -- the first problem in geometric probability (Buffon, 1777),
+and pi emerges with no measurement of pi entering anywhere, purely from the random position and
+angle. The convergence is the slow Monte Carlo `1/sqrt(N)`: 1% accuracy needs ~10000 drops and
+0.1% about a million. The tests reproduce the `2/pi` crossing probability, the pi-estimate
+inversion, the `1/error^2` needle count, the `1/sqrt(N)` error scaling, and a seeded
+simulation converging to pi within a few percent.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

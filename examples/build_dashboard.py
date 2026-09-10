@@ -235,6 +235,7 @@ def main():
     import percolation_demo
     import polya_demo
     import langevin_para_demo
+    import buffon_demo
 
     import plot_orbits
 
@@ -439,6 +440,7 @@ def main():
     percolation_txt = run("percolation_demo", percolation_demo.main, True)
     polya_txt = run("polya_demo", polya_demo.main, True)
     langevin_para_txt = run("langevin_para_demo", langevin_para_demo.main, True)
+    buffon_txt = run("buffon_demo", buffon_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2428,6 +2430,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("langevin_para.svg"), "the Langevin function from the Curie slope to saturation, and the 1/T susceptibility")
             + f'<div class="card">{pre(langevin_para_txt)}</div>'
+            + '</div>'),
+        section(
+            "Buffon's needle: estimating pi by dropping sticks",
+            "Rule a floor with parallel lines a distance d apart and drop a needle of length "
+            "L <= d at random: it crosses a line with probability 2 L/(pi d). So counting "
+            "crossings estimates pi -- pi ~ 2 L N/(d C) for N drops and C crossings -- the "
+            "first problem in geometric probability (Buffon, 1777). pi emerges from a purely "
+            "mechanical experiment with no measurement of pi anywhere, from the geometry of "
+            "random position and angle. Convergence is the slow Monte Carlo 1/sqrt(N): 1% "
+            "needs ~10000 drops, 0.1% about a million.",
+            '<div class="grid">'
+            + svg_card(out("buffon.svg"), "needles dropped across ruled lines (crossings red), and the pi estimate converging")
+            + f'<div class="card">{pre(buffon_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

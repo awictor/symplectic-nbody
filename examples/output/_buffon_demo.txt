@@ -1,0 +1,21 @@
+Buffon's needle: P(cross) = 2L/(pi d), so pi ~ 2 L N / (d C)
+
+  Crossing probability for L = d: 0.6366 (= 2/pi)
+
+     drops N   crossings   pi estimate       error
+         100          58       3.44828     0.30668
+        1000         645       3.10078     0.04082
+       10000        6450       3.10078     0.04082
+      100000       63921       3.12886     0.01273
+     1000000      636951       3.13996     0.00163
+
+  Convergence is slow (Monte Carlo, error ~ 1/sqrt(N)):
+    5.0 % accuracy  ->  ~399 drops
+    1.0 % accuracy  ->  ~10,000 drops
+    0.1 % accuracy  ->  ~1,000,000 drops
+
+  pi falls out of a purely mechanical experiment -- counting how often a tossed
+  stick lands across a floorboard. No measurement of pi enters anywhere; it emerges
+  from the geometry of random position and angle. The first problem in geometric probability.
+
+  wrote examples/output\buffon.svg
