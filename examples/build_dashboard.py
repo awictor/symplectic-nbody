@@ -79,6 +79,7 @@ def main():
     import lensing_demo
     import rotation_curve_demo
     import schwarzschild_demo
+    import friedmann_demo
 
     import plot_orbits
 
@@ -127,6 +128,7 @@ def main():
     lensing_txt = run("lensing_demo", lensing_demo.main, True)
     rotcurve_txt = run("rotation_curve_demo", rotation_curve_demo.main, True)
     schwarz_txt = run("schwarzschild_demo", schwarzschild_demo.main, True)
+    friedmann_txt = run("friedmann_demo", friedmann_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -228,6 +230,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("poincare_section.svg"), "tori and chaotic sea at one energy")
             + f'<div class="card">{pre(poincare_txt)}</div>'
+            + '</div>'),
+        section(
+            "Expansion of the universe (Friedmann)",
+            "The scale factor a(t) under the Friedmann equation: radiation gives "
+            "a ~ t^1/2, matter a ~ t^2/3, dark energy exponential growth. A flat "
+            "LCDM universe ages to ~0.96/H0 (~13.5 Gyr) and is now entering its "
+            "accelerating dark-energy era.",
+            '<div class="grid">'
+            + svg_card(out("friedmann.svg"), "scale factor for radiation, matter, dark energy, LCDM")
+            + f'<div class="card">{pre(friedmann_txt)}</div>'
             + '</div>'),
         section(
             "Schwarzschild black-hole orbits",

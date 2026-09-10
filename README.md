@@ -53,6 +53,7 @@ ruins a long non-symplectic integration.
 | `src/lensing.py` | Gravitational lensing: deflection, Einstein ring, microlensing |
 | `src/rotation_curve.py` | Galaxy rotation curves: Keplerian disk vs flat dark-halo curve |
 | `src/schwarzschild.py` | Black-hole orbits: effective potential, ISCO, photon sphere, plunge |
+| `src/friedmann.py` | Friedmann cosmology: scale factor a(t), expansion eras, age of the universe |
 | `src/poincare.py` | Poincare surface-of-section for the CR3BP (tori vs chaos) |
 | `src/sitnikov.py` | The Sitnikov problem: on-axis test particle, integrable-to-chaotic |
 | `src/galaxy.py` | Disk-galaxy generator and two-galaxy tidal encounters |
@@ -81,6 +82,7 @@ ruins a long non-symplectic integration.
 | `examples/lensing_demo.py` | Microlensing light curve + Einstein-ring image diagram (SVG) |
 | `examples/rotation_curve_demo.py` | Visible (declining) vs disk+halo (flat) rotation curves |
 | `examples/schwarzschild_demo.py` | Precessing & plunging black-hole orbits with ISCO/photon sphere |
+| `examples/friedmann_demo.py` | Scale-factor curves for radiation/matter/dark-energy/LCDM |
 | `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
 | `examples/sitnikov_demo.py` | Stroboscopic maps: circular binary (tori) vs eccentric (chaos) |
 | `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
@@ -216,6 +218,29 @@ diffuse dust. `poincare.py` reconstructs `vy` from the energy so each section
 point is a full initial condition, and the tests confirm the Jacobi constant is
 conserved along each orbit (faithful section), regular orbits stay on tight
 curves, and chaotic ones scatter more than 3x wider.
+
+## Friedmann cosmology: the expanding universe
+
+The same gravity that binds orbits governs the expansion of the whole universe.
+`friedmann.py` integrates the scale factor `a(t)` under the Friedmann equation
+`(a_dot/a)^2 = H0^2 (Om_r/a^4 + Om_m/a^3 + Om_k/a^2 + Om_L)`:
+
+```
+$ python examples/friedmann_demo.py examples/output
+
+  age of a flat LCDM universe : 0.964/H0   (~13.5 Gyr for H0=70)
+  radiation                         n ~ 0.50   (a ~ t^1/2)
+  matter                            n ~ 0.67   (a ~ t^2/3)
+  dark energy     exponential (accelerating)
+  flat LCDM                         n ~ 1.14
+```
+
+Each component dilutes differently as the universe grows -- radiation as
+`a^-4`, matter as `a^-3`, dark energy not at all -- so the expansion passes
+through radiation, matter, and dark-energy eras with distinct power laws. The
+age comes out as a look-back integral to `~0.96/H0`, the measured ~13.8 Gyr. The
+tests verify each era's exponent, the exponential dark-energy growth, and the
+LCDM age.
 
 ## Schwarzschild orbits: strong-field general relativity
 

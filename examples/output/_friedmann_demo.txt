@@ -1,0 +1,17 @@
+Friedmann cosmology: the expansion of the universe (time in 1/H0)
+
+  age of a flat LCDM universe : 0.964/H0
+    (with H0 = 70 km/s/Mpc this is 13.5 Gyr)
+
+  universe        expansion exponent a ~ t^n
+  ------------------------------------------
+  radiation                         n ~ 0.50
+  matter                            n ~ 0.67
+  dark energy     exponential (accelerating)
+  flat LCDM                         n ~ 1.14
+
+  Radiation gives t^1/2, matter t^2/3, dark energy exponential growth.
+  Our universe (LCDM) coasted through matter domination and is now
+  entering the accelerating dark-energy era.
+
+  wrote examples/output\friedmann.svg
