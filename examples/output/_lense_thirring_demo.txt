@@ -1,0 +1,13 @@
+Gravity Probe B: two relativistic gyroscope precessions
+
+  effect                         predicted    measured
+  ----------------------------------------------------
+  geodetic (de Sitter)             6638 mas/yr        6602
+  frame-dragging (LT)              41.1 mas/yr        37.2
+
+  Geodetic precession comes from the curvature of space the gyro is
+  carried through; frame-dragging comes from Earth's rotation twisting
+  spacetime. The latter is ~180x smaller -- it took a dedicated
+  experiment with near-perfect gyroscopes to measure it.
+
+  wrote examples/output\lense_thirring.svg

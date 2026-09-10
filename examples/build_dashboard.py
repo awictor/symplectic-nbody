@@ -95,6 +95,7 @@ def main():
     import mond_demo
     import penrose_demo
     import tidal_heating_demo
+    import lense_thirring_demo
 
     import plot_orbits
 
@@ -159,6 +160,7 @@ def main():
     mond_txt = run("mond_demo", mond_demo.main, True)
     penrose_txt = run("penrose_demo", penrose_demo.main, True)
     tidalheat_txt = run("tidal_heating_demo", tidal_heating_demo.main, True)
+    lt_txt = run("lense_thirring_demo", lense_thirring_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -400,6 +402,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("gr_time.svg"), "Shapiro delay diverging as the ray grazes the Sun")
             + f'<div class="card">{pre(grtime_txt)}</div>'
+            + '</div>'),
+        section(
+            "Frame-dragging & geodetic precession (Gravity Probe B)",
+            "An orbiting gyroscope precesses two ways: geodetic (from spatial "
+            "curvature, ~6600 mas/yr) and frame-dragging (from Earth's rotation "
+            "twisting spacetime, ~40 mas/yr). Gravity Probe B measured both -- the "
+            "frame-dragging term is ~180x smaller and took near-perfect gyros to see.",
+            '<div class="grid">'
+            + svg_card(out("lense_thirring.svg"), "both precession rates vs orbit radius")
+            + f'<div class="card">{pre(lt_txt)}</div>'
             + '</div>'),
         section(
             "Galaxy rotation curves & dark matter",

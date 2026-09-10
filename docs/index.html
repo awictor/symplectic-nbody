@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.03       12.34      0.7x
-   400          37.10       37.61      1.0x
-   800         141.42      111.95      1.3x
-  1600         585.20      341.94      1.7x
-  3200        2631.80      962.43      2.7x
+   200           9.43       12.39      0.8x
+   400          37.35       38.00      1.0x
+   800         144.03      110.85      1.3x
+  1600         598.27      343.76      1.7x
+  3200        2487.45      983.16      2.5x
 
-empirical scaling exponent  direct ~ N^2.04   barnes-hut ~ N^1.58
+empirical scaling exponent  direct ~ N^2.01   barnes-hut ~ N^1.58
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -3501,6 +3501,35 @@ wrote examples/output\poincare_section.svg</pre></div></div>
   tightest Solar-System test of general relativity.
 
   wrote examples/output\gr_time.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Frame-dragging &amp; geodetic precession (Gravity Probe B)</h2>
+    <p class="blurb">An orbiting gyroscope precesses two ways: geodetic (from spatial curvature, ~6600 mas/yr) and frame-dragging (from Earth's rotation twisting spacetime, ~40 mas/yr). Gravity Probe B measured both -- the frame-dragging term is ~180x smaller and took near-perfect gyros to see.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<line x1="64" y1="656" x2="656" y2="656" stroke="#30363d"/>
+<line x1="64" y1="64" x2="64" y2="656" stroke="#30363d"/>
+<polyline points="64.0,64.0 78.6,70.4 92.5,76.5 105.8,82.4 118.6,88.0 130.9,93.5 142.7,98.7 154.1,103.7 165.1,108.5 175.7,113.2 186.0,117.7 195.9,122.1 205.6,126.3 214.9,130.5 224.0,134.4 232.8,138.3 241.4,142.1 249.8,145.8 257.9,149.4 265.8,152.9 273.6,156.3 281.1,159.6 288.5,162.8 295.7,166.0 302.7,169.1 309.6,172.1 316.4,175.1 322.9,178.0 329.4,180.9 335.7,183.6 341.9,186.4 348.0,189.0 354.0,191.7 359.8,194.3 365.6,196.8 371.2,199.3 376.8,201.7 382.2,204.1 387.6,206.5 392.8,208.8 398.0,211.1 403.1,213.3 408.1,215.5 413.1,217.7 417.9,219.8 422.7,221.9 427.4,224.0 432.0,226.0 436.6,228.1 441.1,230.0 445.6,232.0 450.0,233.9 454.3,235.8 458.5,237.7 462.7,239.6 466.9,241.4 471.0,243.2 475.0,245.0 479.0,246.7 483.0,248.5 486.8,250.2 490.7,251.9 494.5,253.5 498.2,255.2 501.9,256.8 505.6,258.4 509.2,260.0 512.8,261.6 516.3,263.2 519.8,264.7 523.3,266.2 526.7,267.7 530.1,269.2 533.5,270.7 536.8,272.2 540.1,273.6 543.3,275.0 546.5,276.4 549.7,277.8 552.9,279.2 556.0,280.6 559.1,282.0 562.1,283.3 565.1,284.6 568.1,286.0 571.1,287.3 574.0,288.6 577.0,289.8 579.8,291.1 582.7,292.4 585.5,293.6 588.3,294.9 591.1,296.1 593.9,297.3 596.6,298.5 599.3,299.7 602.0,300.9 604.7,302.1 607.3,303.2 610.0,304.4 612.6,305.5 615.1,306.7 617.7,307.8 620.2,308.9 622.7,310.0 625.2,311.1 627.7,312.2 630.2,313.3 632.6,314.3 635.0,315.4 637.4,316.5 639.8,317.5 642.2,318.6 644.5,319.6 646.9,320.6 649.2,321.6 651.5,322.6 653.7,323.6 656.0,324.6" fill="none" stroke="#4cc9f0" stroke-width="2"/>
+<polyline points="64.0,343.2 78.6,350.9 92.5,358.3 105.8,365.3 118.6,372.1 130.9,378.6 142.7,384.8 154.1,390.8 165.1,396.6 175.7,402.3 186.0,407.7 195.9,412.9 205.6,418.0 214.9,423.0 224.0,427.8 232.8,432.4 241.4,437.0 249.8,441.4 257.9,445.7 265.8,449.9 273.6,454.0 281.1,457.9 288.5,461.8 295.7,465.6 302.7,469.4 309.6,473.0 316.4,476.6 322.9,480.0 329.4,483.4 335.7,486.8 341.9,490.1 348.0,493.3 354.0,496.4 359.8,499.5 365.6,502.6 371.2,505.5 376.8,508.5 382.2,511.4 387.6,514.2 392.8,517.0 398.0,519.7 403.1,522.4 408.1,525.0 413.1,527.6 417.9,530.2 422.7,532.7 427.4,535.2 432.0,537.7 436.6,540.1 441.1,542.5 445.6,544.8 450.0,547.1 454.3,549.4 458.5,551.7 462.7,553.9 466.9,556.1 471.0,558.2 475.0,560.4 479.0,562.5 483.0,564.6 486.8,566.6 490.7,568.7 494.5,570.7 498.2,572.6 501.9,574.6 505.6,576.5 509.2,578.5 512.8,580.3 516.3,582.2 519.8,584.1 523.3,585.9 526.7,587.7 530.1,589.5 533.5,591.3 536.8,593.0 540.1,594.7 543.3,596.5 546.5,598.2 549.7,599.8 552.9,601.5 556.0,603.1 559.1,604.8 562.1,606.4 565.1,608.0 568.1,609.6 571.1,611.1 574.0,612.7 577.0,614.2 579.8,615.8 582.7,617.3 585.5,618.8 588.3,620.3 591.1,621.7 593.9,623.2 596.6,624.6 599.3,626.1 602.0,627.5 604.7,628.9 607.3,630.3 610.0,631.7 612.6,633.0 615.1,634.4 617.7,635.8 620.2,637.1 622.7,638.4 625.2,639.8 627.7,641.1 630.2,642.4 632.6,643.6 635.0,644.9 637.4,646.2 639.8,647.4 642.2,648.7 644.5,649.9 646.9,651.2 649.2,652.4 651.5,653.6 653.7,654.8 656.0,656.0" fill="none" stroke="#ff006e" stroke-width="2"/>
+<text x="64" y="34" fill="#e6edf3" font-size="18">Gyroscope precession vs orbit radius (log-log)</text>
+<text x="78" y="72" fill="#4cc9f0" font-size="12">geodetic ~ r^-5/2</text>
+<text x="78" y="90" fill="#ff006e" font-size="12">frame-dragging ~ r^-3 (smaller, steeper)</text>
+<text x="656" y="678" fill="#8b949e" font-size="11" text-anchor="end">log10 (r / R_Earth) -&gt;</text>
+<text x="54" y="56" fill="#8b949e" font-size="11">log10 precession (mas/yr)</text>
+</svg><figcaption>both precession rates vs orbit radius</figcaption></figure><div class="card"><pre>Gravity Probe B: two relativistic gyroscope precessions
+
+  effect                         predicted    measured
+  ----------------------------------------------------
+  geodetic (de Sitter)             6638 mas/yr        6602
+  frame-dragging (LT)              41.1 mas/yr        37.2
+
+  Geodetic precession comes from the curvature of space the gyro is
+  carried through; frame-dragging comes from Earth&#x27;s rotation twisting
+  spacetime. The latter is ~180x smaller -- it took a dedicated
+  experiment with near-perfect gyroscopes to measure it.
+
+  wrote examples/output\lense_thirring.svg</pre></div></div>
   </section>
 
   <section>

@@ -89,6 +89,7 @@ ruins a long non-symplectic integration.
 | `src/eddington.py` | Eddington luminosity, accretion rate & Salpeter black-hole growth |
 | `src/hohmann.py` | Hohmann transfer: mission delta-v budgets & launch windows |
 | `src/gr_time.py` | Gravitational redshift, GPS clock correction, Shapiro delay |
+| `src/lense_thirring.py` | Frame-dragging & geodetic precession (Gravity Probe B) |
 | `src/pulsar.py` | Hulse-Taylor binary-pulsar orbital decay (first GW evidence) |
 | `src/friedmann.py` | Friedmann cosmology: scale factor a(t), expansion eras, age of the universe |
 | `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
@@ -133,6 +134,7 @@ ruins a long non-symplectic integration.
 | `examples/eddington_demo.py` | L_Edd across masses + Eddington-limited growth to a quasar |
 | `examples/hohmann_demo.py` | LEO->GEO & Earth->Mars delta-v budgets + transfer diagram |
 | `examples/gr_time_demo.py` | Pound-Rebka, GPS gain, Sun redshift + Shapiro-delay curve |
+| `examples/lense_thirring_demo.py` | GP-B geodetic & frame-drag rates vs orbit radius |
 | `examples/pulsar_demo.py` | Hulse-Taylor dP/dt vs measured + the periastron-shift parabola |
 | `examples/friedmann_demo.py` | Scale-factor curves for radiation/matter/dark-energy/LCDM |
 | `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
@@ -565,6 +567,25 @@ Blandford-Znajek jets), and splits the ISCO: prograde orbits reach down toward
 of the accretion disk, measuring it is how astronomers weigh black-hole spin.
 The tests check the Schwarzschild limit, the extremal `1M`/`9M` values, the
 monotonic spin dependence, and cosmic censorship (`a > M` is rejected).
+
+## Frame-dragging: Gravity Probe B
+
+A gyroscope in orbit precesses two ways in general relativity, both measured by
+Gravity Probe B. `lense_thirring.py`:
+
+```
+$ python examples/lense_thirring_demo.py examples/output
+
+  effect                     predicted    measured
+  geodetic (de Sitter)      6638 mas/yr        6602
+  frame-dragging (LT)       41.1 mas/yr        37.2
+```
+
+Geodetic precession comes from the curvature of space the gyro is carried
+through (`~ r^{-5/2}`); frame-dragging comes from Earth's rotation twisting
+spacetime around it (`~ r^{-3}`). The frame-dragging term is ~180x smaller, which
+is why measuring it needed near-perfect gyroscopes in a dedicated satellite. The
+tests reproduce the ~6600 and ~40 mas/yr values and both radius scalings.
 
 ## Gravitational time: redshift, GPS, and the Shapiro delay
 
