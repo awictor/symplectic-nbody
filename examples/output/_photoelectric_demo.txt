@@ -1,0 +1,18 @@
+Photoelectric effect: K_max = h f - phi (Einstein 1905)
+
+  slope of V_stop vs f is h/e = 4.136e-15 V/Hz (universal)
+
+       metal  phi (eV)   threshold  V_stop @254nm  V_stop @400nm
+  --------------------------------------------------------------
+      cesium      2.14       579nm         2.74 V         0.96 V
+      sodium      2.28       544nm         2.60 V         0.82 V
+        zinc      4.31       288nm         0.57 V           none
+    platinum      6.35       195nm           none           none
+
+  Below the threshold frequency, no electrons come off however bright the
+  light -- energy comes in photon lumps, not a continuous wave. Above it, the
+  stopping voltage climbs linearly with frequency at the SAME slope h/e for
+  every metal; only the intercept (the work function) differs. Millikan
+  measured exactly this line and pinned down Planck's constant.
+
+  wrote examples/output\photoelectric.svg

@@ -128,6 +128,7 @@ ruins a long non-symplectic integration.
 | `src/relativistic_doppler.py` | Relativistic Doppler: longitudinal, transverse & redshift-velocity |
 | `src/de_broglie.py` | The de Broglie wavelength: matter as waves |
 | `src/bohr.py` | The Bohr model: the hydrogen spectrum from a quantized orbit |
+| `src/photoelectric.py` | The photoelectric effect: light quantized into photons |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -247,6 +248,7 @@ ruins a long non-symplectic integration.
 | `examples/relativistic_doppler_demo.py` | Receding/approaching/transverse z per speed + the z(beta) curves |
 | `examples/de_broglie_demo.py` | Matter wavelengths electron-to-baseball + the lambda(E) curves |
 | `examples/bohr_demo.py` | Energy levels & series wavelengths + the level diagram |
+| `examples/photoelectric_demo.py` | Threshold & stopping voltage per metal + the V_stop(f) lines |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2747,6 +2749,31 @@ fine-structure constant `v/c ~ 1/137`. Though superseded by full quantum mechani
 gets the hydrogen energies exactly right. The tests verify the -13.6 eV ground state, the
 52.9 pm Bohr radius, the 656.3 nm H-alpha and 121.6 nm Lyman-alpha lines, the `-1/n^2` and
 `n^2` scalings, and the 1/137 fine-structure constant.
+
+## The photoelectric effect: light in photon lumps
+
+Light ejects electrons from a metal only above a threshold frequency, no matter how bright a
+redder beam is -- Einstein's proof that light arrives in photons of energy hf.
+`photoelectric.py`:
+
+```
+$ python examples/photoelectric_demo.py examples/output
+
+       metal  phi (eV)   threshold  V_stop @254nm  V_stop @400nm
+  --------------------------------------------------------------
+      cesium      2.14       579nm         2.74 V         0.96 V
+      sodium      2.28       544nm         2.60 V         0.82 V
+        zinc      4.31       288nm         0.57 V           none
+    platinum      6.35       195nm           none           none
+```
+
+One photon gives all its energy to one electron, `K_max = hf - phi`, so below the threshold
+`f0 = phi/h` nothing is emitted and above it the stopping voltage `V_stop = K_max/e` climbs
+linearly with frequency at the universal slope `h/e` -- only the intercept (the work function)
+differs between metals. Brighter light ejects more electrons, not faster ones. Millikan's
+measurement of that line pinned down Planck's constant. The tests verify the sodium threshold
+wavelength, the no-emission-below-threshold rule, the linear stopping voltage, the slope being
+Planck's constant independent of metal, and the work-function ordering.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

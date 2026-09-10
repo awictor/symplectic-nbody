@@ -170,6 +170,7 @@ def main():
     import relativistic_doppler_demo
     import de_broglie_demo
     import bohr_demo
+    import photoelectric_demo
 
     import plot_orbits
 
@@ -309,6 +310,7 @@ def main():
     rdopp_txt = run("relativistic_doppler_demo", relativistic_doppler_demo.main, True)
     debroglie_txt = run("de_broglie_demo", de_broglie_demo.main, True)
     bohr_txt = run("bohr_demo", bohr_demo.main, True)
+    photoel_txt = run("photoelectric_demo", photoelectric_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1465,6 +1467,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("bohr.svg"), "the hydrogen energy levels with the Lyman/Balmer/Paschen transitions")
             + f'<div class="card">{pre(bohr_txt)}</div>'
+            + '</div>'),
+        section(
+            "The photoelectric effect",
+            "Light ejects electrons from a metal only above a threshold frequency, no "
+            "matter how bright a redder beam is -- Einstein's proof that light comes in "
+            "photons of energy hf. One photon gives one electron K_max = hf - phi, so "
+            "the stopping voltage climbs linearly with frequency at the universal slope "
+            "h/e; only the intercept (the work function) differs between metals. "
+            "Millikan measured that line and pinned down Planck's constant.",
+            '<div class="grid">'
+            + svg_card(out("photoelectric.svg"), "stopping voltage vs frequency: parallel lines of slope h/e")
+            + f'<div class="card">{pre(photoel_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
