@@ -123,6 +123,7 @@ def main():
     import bremsstrahlung_demo
     import pair_production_demo
     import axial_precession_demo
+    import alfven_demo
 
     import plot_orbits
 
@@ -215,6 +216,7 @@ def main():
     brems_txt = run("bremsstrahlung_demo", bremsstrahlung_demo.main, True)
     pairprod_txt = run("pair_production_demo", pair_production_demo.main, True)
     axprec_txt = run("axial_precession_demo", axial_precession_demo.main, True)
+    alfven_txt = run("alfven_demo", alfven_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -808,6 +810,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("axial_precession.svg"), "the circle the celestial pole traces over a Great Year")
             + f'<div class="card">{pre(axprec_txt)}</div>'
+            + '</div>'),
+        section(
+            "Alfven waves & the magnetized solar wind",
+            "A magnetic field threading a plasma behaves like a set of tensioned "
+            "strings: pluck the field lines and they spring back at the Alfven "
+            "speed v_A = B / sqrt(mu0 rho). The plasma beta = p_gas/p_mag says who "
+            "is in charge -- beta << 1 in the field-dominated corona, beta > 1 in "
+            "gas-dominated interiors. The solar wind starts sub-Alfvenic (the Sun's "
+            "field co-rotates and brakes it), then crosses the Alfven surface near "
+            "~15 R_sun and coasts out decoupled from the Sun's spin.",
+            '<div class="grid">'
+            + svg_card(out("alfven.svg"), "wind speed overtaking the Alfven speed at the Alfven surface")
+            + f'<div class="card">{pre(alfven_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

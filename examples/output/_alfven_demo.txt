@@ -1,0 +1,18 @@
+Alfven waves in magnetized plasma: v_A = B / sqrt(mu0 rho)
+
+             environment     B (T)    n (/m^3)  v_A (km/s)      beta
+  ------------------------------------------------------------------
+           active corona   1.0e-02     1.0e+15      6897.6    0.0007
+            quiet corona   1.0e-03     1.0e+14      2181.2    0.0035
+         solar wind 1 AU   5.0e-09     5.0e+06        48.8    0.6940
+                warm ISM   5.0e-10     1.0e+06        10.9    1.1104
+
+  beta < 1 (corona): magnetic tension rules -- the field channels the
+  plasma and stores the energy that heats the corona and drives flares.
+  beta > 1 (dense interiors): gas pressure drags the field around.
+  The solar wind starts sub-Alfvenic (Sun's field co-rotates the plasma
+  and brakes the spin), then crosses the Alfven surface near ~10-20 R_sun
+  and coasts out super-Alfvenic -- decoupled from the Sun's rotation
+  (Parker Solar Probe crossed the real surface near ~15-20 R_sun).
+
+  wrote examples/output\alfven.svg

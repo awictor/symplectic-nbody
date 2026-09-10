@@ -81,6 +81,7 @@ ruins a long non-symplectic integration.
 | `src/bremsstrahlung.py` | Free-free X-ray emissivity & cluster-gas cooling time |
 | `src/pair_production.py` | Photon-photon pair production & the gamma-ray horizon |
 | `src/axial_precession.py` | Precession of the equinoxes: the 26,000-year luni-solar wobble |
+| `src/alfven.py` | Alfven waves, plasma beta & the Alfven surface of the solar wind |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -153,6 +154,7 @@ ruins a long non-symplectic integration.
 | `examples/bremsstrahlung_demo.py` | Emissivity & cooling time vs density (cooling flows) |
 | `examples/pair_production_demo.py` | Threshold gamma energy vs background photon energy |
 | `examples/axial_precession_demo.py` | Sun/Moon precession rates + the wandering-pole circle |
+| `examples/alfven_demo.py` | v_A & beta across environments + the Alfven-surface crossing |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1372,6 +1374,33 @@ is ~20 minutes shorter than the sidereal year, and why the equinox has slipped a
 zodiac sign since the constellations were named. The tests verify the arcsec rate, the
 period, the Moon-beats-Sun ratio, the `M/r^3` scaling, and the `cos(obliquity)`
 dependence.
+
+## Alfven waves: the magnetized plasma's plucked string
+
+A magnetic field threading a conducting plasma acts like tensioned strings -- displace
+the field lines and magnetic tension springs them back, with the frozen-in plasma
+supplying the inertia. The transverse wave runs along `B` at the Alfven speed
+`v_A = B / sqrt(mu0 rho)`, the magnetic analogue of the sound speed. `alfven.py`:
+
+```
+$ python examples/alfven_demo.py examples/output
+
+             environment     B (T)    n (/m^3)  v_A (km/s)      beta
+  ------------------------------------------------------------------
+           active corona   1.0e-02     1.0e+15      6897.6    0.0007
+            quiet corona   1.0e-03     1.0e+14      2181.2    0.0035
+         solar wind 1 AU   5.0e-09     5.0e+06        48.8    0.6940
+                warm ISM   5.0e-10     1.0e+06        10.9    1.1104
+```
+
+The plasma beta `= p_gas/p_mag` says who is in charge: `beta << 1` in the corona means
+the field channels the plasma and stores the energy that heats it and drives flares;
+`beta > 1` in dense interiors means gas pressure drags the field around. The solar wind
+starts sub-Alfvenic -- so the Sun's field co-rotates the plasma and magnetically brakes
+the spin -- then crosses the Alfven surface near ~15 R_sun (where Parker Solar Probe
+found it) and coasts out super-Alfvenic, decoupled from the Sun's rotation. The tests
+verify the coronal speed, the field- vs gas-dominated regimes, the super-Alfvenic wind,
+and the `v_A ~ B`, `v_A ~ 1/sqrt(rho)`, `beta ~ 1/B^2` scalings.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
