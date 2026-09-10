@@ -135,6 +135,7 @@ def main():
     import fermi_acceleration_demo
     import opacity_demo
     import brunt_vaisala_demo
+    import ram_pressure_demo
 
     import plot_orbits
 
@@ -239,6 +240,7 @@ def main():
     fermi_txt = run("fermi_acceleration_demo", fermi_acceleration_demo.main, True)
     opacity_txt = run("opacity_demo", opacity_demo.main, True)
     brunt_txt = run("brunt_vaisala_demo", brunt_vaisala_demo.main, True)
+    rampress_txt = run("ram_pressure_demo", ram_pressure_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -977,6 +979,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("brunt_vaisala.svg"), "N^2 vs lapse rate, with the convective region beyond adiabatic shaded")
             + f'<div class="card">{pre(brunt_txt)}</div>'
+            + '</div>'),
+        section(
+            "Ram-pressure stripping",
+            "A galaxy plunging through a cluster's hot gas feels a wind of ram "
+            "pressure rho v^2. The Gunn-Gott criterion strips its interstellar gas "
+            "wherever that wind beats the disk's gravitational hold "
+            "2 pi G Sigma_star Sigma_gas, so the galaxy keeps only the gas inside a "
+            "stripping radius. In a rich cluster a Milky-Way-like spiral is stripped "
+            "to a few kpc in one pass -- quenching it into a gas-poor S0.",
+            '<div class="grid">'
+            + svg_card(out("ram_pressure.svg"), "surviving gas radius vs infall speed for a range of ICM densities")
+            + f'<div class="card">{pre(rampress_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

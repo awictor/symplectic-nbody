@@ -93,6 +93,7 @@ ruins a long non-symplectic integration.
 | `src/fermi_acceleration.py` | Diffusive shock acceleration & the universal E^(-2) cosmic-ray spectrum |
 | `src/opacity.py` | Stellar opacity: electron scattering, Kramers law & the photon mean free path |
 | `src/brunt_vaisala.py` | Brunt-Vaisala buoyancy frequency & the Schwarzschild convection criterion |
+| `src/ram_pressure.py` | Ram-pressure stripping: how clusters strip spirals of their gas |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -177,6 +178,7 @@ ruins a long non-symplectic integration.
 | `examples/fermi_acceleration_demo.py` | Spectral index vs Mach + power-law spectra toward p=2 |
 | `examples/opacity_demo.py` | Opacity by region + the Kramers/electron-floor T profile |
 | `examples/brunt_vaisala_demo.py` | N & buoyancy period by layer + the N^2-vs-lapse-rate curve |
+| `examples/ram_pressure_demo.py` | Surviving gas radius by environment + the R_strip(v) curves |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1738,6 +1740,34 @@ it convects. That sign change is precisely the Schwarzschild convection criterio
 decides how stars and atmospheres carry heat. The tests verify the lapse rate, the stable
 subadiabatic and isothermal layers, the superadiabatic convective instability, the absence
 of a real oscillation frequency when unstable, and the `2 pi / N` period.
+
+## Ram-pressure stripping: how clusters strip spirals of their gas
+
+A galaxy plunging through the hot intracluster medium feels a wind of ram pressure
+`P = rho_icm v^2`. The Gunn-Gott criterion strips its interstellar gas wherever that wind
+beats the disk's gravitational hold `2 pi G Sigma_star Sigma_gas`. `ram_pressure.py`:
+
+```
+$ python examples/ram_pressure_demo.py examples/output
+
+             environment   n (/cc)  v (km/s)  R_strip (kpc)
+  ---------------------------------------------------------
+        field / isolated     1e-05       300          16.62
+              poor group     1e-04       500          11.63
+       cluster outskirts     5e-04      1000           7.14
+            rich cluster     1e-03      1500           4.88
+        dense core, fast     3e-03      2000           2.37
+```
+
+A galaxy keeps only the gas inside the stripping radius, where its self-gravity still wins;
+for exponential disks that radius is `R_strip = (h/2) ln(2 pi G Sigma0_s Sigma0_g / rho v^2)`.
+Because the ram pressure scales as `rho v^2` and clusters are both dense and dynamically hot
+(v ~ 1000-2000 km/s), an infalling Milky-Way-like spiral is stripped down to a few kpc on a
+single pass -- its star formation quenches from the outside in, helping turn field spirals
+into the gas-poor S0 and elliptical galaxies that crowd cluster cores. The tests verify the
+`rho v^2` scaling, a finite partial-strip radius in a cluster, inner gas surviving while the
+outskirts go, deeper stripping in harsher environments, and full stripping (R=0) in extreme
+conditions.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,19 @@
+Ram-pressure stripping (Gunn-Gott): rho_icm v^2 > 2 pi G Sigma_s Sigma_g
+
+  Milky-Way-like disk (scale length 3 kpc); gas kept inside R_strip:
+
+             environment   n (/cc)  v (km/s)  R_strip (kpc)
+  ---------------------------------------------------------
+        field / isolated     1e-05       300          16.62
+              poor group     1e-04       500          11.63
+       cluster outskirts     5e-04      1000           7.14
+            rich cluster     1e-03      1500           4.88
+        dense core, fast     3e-03      2000           2.37
+
+  A disk keeps only the gas inside R_strip, where its self-gravity still
+  beats the cluster wind. In a rich cluster a Milky-Way-like galaxy is
+  stripped down to a few kpc on a single pass -- its star formation
+  quenches from the outside in, helping turn infalling spirals into the
+  gas-poor S0s and ellipticals that crowd cluster cores.
+
+  wrote examples/output\ram_pressure.svg
