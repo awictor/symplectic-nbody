@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.23       12.25      0.8x
-   400          37.41       38.37      1.0x
-   800         147.38      114.15      1.3x
-  1600         661.49      377.77      1.8x
-  3200        2661.75     1069.88      2.5x
+   200           8.95       12.16      0.7x
+   400          36.15       37.79      1.0x
+   800         145.48      109.91      1.3x
+  1600         684.12      414.49      1.7x
+  3200        2662.77     1135.56      2.3x
 
-empirical scaling exponent  direct ~ N^2.05   barnes-hut ~ N^1.62
+empirical scaling exponent  direct ~ N^2.07   barnes-hut ~ N^1.65
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -46276,6 +46276,68 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   every colour, so the film looks BLACK -- the classic sign it is about to pop.
 
   wrote examples/output\thin_film.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Malus&#x27;s law: dialling light down with polarizers</h2>
+    <p class="blurb">A polarizer passes only the field component along its axis, so linearly polarized light emerges at I = I0 cos^2(theta) -- Malus's law. Unpolarized light loses exactly half through any one polarizer, and two crossed at 90 degrees pass nothing (the dark LCD pixel); yet slipping a third at 45 degrees between them rescues I0/8, light where there was none. A stack of many slightly rotated polarizers drags the polarization around while passing nearly all the light -- an optical quantum Zeno effect -- and wave plates rotate it losslessly by retarding one component.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<text x="20" y="34" fill="#e6edf3" font-size="18">Malus&#39;s law and the three-polarizer trick</text>
+<text x="20" y="52" fill="#8b949e" font-size="12">I = I0 cos^2(theta) (top); light rescued by a middle polarizer between crossed pair (bottom)</text>
+<line x1="72" y1="348.40000000000003" x2="648" y2="348.40000000000003" stroke="#8b949e" stroke-width="1.4"/>
+<line x1="72" y1="348.40000000000003" x2="72" y2="116" stroke="#8b949e" stroke-width="1.4"/>
+<text x="72.0" y="362.4" fill="#8b949e" font-size="9" text-anchor="middle">0</text>
+<text x="216.0" y="362.4" fill="#8b949e" font-size="9" text-anchor="middle">45</text>
+<text x="360.0" y="362.4" fill="#8b949e" font-size="9" text-anchor="middle">90</text>
+<text x="504.0" y="362.4" fill="#8b949e" font-size="9" text-anchor="middle">135</text>
+<text x="648.0" y="362.4" fill="#8b949e" font-size="9" text-anchor="middle">180</text>
+<text x="66.0" y="351.4" fill="#8b949e" font-size="9" text-anchor="end">0.0</text>
+<text x="66.0" y="235.2" fill="#8b949e" font-size="9" text-anchor="end">0.5</text>
+<text x="66.0" y="119.0" fill="#8b949e" font-size="9" text-anchor="end">1.0</text>
+<polyline points="72.0,116.0 75.2,116.1 78.4,116.3 81.6,116.6 84.8,117.1 88.0,117.8 91.2,118.5 94.4,119.5 97.6,120.5 100.8,121.7 104.0,123.0 107.2,124.5 110.4,126.0 113.6,127.8 116.8,129.6 120.0,131.6 123.2,133.7 126.4,135.9 129.6,138.2 132.8,140.6 136.0,143.2 139.2,145.8 142.4,148.6 145.6,151.5 148.8,154.4 152.0,157.5 155.2,160.7 158.4,163.9 161.6,167.2 164.8,170.6 168.0,174.1 171.2,177.6 174.4,181.3 177.6,184.9 180.8,188.7 184.0,192.5 187.2,196.3 190.4,200.2 193.6,204.1 196.8,208.0 200.0,212.0 203.2,216.0 206.4,220.1 209.6,224.1 212.8,228.1 216.0,232.2 219.2,236.3 222.4,240.3 225.6,244.3 228.8,248.4 232.0,252.4 235.2,256.4 238.4,260.3 241.6,264.2 244.8,268.1 248.0,271.9 251.2,275.7 254.4,279.5 257.6,283.1 260.8,286.8 264.0,290.3 267.2,293.8 270.4,297.2 273.6,300.5 276.8,303.7 280.0,306.9 283.2,310.0 286.4,312.9 289.6,315.8 292.8,318.6 296.0,321.2 299.2,323.8 302.4,326.2 305.6,328.5 308.8,330.7 312.0,332.8 315.2,334.8 318.4,336.6 321.6,338.4 324.8,339.9 328.0,341.4 331.2,342.7 334.4,343.9 337.6,344.9 340.8,345.9 344.0,346.6 347.2,347.3 350.4,347.8 353.6,348.1 356.8,348.3 360.0,348.4 363.2,348.3 366.4,348.1 369.6,347.8 372.8,347.3 376.0,346.6 379.2,345.9 382.4,344.9 385.6,343.9 388.8,342.7 392.0,341.4 395.2,339.9 398.4,338.4 401.6,336.6 404.8,334.8 408.0,332.8 411.2,330.7 414.4,328.5 417.6,326.2 420.8,323.8 424.0,321.2 427.2,318.6 430.4,315.8 433.6,312.9 436.8,310.0 440.0,306.9 443.2,303.7 446.4,300.5 449.6,297.2 452.8,293.8 456.0,290.3 459.2,286.8 462.4,283.1 465.6,279.5 468.8,275.7 472.0,271.9 475.2,268.1 478.4,264.2 481.6,260.3 484.8,256.4 488.0,252.4 491.2,248.4 494.4,244.3 497.6,240.3 500.8,236.3 504.0,232.2 507.2,228.1 510.4,224.1 513.6,220.1 516.8,216.0 520.0,212.0 523.2,208.0 526.4,204.1 529.6,200.2 532.8,196.3 536.0,192.5 539.2,188.7 542.4,184.9 545.6,181.3 548.8,177.6 552.0,174.1 555.2,170.6 558.4,167.2 561.6,163.9 564.8,160.7 568.0,157.5 571.2,154.4 574.4,151.5 577.6,148.6 580.8,145.8 584.0,143.2 587.2,140.6 590.4,138.2 593.6,135.9 596.8,133.7 600.0,131.6 603.2,129.6 606.4,127.8 609.6,126.0 612.8,124.5 616.0,123.0 619.2,121.7 622.4,120.5 625.6,119.5 628.8,118.5 632.0,117.8 635.2,117.1 638.4,116.6 641.6,116.3 644.8,116.1 648.0,116.0" fill="none" stroke="#4dabf7" stroke-width="2.6"/>
+<circle cx="216.0" cy="232.2" r="4" fill="#ffd43b"/>
+<text x="222.0" y="226.2" fill="#ffd43b" font-size="10">45 deg: half</text>
+<circle cx="360.0" cy="348.4" r="4" fill="#ff6b6b"/>
+<text x="366.0" y="342.4" fill="#ff6b6b" font-size="10">90 deg: dark</text>
+<text x="360.0" y="376.4" fill="#8b949e" font-size="10" text-anchor="middle">polarizer angle theta (deg)</text>
+<line x1="72" y1="648" x2="648" y2="648" stroke="#8b949e" stroke-width="1.4"/>
+<line x1="72" y1="648" x2="72" y2="414.40000000000003" stroke="#8b949e" stroke-width="1.4"/>
+<text x="72.0" y="662.0" fill="#8b949e" font-size="9" text-anchor="middle">0</text>
+<text x="168.0" y="662.0" fill="#8b949e" font-size="9" text-anchor="middle">15</text>
+<text x="264.0" y="662.0" fill="#8b949e" font-size="9" text-anchor="middle">30</text>
+<text x="360.0" y="662.0" fill="#8b949e" font-size="9" text-anchor="middle">45</text>
+<text x="456.0" y="662.0" fill="#8b949e" font-size="9" text-anchor="middle">60</text>
+<text x="552.0" y="662.0" fill="#8b949e" font-size="9" text-anchor="middle">75</text>
+<text x="648.0" y="662.0" fill="#8b949e" font-size="9" text-anchor="middle">90</text>
+<polyline points="72.0,648.0 78.4,647.7 84.8,646.9 91.2,645.4 97.6,643.5 104.0,641.0 110.4,637.9 116.8,634.3 123.2,630.3 129.6,625.7 136.0,620.7 142.4,615.2 148.8,609.4 155.2,603.1 161.6,596.5 168.0,589.6 174.4,582.4 180.8,575.0 187.2,567.3 193.6,559.5 200.0,551.5 206.4,543.4 212.8,535.3 219.2,527.1 225.6,519.0 232.0,510.9 238.4,502.9 244.8,495.1 251.2,487.4 257.6,480.0 264.0,472.8 270.4,465.9 276.8,459.3 283.2,453.0 289.6,447.2 296.0,441.7 302.4,436.7 308.8,432.1 315.2,428.1 321.6,424.5 328.0,421.4 334.4,418.9 340.8,417.0 347.2,415.5 353.6,414.7 360.0,414.4 366.4,414.7 372.8,415.5 379.2,417.0 385.6,418.9 392.0,421.4 398.4,424.5 404.8,428.1 411.2,432.1 417.6,436.7 424.0,441.7 430.4,447.2 436.8,453.0 443.2,459.3 449.6,465.9 456.0,472.8 462.4,480.0 468.8,487.4 475.2,495.1 481.6,502.9 488.0,510.9 494.4,519.0 500.8,527.1 507.2,535.3 513.6,543.4 520.0,551.5 526.4,559.5 532.8,567.3 539.2,575.0 545.6,582.4 552.0,589.6 558.4,596.5 564.8,603.1 571.2,609.4 577.6,615.2 584.0,620.7 590.4,625.7 596.8,630.3 603.2,634.3 609.6,637.9 616.0,641.0 622.4,643.5 628.8,645.4 635.2,646.9 641.6,647.7 648.0,648.0" fill="none" stroke="#06d6a0" stroke-width="2.6"/>
+<circle cx="360.0" cy="414.4" r="4" fill="#ffd43b"/>
+<text x="366.0" y="408.4" fill="#ffd43b" font-size="10">peak I0/8 at 45 deg</text>
+<text x="360.0" y="676.0" fill="#8b949e" font-size="10" text-anchor="middle">middle-polarizer angle (deg), outer pair crossed at 0 &amp; 90</text>
+<text x="78.0" y="408.4" fill="#8b949e" font-size="10">transmitted intensity (crossed outer pair alone = 0)</text>
+</svg><figcaption>the cos^2 transmission law and the three-polarizer rescue vs middle angle</figcaption></figure><div class="card"><pre>Malus&#x27;s law I = I0 cos^2(theta): a polarizer passes the aligned field component
+
+     angle   transmission
+      0 deg         1.000
+     30 deg         0.750
+     45 deg         0.500
+     60 deg         0.250
+     90 deg         0.000
+
+  Crossed polarizers (90 deg apart) pass nothing: 0.000
+  ...but a third polarizer at 45 deg between them rescues 0.125 of the input
+  (I0/8) -- light reappears where two polarizers alone gave darkness.
+
+  Rotating a stack of N polarizers through 90 deg (quantum-Zeno-like):
+    N =   1  -&gt;  throughput 0.000
+    N =   2  -&gt;  throughput 0.250
+    N =   5  -&gt;  throughput 0.605
+    N =  20  -&gt;  throughput 0.884
+    N = 100  -&gt;  throughput 0.976
+  With one polarizer a 90 deg turn kills the light; with many tiny steps it
+  survives -- each cos^2 is nearly 1, so the polarization is dragged around intact.
+
+  wrote examples/output\malus.svg</pre></div></div>
   </section>
 
   <section>

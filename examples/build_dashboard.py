@@ -219,6 +219,7 @@ def main():
     import diffraction_limit_demo
     import snell_demo
     import thin_film_demo
+    import malus_demo
 
     import plot_orbits
 
@@ -407,6 +408,7 @@ def main():
     diffraction_limit_txt = run("diffraction_limit_demo", diffraction_limit_demo.main, True)
     snell_txt = run("snell_demo", snell_demo.main, True)
     thin_film_txt = run("thin_film_demo", thin_film_demo.main, True)
+    malus_txt = run("malus_demo", malus_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2186,6 +2188,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("thin_film.svg"), "soap-film bright colour vs thickness, and Newton's rings under a lens")
             + f'<div class="card">{pre(thin_film_txt)}</div>'
+            + '</div>'),
+        section(
+            "Malus's law: dialling light down with polarizers",
+            "A polarizer passes only the field component along its axis, so linearly polarized "
+            "light emerges at I = I0 cos^2(theta) -- Malus's law. Unpolarized light loses "
+            "exactly half through any one polarizer, and two crossed at 90 degrees pass nothing "
+            "(the dark LCD pixel); yet slipping a third at 45 degrees between them rescues I0/8, "
+            "light where there was none. A stack of many slightly rotated polarizers drags the "
+            "polarization around while passing nearly all the light -- an optical quantum Zeno "
+            "effect -- and wave plates rotate it losslessly by retarding one component.",
+            '<div class="grid">'
+            + svg_card(out("malus.svg"), "the cos^2 transmission law and the three-polarizer rescue vs middle angle")
+            + f'<div class="card">{pre(malus_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

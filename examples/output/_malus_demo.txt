@@ -1,0 +1,23 @@
+Malus's law I = I0 cos^2(theta): a polarizer passes the aligned field component
+
+     angle   transmission
+      0 deg         1.000
+     30 deg         0.750
+     45 deg         0.500
+     60 deg         0.250
+     90 deg         0.000
+
+  Crossed polarizers (90 deg apart) pass nothing: 0.000
+  ...but a third polarizer at 45 deg between them rescues 0.125 of the input
+  (I0/8) -- light reappears where two polarizers alone gave darkness.
+
+  Rotating a stack of N polarizers through 90 deg (quantum-Zeno-like):
+    N =   1  ->  throughput 0.000
+    N =   2  ->  throughput 0.250
+    N =   5  ->  throughput 0.605
+    N =  20  ->  throughput 0.884
+    N = 100  ->  throughput 0.976
+  With one polarizer a 90 deg turn kills the light; with many tiny steps it
+  survives -- each cos^2 is nearly 1, so the polarization is dragged around intact.
+
+  wrote examples/output\malus.svg

@@ -177,6 +177,7 @@ ruins a long non-symplectic integration.
 | `src/diffraction_limit.py` | Diffraction limit: Rayleigh resolution, Abbe limit, grating resolving power |
 | `src/snell.py` | Snell's law: refraction, critical angle/TIR, Brewster, fibre numerical aperture |
 | `src/thin_film.py` | Thin-film interference: bubble colours, AR coatings, Newton's rings |
+| `src/malus.py` | Malus's law: polarizer transmission, three-polarizer trick, wave plates |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -345,6 +346,7 @@ ruins a long non-symplectic integration.
 | `examples/diffraction_limit_demo.py` | Per-instrument resolution table + the Rayleigh-limit figure |
 | `examples/snell_demo.py` | Per-medium critical/Brewster table + the refraction/TIR ray figure |
 | `examples/thin_film_demo.py` | Soap-colour/AR-coating table + colour-vs-thickness & Newton's-rings figure |
+| `examples/malus_demo.py` | Transmission/rescue/stack table + cos^2 & three-polarizer figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4054,6 +4056,29 @@ every lens (MgF2, ~100 nm). Newton's rings are the same fringes in the air gap u
 with dark-ring radii `sqrt(m lambda R)`. The tests reproduce the 100 nm soap film's green
 reflection, the destructive condition, the MgF2 quarter-wave thickness and ideal index, and
 the `sqrt(m)` Newton's-ring spacing.
+
+## Malus's law: dialling light down with polarizers
+
+A polarizer passes light by the square of a cosine. `malus.py`:
+
+```
+$ python examples/malus_demo.py examples/output
+
+  angle   transmission        crossed (90 deg): 0.000
+  45 deg  0.500               + 45-deg middle:  0.125 (I0/8)
+  90 deg  0.000               100-step stack:   0.976
+```
+
+Malus's law `I = I0 cos^2(theta)` gives the intensity of linearly polarized light through a
+polarizer at angle `theta` to its axis. Unpolarized light loses exactly half through any one
+polarizer, and two crossed at 90 degrees pass nothing -- yet inserting a third at 45 degrees
+between them rescues `I0/8`, restoring light where the outer pair alone gave darkness. A stack
+of many slightly rotated polarizers drags the polarization around while passing nearly all the
+light (throughput `(cos^2(theta/N))^N -> 1`), an optical quantum Zeno effect, and wave plates
+rotate polarization losslessly by retarding one component (`2 pi delta_n t/lambda`: `pi` is a
+half-wave plate, `pi/2` a quarter-wave). The tests reproduce the cos^2 values, the
+half-through-one and crossed-to-zero results, the `I0/8` three-polarizer rescue, the rotating-
+stack throughput, the crossed-polarizer extinction, and the half/quarter-wave retardances.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
