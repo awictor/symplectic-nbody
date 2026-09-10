@@ -133,6 +133,7 @@ ruins a long non-symplectic integration.
 | `src/tunneling.py` | Quantum tunneling: barrier transmission, WKB & the STM |
 | `src/particle_box.py` | The particle in a box: quantized levels & quantum-dot colour |
 | `src/harmonic_oscillator.py` | The quantum harmonic oscillator: evenly-spaced levels & zero-point energy |
+| `src/rutherford.py` | Rutherford scattering: the Coulomb cross section that found the nucleus |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -257,6 +258,7 @@ ruins a long non-symplectic integration.
 | `examples/tunneling_demo.py` | Transmission by width/height + STM gap sensitivity + the T(L) curves |
 | `examples/particle_box_demo.py` | Levels & quantum-dot colours + the level/wavefunction diagram |
 | `examples/harmonic_oscillator_demo.py` | Vibrational quanta per molecule + the parabolic-well level diagram |
+| `examples/rutherford_demo.py` | Cross section & impact parameter by angle + the 1/sin^4 curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2884,6 +2886,32 @@ uncertainty principle and is physically real -- it keeps helium liquid at absolu
 chemical bond energies, and sets each field mode's vacuum energy. The tests verify the equal
 level spacing, the nonzero zero-point energy, the CO vibrational quantum and 4.6-micron line,
 the `sqrt(k/m)` frequency, and the spring-constant round-trip.
+
+## Rutherford scattering: finding the nucleus
+
+Firing alpha particles at gold foil, a few bounced almost straight back -- impossible off
+diffuse charge. `rutherford.py`:
+
+```
+$ python examples/rutherford_demo.py examples/output
+
+     angle   dsigma/dOmega (rel)    impact b (fm)
+  ----------------------------------------------
+       10d              4.33e+03           260.1
+       30d                  55.7            84.9
+       90d                     1            22.8
+      150d                 0.287             6.1
+      179d                  0.25             0.2
+```
+
+The Coulomb cross section `dsigma/dOmega = (Z1 Z2 e^2 / 16 pi eps0 E)^2 / sin^4(theta/2)`
+soars at small angles (grazing passes) but stays nonzero at 180 degrees -- exactly the rare
+hard bounces observed, which are impossible off spread-out charge and revealed a tiny dense
+nucleus. The impact parameter maps to angle via `b = (k/2E) cot(theta/2)`, and the head-on
+closest approach `r_min = Z1 Z2 e^2 / (4 pi eps0 E)` is ~45 fm for 5 MeV alphas on gold --
+Rutherford's upper bound on the nuclear size. The tests verify the `1/sin^4` dependence, the
+nonzero back-scatter, the small-angle divergence, the ~45 fm closest approach, the
+impact-angle inversion, and the `1/E^2` cross-section scaling.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

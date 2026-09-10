@@ -175,6 +175,7 @@ def main():
     import tunneling_demo
     import particle_box_demo
     import harmonic_oscillator_demo
+    import rutherford_demo
 
     import plot_orbits
 
@@ -319,6 +320,7 @@ def main():
     tunnel_txt = run("tunneling_demo", tunneling_demo.main, True)
     pbox_txt = run("particle_box_demo", particle_box_demo.main, True)
     sho_txt = run("harmonic_oscillator_demo", harmonic_oscillator_demo.main, True)
+    ruth_txt = run("rutherford_demo", rutherford_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1534,6 +1536,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("harmonic_oscillator.svg"), "equally-spaced levels inside the parabolic well")
             + f'<div class="card">{pre(sho_txt)}</div>'
+            + '</div>'),
+        section(
+            "Rutherford scattering",
+            "Firing alphas at gold foil, a few bounced almost straight back -- "
+            "impossible off diffuse charge. Rutherford's Coulomb cross section "
+            "dsigma/dOmega ~ 1/sin^4(theta/2) soars at small angles but stays nonzero "
+            "at 180 degrees, exactly those hard bounces, revealing a tiny dense "
+            "nucleus. The head-on closest approach (~45 fm for 5 MeV alphas on gold) "
+            "bounded the nuclear size.",
+            '<div class="grid">'
+            + svg_card(out("rutherford.svg"), "the 1/sin^4 angular distribution with nonzero back-scatter")
+            + f'<div class="card">{pre(ruth_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

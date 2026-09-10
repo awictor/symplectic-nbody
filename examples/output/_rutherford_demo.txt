@@ -1,0 +1,21 @@
+Rutherford scattering: dsigma/dOmega ~ 1/sin^4(theta/2)
+
+  5 MeV alpha on gold: head-on closest approach = 45.5 fm
+
+     angle   dsigma/dOmega (rel)   impact b (fm)
+  ----------------------------------------------
+       10d              4.33e+03           260.1
+       30d                  55.7            84.9
+       60d                     4            39.4
+       90d                     1            22.8
+      120d                 0.444            13.1
+      150d                 0.287             6.1
+      179d                  0.25             0.2
+
+  The cross section soars at small angles (grazing passes barely deflect)
+  and falls toward back-scattering -- but stays NONZERO at 180 degrees. Those
+  rare hard bounces are impossible off diffuse charge; they proved the atom's
+  positive charge sits in a tiny dense nucleus. The head-on approach distance
+  put an upper bound of tens of femtometres on the nuclear size.
+
+  wrote examples/output\rutherford.svg
