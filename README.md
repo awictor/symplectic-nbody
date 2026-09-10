@@ -38,6 +38,7 @@ ruins a long non-symplectic integration.
 | `src/barnes_hut.py` | O(N log N) octree force solver with opening-angle theta criterion |
 | `src/adaptive.py` | Dormand-Prince RK45 with PI error-controlled adaptive step size |
 | `src/kepler.py` | Exact analytic two-body orbit (Kepler-equation solver) -- the ground truth |
+| `src/cr3bp.py` | Circular restricted 3-body problem: Lagrange points, Jacobi constant |
 | `src/systems.py` | Test systems: two-body, figure-eight, pythagorean 3-body, **Plummer-sphere star cluster** (any N) |
 | `tests/test_conservation.py` | Automated checks of every conservation claim |
 | `tests/test_barnes_hut.py` | Tree force validated against exact O(N^2) summation |
@@ -47,6 +48,7 @@ ruins a long non-symplectic integration.
 | `examples/plot_orbits.py` | Render figure-eight / eccentric / pythagorean orbits to SVG |
 | `examples/adaptive_demo.py` | Adaptive DP45 vs fixed RK4: step adaptation & force-eval savings |
 | `examples/convergence_demo.py` | Measured convergence order of each method vs the exact orbit |
+| `examples/lagrange_demo.py` | Lagrange points + zero-velocity curves rendered to SVG |
 
 ## Barnes-Hut: scaling to many bodies
 
@@ -73,6 +75,34 @@ Tightening `theta` provably reduces the error — all checked in the tests. The
 `plummer_sphere(n=...)` generator builds an equilibrium cluster (positions from
 the Plummer inverse-CDF, velocities by rejection sampling the exact distribution
 function) using a tiny built-in LCG, so it's deterministic and dependency-free.
+
+## Lagrange points: where spacecraft park
+
+Move to the frame co-rotating with two orbiting primaries and five equilibrium
+points appear -- the Lagrange points. JWST sits at Sun-Earth L2; Trojan asteroids
+cluster at Sun-Jupiter L4/L5. `cr3bp.py` builds the circular restricted 3-body
+problem, locates all five points, and exposes the conserved Jacobi constant.
+
+```
+$ python examples/lagrange_demo.py examples/output
+
+Earth-Moon CR3BP (mu = 0.01215)
+point            x           y      Jacobi C
+--------------------------------------------
+L1        0.836918    0.000000      3.188336
+L2        1.155680    0.000000      3.172156
+L3       -1.005062    0.000000      3.012147
+L4        0.487850    0.866025      2.987998
+L5        0.487850   -0.866025      2.987998
+```
+
+The collinear points L1/L2/L3 are found by 1-D root-finding on the effective
+potential; L4/L5 are the exact equilateral-triangle points. The tests verify
+every point is a true equilibrium (|grad Omega| < 1e-9), the Jacobi constant is
+conserved along trajectories (~1e-11), and -- the elegant part -- **L4 stability
+flips at the Routh mass ratio** mu ~ 0.0385: below it a nudged particle librates
+in a bounded loop (like the Trojans), above it the particle escapes. The demo
+also renders the zero-velocity (Hill) curves to SVG via marching squares.
 
 ## Ground truth: convergence against the exact Kepler orbit
 
