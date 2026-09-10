@@ -63,6 +63,7 @@ def main():
     import lagrange_demo
     import solar_system_demo
     import precession_demo
+    import chaos_demo
 
     # make sure all SVGs exist
     import plot_orbits
@@ -76,6 +77,8 @@ def main():
     solar_system_demo.main()
     sys.argv = ["precession_demo", outdir]
     precession_demo.main()
+    sys.argv = ["chaos_demo", outdir]
+    chaos_demo.main()
     sys.argv = _old_argv
 
     print("capturing demo outputs...")
@@ -88,6 +91,8 @@ def main():
     solar_txt = capture(solar_system_demo.main)
     sys.argv = ["precession_demo", outdir]
     prec_txt = capture(precession_demo.main)
+    sys.argv = ["chaos_demo", outdir]
+    chaos_txt = capture(chaos_demo.main)
     sys.argv = _old_argv
     # scaling benchmark is slow; run a lighter inline version
     scale_txt = capture(scaling_benchmark.main)
@@ -133,6 +138,15 @@ def main():
             '<div class="grid">'
             + svg_card(out("inner_planets.svg"), "inner solar system (2 Mars years)")
             + f'<div class="card">{pre(solar_txt)}</div>'
+            + '</div>'),
+        section(
+            "Chaos & the Lyapunov exponent",
+            "Two trajectories started 1e-9 apart diverge to order unity on an "
+            "exponential clock. The pythagorean 3-body has a large positive "
+            "Lyapunov exponent; a regular orbit's estimate decays toward zero.",
+            '<div class="grid">'
+            + svg_card(out("chaos_divergence.svg"), "two runs 1e-6 apart peel apart over time")
+            + f'<div class="card">{pre(chaos_txt)}</div>'
             + '</div>'),
         section(
             "Mercury's perihelion precession (general relativity)",

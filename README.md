@@ -41,6 +41,7 @@ ruins a long non-symplectic integration.
 | `src/cr3bp.py` | Circular restricted 3-body problem: Lagrange points, Jacobi constant |
 | `src/solar_system.py` | The real 8-planet solar system from published orbital elements |
 | `src/relativity.py` | First post-Newtonian gravity & Mercury's perihelion precession |
+| `src/lyapunov.py` | Largest Lyapunov exponent (Benettin shadow-trajectory method) |
 | `src/systems.py` | Test systems: two-body, figure-eight, pythagorean 3-body, **Plummer-sphere star cluster** (any N) |
 | `tests/test_conservation.py` | Automated checks of every conservation claim |
 | `tests/test_barnes_hut.py` | Tree force validated against exact O(N^2) summation |
@@ -53,6 +54,7 @@ ruins a long non-symplectic integration.
 | `examples/lagrange_demo.py` | Lagrange points + zero-velocity curves rendered to SVG |
 | `examples/solar_system_demo.py` | Integrate the real solar system, recover Kepler's third law |
 | `examples/precession_demo.py` | Mercury's 43"/century precession + a relativistic rosette SVG |
+| `examples/chaos_demo.py` | Lyapunov exponent + two trajectories diverging 6 orders of magnitude |
 | `examples/build_dashboard.py` | Assemble all demos into one self-contained `index.html` |
 
 ## Barnes-Hut: scaling to many bodies
@@ -80,6 +82,30 @@ Tightening `theta` provably reduces the error — all checked in the tests. The
 `plummer_sphere(n=...)` generator builds an equilibrium cluster (positions from
 the Plummer inverse-CDF, velocities by rejection sampling the exact distribution
 function) using a tiny built-in LCG, so it's deterministic and dependency-free.
+
+## Chaos: why the three-body problem is unpredictable
+
+The deepest fact in dynamics: exact equations can still defy long-term
+prediction. `lyapunov.py` estimates the largest Lyapunov exponent by the
+Benettin shadow-trajectory method -- evolve a twin orbit an infinitesimal
+distance away, measure the growth, renormalize, repeat.
+
+```
+$ python examples/chaos_demo.py examples/output
+
+  pythagorean 3-body : lambda = 0.523   Lyapunov time ~ 1.9 time units
+  regular two-body   : lambda = 0.035   (decays toward 0 with T)
+
+separation of two trajectories started 1e-9 apart (log scale):
+  ..::----------===========++++++++********************#############@
+  grew from 1e-9 to ~1.3e-03 -- 6 orders of magnitude.
+```
+
+A positive Lyapunov exponent *is* the definition of chaos: a 1e-9 uncertainty
+amplifies to order unity in a few Lyapunov times. The tests confirm the chaotic
+system's exponent dwarfs a regular one's, and that the regular estimate decays
+toward zero as `1/T` (linear, non-exponential separation) while the chaotic one
+stays large. The demo also renders two nearly-identical runs peeling apart.
 
 ## Mercury's perihelion: the first triumph of general relativity
 
