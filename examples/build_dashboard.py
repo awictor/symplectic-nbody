@@ -75,6 +75,7 @@ def main():
     import kozai_demo
     import resonance_demo
     import coorbital_demo
+    import tisserand_demo
 
     import plot_orbits
 
@@ -119,6 +120,7 @@ def main():
     kozai_txt = run("kozai_demo", kozai_demo.main, True)
     resonance_txt = run("resonance_demo", resonance_demo.main, True)
     coorbital_txt = run("coorbital_demo", coorbital_demo.main, True)
+    tisserand_txt = run("tisserand_demo", tisserand_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -220,6 +222,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("poincare_section.svg"), "tori and chaotic sea at one energy")
             + f'<div class="card">{pre(poincare_txt)}</div>'
+            + '</div>'),
+        section(
+            "Tisserand parameter & gravity assists",
+            "Across a planetary flyby a small body's semi-major axis and "
+            "eccentricity change a lot, but the Tisserand parameter "
+            "T = a_p/a + 2 sqrt(a/a_p (1-e^2)) cos i barely moves -- how Tisserand "
+            "recognized comets Jupiter had reshaped, and what bounds a gravity assist.",
+            '<div class="grid">'
+            + svg_card(out("tisserand.svg"), "a & e jump at the flyby; Tisserand stays flat")
+            + f'<div class="card">{pre(tisserand_txt)}</div>'
             + '</div>'),
         section(
             "Coorbital orbits: tadpoles & horseshoes",

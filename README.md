@@ -49,6 +49,7 @@ ruins a long non-symplectic integration.
 | `src/kozai.py` | Kozai-Lidov secular cycles: eccentricity <-> inclination in a triple |
 | `src/resonance.py` | Mean-motion resonance: period locks & librating resonant arguments |
 | `src/coorbital.py` | Tadpole & horseshoe coorbital orbits in the CR3BP |
+| `src/tisserand.py` | Tisserand parameter: the near-invariant of a gravity assist |
 | `src/poincare.py` | Poincare surface-of-section for the CR3BP (tori vs chaos) |
 | `src/sitnikov.py` | The Sitnikov problem: on-axis test particle, integrable-to-chaotic |
 | `src/galaxy.py` | Disk-galaxy generator and two-galaxy tidal encounters |
@@ -73,6 +74,7 @@ ruins a long non-symplectic integration.
 | `examples/kozai_demo.py` | e/i oscillations vs analytic e_max, out-of-phase time series SVG |
 | `examples/resonance_demo.py` | 2:1 resonant argument: libration (locked) vs circulation (free) |
 | `examples/coorbital_demo.py` | Tadpole & horseshoe paths in the rotating frame (SVG) |
+| `examples/tisserand_demo.py` | a & e jump across a flyby while Tisserand stays flat |
 | `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
 | `examples/sitnikov_demo.py` | Stroboscopic maps: circular binary (tori) vs eccentric (chaos) |
 | `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
@@ -208,6 +210,29 @@ diffuse dust. `poincare.py` reconstructs `vy` from the energy so each section
 point is a full initial condition, and the tests confirm the Jacobi constant is
 conserved along each orbit (faithful section), regular orbits stay on tight
 curves, and chaotic ones scatter more than 3x wider.
+
+## Tisserand parameter: the invariant of a gravity assist
+
+A planetary flyby can drastically reshape a small body's orbit, yet the
+combination `T = a_p/a + 2 sqrt(a/a_p (1-e^2)) cos i` stays almost fixed -- it is
+the CR3BP Jacobi constant written in heliocentric elements. `tisserand.py`
+integrates a flyby and measures it:
+
+```
+$ python examples/tisserand_demo.py examples/output
+
+              before     after    change
+a (AU)         1.281     0.890    -0.391
+e              0.330     0.265    -0.065
+T_planet      2.9404    2.9432  +0.00277
+```
+
+The semi-major axis shifts ~30% and the eccentricity moves too, but the
+Tisserand parameter changes by ~0.1%. This is how Tisserand recognized returning
+comets whose orbits Jupiter had scrambled, how small-body populations are
+classified (`T_J > 3` asteroids, `2 < T_J < 3` Jupiter-family comets), and what
+bounds a single gravity assist. The tests verify `T = 3` for a planet-matching
+orbit, the near-invariance across a real flyby, and the classification ordering.
 
 ## Coorbital orbits: tadpoles and horseshoes
 

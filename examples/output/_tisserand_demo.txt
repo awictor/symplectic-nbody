@@ -1,0 +1,13 @@
+Tisserand parameter across a gravity assist
+
+              before     after    change
+----------------------------------------
+a (AU)         1.281     0.890    -0.391
+e              0.330     0.265    -0.065
+T_planet      2.9404    2.9432  +0.00277
+
+a and e are reshaped by the flyby; the Tisserand parameter is nearly
+unchanged. That is how Tisserand recognized returning comets whose orbits
+Jupiter had scrambled -- and it bounds what one flyby can do.
+
+wrote examples/output\tisserand.svg
