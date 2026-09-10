@@ -85,6 +85,7 @@ def main():
     import chandrasekhar_demo
     import tov_demo
     import jeans_demo
+    import sedov_demo
 
     import plot_orbits
 
@@ -139,6 +140,7 @@ def main():
     chandra_txt = run("chandrasekhar_demo", chandrasekhar_demo.main, True)
     tov_txt = run("tov_demo", tov_demo.main, True)
     jeans_txt = run("jeans_demo", jeans_demo.main, True)
+    sedov_txt = run("sedov_demo", sedov_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -240,6 +242,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("poincare_section.svg"), "tori and chaotic sea at one energy")
             + f'<div class="card">{pre(poincare_txt)}</div>'
+            + '</div>'),
+        section(
+            "Sedov-Taylor blast wave",
+            "A point energy release drives a self-similar shock, R ~ (E t^2/rho)^1/5. "
+            "The same law dates supernova remnants (pc-scale, thousands of km/s) "
+            "and -- run backwards -- let G. I. Taylor weigh the Trinity bomb from "
+            "a movie of the fireball while its yield was still classified.",
+            '<div class="grid">'
+            + svg_card(out("sedov.svg"), "remnant radius (t^2/5) and decelerating shock speed")
+            + f'<div class="card">{pre(sedov_txt)}</div>'
             + '</div>'),
         section(
             "Jeans instability: the birth of a star",

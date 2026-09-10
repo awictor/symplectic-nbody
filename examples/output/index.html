@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.17       11.98      0.8x
-   400          36.56       38.12      1.0x
-   800         151.66      111.03      1.4x
-  1600         611.44      379.85      1.6x
-  3200        2661.58      993.99      2.7x
+   200           9.33       12.06      0.8x
+   400          36.02       37.74      1.0x
+   800         147.30      114.70      1.3x
+  1600         620.15      385.86      1.6x
+  3200        2727.52     1057.52      2.6x
 
-empirical scaling exponent  direct ~ N^2.04   barnes-hut ~ N^1.61
+empirical scaling exponent  direct ~ N^2.05   barnes-hut ~ N^1.63
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -2973,6 +2973,50 @@ e=0.3 tears the inner curves into a chaotic sea -- the Sitnikov route to chaos.<
 integrated 19 orbits; 2 trace tight closed curves (KAM tori), the rest fill chaotic regions.
 
 wrote examples/output\poincare_section.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Sedov-Taylor blast wave</h2>
+    <p class="blurb">A point energy release drives a self-similar shock, R ~ (E t^2/rho)^1/5. The same law dates supernova remnants (pc-scale, thousands of km/s) and -- run backwards -- let G. I. Taylor weigh the Trinity bomb from a movie of the fireball while its yield was still classified.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<line x1="64" y1="656" x2="656" y2="656" stroke="#30363d"/>
+<line x1="64" y1="64" x2="64" y2="656" stroke="#30363d"/>
+<polyline points="69.9,570.7 81.8,523.6 123.2,441.7 241.6,323.5 656.0,117.8" fill="none" stroke="#4cc9f0" stroke-width="2"/>
+<polyline points="69.9,117.8 81.8,377.6 123.2,520.8 241.6,586.1 656.0,622.0" fill="none" stroke="#ff006e" stroke-width="2"/>
+<circle cx="69.9" cy="570.7" r="3" fill="#4cc9f0"/>
+<circle cx="69.9" cy="117.8" r="3" fill="#ff006e"/>
+<circle cx="81.8" cy="523.6" r="3" fill="#4cc9f0"/>
+<circle cx="81.8" cy="377.6" r="3" fill="#ff006e"/>
+<circle cx="123.2" cy="441.7" r="3" fill="#4cc9f0"/>
+<circle cx="123.2" cy="520.8" r="3" fill="#ff006e"/>
+<circle cx="241.6" cy="323.5" r="3" fill="#4cc9f0"/>
+<circle cx="241.6" cy="586.1" r="3" fill="#ff006e"/>
+<circle cx="656.0" cy="117.8" r="3" fill="#4cc9f0"/>
+<circle cx="656.0" cy="622.0" r="3" fill="#ff006e"/>
+<text x="64" y="34" fill="#e6edf3" font-size="18">Supernova remnant: radius (blue) &amp; shock speed (pink)</text>
+<text x="78" y="72" fill="#4cc9f0" font-size="12">radius ~ t^2/5 (rises)</text>
+<text x="78" y="90" fill="#ff006e" font-size="12">shock speed ~ t^-3/5 (decelerates)</text>
+<text x="656" y="680" fill="#8b949e" font-size="11" text-anchor="end">remnant age (yr) -&gt;</text>
+</svg><figcaption>remnant radius (t^2/5) and decelerating shock speed</figcaption></figure><div class="card"><pre>Sedov-Taylor blast wave
+
+  Trinity test (Taylor&#x27;s declassification trick):
+    fireball R=130 m at t=25 ms in air -&gt; yield ~ 9 kilotons
+    (the actual device was ~21 kt -- right order from a movie frame)
+
+  Supernova remnant (E=1e51 erg, ISM ~1 H/cc):
+    age (yr)   radius (pc)  shock (km/s)       T (K)
+  --------------------------------------------------
+         100          2.05          8018     8.8e+08
+         300          3.18          4148     2.3e+08
+        1000          5.15          2014     5.5e+07
+        3000          7.99          1042     1.5e+07
+       10000         12.93           506     3.5e+06
+
+  R grows as t^2/5 and the shock decelerates as t^-3/5. The same self-
+  similar law dates supernova remnants and (run backwards) weighed the bomb.
+
+  wrote examples/output\sedov.svg</pre></div></div>
   </section>
 
   <section>

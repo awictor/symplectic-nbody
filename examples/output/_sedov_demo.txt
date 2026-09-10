@@ -1,0 +1,19 @@
+Sedov-Taylor blast wave
+
+  Trinity test (Taylor's declassification trick):
+    fireball R=130 m at t=25 ms in air -> yield ~ 9 kilotons
+    (the actual device was ~21 kt -- right order from a movie frame)
+
+  Supernova remnant (E=1e51 erg, ISM ~1 H/cc):
+    age (yr)   radius (pc)  shock (km/s)       T (K)
+  --------------------------------------------------
+         100          2.05          8018     8.8e+08
+         300          3.18          4148     2.3e+08
+        1000          5.15          2014     5.5e+07
+        3000          7.99          1042     1.5e+07
+       10000         12.93           506     3.5e+06
+
+  R grows as t^2/5 and the shock decelerates as t^-3/5. The same self-
+  similar law dates supernova remnants and (run backwards) weighed the bomb.
+
+  wrote examples/output\sedov.svg

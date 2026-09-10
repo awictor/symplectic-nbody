@@ -59,6 +59,7 @@ ruins a long non-symplectic integration.
 | `src/chandrasekhar.py` | White-dwarf structure & the Chandrasekhar mass (~1.44 M_sun) |
 | `src/tov.py` | Neutron-star structure via the TOV equation & the GR maximum mass |
 | `src/jeans.py` | Jeans instability: the gravitational-collapse / star-formation threshold |
+| `src/sedov.py` | Sedov-Taylor blast wave: supernova remnants and the Trinity yield |
 | `src/poincare.py` | Poincare surface-of-section for the CR3BP (tori vs chaos) |
 | `src/sitnikov.py` | The Sitnikov problem: on-axis test particle, integrable-to-chaotic |
 | `src/galaxy.py` | Disk-galaxy generator and two-galaxy tidal encounters |
@@ -93,6 +94,7 @@ ruins a long non-symplectic integration.
 | `examples/chandrasekhar_demo.py` | White-dwarf mass-radius curve approaching 1.44 M_sun |
 | `examples/tov_demo.py` | Neutron-star mass-radius curve with a maximum mass; GR vs Newton |
 | `examples/jeans_demo.py` | Dispersion relation: sound waves vs collapse across the Jeans length |
+| `examples/sedov_demo.py` | SNR radius/shock-speed history + the Trinity yield estimate |
 | `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
 | `examples/sitnikov_demo.py` | Stroboscopic maps: circular binary (tori) vs eccentric (chaos) |
 | `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
@@ -228,6 +230,28 @@ diffuse dust. `poincare.py` reconstructs `vy` from the energy so each section
 point is a full initial condition, and the tests confirm the Jacobi constant is
 conserved along each orbit (faithful section), regular orbits stay on tight
 curves, and chaotic ones scatter more than 3x wider.
+
+## Sedov-Taylor: supernova remnants and the Trinity bomb
+
+A sudden energy release `E` in a medium of density `rho` drives a self-similar
+shock -- the only length you can build from `E`, `rho`, `t` is
+`(E t^2/rho)^{1/5}`. `sedov.py`:
+
+```
+$ python examples/sedov_demo.py examples/output
+
+  Trinity: fireball R=130 m at 25 ms in air -> yield ~ 9 kilotons (device ~21 kt)
+    age (yr)   radius (pc)  shock (km/s)      T (K)
+         100          2.05          8018    8.8e+08
+       10000         12.93           506    3.5e+06
+```
+
+The shock radius grows as `t^{2/5}` and decelerates as `t^{-3/5}`, dating
+supernova remnants (parsec-scale, thousands of km/s, X-ray-hot). Run the law
+backwards and an observed radius-and-time gives the explosion energy -- exactly
+how G. I. Taylor recovered the classified Trinity yield from a photograph. The
+tests verify the scalings, the exact energy inversion (independent of which time
+you sample), the SNR scale, and the Trinity order of magnitude.
 
 ## Jeans instability: when a cloud becomes a star
 
