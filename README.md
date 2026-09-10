@@ -88,6 +88,7 @@ ruins a long non-symplectic integration.
 | `src/hawking.py` | Black-hole thermodynamics: Hawking temperature, entropy, evaporation |
 | `src/eddington.py` | Eddington luminosity, accretion rate & Salpeter black-hole growth |
 | `src/hohmann.py` | Hohmann transfer: mission delta-v budgets & launch windows |
+| `src/oberth.py` | Oberth effect: why rockets burn deep in a gravity well |
 | `src/gr_time.py` | Gravitational redshift, GPS clock correction, Shapiro delay |
 | `src/lense_thirring.py` | Frame-dragging & geodetic precession (Gravity Probe B) |
 | `src/pulsar.py` | Hulse-Taylor binary-pulsar orbital decay (first GW evidence) |
@@ -133,6 +134,7 @@ ruins a long non-symplectic integration.
 | `examples/hawking_demo.py` | Temperature & evaporation time across black-hole masses |
 | `examples/eddington_demo.py` | L_Edd across masses + Eddington-limited growth to a quasar |
 | `examples/hohmann_demo.py` | LEO->GEO & Earth->Mars delta-v budgets + transfer diagram |
+| `examples/oberth_demo.py` | Periapsis-vs-apoapsis burn: escape speed vs burn radius |
 | `examples/gr_time_demo.py` | Pound-Rebka, GPS gain, Sun redshift + Shapiro-delay curve |
 | `examples/lense_thirring_demo.py` | GP-B geodetic & frame-drag rates vs orbit radius |
 | `examples/pulsar_demo.py` | Hulse-Taylor dP/dt vs measured + the periastron-shift parabola |
@@ -460,6 +462,26 @@ through radiation, matter, and dark-energy eras with distinct power laws. The
 age comes out as a look-back integral to `~0.96/H0`, the measured ~13.8 Gyr. The
 tests verify each era's exponent, the exponential dark-energy growth, and the
 LCDM age.
+
+## The Oberth effect: burn low and fast
+
+A burn's energy gain is `dE = v dv + dv^2/2`, so the same `dv` buys more energy
+where the ship already moves fast -- deep in the gravity well. `oberth.py`:
+
+```
+$ python examples/oberth_demo.py examples/output
+
+  same 1500 m/s burn on a 300 km x 35786 km orbit:
+    at periapsis (v=10.2 km/s): v_inf = 4.05 km/s (escapes)
+    at apoapsis  (v=1.6 km/s):  v_inf = 0.00 km/s (still bound)
+    energy-gain advantage of the periapsis burn: 4.6x
+```
+
+The identical burn escapes from periapsis but leaves the ship bound at apoapsis.
+This is why interplanetary probes dive toward a planet before their escape burn,
+and why a powered gravity assist (an Oberth maneuver at closest approach) far
+outperforms the same burn in deep space. The tests verify the `v dv` energy law,
+the periapsis advantage, and the escape-only-from-periapsis result.
 
 ## Hohmann transfer: the delta-v to get there
 

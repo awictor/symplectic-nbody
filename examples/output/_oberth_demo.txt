@@ -1,0 +1,12 @@
+The Oberth effect: the same burn buys more energy at high speed
+
+  same 1500 m/s burn on a 300 km x 35786 km orbit:
+    at periapsis (v=10.2 km/s): v_inf = 4.05 km/s (escapes)
+    at apoapsis  (v=1.6 km/s): v_inf = 0.00 km/s (still bound)
+    energy-gain advantage of the periapsis burn: 4.6x
+
+  This is why probes dive toward a planet before their escape burn, and
+  why a powered gravity assist (an Oberth maneuver at closest approach)
+  extracts far more than the same burn in deep space.
+
+  wrote examples/output\oberth.svg

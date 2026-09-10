@@ -96,6 +96,7 @@ def main():
     import penrose_demo
     import tidal_heating_demo
     import lense_thirring_demo
+    import oberth_demo
 
     import plot_orbits
 
@@ -161,6 +162,7 @@ def main():
     penrose_txt = run("penrose_demo", penrose_demo.main, True)
     tidalheat_txt = run("tidal_heating_demo", tidal_heating_demo.main, True)
     lt_txt = run("lense_thirring_demo", lense_thirring_demo.main, True)
+    oberth_txt = run("oberth_demo", oberth_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -557,6 +559,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("hohmann.svg"), "Earth-to-Mars transfer ellipse")
             + f'<div class="card">{pre(hohmann_txt)}</div>'
+            + '</div>'),
+        section(
+            "Oberth effect: burn low and fast",
+            "A burn's energy gain is v dv + dv^2/2, so the same dv buys far more "
+            "energy deep in the gravity well where the ship moves fastest. The "
+            "same burn escapes from periapsis but leaves the ship bound at "
+            "apoapsis -- why probes dive in before an escape burn and powered flybys work.",
+            '<div class="grid">'
+            + svg_card(out("oberth.svg"), "escape speed from a fixed burn vs burn radius")
+            + f'<div class="card">{pre(oberth_txt)}</div>'
             + '</div>'),
     ]
 
