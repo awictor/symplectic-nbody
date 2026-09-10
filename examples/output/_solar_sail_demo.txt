@@ -1,0 +1,19 @@
+Solar sail: sunlight pressure 2F/c on a mirror, ~9 uPa at 1 AU
+
+  solar flux at 1 AU: 1361 W/m^2, mirror pressure 9.08 uPa
+
+                sail area (m^2)  mass (kg)  accel (mm/s^2)     beta
+  -----------------------------------------------------------------
+              IKAROS        196        315         0.00565 0.000953
+         LightSail 2         32          5         0.05812   0.0098
+           NEA Scout         86         14         0.05578   0.0094
+       Starshot chip         16      0.001           145.3     24.5
+       beta = 1 sail        653          1            5.93        1
+
+  Both sunlight and gravity fall as 1/r^2, so the lightness number beta =
+  radiation force / solar gravity is a fixed property of the sail. beta = 1
+  (area-to-mass ~653 m^2/kg, a ~1.5 g/m^2 mirror) exactly cancels the Sun's
+  pull; beta > 1 escapes the Solar System on sunlight alone. Today's sails
+  sit at beta ~ 0.01 -- gentle, but propellant-free and endless.
+
+  wrote examples/output\solar_sail.svg

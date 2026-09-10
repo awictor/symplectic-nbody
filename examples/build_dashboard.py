@@ -164,6 +164,7 @@ def main():
     import black_hole_shadow_demo
     import hill_sphere_demo
     import j2_precession_demo
+    import solar_sail_demo
 
     import plot_orbits
 
@@ -297,6 +298,7 @@ def main():
     shadow_txt = run("black_hole_shadow_demo", black_hole_shadow_demo.main, True)
     hill_txt = run("hill_sphere_demo", hill_sphere_demo.main, True)
     j2_txt = run("j2_precession_demo", j2_precession_demo.main, True)
+    sail_txt = run("solar_sail_demo", solar_sail_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1382,6 +1384,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("j2_precession.svg"), "nodal and apsidal rates vs inclination with the special angles marked")
             + f'<div class="card">{pre(j2_txt)}</div>'
+            + '</div>'),
+        section(
+            "Solar sails & radiation pressure",
+            "Sunlight carries momentum: a mirror at 1 AU feels ~9 uPa (2F/c), a "
+            "feather touch that never runs out. Since both sunlight and gravity fall "
+            "as 1/r^2, the lightness number beta = radiation force / solar gravity is "
+            "a fixed property of the sail; beta = 1 (a ~1.5 g/m^2 mirror) cancels the "
+            "Sun's pull and beta > 1 escapes on sunlight alone. Today's sails sit at "
+            "beta ~ 0.01 -- gentle but propellant-free.",
+            '<div class="grid">'
+            + svg_card(out("solar_sail.svg"), "lightness number vs area-to-mass with the beta=1 line and missions")
+            + f'<div class="card">{pre(sail_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

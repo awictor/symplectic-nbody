@@ -122,6 +122,7 @@ ruins a long non-symplectic integration.
 | `src/black_hole_shadow.py` | The black-hole shadow: the dark disk the EHT imaged |
 | `src/hill_sphere.py` | The Hill sphere: how far a planet's gravity keeps its moons |
 | `src/j2_precession.py` | J2 orbital precession: nodal regression, apsidal drift & sun-synchronous orbits |
+| `src/solar_sail.py` | Solar sails & radiation pressure: the lightness number beta |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -235,6 +236,7 @@ ruins a long non-symplectic integration.
 | `examples/black_hole_shadow_demo.py` | Shadow size for M87*/Sgr A* + the nested-radii diagram |
 | `examples/hill_sphere_demo.py` | Hill radius & stable-moon limit per planet + the r_H(a) plot |
 | `examples/j2_precession_demo.py` | Nodal/apsidal rates per orbit + the rate-vs-inclination curves |
+| `examples/solar_sail_demo.py` | Pressure/accel/beta per sail + the beta-vs-area/mass curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2579,6 +2581,33 @@ Setting `5 cos^2 i - 1 = 0` (i = 63.4 deg) freezes the apsides, the Molniya orbi
 apogee over high latitudes for long dwell. The tests verify the ISS nodal drift, the ~98-deg
 retrograde sun-synchronous inclination and its Sun-matching drift, the 63.43-deg critical
 inclination with zero apsidal rate, and the vanishing nodal drift of a polar orbit.
+
+## Solar sails: pushing spacecraft with sunlight
+
+Light carries momentum: a mirror sail feels a pressure `2F/c`, ~9 uPa at 1 AU.
+`solar_sail.py`:
+
+```
+$ python examples/solar_sail_demo.py examples/output
+
+                sail   area (m^2)   mass (kg)   accel (mm/s^2)     beta
+  -----------------------------------------------------------------
+              IKAROS        196        315         0.00565 0.000953
+         LightSail 2         32          5         0.05812   0.0098
+           NEA Scout         86         14         0.05578   0.0094
+       Starshot chip         16      0.001           145.3     24.5
+       beta = 1 sail        653          1            5.93        1
+```
+
+Because sunlight and gravity both fall as `1/r^2`, the lightness number
+`beta = radiation force / solar gravity` is a distance-independent property of the sail,
+`beta = (1+Q) L_sun (A/m) / (4 pi c G M_sun)`. `beta = 1` -- an area-to-mass ratio of ~653
+m^2/kg, a ~1.5 g/m^2 mirror -- exactly cancels the Sun's pull, and `beta > 1` escapes the
+Solar System on sunlight alone (the Starshot lightsail chip reaches beta ~ 25). Real sails
+like IKAROS and LightSail 2 sit at beta ~ 0.01: a gentle push, but propellant-free and
+endless. The tests verify the ~1361 W/m^2 flux and ~9 uPa mirror pressure, the mirror-is-twice-black
+force, the `1/r^2` falloff, the ~1.5 g/m^2 critical loading giving beta = 1, and the
+area-to-mass scaling.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
