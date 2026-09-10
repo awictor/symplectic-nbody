@@ -197,6 +197,7 @@ def main():
     import peclet_demo
     import convection_demo
     import stefan_demo
+    import capillary_demo
 
     import plot_orbits
 
@@ -363,6 +364,7 @@ def main():
     peclet_txt = run("peclet_demo", peclet_demo.main, True)
     convection_txt = run("convection_demo", convection_demo.main, True)
     stefan_txt = run("stefan_demo", stefan_demo.main, True)
+    capillary_txt = run("capillary_demo", capillary_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1850,6 +1852,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("stefan.svg"), "ice thickness vs time for light, hard and arctic frost -- the sqrt(t) slowdown")
             + f'<div class="card">{pre(stefan_txt)}</div>'
+            + '</div>'),
+        section(
+            "The capillary length: surface tension vs gravity",
+            "The same liquid makes a round dewdrop and a flat puddle -- the difference is size. "
+            "Surface tension pulls toward a sphere, gravity flattens anything taller than the "
+            "capillary length l_c = sqrt(gamma/(rho g)) (~2.7 mm for water). The Bond number "
+            "Bo = (L/l_c)^2 says which wins: below 1 drops are round, above 1 they puddle out "
+            "(capped at ~2 l_c deep). A moving drop adds inertia through the Weber number and "
+            "shatters once We tops ~12, and a thin jet pinches into drops spaced ~9 radii "
+            "apart by the Rayleigh-Plateau instability.",
+            '<div class="grid">'
+            + svg_card(out("capillary.svg"), "drops morphing from round spheres to flat puddles as size crosses the capillary length")
+            + f'<div class="card">{pre(capillary_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

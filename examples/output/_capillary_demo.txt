@@ -1,0 +1,21 @@
+Capillary length l_c = sqrt(gamma / (rho g)): surface tension vs gravity
+
+  liquid                  gamma (N/m)     rho   l_c (mm)
+  water                        0.0728     998       2.73
+  mercury                      0.4870   13534       1.92
+  ethanol                      0.0223     789       1.70
+  liquid nitrogen              0.0089     807       1.06
+
+  Water crossover l_c = 2.73 mm.  Bond number Bo = (L/l_c)^2:
+  drop / feature                  size        Bo          regime
+  mist droplet                  0.02mm      0.00 round (tension)
+  raindrop                      2.00mm      0.54 round (tension)
+  water strider foot dimple     3.00mm      1.21  flat (gravity)
+  coin of water                10.00mm     13.44  flat (gravity)
+  spilled puddle               50.00mm    336.09  flat (gravity)
+
+  Max non-wetting puddle depth = 2 l_c = 5.5 mm (water can't pile higher).
+  A moving 2 mm drop shatters once it tops the critical Weber number, at
+  v = 0.66 m/s -- why rain fragments and sprays atomize.
+
+  wrote examples/output\capillary.svg

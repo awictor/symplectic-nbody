@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<text x="20" y="34" fill="#e6edf3" font-size="18">Drop shape across the capillary length</text>
+<text x="20" y="52" fill="#8b949e" font-size="12">below l_c surface tension keeps drops round; above it gravity flattens them into puddles</text>
+<line x1="60.0" y1="446.4" x2="660.0" y2="446.4" stroke="#8b949e" stroke-width="1.5"/>
+<circle cx="111.4" cy="441.9" r="4.5" fill="#4dabf7" opacity="0.85"/>
+<text x="111.4" y="464.4" fill="#8b949e" font-size="10" text-anchor="middle">0.3 mm</text>
+<text x="111.4" y="477.4" fill="#4dabf7" font-size="9" text-anchor="middle">Bo=0.0</text>
+<circle cx="194.3" cy="434.4" r="12.0" fill="#4dabf7" opacity="0.85"/>
+<text x="194.3" y="464.4" fill="#8b949e" font-size="10" text-anchor="middle">0.8 mm</text>
+<text x="194.3" y="477.4" fill="#4dabf7" font-size="9" text-anchor="middle">Bo=0.1</text>
+<circle cx="277.1" cy="423.9" r="22.5" fill="#4dabf7" opacity="0.85"/>
+<text x="277.1" y="464.4" fill="#8b949e" font-size="10" text-anchor="middle">1.5 mm</text>
+<text x="277.1" y="477.4" fill="#4dabf7" font-size="9" text-anchor="middle">Bo=0.3</text>
+<circle cx="360.0" cy="405.9" r="40.5" fill="#4dabf7" opacity="0.85"/>
+<text x="360.0" y="464.4" fill="#8b949e" font-size="10" text-anchor="middle">2.7 mm</text>
+<text x="360.0" y="477.4" fill="#4dabf7" font-size="9" text-anchor="middle">Bo=1.0</text>
+<ellipse cx="442.9" cy="408.9" rx="78.7" ry="37.5" fill="#ff922b" opacity="0.85"/>
+<text x="442.9" y="464.4" fill="#8b949e" font-size="10" text-anchor="middle">5 mm</text>
+<text x="442.9" y="477.4" fill="#ff922b" font-size="9" text-anchor="middle">Bo=3.4</text>
+<ellipse cx="525.7" cy="405.5" rx="78.7" ry="40.9" fill="#ff922b" opacity="0.85"/>
+<text x="525.7" y="464.4" fill="#8b949e" font-size="10" text-anchor="middle">9 mm</text>
+<text x="525.7" y="477.4" fill="#ff922b" font-size="9" text-anchor="middle">Bo=10.9</text>
+<ellipse cx="608.6" cy="405.5" rx="78.7" ry="40.9" fill="#ff922b" opacity="0.85"/>
+<text x="608.6" y="464.4" fill="#8b949e" font-size="10" text-anchor="middle">16 mm</text>
+<text x="608.6" y="477.4" fill="#ff922b" font-size="9" text-anchor="middle">Bo=34.4</text>
+<line x1="401.4" y1="130.0" x2="401.4" y2="486.4" stroke="#ffd43b" stroke-width="1.5" stroke-dasharray="5 5"/>
+<text x="401.4" y="124.0" fill="#ffd43b" font-size="11" text-anchor="middle">l_c = 2.7 mm  (Bo = 1)</text>
+<text x="70.0" y="696.0" fill="#4dabf7" font-size="11">blue = surface tension wins (round)</text>
+<text x="650.0" y="696.0" fill="#ff922b" font-size="11" text-anchor="end">orange = gravity wins (flat)</text>
+</svg>

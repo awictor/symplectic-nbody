@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           8.99       12.32      0.7x
-   400          36.56       38.39      1.0x
-   800         147.55      112.56      1.3x
-  1600         689.51      393.81      1.8x
-  3200        2799.33     1098.88      2.5x
+   200           9.01       12.17      0.7x
+   400          36.49       37.81      1.0x
+   800         147.33      114.89      1.3x
+  1600         671.22      391.61      1.7x
+  3200        2776.41     1055.82      2.6x
 
-empirical scaling exponent  direct ~ N^2.08   barnes-hut ~ N^1.63
+empirical scaling exponent  direct ~ N^2.07   barnes-hut ~ N^1.63
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -21455,6 +21455,62 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   first few cm come in hours but the next foot takes weeks. Same law crusts lava.
 
   wrote examples/output\stefan.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>The capillary length: surface tension vs gravity</h2>
+    <p class="blurb">The same liquid makes a round dewdrop and a flat puddle -- the difference is size. Surface tension pulls toward a sphere, gravity flattens anything taller than the capillary length l_c = sqrt(gamma/(rho g)) (~2.7 mm for water). The Bond number Bo = (L/l_c)^2 says which wins: below 1 drops are round, above 1 they puddle out (capped at ~2 l_c deep). A moving drop adds inertia through the Weber number and shatters once We tops ~12, and a thin jet pinches into drops spaced ~9 radii apart by the Rayleigh-Plateau instability.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<text x="20" y="34" fill="#e6edf3" font-size="18">Drop shape across the capillary length</text>
+<text x="20" y="52" fill="#8b949e" font-size="12">below l_c surface tension keeps drops round; above it gravity flattens them into puddles</text>
+<line x1="60.0" y1="446.4" x2="660.0" y2="446.4" stroke="#8b949e" stroke-width="1.5"/>
+<circle cx="111.4" cy="441.9" r="4.5" fill="#4dabf7" opacity="0.85"/>
+<text x="111.4" y="464.4" fill="#8b949e" font-size="10" text-anchor="middle">0.3 mm</text>
+<text x="111.4" y="477.4" fill="#4dabf7" font-size="9" text-anchor="middle">Bo=0.0</text>
+<circle cx="194.3" cy="434.4" r="12.0" fill="#4dabf7" opacity="0.85"/>
+<text x="194.3" y="464.4" fill="#8b949e" font-size="10" text-anchor="middle">0.8 mm</text>
+<text x="194.3" y="477.4" fill="#4dabf7" font-size="9" text-anchor="middle">Bo=0.1</text>
+<circle cx="277.1" cy="423.9" r="22.5" fill="#4dabf7" opacity="0.85"/>
+<text x="277.1" y="464.4" fill="#8b949e" font-size="10" text-anchor="middle">1.5 mm</text>
+<text x="277.1" y="477.4" fill="#4dabf7" font-size="9" text-anchor="middle">Bo=0.3</text>
+<circle cx="360.0" cy="405.9" r="40.5" fill="#4dabf7" opacity="0.85"/>
+<text x="360.0" y="464.4" fill="#8b949e" font-size="10" text-anchor="middle">2.7 mm</text>
+<text x="360.0" y="477.4" fill="#4dabf7" font-size="9" text-anchor="middle">Bo=1.0</text>
+<ellipse cx="442.9" cy="408.9" rx="78.7" ry="37.5" fill="#ff922b" opacity="0.85"/>
+<text x="442.9" y="464.4" fill="#8b949e" font-size="10" text-anchor="middle">5 mm</text>
+<text x="442.9" y="477.4" fill="#ff922b" font-size="9" text-anchor="middle">Bo=3.4</text>
+<ellipse cx="525.7" cy="405.5" rx="78.7" ry="40.9" fill="#ff922b" opacity="0.85"/>
+<text x="525.7" y="464.4" fill="#8b949e" font-size="10" text-anchor="middle">9 mm</text>
+<text x="525.7" y="477.4" fill="#ff922b" font-size="9" text-anchor="middle">Bo=10.9</text>
+<ellipse cx="608.6" cy="405.5" rx="78.7" ry="40.9" fill="#ff922b" opacity="0.85"/>
+<text x="608.6" y="464.4" fill="#8b949e" font-size="10" text-anchor="middle">16 mm</text>
+<text x="608.6" y="477.4" fill="#ff922b" font-size="9" text-anchor="middle">Bo=34.4</text>
+<line x1="401.4" y1="130.0" x2="401.4" y2="486.4" stroke="#ffd43b" stroke-width="1.5" stroke-dasharray="5 5"/>
+<text x="401.4" y="124.0" fill="#ffd43b" font-size="11" text-anchor="middle">l_c = 2.7 mm  (Bo = 1)</text>
+<text x="70.0" y="696.0" fill="#4dabf7" font-size="11">blue = surface tension wins (round)</text>
+<text x="650.0" y="696.0" fill="#ff922b" font-size="11" text-anchor="end">orange = gravity wins (flat)</text>
+</svg><figcaption>drops morphing from round spheres to flat puddles as size crosses the capillary length</figcaption></figure><div class="card"><pre>Capillary length l_c = sqrt(gamma / (rho g)): surface tension vs gravity
+
+  liquid                  gamma (N/m)     rho   l_c (mm)
+  water                        0.0728     998       2.73
+  mercury                      0.4870   13534       1.92
+  ethanol                      0.0223     789       1.70
+  liquid nitrogen              0.0089     807       1.06
+
+  Water crossover l_c = 2.73 mm.  Bond number Bo = (L/l_c)^2:
+  drop / feature                  size        Bo          regime
+  mist droplet                  0.02mm      0.00 round (tension)
+  raindrop                      2.00mm      0.54 round (tension)
+  water strider foot dimple     3.00mm      1.21  flat (gravity)
+  coin of water                10.00mm     13.44  flat (gravity)
+  spilled puddle               50.00mm    336.09  flat (gravity)
+
+  Max non-wetting puddle depth = 2 l_c = 5.5 mm (water can&#x27;t pile higher).
+  A moving 2 mm drop shatters once it tops the critical Weber number, at
+  v = 0.66 m/s -- why rain fragments and sprays atomize.
+
+  wrote examples/output\capillary.svg</pre></div></div>
   </section>
 
   <section>

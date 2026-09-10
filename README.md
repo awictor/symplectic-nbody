@@ -155,6 +155,7 @@ ruins a long non-symplectic integration.
 | `src/peclet.py` | Peclet number Pe=UL/D + Prandtl/Schmidt/Lewis: advection vs diffusion |
 | `src/convection.py` | Convective heat transfer: Newton cooling, Nusselt correlations, Biot, lumped cooling |
 | `src/stefan.py` | The Stefan problem: melting/freezing front X=2 lambda sqrt(alpha t), latent heat |
+| `src/capillary.py` | Capillary length, Bond & Weber numbers: surface tension vs gravity vs inertia |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -301,6 +302,7 @@ ruins a long non-symplectic integration.
 | `examples/peclet_demo.py` | Per-system Peclet table + the advection-diffusion regime map |
 | `examples/convection_demo.py` | Cooling-regime table + the Newtonian cooling curves |
 | `examples/stefan_demo.py` | Ice-growth table by frost severity + the sqrt(t) front curves |
+| `examples/capillary_demo.py` | Per-liquid capillary length + the drop-shape crossover figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3483,6 +3485,33 @@ classic ice result (~10 cm after a day of hard frost) and the `depth^2` time law
 thin ice form in hours and the next foot take weeks; the same physics crusts a cooling lava
 lake. The tests check the Stefan number, the small-`St` limit, the Stefan condition itself,
 the `sqrt(t)` advance, the `depth^2` scaling, and the latent-heat dependence.
+
+## The capillary length: surface tension vs gravity
+
+Why a dewdrop is round and a puddle is flat comes down to one length. `capillary.py`:
+
+```
+$ python examples/capillary_demo.py examples/output
+
+  liquid            gamma (N/m)    rho    l_c (mm)
+  water                 0.0728     998       2.73
+  mercury               0.4870   13534       1.92
+
+  drop / feature      size      Bo       regime
+  raindrop          2.00 mm    0.54   round (tension)
+  coin of water    10.00 mm   13.44   flat  (gravity)
+```
+
+Surface tension pulls a blob toward a sphere; gravity flattens anything taller than the
+capillary length `l_c = sqrt(gamma/(rho g))`, about 2.7 mm for water. The Bond (Eotvos)
+number `Bo = rho g L^2/gamma = (L/l_c)^2` says which wins -- below 1 drops stay round, above
+1 they puddle out to a film no deeper than ~`2 l_c`. A drop moving through another fluid adds
+inertia via the Weber number `We = rho v^2 L/gamma` and breaks up once `We` exceeds ~12 (a
+2 mm water drop at ~0.66 m/s), the physics behind rain fragmentation and spray atomization,
+while a thin jet pinches into drops spaced ~9 radii apart by the Rayleigh-Plateau
+instability. The tests reproduce water's and mercury's capillary lengths, the `Bo = (L/l_c)^2`
+crossover, the Weber breakup threshold, the `2 l_c` puddle cap, and the Rayleigh-Plateau
+spacing.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
