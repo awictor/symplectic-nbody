@@ -1,0 +1,20 @@
+Synchrotron radiation (B = 1 nT)
+
+     gamma     nu_c (Hz)       P (W)       cooling
+  ------------------------------------------------
+     1e+02      4.20e+05    1.06e-28    2.5e+09 yr
+     1e+03      4.20e+07    1.06e-26    2.5e+08 yr
+     1e+04      4.20e+09    1.06e-24    2.5e+07 yr
+     1e+05      4.20e+11    1.06e-22    2.5e+06 yr
+     1e+06      4.20e+13    1.06e-20    2.5e+05 yr
+
+  spectral index alpha = (p-1)/2 of a power-law electron population:
+    p=2.0: alpha=0.50  (S(nu) ~ nu^-0.50)
+    p=2.5: alpha=0.75  (S(nu) ~ nu^-0.75)
+    p=3.0: alpha=1.00  (S(nu) ~ nu^-1.00)
+
+  Relativistic electrons in weak cosmic fields shine in the radio; the
+  spectral slope reveals the electron energy distribution -- how we read
+  jets, radio galaxies, and supernova remnants.
+
+  wrote examples/output\synchrotron.svg

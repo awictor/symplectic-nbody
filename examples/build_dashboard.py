@@ -110,6 +110,7 @@ def main():
     import bondi_demo
     import cosmic_velocities_demo
     import compton_demo
+    import synchrotron_demo
 
     import plot_orbits
 
@@ -189,6 +190,7 @@ def main():
     bondi_txt = run("bondi_demo", bondi_demo.main, True)
     cosmicv_txt = run("cosmic_velocities_demo", cosmic_velocities_demo.main, True)
     compton_txt = run("compton_demo", compton_demo.main, True)
+    synchrotron_txt = run("synchrotron_demo", synchrotron_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -448,6 +450,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("compton.svg"), "scattered photon energy falling with angle")
             + f'<div class="card">{pre(compton_txt)}</div>'
+            + '</div>'),
+        section(
+            "Synchrotron radiation: cosmic radio glow",
+            "Relativistic electrons spiralling in magnetic fields radiate at a "
+            "critical frequency ~ gamma^2 B (GHz radio for gamma~1e4 in microgauss "
+            "fields). A power-law electron distribution N(E)~E^-p gives a power-law "
+            "spectrum with index (p-1)/2 -- how we read jets and supernova remnants.",
+            '<div class="grid">'
+            + svg_card(out("synchrotron.svg"), "critical frequency climbing with electron energy")
+            + f'<div class="card">{pre(synchrotron_txt)}</div>'
             + '</div>'),
         section(
             "Big Bang nucleosynthesis: the primordial 25% helium",

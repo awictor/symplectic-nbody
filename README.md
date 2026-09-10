@@ -101,6 +101,7 @@ ruins a long non-symplectic integration.
 | `src/cmb.py` | CMB acoustic scale: sound horizon & the l~220 first peak |
 | `src/blackbody.py` | Blackbody radiation: Planck law, Wien peak, Stefan-Boltzmann |
 | `src/compton.py` | Compton & inverse-Compton scattering (photon-electron energy exchange) |
+| `src/synchrotron.py` | Synchrotron radiation: critical frequency, power, spectral index |
 | `src/bbn.py` | Big Bang nucleosynthesis: n/p freeze-out & primordial helium |
 | `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
 | `src/main_sequence.py` | Main sequence: mass-luminosity relation, lifetimes, HR diagram |
@@ -160,6 +161,7 @@ ruins a long non-symplectic integration.
 | `examples/cmb_demo.py` | Sound horizon, acoustic angle & the l~220 peak comb |
 | `examples/blackbody_demo.py` | Peak wavelengths (CMB->B-star) + Planck spectra |
 | `examples/compton_demo.py` | Compton shift/energy vs angle + inverse-Compton boost |
+| `examples/synchrotron_demo.py` | Critical frequency/power/cooling vs energy + spectral index |
 | `examples/bbn_demo.py` | n/p freeze-out chain and the Y_p ~ 0.25 helium fraction |
 | `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
 | `examples/main_sequence_demo.py` | Mass-L-lifetime table + the main sequence on an HR diagram |
@@ -576,6 +578,29 @@ helium-4, giving `Y_p = 2(n/p)/(1+n/p) ~ 0.25`. That quarter-helium abundance,
 observed everywhere in the universe, is one of the strongest confirmations of the
 hot Big Bang. The tests verify the equilibrium limits, the freeze-out ratio, the
 decay, and the ~0.25 helium fraction.
+
+## Synchrotron radiation: the cosmic radio glow
+
+Relativistic electrons spiralling in magnetic fields power most cosmic radio
+emission. `synchrotron.py`:
+
+```
+$ python examples/synchrotron_demo.py examples/output   (B = 1 nT)
+
+     gamma     nu_c (Hz)       cooling
+     1e+04      4.20e+09      2.5e+07 yr
+     1e+06      4.20e+13      2.5e+05 yr
+  p=2.5: alpha=0.75  (S(nu) ~ nu^-0.75)
+```
+
+The critical frequency `nu_c ~ gamma^2 B` puts `gamma ~ 1e4` electrons in
+microgauss fields at GHz radio; the single-electron power goes as `gamma^2 B^2`,
+so high-energy electrons cool fastest. A power-law electron population
+`N(E) ~ E^{-p}` radiates a power-law spectrum of index `(p-1)/2` -- the observed
+radio slope (~0.75) that reveals the electron distribution in jets, radio
+galaxies, and supernova remnants. The tests verify the radio frequency, the
+`gamma^2 B` and `gamma^2 B^2` scalings, faster cooling at higher energy, and the
+spectral index.
 
 ## Compton and inverse-Compton scattering
 
