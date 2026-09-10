@@ -134,6 +134,7 @@ ruins a long non-symplectic integration.
 | `src/particle_box.py` | The particle in a box: quantized levels & quantum-dot colour |
 | `src/harmonic_oscillator.py` | The quantum harmonic oscillator: evenly-spaced levels & zero-point energy |
 | `src/rutherford.py` | Rutherford scattering: the Coulomb cross section that found the nucleus |
+| `src/radioactive_decay.py` | Radioactive decay: half-lives, dating & Bateman decay chains |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -259,6 +260,7 @@ ruins a long non-symplectic integration.
 | `examples/particle_box_demo.py` | Levels & quantum-dot colours + the level/wavefunction diagram |
 | `examples/harmonic_oscillator_demo.py` | Vibrational quanta per molecule + the parabolic-well level diagram |
 | `examples/rutherford_demo.py` | Cross section & impact parameter by angle + the 1/sin^4 curve |
+| `examples/radioactive_decay_demo.py` | Dating ages + a parent/daughter chain and Bateman curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2912,6 +2914,33 @@ closest approach `r_min = Z1 Z2 e^2 / (4 pi eps0 E)` is ~45 fm for 5 MeV alphas 
 Rutherford's upper bound on the nuclear size. The tests verify the `1/sin^4` dependence, the
 nonzero back-scatter, the small-angle divergence, the ~45 fm closest approach, the
 impact-angle inversion, and the `1/E^2` cross-section scaling.
+
+## Radioactive decay: half-lives, dating, and chains
+
+Unstable nuclei decay at a constant per-nucleus rate, so a population falls exponentially.
+`radioactive_decay.py`:
+
+```
+$ python examples/radioactive_decay_demo.py examples/output
+
+  carbon-14 dating (t_half = 5730 yr):
+     % remaining   half-lives    age (yr)
+  ----------------------------------------
+             90%         0.15         871
+             50%         1.00        5730
+             25%         2.00       11460
+             10%         3.32       19035
+              1%         6.64       38069
+```
+
+`N = N0 2^(-t/t_half)` with `lambda = ln2/t_half`, so the surviving fraction dates a sample:
+`t = t_half log2(N0/N)`. In a parent-daughter chain the daughter follows the Bateman equation,
+`N_D = N0 lambda_P/(lambda_D-lambda_P)(e^{-lambda_P t} - e^{-lambda_D t})`, starting at zero,
+rising to a peak, then tracking the parent -- secular equilibrium, where daughter activity
+equals parent activity independent of the daughter's half-life. That balance runs medical
+radioisotope generators (Mo-99/Tc-99m) and the radon that seeps from long-lived uranium. The
+tests verify the one-half-life halving, the C-14 dating age, the number of half-lives, the
+Bateman rise-and-fall from zero, and secular equilibrium.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

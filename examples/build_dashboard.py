@@ -176,6 +176,7 @@ def main():
     import particle_box_demo
     import harmonic_oscillator_demo
     import rutherford_demo
+    import radioactive_decay_demo
 
     import plot_orbits
 
@@ -321,6 +322,7 @@ def main():
     pbox_txt = run("particle_box_demo", particle_box_demo.main, True)
     sho_txt = run("harmonic_oscillator_demo", harmonic_oscillator_demo.main, True)
     ruth_txt = run("rutherford_demo", rutherford_demo.main, True)
+    decay_txt = run("radioactive_decay_demo", radioactive_decay_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1548,6 +1550,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("rutherford.svg"), "the 1/sin^4 angular distribution with nonzero back-scatter")
             + f'<div class="card">{pre(ruth_txt)}</div>'
+            + '</div>'),
+        section(
+            "Radioactive decay & decay chains",
+            "Unstable nuclei decay at a constant per-nucleus rate, so a population falls "
+            "exponentially N = N0 2^(-t/t_half) -- the clock behind carbon-14 dating (25% "
+            "remaining is two half-lives, ~11,500 yr). In a parent-daughter chain the "
+            "daughter follows the Bateman rise-and-fall, reaching secular equilibrium "
+            "where its activity equals the parent's -- the principle of medical "
+            "radioisotope generators and uranium-fed radon.",
+            '<div class="grid">'
+            + svg_card(out("radioactive_decay.svg"), "parent exponential decay and the daughter's Bateman build-up")
+            + f'<div class="card">{pre(decay_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

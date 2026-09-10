@@ -1,0 +1,26 @@
+Radioactive decay: N = N0 2^(-t/t_half); age = t_half log2(N0/N)
+
+  carbon-14 dating (t_half = 5730 yr):
+     % remaining  half-lives    age (yr)
+  ----------------------------------------
+             90%        0.15         871
+             50%        1.00        5730
+             25%        2.00       11460
+             10%        3.32       19035
+              1%        6.64       38069
+
+  Parent -> daughter chain (parent 8 d, daughter 0.6 d):
+    time (d)    parent  daughter
+           0      1000         0
+           1       917        49
+           2       841        60
+           5       648        52
+          10       420        34
+          20       177        14
+
+  The daughter starts at zero, builds up as the parent feeds it, and once
+  it is decaying as fast as it is produced it tracks the parent -- secular
+  equilibrium, where daughter activity equals parent activity. That balance
+  runs medical radioisotope generators and the radon from uranium in rock.
+
+  wrote examples/output\radioactive_decay.svg
