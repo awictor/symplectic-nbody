@@ -144,6 +144,7 @@ def main():
     import greenhouse_demo
     import rossby_demo
     import rayleigh_benard_demo
+    import terminal_velocity_demo
 
     import plot_orbits
 
@@ -257,6 +258,7 @@ def main():
     green_txt = run("greenhouse_demo", greenhouse_demo.main, True)
     rossby_txt = run("rossby_demo", rossby_demo.main, True)
     rb_txt = run("rayleigh_benard_demo", rayleigh_benard_demo.main, True)
+    termv_txt = run("terminal_velocity_demo", terminal_velocity_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1103,6 +1105,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("rayleigh_benard.svg"), "Nusselt number flat at 1 below onset then rising past Ra_c")
             + f'<div class="card">{pre(rb_txt)}</div>'
+            + '</div>'),
+        section(
+            "Terminal velocity & drag",
+            "A falling body speeds up until drag balances gravity. Which drag law "
+            "applies is set by the Reynolds number: viscous Stokes drag (v ~ r^2) for "
+            "tiny slow particles, quadratic drag (v ~ sqrt(r)) for big fast ones. So "
+            "a fog droplet 200x smaller than a raindrop falls 40000x slower and "
+            "effectively floats, a raindrop settles at ~9 m/s, and a belly-down "
+            "skydiver tops out near 50 m/s.",
+            '<div class="grid">'
+            + svg_card(out("terminal_velocity.svg"), "terminal velocity vs radius bending from Stokes r^2 to quadratic sqrt(r)")
+            + f'<div class="card">{pre(termv_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

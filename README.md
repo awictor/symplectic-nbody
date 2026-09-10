@@ -102,6 +102,7 @@ ruins a long non-symplectic integration.
 | `src/greenhouse.py` | The greenhouse effect: surface warming from infrared optical depth |
 | `src/rossby.py` | Rossby number & geostrophic balance: why weather spins |
 | `src/rayleigh_benard.py` | Rayleigh-Benard convection: the Ra_c ~ 1708 onset & Nusselt transport |
+| `src/terminal_velocity.py` | Terminal velocity & drag: Stokes vs quadratic regimes |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -195,6 +196,7 @@ ruins a long non-symplectic integration.
 | `examples/greenhouse_demo.py` | T_eq/T_surf/warming for Venus-Earth-Mars + the warming curve |
 | `examples/rossby_demo.py` | Ro & regime for tornado-to-gyre flows + the Ro(L) curve |
 | `examples/rayleigh_benard_demo.py` | Ra & state from lab cell to Sun + the Nu(Ra) onset curve |
+| `examples/terminal_velocity_demo.py` | Speeds fog-to-skydiver + the v(r) Stokes/quadratic bend |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2001,6 +2003,31 @@ violently turbulent -- the granulation on the Sun and the mantle convection that
 continents both follow. The tests verify the free-free critical value, the supercritical
 water pot, the critical temperature difference that gives `Ra = Ra_c`, the conductive
 sub-onset limit, the 1/3 Nusselt law, and that deeper layers convect at a smaller `dT`.
+
+## Terminal velocity: how fast things fall
+
+A falling body speeds up until drag balances gravity, then coasts at terminal velocity. Which
+drag law applies is set by the Reynolds number. `terminal_velocity.py`:
+
+```
+$ python examples/terminal_velocity_demo.py examples/output
+
+              object        v_term          Re      regime
+  --------------------------------------------------------
+    fog droplet 10um    12.03 mm/s       0.016      Stokes
+       drizzle 100um       2.1 m/s          29   quadratic
+        raindrop 2mm       9.5 m/s     2.6e+03   quadratic
+       hailstone 1cm      20.2 m/s     2.7e+04   quadratic
+      steel ball 1cm      59.5 m/s     8.1e+04   quadratic
+```
+
+At low Reynolds number viscous Stokes drag `F = 6 pi mu r v` gives `v ~ r^2`, so a fog
+droplet 200x smaller than a raindrop falls ~40000x slower and effectively floats. At high
+Reynolds number quadratic drag `F = (1/2) C_d rho A v^2` gives `v ~ sqrt(r)`, so a raindrop
+settles at ~9 m/s and a belly-down skydiver tops out near 50 m/s. The regime boundary is
+`Re ~ 1`. The tests verify the skydiver speed, the raindrop speed and its quadratic regime,
+the Stokes fog droplet, the `r^2` and `sqrt(r)` scalings, and that drag balances weight at
+terminal velocity.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

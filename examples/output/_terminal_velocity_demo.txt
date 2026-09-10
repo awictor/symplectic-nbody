@@ -1,0 +1,18 @@
+Terminal velocity: drag balances gravity (regime set by Reynolds number)
+
+              object        v_term          Re      regime
+  --------------------------------------------------------
+    fog droplet 10um    12.03 mm/s       0.016      Stokes
+       drizzle 100um       2.1 m/s          29   quadratic
+        raindrop 2mm       9.5 m/s     2.6e+03   quadratic
+       hailstone 1cm      20.2 m/s     2.7e+04   quadratic
+      steel ball 1cm      59.5 m/s     8.1e+04   quadratic
+
+    skydiver (belly)        49 m/s  (~176 km/h)
+
+  Stokes drag (viscous) gives v ~ r^2, so a fog droplet 200x smaller than
+  a raindrop falls ~40000x slower -- effectively floating. Big drops cross
+  into quadratic drag where v ~ sqrt(r), so a hailstone and a steel ball of
+  the same size differ only by sqrt(density). The regime boundary is Re ~ 1.
+
+  wrote examples/output\terminal_velocity.svg
