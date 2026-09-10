@@ -216,6 +216,7 @@ def main():
     import hall_effect_demo
     import wiedemann_franz_demo
     import bragg_demo
+    import diffraction_limit_demo
 
     import plot_orbits
 
@@ -401,6 +402,7 @@ def main():
     hall_effect_txt = run("hall_effect_demo", hall_effect_demo.main, True)
     wiedemann_franz_txt = run("wiedemann_franz_demo", wiedemann_franz_demo.main, True)
     bragg_txt = run("bragg_demo", bragg_demo.main, True)
+    diffraction_limit_txt = run("diffraction_limit_demo", diffraction_limit_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2140,6 +2142,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("bragg.svg"), "X-rays reflecting off two atomic planes with the 2 d sin(theta) path difference")
             + f'<div class="card">{pre(bragg_txt)}</div>'
+            + '</div>'),
+        section(
+            "The diffraction limit: every aperture's resolution floor",
+            "No lens focuses light to a point: an aperture of diameter D spreads a wave into an "
+            "Airy disk of angular radius theta = 1.22 lambda/D, the Rayleigh criterion, so two "
+            "sources closer than that blur into one. Bigger apertures resolve finer detail "
+            "(Hubble's 2.4 m gives ~0.05 arcsec), long wavelengths need huge ones (radio "
+            "dishes), and a microscope stops at the Abbe limit lambda/(2 NA) ~ 200 nm for "
+            "light -- which is why electron microscopes with picometre wavelengths see atoms. "
+            "A grating turns it into a spectrometer of resolving power m N.",
+            '<div class="grid">'
+            + svg_card(out("diffraction_limit.svg"), "resolution vs aperture with real instruments, and two sources at the Rayleigh limit")
+            + f'<div class="card">{pre(diffraction_limit_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

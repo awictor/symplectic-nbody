@@ -174,6 +174,7 @@ ruins a long non-symplectic integration.
 | `src/hall_effect.py` | Hall effect: Hall voltage, coefficient, carrier density/sign/mobility |
 | `src/wiedemann_franz.py` | Wiedemann-Franz law: Lorenz number, thermal-from-electrical conductivity |
 | `src/bragg.py` | Bragg diffraction: n lambda = 2 d sin(theta), Miller spacings, max order |
+| `src/diffraction_limit.py` | Diffraction limit: Rayleigh resolution, Abbe limit, grating resolving power |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -339,6 +340,7 @@ ruins a long non-symplectic integration.
 | `examples/hall_effect_demo.py` | Per-material Hall table + the Hall-bar schematic |
 | `examples/wiedemann_franz_demo.py` | Predicted-vs-measured kappa table + the Lorenz-line figure |
 | `examples/bragg_demo.py` | Per-plane Bragg-angle table + the reflection-geometry figure |
+| `examples/diffraction_limit_demo.py` | Per-instrument resolution table + the Rayleigh-limit figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3977,6 +3979,30 @@ Miller plane `(hkl)` has spacing `a/sqrt(h^2+k^2+l^2)` and its own family of ang
 diffracts from nothing, and visible light cannot resolve atoms). The tests reproduce the
 Si(111) Cu-K-alpha angle, the law itself, the order and spacing trends, the cubic Miller
 spacings, the spacing/wavelength inversions, and the maximum-order cutoff.
+
+## The diffraction limit: every aperture's resolution floor
+
+Waves refuse to focus to a point, so every instrument has a resolution floor.
+`diffraction_limit.py`:
+
+```
+$ python examples/diffraction_limit_demo.py examples/output
+
+  instrument         aperture   resolution      microscope Abbe d = lambda/2NA:
+  human eye          2 mm       1.2 arcmin        light  NA 1.4:  196 nm
+  Hubble             2.4 m      0.058 arcsec      electron 4 pm:  100 pm (atoms)
+```
+
+An aperture of diameter `D` spreads a wave into an Airy disk of angular radius
+`theta = 1.22 lambda/D` -- the Rayleigh criterion -- so two point sources closer than that
+merge into one. Bigger apertures resolve finer detail (Hubble's 2.4 m reaches ~0.05 arcsec),
+long wavelengths demand huge ones (why radio dishes are enormous despite coarse resolution),
+and a microscope bottoms out at Abbe's `lambda/(2 NA) ~ 200 nm` for visible light -- which is
+why electron microscopes, riding picometre de Broglie wavelengths, image atoms. A diffraction
+grating turns the same physics into a spectrometer of resolving power `R = m N`. The tests
+reproduce Hubble's and the human eye's resolution, the aperture and wavelength trends, the
+~200 nm Abbe limit (and picometre electron limit), the grating orders, and the `m N`
+resolving power splitting the sodium doublet.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
