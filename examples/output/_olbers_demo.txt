@@ -1,0 +1,22 @@
+Olbers' paradox: in an infinite static universe the sky would blaze
+
+  star density ~ 0.1 /pc^3  ->  mean free path to a star = 2.0e+16 ly
+  cosmic horizon (c x age)  = 1.4e+10 ly
+  ratio horizon / mfp       = 6.8e-07
+
+          distance     d / mfp     sky covered
+  --------------------------------------------
+    cosmic horizon    6.76e-07       6.757e-07
+      100x horizon    6.76e-05       6.757e-05
+           0.1 mfp    1.00e-01         0.09516
+             1 mfp    1.00e+00          0.6321
+             5 mfp    5.00e+00          0.9933
+            20 mfp    2.00e+01               1
+
+  Within the observable universe only ~7e-07
+  of the sky is covered by stellar disks -- which is why night is dark. The
+  paradox is real: every line of sight WOULD end on a star, but only after
+  ~10^16 light-years, a million times farther than light has travelled since
+  the Big Bang. The finite age of the universe, not infinite space, saves us.
+
+  wrote examples/output\olbers.svg

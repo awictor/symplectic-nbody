@@ -157,6 +157,7 @@ def main():
     import standard_candle_demo
     import tully_fisher_demo
     import tolman_demo
+    import olbers_demo
 
     import plot_orbits
 
@@ -283,6 +284,7 @@ def main():
     candle_txt = run("standard_candle_demo", standard_candle_demo.main, True)
     tf_txt = run("tully_fisher_demo", tully_fisher_demo.main, True)
     tolman_txt = run("tolman_demo", tolman_demo.main, True)
+    olbers_txt = run("olbers_demo", olbers_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1284,6 +1286,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("tolman.svg"), "expanding (1+z)^4 dimming diverging from the tired-light (1+z)^1 line")
             + f'<div class="card">{pre(tolman_txt)}</div>'
+            + '</div>'),
+        section(
+            "Olbers' paradox",
+            "In an infinite, eternal, static universe every line of sight would end on "
+            "a star and the whole sky would blaze. It does not -- the night is dark. "
+            "Stars would tile the sky only after ~10^16 light-years (the mean free "
+            "path 1/n sigma), but the cosmic horizon (c x age) is a million times "
+            "closer, so only ~10^-6 of the sky is covered. The finite age of the "
+            "universe, not infinite space, is what makes night dark.",
+            '<div class="grid">'
+            + svg_card(out("olbers.svg"), "sky-covering fraction vs distance with the horizon far short of tiling")
+            + f'<div class="card">{pre(olbers_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

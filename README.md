@@ -115,6 +115,7 @@ ruins a long non-symplectic integration.
 | `src/standard_candle.py` | Standard candles: distance modulus, Cepheids & the distance ladder |
 | `src/tully_fisher.py` | Tully-Fisher: a spiral galaxy's luminosity from its rotation speed |
 | `src/tolman.py` | Tolman surface-brightness dimming: the (1+z)^4 test of expansion |
+| `src/olbers.py` | Olbers' paradox: why the dark night sky reveals a finite-age universe |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -221,6 +222,7 @@ ruins a long non-symplectic integration.
 | `examples/standard_candle_demo.py` | Moduli of landmark objects + the ladder-rung modulus curve |
 | `examples/tully_fisher_demo.py` | L/M_abs/M_baryon by rotation speed + the slope-4 log-log line |
 | `examples/tolman_demo.py` | Dimming vs z (expanding vs tired-light) + the magnitude curves |
+| `examples/olbers_demo.py` | Mean free path/horizon/covered fraction + the covering-vs-distance curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2377,6 +2379,35 @@ square arcsecond, a z=3 galaxy 256x. A static "tired-light" universe would dim o
 is genuine expansion rather than photons losing energy en route. The tests verify the 1/16
 dimming at z=1, the 1/256 at z=3, the ~3 mag magnitude form, the single tired-light factor,
 the expanding-vs-tired ratio, and the exponent recovery from an observed ratio.
+
+## Olbers' paradox: why the night sky is dark
+
+In an infinite, eternal, static universe uniformly filled with stars, every line of sight
+would end on a stellar surface and the whole sky would blaze as bright as the Sun.
+`olbers.py`:
+
+```
+$ python examples/olbers_demo.py examples/output
+
+          distance     d / mfp     sky covered
+  --------------------------------------------
+    cosmic horizon    6.76e-07       6.757e-07
+      100x horizon    6.76e-05       6.757e-05
+           0.1 mfp    1.00e-01         0.09516
+             1 mfp    1.00e+00          0.6321
+             5 mfp    5.00e+00          0.9933
+            20 mfp    2.00e+01               1
+```
+
+Summing shells of stars, each contributing r-independent brightness, diverges; the finite
+scale is the mean free path to a star `lambda = 1/(n sigma)`, and the sky-covering fraction
+out to distance d is `1 - exp(-d/lambda)`. For realistic star densities `lambda ~ 10^16`
+light-years, but the cosmic horizon `c x age ~ 1.4x10^10` ly is a million times closer, so
+only ~`10^-6` of the sky is covered and night is dark. The paradox is real -- every sight
+line *would* eventually hit a star -- but "eventually" lies far beyond the horizon: the
+finite age of the universe, not infinite space, is the resolution. The tests verify the
+astronomically large mean free path, the `1 - 1/e` covering at one mfp and its saturation,
+the horizon scale, and the tiny sky fraction covered within the observable universe.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
