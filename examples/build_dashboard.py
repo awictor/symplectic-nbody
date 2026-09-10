@@ -109,6 +109,7 @@ def main():
     import main_sequence_demo
     import bondi_demo
     import cosmic_velocities_demo
+    import compton_demo
 
     import plot_orbits
 
@@ -187,6 +188,7 @@ def main():
     ms_txt = run("main_sequence_demo", main_sequence_demo.main, True)
     bondi_txt = run("bondi_demo", bondi_demo.main, True)
     cosmicv_txt = run("cosmic_velocities_demo", cosmic_velocities_demo.main, True)
+    compton_txt = run("compton_demo", compton_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -436,6 +438,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("blackbody.svg"), "Planck spectra: hotter = bluer and brighter")
             + f'<div class="card">{pre(blackbody_txt)}</div>'
+            + '</div>'),
+        section(
+            "Compton & inverse-Compton scattering",
+            "Photons trade energy with electrons: Compton down-shifts a photon "
+            "(shift = lambda_C(1-cos theta), lambda_C = 2.426 pm), while inverse "
+            "Compton off a relativistic electron boosts it by ~gamma^2 -- turning "
+            "CMB and starlight into X-rays and gamma-rays.",
+            '<div class="grid">'
+            + svg_card(out("compton.svg"), "scattered photon energy falling with angle")
+            + f'<div class="card">{pre(compton_txt)}</div>'
             + '</div>'),
         section(
             "Big Bang nucleosynthesis: the primordial 25% helium",

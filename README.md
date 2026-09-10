@@ -100,6 +100,7 @@ ruins a long non-symplectic integration.
 | `src/saha.py` | Saha equation & cosmic recombination (the CMB release) |
 | `src/cmb.py` | CMB acoustic scale: sound horizon & the l~220 first peak |
 | `src/blackbody.py` | Blackbody radiation: Planck law, Wien peak, Stefan-Boltzmann |
+| `src/compton.py` | Compton & inverse-Compton scattering (photon-electron energy exchange) |
 | `src/bbn.py` | Big Bang nucleosynthesis: n/p freeze-out & primordial helium |
 | `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
 | `src/main_sequence.py` | Main sequence: mass-luminosity relation, lifetimes, HR diagram |
@@ -158,6 +159,7 @@ ruins a long non-symplectic integration.
 | `examples/saha_demo.py` | Ionization fraction plunging to zero at recombination |
 | `examples/cmb_demo.py` | Sound horizon, acoustic angle & the l~220 peak comb |
 | `examples/blackbody_demo.py` | Peak wavelengths (CMB->B-star) + Planck spectra |
+| `examples/compton_demo.py` | Compton shift/energy vs angle + inverse-Compton boost |
 | `examples/bbn_demo.py` | n/p freeze-out chain and the Y_p ~ 0.25 helium fraction |
 | `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
 | `examples/main_sequence_demo.py` | Mass-L-lifetime table + the main sequence on an HR diagram |
@@ -574,6 +576,28 @@ helium-4, giving `Y_p = 2(n/p)/(1+n/p) ~ 0.25`. That quarter-helium abundance,
 observed everywhere in the universe, is one of the strongest confirmations of the
 hot Big Bang. The tests verify the equilibrium limits, the freeze-out ratio, the
 decay, and the ~0.25 helium fraction.
+
+## Compton and inverse-Compton scattering
+
+Photons exchange energy with electrons. `compton.py`:
+
+```
+$ python examples/compton_demo.py examples/output
+
+   angle (deg)  shift (pm)   E scattered (keV)   (500 keV photon)
+             0       0.000               500.0
+            90       2.426               252.7
+           180       4.853               169.1
+  inverse Compton gamma=1000: boost x1.3e6  (1 meV CMB photon -> 1333 eV)
+```
+
+A photon off a stationary electron lengthens by `lambda_C(1 - cos theta)` with
+`lambda_C = h/m_e c = 2.426 pm`, losing the most energy at back-scattering.
+Inverse Compton runs it the other way: a relativistic electron kicks a photon up
+in energy by `~gamma^2`, turning CMB and starlight into X-rays and gamma-rays --
+the engine of the Sunyaev-Zeldovich effect and high-energy astrophysics. The
+tests verify the 2.426 pm wavelength, the 511 keV electron rest energy, the shift
+at each angle, and the `gamma^2` boost.
 
 ## Blackbody radiation: Planck, Wien, Stefan-Boltzmann
 
