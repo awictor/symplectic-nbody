@@ -166,6 +166,7 @@ ruins a long non-symplectic integration.
 | `src/grashof.py` | Grashof number: natural convection, Rayleigh Nu correlations, buoyancy vs forced |
 | `src/womersley.py` | Womersley number: pulsatile flow, penetration depth, phase lag, pulse-wave speed |
 | `src/marangoni.py` | Marangoni effect: surface-tension-gradient flow, onset, dynamic Bond number |
+| `src/kutta_joukowski.py` | Kutta-Joukowski lift: circulation, 2 pi lift-slope, Magnus force, induced drag |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -323,6 +324,7 @@ ruins a long non-symplectic integration.
 | `examples/grashof_demo.py` | Natural-convection table + the h-vs-height / transition figure |
 | `examples/womersley_demo.py` | Vascular-tree alpha table + the parabola-to-plug profile figure |
 | `examples/marangoni_demo.py` | Onset/regime table + the Marangoni-vs-buoyancy regime map |
+| `examples/kutta_joukowski_demo.py` | Lift/Magnus tables + the lift-slope & induced-drag figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3775,6 +3777,29 @@ Bond number `Bo_d = Ra/Ma = rho g beta L^2/|dgamma/dT|`: thin films and microgra
 Marangoni-driven, thick pools on the ground buoyancy-driven. The tests verify the
 `dT`/`L`/`1/(mu alpha)` scalings, the `Ma ~ 80` onset, the surface stress direction, the
 `L^2` Bond-number scaling, the microgravity limit, and the flow-speed trend.
+
+## Kutta-Joukowski: lift is circulation
+
+A wing flies because the flow around it swirls. `kutta_joukowski.py`:
+
+```
+$ python examples/kutta_joukowski_demo.py examples/output
+
+  angle of attack   c_l (thin)          light aircraft: 20 m^2, c_l 0.5, 50 m/s -> 15.3 kN
+  2 deg             0.219               tennis topspin: 3000 rpm -> 4.3 N side force
+  5 deg             0.548
+```
+
+The Kutta-Joukowski theorem gives lift per span `L' = rho U Gamma` -- density times speed
+times circulation -- for any 2-D shape. An airfoil sets its own circulation through the Kutta
+condition (the flow must leave the sharp trailing edge smoothly), giving the thin-airfoil
+lift-slope `c_l = 2 pi alpha` (~0.11 per degree). The same theorem is the **Magnus effect**: a
+spinning ball drags a boundary layer around, circulation `Gamma = 2 pi r^2 omega`, and curves
+sideways -- the topspin dip, the football bend. Lift is not free: the circulation trails
+vortices, so a finite wing pays induced drag `c_di = c_l^2/(pi AR e)` that falls with aspect
+ratio, the reason gliders and albatrosses have long thin wings. The tests verify the
+`rho U Gamma` lift, the `2 pi` slope, the circulation/coefficient consistency, the `U^2`
+scaling, the Magnus force, and the induced-drag `c_l^2`/aspect-ratio trends.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

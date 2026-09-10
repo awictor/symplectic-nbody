@@ -208,6 +208,7 @@ def main():
     import grashof_demo
     import womersley_demo
     import marangoni_demo
+    import kutta_joukowski_demo
 
     import plot_orbits
 
@@ -385,6 +386,7 @@ def main():
     grashof_txt = run("grashof_demo", grashof_demo.main, True)
     womersley_txt = run("womersley_demo", womersley_demo.main, True)
     marangoni_txt = run("marangoni_demo", marangoni_demo.main, True)
+    kutta_joukowski_txt = run("kutta_joukowski_demo", kutta_joukowski_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2018,6 +2020,20 @@ def main():
             '<div class="grid">'
             + svg_card(out("marangoni.svg"), "regime map over layer thickness and gravity: Marangoni vs buoyancy")
             + f'<div class="card">{pre(marangoni_txt)}</div>'
+            + '</div>'),
+        section(
+            "Kutta-Joukowski: lift is circulation",
+            "A wing flies because the flow around it carries a net swirl -- circulation -- and "
+            "the Kutta-Joukowski theorem makes it exact: lift per span L' = rho U Gamma. The "
+            "airfoil sets its own circulation through the Kutta condition (smooth flow off the "
+            "trailing edge), giving the thin-airfoil lift-slope c_l = 2 pi alpha. The same "
+            "theorem is the Magnus effect -- a spinning ball drags a boundary layer around, "
+            "generating circulation and a sideways curve. Lift isn't free: finite wings trail "
+            "vortices and pay induced drag c_l^2/(pi AR e), so soaring birds wear long thin "
+            "wings.",
+            '<div class="grid">'
+            + svg_card(out("kutta_joukowski.svg"), "the 2 pi lift-slope with stall, and the induced-drag penalty vs aspect ratio")
+            + f'<div class="card">{pre(kutta_joukowski_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

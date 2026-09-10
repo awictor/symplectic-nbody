@@ -1,0 +1,23 @@
+Kutta-Joukowski: L' = rho U Gamma, and thin-airfoil c_l = 2 pi alpha
+
+   angle of attack  c_l (thin)
+              0 deg       0.000
+              2 deg       0.219
+              5 deg       0.548
+              8 deg       0.877
+             12 deg       1.316
+
+  Light aircraft (20 m^2 wing, c_l = 0.5, 50 m/s):
+    lift = 15.3 kN  (holds ~1.6 tonnes)
+
+  Magnus effect on a spinning ball (side force):
+  ball                  spin    speed   side force
+  tennis topspin     3000 rpm     25 m/s       4.34 N
+  football curl       600 rpm     25 m/s      32.18 N
+  golf backspin      3000 rpm     60 m/s       2.75 N
+
+  Lift comes from the circulation the wing sets via the Kutta condition, not any
+  equal-transit myth. Finite wings trail vortices and pay induced drag c_l^2/(pi AR e),
+  which is why soaring birds and gliders wear long, high-aspect-ratio wings.
+
+  wrote examples/output\kutta_joukowski.svg
