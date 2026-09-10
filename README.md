@@ -35,9 +35,38 @@ ruins a long non-symplectic integration.
 |------|----------|
 | `src/integrators.py` | `velocity_verlet` (2nd-order symplectic), `forest_ruth` (4th-order symplectic), `rk4` (non-symplectic foil) |
 | `src/nbody.py` | Newtonian forces, kinetic/potential energy, linear & angular momentum, softening |
-| `src/systems.py` | Test systems: circular & eccentric two-body, the figure-eight choreography, Burrau's pythagorean 3-body |
+| `src/barnes_hut.py` | O(N log N) octree force solver with opening-angle theta criterion |
+| `src/systems.py` | Test systems: two-body, figure-eight, pythagorean 3-body, **Plummer-sphere star cluster** (any N) |
 | `tests/test_conservation.py` | Automated checks of every conservation claim |
-| `examples/energy_drift_demo.py` | The ASCII demo above |
+| `tests/test_barnes_hut.py` | Tree force validated against exact O(N^2) summation |
+| `examples/energy_drift_demo.py` | The ASCII energy-drift demo above |
+| `examples/scaling_benchmark.py` | Direct vs Barnes-Hut timing & empirical scaling exponent |
+
+## Barnes-Hut: scaling to many bodies
+
+Direct summation is O(N^2). For a star cluster of thousands of bodies that is
+hopeless. `barnes_hut.py` builds an octree, collapses distant groups of bodies
+to their centre of mass, and uses them wholesale when the opening angle
+`theta = cell_width / distance` is small enough. Same acceleration interface, so
+it drops straight into the same symplectic integrators.
+
+```
+$ python examples/scaling_benchmark.py
+
+     N    direct (ms)     bh (ms)   speedup
+---------------------------------------------
+   200           9.15       12.19      0.8x
+  3200        2680.78     1126.60      2.4x
+
+empirical scaling exponent  direct ~ N^2.04   barnes-hut ~ N^1.64
+```
+
+`theta=0` reproduces direct summation to machine precision; `theta=0.5` is the
+classic accuracy/speed sweet spot (matches exact forces to a few percent).
+Tightening `theta` provably reduces the error — all checked in the tests. The
+`plummer_sphere(n=...)` generator builds an equilibrium cluster (positions from
+the Plummer inverse-CDF, velocities by rejection sampling the exact distribution
+function) using a tiny built-in LCG, so it's deterministic and dependency-free.
 
 ## The claims, checked automatically
 

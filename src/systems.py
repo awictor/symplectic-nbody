@@ -74,9 +74,66 @@ def pythagorean() -> NBody:
     )
 
 
+def plummer_sphere(n: int = 500, seed: int = 1, total_mass: float = 1.0,
+                   scale: float = 1.0) -> NBody:
+    """A Plummer sphere: the standard equilibrium model of a star cluster.
+
+    Positions follow the Plummer density profile; velocities are drawn from the
+    exact isotropic distribution function via von Neumann rejection, so the cloud
+    starts in near-virial equilibrium. Deterministic given `seed` (uses a small
+    LCG so there are zero dependencies)."""
+    rng = _LCG(seed)
+    masses = [total_mass / n] * n
+    pos: list = []
+    vel: list = []
+    for _ in range(n):
+        # radius from inverse-CDF of the Plummer profile
+        m = rng.uniform()
+        r = scale / math.sqrt(m ** (-2.0 / 3.0) - 1.0)
+        x, y, z = _random_unit_vector(rng)
+        pos.append([r * x, r * y, r * z])
+
+        # escape speed at r; sample q = v/v_esc from g(q) = q^2 (1-q^2)^{7/2}
+        v_esc = math.sqrt(2.0) * (1.0 + r * r / (scale * scale)) ** (-0.25)
+        while True:
+            q = rng.uniform()
+            g = q * q * (1.0 - q * q) ** 3.5
+            if 0.1 * rng.uniform() < g:  # 0.1 >= max of g(q)
+                break
+        v = q * v_esc
+        vx, vy, vz = _random_unit_vector(rng)
+        vel.append([v * vx, v * vy, v * vz])
+
+    return NBody(masses=masses, pos=pos, vel=vel, softening=scale / math.sqrt(n))
+
+
+class _LCG:
+    """Tiny deterministic PRNG (Numerical Recipes constants). No stdlib random,
+    so results are reproducible across platforms and Python versions."""
+    def __init__(self, seed: int):
+        self.state = (seed * 2862933555777941757 + 1) & ((1 << 64) - 1)
+
+    def uniform(self) -> float:
+        self.state = (self.state * 6364136223846793005 + 1442695040888963407) & ((1 << 64) - 1)
+        return ((self.state >> 11) / float(1 << 53)) or 1e-12
+
+
+def _random_unit_vector(rng: "_LCG"):
+    # Marsaglia's method for a uniform point on the unit sphere.
+    while True:
+        u = 2.0 * rng.uniform() - 1.0
+        v = 2.0 * rng.uniform() - 1.0
+        s = u * u + v * v
+        if s < 1.0:
+            break
+    f = 2.0 * math.sqrt(1.0 - s)
+    return u * f, v * f, 1.0 - 2.0 * s
+
+
 SYSTEMS = {
     "two_body": two_body_circular,
     "two_body_eccentric": two_body_eccentric,
     "figure_eight": figure_eight,
     "pythagorean": pythagorean,
+    "plummer": plummer_sphere,
 }
