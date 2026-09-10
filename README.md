@@ -118,6 +118,7 @@ ruins a long non-symplectic integration.
 | `src/olbers.py` | Olbers' paradox: why the dark night sky reveals a finite-age universe |
 | `src/bi_elliptic.py` | Bi-elliptic transfer: when three burns beat the Hohmann two |
 | `src/gravity_assist.py` | Gravity assist: the slingshot boost from a planetary flyby |
+| `src/synodic.py` | Synodic periods: how often planets line up |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -227,6 +228,7 @@ ruins a long non-symplectic integration.
 | `examples/olbers_demo.py` | Mean free path/horizon/covered fraction + the covering-vs-distance curve |
 | `examples/bi_elliptic_demo.py` | Hohmann vs bi-elliptic delta-v by ratio + the crossover curves |
 | `examples/gravity_assist_demo.py` | Turn angle & boost by flyby depth/speed + the boost(r_p) curves |
+| `examples/synodic_demo.py` | Synodic period & conjunction cadence per planet + the S(P) curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2468,6 +2470,33 @@ of the fuel a direct burn would need, while the planets lost a laughably tiny bi
 energy. The tests verify that deeper and slower passes bend more, the Voyager-scale Jupiter
 boost, that the gain never exceeds `2 v_inf`, the near-180-degree limit, and that a trailing
 pass adds speed.
+
+## Synodic periods: how often planets line up
+
+The geometry we see -- oppositions, launch windows, new Moons -- repeats not on a planet's
+sidereal period but on its synodic period, the beat between two orbital rates. `synodic.py`:
+
+```
+$ python examples/synodic_demo.py examples/output
+
+      planet  sidereal (d)   synodic (d)   per year
+  ------------------------------------------------
+     Mercury          88.0         115.9     3.152
+       Venus         224.7         583.9     0.626
+        Mars         687.0         779.9     0.468
+     Jupiter        4332.6         398.9     0.916
+      Saturn       10759.2         378.1     0.966
+     Neptune       60190.0         367.5     0.994
+```
+
+From `1/S = |1/P_planet - 1/P_earth|`, Mars returns to opposition every ~780 days -- exactly
+the ~26-month cadence of Mars launch windows -- and the synodic month is 29.5 days, longer
+than the 27.3-day sidereal month because the Earth-Moon system also circles the Sun. Fast
+inner planets lap Earth often; distant planets barely move, so their synodic period settles
+toward one Earth year (Earth does the lapping). Right at Earth's own orbit the synodic period
+diverges: two bodies at the same distance never change their alignment. The tests verify the
+Mars/Venus/Mercury synodic periods, the 29.5-day synodic month, the divergence at equal
+periods, the one-year limit for distant planets, and the conjunction cadence.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

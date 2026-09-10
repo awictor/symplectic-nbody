@@ -1,0 +1,20 @@
+Synodic period: 1/S = |1/P_planet - 1/P_earth| -- when alignments repeat
+
+      planet  sidereal (d)   synodic (d)  per year
+  ------------------------------------------------
+     Mercury          88.0         115.9     3.152
+       Venus         224.7         583.9     0.626
+        Mars         687.0         779.9     0.468
+     Jupiter        4332.6         398.9     0.916
+      Saturn       10759.2         378.1     0.966
+     Neptune       60190.0         367.5     0.994
+
+  synodic month (new Moon to new Moon): 29.53 days
+
+  Mars returns to opposition every ~780 days -- exactly the ~26-month
+  cadence of Mars launch windows. Inner planets lap Earth quickly; distant
+  planets barely move, so their synodic period approaches one Earth year
+  (Earth does the lapping). Near Earth's own orbit the synodic period blows
+  up: two bodies at the same distance never change their alignment.
+
+  wrote examples/output\synodic.svg

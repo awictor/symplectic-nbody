@@ -160,6 +160,7 @@ def main():
     import olbers_demo
     import bi_elliptic_demo
     import gravity_assist_demo
+    import synodic_demo
 
     import plot_orbits
 
@@ -289,6 +290,7 @@ def main():
     olbers_txt = run("olbers_demo", olbers_demo.main, True)
     biell_txt = run("bi_elliptic_demo", bi_elliptic_demo.main, True)
     gassist_txt = run("gravity_assist_demo", gravity_assist_demo.main, True)
+    synodic_txt = run("synodic_demo", synodic_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1326,6 +1328,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("gravity_assist.svg"), "slingshot boost vs flyby periapsis for several approach speeds")
             + f'<div class="card">{pre(gassist_txt)}</div>'
+            + '</div>'),
+        section(
+            "Synodic periods & alignments",
+            "The geometry we see -- oppositions, launch windows, new Moons -- repeats "
+            "on the synodic period, the beat between two orbital rates: "
+            "1/S = |1/P1 - 1/P2|. Mars returns to opposition every ~780 days, exactly "
+            "the ~26-month cadence of Mars missions; the synodic month is 29.5 days, "
+            "longer than the 27.3-day sidereal month. Near Earth's own orbit S blows "
+            "up; distant planets approach a one-year synodic period.",
+            '<div class="grid">'
+            + svg_card(out("synodic.svg"), "synodic period diverging at Earth's orbit and settling to one year")
+            + f'<div class="card">{pre(synodic_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
