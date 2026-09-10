@@ -94,6 +94,7 @@ ruins a long non-symplectic integration.
 | `src/pulsar.py` | Hulse-Taylor binary-pulsar orbital decay (first GW evidence) |
 | `src/friedmann.py` | Friedmann cosmology: scale factor a(t), expansion eras, age of the universe |
 | `src/saha.py` | Saha equation & cosmic recombination (the CMB release) |
+| `src/cmb.py` | CMB acoustic scale: sound horizon & the l~220 first peak |
 | `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
 | `src/distances.py` | Cosmological distances: luminosity/angular-diameter, cosmic acceleration |
 | `src/chandrasekhar.py` | White-dwarf structure & the Chandrasekhar mass (~1.44 M_sun) |
@@ -143,6 +144,7 @@ ruins a long non-symplectic integration.
 | `examples/pulsar_demo.py` | Hulse-Taylor dP/dt vs measured + the periastron-shift parabola |
 | `examples/friedmann_demo.py` | Scale-factor curves for radiation/matter/dark-energy/LCDM |
 | `examples/saha_demo.py` | Ionization fraction plunging to zero at recombination |
+| `examples/cmb_demo.py` | Sound horizon, acoustic angle & the l~220 peak comb |
 | `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
 | `examples/distances_demo.py` | Hubble diagram (LCDM vs decelerating) + D_A turnover |
 | `examples/chandrasekhar_demo.py` | White-dwarf mass-radius curve approaching 1.44 M_sun |
@@ -487,6 +489,29 @@ in 1998 (2011 Nobel Prize). The angular-diameter distance is non-monotonic,
 peaking near `z~1.6`, which is why the CMB's acoustic spots subtend about a
 degree. The tests check the low-z Hubble law, the acceleration signal, the
 turnover, and the Etherington duality `D_L = (1+z)^2 D_A`.
+
+## The CMB acoustic scale: the 1-degree spots
+
+The sound horizon at recombination -- the farthest a pressure wave travels in the
+photon-baryon plasma before the CMB is released -- is a standard ruler. Seen
+across the distance to last scattering it subtends a fixed angle, the first
+acoustic peak. `cmb.py`:
+
+```
+$ python examples/cmb_demo.py examples/output
+
+  sound horizon r_s          : 192 Mpc
+  distance to last scattering: 13734 Mpc
+  acoustic angle theta       : 0.80 deg
+  first acoustic peak        : l ~ 225   (WMAP/Planck: 220)
+```
+
+Reusing the recombination redshift (`saha`) and the comoving distance
+(`friedmann`/`distances`), the first peak comes out at `l ~ 220` -- features about
+a degree across, exactly what WMAP and Planck measured. Because that angle
+depends on the geometry the light traveled through, its position is what pins the
+universe to be spatially flat. The tests verify the peak multipole, the ~14000
+Mpc distance to last scattering, and the sound-speed limits.
 
 ## Cosmic recombination: the birth of the CMB
 

@@ -100,6 +100,7 @@ def main():
     import dynamical_friction_demo
     import gw_strain_demo
     import saha_demo
+    import cmb_demo
 
     import plot_orbits
 
@@ -169,6 +170,7 @@ def main():
     df_txt = run("dynamical_friction_demo", dynamical_friction_demo.main, True)
     gwstrain_txt = run("gw_strain_demo", gw_strain_demo.main, True)
     saha_txt = run("saha_demo", saha_demo.main, True)
+    cmb_txt = run("cmb_demo", cmb_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -379,6 +381,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("saha.svg"), "ionization fraction plunging to zero at recombination")
             + f'<div class="card">{pre(saha_txt)}</div>'
+            + '</div>'),
+        section(
+            "CMB acoustic scale: the 1-degree spots",
+            "The sound horizon at recombination is a fixed ruler; seen across the "
+            "distance to last scattering it subtends ~1 degree, putting the first "
+            "acoustic peak at multipole l ~ 220. Its position pins the universe's "
+            "geometry to flat.",
+            '<div class="grid">'
+            + svg_card(out("cmb.svg"), "schematic acoustic peaks with the first at l~220")
+            + f'<div class="card">{pre(cmb_txt)}</div>'
             + '</div>'),
         section(
             "The Eddington luminosity & black-hole growth",

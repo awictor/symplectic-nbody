@@ -1,0 +1,13 @@
+The CMB acoustic scale (flat LCDM)
+
+  recombination redshift    : z = 1379
+  sound horizon r_s         : 192 Mpc
+  distance to last scattering: 13734 Mpc
+  acoustic angle theta      : 0.80 deg
+  first acoustic peak       : l ~ 225  (WMAP/Planck: 220)
+
+  A fixed sound-horizon ruler at the edge of the observable universe
+  subtends about a degree; the harmonics of that standing wave are the
+  acoustic peaks, and their position pins the geometry to flat.
+
+  wrote examples/output\cmb.svg
