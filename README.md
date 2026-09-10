@@ -70,6 +70,7 @@ ruins a long non-symplectic integration.
 | `src/cr3bp.py` | Circular restricted 3-body problem: Lagrange points, Jacobi constant |
 | `src/solar_system.py` | The real 8-planet solar system from published orbital elements |
 | `src/exoplanet.py` | Exoplanet detection: transit depth & radial-velocity wobble |
+| `src/habitable_zone.py` | Habitable zone: equilibrium temperature & liquid-water bounds |
 | `src/relativity.py` | First post-Newtonian gravity & Mercury's perihelion precession |
 | `src/lyapunov.py` | Largest Lyapunov exponent (Benettin shadow-trajectory method) |
 | `src/stability_map.py` | Three-body escape-time scan over a grid of initial conditions |
@@ -136,6 +137,7 @@ ruins a long non-symplectic integration.
 | `examples/lagrange_demo.py` | Lagrange points + zero-velocity curves rendered to SVG |
 | `examples/solar_system_demo.py` | Integrate the real solar system, recover Kepler's third law |
 | `examples/exoplanet_demo.py` | Transit depths & RV wobbles + a transit light-curve dip |
+| `examples/habitable_zone_demo.py` | HZ bounds by stellar type + the zone-vs-luminosity band |
 | `examples/precession_demo.py` | Mercury's 43"/century precession + a relativistic rosette SVG |
 | `examples/chaos_demo.py` | Lyapunov exponent + two trajectories diverging 6 orders of magnitude |
 | `examples/stability_map_demo.py` | Parallel escape-time heatmap revealing the fractal chaos boundary |
@@ -1394,6 +1396,27 @@ the demo amplifies GR (shrinks c) so the ellipse visibly rotates into a rosette
 and renders it to SVG. The tests confirm the 43"/century value, that numeric
 integration matches the analytic advance, that Newtonian orbits don't precess,
 and that the precession scales as 1/c^2.
+
+## The habitable zone: where water can be liquid
+
+`habitable_zone.py` turns a star's luminosity into the band of orbits where a
+planet's equilibrium temperature allows surface water:
+
+```
+$ python examples/habitable_zone_demo.py examples/output
+
+  Earth's equilibrium temperature: 255 K   (greenhouse -> 288 K surface)
+  star              L (L_sun)   HZ inner   HZ outer
+  Sun (1.0)              1.00     0.47 AU    0.87 AU
+  A star (2.0)         11.31     1.57 AU    2.93 AU
+```
+
+The equilibrium temperature `T_eq ~ L^{1/4} / sqrt(d)` gives Earth 255 K (the
+greenhouse effect warms the surface the rest of the way to 288 K). Setting `T_eq`
+to the liquid-water bounds gives the habitable zone, whose distance scales as
+`sqrt(L_star)` -- tucked in close for a dim red dwarf, far out for a luminous
+star. The tests verify Earth's 255 K, the `L^{1/4}/sqrt(d)` scalings, and the
+`sqrt(L)` march of the zone.
 
 ## Exoplanet detection: transits and radial velocity
 

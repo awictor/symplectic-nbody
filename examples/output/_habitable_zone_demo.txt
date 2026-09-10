@@ -1,0 +1,17 @@
+The habitable zone: liquid-water orbits around a star
+
+  Earth's equilibrium temperature: 255 K
+  (greenhouse warms the surface to ~288 K)
+
+  star                L (L_sun)   HZ inner   HZ outer
+  ---------------------------------------------------
+  red dwarf (0.3)          0.01     0.06 AU    0.11 AU
+  Sun (1.0)                1.00     0.47 AU    0.87 AU
+  F star (1.5)             4.13     0.95 AU    1.77 AU
+  A star (2.0)            11.31     1.57 AU    2.93 AU
+
+  The zone marches out as sqrt(L): red-dwarf HZs hug the star (and risk
+  tidal locking), while luminous stars push it far out. This is the target
+  band for finding worlds that could have surface oceans.
+
+  wrote examples/output\habitable_zone.svg

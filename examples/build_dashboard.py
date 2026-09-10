@@ -117,6 +117,7 @@ def main():
     import larmor_demo
     import optical_depth_demo
     import exoplanet_demo
+    import habitable_zone_demo
 
     import plot_orbits
 
@@ -203,6 +204,7 @@ def main():
     larmor_txt = run("larmor_demo", larmor_demo.main, True)
     optdepth_txt = run("optical_depth_demo", optical_depth_demo.main, True)
     exoplanet_txt = run("exoplanet_demo", exoplanet_demo.main, True)
+    hz_txt = run("habitable_zone_demo", habitable_zone_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -262,6 +264,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("exoplanet.svg"), "a transit light-curve dip")
             + f'<div class="card">{pre(exoplanet_txt)}</div>'
+            + '</div>'),
+        section(
+            "The habitable zone: where liquid water survives",
+            "A planet's equilibrium temperature T_eq ~ L^1/4 / sqrt(d) sets the band "
+            "of orbits where water stays liquid. Earth's T_eq is 255 K (greenhouse "
+            "warms it to 288 K). The zone marches out as sqrt(L) -- close in for red "
+            "dwarfs, far out for luminous stars.",
+            '<div class="grid">'
+            + svg_card(out("habitable_zone.svg"), "HZ inner/outer edges vs stellar luminosity")
+            + f'<div class="card">{pre(hz_txt)}</div>'
             + '</div>'),
         section(
             "Hulse-Taylor binary pulsar (GW before LIGO)",
