@@ -1,0 +1,20 @@
+Marangoni effect: flow from a surface-tension gradient (Ma_c ~ 80)
+
+  Heated water layer, dT = 10 K (dgamma/dT = -1.5e-4 N/m/K):
+
+     layer L          Ma    onset?      flow U
+     0.05 mm     5.4e+02  convects      1.50 m/s
+     0.20 mm     2.1e+03  convects      1.50 m/s
+     1.00 mm     1.1e+04  convects      1.50 m/s
+     5.00 mm     5.4e+04  convects      1.50 m/s
+
+  Tears of wine: ethanol evaporates from the film climbing the glass, raising its
+  surface tension there, so liquid is pulled UP toward the higher-tension rim until
+  it beads and runs back as 'legs'. A pure solutal Marangoni flow, no heat needed.
+
+  Marangoni vs buoyancy (dynamic Bond number Bo_d = Ra/Ma):
+    thin film, Earth     Bo_d =  1.37e-04  ->  Marangoni-driven
+    thick pool, Earth    Bo_d =  1.37e+00  ->  buoyancy-driven
+    thick pool, orbit    Bo_d =  1.40e-05  ->  Marangoni-driven
+
+  wrote examples/output\marangoni.svg

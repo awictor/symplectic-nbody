@@ -165,6 +165,7 @@ ruins a long non-symplectic integration.
 | `src/sersic.py` | Sersic surface-brightness profile: b_n, total luminosity, enclosed light |
 | `src/grashof.py` | Grashof number: natural convection, Rayleigh Nu correlations, buoyancy vs forced |
 | `src/womersley.py` | Womersley number: pulsatile flow, penetration depth, phase lag, pulse-wave speed |
+| `src/marangoni.py` | Marangoni effect: surface-tension-gradient flow, onset, dynamic Bond number |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -321,6 +322,7 @@ ruins a long non-symplectic integration.
 | `examples/sersic_demo.py` | Per-index profile table + the surface-brightness curves |
 | `examples/grashof_demo.py` | Natural-convection table + the h-vs-height / transition figure |
 | `examples/womersley_demo.py` | Vascular-tree alpha table + the parabola-to-plug profile figure |
+| `examples/marangoni_demo.py` | Onset/regime table + the Marangoni-vs-buoyancy regime map |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3749,6 +3751,30 @@ at the Moens-Korteweg speed `c = sqrt(E h/(2 rho R))` (~6-10 m/s, rising as arte
 The tests reproduce the aorta's `alpha ~ 15` and a capillary's `alpha << 1`, the
 `R`/`sqrt(omega)` scalings, `alpha = R/delta`, the phase-lag trend to 90 degrees, the
 `R^4` Poiseuille flow, and the pulse-wave speed.
+
+## The Marangoni effect: flow along a tension gradient
+
+A gradient in surface tension drags the fluid itself. `marangoni.py`:
+
+```
+$ python examples/marangoni_demo.py examples/output
+
+  layer L      Ma        onset?      flow U
+  0.05 mm      5.4e2      convects    1.50 m/s
+
+  thin film, Earth   Bo_d = 1.4e-4 -> Marangoni      thick pool, Earth  Bo_d = 1.4 -> buoyancy
+```
+
+When surface tension varies along a surface -- from a temperature or composition difference
+-- fluid is pulled from low-tension toward high-tension regions and hauls the bulk with it:
+the tears of wine climbing a glass, pepper fleeing a soap drop, thermocapillary stirring in a
+weld pool. The Marangoni number `Ma = |dgamma/dT| dT L/(mu alpha)` weighs that drive against
+viscous and thermal diffusion, and a heated layer breaks into Benard-Marangoni cells above
+`Ma ~ 80`. Whether surface tension or buoyancy dominates a heated layer is set by the dynamic
+Bond number `Bo_d = Ra/Ma = rho g beta L^2/|dgamma/dT|`: thin films and microgravity are
+Marangoni-driven, thick pools on the ground buoyancy-driven. The tests verify the
+`dT`/`L`/`1/(mu alpha)` scalings, the `Ma ~ 80` onset, the surface stress direction, the
+`L^2` Bond-number scaling, the microgravity limit, and the flow-speed trend.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

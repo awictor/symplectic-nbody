@@ -207,6 +207,7 @@ def main():
     import sersic_demo
     import grashof_demo
     import womersley_demo
+    import marangoni_demo
 
     import plot_orbits
 
@@ -383,6 +384,7 @@ def main():
     sersic_txt = run("sersic_demo", sersic_demo.main, True)
     grashof_txt = run("grashof_demo", grashof_demo.main, True)
     womersley_txt = run("womersley_demo", womersley_demo.main, True)
+    marangoni_txt = run("marangoni_demo", marangoni_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2002,6 +2004,20 @@ def main():
             '<div class="grid">'
             + svg_card(out("womersley.svg"), "velocity profiles from quasi-steady parabola to inertial plug as alpha grows")
             + f'<div class="card">{pre(womersley_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Marangoni effect: flow along a tension gradient",
+            "When surface tension varies along a surface -- from a temperature or composition "
+            "gradient -- the imbalance drags the fluid from low-tension toward high-tension "
+            "regions. It climbs the tears of wine up a glass, scatters pepper from a soap drop, "
+            "and stirs weld pools. The Marangoni number Ma = |dgamma/dT| dT L/(mu alpha) "
+            "measures the drive against diffusion, breaking a heated layer into Benard-"
+            "Marangoni cells above Ma ~ 80. The dynamic Bond number Ra/Ma decides surface "
+            "tension vs buoyancy: thin films and microgravity are Marangoni-driven, thick "
+            "pools on the ground buoyancy-driven.",
+            '<div class="grid">'
+            + svg_card(out("marangoni.svg"), "regime map over layer thickness and gravity: Marangoni vs buoyancy")
+            + f'<div class="card">{pre(marangoni_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
