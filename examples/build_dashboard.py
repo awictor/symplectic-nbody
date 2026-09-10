@@ -140,6 +140,15 @@ def main():
             + f'<div class="card">{pre(solar_txt)}</div>'
             + '</div>'),
         section(
+            "Three-body stability map",
+            "Every pixel is a full three-body integration; colour is the time "
+            "until a body escapes. The fractal boundary between long-lived and "
+            "quickly-ionized initial conditions is chaos drawn in IC space. "
+            "(Generated separately by stability_map_demo.py -- it's compute-heavy.)",
+            '<div class="grid">'
+            + svg_card(out("stability_map.svg"), "escape time over a grid of starting points")
+            + '</div>'),
+        section(
             "Chaos & the Lyapunov exponent",
             "Two trajectories started 1e-9 apart diverge to order unity on an "
             "exponential clock. The pythagorean 3-body has a large positive "

@@ -42,6 +42,7 @@ ruins a long non-symplectic integration.
 | `src/solar_system.py` | The real 8-planet solar system from published orbital elements |
 | `src/relativity.py` | First post-Newtonian gravity & Mercury's perihelion precession |
 | `src/lyapunov.py` | Largest Lyapunov exponent (Benettin shadow-trajectory method) |
+| `src/stability_map.py` | Three-body escape-time scan over a grid of initial conditions |
 | `src/systems.py` | Test systems: two-body, figure-eight, pythagorean 3-body, **Plummer-sphere star cluster** (any N) |
 | `tests/test_conservation.py` | Automated checks of every conservation claim |
 | `tests/test_barnes_hut.py` | Tree force validated against exact O(N^2) summation |
@@ -55,6 +56,7 @@ ruins a long non-symplectic integration.
 | `examples/solar_system_demo.py` | Integrate the real solar system, recover Kepler's third law |
 | `examples/precession_demo.py` | Mercury's 43"/century precession + a relativistic rosette SVG |
 | `examples/chaos_demo.py` | Lyapunov exponent + two trajectories diverging 6 orders of magnitude |
+| `examples/stability_map_demo.py` | Parallel escape-time heatmap revealing the fractal chaos boundary |
 | `examples/build_dashboard.py` | Assemble all demos into one self-contained `index.html` |
 
 ## Barnes-Hut: scaling to many bodies
@@ -82,6 +84,24 @@ Tightening `theta` provably reduces the error — all checked in the tests. The
 `plummer_sphere(n=...)` generator builds an equilibrium cluster (positions from
 the Plummer inverse-CDF, velocities by rejection sampling the exact distribution
 function) using a tiny built-in LCG, so it's deterministic and dependency-free.
+
+## Stability maps: chaos drawn in initial-condition space
+
+`stability_map.py` drops a third body at rest at every point of a grid between
+two primaries and integrates each one, recording how long the system stays bound
+before a body escapes. Colouring the grid by escape time draws the boundary
+between order and chaos directly:
+
+```
+python examples/stability_map_demo.py examples/output 64   # 64x64 = 4096 integrations
+```
+
+Rows run in parallel across CPU cores. The output SVG shows a mirror-symmetric
+pattern (the primaries sit on the x-axis, so `y -> -y` is an exact symmetry --
+verified in the tests) with a fractal-edged escape boundary. Bright regions are
+long-lived, near-periodic configurations; dark regions ionize almost at once.
+The intricate filigree at the edge is the fingerprint of chaos: neighbouring
+starting points can have wildly different fates.
 
 ## Chaos: why the three-body problem is unpredictable
 
