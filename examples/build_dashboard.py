@@ -61,6 +61,7 @@ def main():
     import scaling_benchmark
     import adaptive_demo
     import lagrange_demo
+    import solar_system_demo
 
     # make sure all SVGs exist
     import plot_orbits
@@ -70,6 +71,8 @@ def main():
     plot_orbits.main()
     sys.argv = ["lagrange_demo", outdir]
     lagrange_demo.main()
+    sys.argv = ["solar_system_demo", outdir]
+    solar_system_demo.main()
     sys.argv = _old_argv
 
     print("capturing demo outputs...")
@@ -78,6 +81,8 @@ def main():
     adapt_txt = capture(adaptive_demo.main)
     sys.argv = ["lagrange_demo", outdir]
     lagr_txt = capture(lagrange_demo.main)
+    sys.argv = ["solar_system_demo", outdir]
+    solar_txt = capture(solar_system_demo.main)
     sys.argv = _old_argv
     # scaling benchmark is slow; run a lighter inline version
     scale_txt = capture(scaling_benchmark.main)
@@ -114,6 +119,15 @@ def main():
             + svg_card(out("figure_eight_animated.svg"), "figure-eight choreography (animated)")
             + svg_card(out("eccentric.svg"), "eccentric two-body, e=0.7")
             + svg_card(out("pythagorean.svg"), "Burrau pythagorean 3-body")
+            + '</div>'),
+        section(
+            "The real solar system & Kepler's third law",
+            "Eight planets from published orbital elements, in AU/years/solar "
+            "masses. T^2/a^3 comes out constant -- Kepler's third law, straight "
+            "from Newtonian gravity and a symplectic integrator, no fitting.",
+            '<div class="grid">'
+            + svg_card(out("inner_planets.svg"), "inner solar system (2 Mars years)")
+            + f'<div class="card">{pre(solar_txt)}</div>'
             + '</div>'),
         section(
             "Lagrange points & zero-velocity curves",

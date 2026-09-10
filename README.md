@@ -39,6 +39,7 @@ ruins a long non-symplectic integration.
 | `src/adaptive.py` | Dormand-Prince RK45 with PI error-controlled adaptive step size |
 | `src/kepler.py` | Exact analytic two-body orbit (Kepler-equation solver) -- the ground truth |
 | `src/cr3bp.py` | Circular restricted 3-body problem: Lagrange points, Jacobi constant |
+| `src/solar_system.py` | The real 8-planet solar system from published orbital elements |
 | `src/systems.py` | Test systems: two-body, figure-eight, pythagorean 3-body, **Plummer-sphere star cluster** (any N) |
 | `tests/test_conservation.py` | Automated checks of every conservation claim |
 | `tests/test_barnes_hut.py` | Tree force validated against exact O(N^2) summation |
@@ -49,6 +50,7 @@ ruins a long non-symplectic integration.
 | `examples/adaptive_demo.py` | Adaptive DP45 vs fixed RK4: step adaptation & force-eval savings |
 | `examples/convergence_demo.py` | Measured convergence order of each method vs the exact orbit |
 | `examples/lagrange_demo.py` | Lagrange points + zero-velocity curves rendered to SVG |
+| `examples/solar_system_demo.py` | Integrate the real solar system, recover Kepler's third law |
 | `examples/build_dashboard.py` | Assemble all demos into one self-contained `index.html` |
 
 ## Barnes-Hut: scaling to many bodies
@@ -76,6 +78,29 @@ Tightening `theta` provably reduces the error — all checked in the tests. The
 `plummer_sphere(n=...)` generator builds an equilibrium cluster (positions from
 the Plummer inverse-CDF, velocities by rejection sampling the exact distribution
 function) using a tiny built-in LCG, so it's deterministic and dependency-free.
+
+## The real solar system, and Kepler's third law for free
+
+`solar_system.py` builds all eight planets from published orbital elements in
+AU / years / solar masses (so `G = 4*pi^2`). Integrate, measure each period, and
+the third law appears on its own:
+
+```
+$ python examples/solar_system_demo.py examples/output
+
+planet      a [AU]  T measured   T Kepler    T real   T^2/a^3
+-------------------------------------------------------------
+Mercury      0.387      0.2410     0.2408    0.2408    1.0010
+Earth        1.000      1.0005     1.0000    1.0000    1.0010
+Jupiter      5.204     11.9080    11.8724   11.8620    1.0060
+Neptune     30.070    164.9740   164.8916  164.7900    1.0010
+```
+
+`T^2/a^3` is constant across two orders of magnitude in orbital radius -- that
+constant *is* Kepler's third law, and it drops out of Newtonian gravity plus a
+symplectic step with no fitting. Measured periods match the real sidereal
+periods to better than half a percent. The tests verify the T-vs-a log-log slope
+is exactly 3/2 and that the full eight-body system conserves energy.
 
 ## One-page dashboard
 
