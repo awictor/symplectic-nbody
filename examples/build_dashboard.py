@@ -121,6 +121,7 @@ def main():
     import faber_jackson_demo
     import focusing_demo
     import bremsstrahlung_demo
+    import pair_production_demo
 
     import plot_orbits
 
@@ -211,6 +212,7 @@ def main():
     fj_txt = run("faber_jackson_demo", faber_jackson_demo.main, True)
     focusing_txt = run("focusing_demo", focusing_demo.main, True)
     brems_txt = run("bremsstrahlung_demo", bremsstrahlung_demo.main, True)
+    pairprod_txt = run("pair_production_demo", pair_production_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -780,6 +782,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("bremsstrahlung.svg"), "cooling time crossing the Hubble threshold")
             + f'<div class="card">{pre(brems_txt)}</div>'
+            + '</div>'),
+        section(
+            "Pair production & the gamma-ray horizon",
+            "Two photons colliding turn into an electron-positron pair once "
+            "E1 E2 (1 - cos theta) >= 2(m_e c^2)^2, so two 511 keV gammas just "
+            "pair head-on. A single high-energy gamma pair-produces off a soft "
+            "background photon above (m_e c^2)^2 / E_bg -- TeV gammas from blazars "
+            "are eaten by starlight/IR, PeV gammas by the CMB. The universe is "
+            "opaque to gamma rays beyond a horizon that shrinks as energy rises.",
+            '<div class="grid">'
+            + svg_card(out("pair_production.svg"), "threshold gamma energy vs background photon energy")
+            + f'<div class="card">{pre(pairprod_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

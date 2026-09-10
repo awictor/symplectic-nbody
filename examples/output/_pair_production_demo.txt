@@ -1,0 +1,18 @@
+Photon-photon pair production: gamma + gamma -> e+ e-
+
+  electron rest energy: 511 keV
+  head-on threshold (each photon): 511 keV
+
+     background photon    E (eV)   threshold gamma
+  ------------------------------------------------
+                   CMB   6.0e-04           435 TeV
+        infrared (EBL)   1.0e-01             3 TeV
+         optical (EBL)   2.0e+00           131 GeV
+                 X-ray   1.0e+03           261 MeV
+
+  A gamma ray is absorbed once its energy exceeds (m_e c^2)^2 / E_bg,
+  so TeV photons from distant blazars are eaten by starlight/IR and
+  PeV photons by the CMB -- the universe has a gamma-ray horizon that
+  shrinks as the photon energy rises.
+
+  wrote examples/output\pair_production.svg

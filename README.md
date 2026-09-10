@@ -79,6 +79,7 @@ ruins a long non-symplectic integration.
 | `src/cluster.py` | Galaxy-cluster virial temperature, M-T relation & X-ray scaling |
 | `src/sz.py` | Sunyaev-Zeldovich effect: Compton-y CMB distortion by cluster gas |
 | `src/bremsstrahlung.py` | Free-free X-ray emissivity & cluster-gas cooling time |
+| `src/pair_production.py` | Photon-photon pair production & the gamma-ray horizon |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -149,6 +150,7 @@ ruins a long non-symplectic integration.
 | `examples/cluster_demo.py` | Cluster M-T table + the kT ~ M^2/3 relation curve |
 | `examples/sz_demo.py` | Compton y & CMB decrement across cluster masses |
 | `examples/bremsstrahlung_demo.py` | Emissivity & cooling time vs density (cooling flows) |
+| `examples/pair_production_demo.py` | Threshold gamma energy vs background photon energy |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1315,6 +1317,32 @@ flows -- while the tenuous outskirts effectively never cool. This is the X-ray
 emission whose CMB imprint is the SZ effect, and it's rooted in the same Larmor
 radiation as synchrotron. The tests verify the `n^2` and `sqrt(T)` scalings, the
 cooling-time scalings, and the cluster cooling-flow regime.
+
+## Pair production: why the gamma-ray sky has a horizon
+
+Turn the emission around: sufficiently energetic photons don't just scatter, they
+collide and *become matter*. Two photons make an electron-positron pair once
+`E1 E2 (1 - cos theta) >= 2 (m_e c^2)^2`. `pair_production.py`:
+
+```
+$ python examples/pair_production_demo.py examples/output
+
+     background photon    E (eV)   threshold gamma
+  ------------------------------------------------
+                   CMB   6.0e-04           435 TeV
+        infrared (EBL)   1.0e-01             3 TeV
+         optical (EBL)   2.0e+00           131 GeV
+                 X-ray   1.0e+03           261 MeV
+```
+
+Head-on, two 511 keV gammas just reach threshold (`E >= m_e c^2` each). A lone
+high-energy gamma pair-produces off a soft background photon above
+`(m_e c^2)^2 / E_bg`, so a TeV photon from a distant blazar is annihilated by the
+optical/infrared extragalactic background light and a PeV photon by the meV CMB.
+The universe is opaque to gamma rays beyond a horizon that shrinks as their energy
+rises -- the same `m_e c^2` scale that sets Compton scattering, run in reverse.
+The tests verify the 511 keV threshold, the `(m_e c^2)^2 / E_bg` partner energy,
+the angle dependence, and the TeV-EBL / PeV-CMB absorption cases.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
