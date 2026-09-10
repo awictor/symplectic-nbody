@@ -201,6 +201,7 @@ def main():
     import froude_demo
     import mach_cone_demo
     import nozzle_demo
+    import blasius_demo
 
     import plot_orbits
 
@@ -371,6 +372,7 @@ def main():
     froude_txt = run("froude_demo", froude_demo.main, True)
     mach_cone_txt = run("mach_cone_demo", mach_cone_demo.main, True)
     nozzle_txt = run("nozzle_demo", nozzle_demo.main, True)
+    blasius_txt = run("blasius_demo", blasius_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1910,6 +1912,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("nozzle.svg"), "a converging-diverging nozzle with Mach rising through 1 and pressure falling")
             + f'<div class="card">{pre(nozzle_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Blasius boundary layer",
+            "No-slip makes a thin sheared film cling to any surface in a stream. Blasius solved "
+            "the laminar flat-plate case exactly: the 99%-thickness grows as "
+            "delta = 5.0 x/sqrt(Re_x) -- only millimetres over the front of a wing -- with the "
+            "displacement and momentum thicknesses tracking it at 1.721 and 0.664. The wall "
+            "shear gives a local skin friction c_f = 0.664/sqrt(Re_x) (heaviest at the sharp "
+            "leading edge) and a plate drag C_D = 1.328/sqrt(Re_L), and the layer stays laminar "
+            "until Re_x ~ 5e5, where it trips to turbulence.",
+            '<div class="grid">'
+            + svg_card(out("blasius.svg"), "the boundary layer thickening as sqrt(x) with velocity profiles and the transition point")
+            + f'<div class="card">{pre(blasius_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

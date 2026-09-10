@@ -1,0 +1,16 @@
+Blasius boundary layer: delta = 5.0 x / sqrt(Re_x)  (air, U = 10 m/s)
+
+     x (m)        Re_x   delta (mm)        c_f
+      0.01        6667         0.61    0.00813
+      0.05       33333         1.37    0.00364
+      0.10       66667         1.94    0.00257
+      0.30      200000         3.35    0.00148
+      0.75      500000         5.30    0.00094
+
+  Laminar until Re_x ~ 5e5, i.e. x = 0.75 m; beyond that it turns turbulent.
+
+  A 0.5 m x 0.2 m plate: C_D = 0.00230, friction drag = 0.0141 N per side.
+  The layer thickens as sqrt(x) -- a couple of mm over the front of a wing -- while
+  the skin friction thins as 1/sqrt(x), heaviest right at the sharp leading edge.
+
+  wrote examples/output\blasius.svg

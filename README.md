@@ -159,6 +159,7 @@ ruins a long non-symplectic integration.
 | `src/froude.py` | Froude number: flow regime, hull speed, hydraulic jump, Kelvin wake |
 | `src/mach_cone.py` | Mach cone: cone angle, sonic-boom timing, Prandtl-Glauert & Prandtl-Meyer |
 | `src/nozzle.py` | de Laval nozzle: isentropic ratios, area-Mach, choked flow, exhaust velocity |
+| `src/blasius.py` | Blasius boundary layer: delta~sqrt(x), skin friction, plate drag, transition |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -309,6 +310,7 @@ ruins a long non-symplectic integration.
 | `examples/froude_demo.py` | Flow-regime & hull-speed tables + the hydraulic-jump profile |
 | `examples/mach_cone_demo.py` | Cone-angle & boom-timing tables + the Mach-cone figure |
 | `examples/nozzle_demo.py` | Area-ratio/exit-Mach table + the converging-diverging bell figure |
+| `examples/blasius_demo.py` | Thickness/skin-friction table + the growing-boundary-layer figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3596,6 +3598,29 @@ number depends only on the bell's area ratio. The tests reproduce the M=1 isentr
 the `0.528` choking ratio, the `A/A*` values at Mach 2 and 3, the sub/supersonic inversion of
 the area-Mach relation, and the linear scaling of choked flow with chamber pressure and
 throat area.
+
+## The Blasius boundary layer
+
+No-slip makes a thin sheared film cling to a plate; Blasius solved its shape exactly.
+`blasius.py`:
+
+```
+$ python examples/blasius_demo.py examples/output
+
+  x (m)      Re_x    delta (mm)     c_f       (air, U = 10 m/s)
+   0.01      6667      0.61      0.00813
+   0.10     66667      1.94      0.00257
+   0.75    500000      5.30      0.00094   (transition to turbulence)
+```
+
+The 99%-thickness grows as `delta = 5.0 x/sqrt(Re_x)` -- millimetres over the front of a wing
+-- with the displacement thickness `1.721 x/sqrt(Re_x)` (the outward push on the outer flow)
+and momentum thickness `0.664 x/sqrt(Re_x)` tracking it. The wall shear gives a local
+skin-friction coefficient `c_f = 0.664/sqrt(Re_x)`, heaviest at the sharp leading edge, and
+integrating over a plate of length L gives the drag coefficient `C_D = 1.328/sqrt(Re_L)` --
+exactly twice the trailing-edge `c_f`. The layer stays laminar until `Re_x ~ 5e5`, where it
+trips to turbulence. The tests verify the `sqrt(x)` growth, the fixed thickness ratios, the
+`c_f` and `C_D` laws, the `U^1.5` drag scaling, and the transition distance.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
