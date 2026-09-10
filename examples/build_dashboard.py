@@ -127,6 +127,7 @@ def main():
     import parker_spiral_demo
     import magnetic_braking_demo
     import tidal_locking_demo
+    import jeans_escape_demo
 
     import plot_orbits
 
@@ -223,6 +224,7 @@ def main():
     parker_txt = run("parker_spiral_demo", parker_spiral_demo.main, True)
     magbrake_txt = run("magnetic_braking_demo", magnetic_braking_demo.main, True)
     tidelock_txt = run("tidal_locking_demo", tidal_locking_demo.main, True)
+    jeansesc_txt = run("jeans_escape_demo", jeans_escape_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -865,6 +867,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("tidal_locking.svg"), "the a^6 locking time crossing the age of the solar system")
             + f'<div class="card">{pre(tidelock_txt)}</div>'
+            + '</div>'),
+        section(
+            "Jeans escape & the cosmic shoreline",
+            "At the exobase, molecules faster than escape speed leave for good. "
+            "Light, hot gases have a fatter Maxwell-Boltzmann tail, so the escape "
+            "parameter lambda = v_esc^2/v_th^2 decides who keeps an atmosphere: "
+            "Earth holds N2/O2/CO2 but loses H2 and He, the hot low-gravity Moon "
+            "holds almost nothing, cold Titan clings even to nitrogen, and Jupiter "
+            "keeps everything. Escape speed vs temperature is a cosmic shoreline.",
+            '<div class="grid">'
+            + svg_card(out("jeans_escape.svg"), "worlds and gases sorted by the v_esc = 6 v_th retention line")
+            + f'<div class="card">{pre(jeansesc_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

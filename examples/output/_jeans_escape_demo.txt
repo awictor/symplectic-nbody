@@ -1,0 +1,19 @@
+Jeans escape: lambda = v_esc^2 / v_th^2 = G M m / (R k_B T)
+
+  retention rule of thumb: keep a gas when v_esc >= 6 v_th (lambda >= 36)
+
+      body    v_esc     H2     He    H2O     N2     O2    CO2   (Y=kept, .=lost)
+  -------------------------------------------------------------------
+     Earth    11.2k      .      .      Y      Y      Y      Y
+      Moon     2.4k      .      .      .      .      .      Y
+      Mars     5.0k      .      .      Y      Y      Y      Y
+     Titan     2.6k      .      .      Y      Y      Y      Y
+   Jupiter    60.2k      Y      Y      Y      Y      Y      Y
+
+  Earth keeps N2/O2/CO2/water but loses H2 and He (why our air is heavy);
+  the hot, low-gravity Moon loses all but the heaviest (and even CO2 goes
+  to non-thermal escape); cold Titan clings even to N2;
+  giant Jupiter keeps everything, including hydrogen. This 'cosmic
+  shoreline' -- escape speed vs temperature -- sorts which worlds have air.
+
+  wrote examples/output\jeans_escape.svg

@@ -85,6 +85,7 @@ ruins a long non-symplectic integration.
 | `src/parker_spiral.py` | The Parker spiral: the Sun's field wound up by its rotation |
 | `src/magnetic_braking.py` | Magnetic braking & gyrochronology: a star's age from its spin |
 | `src/tidal_locking.py` | Tidal locking timescale: why the Moon shows one face |
+| `src/jeans_escape.py` | Jeans escape: which gases a world keeps, which leak to space |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -161,6 +162,7 @@ ruins a long non-symplectic integration.
 | `examples/parker_spiral_demo.py` | Garden-hose angle Sun->Saturn + spiral field lines |
 | `examples/magnetic_braking_demo.py` | Gyro ages for clusters + the Skumanich age-period curve |
 | `examples/tidal_locking_demo.py` | Locking times across the solar system + the a^6 curve |
+| `examples/jeans_escape_demo.py` | Gas-retention table + the escape-vs-thermal-speed shoreline |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1493,6 +1495,34 @@ old -- which is why our days are still lengthening (~1.8 ms/century) rather than
 Mercury dodged full locking into a 3:2 spin-orbit resonance, and hot Jupiters at a few
 stellar radii are all assumed synchronous. The tests verify the Moon-locked / Earth-free
 contrast, the `a^6` and `1/M_p^2` scalings, and the locking-zone boundary.
+
+## Jeans escape: which gases a world keeps
+
+At the top of an atmosphere (the exobase) molecules follow a Maxwell-Boltzmann speed
+distribution; any moving upward faster than escape speed leave for good. Light, hot gases
+have a fatter high-speed tail, so the escape parameter `lambda = v_esc^2/v_th^2 =
+G M m/(R k_B T)` decides who keeps an air. `jeans_escape.py`:
+
+```
+$ python examples/jeans_escape_demo.py examples/output
+
+      body    v_esc     H2     He    H2O     N2     O2    CO2   (Y=kept, .=lost)
+  -------------------------------------------------------------------
+     Earth    11.2k      .      .      Y      Y      Y      Y
+      Moon     2.4k      .      .      .      .      .      Y
+      Mars     5.0k      .      .      Y      Y      Y      Y
+     Titan     2.6k      .      .      Y      Y      Y      Y
+   Jupiter    60.2k      Y      Y      Y      Y      Y      Y
+```
+
+A rough rule keeps a gas over geologic time when `v_esc >~ 6 v_th` (lambda >~ 36), and
+the Jeans flux carries a steep `exp(-lambda)` Boltzmann factor. So Earth keeps its heavy
+N2/O2/CO2 and water but lost its primordial H2 and He, the hot low-gravity Moon holds
+almost nothing, cold Titan clings even to nitrogen, and giant Jupiter retains hydrogen
+itself. Plotting escape speed against thermal speed draws the "cosmic shoreline" that
+separates worlds with atmospheres from airless ones. The tests verify Earth's keep/lose
+split, the airless Moon, the `lambda` scalings with mass/gravity/temperature, and the
+exponential suppression of heavy-gas escape.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
