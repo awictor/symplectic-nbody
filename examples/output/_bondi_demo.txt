@@ -1,0 +1,15 @@
+Bondi accretion (10 M_sun object, n ~ 1 /cm^3)
+
+   gas T (K)  c_s (km/s)  r_B (AU)  Mdot (Msun/yr)
+  ------------------------------------------------
+       1e+02         1.2    6450.0        9.09e-11
+       1e+03         3.7     645.0        2.87e-12
+       1e+04        11.7      64.5        9.09e-14
+       1e+06       117.3       0.6        9.09e-17
+       1e+07       370.9       0.1        2.87e-18
+
+  Rate ~ M^2 rho / c_s^3, so accretion runs away with mass and is far
+  stronger in cold gas: a black hole in a 100 K molecular cloud accretes
+  millions of times faster than one in hot 10^7 K coronal gas.
+
+  wrote examples/output\bondi.svg

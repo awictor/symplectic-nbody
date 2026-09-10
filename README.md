@@ -89,6 +89,7 @@ ruins a long non-symplectic integration.
 | `src/penrose.py` | Penrose process: irreducible mass & extractable spin energy |
 | `src/hawking.py` | Black-hole thermodynamics: Hawking temperature, entropy, evaporation |
 | `src/eddington.py` | Eddington luminosity, accretion rate & Salpeter black-hole growth |
+| `src/bondi.py` | Bondi accretion: spherical feeding rate onto a compact object |
 | `src/hohmann.py` | Hohmann transfer: mission delta-v budgets & launch windows |
 | `src/oberth.py` | Oberth effect: why rockets burn deep in a gravity well |
 | `src/gr_time.py` | Gravitational redshift, GPS clock correction, Shapiro delay |
@@ -145,6 +146,7 @@ ruins a long non-symplectic integration.
 | `examples/penrose_demo.py` | Extractable-energy fraction vs spin + the area theorem |
 | `examples/hawking_demo.py` | Temperature & evaporation time across black-hole masses |
 | `examples/eddington_demo.py` | L_Edd across masses + Eddington-limited growth to a quasar |
+| `examples/bondi_demo.py` | Accretion rate vs gas temperature and mass |
 | `examples/hohmann_demo.py` | LEO->GEO & Earth->Mars delta-v budgets + transfer diagram |
 | `examples/oberth_demo.py` | Periapsis-vs-apoapsis burn: escape speed vs burn radius |
 | `examples/gr_time_demo.py` | Pound-Rebka, GPS gain, Sun redshift + Shapiro-delay curve |
@@ -698,6 +700,27 @@ depart -- is why Mars windows open only every ~26 months. Feed the delta-v to
 Tsiolkovsky's rocket equation and you get the propellant mass. The tests
 reproduce the standard LEO->GEO (~3.9 km/s), Earth->Mars (~5.6 km/s, 259 day,
 44 deg) figures used in real mission design.
+
+## Bondi accretion: feeding on ambient gas
+
+The companion to the Eddington limit -- the supply side. `bondi.py` gives the
+spherical accretion rate onto a body at rest in gas:
+
+```
+$ python examples/bondi_demo.py examples/output
+
+   gas T (K)  c_s (km/s)  r_B (AU)  Mdot (Msun/yr)
+       1e+02         1.2    6450.0        9.09e-11
+       1e+04        11.7      64.5        9.09e-14
+       1e+07       370.9       0.1        2.87e-18
+```
+
+`Mdot = 4 pi lambda (G M)^2 rho / c_s^3` runs away as `M^2` (bigger holes eat
+faster), rises with density, and falls steeply with temperature (`c_s^{-3} ~
+T^{-3/2}`) -- a black hole in a 100 K molecular cloud accretes millions of times
+faster than one in 10^7 K coronal gas. Compared with the Eddington rate it tells
+you whether growth is supply-limited or radiation-limited. The tests verify all
+three scalings and the ~tens-of-AU Bondi radius.
 
 ## The Eddington luminosity: the brightness limit of accretion
 

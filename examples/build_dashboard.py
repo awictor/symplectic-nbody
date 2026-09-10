@@ -107,6 +107,7 @@ def main():
     import degeneracy_demo
     import blackbody_demo
     import main_sequence_demo
+    import bondi_demo
 
     import plot_orbits
 
@@ -183,6 +184,7 @@ def main():
     degeneracy_txt = run("degeneracy_demo", degeneracy_demo.main, True)
     blackbody_txt = run("blackbody_demo", blackbody_demo.main, True)
     ms_txt = run("main_sequence_demo", main_sequence_demo.main, True)
+    bondi_txt = run("bondi_demo", bondi_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -452,6 +454,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("eddington.svg"), "Eddington-limited exponential growth to a quasar")
             + f'<div class="card">{pre(eddington_txt)}</div>'
+            + '</div>'),
+        section(
+            "Bondi accretion: feeding on ambient gas",
+            "Spherical accretion onto a compact object: Mdot ~ M^2 rho / c_s^3. It "
+            "runs away with mass and is far stronger in cold gas -- a black hole in "
+            "a molecular cloud eats millions of times faster than one in hot "
+            "coronal gas. Compared to Eddington, it says whether growth is supply- or radiation-limited.",
+            '<div class="grid">'
+            + svg_card(out("bondi.svg"), "accretion rate plunging with gas temperature")
+            + f'<div class="card">{pre(bondi_txt)}</div>'
             + '</div>'),
         section(
             "Hawking radiation & black-hole thermodynamics",
