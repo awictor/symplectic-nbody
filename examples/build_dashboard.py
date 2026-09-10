@@ -65,6 +65,7 @@ def main():
     import precession_demo
     import chaos_demo
     import poincare_demo
+    import galaxy_collision_demo
 
     # make sure all SVGs exist
     import plot_orbits
@@ -82,6 +83,8 @@ def main():
     chaos_demo.main()
     sys.argv = ["poincare_demo", outdir]
     poincare_demo.main()
+    sys.argv = ["galaxy_collision_demo", outdir]
+    galaxy_collision_demo.main()
     sys.argv = _old_argv
 
     print("capturing demo outputs...")
@@ -98,6 +101,8 @@ def main():
     chaos_txt = capture(chaos_demo.main)
     sys.argv = ["poincare_demo", outdir]
     poincare_txt = capture(poincare_demo.main)
+    sys.argv = ["galaxy_collision_demo", outdir]
+    galaxy_txt = capture(galaxy_collision_demo.main)
     sys.argv = _old_argv
     # scaling benchmark is slow; run a lighter inline version
     scale_txt = capture(scaling_benchmark.main)
@@ -143,6 +148,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("inner_planets.svg"), "inner solar system (2 Mars years)")
             + f'<div class="card">{pre(solar_txt)}</div>'
+            + '</div>'),
+        section(
+            "Galaxy collision & tidal tails",
+            "Two disk galaxies (heavy cores + cold tracer disks) pass close, and "
+            "differential gravity draws their disks into bridges and tails -- the "
+            "same physics as the Antennae and the Mice. Barnes-Hut forces, ~1000 "
+            "bodies. Frames left-to-right in time.",
+            '<div class="grid">'
+            + svg_card(out("galaxy_t1.svg"), "approach")
+            + svg_card(out("galaxy_t2.svg"), "close passage")
+            + svg_card(out("galaxy_t4.svg"), "tidal tails")
+            + f'<div class="card">{pre(galaxy_txt)}</div>'
             + '</div>'),
         section(
             "Poincare surface-of-section",

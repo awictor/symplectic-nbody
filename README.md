@@ -44,6 +44,7 @@ ruins a long non-symplectic integration.
 | `src/lyapunov.py` | Largest Lyapunov exponent (Benettin shadow-trajectory method) |
 | `src/stability_map.py` | Three-body escape-time scan over a grid of initial conditions |
 | `src/poincare.py` | Poincare surface-of-section for the CR3BP (tori vs chaos) |
+| `src/galaxy.py` | Disk-galaxy generator and two-galaxy tidal encounters |
 | `src/systems.py` | Test systems: two-body, figure-eight, pythagorean 3-body, **Plummer-sphere star cluster** (any N) |
 | `tests/test_conservation.py` | Automated checks of every conservation claim |
 | `tests/test_barnes_hut.py` | Tree force validated against exact O(N^2) summation |
@@ -59,6 +60,7 @@ ruins a long non-symplectic integration.
 | `examples/chaos_demo.py` | Lyapunov exponent + two trajectories diverging 6 orders of magnitude |
 | `examples/stability_map_demo.py` | Parallel escape-time heatmap revealing the fractal chaos boundary |
 | `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
+| `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
 | `examples/build_dashboard.py` | Assemble all demos into one self-contained `index.html` |
 
 ## Barnes-Hut: scaling to many bodies
@@ -86,6 +88,25 @@ Tightening `theta` provably reduces the error — all checked in the tests. The
 `plummer_sphere(n=...)` generator builds an equilibrium cluster (positions from
 the Plummer inverse-CDF, velocities by rejection sampling the exact distribution
 function) using a tiny built-in LCG, so it's deterministic and dependency-free.
+
+## Galaxy collisions: tidal tails from gravity alone
+
+`galaxy.py` builds a disk galaxy -- a heavy central mass wrapped in a cold disk
+of light tracers on circular orbits -- and sends two of them past each other.
+Differential tidal force stretches the disks into the bridges and tails seen in
+real interacting galaxies, exactly the Toomre & Toomre (1972) restricted N-body
+picture. Forces use the Barnes-Hut tree, so ~1000 bodies run quickly.
+
+```
+python examples/galaxy_collision_demo.py examples/output
+# Two-galaxy encounter: 1002 bodies, Barnes-Hut forces
+# 487 tracer particles pulled into tidal bridges/tails.
+```
+
+The demo writes a time sequence of SVG snapshots (approach -> close passage ->
+tails). The tests confirm an isolated disk is stable (cold circular orbits don't
+fly apart), the tracers are massless with all mass in the two cores, and a close
+passage strips a substantial fraction of the disk into tails.
 
 ## Poincare sections: order and chaos at the same energy
 
