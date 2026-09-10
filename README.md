@@ -186,6 +186,7 @@ ruins a long non-symplectic integration.
 | `src/stark.py` | Stark effect: linear/quadratic line shifts, field ionization of Rydberg atoms |
 | `src/aharonov_bohm.py` | Aharonov-Bohm phase, flux quantum, SQUID field sensitivity |
 | `src/josephson.py` | Josephson junction: DC/AC supercurrent, Shapiro steps, volt standard |
+| `src/quantum_hall.py` | Quantum Hall effect: von Klitzing constant, plateaus, Landau levels |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -363,6 +364,7 @@ ruins a long non-symplectic integration.
 | `examples/stark_demo.py` | Splitting/ionization table + the Stark fan & ionization-field figure |
 | `examples/aharonov_bohm_demo.py` | Flux/phase table + the fringe-shift & phase-winding figure |
 | `examples/josephson_demo.py` | V-f/Shapiro table + the I-phi sine & Shapiro-staircase figure |
+| `examples/quantum_hall_demo.py` | Plateau/Landau table + the R_xy staircase figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4278,6 +4280,28 @@ defined and how quantum voltmeters achieve parts-per-billion accuracy. The Josep
 The tests verify the `sin(phi)` current and its critical bound, the `K_J` constant, the
 483.6 GHz/mV conversion and its inverse, the evenly spaced Shapiro steps, the `2 pi f` phase
 rate, and the coupling energy.
+
+## The quantum Hall effect: resistance from pure constants
+
+Cooled and strongly magnetized, a 2D electron gas quantizes its resistance. `quantum_hall.py`:
+
+```
+$ python examples/quantum_hall_demo.py examples/output
+
+  filling nu   Hall resistance      B (T)   Landau spacing   degeneracy
+  1            25812.8 ohm          10      1.16 meV         2.4e15 /m^2
+  2            12906.4 ohm
+```
+
+The Hall resistance locks onto plateaus `R_xy = R_K/nu` with the von Klitzing constant
+`R_K = h/e^2 = 25812.807 ohm` -- set by fundamental constants alone, independent of the
+sample. The electron energies collapse into Landau levels spaced by `hbar eB/m`, each holding
+`eB/h` states per unit area; when `nu` of them are filled the bulk is insulating and `nu`
+chiral edge channels each carry a conductance quantum `e^2/h`, giving the quantized `R_xy`.
+Reproducible to parts per billion in any device, it now defines the SI ohm -- the resistance
+counterpart to the Josephson volt. The tests reproduce `R_K` and the `R_K/nu` plateaus, the
+conductance-resistance inverse and its quantization, the cyclotron frequency and Landau
+spacing/degeneracy, and the filling factor from density and field.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

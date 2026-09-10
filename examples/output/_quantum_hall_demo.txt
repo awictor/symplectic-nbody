@@ -1,0 +1,26 @@
+Quantum Hall effect: R_xy = R_K / nu, R_K = h/e^2 = 25812.807 ohm
+
+    filling nu   Hall resistance
+             1      25812.8 ohm
+             2      12906.4 ohm
+             3       8604.3 ohm
+             4       6453.2 ohm
+             6       4302.1 ohm
+
+  Landau levels vs field (need k_B T << spacing to resolve plateaus):
+     B (T)   spacing (meV)    degeneracy (1/m^2)
+         2         0.23              4.84e+14
+         5         0.58              1.21e+15
+        10         1.16              2.42e+15
+        20         2.32              4.84e+15
+
+  A 2D electron gas at n = 5e15 /m^2 hits integer filling as field is swept:
+    B =  5 T  ->  nu = 4.14
+    B = 10 T  ->  nu = 2.07
+    B = 20 T  ->  nu = 1.03
+
+  On each plateau the bulk is insulating and only chiral edge channels conduct,
+  one per filled Landau level -- so R_xy depends on nothing but h/e^2. Reproducible
+  to parts per billion in any device, it is how the ohm is now defined.
+
+  wrote examples/output\quantum_hall.svg

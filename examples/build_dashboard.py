@@ -228,6 +228,7 @@ def main():
     import stark_demo
     import aharonov_bohm_demo
     import josephson_demo
+    import quantum_hall_demo
 
     import plot_orbits
 
@@ -425,6 +426,7 @@ def main():
     stark_txt = run("stark_demo", stark_demo.main, True)
     aharonov_bohm_txt = run("aharonov_bohm_demo", aharonov_bohm_demo.main, True)
     josephson_txt = run("josephson_demo", josephson_demo.main, True)
+    quantum_hall_txt = run("quantum_hall_demo", quantum_hall_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2322,6 +2324,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("josephson.svg"), "the DC I = I_c sin(phi) supercurrent, and the irradiated I-V climbing in Shapiro steps")
             + f'<div class="card">{pre(josephson_txt)}</div>'
+            + '</div>'),
+        section(
+            "The quantum Hall effect: resistance from pure constants",
+            "Cool a 2D electron gas in a strong field and its Hall resistance locks onto flat "
+            "plateaus R_xy = R_K/nu with R_K = h/e^2 = 25812.807 ohm -- values set by "
+            "fundamental constants alone, independent of the material. The electron energies "
+            "collapse into Landau levels (spacing hbar eB/m, degeneracy eB/h), and when nu of "
+            "them are filled the bulk is insulating while nu chiral edge channels each carry "
+            "e^2/h of conductance. Reproducible to parts per billion in any device, it now "
+            "defines the ohm -- the resistance counterpart of the Josephson volt.",
+            '<div class="grid">'
+            + svg_card(out("quantum_hall.svg"), "the Hall resistance staircase: plateaus at R_K/nu as field sweeps a fixed density")
+            + f'<div class="card">{pre(quantum_hall_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
