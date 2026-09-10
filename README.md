@@ -73,6 +73,7 @@ ruins a long non-symplectic integration.
 | `src/lyapunov.py` | Largest Lyapunov exponent (Benettin shadow-trajectory method) |
 | `src/stability_map.py` | Three-body escape-time scan over a grid of initial conditions |
 | `src/virial.py` | Virial theorem & violent relaxation of a self-gravitating cluster |
+| `src/cluster.py` | Galaxy-cluster virial temperature, M-T relation & X-ray scaling |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/kozai.py` | Kozai-Lidov secular cycles: eccentricity <-> inclination in a triple |
@@ -124,6 +125,7 @@ ruins a long non-symplectic integration.
 | `examples/chaos_demo.py` | Lyapunov exponent + two trajectories diverging 6 orders of magnitude |
 | `examples/stability_map_demo.py` | Parallel escape-time heatmap revealing the fractal chaos boundary |
 | `examples/virial_demo.py` | Equilibrium vs cold cluster: running 2T/U converging on -1 |
+| `examples/cluster_demo.py` | Cluster M-T table + the kT ~ M^2/3 relation curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/kozai_demo.py` | e/i oscillations vs analytic e_max, out-of-phase time series SVG |
@@ -977,6 +979,26 @@ tidal, the surviving bound fraction drops sharply as the orbit crosses inside th
 Roche limit. The demo renders a satellite stretching into a tidal stream -- the
 process behind planetary rings and the fragment chain of comet Shoemaker-Levy 9.
 The tests check the Roche formula's scaling and the disruption gradient.
+
+## Galaxy clusters: virial temperature and X-rays
+
+The virial theorem applied to the largest bound objects. `cluster.py` turns a
+cluster's mass into the temperature of its gas:
+
+```
+$ python examples/cluster_demo.py examples/output
+
+     mass (M_sun)  radius (Mpc)  kT (keV)       T (K)
+           1e+14          0.93      1.45     1.7e+07
+           1e+15          2.00      6.74     7.8e+07
+```
+
+Gas falling into a `10^15`-solar-mass well virializes at `kT ~ G M mu m_p / (2R)`
+-- a few keV, `~10^8` K -- hot enough to emit thermal-bremsstrahlung X-rays, which
+is how clusters are found. Because `kT ~ M^{2/3}` at fixed overdensity, an X-ray
+temperature measures the cluster's total (mostly dark) mass. The tests reproduce
+Coma's ~8 keV, the dispersion estimate, the `M^{2/3}` relation, and the
+mass inversion.
 
 ## The virial theorem and violent relaxation
 

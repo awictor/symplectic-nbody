@@ -102,6 +102,7 @@ def main():
     import saha_demo
     import cmb_demo
     import bbn_demo
+    import cluster_demo
 
     import plot_orbits
 
@@ -173,6 +174,7 @@ def main():
     saha_txt = run("saha_demo", saha_demo.main, True)
     cmb_txt = run("cmb_demo", cmb_demo.main, True)
     bbn_txt = run("bbn_demo", bbn_demo.main, True)
+    cluster_txt = run("cluster_demo", cluster_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -573,6 +575,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("virial.svg"), "running 2T/U converging on -1")
             + f'<div class="card">{pre(virial_txt)}</div>'
+            + '</div>'),
+        section(
+            "Galaxy clusters: virial temperature & X-rays",
+            "The virial theorem applied to a cluster's gas: falling into a "
+            "10^15-solar-mass well heats it to a few keV (~10^8 K), radiating "
+            "X-rays. Because kT ~ M^{2/3}, an X-ray temperature weighs the "
+            "cluster's total (mostly dark) mass.",
+            '<div class="grid">'
+            + svg_card(out("cluster.svg"), "the kT ~ M^2/3 mass-temperature relation")
+            + f'<div class="card">{pre(cluster_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

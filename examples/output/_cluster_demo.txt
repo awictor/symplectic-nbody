@@ -1,0 +1,15 @@
+Galaxy clusters: virial temperature and the M-T relation
+
+    mass (M_sun)  radius (Mpc)  kT (keV)       T (K)
+  --------------------------------------------------
+           1e+13          0.43      0.31     3.6e+06
+           3e+13          0.63      0.67     7.8e+06
+           1e+14          0.93      1.45     1.7e+07
+           3e+14          1.36      3.13     3.6e+07
+           1e+15          2.00      6.74     7.8e+07
+
+  A massive cluster reaches several keV (~10^8 K), radiating thermal
+  bremsstrahlung X-rays. Because kT ~ M^{2/3}, an X-ray temperature
+  measures the cluster's total (mostly dark) mass -- how clusters are weighed.
+
+  wrote examples/output\cluster.svg
