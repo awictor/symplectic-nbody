@@ -140,6 +140,7 @@ ruins a long non-symplectic integration.
 | `src/quantum_stats.py` | Quantum statistics: Fermi-Dirac, Bose-Einstein & the classical limit |
 | `src/debye_heat.py` | Debye specific heat: the T^3 law & the Dulong-Petit plateau |
 | `src/carnot.py` | The Carnot cycle: the efficiency limit & heat-pump COP |
+| `src/adiabatic.py` | Adiabatic processes: PV^gamma, compression heating & the speed of sound |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -271,6 +272,7 @@ ruins a long non-symplectic integration.
 | `examples/quantum_stats_demo.py` | Occupation vs (E-mu)/kT + the FD/BE/MB distribution curves |
 | `examples/debye_heat_demo.py` | C_V per material + the universal C_V/3R vs T/Theta_D curve |
 | `examples/carnot_demo.py` | Engine efficiencies & COP + the efficiency-vs-temperature-ratio curve |
+| `examples/adiabatic_demo.py` | Compression temperatures + the adiabat-vs-isotherm P-V diagram |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3084,6 +3086,32 @@ small gap -- a heat pump delivers several times the heat of the work it draws, w
 it beats resistive heating. The tests verify the 62.5% plant efficiency, efficiency below
 one, energy conservation, always-rejected heat, the heat-pump-is-fridge-plus-one relation,
 and the zero-entropy reversible cycle.
+
+## Adiabatic processes: heat-free compression and expansion
+
+Compress or expand a gas with no time to shed heat and it obeys `P V^gamma = const` and
+`T V^(gamma-1) = const`. `adiabatic.py`:
+
+```
+$ python examples/adiabatic_demo.py examples/output
+
+     ratio V1/V2    T2 (K)     P2/P1
+  ----------------------------------
+               2       396       2.6
+               5       571       9.5
+              10       754      25.1
+              22      1033      75.8
+              50      1435     239.1
+```
+
+Because no heat escapes, the temperature moves with the volume: a diesel engine's 22:1
+squeeze reaches ~1000 K and ignites fuel without a spark, while expansion cools the gas
+(rising air, released spray). The adiabat is steeper than an isotherm through the same point
+precisely because T also changes. Sound waves compress air adiabatically, so the speed of
+sound is `c = sqrt(gamma R T / M)` -- Laplace's `sqrt(gamma)` factor that fixed Newton's ~18%
+error (343 vs 290 m/s). The tests verify the ~343 m/s air sound speed, the Laplace-over-Newton
+ratio, diesel-compression ignition, the `PV^gamma` and `TV^(gamma-1)` invariants, the P/V
+temperature consistency, and the positive expansion work.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

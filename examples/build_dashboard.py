@@ -182,6 +182,7 @@ def main():
     import quantum_stats_demo
     import debye_heat_demo
     import carnot_demo
+    import adiabatic_demo
 
     import plot_orbits
 
@@ -333,6 +334,7 @@ def main():
     qstats_txt = run("quantum_stats_demo", quantum_stats_demo.main, True)
     debye_txt = run("debye_heat_demo", debye_heat_demo.main, True)
     carnot_txt = run("carnot_demo", carnot_demo.main, True)
+    adiab_txt = run("adiabatic_demo", adiabatic_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1632,6 +1634,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("carnot.svg"), "efficiency vs reservoir temperature ratio with real engines marked")
             + f'<div class="card">{pre(carnot_txt)}</div>'
+            + '</div>'),
+        section(
+            "Adiabatic processes",
+            "Compress or expand a gas with no time to shed heat and it obeys P V^gamma = "
+            "const, T V^(gamma-1) = const -- and its temperature changes. A diesel "
+            "engine's 22:1 squeeze reaches ~1000 K and ignites fuel without a spark; "
+            "expansion cools (rising air, released spray). Sound waves compress air "
+            "adiabatically, so the speed of sound carries Laplace's sqrt(gamma) factor -- "
+            "the fix that corrected Newton's ~18% error.",
+            '<div class="grid">'
+            + svg_card(out("adiabatic.svg"), "an adiabat steeper than the isotherm through the same point")
+            + f'<div class="card">{pre(adiab_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

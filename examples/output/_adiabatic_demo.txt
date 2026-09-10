@@ -1,0 +1,21 @@
+Adiabatic: P V^gamma = const, T V^(gamma-1) = const (no heat flow)
+
+  speed of sound in air (293 K): 343.2 m/s
+    (Laplace's gamma vs Newton's wrong 290 m/s)
+
+  adiabatic compression of air from 300 K:
+     ratio V1/V2    T2 (K)     P2/P1
+  ----------------------------------
+               2       396       2.6
+               5       571       9.5
+              10       754      25.1
+              22      1033      75.8
+              50      1435     239.1
+
+  Compressing a gas with no time to shed heat drives its temperature up
+  steeply -- a diesel engine's 22:1 squeeze reaches ~1000 K and ignites fuel
+  without a spark. Expansion does the reverse, cooling the gas (rising air,
+  released CO2). Sound waves compress air adiabatically too, so the speed of
+  sound carries Laplace's sqrt(gamma) factor -- the fix to Newton's estimate.
+
+  wrote examples/output\adiabatic.svg
