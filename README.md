@@ -125,6 +125,7 @@ ruins a long non-symplectic integration.
 | `src/solar_sail.py` | Solar sails & radiation pressure: the lightness number beta |
 | `src/beaming.py` | Relativistic beaming: Doppler boosting & one-sided jets |
 | `src/relativistic_rocket.py` | The relativistic rocket: interstellar travel at constant 1 g |
+| `src/relativistic_doppler.py` | Relativistic Doppler: longitudinal, transverse & redshift-velocity |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -241,6 +242,7 @@ ruins a long non-symplectic integration.
 | `examples/solar_sail_demo.py` | Pressure/accel/beta per sail + the beta-vs-area/mass curve |
 | `examples/beaming_demo.py` | Doppler/boost/jet-ratio per gamma & angle + the D(theta) curves |
 | `examples/relativistic_rocket_demo.py` | Ship/Earth time & v to each destination + the divergence plot |
+| `examples/relativistic_doppler_demo.py` | Receding/approaching/transverse z per speed + the z(beta) curves |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2663,6 +2665,33 @@ of the observable universe in ~25. Rapidity `phi = a tau/c` is the additive velo
 the payload mass to accelerate and stop. The tests verify the ~0.77c after one year at 1 g,
 that velocity never reaches c, the distance/proper-time inversion, the ~10-crew-year galactic
 centre with ~27,000 Earth-years, and the exponential mass ratio.
+
+## Relativistic Doppler: colour shifts of fast sources
+
+A moving light source shifts in frequency by the classical Doppler effect times time
+dilation. `relativistic_doppler.py`:
+
+```
+$ python examples/relativistic_doppler_demo.py examples/output
+
+     beta   receding z   approaching z   transverse z
+  --------------------------------------------------
+     0.10       0.1055        -0.0955         0.0050
+     0.50       0.7321        -0.4226         0.1547
+     0.90       3.3589        -0.7706         1.2942
+     0.99      13.1067        -0.9291         6.0888
+```
+
+Radial motion gives `f_obs/f_src = sqrt((1-beta)/(1+beta))` receding (redshift) and its
+reciprocal approaching (blueshift). The purely relativistic surprise is the transverse shift:
+a source moving exactly across the line of sight has no classical Doppler component, yet its
+light still reddens by `1/gamma` because its clock runs slow -- the effect Ives and Stilwell
+measured in 1938, direct proof of time dilation. The general angle gives the same Doppler
+factor `1/(gamma(1 - beta cos theta))` that beams jets, and a measured redshift inverts to a
+speed, `beta = ((1+z)^2-1)/((1+z)^2+1)`. The tests verify the receding redshift and
+approaching blueshift, the frequency/wavelength reciprocity, the `1/gamma` transverse
+time-dilation shift, the reduction of the general angle to the radial and transverse cases,
+and the redshift-velocity round-trip.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

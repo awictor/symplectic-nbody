@@ -167,6 +167,7 @@ def main():
     import solar_sail_demo
     import beaming_demo
     import relativistic_rocket_demo
+    import relativistic_doppler_demo
 
     import plot_orbits
 
@@ -303,6 +304,7 @@ def main():
     sail_txt = run("solar_sail_demo", solar_sail_demo.main, True)
     beaming_txt = run("beaming_demo", beaming_demo.main, True)
     rocket_txt = run("relativistic_rocket_demo", relativistic_rocket_demo.main, True)
+    rdopp_txt = run("relativistic_doppler_demo", relativistic_doppler_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1424,6 +1426,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("relativistic_rocket.svg"), "ship time vs Earth time diverging with distance at 1 g")
             + f'<div class="card">{pre(rocket_txt)}</div>'
+            + '</div>'),
+        section(
+            "Relativistic Doppler shift",
+            "A moving light source shifts in frequency by the classical Doppler effect "
+            "times time dilation: receding sources redshift, approaching ones blueshift. "
+            "The purely relativistic surprise is the transverse shift -- a source moving "
+            "exactly across the line of sight still reddens by 1/gamma because its clock "
+            "runs slow, the effect Ives and Stilwell measured in 1938. A measured "
+            "redshift maps straight back to a speed.",
+            '<div class="grid">'
+            + svg_card(out("relativistic_doppler.svg"), "redshift vs speed for receding, approaching and transverse cases")
+            + f'<div class="card">{pre(rdopp_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

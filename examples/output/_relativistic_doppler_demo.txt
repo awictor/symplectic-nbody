@@ -1,0 +1,19 @@
+Relativistic Doppler: classical shift x time dilation
+
+     beta   receding z  approaching z   transverse z
+  --------------------------------------------------
+     0.10       0.1055        -0.0955         0.0050
+     0.30       0.3628        -0.2662         0.0483
+     0.50       0.7321        -0.4226         0.1547
+     0.70       1.3805        -0.5799         0.4003
+     0.90       3.3589        -0.7706         1.2942
+     0.99      13.1067        -0.9291         6.0888
+
+  Receding sources redshift, approaching ones blueshift -- the familiar
+  Doppler shift, but amplified by time dilation. The purely relativistic
+  effect is the transverse shift: a source moving exactly across the line of
+  sight still reddens by 1/gamma because its clock runs slow. Ives and
+  Stilwell measured it in 1938 -- direct proof of time dilation. A measured
+  redshift maps back to a speed: z = 1 means beta = 0.60.
+
+  wrote examples/output\relativistic_doppler.svg
