@@ -191,6 +191,7 @@ def main():
     import surface_tension_demo
     import ekman_demo
     import milankovitch_demo
+    import equipartition_demo
 
     import plot_orbits
 
@@ -351,6 +352,7 @@ def main():
     surface_tension_txt = run("surface_tension_demo", surface_tension_demo.main, True)
     ekman_txt = run("ekman_demo", ekman_demo.main, True)
     milankovitch_txt = run("milankovitch_demo", milankovitch_demo.main, True)
+    equipartition_txt = run("equipartition_demo", equipartition_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1760,6 +1762,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("milankovitch.svg"), "daily insolation over latitude and season, polar day/night and the 65N target marked")
             + f'<div class="card">{pre(milankovitch_txt)}</div>'
+            + '</div>'),
+        section(
+            "Equipartition & the heat-capacity staircase",
+            "Classically every quadratic degree of freedom carries (1/2) k_B T, so an ideal "
+            "gas has C_V = (f/2)R and gamma = (f+2)/f: 3R/2 and 5/3 for a monatomic gas, "
+            "5R/2 and 7/5 for a diatomic at room temperature, and 3R for a solid (Dulong-"
+            "Petit). But equipartition is only the hot-limit ceiling -- quantum mechanics "
+            "freezes a mode out below its energy quantum, so H2 climbs a staircase from 3R/2 "
+            "to 5R/2 (rotation thaws near 100 K) toward 7R/2 (vibration near 1000s K).",
+            '<div class="grid">'
+            + svg_card(out("equipartition.svg"), "H2 molar C_V/R vs temperature: plateaus at 3/2, 5/2, 7/2 as modes thaw")
+            + f'<div class="card">{pre(equipartition_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

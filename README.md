@@ -149,6 +149,7 @@ ruins a long non-symplectic integration.
 | `src/surface_tension.py` | Surface tension: capillary rise (Jurin), Young-Laplace droplet/bubble pressure |
 | `src/ekman.py` | The Ekman spiral: wind-driven rotating boundary layer, transport & depth |
 | `src/milankovitch.py` | Milankovitch cycles: daily insolation, obliquity/eccentricity/precession forcing |
+| `src/equipartition.py` | Equipartition: (1/2)kT per DOF, gas C_V/C_P/gamma, the H2 heat-capacity staircase |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -289,6 +290,7 @@ ruins a long non-symplectic integration.
 | `examples/surface_tension_demo.py` | Capillary rise table + rise-vs-radius log-log plot |
 | `examples/ekman_demo.py` | Current-vs-depth table + the Ekman spiral hodograph |
 | `examples/milankovitch_demo.py` | 65N-summer sensitivity table + seasonal insolation map |
+| `examples/equipartition_demo.py` | Gas heat-capacity table + the H2 C_V staircase plot |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3321,6 +3323,32 @@ sheets grow. Obliquity (~41 kyr) sets season strength, and climatic precession `
 (~23 kyr) sets which season falls at perihelion, all modulated by the ~100 kyr eccentricity
 envelope. The tests check the 65N peak, the solstice/equinox declinations, the polar
 day/night limits, and the obliquity and precession sensitivities.
+
+## Equipartition: half a kT per degree of freedom
+
+Classical statistical mechanics puts `(1/2) k_B T` into every quadratic degree of freedom.
+`equipartition.py`:
+
+```
+$ python examples/equipartition_demo.py examples/output
+
+  gas / solid              f   C_V/R   C_P/R   gamma
+  monatomic (He, Ar)       3    1.50    2.50   1.667
+  diatomic, room T (N2)    5    2.50    3.50   1.400
+  solid (Dulong-Petit)     6    3.00    4.00   1.333
+
+  H2 staircase:  20 K -> 1.77 R   300 K -> 2.49 R   10000 K -> 3.47 R
+```
+
+Summing the modes gives `C_V = (f/2)R`, `C_P = C_V + R`, and `gamma = (f+2)/f` -- exactly the
+5/3 of a monatomic gas, the 7/5 of a diatomic, and the `3R` Dulong-Petit value of a solid.
+But equipartition is the *classical, high-temperature* limit: a mode only contributes once
+`k_B T` exceeds its energy quantum, so a real diatomic gas climbs a heat-capacity staircase
+as it warms -- translation always on, rotation thawing near its `theta_rot ~ 85 K`, and
+vibration only near `theta_vib ~ 6000 K`. The module uses the Einstein two-state activation
+factor for the freeze-out, and the tests verify the monatomic/diatomic capacities, Mayer's
+relation, Dulong-Petit, the N2 rms speed, and the monotonic H2 staircase from 3R/2 through
+5R/2 toward 7R/2.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,26 @@
+Equipartition: (1/2) k_B T per quadratic degree of freedom
+
+  gas / solid                 f   C_V/R   C_P/R   gamma
+  monatomic (He, Ar)          3    1.50    2.50   1.667
+  diatomic, room T (N2)       5    2.50    3.50   1.400
+  diatomic, hot (+vib)        7    3.50    4.50   1.286
+  nonlinear triatomic         6    3.00    4.00   1.333
+  solid (Dulong-Petit)        6    3.00    4.00   1.333
+
+  H2 heat-capacity staircase (theta_rot=85 K, theta_vib=6000 K):
+       T (K)     C_V/R
+          20      1.77
+          50      2.29
+         100      2.44
+         300      2.49
+        1000      2.59
+        3000      3.22
+        6000      3.42
+       10000      3.47
+
+  Classical equipartition is the high-T ceiling; each mode contributes only
+  once k_B T tops its quantum. So H2 sits at 3R/2 while rotation is frozen, steps
+  up to 5R/2 once it thaws (~100 K), and only near ~1000s K does vibration lift it
+  toward 7R/2 -- the staircase Maxwell could see but not explain before quanta.
+
+  wrote examples/output\equipartition.svg
