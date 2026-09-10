@@ -49,6 +49,7 @@ ruins a long non-symplectic integration.
 | `examples/adaptive_demo.py` | Adaptive DP45 vs fixed RK4: step adaptation & force-eval savings |
 | `examples/convergence_demo.py` | Measured convergence order of each method vs the exact orbit |
 | `examples/lagrange_demo.py` | Lagrange points + zero-velocity curves rendered to SVG |
+| `examples/build_dashboard.py` | Assemble all demos into one self-contained `index.html` |
 
 ## Barnes-Hut: scaling to many bodies
 
@@ -75,6 +76,18 @@ Tightening `theta` provably reduces the error — all checked in the tests. The
 `plummer_sphere(n=...)` generator builds an equilibrium cluster (positions from
 the Plummer inverse-CDF, velocities by rejection sampling the exact distribution
 function) using a tiny built-in LCG, so it's deterministic and dependency-free.
+
+## One-page dashboard
+
+```
+python examples/build_dashboard.py examples/output
+```
+
+Runs every demo, captures its output, inlines all the SVGs, and writes a single
+self-contained `examples/output/index.html` -- no external assets, no JavaScript,
+no build step. Open it in a browser or point GitHub Pages at `examples/output/`.
+It's the whole library on one page: energy conservation, convergence order,
+adaptive stepping, Barnes-Hut scaling, the orbit gallery, and the Lagrange points.
 
 ## Lagrange points: where spacecraft park
 
