@@ -182,6 +182,7 @@ ruins a long non-symplectic integration.
 | `src/zeeman.py` | Zeeman effect: normal/anomalous line splitting, Lande g-factor, field readout |
 | `src/rabi.py` | Rabi oscillations: two-level flopping, generalized Rabi, pi/pi-2 pulses |
 | `src/franck_hertz.py` | Franck-Hertz: quantized excitation dips, emission wavelength |
+| `src/moseley.py` | Moseley's law: K-alpha X-ray energy vs Z, elemental identification |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -355,6 +356,7 @@ ruins a long non-symplectic integration.
 | `examples/zeeman_demo.py` | Splitting/g-factor table + the triplet-fan & sublevel-ladder figure |
 | `examples/rabi_demo.py` | Pulse/detuning table + the flopping & Lorentzian-resonance figure |
 | `examples/franck_hertz_demo.py` | Dip/excitation table + the current-vs-voltage sawtooth figure |
+| `examples/moseley_demo.py` | Per-element K-alpha table + the Moseley sqrt(f)-vs-Z line |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4177,6 +4179,28 @@ electron can excite the atom several times on one crossing. The excited atom rel
 emitting a photon at `lambda = h c/E_ex`, mercury's 254 nm ultraviolet line. The tests
 reproduce the 4.9 V spacing, the multiple dips and their offset, the excitation count and
 residual energy versus voltage, and the 254 nm emission.
+
+## Moseley's law: ordering the elements by X-ray colour
+
+Characteristic X-rays fingerprint an element by its nuclear charge. `moseley.py`:
+
+```
+$ python examples/moseley_demo.py examples/output
+
+  element   Z    K-alpha energy   wavelength     line at 6.4 keV -> Z=26 (Fe)
+  Cu        29   8.00 keV         0.155 nm       line at 8.0 keV -> Z=29 (Cu)
+  Mo        42   17.15 keV        0.072 nm
+```
+
+Moseley found the square root of the K-alpha frequency rises linearly with atomic number,
+`sqrt(f) = a(Z-1)`, equivalently the K-alpha energy is a screened-hydrogenic
+`13.6 (3/4)(Z-1)^2 eV` (the n=2->1 transition seen by a nearly-unscreened charge `Z-1`). This
+ordered the elements by nuclear charge rather than atomic weight, exposed the gaps where
+technetium and promethium had to sit, and proved `Z` is the true atomic serial number.
+Inverting the relation identifies an element from a measured line -- still how XRF guns and
+electron microprobes read a sample's composition. The tests reproduce copper's 8 keV K-alpha
+and 0.154 nm wavelength, the linear `sqrt(f)`-vs-`Z` law, the `(Z-1)^2` scaling, molybdenum's
+17 keV line, the element identification, and the general K-beta/L-series transitions.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

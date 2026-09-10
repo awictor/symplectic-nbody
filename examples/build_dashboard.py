@@ -224,6 +224,7 @@ def main():
     import zeeman_demo
     import rabi_demo
     import franck_hertz_demo
+    import moseley_demo
 
     import plot_orbits
 
@@ -417,6 +418,7 @@ def main():
     zeeman_txt = run("zeeman_demo", zeeman_demo.main, True)
     rabi_txt = run("rabi_demo", rabi_demo.main, True)
     franck_hertz_txt = run("franck_hertz_demo", franck_hertz_demo.main, True)
+    moseley_txt = run("moseley_demo", moseley_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2261,6 +2263,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("franck_hertz.svg"), "the current-vs-voltage sawtooth with dips at multiples of the 4.9 V excitation")
             + f'<div class="card">{pre(franck_hertz_txt)}</div>'
+            + '</div>'),
+        section(
+            "Moseley's law: ordering the elements by X-ray colour",
+            "An element struck by fast electrons fluoresces characteristic X-rays, and Moseley "
+            "found the square root of the K-alpha frequency rises linearly with atomic number, "
+            "sqrt(f) = a(Z-1). Equivalently the K-alpha energy is a Rydberg-like "
+            "13.6 (3/4)(Z-1)^2 eV -- copper's 8 keV, molybdenum's 17 keV. This ordered the "
+            "periodic table by nuclear charge rather than atomic weight, exposed gaps where "
+            "undiscovered elements had to sit, and is still how an XRF gun reads which elements "
+            "a sample contains from its X-ray lines.",
+            '<div class="grid">'
+            + svg_card(out("moseley.svg"), "the Moseley plot: sqrt(K-alpha frequency) a straight line in atomic number")
+            + f'<div class="card">{pre(moseley_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<text x="20" y="34" fill="#e6edf3" font-size="18">Moseley&#39;s law</text>
+<text x="20" y="52" fill="#8b949e" font-size="12">sqrt(K-alpha frequency) is a straight line in atomic number Z -- the periodic table&#39;s true order</text>
+<line x1="80" y1="640" x2="640" y2="640" stroke="#8b949e" stroke-width="1.5"/>
+<line x1="80" y1="640" x2="80" y2="124" stroke="#8b949e" stroke-width="1.5"/>
+<text x="80.0" y="656.0" fill="#8b949e" font-size="9" text-anchor="middle">10</text>
+<text x="160.0" y="656.0" fill="#8b949e" font-size="9" text-anchor="middle">20</text>
+<text x="240.0" y="656.0" fill="#8b949e" font-size="9" text-anchor="middle">30</text>
+<text x="320.0" y="656.0" fill="#8b949e" font-size="9" text-anchor="middle">40</text>
+<text x="400.0" y="656.0" fill="#8b949e" font-size="9" text-anchor="middle">50</text>
+<text x="480.0" y="656.0" fill="#8b949e" font-size="9" text-anchor="middle">60</text>
+<text x="560.0" y="656.0" fill="#8b949e" font-size="9" text-anchor="middle">70</text>
+<text x="640.0" y="656.0" fill="#8b949e" font-size="9" text-anchor="middle">80</text>
+<text x="360.0" y="672.0" fill="#8b949e" font-size="11" text-anchor="middle">atomic number Z</text>
+<text x="24" y="382.0" fill="#8b949e" font-size="11" transform="rotate(-90 24 382.0)" text-anchor="middle">sqrt(K-alpha frequency)</text>
+<polyline points="80.0,584.0 88.0,577.8 96.0,571.6 104.0,565.4 112.0,559.1 120.0,552.9 128.0,546.7 136.0,540.5 144.0,534.2 152.0,528.0 160.0,521.8 168.0,515.6 176.0,509.4 184.0,503.1 192.0,496.9 200.0,490.7 208.0,484.5 216.0,478.3 224.0,472.0 232.0,465.8 240.0,459.6 248.0,453.4 256.0,447.2 264.0,440.9 272.0,434.7 280.0,428.5 288.0,422.3 296.0,416.1 304.0,409.8 312.0,403.6 320.0,397.4 328.0,391.2 336.0,385.0 344.0,378.7 352.0,372.5 360.0,366.3 368.0,360.1 376.0,353.9 384.0,347.6 392.0,341.4 400.0,335.2 408.0,329.0 416.0,322.7 424.0,316.5 432.0,310.3 440.0,304.1 448.0,297.9 456.0,291.6 464.0,285.4 472.0,279.2 480.0,273.0 488.0,266.8 496.0,260.5 504.0,254.3 512.0,248.1 520.0,241.9 528.0,235.7 536.0,229.4 544.0,223.2 552.0,217.0 560.0,210.8 568.0,204.6 576.0,198.3 584.0,192.1 592.0,185.9 600.0,179.7 608.0,173.5 616.0,167.2 624.0,161.0 632.0,154.8 640.0,148.6" fill="none" stroke="#4dabf7" stroke-width="2.6"/>
+<circle cx="160.0" cy="521.8" r="5" fill="#ffd43b"/>
+<text x="167.0" y="525.8" fill="#ffd43b" font-size="11">Ca (20)</text>
+<circle cx="208.0" cy="484.5" r="5" fill="#ffd43b"/>
+<text x="215.0" y="488.5" fill="#ffd43b" font-size="11">Fe (26)</text>
+<circle cx="232.0" cy="465.8" r="5" fill="#ffd43b"/>
+<text x="239.0" y="469.8" fill="#ffd43b" font-size="11">Cu (29)</text>
+<circle cx="336.0" cy="385.0" r="5" fill="#ffd43b"/>
+<text x="343.0" y="389.0" fill="#ffd43b" font-size="11">Mo (42)</text>
+<circle cx="376.0" cy="353.9" r="5" fill="#ffd43b"/>
+<text x="383.0" y="357.9" fill="#ffd43b" font-size="11">Ag (47)</text>
+<circle cx="592.0" cy="185.9" r="5" fill="#ffd43b"/>
+<text x="599.0" y="189.9" fill="#ffd43b" font-size="11">W (74)</text>
+<text x="160.0" y="273.0" fill="#8b949e" font-size="11">straight line: gaps meant missing elements</text>
+</svg>

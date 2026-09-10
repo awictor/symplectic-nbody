@@ -1,0 +1,20 @@
+Moseley's law: sqrt(f) = a(Z - 1) -- X-ray lines order the periodic table
+
+  element      Z    K-alpha energy    wavelength
+  Ca          20          3.68 keV     0.3366 nm
+  Fe          26          6.38 keV     0.1944 nm
+  Cu          29          8.00 keV     0.1550 nm
+  Mo          42         17.15 keV     0.0723 nm
+  Ag          47         21.59 keV     0.0574 nm
+  W           74         54.38 keV     0.0228 nm
+
+  Identifying an unknown from its K-alpha line:
+    line at   6.4 keV  ->  Z = 26 (Fe)
+    line at   8.0 keV  ->  Z = 29 (Cu)
+    line at  21.6 keV  ->  Z = 47 (Ag)
+
+  Because sqrt(f) is exactly linear in Z, Moseley's plot ordered the elements by
+  nuclear charge -- not atomic weight -- and its gaps predicted where undiscovered
+  elements (technetium, promethium) had to be. Still the basis of XRF elemental ID.
+
+  wrote examples/output\moseley.svg
