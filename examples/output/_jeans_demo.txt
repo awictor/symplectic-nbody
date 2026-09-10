@@ -1,0 +1,21 @@
+Jeans instability: the collapse threshold (c_s = rho0 = G = 1)
+
+  Jeans wavenumber k_J : 3.5449
+  Jeans length         : 1.7725
+  Jeans mass           : 2.9156
+  free-fall time       : 0.5427
+
+    k/k_J     omega^2       behaviour
+  -----------------------------------
+     0.25     -11.781        collapse
+     0.50      -9.425        collapse
+     0.75      -5.498        collapse
+     1.00      -0.000        collapse
+     1.50      15.708      sound wave
+     2.00      37.699      sound wave
+
+  Below k_J (long wavelength / large cloud) gravity beats pressure and
+  the gas collapses -- the birth of a star. Above it, pressure wins and
+  the perturbation is just a sound wave.
+
+  wrote examples/output\jeans.svg

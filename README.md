@@ -58,6 +58,7 @@ ruins a long non-symplectic integration.
 | `src/distances.py` | Cosmological distances: luminosity/angular-diameter, cosmic acceleration |
 | `src/chandrasekhar.py` | White-dwarf structure & the Chandrasekhar mass (~1.44 M_sun) |
 | `src/tov.py` | Neutron-star structure via the TOV equation & the GR maximum mass |
+| `src/jeans.py` | Jeans instability: the gravitational-collapse / star-formation threshold |
 | `src/poincare.py` | Poincare surface-of-section for the CR3BP (tori vs chaos) |
 | `src/sitnikov.py` | The Sitnikov problem: on-axis test particle, integrable-to-chaotic |
 | `src/galaxy.py` | Disk-galaxy generator and two-galaxy tidal encounters |
@@ -91,6 +92,7 @@ ruins a long non-symplectic integration.
 | `examples/distances_demo.py` | Hubble diagram (LCDM vs decelerating) + D_A turnover |
 | `examples/chandrasekhar_demo.py` | White-dwarf mass-radius curve approaching 1.44 M_sun |
 | `examples/tov_demo.py` | Neutron-star mass-radius curve with a maximum mass; GR vs Newton |
+| `examples/jeans_demo.py` | Dispersion relation: sound waves vs collapse across the Jeans length |
 | `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
 | `examples/sitnikov_demo.py` | Stroboscopic maps: circular binary (tori) vs eccentric (chaos) |
 | `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
@@ -226,6 +228,29 @@ diffuse dust. `poincare.py` reconstructs `vy` from the energy so each section
 point is a full initial condition, and the tests confirm the Jacobi constant is
 conserved along each orbit (faithful section), regular orbits stay on tight
 curves, and chaotic ones scatter more than 3x wider.
+
+## Jeans instability: when a cloud becomes a star
+
+Star formation begins when a gas cloud's self-gravity overwhelms its pressure.
+`jeans.py` gives the linear dispersion relation for a self-gravitating gas:
+
+```
+$ python examples/jeans_demo.py examples/output
+
+  Jeans wavenumber k_J : 3.5449   (c_s = rho0 = G = 1)
+    k/k_J     omega^2       behaviour
+     0.50      -9.425        collapse
+     1.00      -0.000        marginal
+     2.00      37.699      sound wave
+```
+
+`omega^2 = c_s^2 k^2 - 4 pi G rho0`: short-wavelength modes have `omega^2 > 0`
+and just oscillate as sound waves, but long-wavelength modes (`k < k_J`) have
+`omega^2 < 0` and grow exponentially -- the cloud collapses. The crossover is the
+Jeans length, and a cloud above the corresponding Jeans mass forms stars. Denser
+or colder gas has a smaller Jeans length, so it fragments more easily. The tests
+verify the two branches, the marginal mode at `k_J`, the growth rate approaching
+`sqrt(4 pi G rho)`, and the density/temperature scalings.
 
 ## Neutron stars: the TOV equation and the mass that makes black holes
 

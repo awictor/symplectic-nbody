@@ -84,6 +84,7 @@ def main():
     import distances_demo
     import chandrasekhar_demo
     import tov_demo
+    import jeans_demo
 
     import plot_orbits
 
@@ -137,6 +138,7 @@ def main():
     distances_txt = run("distances_demo", distances_demo.main, True)
     chandra_txt = run("chandrasekhar_demo", chandrasekhar_demo.main, True)
     tov_txt = run("tov_demo", tov_demo.main, True)
+    jeans_txt = run("jeans_demo", jeans_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -238,6 +240,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("poincare_section.svg"), "tori and chaotic sea at one energy")
             + f'<div class="card">{pre(poincare_txt)}</div>'
+            + '</div>'),
+        section(
+            "Jeans instability: the birth of a star",
+            "A gas cloud collapses when gravity beats pressure. The dispersion "
+            "relation omega^2 = c_s^2 k^2 - 4 pi G rho splits into stable sound "
+            "waves (short wavelength) and collapsing modes (long wavelength) at "
+            "the Jeans length -- the threshold for all star and structure formation.",
+            '<div class="grid">'
+            + svg_card(out("jeans.svg"), "omega^2 goes negative below k_J: collapse")
+            + f'<div class="card">{pre(jeans_txt)}</div>'
             + '</div>'),
         section(
             "Neutron stars & the TOV maximum mass",
