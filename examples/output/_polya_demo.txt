@@ -1,0 +1,21 @@
+Polya's random walk: does an infinite lattice walk return to the origin?
+
+  'A drunk man finds his way home; a drunk bird may get lost forever.'
+
+   dim  return prob  escape prob  exp. visits       class
+     1       1.0000       0.0000          inf   recurrent
+     2       1.0000       0.0000          inf   recurrent
+     3       0.3405       0.6595        1.516   transient
+     4       0.1932       0.8068        1.239   transient
+     5       0.1352       0.8648        1.156   transient
+
+  Simulated return fraction (finite walks, 3000 steps, 200 trials):
+    1D  ->  97 % returned
+    2D  ->  67 % returned
+    3D  ->  34 % returned
+
+  In 1D and 2D the walk is certain to return (and visits every site infinitely
+  often); in 3D+ it can escape to infinity. The knife-edge is exactly two dimensions,
+  because P(at origin) decays as n^(-d/2) -- summable (transient) only for d >= 3.
+
+  wrote examples/output\polya.svg

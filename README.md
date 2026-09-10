@@ -191,6 +191,7 @@ ruins a long non-symplectic integration.
 | `src/london.py` | London/Meissner: penetration depth, field expulsion, type I/II classification |
 | `src/ising_mft.py` | Mean-field Ising: Curie temperature, spontaneous magnetization, Curie-Weiss |
 | `src/percolation.py` | Site percolation: union-find clusters, spanning test, threshold sweep |
+| `src/polya.py` | Polya random walk: return probability by dimension, recurrence, simulation |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -373,6 +374,7 @@ ruins a long non-symplectic integration.
 | `examples/london_demo.py` | Penetration/type table + the Meissner-decay & type-boundary figure |
 | `examples/ising_mft_demo.py` | Magnetization/susceptibility table + the m(T) & chi figure |
 | `examples/percolation_demo.py` | Spanning/cluster table + the threshold curve & lattice snapshots |
+| `examples/polya_demo.py` | Return/escape/visits table + the return-probability-vs-dimension figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4403,6 +4405,27 @@ keeps runs reproducible without `random`). The same threshold governs forest fir
 porous rock, disease on a contact network, and current through a random resistor grid. The
 tests verify the occupation fraction, empty/full/stripe spanning, the largest-cluster growth
 with `p`, and the spanning probability sharpening from near 0 below `p_c` to near 1 above.
+
+## Polya's random walk: home, or lost forever?
+
+Whether a lattice walk returns to the origin depends only on dimension. `polya.py`:
+
+```
+$ python examples/polya_demo.py examples/output
+
+  dim   return prob   escape prob   exp. visits   class
+  2     1.0000        0.0000        inf           recurrent
+  3     0.3405        0.6595        1.516         transient
+```
+
+Polya proved a random walk is recurrent (returns with probability 1, visiting every site
+infinitely often) in 1D and 2D, but transient (escapes to infinity with nonzero probability)
+in 3D and above -- a ~0.34 chance of ever returning in 3D. The knife-edge is exactly two
+dimensions, because the probability of being back at the origin decays as `n^(-d/2)`, whose
+sum over time diverges (recurrent) only for `d <= 2`. "A drunk man finds his way home, but a
+drunk bird may get lost forever." The tests reproduce the certain return in 1D/2D and ~0.34
+in 3D, the infinite/finite expected visits, the escape-plus-return sum, the `sqrt(n)` rms
+displacement, and a direct simulation (97% of 1D walks return, far fewer in 3D).
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

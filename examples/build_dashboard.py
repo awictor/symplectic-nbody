@@ -233,6 +233,7 @@ def main():
     import london_demo
     import ising_mft_demo
     import percolation_demo
+    import polya_demo
 
     import plot_orbits
 
@@ -435,6 +436,7 @@ def main():
     london_txt = run("london_demo", london_demo.main, True)
     ising_mft_txt = run("ising_mft_demo", ising_mft_demo.main, True)
     percolation_txt = run("percolation_demo", percolation_demo.main, True)
+    polya_txt = run("polya_demo", polya_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2397,6 +2399,20 @@ def main():
             '<div class="grid">'
             + svg_card(out("percolation.svg"), "the spanning probability sharpening at p_c, and lattices below/at/above threshold")
             + f'<div class="card">{pre(percolation_txt)}</div>'
+            + '</div>'),
+        section(
+            "Polya's random walk: home, or lost forever?",
+            "A random walker on an infinite lattice steps to a random neighbour forever -- does "
+            "it ever return to the origin? Polya proved the answer depends only on dimension: in "
+            "1D and 2D the walk is recurrent, returning with probability 1 (and visiting every "
+            "site infinitely often); in 3D and above it is transient, escaping to infinity with "
+            "nonzero probability (a ~0.34 chance of ever returning in 3D). The knife-edge is "
+            "exactly two dimensions, because the probability of being back at the origin decays "
+            "as n^(-d/2) -- summable only for d >= 3. 'A drunk man finds his way home, but a "
+            "drunk bird may get lost forever.'",
+            '<div class="grid">'
+            + svg_card(out("polya.svg"), "return probability dropping below 1 past two dimensions -- recurrent to transient")
+            + f'<div class="card">{pre(polya_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
