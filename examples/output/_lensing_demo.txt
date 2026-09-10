@@ -1,0 +1,13 @@
+Gravitational lensing
+
+  light deflection at the Sun's limb : 1.751 arcsec (Eddington 1919 measured ~1.75)
+
+  microlensing light curve (min impact u0=0.2):
+                                                                 ............:::::::----====++***####@@####***++====----:::::::............                                                               
+  peak magnification A_max = 5.07 at closest approach
+
+  A point-source drifting behind a mass brightens symmetrically then
+  fades -- the achromatic, time-symmetric microlensing signature used
+  to find exoplanets and dark compact objects.
+
+  wrote examples/output\lensing.svg

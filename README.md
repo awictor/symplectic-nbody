@@ -50,6 +50,7 @@ ruins a long non-symplectic integration.
 | `src/resonance.py` | Mean-motion resonance: period locks & librating resonant arguments |
 | `src/coorbital.py` | Tadpole & horseshoe coorbital orbits in the CR3BP |
 | `src/tisserand.py` | Tisserand parameter: the near-invariant of a gravity assist |
+| `src/lensing.py` | Gravitational lensing: deflection, Einstein ring, microlensing |
 | `src/poincare.py` | Poincare surface-of-section for the CR3BP (tori vs chaos) |
 | `src/sitnikov.py` | The Sitnikov problem: on-axis test particle, integrable-to-chaotic |
 | `src/galaxy.py` | Disk-galaxy generator and two-galaxy tidal encounters |
@@ -75,6 +76,7 @@ ruins a long non-symplectic integration.
 | `examples/resonance_demo.py` | 2:1 resonant argument: libration (locked) vs circulation (free) |
 | `examples/coorbital_demo.py` | Tadpole & horseshoe paths in the rotating frame (SVG) |
 | `examples/tisserand_demo.py` | a & e jump across a flyby while Tisserand stays flat |
+| `examples/lensing_demo.py` | Microlensing light curve + Einstein-ring image diagram (SVG) |
 | `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
 | `examples/sitnikov_demo.py` | Stroboscopic maps: circular binary (tori) vs eccentric (chaos) |
 | `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
@@ -210,6 +212,29 @@ diffuse dust. `poincare.py` reconstructs `vy` from the energy so each section
 point is a full initial condition, and the tests confirm the Jacobi constant is
 conserved along each orbit (faithful section), regular orbits stay on tight
 curves, and chaotic ones scatter more than 3x wider.
+
+## Gravitational lensing: bending light with gravity
+
+Mass deflects light by `alpha = 4GM/(c^2 b)` -- exactly twice the Newtonian
+value, the prediction Eddington confirmed at the 1919 eclipse. `lensing.py`
+reproduces it and solves the point-mass lens equation:
+
+```
+$ python examples/lensing_demo.py examples/output
+
+  light deflection at the Sun's limb : 1.751 arcsec  (measured ~1.75)
+  microlensing light curve (u0=0.2):
+  ....::::----====++***####@@####***++====----::::....
+  peak magnification A_max = 5.07 at closest approach
+```
+
+A point-mass lens splits a source into two images; at perfect alignment they
+merge into an Einstein ring at `theta_E`, and as the source drifts past, the
+total magnification `A(u) = (u^2+2)/(u sqrt(u^2+4))` traces the symmetric
+microlensing curve used to find exoplanets and dark compact objects. The tests
+verify the 1.75-arcsec deflection, that both images solve the lens equation, the
+Einstein ring at `beta=0`, and that the summed image magnification equals the
+closed-form total.
 
 ## Tisserand parameter: the invariant of a gravity assist
 

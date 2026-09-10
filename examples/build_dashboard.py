@@ -76,6 +76,7 @@ def main():
     import resonance_demo
     import coorbital_demo
     import tisserand_demo
+    import lensing_demo
 
     import plot_orbits
 
@@ -121,6 +122,7 @@ def main():
     resonance_txt = run("resonance_demo", resonance_demo.main, True)
     coorbital_txt = run("coorbital_demo", coorbital_demo.main, True)
     tisserand_txt = run("tisserand_demo", tisserand_demo.main, True)
+    lensing_txt = run("lensing_demo", lensing_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -222,6 +224,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("poincare_section.svg"), "tori and chaotic sea at one energy")
             + f'<div class="card">{pre(poincare_txt)}</div>'
+            + '</div>'),
+        section(
+            "Gravitational lensing",
+            "Mass bends light by 4GM/(c^2 b) -- twice the Newtonian value, the "
+            "1919 eclipse result (1.75 arcsec at the Sun's limb). A point-mass "
+            "lens splits a source into two images, an Einstein ring at perfect "
+            "alignment, and the symmetric microlensing brightening used to find exoplanets.",
+            '<div class="grid">'
+            + svg_card(out("lensing.svg"), "microlensing light curve + Einstein ring and images")
+            + f'<div class="card">{pre(lensing_txt)}</div>'
             + '</div>'),
         section(
             "Tisserand parameter & gravity assists",

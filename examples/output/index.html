@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.11       12.03      0.8x
-   400          36.36       37.80      1.0x
-   800         144.08      112.37      1.3x
-  1600         601.79      356.09      1.7x
-  3200        2687.19      975.17      2.8x
+   200           9.51       12.51      0.8x
+   400          36.09       39.12      0.9x
+   800         144.46      117.89      1.2x
+  1600         597.82      387.40      1.5x
+  3200        2515.11     1033.29      2.4x
 
-empirical scaling exponent  direct ~ N^2.05   barnes-hut ~ N^1.59
+empirical scaling exponent  direct ~ N^2.01   barnes-hut ~ N^1.60
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -2973,6 +2973,35 @@ e=0.3 tears the inner curves into a chaotic sea -- the Sitnikov route to chaos.<
 integrated 19 orbits; 2 trace tight closed curves (KAM tori), the rest fill chaotic regions.
 
 wrote examples/output\poincare_section.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Gravitational lensing</h2>
+    <p class="blurb">Mass bends light by 4GM/(c^2 b) -- twice the Newtonian value, the 1919 eclipse result (1.75 arcsec at the Sun's limb). A point-mass lens splits a source into two images, an Einstein ring at perfect alignment, and the symmetric microlensing brightening used to find exoplanets.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<polyline points="56.0,655.1 57.4,654.8 58.8,654.5 60.2,654.2 61.5,654.0 62.9,653.6 64.3,653.3 65.7,653.0 67.1,652.7 68.5,652.3 69.9,651.9 71.3,651.6 72.6,651.2 74.0,650.8 75.4,650.3 76.8,649.9 78.2,649.5 79.6,649.0 81.0,648.5 82.4,648.0 83.7,647.4 85.1,646.9 86.5,646.3 87.9,645.7 89.3,645.1 90.7,644.4 92.1,643.8 93.4,643.1 94.8,642.3 96.2,641.6 97.6,640.8 99.0,639.9 100.4,639.1 101.8,638.2 103.2,637.2 104.5,636.2 105.9,635.2 107.3,634.1 108.7,633.0 110.1,631.8 111.5,630.6 112.9,629.3 114.3,627.9 115.6,626.5 117.0,625.0 118.4,623.5 119.8,621.9 121.2,620.2 122.6,618.4 124.0,616.5 125.3,614.5 126.7,612.4 128.1,610.2 129.5,607.9 130.9,605.5 132.3,603.0 133.7,600.3 135.1,597.4 136.4,594.4 137.8,591.3 139.2,587.9 140.6,584.4 142.0,580.6 143.4,576.6 144.8,572.4 146.2,567.9 147.5,563.2 148.9,558.1 150.3,552.8 151.7,547.0 153.1,540.9 154.5,534.4 155.9,527.4 157.2,519.9 158.6,511.9 160.0,503.3 161.4,494.1 162.8,484.2 164.2,473.5 165.6,462.0 167.0,449.7 168.3,436.3 169.7,421.8 171.1,406.2 172.5,389.3 173.9,371.1 175.3,351.5 176.7,330.3 178.1,307.6 179.4,283.3 180.8,257.6 182.2,230.7 183.6,202.8 185.0,174.6 186.4,146.8 187.8,120.4 189.1,96.7 190.5,77.3 191.9,63.3 193.3,56.0 194.7,56.0 196.1,63.3 197.5,77.3 198.9,96.7 200.2,120.4 201.6,146.8 203.0,174.6 204.4,202.8 205.8,230.7 207.2,257.6 208.6,283.3 209.9,307.6 211.3,330.3 212.7,351.5 214.1,371.1 215.5,389.3 216.9,406.2 218.3,421.8 219.7,436.3 221.0,449.7 222.4,462.0 223.8,473.5 225.2,484.2 226.6,494.1 228.0,503.3 229.4,511.9 230.8,519.9 232.1,527.4 233.5,534.4 234.9,540.9 236.3,547.0 237.7,552.8 239.1,558.1 240.5,563.2 241.8,567.9 243.2,572.4 244.6,576.6 246.0,580.6 247.4,584.4 248.8,587.9 250.2,591.3 251.6,594.4 252.9,597.4 254.3,600.3 255.7,603.0 257.1,605.5 258.5,607.9 259.9,610.2 261.3,612.4 262.7,614.5 264.0,616.5 265.4,618.4 266.8,620.2 268.2,621.9 269.6,623.5 271.0,625.0 272.4,626.5 273.7,627.9 275.1,629.3 276.5,630.6 277.9,631.8 279.3,633.0 280.7,634.1 282.1,635.2 283.5,636.2 284.8,637.2 286.2,638.2 287.6,639.1 289.0,639.9 290.4,640.8 291.8,641.6 293.2,642.3 294.6,643.1 295.9,643.8 297.3,644.4 298.7,645.1 300.1,645.7 301.5,646.3 302.9,646.9 304.3,647.4 305.6,648.0 307.0,648.5 308.4,649.0 309.8,649.5 311.2,649.9 312.6,650.3 314.0,650.8 315.4,651.2 316.7,651.6 318.1,651.9 319.5,652.3 320.9,652.7 322.3,653.0 323.7,653.3 325.1,653.6 326.5,654.0 327.8,654.2 329.2,654.5 330.6,654.8 332.0,655.1" fill="none" stroke="#ffbe0b" stroke-width="1.8"/>
+<text x="56" y="30" fill="#e6edf3" font-size="16">Microlensing light curve</text>
+<text x="56" y="704" fill="#8b949e" font-size="11">total magnification vs source position (u0=0.2)</text>
+<circle cx="540" cy="360" r="144" fill="none" stroke="#4cc9f0" stroke-dasharray="4,4"/>
+<circle cx="540" cy="360" r="4" fill="#ffd166"/>
+<circle cx="540.0" cy="348.48" r="3" fill="#e6edf3"/>
+<circle cx="540.0" cy="296.3527164223437" r="4" fill="#ff006e"/>
+<circle cx="540.0" cy="412.1272835776563" r="4" fill="#ff006e"/>
+<text x="396" y="204" fill="#4cc9f0" font-size="12">Einstein ring &amp; two images</text>
+</svg><figcaption>microlensing light curve + Einstein ring and images</figcaption></figure><div class="card"><pre>Gravitational lensing
+
+  light deflection at the Sun&#x27;s limb : 1.751 arcsec (Eddington 1919 measured ~1.75)
+
+  microlensing light curve (min impact u0=0.2):
+                                                                 ............:::::::----====++***####@@####***++====----:::::::............                                                               
+  peak magnification A_max = 5.07 at closest approach
+
+  A point-source drifting behind a mass brightens symmetrically then
+  fades -- the achromatic, time-symmetric microlensing signature used
+  to find exoplanets and dark compact objects.
+
+  wrote examples/output\lensing.svg</pre></div></div>
   </section>
 
   <section>
