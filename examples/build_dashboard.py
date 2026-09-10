@@ -90,6 +90,7 @@ def main():
     import hawking_demo
     import eddington_demo
     import hohmann_demo
+    import gr_time_demo
 
     import plot_orbits
 
@@ -149,6 +150,7 @@ def main():
     hawking_txt = run("hawking_demo", hawking_demo.main, True)
     eddington_txt = run("eddington_demo", eddington_demo.main, True)
     hohmann_txt = run("hohmann_demo", hohmann_demo.main, True)
+    grtime_txt = run("gr_time_demo", gr_time_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -360,6 +362,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("schwarzschild.svg"), "precessing (teal) and plunging (pink) geodesics")
             + f'<div class="card">{pre(schwarz_txt)}</div>'
+            + '</div>'),
+        section(
+            "Gravitational time: redshift, GPS & Shapiro delay",
+            "Clocks run slower deeper in gravity and light lags near mass. "
+            "Pound-Rebka measured the redshift on a tower; GPS satellites gain "
+            "~38 us/day (correct it or navigation fails); the Shapiro radar delay "
+            "past the Sun is the tightest Solar-System test of GR.",
+            '<div class="grid">'
+            + svg_card(out("gr_time.svg"), "Shapiro delay diverging as the ray grazes the Sun")
+            + f'<div class="card">{pre(grtime_txt)}</div>'
             + '</div>'),
         section(
             "Galaxy rotation curves & dark matter",

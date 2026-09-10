@@ -1,0 +1,12 @@
+Gravitational time effects (classic GR tests)
+
+  Pound-Rebka (22.5 m tower)  : z = 2.45e-15   (measured 2.5e-15)
+  GPS clock gain              : +38.5 us/day  (must be corrected or GPS drifts km/day)
+  Sun surface redshift        : z = 2.12e-06   (2.12e-6)
+  Shapiro delay (past the Sun): 281 us      (Cassini ~240-280 us)
+
+  Clocks run slower deeper in gravity and light lags near mass. The GPS
+  correction is relativity you rely on daily; the Shapiro delay is the
+  tightest Solar-System test of general relativity.
+
+  wrote examples/output\gr_time.svg

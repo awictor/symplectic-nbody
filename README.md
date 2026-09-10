@@ -85,6 +85,7 @@ ruins a long non-symplectic integration.
 | `src/hawking.py` | Black-hole thermodynamics: Hawking temperature, entropy, evaporation |
 | `src/eddington.py` | Eddington luminosity, accretion rate & Salpeter black-hole growth |
 | `src/hohmann.py` | Hohmann transfer: mission delta-v budgets & launch windows |
+| `src/gr_time.py` | Gravitational redshift, GPS clock correction, Shapiro delay |
 | `src/friedmann.py` | Friedmann cosmology: scale factor a(t), expansion eras, age of the universe |
 | `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
 | `src/distances.py` | Cosmological distances: luminosity/angular-diameter, cosmic acceleration |
@@ -124,6 +125,7 @@ ruins a long non-symplectic integration.
 | `examples/hawking_demo.py` | Temperature & evaporation time across black-hole masses |
 | `examples/eddington_demo.py` | L_Edd across masses + Eddington-limited growth to a quasar |
 | `examples/hohmann_demo.py` | LEO->GEO & Earth->Mars delta-v budgets + transfer diagram |
+| `examples/gr_time_demo.py` | Pound-Rebka, GPS gain, Sun redshift + Shapiro-delay curve |
 | `examples/friedmann_demo.py` | Scale-factor curves for radiation/matter/dark-energy/LCDM |
 | `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
 | `examples/distances_demo.py` | Hubble diagram (LCDM vs decelerating) + D_A turnover |
@@ -511,6 +513,28 @@ Blandford-Znajek jets), and splits the ISCO: prograde orbits reach down toward
 of the accretion disk, measuring it is how astronomers weigh black-hole spin.
 The tests check the Schwarzschild limit, the extremal `1M`/`9M` values, the
 monotonic spin dependence, and cosmic censorship (`a > M` is rejected).
+
+## Gravitational time: redshift, GPS, and the Shapiro delay
+
+Gravity slows clocks and delays light. `gr_time.py` reproduces three classic
+tests:
+
+```
+$ python examples/gr_time_demo.py examples/output
+
+  Pound-Rebka (22.5 m tower)  : z = 2.45e-15   (measured 2.5e-15)
+  GPS clock gain              : +38.5 us/day
+  Sun surface redshift        : z = 2.12e-06
+  Shapiro delay (past the Sun): 281 us      (Cassini ~240-280 us)
+```
+
+A photon climbing out of a well is redshifted by `Delta Phi / c^2`; GPS
+satellites' clocks gain ~38 microseconds a day (uncorrected, positions drift
+kilometers daily); and radar grazing the Sun is delayed a few hundred
+microseconds -- the Shapiro effect, the tightest Solar-System test of GR. The
+tests check the Pound-Rebka value, the GPS gain, the solar redshift, the Shapiro
+scale and its mass-linearity, and that the exact Schwarzschild redshift reduces
+to `g h / c^2`.
 
 ## Schwarzschild orbits: strong-field general relativity
 
