@@ -44,6 +44,7 @@ ruins a long non-symplectic integration.
 | `src/relativity.py` | First post-Newtonian gravity & Mercury's perihelion precession |
 | `src/lyapunov.py` | Largest Lyapunov exponent (Benettin shadow-trajectory method) |
 | `src/stability_map.py` | Three-body escape-time scan over a grid of initial conditions |
+| `src/virial.py` | Virial theorem & violent relaxation of a self-gravitating cluster |
 | `src/poincare.py` | Poincare surface-of-section for the CR3BP (tori vs chaos) |
 | `src/sitnikov.py` | The Sitnikov problem: on-axis test particle, integrable-to-chaotic |
 | `src/galaxy.py` | Disk-galaxy generator and two-galaxy tidal encounters |
@@ -63,6 +64,7 @@ ruins a long non-symplectic integration.
 | `examples/precession_demo.py` | Mercury's 43"/century precession + a relativistic rosette SVG |
 | `examples/chaos_demo.py` | Lyapunov exponent + two trajectories diverging 6 orders of magnitude |
 | `examples/stability_map_demo.py` | Parallel escape-time heatmap revealing the fractal chaos boundary |
+| `examples/virial_demo.py` | Equilibrium vs cold cluster: running 2T/U converging on -1 |
 | `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
 | `examples/sitnikov_demo.py` | Stroboscopic maps: circular binary (tori) vs eccentric (chaos) |
 | `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
@@ -198,6 +200,25 @@ diffuse dust. `poincare.py` reconstructs `vy` from the energy so each section
 point is a full initial condition, and the tests confirm the Jacobi constant is
 conserved along each orbit (faithful section), regular orbits stay on tight
 curves, and chaotic ones scatter more than 3x wider.
+
+## The virial theorem and violent relaxation
+
+A bound gravitational system in equilibrium obeys `2<T> + <U> = 0`, i.e.
+`2T/U = -1`. `virial.py` measures the running virial ratio along an N-body
+integration:
+
+```
+$ python examples/virial_demo.py examples/output
+
+  equilibrium Plummer : running <2T/U> -> -0.992  (target -1)
+  cold cluster        : start -0.083 -> running <2T/U> -0.952
+```
+
+An equilibrium Plummer sphere sits right at `-1`. A **cold** cluster (velocities
+scaled down, far sub-virial) collapses, overshoots, and relaxes toward `-1` --
+"violent relaxation" -- forgetting its initial state. The tests confirm the
+equilibrium value, the cold-start relaxation, that scaling velocities scales `T`
+as `v^2`, and that total energy is conserved throughout the collapse.
 
 ## Stability maps: chaos drawn in initial-condition space
 

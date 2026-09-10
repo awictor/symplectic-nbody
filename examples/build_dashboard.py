@@ -70,6 +70,7 @@ def main():
     import gravwave_demo
     import circularization_demo
     import sitnikov_demo
+    import virial_demo
 
     # make sure all SVGs exist
     import plot_orbits
@@ -95,6 +96,8 @@ def main():
     circularization_demo.main()
     sys.argv = ["sitnikov_demo", outdir]
     sitnikov_demo.main()
+    sys.argv = ["virial_demo", outdir]
+    virial_demo.main()
     sys.argv = _old_argv
 
     print("capturing demo outputs...")
@@ -119,6 +122,8 @@ def main():
     circ_txt = capture(circularization_demo.main)
     sys.argv = ["sitnikov_demo", outdir]
     sitnikov_txt = capture(sitnikov_demo.main)
+    sys.argv = ["virial_demo", outdir]
+    virial_txt = capture(virial_demo.main)
     sys.argv = _old_argv
     hermite_txt = capture(hermite_demo.main)
     # scaling benchmark is slow; run a lighter inline version
@@ -224,6 +229,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("poincare_section.svg"), "tori and chaotic sea at one energy")
             + f'<div class="card">{pre(poincare_txt)}</div>'
+            + '</div>'),
+        section(
+            "Virial theorem & violent relaxation",
+            "For a bound gravitational system 2T + U = 0. A Plummer sphere sits "
+            "at 2T/U = -1; a cold, sub-virial cluster collapses, overshoots, and "
+            "relaxes to the same value -- forgetting its initial state through "
+            "violent relaxation.",
+            '<div class="grid">'
+            + svg_card(out("virial.svg"), "running 2T/U converging on -1")
+            + f'<div class="card">{pre(virial_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
