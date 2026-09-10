@@ -187,6 +187,7 @@ ruins a long non-symplectic integration.
 | `src/aharonov_bohm.py` | Aharonov-Bohm phase, flux quantum, SQUID field sensitivity |
 | `src/josephson.py` | Josephson junction: DC/AC supercurrent, Shapiro steps, volt standard |
 | `src/quantum_hall.py` | Quantum Hall effect: von Klitzing constant, plateaus, Landau levels |
+| `src/bcs.py` | BCS superconductivity: gap-to-Tc ratio, gap(T), Tc from coupling, isotope effect |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -365,6 +366,7 @@ ruins a long non-symplectic integration.
 | `examples/aharonov_bohm_demo.py` | Flux/phase table + the fringe-shift & phase-winding figure |
 | `examples/josephson_demo.py` | V-f/Shapiro table + the I-phi sine & Shapiro-staircase figure |
 | `examples/quantum_hall_demo.py` | Plateau/Landau table + the R_xy staircase figure |
+| `examples/bcs_demo.py` | Gap/isotope/Tc table + the gap(T) & Tc-vs-coupling figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4302,6 +4304,29 @@ Reproducible to parts per billion in any device, it now defines the SI ohm -- th
 counterpart to the Josephson volt. The tests reproduce `R_K` and the `R_K/nu` plateaus, the
 conductance-resistance inverse and its quantization, the cyclotron frequency and Landau
 spacing/degeneracy, and the filling factor from density and field.
+
+## BCS superconductivity: the gap that kills resistance
+
+Cooper pairs and an energy gap explain zero resistance. `bcs.py`:
+
+```
+$ python examples/bcs_demo.py examples/output
+
+  material    T_c (K)   gap (meV)   pair-break      lambda 0.3 -> Tc 9.2 K
+  aluminium   1.2       0.183       0.09 THz        lambda 0.5 -> Tc 35 K
+  niobium     9.3       1.414       0.68 THz
+```
+
+Below `T_c` a phonon-mediated attraction binds electrons into Cooper pairs that condense into
+a single coherent state carrying current without resistance. The theory's core is an energy
+gap `Delta` at the Fermi surface -- breaking a pair costs `2 Delta`, so nothing scatters the
+condensate. BCS predicts the universal ratio `2 Delta(0)/(k_B T_c) = 3.53` for every
+weak-coupling superconductor, a gap closing as `sqrt(1-T/Tc)` toward `T_c`, and
+`k_B T_c = 1.13 hbar wD exp(-1/lambda)` from the Debye energy and electron-phonon coupling.
+Because `wD ~ 1/sqrt(M)`, `T_c ~ M^(-1/2)` -- the isotope effect that proved phonons do the
+pairing. The tests reproduce the 3.53 ratio and Al/Nb gaps, the gap-Tc inversion, the
+`sqrt(1-T/Tc)` closing, the exponential `T_c(lambda)`, the isotope shift, and the sub-THz
+pair-breaking frequency.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

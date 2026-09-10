@@ -229,6 +229,7 @@ def main():
     import aharonov_bohm_demo
     import josephson_demo
     import quantum_hall_demo
+    import bcs_demo
 
     import plot_orbits
 
@@ -427,6 +428,7 @@ def main():
     aharonov_bohm_txt = run("aharonov_bohm_demo", aharonov_bohm_demo.main, True)
     josephson_txt = run("josephson_demo", josephson_demo.main, True)
     quantum_hall_txt = run("quantum_hall_demo", quantum_hall_demo.main, True)
+    bcs_txt = run("bcs_demo", bcs_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2337,6 +2339,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("quantum_hall.svg"), "the Hall resistance staircase: plateaus at R_K/nu as field sweeps a fixed density")
             + f'<div class="card">{pre(quantum_hall_txt)}</div>'
+            + '</div>'),
+        section(
+            "BCS superconductivity: the gap that kills resistance",
+            "Below T_c a phonon-mediated attraction binds electrons into Cooper pairs that "
+            "condense into one coherent state carrying current without resistance. The theory's "
+            "core is an energy gap Delta at the Fermi surface -- it costs 2 Delta to break a "
+            "pair, so nothing scatters the condensate. BCS predicts the universal ratio "
+            "2 Delta(0)/(k_B T_c) = 3.53 for every weak-coupling superconductor, a gap that "
+            "closes as sqrt(1-T/Tc), and T_c = 1.13 hbar wD exp(-1/lambda) -- whose wD ~ 1/sqrt(M) "
+            "gives the isotope effect that proved phonons do the pairing.",
+            '<div class="grid">'
+            + svg_card(out("bcs.svg"), "the gap closing as sqrt(1-T/Tc), and T_c rising with electron-phonon coupling")
+            + f'<div class="card">{pre(bcs_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

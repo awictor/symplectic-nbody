@@ -1,0 +1,22 @@
+BCS superconductivity: 2 Delta(0) / (k_B T_c) = 3.53 (universal)
+
+  material      T_c (K)   gap (meV)    pair-break
+  aluminium         1.2       0.183       0.09 THz
+  niobium           9.3       1.414       0.68 THz
+  lead              7.2       1.095       0.53 THz
+
+  Isotope effect (T_c ~ M^-1/2): mercury-198 vs mercury-202 (Hg T_c=4.15 K):
+    Hg-202 / Hg-198 mass ratio 1.020  ->  T_c = 4.109 K
+    heavier isotope, lower T_c -- proof phonons do the pairing.
+
+  T_c from electron-phonon coupling (Debye freq 3e13 rad/s):
+    lambda = 0.2  ->  T_c = 1.74 K
+    lambda = 0.3  ->  T_c = 9.24 K
+    lambda = 0.4  ->  T_c = 21.25 K
+    lambda = 0.5  ->  T_c = 35.04 K
+
+  Below T_c an energy gap opens at the Fermi surface: it costs 2 Delta to break a
+  Cooper pair, so nothing scatters the condensate and resistance vanishes. The gap
+  closes as sqrt(1 - T/Tc) toward T_c, where superconductivity ends.
+
+  wrote examples/output\bcs.svg
