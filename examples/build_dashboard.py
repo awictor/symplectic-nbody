@@ -202,6 +202,7 @@ def main():
     import mach_cone_demo
     import nozzle_demo
     import blasius_demo
+    import strouhal_demo
 
     import plot_orbits
 
@@ -373,6 +374,7 @@ def main():
     mach_cone_txt = run("mach_cone_demo", mach_cone_demo.main, True)
     nozzle_txt = run("nozzle_demo", nozzle_demo.main, True)
     blasius_txt = run("blasius_demo", blasius_demo.main, True)
+    strouhal_txt = run("strouhal_demo", strouhal_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1925,6 +1927,20 @@ def main():
             '<div class="grid">'
             + svg_card(out("blasius.svg"), "the boundary layer thickening as sqrt(x) with velocity profiles and the transition point")
             + f'<div class="card">{pre(blasius_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Strouhal number: von Karman vortex streets",
+            "A blunt body in a steady flow sheds vortices alternately from each side, a "
+            "staggered von Karman street whose frequency obeys St = f d / U with St ~ 0.2 "
+            "nearly constant over a huge Reynolds-number range. So shedding frequency scales "
+            "linearly with wind speed -- the aeolian hum of a wire (a 5 mm wire in 10 m/s wind "
+            "sings at 400 Hz), the flutter of an antenna. When that frequency crosses a "
+            "structure's natural frequency the flow locks in and the alternating side-force "
+            "can drive destructive vortex-induced vibration, the reason chimneys wear helical "
+            "strakes.",
+            '<div class="grid">'
+            + svg_card(out("strouhal.svg"), "vortices peeling alternately off a cylinder into the staggered von Karman wake")
+            + f'<div class="card">{pre(strouhal_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

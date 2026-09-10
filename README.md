@@ -160,6 +160,7 @@ ruins a long non-symplectic integration.
 | `src/mach_cone.py` | Mach cone: cone angle, sonic-boom timing, Prandtl-Glauert & Prandtl-Meyer |
 | `src/nozzle.py` | de Laval nozzle: isentropic ratios, area-Mach, choked flow, exhaust velocity |
 | `src/blasius.py` | Blasius boundary layer: delta~sqrt(x), skin friction, plate drag, transition |
+| `src/strouhal.py` | Strouhal number: vortex-shedding frequency, Roshko fit, aeolian tone, lock-in |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -311,6 +312,7 @@ ruins a long non-symplectic integration.
 | `examples/mach_cone_demo.py` | Cone-angle & boom-timing tables + the Mach-cone figure |
 | `examples/nozzle_demo.py` | Area-ratio/exit-Mach table + the converging-diverging bell figure |
 | `examples/blasius_demo.py` | Thickness/skin-friction table + the growing-boundary-layer figure |
+| `examples/strouhal_demo.py` | Shedding-frequency table + the von Karman vortex-street figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3621,6 +3623,31 @@ integrating over a plate of length L gives the drag coefficient `C_D = 1.328/sqr
 exactly twice the trailing-edge `c_f`. The layer stays laminar until `Re_x ~ 5e5`, where it
 trips to turbulence. The tests verify the `sqrt(x)` growth, the fixed thickness ratios, the
 `c_f` and `C_D` laws, the `U^1.5` drag scaling, and the transition distance.
+
+## The Strouhal number: von Karman vortex streets
+
+A blunt body in a steady flow sheds a rhythmic wake. `strouhal.py`:
+
+```
+$ python examples/strouhal_demo.py examples/output
+
+  body               d       wind    shed freq
+  telephone wire     5 mm    10 m/s   400.0 Hz   (aeolian hum)
+  factory chimney    3 m     12 m/s   0.8 Hz
+
+  Roshko: Re=300 -> St 0.197   Re=1e4 -> St 0.212
+```
+
+Above a modest Reynolds number a cylinder sheds vortices alternately from each side -- a
+staggered von Karman street -- at a frequency `f = St U/d` with the Strouhal number `St ~ 0.2`
+nearly constant from `Re ~ 300` to `2e5` (Roshko's `St = 0.212(1 - 21.2/Re)` captures its
+slow rise). So the pitch scales linearly with wind speed: a 5 mm wire in a 10 m/s wind sings
+at 400 Hz (the aeolian tone), and the wake vortices trail about five diameters apart. When
+the shedding frequency crosses a structure's natural frequency the flow **locks in** and the
+alternating side-force can build destructive vortex-induced vibration -- the reason tall
+chimneys wear helical strakes and why the Tacoma-era lesson still matters. The tests verify
+the `f = St U/d` scaling, the Strouhal inversion, the Roshko rise, the aeolian pitch, the
+lock-in speed, and the `~5d` vortex spacing.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

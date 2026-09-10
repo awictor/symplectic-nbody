@@ -1,0 +1,21 @@
+Strouhal number St = f d / U ~ 0.2: the rhythm of vortex shedding
+
+  body                                d     wind   shed freq
+  telephone wire                    5mm     10 m/s    400.0 Hz
+  car antenna                       8mm     25 m/s    625.0 Hz
+  ship rigging                     20mm     15 m/s    150.0 Hz
+  factory chimney                3000mm     12 m/s   800.0 mHz
+
+  Roshko St = 0.212(1 - 21.2/Re) rises toward ~0.21 as Re grows:
+    Re =      100  ->  St = 0.167
+    Re =      300  ->  St = 0.197
+    Re =     1000  ->  St = 0.208
+    Re =    10000  ->  St = 0.212
+    Re =  1000000  ->  St = 0.212
+
+  A 3 m chimney with a 0.25 Hz sway mode locks in at wind ~3.8 m/s -- when the
+  shedding beat hits the structure's resonance, the alternating side-force can
+  build destructive vortex-induced vibration (why chimneys wear helical strakes).
+  Wake vortices trail ~5 diameters apart.
+
+  wrote examples/output\strouhal.svg
