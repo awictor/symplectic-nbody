@@ -82,6 +82,7 @@ ruins a long non-symplectic integration.
 | `src/pair_production.py` | Photon-photon pair production & the gamma-ray horizon |
 | `src/axial_precession.py` | Precession of the equinoxes: the 26,000-year luni-solar wobble |
 | `src/alfven.py` | Alfven waves, plasma beta & the Alfven surface of the solar wind |
+| `src/parker_spiral.py` | The Parker spiral: the Sun's field wound up by its rotation |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -155,6 +156,7 @@ ruins a long non-symplectic integration.
 | `examples/pair_production_demo.py` | Threshold gamma energy vs background photon energy |
 | `examples/axial_precession_demo.py` | Sun/Moon precession rates + the wandering-pole circle |
 | `examples/alfven_demo.py` | v_A & beta across environments + the Alfven-surface crossing |
+| `examples/parker_spiral_demo.py` | Garden-hose angle Sun->Saturn + spiral field lines |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1401,6 +1403,36 @@ the spin -- then crosses the Alfven surface near ~15 R_sun (where Parker Solar P
 found it) and coasts out super-Alfvenic, decoupled from the Sun's rotation. The tests
 verify the coronal speed, the field- vs gas-dominated regimes, the super-Alfvenic wind,
 and the `v_A ~ B`, `v_A ~ 1/sqrt(rho)`, `beta ~ 1/B^2` scalings.
+
+## The Parker spiral: the Sun's field wound up by its rotation
+
+The solar wind drags the Sun's magnetic field radially outward, but the field's feet
+stay rooted in a Sun that turns once every ~25 days -- a rotating sprinkler. Each plasma
+parcel flies straight out, yet the field line joining them is an Archimedean spiral.
+`parker_spiral.py`:
+
+```
+$ python examples/parker_spiral_demo.py examples/output
+
+        location   r (AU)  angle (deg)   |B| (nT)
+  -----------------------------------------------
+         Mercury     0.39         22.7      35.63
+           Venus     0.72         37.7      12.18
+           Earth     1.00         47.0       7.33
+            Mars     1.52         58.5       4.14
+         Jupiter     5.20         79.8       1.05
+          Saturn     9.58         84.4       0.56
+```
+
+The garden-hose angle `tan(psi) = Omega r sin(theta) / u` grows with distance: nearly
+radial near the Sun, ~45 degrees at Earth (measured value), nearly azimuthal past
+Jupiter. Flux conservation splits the field into a radial part falling as `1/r^2` and an
+azimuthal part falling only as `1/r`, so the distant heliospheric field is mostly the
+wound-up azimuthal component -- and Earth's ~7 nT total field matches. This geometry is
+why solar energetic particles from a western-limb flare reach Earth best (they are
+magnetically connected along the spiral). The tests verify the ~45-degree angle at 1 AU,
+the radial/azimuthal regimes near the Sun and at Jupiter, the `1/r^2` and `1/r` scalings,
+and that a faster wind winds the spiral less tightly.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

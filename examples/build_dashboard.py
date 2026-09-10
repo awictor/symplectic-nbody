@@ -124,6 +124,7 @@ def main():
     import pair_production_demo
     import axial_precession_demo
     import alfven_demo
+    import parker_spiral_demo
 
     import plot_orbits
 
@@ -217,6 +218,7 @@ def main():
     pairprod_txt = run("pair_production_demo", pair_production_demo.main, True)
     axprec_txt = run("axial_precession_demo", axial_precession_demo.main, True)
     alfven_txt = run("alfven_demo", alfven_demo.main, True)
+    parker_txt = run("parker_spiral_demo", parker_spiral_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -823,6 +825,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("alfven.svg"), "wind speed overtaking the Alfven speed at the Alfven surface")
             + f'<div class="card">{pre(alfven_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Parker spiral",
+            "The solar wind drags the Sun's magnetic field radially outward while "
+            "its footpoints stay rooted in a Sun that rotates every ~25 days -- a "
+            "rotating sprinkler. Each parcel flies straight out, but the field line "
+            "traces an Archimedean spiral: nearly radial near the Sun, bent ~45 deg "
+            "at Earth (the garden-hose angle), nearly azimuthal by Jupiter. It is "
+            "why western-limb flares connect best to Earth along the spiral.",
+            '<div class="grid">'
+            + svg_card(out("parker_spiral.svg"), "field lines spiralling out through the ecliptic")
+            + f'<div class="card">{pre(parker_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

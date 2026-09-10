@@ -1,0 +1,20 @@
+The Parker spiral: the Sun's field wound up by its rotation
+
+  solar wind speed: 400 km/s, rotation period: 25.4 days
+
+        location   r (AU)  angle (deg)   |B| (nT)
+  -----------------------------------------------
+         Mercury     0.39         22.7      35.63
+           Venus     0.72         37.7      12.18
+           Earth     1.00         47.0       7.33
+            Mars     1.52         58.5       4.14
+         Jupiter     5.20         79.8       1.05
+          Saturn     9.58         84.4       0.56
+
+  Near the Sun the field is nearly radial; by Earth it is bent ~45 deg
+  (the classic garden-hose angle); past Jupiter it is nearly azimuthal.
+  B_r falls as 1/r^2 but B_phi only as 1/r, so the distant heliospheric
+  field is mostly the wound-up azimuthal component. This is why western-
+  limb solar flares connect best to Earth along the spiral field line.
+
+  wrote examples/output\parker_spiral.svg
