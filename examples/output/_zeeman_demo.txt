@@ -1,0 +1,19 @@
+Zeeman effect: delta_E = g_J m_J mu_B B splits levels (mu_B = 9.274e-24 J/T)
+
+     field    normal split       at 500 nm
+     0.1 T         1.40 GHz         1.17 pm
+     0.3 T         4.20 GHz         3.50 pm
+     1.0 T        14.00 GHz        11.67 pm
+     3.0 T        41.99 GHz        35.01 pm
+
+  Lande g-factors (anomalous Zeeman -- uneven splitting):
+    2S1/2 (ground)           g = 2.000
+    2P1/2                    g = 0.667
+    2P3/2                    g = 1.333
+    3D3 (pure orbital-ish)   g = 1.333
+
+  A sunspot line split by 4.2 GHz implies B = 0.30 T -- how magnetograms map the
+  Sun's magnetic field. The normal triplet (g=1) is the Lorentz-triplet classical
+  physics got right; the uneven anomalous patterns forced the discovery of spin.
+
+  wrote examples/output\zeeman.svg

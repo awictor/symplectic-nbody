@@ -179,6 +179,7 @@ ruins a long non-symplectic integration.
 | `src/thin_film.py` | Thin-film interference: bubble colours, AR coatings, Newton's rings |
 | `src/malus.py` | Malus's law: polarizer transmission, three-polarizer trick, wave plates |
 | `src/cherenkov.py` | Cherenkov radiation: threshold, cone angle, velocity from the ring |
+| `src/zeeman.py` | Zeeman effect: normal/anomalous line splitting, Lande g-factor, field readout |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -349,6 +350,7 @@ ruins a long non-symplectic integration.
 | `examples/thin_film_demo.py` | Soap-colour/AR-coating table + colour-vs-thickness & Newton's-rings figure |
 | `examples/malus_demo.py` | Transmission/rescue/stack table + cos^2 & three-polarizer figure |
 | `examples/cherenkov_demo.py` | Per-radiator threshold table + cone-angle & cone-geometry figure |
+| `examples/zeeman_demo.py` | Splitting/g-factor table + the triplet-fan & sublevel-ladder figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4104,6 +4106,28 @@ neutrino observatories (IceCube, Super-Kamiokande) watch for the faint rings. Th
 reproduce water's 0.75 threshold and 41-degree maximum cone, the threshold Lorentz factor, the
 emission test, the cone opening with speed, the velocity-from-cone inversion, and the photon-
 yield trend, plus aerogel's high 0.95 threshold.
+
+## The Zeeman effect: splitting lines with a magnetic field
+
+A magnetic field shifts an atom's levels and splits its spectral lines. `zeeman.py`:
+
+```
+$ python examples/zeeman_demo.py examples/output
+
+  field    normal split   at 500 nm       Lande g:  2S1/2 = 2.00
+  0.1 T    1.40 GHz       1.17 pm                   2P1/2 = 0.67
+  1.0 T    14.00 GHz      11.67 pm                  2P3/2 = 1.33
+```
+
+Each sublevel shifts by `delta_E = g_J m_J mu_B B`, with the Bohr magneton
+`mu_B = e hbar/2 m_e`. The **normal** Zeeman effect (spin cancels, `g = 1`) splits a line into
+the clean Lorentz triplet shifted by `mu_B B/h = 14 GHz` per tesla, exactly as classical
+physics predicted. The **anomalous** effect uses the Lande g-factor
+`1 + [J(J+1)+S(S+1)-L(L+1)]/2J(J+1)` (running 1 for pure orbital to 2 for pure spin), giving
+more lines, unevenly spaced -- a puzzle whose resolution required electron spin. Reading the
+splitting backwards gives the field (`B = h delta_nu/mu_B`), which is how solar magnetograms
+map sunspots. The tests reproduce the Bohr magneton, the 14 GHz/T normal shift, the sodium
+D-line g-factors (2/3, 4/3, 2), the sign-flipping sublevel shifts, and the field inversion.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

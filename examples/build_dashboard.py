@@ -221,6 +221,7 @@ def main():
     import thin_film_demo
     import malus_demo
     import cherenkov_demo
+    import zeeman_demo
 
     import plot_orbits
 
@@ -411,6 +412,7 @@ def main():
     thin_film_txt = run("thin_film_demo", thin_film_demo.main, True)
     malus_txt = run("malus_demo", malus_demo.main, True)
     cherenkov_txt = run("cherenkov_demo", cherenkov_demo.main, True)
+    zeeman_txt = run("zeeman_demo", zeeman_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2216,6 +2218,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("cherenkov.svg"), "cone angle vs speed for several radiators, and the cone trailing a superluminal particle")
             + f'<div class="card">{pre(cherenkov_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Zeeman effect: splitting lines with a magnetic field",
+            "An atom's magnetic moment shifts its energy levels in a field, so a spectral line "
+            "splits: delta_E = g_J m_J mu_B B. The normal Zeeman effect (spin cancels, g=1) "
+            "gives a clean Lorentz triplet shifted by mu_B B/h = 14 GHz per tesla; the "
+            "anomalous effect (g != 1, from the Lande factor 1 + [J(J+1)+S(S+1)-L(L+1)]/2J(J+1)) "
+            "splits into more, unevenly spaced lines whose existence forced the discovery of "
+            "electron spin. Reading the splitting backwards measures the field -- how "
+            "magnetograms map sunspots.",
+            '<div class="grid">'
+            + svg_card(out("zeeman.svg"), "the normal triplet fanning out with field, and an anomalous sublevel ladder")
+            + f'<div class="card">{pre(zeeman_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
