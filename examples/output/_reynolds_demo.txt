@@ -1,0 +1,19 @@
+Reynolds number Re = rho v L / mu: inertia vs viscosity
+
+              system   v (m/s)     L (m)          Re        regime
+  ----------------------------------------------------------------
+           bacterium     3e-05     1e-06     3.0e-05       laminar
+          sperm cell    0.0002     5e-05     1.0e-02       laminar
+  blood in capillary     0.001     8e-06     8.0e-03       laminar
+    water tap (pipe)         1      0.02     2.0e+04     turbulent
+      swimming human       1.5       1.8     2.7e+06     turbulent
+       airliner wing   2.5e+02         3     5.1e+07     turbulent
+          blue whale        10        25     2.5e+08     turbulent
+
+  Thirteen orders of magnitude of Re separate a bacterium from a whale.
+  At tiny Re viscosity rules -- a microbe cannot coast, it is like swimming
+  in honey. At huge Re inertia rules and the flow tumbles into turbulence.
+  For pipe flow the crossover sits near Re ~ 2300, which is why a slow tap
+  runs in smooth laminar sheets but a fast one roars and sputters.
+
+  wrote examples/output\reynolds.svg

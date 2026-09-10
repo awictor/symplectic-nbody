@@ -186,6 +186,7 @@ def main():
     import van_der_waals_demo
     import joule_thomson_demo
     import clausius_clapeyron_demo
+    import reynolds_demo
 
     import plot_orbits
 
@@ -341,6 +342,7 @@ def main():
     vdw_txt = run("van_der_waals_demo", van_der_waals_demo.main, True)
     jt_txt = run("joule_thomson_demo", joule_thomson_demo.main, True)
     cc_txt = run("clausius_clapeyron_demo", clausius_clapeyron_demo.main, True)
+    reynolds_txt = run("reynolds_demo", reynolds_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1688,6 +1690,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("clausius_clapeyron.svg"), "the exponential vapor-pressure curve with altitude markers")
             + f'<div class="card">{pre(cc_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Reynolds number",
+            "One dimensionless ratio Re = rho v L / mu decides whether a flow is smooth "
+            "or turbulent: viscosity damps disturbances at low Re, inertia tears them "
+            "into eddies at high Re, with pipe flow transitioning near Re ~ 2300. It "
+            "spans 13 orders of magnitude -- a bacterium at Re ~ 1e-5 lives in pure "
+            "viscosity and cannot coast, a whale at Re ~ 1e8 glides on inertia. Laminar "
+            "flow follows Hagen-Poiseuille's r^4 law.",
+            '<div class="grid">'
+            + svg_card(out("reynolds.svg"), "systems from bacterium to whale on a log Reynolds axis")
+            + f'<div class="card">{pre(reynolds_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

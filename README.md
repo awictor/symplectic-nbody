@@ -144,6 +144,7 @@ ruins a long non-symplectic integration.
 | `src/van_der_waals.py` | The van der Waals gas: real-gas EOS, critical point & corresponding states |
 | `src/joule_thomson.py` | The Joule-Thomson effect: throttling cooling & gas liquefaction |
 | `src/clausius_clapeyron.py` | Clausius-Clapeyron: vapor pressure, boiling point & latent heat |
+| `src/reynolds.py` | The Reynolds number: laminar vs turbulent flow & Hagen-Poiseuille |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -279,6 +280,7 @@ ruins a long non-symplectic integration.
 | `examples/van_der_waals_demo.py` | Critical constants per gas + the reduced isotherms with the loop |
 | `examples/joule_thomson_demo.py` | Inversion temperatures per gas + the mu_JT(T) crossings |
 | `examples/clausius_clapeyron_demo.py` | Boiling point vs altitude + the vapor-pressure curve |
+| `examples/reynolds_demo.py` | Re & regime from bacterium to whale + the log-Re transition chart |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3194,6 +3196,30 @@ at 72 C (too cold to cook an egg) while a pressure cooker raises it to ~121 C. T
 humidity and cloud formation. The tests verify the 100 C sea-level boiling, the Everest and
 pressure-cooker points, the steep exponential rise, the latent-heat recovery, and the
 boiling/vapor-pressure inversion.
+
+## The Reynolds number: laminar vs turbulent
+
+One dimensionless ratio decides whether a flow is smooth or chaotic. `reynolds.py`:
+
+```
+$ python examples/reynolds_demo.py examples/output
+
+            system   v (m/s)     L (m)          Re        regime
+  ----------------------------------------------------------------
+         bacterium     3e-05     1e-06     3.0e-05       laminar
+  water tap (pipe)         1      0.02     2.0e+04     turbulent
+    swimming human       1.5       1.8     2.7e+06     turbulent
+        blue whale        10        25     2.5e+08     turbulent
+```
+
+`Re = rho v L / mu` weighs inertia against viscosity: below the critical value viscosity
+damps disturbances and the flow stays laminar, above it inertia tears it into turbulent
+eddies, with pipe flow transitioning near `Re ~ 2300`. It spans thirteen orders of magnitude
+-- a bacterium at `Re ~ 1e-5` swims in what feels like honey and cannot coast, while a whale
+at `Re ~ 1e8` glides on inertia. Laminar pipe flow obeys Hagen-Poiseuille's `Q ~ r^4 dP` law,
+so halving a pipe's radius cuts the flow sixteen-fold. The tests verify the laminar/turbulent
+transition, the bacterium and whale Reynolds numbers, the `r^4` Poiseuille scaling, the
+kinematic/dynamic form agreement, and the critical-velocity inversion.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
