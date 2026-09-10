@@ -138,6 +138,7 @@ ruins a long non-symplectic integration.
 | `src/mass_formula.py` | Semi-empirical mass formula: nuclear binding & the iron peak |
 | `src/q_value.py` | Nuclear Q-value: the energy released when nuclei rearrange |
 | `src/quantum_stats.py` | Quantum statistics: Fermi-Dirac, Bose-Einstein & the classical limit |
+| `src/debye_heat.py` | Debye specific heat: the T^3 law & the Dulong-Petit plateau |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -267,6 +268,7 @@ ruins a long non-symplectic integration.
 | `examples/mass_formula_demo.py` | B/A for landmark nuclei + the binding-energy curve peaking at iron |
 | `examples/q_value_demo.py` | Reaction Q-values + the chemical-to-annihilation energy-density chart |
 | `examples/quantum_stats_demo.py` | Occupation vs (E-mu)/kT + the FD/BE/MB distribution curves |
+| `examples/debye_heat_demo.py` | C_V per material + the universal C_V/3R vs T/Theta_D curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3028,6 +3030,33 @@ Far above the chemical potential (`E - mu >> kT`) both fade into the classical M
 exponential, and a photon mode (`mu=0`) at `E=kT` has the Planck occupation `1/(e-1) ~ 0.58`.
 The tests verify the 0.5-at-mu Fermi value, the T=0 step, the never-above-one bound, the bosonic
 divergence, the classical high-energy limit, and the photon Planck factor.
+
+## Debye specific heat: why solids go cold
+
+Classically a solid stores 3R of heat per mole (Dulong-Petit), but measured heat capacities
+plunge toward zero in the cold. `debye_heat.py`:
+
+```
+$ python examples/debye_heat_demo.py examples/output
+
+      material  Theta_D (K)   C_V @300K   % of 3R
+  ------------------------------------------------
+          lead          105       24.79     99.4%
+        copper          343       23.39     93.8%
+     aluminium          428       22.58     90.5%
+       diamond         2230        4.13     16.6%
+```
+
+Debye treated the lattice vibrations as a gas of quantized phonons with a maximum frequency
+set by the interatomic spacing (the Debye temperature Theta_D), giving
+`C_V = 9R (T/Theta_D)^3 integral x^4 e^x/(e^x-1)^2 dx`. It has two clean limits: the classical
+`3R` for `T >> Theta_D`, and the Debye `T^3` law `(12 pi^4/5) R (T/Theta_D)^3` for
+`T << Theta_D`, the fingerprint of freezing out high-frequency phonon modes. Every solid
+follows one universal curve in `T/Theta_D`, so a stiff light lattice like diamond
+(Theta_D ~ 2230 K) stays "cold" at room temperature -- only ~1/6 of 3R -- while soft heavy
+lead has long reached the plateau. The tests verify the high-T Dulong-Petit limit, the low-T
+`T^3` law and its scaling, copper's ~94% at room temperature, diamond staying below 3R, and
+the monotonic rise.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

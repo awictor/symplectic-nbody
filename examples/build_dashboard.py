@@ -180,6 +180,7 @@ def main():
     import mass_formula_demo
     import q_value_demo
     import quantum_stats_demo
+    import debye_heat_demo
 
     import plot_orbits
 
@@ -329,6 +330,7 @@ def main():
     semf_txt = run("mass_formula_demo", mass_formula_demo.main, True)
     qval_txt = run("q_value_demo", q_value_demo.main, True)
     qstats_txt = run("quantum_stats_demo", quantum_stats_demo.main, True)
+    debye_txt = run("debye_heat_demo", debye_heat_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1604,6 +1606,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("quantum_stats.svg"), "the fermion step, boson divergence and classical merge")
             + f'<div class="card">{pre(qstats_txt)}</div>'
+            + '</div>'),
+        section(
+            "Debye specific heat",
+            "Classically a solid stores 3R of heat per mole (Dulong-Petit), but measured "
+            "heat capacities plunge toward zero in the cold. Debye treated the "
+            "vibrations as quantized phonons with a maximum frequency (the Debye "
+            "temperature), giving C_V ~ T^3 at low T and 3R at high T. A stiff light "
+            "lattice like diamond (Theta_D ~ 2230 K) is still 'cold' at room temperature "
+            "-- only ~1/6 of 3R -- while soft heavy lead has long reached the plateau.",
+            '<div class="grid">'
+            + svg_card(out("debye_heat.svg"), "the universal C_V/3R vs T/Theta_D curve")
+            + f'<div class="card">{pre(debye_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

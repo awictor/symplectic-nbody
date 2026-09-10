@@ -1,0 +1,16 @@
+Debye model: C_V rises as T^3, plateaus at Dulong-Petit 3R = 24.94 J/mol/K
+
+      material  Theta_D (K)   C_V @300K   % of 3R
+  ------------------------------------------------
+          lead          105       24.79     99.4%
+        copper          343       23.39     93.8%
+     aluminium          428       22.58     90.5%
+       diamond         2230        4.13     16.6%
+
+  Every solid follows one universal curve in T/Theta_D. A stiff, light
+  lattice has a high Debye temperature, so at room temperature it is still
+  'cold' -- diamond stores only ~1/6 of its classical heat capacity, while
+  soft heavy lead has long since reached the 3R plateau. The T^3 falloff at
+  low temperature is the fingerprint of phonon quantization.
+
+  wrote examples/output\debye_heat.svg
