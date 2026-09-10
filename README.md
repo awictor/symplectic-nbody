@@ -184,6 +184,7 @@ ruins a long non-symplectic integration.
 | `src/franck_hertz.py` | Franck-Hertz: quantized excitation dips, emission wavelength |
 | `src/moseley.py` | Moseley's law: K-alpha X-ray energy vs Z, elemental identification |
 | `src/stark.py` | Stark effect: linear/quadratic line shifts, field ionization of Rydberg atoms |
+| `src/aharonov_bohm.py` | Aharonov-Bohm phase, flux quantum, SQUID field sensitivity |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -359,6 +360,7 @@ ruins a long non-symplectic integration.
 | `examples/franck_hertz_demo.py` | Dip/excitation table + the current-vs-voltage sawtooth figure |
 | `examples/moseley_demo.py` | Per-element K-alpha table + the Moseley sqrt(f)-vs-Z line |
 | `examples/stark_demo.py` | Splitting/ionization table + the Stark fan & ionization-field figure |
+| `examples/aharonov_bohm_demo.py` | Flux/phase table + the fringe-shift & phase-winding figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4228,6 +4230,28 @@ scales as `1/n^4`, so a Rydberg atom (`n=30`) ionizes in ~40 kV/m versus ground 
 verify the linear shift's field/`k` proportionality and symmetric `2n-1` pattern, the negative
 `E^2` quadratic shift, the induced dipole, and the `1/n^4` ionization threshold (ground H
 ~3e10 V/m, Rydberg tiny).
+
+## The Aharonov-Bohm effect: a phase from an untouched field
+
+A field the particle never touches still shifts its quantum phase. `aharonov_bohm.py`:
+
+```
+$ python examples/aharonov_bohm_demo.py examples/output
+
+  flux / Phi_0   phase (rad)   fringe shift     Phi_0 = h/e = 4.14e-15 Wb
+  0.50           3.142         0.50             h/2e (Cooper pair) = 2.07e-15 Wb
+  1.00           6.283         0.00
+```
+
+Steer a charged particle around a solenoid whose field is confined entirely inside -- zero on
+the path -- and the interference fringes still shift by `delta_phi = q Phi/hbar`, set purely by
+the enclosed flux. The particle responds to the vector potential, not the field, proof that
+the potentials are physically real in quantum mechanics. The phase is periodic in the flux
+quantum `Phi_0 = h/q` (the smaller `h/2e` for Cooper pairs), which quantizes flux through a
+superconducting ring and runs SQUID magnetometers: one flux quantum through a 1 mm^2 loop
+needs only ~2 nT, letting them sense fields a billion times weaker than Earth's. The tests
+reproduce the `h/e` and `h/2e` quanta, the `2 pi`-per-quantum phase, the linear-in-flux phase,
+the periodic fringe shift, the Cooper-pair doubling, and the tiny per-quantum field.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -226,6 +226,7 @@ def main():
     import franck_hertz_demo
     import moseley_demo
     import stark_demo
+    import aharonov_bohm_demo
 
     import plot_orbits
 
@@ -421,6 +422,7 @@ def main():
     franck_hertz_txt = run("franck_hertz_demo", franck_hertz_demo.main, True)
     moseley_txt = run("moseley_demo", moseley_demo.main, True)
     stark_txt = run("stark_demo", stark_demo.main, True)
+    aharonov_bohm_txt = run("aharonov_bohm_demo", aharonov_bohm_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2291,6 +2293,20 @@ def main():
             '<div class="grid">'
             + svg_card(out("stark.svg"), "the linear Stark fan of hydrogen n=4, and the ionizing field plummeting with n")
             + f'<div class="card">{pre(stark_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Aharonov-Bohm effect: a phase from an untouched field",
+            "Classically no field means no effect, but a charged particle steered around a "
+            "solenoid -- with the field entirely confined inside, zero on its path -- still has "
+            "its interference fringes shift. It responds to the vector potential, picking up a "
+            "phase delta_phi = q Phi/hbar set purely by the enclosed flux, proof that the "
+            "potentials are physically real in quantum mechanics. The phase is periodic in the "
+            "flux quantum h/q (h/2e for Cooper pairs), which quantizes flux through a "
+            "superconducting ring and drives SQUID magnetometers to sense fields a billion "
+            "times weaker than Earth's.",
+            '<div class="grid">'
+            + svg_card(out("aharonov_bohm.svg"), "interference fringes sliding with enclosed flux, and the phase winding per flux quantum")
+            + f'<div class="card">{pre(aharonov_bohm_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -1,0 +1,17 @@
+Aharonov-Bohm: delta_phi = q Phi / hbar, from flux Phi with B=0 on the path
+
+  Electron flux quantum Phi_0 = h/e = 4.136e-15 Wb
+
+    flux / Phi_0   phase (rad)  fringe shift
+            0.00         0.000          0.00
+            0.25         1.571          0.25
+            0.50         3.142          0.50
+            1.00         6.283          0.00
+            2.50        15.708          0.50
+
+  Superconducting flux quantum h/2e = 2.068e-15 Wb (Cooper pairs).
+  One quantum through a 1 mm^2 SQUID loop needs only 2.07e-09 T -- how SQUIDs sense
+  fields a billion times weaker than Earth's. The electron never sees the field,
+  only the vector potential -- proof the potentials are physically real in QM.
+
+  wrote examples/output\aharonov_bohm.svg
