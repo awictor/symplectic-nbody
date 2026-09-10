@@ -1,0 +1,19 @@
+Heisenberg: dx dp >= hbar/2 -> irreducible confinement energy
+
+           confinement      size    electron E     nucleon E
+  ----------------------------------------------------------
+              molecule      1 nm     0.0095 eV    5.2e-06 eV
+                  atom    0.1 nm       0.95 eV    0.00052 eV
+            inner atom   0.01 nm         95 eV      0.052 eV
+        atomic nucleus      5 fm   3.8e+02 MeV      0.21 MeV
+          nucleon core      1 fm   9.5e+03 MeV       5.2 MeV
+
+  minimizing confinement + Coulomb energy gives hydrogen's binding:
+    13.61 eV -- the atomic scale from uncertainty alone
+
+  Squeezing a particle into a smaller box forces a larger momentum spread
+  and thus more kinetic energy (E ~ 1/dx^2). That is why electrons don't
+  fall into the nucleus, why atoms are ~0.1 nm (eV energies), and why
+  nucleons confined to femtometres carry MeV -- the energy scale of nuclei.
+
+  wrote examples/output\uncertainty.svg

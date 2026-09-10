@@ -171,6 +171,7 @@ def main():
     import de_broglie_demo
     import bohr_demo
     import photoelectric_demo
+    import uncertainty_demo
 
     import plot_orbits
 
@@ -311,6 +312,7 @@ def main():
     debroglie_txt = run("de_broglie_demo", de_broglie_demo.main, True)
     bohr_txt = run("bohr_demo", bohr_demo.main, True)
     photoel_txt = run("photoelectric_demo", photoelectric_demo.main, True)
+    uncert_txt = run("uncertainty_demo", uncertainty_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1479,6 +1481,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("photoelectric.svg"), "stopping voltage vs frequency: parallel lines of slope h/e")
             + f'<div class="card">{pre(photoel_txt)}</div>'
+            + '</div>'),
+        section(
+            "The uncertainty principle",
+            "Position and momentum cannot both be sharp: dx dp >= hbar/2. Confining a "
+            "particle to a box forces a momentum spread and thus an irreducible "
+            "zero-point energy E ~ hbar^2/(m dx^2). An electron squeezed to atomic size "
+            "(~0.1 nm) carries ~1 eV -- why it never falls into the nucleus -- and "
+            "minimizing that against the Coulomb pull reproduces hydrogen's 13.6 eV; a "
+            "nucleon in a femtometre nucleus carries MeV.",
+            '<div class="grid">'
+            + svg_card(out("uncertainty.svg"), "confinement energy vs box size for an electron and a nucleon")
+            + f'<div class="card">{pre(uncert_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

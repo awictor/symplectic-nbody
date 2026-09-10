@@ -129,6 +129,7 @@ ruins a long non-symplectic integration.
 | `src/de_broglie.py` | The de Broglie wavelength: matter as waves |
 | `src/bohr.py` | The Bohr model: the hydrogen spectrum from a quantized orbit |
 | `src/photoelectric.py` | The photoelectric effect: light quantized into photons |
+| `src/uncertainty.py` | The Heisenberg uncertainty principle & zero-point energy |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -249,6 +250,7 @@ ruins a long non-symplectic integration.
 | `examples/de_broglie_demo.py` | Matter wavelengths electron-to-baseball + the lambda(E) curves |
 | `examples/bohr_demo.py` | Energy levels & series wavelengths + the level diagram |
 | `examples/photoelectric_demo.py` | Threshold & stopping voltage per metal + the V_stop(f) lines |
+| `examples/uncertainty_demo.py` | Confinement energy by box size + the E(dx) electron/nucleon curves |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2774,6 +2776,31 @@ differs between metals. Brighter light ejects more electrons, not faster ones. M
 measurement of that line pinned down Planck's constant. The tests verify the sodium threshold
 wavelength, the no-emission-below-threshold rule, the linear stopping voltage, the slope being
 Planck's constant independent of metal, and the work-function ordering.
+
+## The uncertainty principle: why quantum things can't sit still
+
+Position and momentum cannot both be sharp: `dx dp >= hbar/2`. `uncertainty.py`:
+
+```
+$ python examples/uncertainty_demo.py examples/output
+
+           confinement      size    electron E     nucleon E
+  ----------------------------------------------------------
+              molecule      1 nm     0.0095 eV    5.2e-06 eV
+                  atom    0.1 nm       0.95 eV    0.00052 eV
+        atomic nucleus      5 fm   3.8e+02 MeV      0.21 MeV
+          nucleon core      1 fm   9.5e+03 MeV       5.2 MeV
+```
+
+Confining a particle to a box forces a momentum spread `dp >= hbar/(2 dx)` and thus an
+irreducible zero-point kinetic energy `E ~ hbar^2/(m dx^2)`. Squeeze an electron to atomic
+size (~0.1 nm) and it carries ~1 eV -- which is why it does not spiral into the nucleus -- and
+minimizing that confinement energy against the Coulomb pull reproduces hydrogen's 13.6 eV
+binding from the uncertainty principle alone. A nucleon confined to a femtometre nucleus
+carries MeV, the nuclear energy scale. The same `dE dt >= hbar/2` gives a short-lived state a
+broad natural line width. The tests verify the `dx dp = hbar/2` bound, the eV atomic and MeV
+nuclear confinement energies, the 13.6 eV hydrogen estimate, and the lifetime-linewidth
+relation.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
