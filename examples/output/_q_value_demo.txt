@@ -1,0 +1,22 @@
+Nuclear Q = (m_reactants - m_products) c^2  (1 amu = 931.494 MeV)
+
+                reaction    Q (MeV)   mass converted
+  --------------------------------------------------
+        D + T -> He4 + n      17.59          0.375 %
+        D + D -> He3 + n       3.26          0.087 %
+         p-p chain (net)      26.70          0.711 %
+           U-235 fission     197.01          0.090 %
+
+  energy density of fuels (joules per kilogram):
+          TNT (chemical): 4.60e+06 J/kg
+                gasoline: 4.60e+07 J/kg
+           U-235 fission: 8.05e+13 J/kg
+              D-T fusion: 3.38e+14 J/kg
+       matter-antimatter: 8.99e+16 J/kg
+
+  A nuclear reaction converts only a fraction of a percent of its mass, but
+  c^2 makes that millions of times more than any chemical bond -- fission
+  ~2 million times TNT, fusion ~4x fission. Total annihilation converts 100%
+  of the mass, the ultimate energy density c^2 ~ 9x10^16 J/kg.
+
+  wrote examples/output\q_value.svg

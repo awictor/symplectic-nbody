@@ -7115,6 +7115,55 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   </section>
 
   <section>
+    <h2>Nuclear Q-value: E = mc^2 at work</h2>
+    <p class="blurb">A nuclear reaction releases energy equal to its mass defect times c^2 (1 amu = 931.5 MeV). D-T fusion yields 17.6 MeV, U-235 fission ~200 MeV -- only a fraction of a percent of the mass, but c^2 makes it millions of times a chemical bond: fission is ~2 million times TNT, fusion ~4x fission, and total matter-antimatter annihilation converts 100% of the mass at ~9x10^16 J/kg.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<line x1="90" y1="630" x2="630" y2="630" stroke="#30363d"/>
+<line x1="90" y1="90" x2="90" y2="630" stroke="#30363d"/>
+<rect x="111.6" y="558.2" width="64.8" height="71.8" fill="#8b949e" opacity="0.8"/>
+<text x="144.0" y="552.2" fill="#8b949e" font-size="10" text-anchor="middle">1e7</text>
+<text x="144.0" y="646.0" fill="#8b949e" font-size="9" text-anchor="middle" transform="rotate(20 144.0 646.0)">TNT (chemical)</text>
+<rect x="219.6" y="515.0" width="64.8" height="115.0" fill="#8b949e" opacity="0.8"/>
+<text x="252.0" y="509.0" fill="#8b949e" font-size="10" text-anchor="middle">1e8</text>
+<text x="252.0" y="646.0" fill="#8b949e" font-size="9" text-anchor="middle" transform="rotate(20 252.0 646.0)">gasoline</text>
+<rect x="327.6" y="245.3" width="64.8" height="384.7" fill="#ff922b" opacity="0.8"/>
+<text x="360.0" y="239.3" fill="#ff922b" font-size="10" text-anchor="middle">1e14</text>
+<text x="360.0" y="646.0" fill="#8b949e" font-size="9" text-anchor="middle" transform="rotate(20 360.0 646.0)">U-235 fission</text>
+<rect x="435.6" y="218.4" width="64.8" height="411.6" fill="#ffd43b" opacity="0.8"/>
+<text x="468.0" y="212.4" fill="#ffd43b" font-size="10" text-anchor="middle">1e15</text>
+<text x="468.0" y="646.0" fill="#8b949e" font-size="9" text-anchor="middle" transform="rotate(20 468.0 646.0)">D-T fusion</text>
+<rect x="543.6" y="113.6" width="64.8" height="516.4" fill="#ff6b6b" opacity="0.8"/>
+<text x="576.0" y="107.6" fill="#ff6b6b" font-size="10" text-anchor="middle">1e17</text>
+<text x="576.0" y="646.0" fill="#8b949e" font-size="9" text-anchor="middle" transform="rotate(20 576.0 646.0)">matter-antimatter</text>
+<text x="90" y="34" fill="#e6edf3" font-size="18">Energy density of fuels (E = mc^2 at work)</text>
+<text x="90" y="52" fill="#8b949e" font-size="12">chemical -&gt; nuclear -&gt; pure mass: each step a millionfold leap</text>
+<text x="72" y="82" fill="#8b949e" font-size="11">log10 energy per kg (J/kg)</text>
+</svg><figcaption>fuel energy density from chemical to nuclear to pure mass-energy</figcaption></figure><div class="card"><pre>Nuclear Q = (m_reactants - m_products) c^2  (1 amu = 931.494 MeV)
+
+                reaction    Q (MeV)   mass converted
+  --------------------------------------------------
+        D + T -&gt; He4 + n      17.59          0.375 %
+        D + D -&gt; He3 + n       3.26          0.087 %
+         p-p chain (net)      26.70          0.711 %
+           U-235 fission     197.01          0.090 %
+
+  energy density of fuels (joules per kilogram):
+          TNT (chemical): 4.60e+06 J/kg
+                gasoline: 4.60e+07 J/kg
+           U-235 fission: 8.05e+13 J/kg
+              D-T fusion: 3.38e+14 J/kg
+       matter-antimatter: 8.99e+16 J/kg
+
+  A nuclear reaction converts only a fraction of a percent of its mass, but
+  c^2 makes that millions of times more than any chemical bond -- fission
+  ~2 million times TNT, fusion ~4x fission. Total annihilation converts 100%
+  of the mass, the ultimate energy density c^2 ~ 9x10^16 J/kg.
+
+  wrote examples/output\q_value.svg</pre></div></div>
+  </section>
+
+  <section>
     <h2>Three-body stability map</h2>
     <p class="blurb">Every pixel is a full three-body integration; colour is the time until a body escapes. The fractal boundary between long-lived and quickly-ionized initial conditions is chaos drawn in IC space. (Generated separately by stability_map_demo.py -- it's compute-heavy.)</p>
     <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">

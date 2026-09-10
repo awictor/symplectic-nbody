@@ -136,6 +136,7 @@ ruins a long non-symplectic integration.
 | `src/rutherford.py` | Rutherford scattering: the Coulomb cross section that found the nucleus |
 | `src/radioactive_decay.py` | Radioactive decay: half-lives, dating & Bateman decay chains |
 | `src/mass_formula.py` | Semi-empirical mass formula: nuclear binding & the iron peak |
+| `src/q_value.py` | Nuclear Q-value: the energy released when nuclei rearrange |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -263,6 +264,7 @@ ruins a long non-symplectic integration.
 | `examples/rutherford_demo.py` | Cross section & impact parameter by angle + the 1/sin^4 curve |
 | `examples/radioactive_decay_demo.py` | Dating ages + a parent/daughter chain and Bateman curve |
 | `examples/mass_formula_demo.py` | B/A for landmark nuclei + the binding-energy curve peaking at iron |
+| `examples/q_value_demo.py` | Reaction Q-values + the chemical-to-annihilation energy-density chart |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2970,6 +2972,34 @@ collapses into a supernova. Minimizing over Z traces the valley of stability, dr
 neutron excess in heavy nuclei (U-238 at Z=92, Pb-208 at Z=82). The tests verify the ~8.8
 MeV iron binding, the iron-group peak, light-rises/heavy-falls, the valley of stability, the
 growing neutron excess, and the pairing signs.
+
+## Nuclear Q-value: the energy in mass
+
+A nuclear reaction releases energy equal to its mass defect times c^2. `q_value.py`:
+
+```
+$ python examples/q_value_demo.py examples/output
+
+              reaction    Q (MeV)   mass converted
+  --------------------------------------------------
+      D + T -> He4 + n      17.59          0.375 %
+       p-p chain (net)      26.70          0.711 %
+         U-235 fission     197.01          0.090 %
+
+  energy density of fuels (joules per kilogram):
+          TNT (chemical): 4.60e+06 J/kg
+           U-235 fission: 8.05e+13 J/kg
+              D-T fusion: 3.38e+14 J/kg
+       matter-antimatter: 8.99e+16 J/kg
+```
+
+With `Q = (m_reactants - m_products) c^2` and the shortcut `1 amu = 931.494 MeV`, D-T fusion
+yields 17.6 MeV and U-235 fission ~200 MeV -- only a fraction of a percent of the mass, yet
+`c^2` makes it millions of times a chemical bond: fission is ~2 million times TNT, fusion ~4x
+fission, and total matter-antimatter annihilation converts 100% of the mass at the ultimate
+`c^2 ~ 9x10^16 J/kg`. The tests verify the 931.494 MeV/amu equivalence, the D-T and U-235
+Q-values, the exothermic sign, the mass-energy consistency, the binding-energy route, and the
+~10^14 J/kg fusion energy density.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -178,6 +178,7 @@ def main():
     import rutherford_demo
     import radioactive_decay_demo
     import mass_formula_demo
+    import q_value_demo
 
     import plot_orbits
 
@@ -325,6 +326,7 @@ def main():
     ruth_txt = run("rutherford_demo", rutherford_demo.main, True)
     decay_txt = run("radioactive_decay_demo", radioactive_decay_demo.main, True)
     semf_txt = run("mass_formula_demo", mass_formula_demo.main, True)
+    qval_txt = run("q_value_demo", q_value_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1576,6 +1578,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("mass_formula.svg"), "the binding-energy-per-nucleon curve peaking at iron")
             + f'<div class="card">{pre(semf_txt)}</div>'
+            + '</div>'),
+        section(
+            "Nuclear Q-value: E = mc^2 at work",
+            "A nuclear reaction releases energy equal to its mass defect times c^2 "
+            "(1 amu = 931.5 MeV). D-T fusion yields 17.6 MeV, U-235 fission ~200 MeV -- "
+            "only a fraction of a percent of the mass, but c^2 makes it millions of "
+            "times a chemical bond: fission is ~2 million times TNT, fusion ~4x fission, "
+            "and total matter-antimatter annihilation converts 100% of the mass at "
+            "~9x10^16 J/kg.",
+            '<div class="grid">'
+            + svg_card(out("q_value.svg"), "fuel energy density from chemical to nuclear to pure mass-energy")
+            + f'<div class="card">{pre(qval_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
