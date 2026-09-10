@@ -78,6 +78,7 @@ def main():
     import tisserand_demo
     import lensing_demo
     import rotation_curve_demo
+    import schwarzschild_demo
 
     import plot_orbits
 
@@ -125,6 +126,7 @@ def main():
     tisserand_txt = run("tisserand_demo", tisserand_demo.main, True)
     lensing_txt = run("lensing_demo", lensing_demo.main, True)
     rotcurve_txt = run("rotation_curve_demo", rotation_curve_demo.main, True)
+    schwarz_txt = run("schwarzschild_demo", schwarzschild_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -226,6 +228,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("poincare_section.svg"), "tori and chaotic sea at one energy")
             + f'<div class="card">{pre(poincare_txt)}</div>'
+            + '</div>'),
+        section(
+            "Schwarzschild black-hole orbits",
+            "Strong-field GR from the effective potential V=(1-2M/r)(1+L^2/r^2): "
+            "the ISCO at 6M, the photon sphere at 3M, bound orbits that precess "
+            "tens of degrees per orbit, and low-angular-momentum orbits that "
+            "plunge through the horizon.",
+            '<div class="grid">'
+            + svg_card(out("schwarzschild.svg"), "precessing (teal) and plunging (pink) geodesics")
+            + f'<div class="card">{pre(schwarz_txt)}</div>'
             + '</div>'),
         section(
             "Galaxy rotation curves & dark matter",

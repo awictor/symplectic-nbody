@@ -52,6 +52,7 @@ ruins a long non-symplectic integration.
 | `src/tisserand.py` | Tisserand parameter: the near-invariant of a gravity assist |
 | `src/lensing.py` | Gravitational lensing: deflection, Einstein ring, microlensing |
 | `src/rotation_curve.py` | Galaxy rotation curves: Keplerian disk vs flat dark-halo curve |
+| `src/schwarzschild.py` | Black-hole orbits: effective potential, ISCO, photon sphere, plunge |
 | `src/poincare.py` | Poincare surface-of-section for the CR3BP (tori vs chaos) |
 | `src/sitnikov.py` | The Sitnikov problem: on-axis test particle, integrable-to-chaotic |
 | `src/galaxy.py` | Disk-galaxy generator and two-galaxy tidal encounters |
@@ -79,6 +80,7 @@ ruins a long non-symplectic integration.
 | `examples/tisserand_demo.py` | a & e jump across a flyby while Tisserand stays flat |
 | `examples/lensing_demo.py` | Microlensing light curve + Einstein-ring image diagram (SVG) |
 | `examples/rotation_curve_demo.py` | Visible (declining) vs disk+halo (flat) rotation curves |
+| `examples/schwarzschild_demo.py` | Precessing & plunging black-hole orbits with ISCO/photon sphere |
 | `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
 | `examples/sitnikov_demo.py` | Stroboscopic maps: circular binary (tori) vs eccentric (chaos) |
 | `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
@@ -214,6 +216,31 @@ diffuse dust. `poincare.py` reconstructs `vy` from the energy so each section
 point is a full initial condition, and the tests confirm the Jacobi constant is
 conserved along each orbit (faithful section), regular orbits stay on tight
 curves, and chaotic ones scatter more than 3x wider.
+
+## Schwarzschild orbits: strong-field general relativity
+
+Outside a non-rotating black hole, a particle's radial motion is governed by the
+effective potential `V(r) = (1 - 2M/r)(1 + L^2/r^2)` (units of M). `schwarzschild.py`
+locates the landmark radii and integrates the exact orbit shape:
+
+```
+$ python examples/schwarzschild_demo.py examples/output
+
+  event horizon  : r = 2 M
+  photon sphere  : r = 3 M
+  ISCO           : r = 6 M
+  bound orbit (r: 10-20 M): perihelion advance 126.2 deg/orbit
+  plunging orbit: falls from r=12 M through the horizon to r=0.01 M
+```
+
+The **ISCO at 6M** is the inner edge of accretion disks; the **photon sphere at
+3M** is the light ring seen in the M87*/Sgr A* images. Bound orbits precess by
+tens of degrees *per orbit* (versus Mercury's 43 arcsec per century), and orbits
+that pass inside the potential barrier plunge to `r -> 0`. The demo renders a
+precessing rosette and a plunging geodesic with the horizon, photon sphere, and
+ISCO marked. The tests verify the ISCO/photon-sphere radii, the circular-orbit
+angular momentum `sqrt(12) M` at the ISCO, the plunge, and that the weak-field
+precession recovers the classic `6*pi*M/(a(1-e^2))`.
 
 ## Galaxy rotation curves: the case for dark matter
 

@@ -1,0 +1,14 @@
+Orbits around a Schwarzschild black hole (units of M)
+
+  event horizon  : r = 2 M
+  photon sphere  : r = 3 M
+  ISCO           : r = 6 M
+
+  bound orbit (r: 10-20 M): perihelion advance 126.2 deg/orbit
+    (Mercury's is 43 arcsec/CENTURY; here it's tens of degrees PER ORBIT)
+
+  plunging orbit: falls from r=12 M through the horizon to r=0.01 M
+
+  wrote examples/output\schwarzschild.svg
+  The bound orbit is a precessing rosette; the plunger spirals through
+  the horizon. Both are exact Schwarzschild geodesics.
