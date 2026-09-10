@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.43       12.05      0.8x
-   400          37.31       37.77      1.0x
-   800         149.28      111.41      1.3x
-  1600         620.51      383.48      1.6x
-  3200        2747.41     1062.61      2.6x
+   200           9.52       12.49      0.8x
+   400          37.69       39.12      1.0x
+   800         151.24      115.89      1.3x
+  1600         662.91      416.56      1.6x
+  3200        2734.53     1128.75      2.4x
 
-empirical scaling exponent  direct ~ N^2.04   barnes-hut ~ N^1.63
+empirical scaling exponent  direct ~ N^2.05   barnes-hut ~ N^1.64
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -230,6 +230,48 @@ units, which IS Kepler&#x27;s third law. It falls straight out of Newtonian
 gravity + a symplectic integrator, no fitting.
 
 wrote examples/output\inner_planets.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Hulse-Taylor binary pulsar (GW before LIGO)</h2>
+    <p class="blurb">PSR B1913+16's orbit shrinks as it radiates gravitational waves; the predicted period decay dP/dt = -2.40e-12 s/s matches the measured value to 99%. Tracking the cumulative shift for decades won the 1993 Nobel Prize, 22 years before LIGO's direct detection.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<line x1="64" y1="64" x2="656" y2="64" stroke="#30363d"/>
+<line x1="64" y1="64" x2="64" y2="656" stroke="#30363d"/>
+<polyline points="64.0,64.0 80.9,64.5 97.8,65.9 114.7,68.3 131.7,71.7 148.6,76.1 165.5,81.4 182.4,87.7 199.3,94.9 216.2,103.1 233.1,112.3 250.1,122.5 267.0,133.6 283.9,145.7 300.8,158.7 317.7,172.7 334.6,187.7 351.5,203.7 368.5,220.6 385.4,238.5 402.3,257.3 419.2,277.1 436.1,297.9 453.0,319.6 469.9,342.4 486.9,366.0 503.8,390.7 520.7,416.3 537.6,442.9 554.5,470.4 571.4,498.9 588.3,528.4 605.3,558.9 622.2,590.3 639.1,622.7 656.0,656.0" fill="none" stroke="#4cc9f0" stroke-width="2.2"/>
+<circle cx="64.0" cy="64.0" r="3" fill="#ffbe0b"/>
+<circle cx="114.7" cy="68.3" r="3" fill="#ffbe0b"/>
+<circle cx="165.5" cy="81.4" r="3" fill="#ffbe0b"/>
+<circle cx="216.2" cy="103.1" r="3" fill="#ffbe0b"/>
+<circle cx="267.0" cy="133.6" r="3" fill="#ffbe0b"/>
+<circle cx="317.7" cy="172.7" r="3" fill="#ffbe0b"/>
+<circle cx="368.5" cy="220.6" r="3" fill="#ffbe0b"/>
+<circle cx="419.2" cy="277.1" r="3" fill="#ffbe0b"/>
+<circle cx="469.9" cy="342.4" r="3" fill="#ffbe0b"/>
+<circle cx="520.7" cy="416.3" r="3" fill="#ffbe0b"/>
+<circle cx="571.4" cy="498.9" r="3" fill="#ffbe0b"/>
+<circle cx="622.2" cy="590.3" r="3" fill="#ffbe0b"/>
+<text x="64" y="34" fill="#e6edf3" font-size="18">Hulse-Taylor cumulative periastron shift</text>
+<text x="64" y="52" fill="#8b949e" font-size="12">GR prediction (blue) with sample epochs (gold) -- the orbit is decaying</text>
+<text x="656" y="678" fill="#8b949e" font-size="11" text-anchor="end">years -&gt;</text>
+<text x="54" y="56" fill="#8b949e" font-size="11">shift (s), downward</text>
+</svg><figcaption>the famous cumulative-periastron-shift parabola</figcaption></figure><div class="card"><pre>PSR B1913+16 (Hulse-Taylor): gravitational waves before LIGO
+
+  orbital period      : 7.752 hours
+  eccentricity        : 0.6171334
+  dP/dt (GR predicted): -2.4031e-12 s/s
+  dP/dt (measured)    : -2.423e-12 s/s
+  agreement           : 99.2% of measured
+
+  cumulative shift over 30 yr : -38.6 s
+  P/|dP/dt| timescale         : 368 Myr
+
+  The orbit&#x27;s period shrinks by ~76 microseconds per year as the system
+  radiates gravitational waves. Tracking that decay for decades -- the
+  parabola below -- won the 1993 Nobel Prize, 22 years before LIGO.
+
+  wrote examples/output\pulsar.svg</pre></div></div>
   </section>
 
   <section>

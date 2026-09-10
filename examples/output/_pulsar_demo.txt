@@ -1,0 +1,16 @@
+PSR B1913+16 (Hulse-Taylor): gravitational waves before LIGO
+
+  orbital period      : 7.752 hours
+  eccentricity        : 0.6171334
+  dP/dt (GR predicted): -2.4031e-12 s/s
+  dP/dt (measured)    : -2.423e-12 s/s
+  agreement           : 99.2% of measured
+
+  cumulative shift over 30 yr : -38.6 s
+  P/|dP/dt| timescale         : 368 Myr
+
+  The orbit's period shrinks by ~76 microseconds per year as the system
+  radiates gravitational waves. Tracking that decay for decades -- the
+  parabola below -- won the 1993 Nobel Prize, 22 years before LIGO.
+
+  wrote examples/output\pulsar.svg

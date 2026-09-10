@@ -91,6 +91,7 @@ def main():
     import eddington_demo
     import hohmann_demo
     import gr_time_demo
+    import pulsar_demo
 
     import plot_orbits
 
@@ -151,6 +152,7 @@ def main():
     eddington_txt = run("eddington_demo", eddington_demo.main, True)
     hohmann_txt = run("hohmann_demo", hohmann_demo.main, True)
     grtime_txt = run("gr_time_demo", gr_time_demo.main, True)
+    pulsar_txt = run("pulsar_demo", pulsar_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -200,6 +202,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("inner_planets.svg"), "inner solar system (2 Mars years)")
             + f'<div class="card">{pre(solar_txt)}</div>'
+            + '</div>'),
+        section(
+            "Hulse-Taylor binary pulsar (GW before LIGO)",
+            "PSR B1913+16's orbit shrinks as it radiates gravitational waves; the "
+            "predicted period decay dP/dt = -2.40e-12 s/s matches the measured "
+            "value to 99%. Tracking the cumulative shift for decades won the 1993 "
+            "Nobel Prize, 22 years before LIGO's direct detection.",
+            '<div class="grid">'
+            + svg_card(out("pulsar.svg"), "the famous cumulative-periastron-shift parabola")
+            + f'<div class="card">{pre(pulsar_txt)}</div>'
             + '</div>'),
         section(
             "Gravitational-wave inspiral (the LIGO chirp)",

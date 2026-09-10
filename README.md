@@ -86,6 +86,7 @@ ruins a long non-symplectic integration.
 | `src/eddington.py` | Eddington luminosity, accretion rate & Salpeter black-hole growth |
 | `src/hohmann.py` | Hohmann transfer: mission delta-v budgets & launch windows |
 | `src/gr_time.py` | Gravitational redshift, GPS clock correction, Shapiro delay |
+| `src/pulsar.py` | Hulse-Taylor binary-pulsar orbital decay (first GW evidence) |
 | `src/friedmann.py` | Friedmann cosmology: scale factor a(t), expansion eras, age of the universe |
 | `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
 | `src/distances.py` | Cosmological distances: luminosity/angular-diameter, cosmic acceleration |
@@ -126,6 +127,7 @@ ruins a long non-symplectic integration.
 | `examples/eddington_demo.py` | L_Edd across masses + Eddington-limited growth to a quasar |
 | `examples/hohmann_demo.py` | LEO->GEO & Earth->Mars delta-v budgets + transfer diagram |
 | `examples/gr_time_demo.py` | Pound-Rebka, GPS gain, Sun redshift + Shapiro-delay curve |
+| `examples/pulsar_demo.py` | Hulse-Taylor dP/dt vs measured + the periastron-shift parabola |
 | `examples/friedmann_demo.py` | Scale-factor curves for radiation/matter/dark-energy/LCDM |
 | `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
 | `examples/distances_demo.py` | Hubble diagram (LCDM vs decelerating) + D_A turnover |
@@ -165,6 +167,27 @@ Tightening `theta` provably reduces the error — all checked in the tests. The
 `plummer_sphere(n=...)` generator builds an equilibrium cluster (positions from
 the Plummer inverse-CDF, velocities by rejection sampling the exact distribution
 function) using a tiny built-in LCG, so it's deterministic and dependency-free.
+
+## Hulse-Taylor pulsar: gravitational waves before LIGO
+
+Two decades before LIGO, the binary pulsar PSR B1913+16 proved gravitational
+waves exist -- its orbit shrinks as it radiates them. `pulsar.py` computes the
+decay from the Peters formula:
+
+```
+$ python examples/pulsar_demo.py examples/output
+
+  dP/dt (GR predicted): -2.4031e-12 s/s
+  dP/dt (measured)    : -2.423e-12 s/s
+  agreement           : 99.2% of measured
+  cumulative shift over 30 yr : -38.6 s
+```
+
+The orbital period drops ~76 microseconds a year, and the cumulative shift in
+periastron time traces a parabola whose data points fall on the general-
+relativity curve -- the plot that won the 1993 Nobel Prize. The tests confirm the
+dP/dt match to under 1%, the `t^2` cumulative shift, the eccentricity and
+period dependence, and the ~370 Myr decay timescale.
 
 ## Gravitational waves: the LIGO chirp from first principles
 
