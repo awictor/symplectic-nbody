@@ -131,6 +131,7 @@ ruins a long non-symplectic integration.
 | `src/photoelectric.py` | The photoelectric effect: light quantized into photons |
 | `src/uncertainty.py` | The Heisenberg uncertainty principle & zero-point energy |
 | `src/tunneling.py` | Quantum tunneling: barrier transmission, WKB & the STM |
+| `src/particle_box.py` | The particle in a box: quantized levels & quantum-dot colour |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -253,6 +254,7 @@ ruins a long non-symplectic integration.
 | `examples/photoelectric_demo.py` | Threshold & stopping voltage per metal + the V_stop(f) lines |
 | `examples/uncertainty_demo.py` | Confinement energy by box size + the E(dx) electron/nucleon curves |
 | `examples/tunneling_demo.py` | Transmission by width/height + STM gap sensitivity + the T(L) curves |
+| `examples/particle_box_demo.py` | Levels & quantum-dot colours + the level/wavefunction diagram |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2831,6 +2833,30 @@ decay (tunneling out of the nuclear Coulomb barrier) and stellar fusion (tunneli
 Gamow module). The WKB integral extends it to a general barrier shape. The tests verify the
 exponential width dependence, the exact-to-thick-limit reduction, the WKB match on a
 rectangular barrier, and the ~order-of-magnitude-per-Angstrom STM sensitivity.
+
+## The particle in a box: the simplest quantized system
+
+Trap a particle in an infinite square well and only standing waves with a whole number of
+half-wavelengths fit, quantizing the energy. `particle_box.py`:
+
+```
+$ python examples/particle_box_demo.py examples/output
+
+  quantum-dot n=1->2 emission (smaller box = bluer):
+    5 nm dot  ->  27477 nm
+    3 nm dot  ->  9892 nm
+    2 nm dot  ->  4396 nm
+    1 nm dot  ->  1099 nm
+```
+
+`E_n = n^2 h^2 / (8 m L^2)`: levels rise as `n^2`, the ground state is nonzero (the
+confinement zero-point energy of the uncertainty principle), and every level scales as
+`1/L^2`. That last dependence is why quantum dots -- nanoscale electron boxes -- have
+size-tunable colour: shrink the dot and the level gaps widen, shifting emission toward the
+blue, exploited in displays and biological markers. The eigenfunctions
+`psi_n = sqrt(2/L) sin(n pi x/L)` are orthonormal with `n-1` nodes. The tests verify the
+`n^2` levels, the nonzero ground state, the `1/L^2` scaling, the smaller-dot-bluer trend, the
+wavefunction normalization, and the box-width-for-gap inversion.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

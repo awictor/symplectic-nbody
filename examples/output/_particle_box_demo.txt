@@ -1,0 +1,23 @@
+Particle in a box: E_n = n^2 h^2 / (8 m L^2)  (electron, L = 1 nm)
+
+     n   E_n (eV)   gap to n-1 (eV)
+  ----------------------------------
+     1      0.376             0.000
+     2      1.504             1.128
+     3      3.384             1.880
+     4      6.016             2.632
+     5      9.401             3.384
+
+  quantum-dot n=1->2 emission (smaller box = bluer):
+    5 nm dot  ->  27477 nm
+    3 nm dot  ->  9892 nm
+    2 nm dot  ->  4396 nm
+    1 nm dot  ->  1099 nm
+
+  Only whole numbers of half-wavelengths fit between the walls, so energy
+  comes in n^2 rungs with a nonzero ground state (confinement zero-point
+  energy). Because every level scales as 1/L^2, shrinking a quantum dot
+  widens the gaps and shifts its glow toward the blue -- size-tunable colour,
+  used in displays and biological markers.
+
+  wrote examples/output\particle_box.svg

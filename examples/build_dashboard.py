@@ -173,6 +173,7 @@ def main():
     import photoelectric_demo
     import uncertainty_demo
     import tunneling_demo
+    import particle_box_demo
 
     import plot_orbits
 
@@ -315,6 +316,7 @@ def main():
     photoel_txt = run("photoelectric_demo", photoelectric_demo.main, True)
     uncert_txt = run("uncertainty_demo", uncertainty_demo.main, True)
     tunnel_txt = run("tunneling_demo", tunneling_demo.main, True)
+    pbox_txt = run("particle_box_demo", particle_box_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1507,6 +1509,17 @@ def main():
             '<div class="grid">'
             + svg_card(out("tunneling.svg"), "transmission falling exponentially with barrier width")
             + f'<div class="card">{pre(tunnel_txt)}</div>'
+            + '</div>'),
+        section(
+            "The particle in a box",
+            "Trap a particle in a well and only standing waves fit, quantizing the "
+            "energy: E_n = n^2 h^2 / (8 m L^2). Levels rise as n^2, the ground state is "
+            "nonzero (confinement zero-point energy), and every level scales as 1/L^2 -- "
+            "which is why shrinking a quantum dot widens its gaps and shifts its glow "
+            "bluer, giving size-tunable colour for displays and bio-markers.",
+            '<div class="grid">'
+            + svg_card(out("particle_box.svg"), "the first energy levels with their wavefunctions in the well")
+            + f'<div class="card">{pre(pbox_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
