@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           8.98       12.10      0.7x
-   400          35.69       37.60      0.9x
-   800         143.87      112.99      1.3x
-  1600         584.00      338.91      1.7x
-  3200        2419.60      928.03      2.6x
+   200           9.23       12.23      0.8x
+   400          35.22       37.13      0.9x
+   800         143.47      111.20      1.3x
+  1600         668.33      375.66      1.8x
+  3200        2616.42      994.29      2.6x
 
-empirical scaling exponent  direct ~ N^2.02   barnes-hut ~ N^1.57
+empirical scaling exponent  direct ~ N^2.05   barnes-hut ~ N^1.60
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -48566,6 +48566,55 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   because P(at origin) decays as n^(-d/2) -- summable (transient) only for d &gt;= 3.
 
   wrote examples/output\polya.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Langevin paramagnetism: moments vs thermal chaos</h2>
+    <p class="blurb">A paramagnet's independent magnetic moments each favour aligning with an applied field (energy -mu.B) while temperature randomizes them. Averaging over the Boltzmann distribution gives the Langevin function m/mu = L(x) = coth(x) - 1/x with x = mu B/(k_B T). Weak field or high temperature is the linear regime L(x) ~ x/3, so the susceptibility follows Curie's law chi ~ 1/T -- the fingerprint of a paramagnet; strong field or low temperature saturates every moment at L = 1 and the magnetization can grow no further.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<text x="20" y="34" fill="#e6edf3" font-size="18">Langevin paramagnetism</text>
+<text x="20" y="52" fill="#8b949e" font-size="12">alignment L(x) from the x/3 Curie slope to saturation (top); chi ~ 1/T (bottom)</text>
+<line x1="76" y1="362.8" x2="644" y2="362.8" stroke="#8b949e" stroke-width="1.4"/>
+<line x1="76" y1="362.8" x2="76" y2="120" stroke="#8b949e" stroke-width="1.4"/>
+<text x="70.0" y="365.8" fill="#8b949e" font-size="9" text-anchor="end">0.0</text>
+<text x="70.0" y="244.4" fill="#8b949e" font-size="9" text-anchor="end">0.5</text>
+<text x="70.0" y="123.0" fill="#8b949e" font-size="9" text-anchor="end">1.0</text>
+<line x1="76" y1="120.0" x2="644" y2="120.0" stroke="#ff6b6b" stroke-width="0.8" stroke-dasharray="4 4" opacity="0.6"/>
+<text x="640.0" y="116.0" fill="#ff6b6b" font-size="10" text-anchor="end">saturation L=1</text>
+<polyline points="76.0,362.8 78.8,359.6 81.7,356.3 84.5,353.1 87.4,349.9 90.2,346.7 93.0,343.5 95.9,340.3 98.7,337.1 101.6,333.9 104.4,330.8 107.2,327.6 110.1,324.5 112.9,321.5 115.8,318.4 118.6,315.4 121.4,312.4 124.3,309.4 127.1,306.4 130.0,303.5 132.8,300.7 135.6,297.8 138.5,295.0 141.3,292.2 144.2,289.5 147.0,286.8 149.8,284.1 152.7,281.5 155.5,278.9 158.4,276.4 161.2,273.9 164.0,271.4 166.9,269.0 169.7,266.6 172.6,264.3 175.4,262.0 178.2,259.7 181.1,257.5 183.9,255.3 186.8,253.2 189.6,251.1 192.4,249.1 195.3,247.0 198.1,245.1 201.0,243.1 203.8,241.2 206.6,239.4 209.5,237.6 212.3,235.8 215.2,234.0 218.0,232.3 220.8,230.7 223.7,229.0 226.5,227.4 229.4,225.9 232.2,224.3 235.0,222.8 237.9,221.4 240.7,219.9 243.6,218.5 246.4,217.1 249.2,215.8 252.1,214.5 254.9,213.2 257.8,211.9 260.6,210.7 263.4,209.5 266.3,208.3 269.1,207.1 272.0,206.0 274.8,204.9 277.6,203.8 280.5,202.8 283.3,201.7 286.2,200.7 289.0,199.7 291.8,198.8 294.7,197.8 297.5,196.9 300.4,196.0 303.2,195.1 306.0,194.2 308.9,193.3 311.7,192.5 314.6,191.7 317.4,190.9 320.2,190.1 323.1,189.3 325.9,188.6 328.8,187.8 331.6,187.1 334.4,186.4 337.3,185.7 340.1,185.0 343.0,184.3 345.8,183.7 348.6,183.0 351.5,182.4 354.3,181.7 357.2,181.1 360.0,180.5 362.8,179.9 365.7,179.4 368.5,178.8 371.4,178.2 374.2,177.7 377.0,177.2 379.9,176.6 382.7,176.1 385.6,175.6 388.4,175.1 391.2,174.6 394.1,174.1 396.9,173.7 399.8,173.2 402.6,172.7 405.4,172.3 408.3,171.8 411.1,171.4 414.0,171.0 416.8,170.6 419.6,170.1 422.5,169.7 425.3,169.3 428.2,168.9 431.0,168.5 433.8,168.2 436.7,167.8 439.5,167.4 442.4,167.0 445.2,166.7 448.0,166.3 450.9,166.0 453.7,165.6 456.6,165.3 459.4,165.0 462.2,164.6 465.1,164.3 467.9,164.0 470.8,163.7 473.6,163.4 476.4,163.0 479.3,162.7 482.1,162.4 485.0,162.1 487.8,161.9 490.6,161.6 493.5,161.3 496.3,161.0 499.2,160.7 502.0,160.5 504.8,160.2 507.7,159.9 510.5,159.7 513.4,159.4 516.2,159.2 519.0,158.9 521.9,158.7 524.7,158.4 527.6,158.2 530.4,157.9 533.2,157.7 536.1,157.5 538.9,157.2 541.8,157.0 544.6,156.8 547.4,156.6 550.3,156.3 553.1,156.1 556.0,155.9 558.8,155.7 561.6,155.5 564.5,155.3 567.3,155.1 570.2,154.9 573.0,154.7 575.8,154.5 578.7,154.3 581.5,154.1 584.4,153.9 587.2,153.7 590.0,153.5 592.9,153.4 595.7,153.2 598.6,153.0 601.4,152.8 604.2,152.6 607.1,152.5 609.9,152.3 612.8,152.1 615.6,151.9 618.4,151.8 621.3,151.6 624.1,151.5 627.0,151.3 629.8,151.1 632.6,151.0 635.5,150.8 638.3,150.7 641.2,150.5 644.0,150.3" fill="none" stroke="#4dabf7" stroke-width="2.8"/>
+<line x1="76.0" y1="362.8" x2="289.0" y2="120.0" stroke="#06d6a0" stroke-width="1.4" stroke-dasharray="5 4"/>
+<text x="189.6" y="212.3" fill="#06d6a0" font-size="10">Curie slope L ~ x/3</text>
+<text x="360.0" y="378.8" fill="#8b949e" font-size="10" text-anchor="middle">x = mu B / kT   (alignment fraction L(x))</text>
+<line x1="76" y1="644" x2="644" y2="644" stroke="#8b949e" stroke-width="1.4"/>
+<line x1="76" y1="644" x2="76" y2="428.8" stroke="#8b949e" stroke-width="1.4"/>
+<polyline points="76.0,428.8 79.9,490.3 83.7,524.4 87.6,546.2 91.4,561.2 95.3,572.3 99.1,580.7 103.0,587.4 106.8,592.8 110.7,597.2 114.5,601.0 118.4,604.1 122.2,606.9 126.1,609.3 129.9,611.4 133.8,613.3 137.6,614.9 141.5,616.4 145.3,617.8 149.2,619.0 153.0,620.1 156.9,621.1 160.7,622.0 164.6,622.9 168.4,623.7 172.3,624.4 176.1,625.1 180.0,625.8 183.8,626.4 187.7,626.9 191.5,627.4 195.4,627.9 199.2,628.4 203.1,628.8 206.9,629.3 210.8,629.7 214.6,630.0 218.5,630.4 222.3,630.7 226.2,631.0 230.0,631.3 233.9,631.6 237.7,631.9 241.6,632.2 245.4,632.4 249.3,632.7 253.1,632.9 257.0,633.1 260.8,633.3 264.7,633.6 268.5,633.8 272.4,633.9 276.2,634.1 280.1,634.3 283.9,634.5 287.8,634.6 291.6,634.8 295.5,635.0 299.3,635.1 303.2,635.3 307.1,635.4 310.9,635.5 314.8,635.7 318.6,635.8 322.5,635.9 326.3,636.0 330.2,636.1 334.0,636.3 337.9,636.4 341.7,636.5 345.6,636.6 349.4,636.7 353.3,636.8 357.1,636.9 361.0,637.0 364.8,637.1 368.7,637.1 372.5,637.2 376.4,637.3 380.2,637.4 384.1,637.5 387.9,637.6 391.8,637.6 395.6,637.7 399.5,637.8 403.3,637.9 407.2,637.9 411.0,638.0 414.9,638.1 418.7,638.1 422.6,638.2 426.4,638.2 430.3,638.3 434.1,638.4 438.0,638.4 441.8,638.5 445.7,638.5 449.5,638.6 453.4,638.6 457.2,638.7 461.1,638.8 464.9,638.8 468.8,638.9 472.6,638.9 476.5,638.9 480.3,639.0 484.2,639.0 488.0,639.1 491.9,639.1 495.7,639.2 499.6,639.2 503.4,639.3 507.3,639.3 511.1,639.3 515.0,639.4 518.8,639.4 522.7,639.5 526.5,639.5 530.4,639.5 534.3,639.6 538.1,639.6 542.0,639.6 545.8,639.7 549.7,639.7 553.5,639.7 557.4,639.8 561.2,639.8 565.1,639.8 568.9,639.9 572.8,639.9 576.6,639.9 580.5,640.0 584.3,640.0 588.2,640.0 592.0,640.1 595.9,640.1 599.7,640.1 603.6,640.1 607.4,640.2 611.3,640.2 615.1,640.2 619.0,640.3 622.8,640.3 626.7,640.3 630.5,640.3 634.4,640.4 638.2,640.4 642.1,640.4" fill="none" stroke="#ff922b" stroke-width="2.6"/>
+<text x="162.6" y="658.0" fill="#8b949e" font-size="9" text-anchor="middle">50 K</text>
+<text x="258.9" y="658.0" fill="#8b949e" font-size="9" text-anchor="middle">100 K</text>
+<text x="451.5" y="658.0" fill="#8b949e" font-size="9" text-anchor="middle">200 K</text>
+<text x="644.0" y="658.0" fill="#8b949e" font-size="9" text-anchor="middle">300 K</text>
+<text x="360.0" y="672.0" fill="#8b949e" font-size="10" text-anchor="middle">temperature (susceptibility chi = C/T, Curie law)</text>
+<text x="297.4" y="626.1" fill="#ff922b" font-size="11">chi diverges as T -> 0</text>
+</svg><figcaption>the Langevin function from the Curie slope to saturation, and the 1/T susceptibility</figcaption></figure><div class="card"><pre>Langevin paramagnetism: m/mu = L(x) = coth(x) - 1/x, x = mu B / kT
+
+  Alignment fraction L(x) for a 5-Bohr-magneton moment:
+     B (T)   T (K)         x   aligned
+         1     300     0.011     0.4 %
+        10     300     0.112     3.7 %
+        10       4     8.396    88.1 %
+        50       1   167.928    99.4 %
+
+  Curie law chi = C/T (C = n mu^2/3k):
+    T =    1 K  -&gt;  chi (per moment) = 5.191e-23
+    T =   10 K  -&gt;  chi (per moment) = 5.191e-24
+    T =  100 K  -&gt;  chi (per moment) = 5.191e-25
+    T =  300 K  -&gt;  chi (per moment) = 1.730e-25
+
+  Weak field or high temperature: L(x) ~ x/3, so susceptibility falls as 1/T --
+  Curie&#x27;s law, the fingerprint of a paramagnet. Strong field or low temperature:
+  every moment aligns and L saturates at 1, the magnetization can grow no further.
+
+  wrote examples/output\langevin_para.svg</pre></div></div>
   </section>
 
   <section>

@@ -1,0 +1,20 @@
+Langevin paramagnetism: m/mu = L(x) = coth(x) - 1/x, x = mu B / kT
+
+  Alignment fraction L(x) for a 5-Bohr-magneton moment:
+     B (T)   T (K)         x   aligned
+         1     300     0.011     0.4 %
+        10     300     0.112     3.7 %
+        10       4     8.396    88.1 %
+        50       1   167.928    99.4 %
+
+  Curie law chi = C/T (C = n mu^2/3k):
+    T =    1 K  ->  chi (per moment) = 5.191e-23
+    T =   10 K  ->  chi (per moment) = 5.191e-24
+    T =  100 K  ->  chi (per moment) = 5.191e-25
+    T =  300 K  ->  chi (per moment) = 1.730e-25
+
+  Weak field or high temperature: L(x) ~ x/3, so susceptibility falls as 1/T --
+  Curie's law, the fingerprint of a paramagnet. Strong field or low temperature:
+  every moment aligns and L saturates at 1, the magnetization can grow no further.
+
+  wrote examples/output\langevin_para.svg

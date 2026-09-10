@@ -192,6 +192,7 @@ ruins a long non-symplectic integration.
 | `src/ising_mft.py` | Mean-field Ising: Curie temperature, spontaneous magnetization, Curie-Weiss |
 | `src/percolation.py` | Site percolation: union-find clusters, spanning test, threshold sweep |
 | `src/polya.py` | Polya random walk: return probability by dimension, recurrence, simulation |
+| `src/langevin_para.py` | Langevin paramagnetism: L(x), Curie-law susceptibility, saturation |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -375,6 +376,7 @@ ruins a long non-symplectic integration.
 | `examples/ising_mft_demo.py` | Magnetization/susceptibility table + the m(T) & chi figure |
 | `examples/percolation_demo.py` | Spanning/cluster table + the threshold curve & lattice snapshots |
 | `examples/polya_demo.py` | Return/escape/visits table + the return-probability-vs-dimension figure |
+| `examples/langevin_para_demo.py` | Alignment/Curie table + the L(x) & 1/T susceptibility figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4426,6 +4428,27 @@ sum over time diverges (recurrent) only for `d <= 2`. "A drunk man finds his way
 drunk bird may get lost forever." The tests reproduce the certain return in 1D/2D and ~0.34
 in 3D, the infinite/finite expected visits, the escape-plus-return sum, the `sqrt(n)` rms
 displacement, and a direct simulation (97% of 1D walks return, far fewer in 3D).
+
+## Langevin paramagnetism: moments vs thermal chaos
+
+Independent magnetic moments align against thermal randomization. `langevin_para.py`:
+
+```
+$ python examples/langevin_para_demo.py examples/output
+
+  B (T)   T (K)     x        aligned      Curie: chi = C/T
+  1       300       0.011    0.4 %        T=300 -> 1.7e-25
+  10      4         8.4      88.1 %       T=1   -> 5.2e-23
+```
+
+Each moment feels an alignment energy `-mu.B` while temperature randomizes it, and averaging
+over the Boltzmann distribution gives the Langevin function `m/mu = L(x) = coth(x) - 1/x` with
+`x = mu B/(k_B T)`. Weak field or high temperature is the linear regime `L(x) ~ x/3`, so the
+susceptibility follows Curie's law `chi = n mu^2/(3 k_B T) ~ 1/T` -- the paramagnet's
+fingerprint; strong field or low temperature saturates every moment at `L = 1`. The tests
+reproduce `L(0)=0`, the `x/3` slope and `L(1) ~ 0.313`, saturation to 1, the `1/T` Curie
+susceptibility and constant, the small-field linear response, and the field-for-saturation
+inversion.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

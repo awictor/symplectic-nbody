@@ -234,6 +234,7 @@ def main():
     import ising_mft_demo
     import percolation_demo
     import polya_demo
+    import langevin_para_demo
 
     import plot_orbits
 
@@ -437,6 +438,7 @@ def main():
     ising_mft_txt = run("ising_mft_demo", ising_mft_demo.main, True)
     percolation_txt = run("percolation_demo", percolation_demo.main, True)
     polya_txt = run("polya_demo", polya_demo.main, True)
+    langevin_para_txt = run("langevin_para_demo", langevin_para_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2413,6 +2415,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("polya.svg"), "return probability dropping below 1 past two dimensions -- recurrent to transient")
             + f'<div class="card">{pre(polya_txt)}</div>'
+            + '</div>'),
+        section(
+            "Langevin paramagnetism: moments vs thermal chaos",
+            "A paramagnet's independent magnetic moments each favour aligning with an applied "
+            "field (energy -mu.B) while temperature randomizes them. Averaging over the "
+            "Boltzmann distribution gives the Langevin function m/mu = L(x) = coth(x) - 1/x "
+            "with x = mu B/(k_B T). Weak field or high temperature is the linear regime "
+            "L(x) ~ x/3, so the susceptibility follows Curie's law chi ~ 1/T -- the fingerprint "
+            "of a paramagnet; strong field or low temperature saturates every moment at L = 1 "
+            "and the magnetization can grow no further.",
+            '<div class="grid">'
+            + svg_card(out("langevin_para.svg"), "the Langevin function from the Curie slope to saturation, and the 1/T susceptibility")
+            + f'<div class="card">{pre(langevin_para_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
