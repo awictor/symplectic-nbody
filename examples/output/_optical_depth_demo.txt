@@ -1,0 +1,19 @@
+Optical depth: how far light sees into matter
+
+     tau   transmitted          regime
+  --------------------------------------
+    0.10         0.905            thin
+    0.50         0.607            thin
+    0.67         0.513thin (photosphere)
+    1.00         0.368            thin
+    3.00         0.050           thick
+   10.00         0.000           thick
+
+  at n_e = 1e+20 /m^3 (Thomson): mean free path 150319 km,
+  photosphere depth 100213 km.
+
+  A star has no solid surface -- its photosphere is simply the layer
+  where the inward optical depth reaches ~2/3, the depth from which
+  photons finally escape and set the effective temperature.
+
+  wrote examples/output\optical_depth.svg

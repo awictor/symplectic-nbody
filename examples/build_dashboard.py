@@ -115,6 +115,7 @@ def main():
     import kelvin_helmholtz_demo
     import atmosphere_demo
     import larmor_demo
+    import optical_depth_demo
 
     import plot_orbits
 
@@ -199,6 +200,7 @@ def main():
     kh_txt = run("kelvin_helmholtz_demo", kelvin_helmholtz_demo.main, True)
     atm_txt = run("atmosphere_demo", atmosphere_demo.main, True)
     larmor_txt = run("larmor_demo", larmor_demo.main, True)
+    optdepth_txt = run("optical_depth_demo", optical_depth_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -488,6 +490,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("synchrotron.svg"), "critical frequency climbing with electron energy")
             + f'<div class="card">{pre(synchrotron_txt)}</div>'
+            + '</div>'),
+        section(
+            "Optical depth: where a star's surface is",
+            "Light is attenuated as exp(-tau) crossing matter. A star has no solid "
+            "surface -- its photosphere is the layer where the inward optical depth "
+            "reaches tau ~ 2/3, the depth photons escape from and that sets the "
+            "effective temperature.",
+            '<div class="grid">'
+            + svg_card(out("optical_depth.svg"), "transmitted fraction falling as exp(-tau)")
+            + f'<div class="card">{pre(optdepth_txt)}</div>'
             + '</div>'),
         section(
             "Big Bang nucleosynthesis: the primordial 25% helium",

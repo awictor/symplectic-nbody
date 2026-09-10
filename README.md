@@ -105,6 +105,7 @@ ruins a long non-symplectic integration.
 | `src/compton.py` | Compton & inverse-Compton scattering (photon-electron energy exchange) |
 | `src/larmor.py` | Larmor formula: power radiated by an accelerating charge |
 | `src/synchrotron.py` | Synchrotron radiation: critical frequency, power, spectral index |
+| `src/optical_depth.py` | Optical depth & radiative transfer: the tau~2/3 photosphere |
 | `src/bbn.py` | Big Bang nucleosynthesis: n/p freeze-out & primordial helium |
 | `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
 | `src/main_sequence.py` | Main sequence: mass-luminosity relation, lifetimes, HR diagram |
@@ -169,6 +170,7 @@ ruins a long non-symplectic integration.
 | `examples/compton_demo.py` | Compton shift/energy vs angle + inverse-Compton boost |
 | `examples/larmor_demo.py` | Radiated power vs gamma (gamma^4 circular, gamma^6 linear) |
 | `examples/synchrotron_demo.py` | Critical frequency/power/cooling vs energy + spectral index |
+| `examples/optical_depth_demo.py` | Transmission vs tau + the photosphere at tau=2/3 |
 | `examples/bbn_demo.py` | n/p freeze-out chain and the Y_p ~ 0.25 helium fraction |
 | `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
 | `examples/main_sequence_demo.py` | Mass-L-lifetime table + the main sequence on an HR diagram |
@@ -629,6 +631,26 @@ same formula predicts a classical hydrogen atom collapses in `~1.6e-11 s` -- the
 catastrophe quantum mechanics had to resolve -- and, boosted by `gamma^4`, is the
 engine of synchrotron radiation in the next section. The tests verify the `a^2`
 law, the `gamma^4`/`gamma^6` boosts, and the atom-collapse time.
+
+## Optical depth: where a star's surface is
+
+Light crossing matter is attenuated as `exp(-tau)`. `optical_depth.py`:
+
+```
+$ python examples/optical_depth_demo.py examples/output
+
+     tau   transmitted          regime
+    0.67         0.513   thin (photosphere)
+    1.00         0.368            thin
+    3.00         0.050           thick
+```
+
+The optical depth `tau = n sigma L` counts mean free paths; `tau << 1` is
+transparent, `tau >> 1` opaque. A star has no solid surface -- its photosphere is
+simply the layer where the inward optical depth reaches `tau ~ 2/3`
+(Eddington-Barbier), the depth photons escape from and that fixes the effective
+temperature. The tests verify the `exp(-tau)` law, the linearity in
+density/path, the mean free path, and the `tau = 2/3` photosphere.
 
 ## Synchrotron radiation: the cosmic radio glow
 
