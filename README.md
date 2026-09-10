@@ -57,6 +57,7 @@ ruins a long non-symplectic integration.
 | `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
 | `src/distances.py` | Cosmological distances: luminosity/angular-diameter, cosmic acceleration |
 | `src/chandrasekhar.py` | White-dwarf structure & the Chandrasekhar mass (~1.44 M_sun) |
+| `src/tov.py` | Neutron-star structure via the TOV equation & the GR maximum mass |
 | `src/poincare.py` | Poincare surface-of-section for the CR3BP (tori vs chaos) |
 | `src/sitnikov.py` | The Sitnikov problem: on-axis test particle, integrable-to-chaotic |
 | `src/galaxy.py` | Disk-galaxy generator and two-galaxy tidal encounters |
@@ -89,6 +90,7 @@ ruins a long non-symplectic integration.
 | `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
 | `examples/distances_demo.py` | Hubble diagram (LCDM vs decelerating) + D_A turnover |
 | `examples/chandrasekhar_demo.py` | White-dwarf mass-radius curve approaching 1.44 M_sun |
+| `examples/tov_demo.py` | Neutron-star mass-radius curve with a maximum mass; GR vs Newton |
 | `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
 | `examples/sitnikov_demo.py` | Stroboscopic maps: circular binary (tori) vs eccentric (chaos) |
 | `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
@@ -224,6 +226,30 @@ diffuse dust. `poincare.py` reconstructs `vy` from the energy so each section
 point is a full initial condition, and the tests confirm the Jacobi constant is
 conserved along each orbit (faithful section), regular orbits stay on tight
 curves, and chaotic ones scatter more than 3x wider.
+
+## Neutron stars: the TOV equation and the mass that makes black holes
+
+In a neutron star, gravity is so strong that Newtonian hydrostatics is wrong --
+you need the general-relativistic Tolman-Oppenheimer-Volkoff equation.
+`tov.py` integrates it for a polytropic equation of state:
+
+```
+$ python examples/tov_demo.py examples/output
+
+       rho_c    R (km)    M_TOV    M_Newton
+     1.0e-03     10.37    0.946        1.70
+     5.2e-03      7.09    1.342        8.91   <- near the peak
+     7.6e-01      4.94    0.965     1287.71
+  TOV maximum mass       : 1.351 M_sun (the sequence turns over)
+  Newtonian, densest star: 1698 M_sun (no limit -- grows forever)
+```
+
+The relativistic corrections make gravity effectively stronger, so the
+mass-radius curve **turns over**: there is a maximum neutron-star mass, above
+which no static star exists and collapse to a black hole is inevitable. The
+Newtonian version has no such limit -- its mass grows without bound. The tests
+check the neutron-star scale (R ~ 10 km, M ~ 1 M_sun), the TOV turnover, the
+absence of a Newtonian maximum, and that GR caps the mass below Newton.
 
 ## The Chandrasekhar mass: the limit of a white dwarf
 

@@ -1,0 +1,21 @@
+Neutron-star structure: the TOV maximum mass
+
+       rho_c    R (km)     M_TOV    M_Newton
+  ------------------------------------------
+     1.0e-03     10.37     0.946        1.70
+     2.3e-03      8.80     1.274        3.89
+     5.2e-03      7.09     1.342        8.91
+     1.2e-02      5.77     1.211       20.41
+     2.8e-02      5.10     1.066       46.75
+     6.3e-02      4.92     0.991      107.11
+     1.4e-01      4.92     0.969      245.37
+     3.3e-01      4.93     0.965      562.11
+     7.6e-01      4.94     0.965     1287.71
+
+  TOV maximum mass       : 1.351 M_sun (the sequence turns over)
+  Newtonian, densest star: 1698 M_sun (no limit -- grows forever)
+
+  General relativity imposes a maximum neutron-star mass. Above it the
+  star cannot support itself and collapses to a black hole.
+
+  wrote examples/output\tov.svg

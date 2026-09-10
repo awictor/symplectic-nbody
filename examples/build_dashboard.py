@@ -83,6 +83,7 @@ def main():
     import lane_emden_demo
     import distances_demo
     import chandrasekhar_demo
+    import tov_demo
 
     import plot_orbits
 
@@ -135,6 +136,7 @@ def main():
     laneemden_txt = run("lane_emden_demo", lane_emden_demo.main, True)
     distances_txt = run("distances_demo", distances_demo.main, True)
     chandra_txt = run("chandrasekhar_demo", chandrasekhar_demo.main, True)
+    tov_txt = run("tov_demo", tov_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -236,6 +238,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("poincare_section.svg"), "tori and chaotic sea at one energy")
             + f'<div class="card">{pre(poincare_txt)}</div>'
+            + '</div>'),
+        section(
+            "Neutron stars & the TOV maximum mass",
+            "For a neutron star, gravity is strong enough that Newtonian "
+            "hydrostatics fails -- you need the relativistic TOV equation. The "
+            "mass-radius curve turns over at a maximum mass (no static star above "
+            "it), while the Newtonian version has no limit. GR makes black holes possible.",
+            '<div class="grid">'
+            + svg_card(out("tov.svg"), "neutron-star mass-radius curve with a maximum mass")
+            + f'<div class="card">{pre(tov_txt)}</div>'
             + '</div>'),
         section(
             "The Chandrasekhar mass",
