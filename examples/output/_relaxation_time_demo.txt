@@ -1,0 +1,19 @@
+Two-body relaxation: t_relax ~ (N / 8 ln N) t_cross
+
+  Hubble time = 13.8 Gyr (the collisionless threshold)
+
+                system         N    t_cross     t_relax           state
+  ---------------------------------------------------------------------
+          open cluster     1e+03   1956 kyr      35 Myr     collisional
+      globular cluster     1e+05    978 kyr    1062 Myr     collisional
+  nuclear star cluster     1e+07     49 kyr       4 Gyr     collisional
+          dwarf galaxy     1e+08     33 Myr   22117 Gyr   collisionless
+             Milky Way     1e+11     73 Myr   3e+06 t_H   collisionless
+
+  t_relax grows almost linearly with N, so small systems relax and
+  mass-segregate fast while big ones never do. A globular cluster relaxes
+  in ~1 Gyr and slowly evaporates; the Milky Way's relaxation time is
+  millions of Hubble times, so it is collisionless -- which is why galaxies
+  keep their spiral arms, streams and cold disks intact for a Hubble time.
+
+  wrote examples/output\relaxation_time.svg

@@ -139,6 +139,7 @@ def main():
     import free_fall_demo
     import shock_jump_demo
     import stromgren_demo
+    import relaxation_time_demo
 
     import plot_orbits
 
@@ -247,6 +248,7 @@ def main():
     freefall_txt = run("free_fall_demo", free_fall_demo.main, True)
     shock_txt = run("shock_jump_demo", shock_jump_demo.main, True)
     stromgren_txt = run("stromgren_demo", stromgren_demo.main, True)
+    relax_txt = run("relaxation_time_demo", relaxation_time_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1033,6 +1035,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("stromgren.svg"), "Stromgren radius shrinking as n^(-2/3) for three stellar types")
             + f'<div class="card">{pre(stromgren_txt)}</div>'
+            + '</div>'),
+        section(
+            "Two-body relaxation & evaporation",
+            "Every stellar flyby deflects a star a little; the accumulated random "
+            "kicks change its velocity by order itself in the relaxation time "
+            "t_relax ~ (N / 8 ln N) t_cross. Because that grows almost linearly with "
+            "N, a globular cluster relaxes in ~1 Gyr and slowly evaporates, while a "
+            "galaxy's relaxation time is millions of Hubble times -- effectively "
+            "collisionless, which is why it keeps its spiral arms and streams.",
+            '<div class="grid">'
+            + svg_card(out("relaxation_time.svg"), "relaxation time vs N crossing the Hubble-time line")
+            + f'<div class="card">{pre(relax_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

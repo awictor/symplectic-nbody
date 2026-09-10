@@ -97,6 +97,7 @@ ruins a long non-symplectic integration.
 | `src/free_fall.py` | Free-fall & dynamical time: the 1/sqrt(G rho) clock of gravity |
 | `src/shock_jump.py` | Sound speed & the Rankine-Hugoniot shock jumps |
 | `src/stromgren.py` | The Stromgren sphere: the ionized HII bubble around a hot star |
+| `src/relaxation_time.py` | Two-body relaxation & evaporation: collisional clusters vs collisionless galaxies |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -185,6 +186,7 @@ ruins a long non-symplectic integration.
 | `examples/free_fall_demo.py` | Free-fall time from clouds to neutron stars + the rho^(-1/2) line |
 | `examples/shock_jump_demo.py` | Jump ratios vs Mach + the density-4 ceiling and M^2 divergence |
 | `examples/stromgren_demo.py` | Radius & ionized mass by star/density + the R ~ n^(-2/3) curves |
+| `examples/relaxation_time_demo.py` | Crossing/relax/evap times by system + t_relax(N) vs Hubble time |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1860,6 +1862,32 @@ Orion, the Rosette, the Eagle -- that trace where massive stars formed in the la
 million years, and the same physics sizes the ionized bubbles of cosmic reionization. The
 tests verify the ~pc-scale O-star sphere, the smaller B-star sphere, the `Q^(1/3)` and
 `n^(-2/3)` scalings, the recombination-output balance, and the ~1000-year recombination time.
+
+## Two-body relaxation: collisional clusters vs collisionless galaxies
+
+Every stellar flyby deflects a star a little; the accumulated random kicks change its
+velocity by order itself in the relaxation time. `relaxation_time.py`:
+
+```
+$ python examples/relaxation_time_demo.py examples/output
+
+                system         N    t_cross     t_relax           state
+  ---------------------------------------------------------------------
+          open cluster     1e+03   1956 kyr      35 Myr     collisional
+      globular cluster     1e+05    978 kyr    1062 Myr     collisional
+  nuclear star cluster     1e+07     49 kyr       4 Gyr     collisional
+          dwarf galaxy     1e+08     33 Myr   22117 Gyr   collisionless
+             Milky Way     1e+11     73 Myr   3e+06 t_H   collisionless
+```
+
+With `t_relax ~ (N / 8 ln N) t_cross`, the Coulomb logarithm counting the many weak distant
+encounters, relaxation grows almost linearly with `N`. So a globular cluster relaxes in ~1
+Gyr, mass-segregates, and slowly evaporates (a roughly constant ~1% of stars escape per
+relaxation time, giving a dissolution time ~100 t_relax), while the Milky Way's relaxation
+time is millions of Hubble times -- it is effectively collisionless, which is why galaxies
+keep their spiral arms, tidal streams and cold disks intact for a Hubble time. The tests
+verify the ~1 Gyr globular relaxation, the collisionless galaxy, the near-linear `N`
+dependence, the large evaporation multiple, and faster relaxation for shorter crossing times.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
