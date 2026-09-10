@@ -143,6 +143,7 @@ def main():
     import parker_wind_demo
     import greenhouse_demo
     import rossby_demo
+    import rayleigh_benard_demo
 
     import plot_orbits
 
@@ -255,6 +256,7 @@ def main():
     pwind_txt = run("parker_wind_demo", parker_wind_demo.main, True)
     green_txt = run("greenhouse_demo", greenhouse_demo.main, True)
     rossby_txt = run("rossby_demo", rossby_demo.main, True)
+    rb_txt = run("rayleigh_benard_demo", rayleigh_benard_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1089,6 +1091,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("rossby.svg"), "Rossby number vs length scale with the geostrophic band shaded")
             + f'<div class="card">{pre(rossby_txt)}</div>'
+            + '</div>'),
+        section(
+            "Rayleigh-Benard convection",
+            "Heat a fluid from below and buoyancy fights viscosity and diffusion. The "
+            "Rayleigh number Ra = g alpha dT d^3 / (nu kappa) measures the contest: "
+            "below Ra_c ~ 1708 the layer just conducts, above it convection switches "
+            "on sharply in rolls and cells. The heat enhancement Nu ~ (Ra/Ra_c)^(1/3) "
+            "climbs steeply -- and at the Ra ~ 10^30 of the solar convection zone the "
+            "flow is violently turbulent, driving granulation and mantle plate motion.",
+            '<div class="grid">'
+            + svg_card(out("rayleigh_benard.svg"), "Nusselt number flat at 1 below onset then rising past Ra_c")
+            + f'<div class="card">{pre(rb_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

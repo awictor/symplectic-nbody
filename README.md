@@ -101,6 +101,7 @@ ruins a long non-symplectic integration.
 | `src/parker_wind.py` | The Parker transonic solar wind through the sonic critical point |
 | `src/greenhouse.py` | The greenhouse effect: surface warming from infrared optical depth |
 | `src/rossby.py` | Rossby number & geostrophic balance: why weather spins |
+| `src/rayleigh_benard.py` | Rayleigh-Benard convection: the Ra_c ~ 1708 onset & Nusselt transport |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -193,6 +194,7 @@ ruins a long non-symplectic integration.
 | `examples/parker_wind_demo.py` | Sound speed/critical radius/1 AU speed + transonic profiles |
 | `examples/greenhouse_demo.py` | T_eq/T_surf/warming for Venus-Earth-Mars + the warming curve |
 | `examples/rossby_demo.py` | Ro & regime for tornado-to-gyre flows + the Ro(L) curve |
+| `examples/rayleigh_benard_demo.py` | Ra & state from lab cell to Sun + the Nu(Ra) onset curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1972,6 +1974,33 @@ drains (Ro ~ 10^4) spin from local vorticity, not the Coriolis force -- the drai
 is a myth. The tests verify the equator/pole Coriolis parameter, the ~1e-4 mid-latitude value,
 the geostrophic cyclone vs ageostrophic tornado, the geostrophic-wind scale, the hemisphere sign
 flip, and the ~17-hour inertial period.
+
+## Rayleigh-Benard convection: when a heated layer churns
+
+Heat a fluid from below and buoyancy fights viscosity and thermal diffusion. The Rayleigh
+number measures the contest. `rayleigh_benard.py`:
+
+```
+$ python examples/rayleigh_benard_demo.py examples/output
+
+                  system          Ra           state      Nu
+  ----------------------------------------------------------
+   lab cell (near onset)     3.6e+01      conducting         1
+           mug of coffee     4.7e+07      convecting        30
+          pot on a stove     3.6e+08      convecting        60
+          Earth's mantle     2.2e+08      convecting        50
+   solar convection zone     7.8e+30      convecting     2e+09
+```
+
+With `Ra = g alpha dT d^3 / (nu kappa)`, convection switches on abruptly above the critical
+value `Ra_c ~ 1708` for rigid plates (`(27/4) pi^4 ~ 657.5` for stress-free ones) -- one of
+the cleanest predictions in fluid dynamics, confirmed to under a percent. Below onset the
+layer only conducts (`Nu = 1`); above it the heat enhancement climbs as
+`Nu ~ (Ra/Ra_c)^(1/3)`. Astrophysical layers run at `Ra` of `10^20` and up, so they are
+violently turbulent -- the granulation on the Sun and the mantle convection that drifts
+continents both follow. The tests verify the free-free critical value, the supercritical
+water pot, the critical temperature difference that gives `Ra = Ra_c`, the conductive
+sub-onset limit, the 1/3 Nusselt law, and that deeper layers convect at a smaller `dT`.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

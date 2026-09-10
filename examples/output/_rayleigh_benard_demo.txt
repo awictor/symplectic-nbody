@@ -1,0 +1,17 @@
+Rayleigh-Benard: Ra = g alpha dT d^3 / (nu kappa); onset at Ra_c ~ 1708
+
+                  system          Ra           state      Nu
+  ----------------------------------------------------------
+   lab cell (near onset)     3.6e+01      conducting         1
+           mug of coffee     4.7e+07      convecting        30
+          pot on a stove     3.6e+08      convecting        60
+          Earth's mantle     2.2e+08      convecting        50
+   solar convection zone     7.8e+30      convecting     2e+09
+
+  Below Ra_c the layer just conducts (Nu = 1); above it convection
+  switches on sharply and carries far more heat (Nu ~ (Ra/Ra_c)^(1/3)).
+  Astrophysical layers -- the mantle, the solar convection zone -- run
+  at Ra of 10^20 or more, so they are violently, turbulently convective:
+  the granulation on the Sun and the plates under our feet both follow.
+
+  wrote examples/output\rayleigh_benard.svg
