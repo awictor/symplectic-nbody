@@ -100,6 +100,7 @@ ruins a long non-symplectic integration.
 | `src/relaxation_time.py` | Two-body relaxation & evaporation: collisional clusters vs collisionless galaxies |
 | `src/parker_wind.py` | The Parker transonic solar wind through the sonic critical point |
 | `src/greenhouse.py` | The greenhouse effect: surface warming from infrared optical depth |
+| `src/rossby.py` | Rossby number & geostrophic balance: why weather spins |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -191,6 +192,7 @@ ruins a long non-symplectic integration.
 | `examples/relaxation_time_demo.py` | Crossing/relax/evap times by system + t_relax(N) vs Hubble time |
 | `examples/parker_wind_demo.py` | Sound speed/critical radius/1 AU speed + transonic profiles |
 | `examples/greenhouse_demo.py` | T_eq/T_surf/warming for Venus-Earth-Mars + the warming curve |
+| `examples/rossby_demo.py` | Ro & regime for tornado-to-gyre flows + the Ro(L) curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1942,6 +1944,34 @@ dense CO2 atmosphere of tau ~ 150, runs away from a 227 K equilibrium to a lead-
 while nearly airless Mars sits at its equilibrium temperature. The tests verify Earth's ~255 K
 equilibrium and ~33 K greenhouse, the tau=0 airless limit, Venus's runaway optical depth, the
 monotonic rise with tau, and the optical-depth inversion.
+
+## Rossby number: why weather spins
+
+On a rotating planet the Coriolis force deflects any moving parcel at rate
+`f = 2 Omega sin(lat)`, and the Rossby number `Ro = U/(fL)` decides whether that matters.
+`rossby.py`:
+
+```
+$ python examples/rossby_demo.py examples/output
+
+                  flow  U (m/s)           L          Ro          regime
+  ---------------------------------------------------------------------
+         bathtub drain      0.2       0.1 m    1.94e+04    ageostrophic
+               tornado    100.0     100.0 m     9.7e+03    ageostrophic
+            sea breeze      5.0       20 km        2.42    ageostrophic
+             hurricane     50.0      500 km        0.97    ageostrophic
+    cyclone (synoptic)     10.0     1000 km       0.097     geostrophic
+            ocean gyre      0.1     2000 km    0.000485     geostrophic
+```
+
+When `Ro << 1` the Coriolis and pressure-gradient forces balance (geostrophic), so the wind
+blows along the isobars rather than across them -- which is why cyclones and ocean gyres are
+persistent rotating vortices instead of simple radial flows, and why a 1 mb / 100 km gradient
+drives a ~8 m/s geostrophic wind. When `Ro >> 1` rotation is negligible: tornadoes and bathtub
+drains (Ro ~ 10^4) spin from local vorticity, not the Coriolis force -- the draining-sink story
+is a myth. The tests verify the equator/pole Coriolis parameter, the ~1e-4 mid-latitude value,
+the geostrophic cyclone vs ageostrophic tornado, the geostrophic-wind scale, the hemisphere sign
+flip, and the ~17-hour inertial period.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

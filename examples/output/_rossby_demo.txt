@@ -1,0 +1,21 @@
+Rossby number Ro = U / (f L): does planetary rotation matter?
+
+  Coriolis parameter at 45 deg: f = 1.03e-04 s^-1
+  inertial period there: 16.9 hr (half a pendulum day)
+
+                  flow  U (m/s)           L          Ro          regime
+  ---------------------------------------------------------------------
+         bathtub drain      0.2       0.1 m    1.94e+04    ageostrophic
+               tornado    100.0     100.0 m     9.7e+03    ageostrophic
+            sea breeze      5.0       20 km        2.42    ageostrophic
+             hurricane     50.0      500 km        0.97    ageostrophic
+    cyclone (synoptic)     10.0     1000 km       0.097     geostrophic
+            ocean gyre      0.1     2000 km    0.000485     geostrophic
+
+  A 1 mb / 100 km pressure gradient drives a ~8 m/s geostrophic wind
+  -- blowing ALONG the isobars, not across them, because Coriolis balances
+  the pressure force. Small, fast flows (Ro >> 1) ignore rotation; large,
+  slow ones (Ro << 1) are ruled by it, which is why weather systems and
+  ocean gyres are big rotating vortices rather than simple radial flows.
+
+  wrote examples/output\rossby.svg

@@ -142,6 +142,7 @@ def main():
     import relaxation_time_demo
     import parker_wind_demo
     import greenhouse_demo
+    import rossby_demo
 
     import plot_orbits
 
@@ -253,6 +254,7 @@ def main():
     relax_txt = run("relaxation_time_demo", relaxation_time_demo.main, True)
     pwind_txt = run("parker_wind_demo", parker_wind_demo.main, True)
     green_txt = run("greenhouse_demo", greenhouse_demo.main, True)
+    rossby_txt = run("rossby_demo", rossby_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1075,6 +1077,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("greenhouse.svg"), "surface warming vs optical depth with the terrestrial planets marked")
             + f'<div class="card">{pre(green_txt)}</div>'
+            + '</div>'),
+        section(
+            "Rossby number & geostrophic balance",
+            "On a rotating planet the Coriolis force deflects moving air at rate "
+            "f = 2 Omega sin(lat). The Rossby number Ro = U/(fL) decides whether it "
+            "matters: Ro << 1 (big, slow flows) means geostrophic balance -- wind "
+            "blows along the isobars, so cyclones and ocean gyres are rotating "
+            "vortices. Ro >> 1 (tornadoes, bathtub drains) ignores rotation entirely, "
+            "which is why the draining-sink Coriolis story is a myth.",
+            '<div class="grid">'
+            + svg_card(out("rossby.svg"), "Rossby number vs length scale with the geostrophic band shaded")
+            + f'<div class="card">{pre(rossby_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
