@@ -171,6 +171,7 @@ ruins a long non-symplectic integration.
 | `src/richardson.py` | Richardson number: stratified-shear stability, Kelvin-Helmholtz onset |
 | `src/kolmogorov.py` | Kolmogorov cascade: -5/3 spectrum, dissipation microscales, Re^(3/4) range |
 | `src/casimir.py` | Casimir effect: vacuum pressure/force/energy between plates, d^-4 law |
+| `src/hall_effect.py` | Hall effect: Hall voltage, coefficient, carrier density/sign/mobility |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -333,6 +334,7 @@ ruins a long non-symplectic integration.
 | `examples/richardson_demo.py` | Per-layer stability table + the Ri map & KH-billow sketch |
 | `examples/kolmogorov_demo.py` | Per-flow microscale table + the -5/3 energy-spectrum figure |
 | `examples/casimir_demo.py` | Pressure/force-vs-gap table + the d^-4 pressure figure |
+| `examples/hall_effect_demo.py` | Per-material Hall table + the Hall-bar schematic |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3900,6 +3902,30 @@ but crushing below ~100 nm -- reaching one atmosphere by ~10 nm -- where it caus
 micro-electromechanical systems. The tests reproduce the ~13 Pa pressure at 100 nm, the
 `d^-4` and `d^-3` scalings, the pressure-as-energy-gradient relation, the ~10 nm one-
 atmosphere gap, and Casimir's dominance over gravity between thin plates.
+
+## The Hall effect: weighing carriers with a magnet
+
+A current in a magnetic field builds a sideways voltage that reads out the charge carriers.
+`hall_effect.py`:
+
+```
+$ python examples/hall_effect_demo.py examples/output
+
+  material              n (1/m^3)   carrier      V_H       |R_H|
+  copper (electrons)    8.5e28      electrons    0.001 uV  7.34e-11
+  n-Si (doped)          1e22        electrons    6.24 mV   6.24e-04
+```
+
+The Lorentz force pushes moving charges sideways until the transverse **Hall voltage**
+`V_H = I B/(n q t)` balances them. Its magnitude gives the carrier density `n`, and its
+*sign* reveals whether the carriers are electrons or positive **holes** -- the result that
+classical free-electron theory could not explain and that underlies all semiconductor doping.
+The Hall coefficient `R_H = 1/(n q)` packages it, and with the conductivity it separates
+density from mobility (`mu = |R_H| sigma`), while the Hall angle `arctan(mu B)` measures how
+far the field tilts the current. Sparse-carrier semiconductors give millivolt signals versus
+microvolts in a metal. The tests reproduce copper's tiny electron Hall voltage and `|R_H|`,
+the `I`/`B`/`1/t` scalings, the density inversion, the electron/hole sign, the mobility, and
+the Hall-angle limits.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

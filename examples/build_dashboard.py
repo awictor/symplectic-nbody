@@ -213,6 +213,7 @@ def main():
     import richardson_demo
     import kolmogorov_demo
     import casimir_demo
+    import hall_effect_demo
 
     import plot_orbits
 
@@ -395,6 +396,7 @@ def main():
     richardson_txt = run("richardson_demo", richardson_demo.main, True)
     kolmogorov_txt = run("kolmogorov_demo", kolmogorov_demo.main, True)
     casimir_txt = run("casimir_demo", casimir_demo.main, True)
+    hall_effect_txt = run("hall_effect_demo", hall_effect_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2095,6 +2097,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("casimir.svg"), "Casimir pressure vs plate gap on log-log axes, crossing one atmosphere near 10 nm")
             + f'<div class="card">{pre(casimir_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Hall effect: weighing carriers with a magnet",
+            "Run a current through a conductor in a perpendicular field and the Lorentz force "
+            "pushes the carriers sideways until a transverse Hall voltage V_H = I B/(n q t) "
+            "balances them. Its magnitude gives the carrier density n, and its sign reveals "
+            "whether the charge carriers are electrons or positive holes -- the result that "
+            "classical free-electron theory could not explain and that underpins semiconductor "
+            "doping. Combined with the conductivity it separates density from mobility "
+            "(mu = |R_H| sigma), so a Hall bar fully characterizes a conductor.",
+            '<div class="grid">'
+            + svg_card(out("hall_effect.svg"), "a Hall bar: current, field, deflected carriers and the transverse Hall voltage")
+            + f'<div class="card">{pre(hall_effect_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

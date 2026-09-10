@@ -1,0 +1,18 @@
+Hall effect: V_H = I B / (n q t) reveals carrier density AND sign
+
+  1 mA through a 0.1 mm-thick sample in a 1 T field:
+
+  material                 n (1/m^3)    carrier         V_H       |R_H|
+  copper (electrons)         8.5e+28  electrons    0.001 uV    7.34e-11
+  aluminium (holes*)         1.8e+29      holes    0.000 uV    3.47e-11
+  n-Si (doped)               1.0e+22  electrons     6.24 mV    6.24e-04
+  p-Ge (doped)               5.0e+21      holes    12.48 mV    1.25e-03
+
+  (*Al's measured Hall sign is positive -- a famous hint that band structure makes
+  some carriers behave as positive 'holes', which classical free electrons can't explain.)
+
+  The doped semiconductors give millivolt Hall signals from their sparse carriers,
+  vs microvolts in a metal: fewer carriers, bigger V_H. Mobility follows from
+  mu = |R_H| sigma -- n-Si here: mu = 0.624 m^2/Vs, Hall angle 32.0 deg at 1 T.
+
+  wrote examples/output\hall_effect.svg

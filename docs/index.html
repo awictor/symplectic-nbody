@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.33       12.09      0.8x
-   400          37.10       37.52      1.0x
-   800         147.44      112.38      1.3x
-  1600         778.14      519.23      1.5x
-  3200        3309.34     1337.68      2.5x
+   200           9.17       11.87      0.8x
+   400          36.90       37.41      1.0x
+   800         145.22      110.70      1.3x
+  1600         662.26      372.57      1.8x
+  3200        2697.07     1034.11      2.6x
 
-empirical scaling exponent  direct ~ N^2.13   barnes-hut ~ N^1.74
+empirical scaling exponent  direct ~ N^2.06   barnes-hut ~ N^1.62
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -45890,6 +45890,74 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   at human scales but dominant in MEMS, where it sticks micro-parts together (stiction).
 
   wrote examples/output\casimir.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>The Hall effect: weighing carriers with a magnet</h2>
+    <p class="blurb">Run a current through a conductor in a perpendicular field and the Lorentz force pushes the carriers sideways until a transverse Hall voltage V_H = I B/(n q t) balances them. Its magnitude gives the carrier density n, and its sign reveals whether the charge carriers are electrons or positive holes -- the result that classical free-electron theory could not explain and that underpins semiconductor doping. Combined with the conductivity it separates density from mobility (mu = |R_H| sigma), so a Hall bar fully characterizes a conductor.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<text x="20" y="34" fill="#e6edf3" font-size="18">The Hall bar</text>
+<text x="20" y="52" fill="#8b949e" font-size="12">current + perpendicular field push carriers sideways, building a transverse Hall voltage</text>
+<rect x="70.0" y="223.2" width="580.0" height="187.2" fill="#30363d" stroke="#8b949e" stroke-width="2"/>
+<circle cx="157.0" cy="288.7" r="2.5" fill="none" stroke="#b197fc" stroke-width="1.4"/>
+<circle cx="157.0" cy="288.7" r="0.8" fill="#b197fc"/>
+<circle cx="157.0" cy="354.2" r="2.5" fill="none" stroke="#b197fc" stroke-width="1.4"/>
+<circle cx="157.0" cy="354.2" r="0.8" fill="#b197fc"/>
+<circle cx="238.2" cy="288.7" r="2.5" fill="none" stroke="#b197fc" stroke-width="1.4"/>
+<circle cx="238.2" cy="288.7" r="0.8" fill="#b197fc"/>
+<circle cx="238.2" cy="354.2" r="2.5" fill="none" stroke="#b197fc" stroke-width="1.4"/>
+<circle cx="238.2" cy="354.2" r="0.8" fill="#b197fc"/>
+<circle cx="319.4" cy="288.7" r="2.5" fill="none" stroke="#b197fc" stroke-width="1.4"/>
+<circle cx="319.4" cy="288.7" r="0.8" fill="#b197fc"/>
+<circle cx="319.4" cy="354.2" r="2.5" fill="none" stroke="#b197fc" stroke-width="1.4"/>
+<circle cx="319.4" cy="354.2" r="0.8" fill="#b197fc"/>
+<circle cx="400.6" cy="288.7" r="2.5" fill="none" stroke="#b197fc" stroke-width="1.4"/>
+<circle cx="400.6" cy="288.7" r="0.8" fill="#b197fc"/>
+<circle cx="400.6" cy="354.2" r="2.5" fill="none" stroke="#b197fc" stroke-width="1.4"/>
+<circle cx="400.6" cy="354.2" r="0.8" fill="#b197fc"/>
+<circle cx="481.8" cy="288.7" r="2.5" fill="none" stroke="#b197fc" stroke-width="1.4"/>
+<circle cx="481.8" cy="288.7" r="0.8" fill="#b197fc"/>
+<circle cx="481.8" cy="354.2" r="2.5" fill="none" stroke="#b197fc" stroke-width="1.4"/>
+<circle cx="481.8" cy="354.2" r="0.8" fill="#b197fc"/>
+<circle cx="563.0" cy="288.7" r="2.5" fill="none" stroke="#b197fc" stroke-width="1.4"/>
+<circle cx="563.0" cy="288.7" r="0.8" fill="#b197fc"/>
+<circle cx="563.0" cy="354.2" r="2.5" fill="none" stroke="#b197fc" stroke-width="1.4"/>
+<circle cx="563.0" cy="354.2" r="0.8" fill="#b197fc"/>
+<text x="360.0" y="215.2" fill="#b197fc" font-size="11" text-anchor="middle">B out of page</text>
+<line x1="40.0" y1="316.8" x2="70.0" y2="316.8" stroke="#ffd43b" stroke-width="3"/>
+<line x1="650.0" y1="316.8" x2="680.0" y2="316.8" stroke="#ffd43b" stroke-width="3"/>
+<polygon points="680.0,316.8 668.0,310.8 668.0,322.8" fill="#ffd43b"/>
+<text x="684.0" y="308.8" fill="#ffd43b" font-size="12">I</text>
+<line x1="273.0" y1="316.8" x2="389.0" y2="402.4" stroke="#4dabf7" stroke-width="1.8"/>
+<polygon points="389.0,402.4 377.4,392.4 409.3,396.4" fill="#4dabf7"/>
+<circle cx="273.0" cy="316.8" r="4" fill="#4dabf7"/>
+<text x="284.6" y="308.8" fill="#4dabf7" font-size="11">carrier</text>
+<text x="360.0" y="363.6" fill="#8b949e" font-size="10">F = q v x B</text>
+<text x="360.0" y="428.4" fill="#ff6b6b" font-size="14" text-anchor="middle">- - - - - -</text>
+<text x="360.0" y="201.2" fill="#06d6a0" font-size="14" text-anchor="middle">+ + + + + +</text>
+<line x1="534.0" y1="223.2" x2="534.0" y2="183.2" stroke="#8b949e" stroke-width="1.4"/>
+<line x1="534.0" y1="410.4" x2="534.0" y2="450.4" stroke="#8b949e" stroke-width="1.4"/>
+<text x="542.0" y="320.8" fill="#e6edf3" font-size="13">V_H</text>
+<text x="70.0" y="680.0" fill="#8b949e" font-size="11">V_H = I B / (n q t): its size gives the carrier density, its sign gives the carrier charge</text>
+</svg><figcaption>a Hall bar: current, field, deflected carriers and the transverse Hall voltage</figcaption></figure><div class="card"><pre>Hall effect: V_H = I B / (n q t) reveals carrier density AND sign
+
+  1 mA through a 0.1 mm-thick sample in a 1 T field:
+
+  material                 n (1/m^3)    carrier         V_H       |R_H|
+  copper (electrons)         8.5e+28  electrons    0.001 uV    7.34e-11
+  aluminium (holes*)         1.8e+29      holes    0.000 uV    3.47e-11
+  n-Si (doped)               1.0e+22  electrons     6.24 mV    6.24e-04
+  p-Ge (doped)               5.0e+21      holes    12.48 mV    1.25e-03
+
+  (*Al&#x27;s measured Hall sign is positive -- a famous hint that band structure makes
+  some carriers behave as positive &#x27;holes&#x27;, which classical free electrons can&#x27;t explain.)
+
+  The doped semiconductors give millivolt Hall signals from their sparse carriers,
+  vs microvolts in a metal: fewer carriers, bigger V_H. Mobility follows from
+  mu = |R_H| sigma -- n-Si here: mu = 0.624 m^2/Vs, Hall angle 32.0 deg at 1 T.
+
+  wrote examples/output\hall_effect.svg</pre></div></div>
   </section>
 
   <section>
