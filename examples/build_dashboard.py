@@ -184,6 +184,7 @@ def main():
     import carnot_demo
     import adiabatic_demo
     import van_der_waals_demo
+    import joule_thomson_demo
 
     import plot_orbits
 
@@ -337,6 +338,7 @@ def main():
     carnot_txt = run("carnot_demo", carnot_demo.main, True)
     adiab_txt = run("adiabatic_demo", adiabatic_demo.main, True)
     vdw_txt = run("van_der_waals_demo", van_der_waals_demo.main, True)
+    jt_txt = run("joule_thomson_demo", joule_thomson_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1660,6 +1662,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("van_der_waals.svg"), "reduced isotherms with the sub-critical condensation loop")
             + f'<div class="card">{pre(vdw_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Joule-Thomson effect",
+            "Push a real gas through a valve and it cools or warms depending on which "
+            "wins: attraction (cools) or finite molecular size (warms). Below the "
+            "inversion temperature T_inv = (27/4) T_c throttling cools -- so nitrogen "
+            "and CO2 liquefy by repeated expansion at room temperature, but hydrogen "
+            "and helium (low T_inv) warm and must be pre-cooled first. An ideal gas has "
+            "no Joule-Thomson effect at all.",
+            '<div class="grid">'
+            + svg_card(out("joule_thomson.svg"), "the JT coefficient crossing zero at each gas's inversion temperature")
+            + f'<div class="card">{pre(jt_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

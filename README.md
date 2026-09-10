@@ -142,6 +142,7 @@ ruins a long non-symplectic integration.
 | `src/carnot.py` | The Carnot cycle: the efficiency limit & heat-pump COP |
 | `src/adiabatic.py` | Adiabatic processes: PV^gamma, compression heating & the speed of sound |
 | `src/van_der_waals.py` | The van der Waals gas: real-gas EOS, critical point & corresponding states |
+| `src/joule_thomson.py` | The Joule-Thomson effect: throttling cooling & gas liquefaction |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -275,6 +276,7 @@ ruins a long non-symplectic integration.
 | `examples/carnot_demo.py` | Engine efficiencies & COP + the efficiency-vs-temperature-ratio curve |
 | `examples/adiabatic_demo.py` | Compression temperatures + the adiabat-vs-isotherm P-V diagram |
 | `examples/van_der_waals_demo.py` | Critical constants per gas + the reduced isotherms with the loop |
+| `examples/joule_thomson_demo.py` | Inversion temperatures per gas + the mu_JT(T) crossings |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3139,6 +3141,32 @@ water's 647 K, and the compressibility `Pc Vc / R Tc = 3/8` is universal -- the 
 corresponding states, under which every gas collapses onto one reduced curve. The tests verify
 CO2's critical temperature and pressure, the universal 3/8 compressibility, the ideal-gas
 large-volume limit, attraction lowering Z, and the reduced critical point.
+
+## The Joule-Thomson effect: cooling by throttling
+
+Push a real gas through a valve at constant enthalpy and its temperature changes.
+`joule_thomson.py`:
+
+```
+$ python examples/joule_thomson_demo.py examples/output
+
+       gas   T_inv (K)      at 300 K   mu (K/MPa) @300K
+  ----------------------------------------------------
+       CO2        2052         cools             6.717
+        N2         852         cools             2.445
+        H2         224         warms            -0.235
+        He          35         warms            -1.011
+```
+
+The JT coefficient `mu = (dT/dP)_H ~ (1/C_p)(2a/RT - b)` pits attraction (which cools an
+expanding gas) against finite molecular size (which warms it). Below the inversion
+temperature `T_inv = 2a/Rb = (27/4) T_c` attraction wins, so nitrogen and CO2 cool when
+throttled and liquefy by repeated expansion at room temperature -- but hydrogen and helium
+have low inversion temperatures and *warm* on throttling, so they must be pre-cooled first
+(a real early-liquefaction hazard). An ideal gas has `mu = 0` exactly. The tests verify
+nitrogen cooling and hydrogen/helium warming at room temperature, the `(27/4) T_c` inversion
+ratio, the sign flip at the inversion temperature, the vanishing ideal-gas coefficient, and
+the inversion-temperature ordering.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

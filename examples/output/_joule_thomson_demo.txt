@@ -1,0 +1,17 @@
+Joule-Thomson: throttling cools below T_inv, warms above
+
+       gas   T_inv (K)      at 300 K  mu (K/MPa) @300K
+  ----------------------------------------------------
+       CO2        2052         cools             6.717
+        N2         852         cools             2.445
+        H2         224         warms            -0.235
+        He          35         warms            -1.011
+
+  Two effects compete when a real gas expands through a valve: attraction
+  cools it (work pulling molecules apart), finite size warms it. Below the
+  inversion temperature attraction wins, so nitrogen and CO2 cool at room
+  temperature and can be liquefied by repeated throttling. Hydrogen and
+  helium have low inversion temperatures, so they must be pre-cooled first
+  -- otherwise throttling heats them, an early liquefaction hazard.
+
+  wrote examples/output\joule_thomson.svg
