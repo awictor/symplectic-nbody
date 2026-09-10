@@ -1,0 +1,16 @@
+Greenhouse effect: T_surf = T_eq (1 + 3 tau / 4)^(1/4)
+
+    planet  T_eq (K)  T_surf (K)   warming  tau needed
+  ----------------------------------------------------
+     Venus     226.8       737.0     510.2       147.3
+     Earth     254.7       288.0      33.3         0.8
+      Mars     209.9       210.0       0.1         0.0
+     Titan      84.6        94.0       9.4         0.7
+
+  Earth's modest tau ~ 0.8 lifts its 255 K skin temperature to a
+  life-friendly 288 K -- a 33 K blanket. Venus, wrapped in a dense CO2
+  atmosphere of tau ~ 150, is heated from a 227 K equilibrium to a
+  lead-melting 737 K: the runaway greenhouse. Nearly airless Mars and
+  hazy-but-cold Titan sit close to their equilibrium temperatures.
+
+  wrote examples/output\greenhouse.svg

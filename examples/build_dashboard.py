@@ -141,6 +141,7 @@ def main():
     import stromgren_demo
     import relaxation_time_demo
     import parker_wind_demo
+    import greenhouse_demo
 
     import plot_orbits
 
@@ -251,6 +252,7 @@ def main():
     stromgren_txt = run("stromgren_demo", stromgren_demo.main, True)
     relax_txt = run("relaxation_time_demo", relaxation_time_demo.main, True)
     pwind_txt = run("parker_wind_demo", parker_wind_demo.main, True)
+    green_txt = run("greenhouse_demo", greenhouse_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1061,6 +1063,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("parker_wind.svg"), "transonic velocity profiles through the Mach-1 critical point")
             + f'<div class="card">{pre(pwind_txt)}</div>'
+            + '</div>'),
+        section(
+            "The greenhouse effect",
+            "An atmosphere transparent to sunlight but opaque in the infrared lets "
+            "light in and traps the outgoing heat, so the surface runs hotter than "
+            "the equilibrium temperature: T_surf = T_eq (1 + 3 tau/4)^(1/4). Earth's "
+            "modest tau ~ 0.8 lifts 255 K to a life-friendly 288 K; Venus, wrapped in "
+            "dense CO2 (tau ~ 150), runs away to a lead-melting 737 K; airless Mars "
+            "sits at its equilibrium temperature.",
+            '<div class="grid">'
+            + svg_card(out("greenhouse.svg"), "surface warming vs optical depth with the terrestrial planets marked")
+            + f'<div class="card">{pre(green_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

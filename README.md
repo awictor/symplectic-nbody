@@ -99,6 +99,7 @@ ruins a long non-symplectic integration.
 | `src/stromgren.py` | The Stromgren sphere: the ionized HII bubble around a hot star |
 | `src/relaxation_time.py` | Two-body relaxation & evaporation: collisional clusters vs collisionless galaxies |
 | `src/parker_wind.py` | The Parker transonic solar wind through the sonic critical point |
+| `src/greenhouse.py` | The greenhouse effect: surface warming from infrared optical depth |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -189,6 +190,7 @@ ruins a long non-symplectic integration.
 | `examples/stromgren_demo.py` | Radius & ionized mass by star/density + the R ~ n^(-2/3) curves |
 | `examples/relaxation_time_demo.py` | Crossing/relax/evap times by system + t_relax(N) vs Hubble time |
 | `examples/parker_wind_demo.py` | Sound speed/critical radius/1 AU speed + transonic profiles |
+| `examples/greenhouse_demo.py` | T_eq/T_surf/warming for Venus-Earth-Mars + the warming curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1916,6 +1918,30 @@ sooner and reaches a higher terminal speed -- a few hundred km/s by 1 AU, the so
 Mariner 2 confirmed over the static-corona camp. The tests verify the ~140 km/s coronal sound
 speed, the few-solar-radii critical radius, exact Mach 1 at `r_c`, the subsonic/supersonic
 branches, monotonic outward acceleration, the 1 AU speed, and the hotter-faster trend.
+
+## The greenhouse effect: why planets beat their sunlight
+
+An atmosphere transparent to sunlight but opaque in the infrared lets light in and traps the
+outgoing heat, so the surface runs hotter than the equilibrium temperature. `greenhouse.py`:
+
+```
+$ python examples/greenhouse_demo.py examples/output
+
+    planet  T_eq (K)  T_surf (K)   warming  tau needed
+  ----------------------------------------------------
+     Venus     226.8       737.0     510.2       147.3
+     Earth     254.7       288.0      33.3         0.8
+      Mars     209.9       210.0       0.1         0.0
+     Titan      84.6        94.0       9.4         0.7
+```
+
+For a grey atmosphere of infrared optical depth tau the surface warms to
+`T_surf = T_eq (1 + 3 tau/4)^(1/4)`. Earth's modest tau ~ 0.8 lifts its 255 K skin temperature
+to a life-friendly 288 K -- a 33 K blanket that keeps the oceans liquid. Venus, wrapped in a
+dense CO2 atmosphere of tau ~ 150, runs away from a 227 K equilibrium to a lead-melting 737 K,
+while nearly airless Mars sits at its equilibrium temperature. The tests verify Earth's ~255 K
+equilibrium and ~33 K greenhouse, the tau=0 airless limit, Venus's runaway optical depth, the
+monotonic rise with tau, and the optical-depth inversion.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
