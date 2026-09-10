@@ -1,0 +1,18 @@
+Roche limit: tidal disruption of a rubble-pile satellite
+
+ d / d_Roche  surviving bound fraction
+------------------------------------------------
+        0.40  ------------------------------ 0.00
+        0.60  #################------------- 0.57
+        0.80  ##########################---- 0.88
+        1.00  ###########################--- 0.90
+        1.25  ############################-- 0.95
+        1.50  #############################- 0.98
+        2.00  ############################## 1.00
+        3.00  ############################## 1.00
+
+Below ~1 Roche the satellite is shredded; above it, it survives.
+
+wrote examples/output\roche_disruption.svg
+The rubble pile stretches into a tidal stream -- how Saturn's rings
+and Shoemaker-Levy 9's fragment chain came to be.

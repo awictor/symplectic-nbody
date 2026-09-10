@@ -45,6 +45,7 @@ ruins a long non-symplectic integration.
 | `src/lyapunov.py` | Largest Lyapunov exponent (Benettin shadow-trajectory method) |
 | `src/stability_map.py` | Three-body escape-time scan over a grid of initial conditions |
 | `src/virial.py` | Virial theorem & violent relaxation of a self-gravitating cluster |
+| `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/poincare.py` | Poincare surface-of-section for the CR3BP (tori vs chaos) |
 | `src/sitnikov.py` | The Sitnikov problem: on-axis test particle, integrable-to-chaotic |
 | `src/galaxy.py` | Disk-galaxy generator and two-galaxy tidal encounters |
@@ -65,6 +66,7 @@ ruins a long non-symplectic integration.
 | `examples/chaos_demo.py` | Lyapunov exponent + two trajectories diverging 6 orders of magnitude |
 | `examples/stability_map_demo.py` | Parallel escape-time heatmap revealing the fractal chaos boundary |
 | `examples/virial_demo.py` | Equilibrium vs cold cluster: running 2T/U converging on -1 |
+| `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
 | `examples/sitnikov_demo.py` | Stroboscopic maps: circular binary (tori) vs eccentric (chaos) |
 | `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
@@ -200,6 +202,29 @@ diffuse dust. `poincare.py` reconstructs `vy` from the energy so each section
 point is a full initial condition, and the tests confirm the Jacobi constant is
 conserved along each orbit (faithful section), regular orbits stay on tight
 curves, and chaotic ones scatter more than 3x wider.
+
+## The Roche limit: tearing a moon into a ring
+
+`roche.py` models a satellite as a rubble pile -- a cloud of particles bound only
+by mutual gravity -- orbiting a heavy primary. Self-gravity holds it together
+until the tidal field wins, inside the Roche limit
+`d = 2.44 R (rho_primary / rho_satellite)^{1/3}`:
+
+```
+$ python examples/roche_demo.py examples/output
+
+ d / d_Roche  surviving bound fraction
+        0.40  ------------------------------ 0.00
+        0.80  ##########################---- 0.88
+        1.50  #############################- 0.98
+        3.00  ############################## 1.00
+```
+
+Holding mass, size, and integration time fixed so the comparison is purely
+tidal, the surviving bound fraction drops sharply as the orbit crosses inside the
+Roche limit. The demo renders a satellite stretching into a tidal stream -- the
+process behind planetary rings and the fragment chain of comet Shoemaker-Levy 9.
+The tests check the Roche formula's scaling and the disruption gradient.
 
 ## The virial theorem and violent relaxation
 

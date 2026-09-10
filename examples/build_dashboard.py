@@ -71,6 +71,7 @@ def main():
     import circularization_demo
     import sitnikov_demo
     import virial_demo
+    import roche_demo
 
     import plot_orbits
 
@@ -111,6 +112,7 @@ def main():
     circ_txt = run("circularization_demo", circularization_demo.main, True)
     sitnikov_txt = run("sitnikov_demo", sitnikov_demo.main, True)
     virial_txt = run("virial_demo", virial_demo.main, True)
+    roche_txt = run("roche_demo", roche_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -212,6 +214,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("poincare_section.svg"), "tori and chaotic sea at one energy")
             + f'<div class="card">{pre(poincare_txt)}</div>'
+            + '</div>'),
+        section(
+            "Roche limit & tidal disruption",
+            "A rubble-pile satellite survives only outside the Roche limit; "
+            "inside it, the tide overwhelms self-gravity and tears it into a "
+            "stream -- how planetary rings and Shoemaker-Levy 9's fragment chain "
+            "formed. The surviving bound fraction drops sharply across the limit.",
+            '<div class="grid">'
+            + svg_card(out("roche_disruption.svg"), "satellite shredding into a tidal stream")
+            + f'<div class="card">{pre(roche_txt)}</div>'
             + '</div>'),
         section(
             "Virial theorem & violent relaxation",
