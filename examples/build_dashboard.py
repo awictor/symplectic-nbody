@@ -217,6 +217,7 @@ def main():
     import wiedemann_franz_demo
     import bragg_demo
     import diffraction_limit_demo
+    import snell_demo
 
     import plot_orbits
 
@@ -403,6 +404,7 @@ def main():
     wiedemann_franz_txt = run("wiedemann_franz_demo", wiedemann_franz_demo.main, True)
     bragg_txt = run("bragg_demo", bragg_demo.main, True)
     diffraction_limit_txt = run("diffraction_limit_demo", diffraction_limit_demo.main, True)
+    snell_txt = run("snell_demo", snell_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2155,6 +2157,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("diffraction_limit.svg"), "resolution vs aperture with real instruments, and two sources at the Rayleigh limit")
             + f'<div class="card">{pre(diffraction_limit_txt)}</div>'
+            + '</div>'),
+        section(
+            "Snell's law: bending, trapping, and reflecting light",
+            "Light changes speed across a boundary and so must bend: n1 sin(theta1) = "
+            "n2 sin(theta2). Entering a denser medium it turns toward the normal; leaving one, "
+            "away from it -- until, past the critical angle arcsin(n2/n1), the refracted ray "
+            "cannot exist and all the light is totally internally reflected. That perfect "
+            "mirror guides light down an optical fibre and makes a diamond (24 deg critical "
+            "angle) sparkle. At Brewster's angle arctan(n2/n1) the reflection is perfectly "
+            "polarized, the trick behind polarizing sunglasses.",
+            '<div class="grid">'
+            + svg_card(out("snell.svg"), "rays leaving water bending away from the normal, then flipping to total internal reflection")
+            + f'<div class="card">{pre(snell_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

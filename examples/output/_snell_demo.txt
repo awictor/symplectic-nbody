@@ -1,0 +1,20 @@
+Snell's law n1 sin(t1) = n2 sin(t2): refraction, TIR, and Brewster
+
+  medium            n    critical angle   Brewster (from air)
+  water         1.333           48.6 deg              53.1 deg
+  glass         1.520           41.2 deg              56.7 deg
+  diamond       2.417           24.4 deg              67.5 deg
+
+  Diamond's tiny 24 deg critical angle traps light through many internal bounces
+  before it escapes -- that repeated total internal reflection is the sparkle.
+
+  Air -> water refraction (light bends toward the normal entering denser water):
+    incidence 10 deg  ->  refracts to 7.5 deg
+    incidence 30 deg  ->  refracts to 22.0 deg
+    incidence 50 deg  ->  refracts to 35.1 deg
+    incidence 70 deg  ->  refracts to 44.8 deg
+
+  Optical fibre (core 1.48, clad 1.46): NA = 0.242, acceptance cone half-angle 14.0 deg.
+  Light inside that cone is trapped by total internal reflection and guided for km.
+
+  wrote examples/output\snell.svg

@@ -175,6 +175,7 @@ ruins a long non-symplectic integration.
 | `src/wiedemann_franz.py` | Wiedemann-Franz law: Lorenz number, thermal-from-electrical conductivity |
 | `src/bragg.py` | Bragg diffraction: n lambda = 2 d sin(theta), Miller spacings, max order |
 | `src/diffraction_limit.py` | Diffraction limit: Rayleigh resolution, Abbe limit, grating resolving power |
+| `src/snell.py` | Snell's law: refraction, critical angle/TIR, Brewster, fibre numerical aperture |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -341,6 +342,7 @@ ruins a long non-symplectic integration.
 | `examples/wiedemann_franz_demo.py` | Predicted-vs-measured kappa table + the Lorenz-line figure |
 | `examples/bragg_demo.py` | Per-plane Bragg-angle table + the reflection-geometry figure |
 | `examples/diffraction_limit_demo.py` | Per-instrument resolution table + the Rayleigh-limit figure |
+| `examples/snell_demo.py` | Per-medium critical/Brewster table + the refraction/TIR ray figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4003,6 +4005,28 @@ grating turns the same physics into a spectrometer of resolving power `R = m N`.
 reproduce Hubble's and the human eye's resolution, the aperture and wavelength trends, the
 ~200 nm Abbe limit (and picometre electron limit), the grating orders, and the `m N`
 resolving power splitting the sodium doublet.
+
+## Snell's law: bending, trapping, and reflecting light
+
+Light bends when it changes speed at a boundary, and can be trapped entirely. `snell.py`:
+
+```
+$ python examples/snell_demo.py examples/output
+
+  medium     n       critical angle   Brewster (from air)
+  water      1.333   48.6 deg         53.1 deg
+  diamond    2.417   24.4 deg         67.5 deg
+```
+
+Snell's law `n1 sin(theta1) = n2 sin(theta2)` bends a ray toward the normal entering a denser
+medium and away from it leaving one -- until, past the critical angle `arcsin(n2/n1)`, the
+refracted ray is impossible and the light is **totally internally reflected**. That lossless
+mirror guides light down an optical fibre for thousands of kilometres and, with diamond's tiny
+24-degree critical angle, produces the sparkle of repeated internal bounces. At Brewster's
+angle `arctan(n2/n1)` the reflected beam is perfectly polarized (polarizing sunglasses), and a
+fibre's numerical aperture `sqrt(n_core^2 - n_clad^2)` sets its acceptance cone. The tests
+reproduce the air-water bend, water's 48.6-degree and diamond's 24-degree critical angles, the
+TIR onset and refraction raise, Brewster's angle, and the fibre NA and acceptance angle.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

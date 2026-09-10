@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200          10.35       13.95      0.7x
-   400          39.62       40.14      1.0x
-   800         168.77      157.65      1.1x
-  1600         864.47      497.22      1.7x
-  3200        3728.60     1404.14      2.7x
+   200           9.42       11.93      0.8x
+   400          36.74       38.11      1.0x
+   800         147.22      112.44      1.3x
+  1600         675.00      375.19      1.8x
+  3200        2756.63     1109.44      2.5x
 
-empirical scaling exponent  direct ~ N^2.14   barnes-hut ~ N^1.69
+empirical scaling exponent  direct ~ N^2.06   barnes-hut ~ N^1.64
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -46141,6 +46141,51 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   the only way past the wave-optics floor; it&#x27;s why telescopes and dishes grow huge.
 
   wrote examples/output\diffraction_limit.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Snell&#x27;s law: bending, trapping, and reflecting light</h2>
+    <p class="blurb">Light changes speed across a boundary and so must bend: n1 sin(theta1) = n2 sin(theta2). Entering a denser medium it turns toward the normal; leaving one, away from it -- until, past the critical angle arcsin(n2/n1), the refracted ray cannot exist and all the light is totally internally reflected. That perfect mirror guides light down an optical fibre and makes a diamond (24 deg critical angle) sparkle. At Brewster's angle arctan(n2/n1) the reflection is perfectly polarized, the trick behind polarizing sunglasses.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<text x="20" y="34" fill="#e6edf3" font-size="18">Refraction and total internal reflection</text>
+<text x="20" y="52" fill="#8b949e" font-size="12">rays leaving water bend away from the normal, then flip to TIR past the critical angle</text>
+<rect x="0" y="331.2" width="720" height="388.8" fill="#4dabf7" opacity="0.10"/>
+<line x1="0" y1="331.2" x2="720" y2="331.2" stroke="#8b949e" stroke-width="2"/>
+<text x="646.0" y="323.2" fill="#8b949e" font-size="11" text-anchor="end">air (n=1.00)</text>
+<text x="646.0" y="349.2" fill="#4dabf7" font-size="11" text-anchor="end">water (n=1.333)</text>
+<line x1="360.0" y1="191.2" x2="360.0" y2="471.2" stroke="#21262d" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="308.7" y1="472.2" x2="360.0" y2="331.2" stroke="#06d6a0" stroke-width="2"/>
+<line x1="360.0" y1="331.2" x2="428.4" y2="197.7" stroke="#06d6a0" stroke-width="2"/>
+<line x1="263.6" y1="446.1" x2="360.0" y2="331.2" stroke="#06d6a0" stroke-width="2"/>
+<line x1="360.0" y1="331.2" x2="488.5" y2="253.8" stroke="#06d6a0" stroke-width="2"/>
+<line x1="247.5" y1="430.4" x2="360.0" y2="331.2" stroke="#ff6b6b" stroke-width="2"/>
+<line x1="360.0" y1="331.2" x2="509.9" y2="327.0" stroke="#06d6a0" stroke-width="2"/>
+<line x1="230.1" y1="406.2" x2="360.0" y2="331.2" stroke="#ff6b6b" stroke-width="2"/>
+<line x1="360.0" y1="331.2" x2="489.9" y2="406.2" stroke="#ff6b6b" stroke-width="2" stroke-dasharray="5 3"/>
+<text x="241.4" y="446.3" fill="#ffd43b" font-size="11" text-anchor="end">critical 48.6 deg</text>
+<text x="70.0" y="694.0" fill="#06d6a0" font-size="11">green = refracts out</text>
+<text x="650.0" y="694.0" fill="#ff6b6b" font-size="11" text-anchor="end">red = totally reflected (trapped)</text>
+</svg><figcaption>rays leaving water bending away from the normal, then flipping to total internal reflection</figcaption></figure><div class="card"><pre>Snell&#x27;s law n1 sin(t1) = n2 sin(t2): refraction, TIR, and Brewster
+
+  medium            n    critical angle   Brewster (from air)
+  water         1.333           48.6 deg              53.1 deg
+  glass         1.520           41.2 deg              56.7 deg
+  diamond       2.417           24.4 deg              67.5 deg
+
+  Diamond&#x27;s tiny 24 deg critical angle traps light through many internal bounces
+  before it escapes -- that repeated total internal reflection is the sparkle.
+
+  Air -&gt; water refraction (light bends toward the normal entering denser water):
+    incidence 10 deg  -&gt;  refracts to 7.5 deg
+    incidence 30 deg  -&gt;  refracts to 22.0 deg
+    incidence 50 deg  -&gt;  refracts to 35.1 deg
+    incidence 70 deg  -&gt;  refracts to 44.8 deg
+
+  Optical fibre (core 1.48, clad 1.46): NA = 0.242, acceptance cone half-angle 14.0 deg.
+  Light inside that cone is trapped by total internal reflection and guided for km.
+
+  wrote examples/output\snell.svg</pre></div></div>
   </section>
 
   <section>
