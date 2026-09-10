@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.93       13.38      0.7x
-   400          38.81       39.25      1.0x
-   800         154.62      122.71      1.3x
-  1600         637.80      489.09      1.3x
-  3200        2439.77      953.12      2.6x
+   200           9.33       12.09      0.8x
+   400          37.10       37.52      1.0x
+   800         147.44      112.38      1.3x
+  1600         778.14      519.23      1.5x
+  3200        3309.34     1337.68      2.5x
 
-empirical scaling exponent  direct ~ N^1.99   barnes-hut ~ N^1.59
+empirical scaling exponent  direct ~ N^2.13   barnes-hut ~ N^1.74
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -45828,6 +45828,68 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   to simulate (~Re^(9/4) grid points in 3-D).
 
   wrote examples/output\kolmogorov.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>The Casimir effect: pushed together by empty space</h2>
+    <p class="blurb">The quantum vacuum has a zero-point energy in every field mode. Slide two conducting plates close and only the modes that fit in the gap survive between them, so the fuller vacuum outside presses them together with a pressure P = pi^2 hbar c/(240 d^4) -- a force from nothing but the structure of empty space, predicted in 1948 and measured in 1997. The steep d^-4 law makes it invisible at human gaps but crushing below 100 nm (an atmosphere by ~10 nm), where it sticks micro-machine parts together.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<text x="20" y="34" fill="#e6edf3" font-size="18">The Casimir pressure of the vacuum</text>
+<text x="20" y="52" fill="#8b949e" font-size="12">P ~ d^-4: nothing at human gaps, an atmosphere by ~10 nm</text>
+<line x1="82" y1="638" x2="638" y2="638" stroke="#8b949e" stroke-width="1.5"/>
+<line x1="82" y1="638" x2="82" y2="126" stroke="#8b949e" stroke-width="1.5"/>
+<line x1="82" y1="577.6" x2="638" y2="577.6" stroke="#21262d" stroke-width="1"/>
+<text x="74.0" y="581.6" fill="#8b949e" font-size="10" text-anchor="end">10^-5 Pa</text>
+<line x1="82" y1="513.6" x2="638" y2="513.6" stroke="#21262d" stroke-width="1"/>
+<text x="74.0" y="517.6" fill="#8b949e" font-size="10" text-anchor="end">10^-3 Pa</text>
+<line x1="82" y1="449.6" x2="638" y2="449.6" stroke="#21262d" stroke-width="1"/>
+<text x="74.0" y="453.6" fill="#8b949e" font-size="10" text-anchor="end">10^-1 Pa</text>
+<line x1="82" y1="385.6" x2="638" y2="385.6" stroke="#21262d" stroke-width="1"/>
+<text x="74.0" y="389.6" fill="#8b949e" font-size="10" text-anchor="end">10^1 Pa</text>
+<line x1="82" y1="321.6" x2="638" y2="321.6" stroke="#21262d" stroke-width="1"/>
+<text x="74.0" y="325.6" fill="#8b949e" font-size="10" text-anchor="end">10^3 Pa</text>
+<line x1="82" y1="257.6" x2="638" y2="257.6" stroke="#21262d" stroke-width="1"/>
+<text x="74.0" y="261.6" fill="#8b949e" font-size="10" text-anchor="end">10^5 Pa</text>
+<line x1="82" y1="193.6" x2="638" y2="193.6" stroke="#21262d" stroke-width="1"/>
+<text x="74.0" y="197.6" fill="#8b949e" font-size="10" text-anchor="end">10^7 Pa</text>
+<line x1="82" y1="129.6" x2="638" y2="129.6" stroke="#21262d" stroke-width="1"/>
+<text x="74.0" y="133.6" fill="#8b949e" font-size="10" text-anchor="end">10^9 Pa</text>
+<line x1="82.0" y1="638.0" x2="82.0" y2="642.0" stroke="#8b949e"/>
+<text x="82.0" y="654.0" fill="#8b949e" font-size="10" text-anchor="middle">1 nm</text>
+<line x1="221.0" y1="638.0" x2="221.0" y2="642.0" stroke="#8b949e"/>
+<text x="221.0" y="654.0" fill="#8b949e" font-size="10" text-anchor="middle">10 nm</text>
+<line x1="360.0" y1="638.0" x2="360.0" y2="642.0" stroke="#8b949e"/>
+<text x="360.0" y="654.0" fill="#8b949e" font-size="10" text-anchor="middle">100 nm</text>
+<line x1="499.0" y1="638.0" x2="499.0" y2="642.0" stroke="#8b949e"/>
+<text x="499.0" y="654.0" fill="#8b949e" font-size="10" text-anchor="middle">1 um</text>
+<line x1="638.0" y1="638.0" x2="638.0" y2="642.0" stroke="#8b949e"/>
+<text x="638.0" y="654.0" fill="#8b949e" font-size="10" text-anchor="middle">10 um</text>
+<text x="360.0" y="668.0" fill="#8b949e" font-size="11" text-anchor="middle">plate separation d</text>
+<line x1="82" y1="257.5" x2="638" y2="257.5" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="5 4" opacity="0.7"/>
+<text x="634.0" y="252.5" fill="#ff6b6b" font-size="10" text-anchor="end">1 atmosphere</text>
+<polyline points="82.0,126.0 84.8,128.6 87.6,131.1 90.4,133.7 93.2,136.3 96.0,138.9 98.8,141.4 101.6,144.0 104.4,146.6 107.1,149.2 109.9,151.7 112.7,154.3 115.5,156.9 118.3,159.4 121.1,162.0 123.9,164.6 126.7,167.2 129.5,169.7 132.3,172.3 135.1,174.9 137.9,177.5 140.7,180.0 143.5,182.6 146.3,185.2 149.1,187.7 151.8,190.3 154.6,192.9 157.4,195.5 160.2,198.0 163.0,200.6 165.8,203.2 168.6,205.8 171.4,208.3 174.2,210.9 177.0,213.5 179.8,216.1 182.6,218.6 185.4,221.2 188.2,223.8 191.0,226.3 193.8,228.9 196.6,231.5 199.3,234.1 202.1,236.6 204.9,239.2 207.7,241.8 210.5,244.4 213.3,246.9 216.1,249.5 218.9,252.1 221.7,254.6 224.5,257.2 227.3,259.8 230.1,262.4 232.9,264.9 235.7,267.5 238.5,270.1 241.3,272.7 244.1,275.2 246.8,277.8 249.6,280.4 252.4,282.9 255.2,285.5 258.0,288.1 260.8,290.7 263.6,293.2 266.4,295.8 269.2,298.4 272.0,301.0 274.8,303.5 277.6,306.1 280.4,308.7 283.2,311.2 286.0,313.8 288.8,316.4 291.5,319.0 294.3,321.5 297.1,324.1 299.9,326.7 302.7,329.3 305.5,331.8 308.3,334.4 311.1,337.0 313.9,339.5 316.7,342.1 319.5,344.7 322.3,347.3 325.1,349.8 327.9,352.4 330.7,355.0 333.5,357.6 336.3,360.1 339.0,362.7 341.8,365.3 344.6,367.8 347.4,370.4 350.2,373.0 353.0,375.6 355.8,378.1 358.6,380.7 361.4,383.3 364.2,385.9 367.0,388.4 369.8,391.0 372.6,393.6 375.4,396.2 378.2,398.7 381.0,401.3 383.7,403.9 386.5,406.4 389.3,409.0 392.1,411.6 394.9,414.2 397.7,416.7 400.5,419.3 403.3,421.9 406.1,424.5 408.9,427.0 411.7,429.6 414.5,432.2 417.3,434.7 420.1,437.3 422.9,439.9 425.7,442.5 428.5,445.0 431.2,447.6 434.0,450.2 436.8,452.8 439.6,455.3 442.4,457.9 445.2,460.5 448.0,463.0 450.8,465.6 453.6,468.2 456.4,470.8 459.2,473.3 462.0,475.9 464.8,478.5 467.6,481.1 470.4,483.6 473.2,486.2 475.9,488.8 478.7,491.3 481.5,493.9 484.3,496.5 487.1,499.1 489.9,501.6 492.7,504.2 495.5,506.8 498.3,509.4 501.1,511.9 503.9,514.5 506.7,517.1 509.5,519.6 512.3,522.2 515.1,524.8 517.9,527.4 520.7,529.9 523.4,532.5 526.2,535.1 529.0,537.7 531.8,540.2 534.6,542.8 537.4,545.4 540.2,547.9 543.0,550.5 545.8,553.1 548.6,555.7 551.4,558.2 554.2,560.8 557.0,563.4 559.8,566.0 562.6,568.5 565.4,571.1 568.2,573.7 570.9,576.3 573.7,578.8 576.5,581.4 579.3,584.0 582.1,586.5 584.9,589.1 587.7,591.7 590.5,594.3 593.3,596.8 596.1,599.4 598.9,602.0 601.7,604.6 604.5,607.1 607.3,609.7 610.1,612.3 612.9,614.8 615.6,617.4 618.4,620.0 621.2,622.6 624.0,625.1 626.8,627.7 629.6,630.3 632.4,632.9 635.2,635.4 638.0,638.0" fill="none" stroke="#4dabf7" stroke-width="2.8"/>
+<circle cx="360.0" cy="382.0" r="4.5" fill="#ffd43b"/>
+<text x="367.0" y="376.0" fill="#ffd43b" font-size="10">100 nm: ~13 Pa</text>
+<circle cx="224.8" cy="257.5" r="4.5" fill="#ff6b6b"/>
+<text x="231.8" y="251.5" fill="#ff6b6b" font-size="10">= 1 atm</text>
+<circle cx="499.0" cy="510.0" r="4.5" fill="#06d6a0"/>
+<text x="506.0" y="504.0" fill="#06d6a0" font-size="10">1 um (MEMS)</text>
+</svg><figcaption>Casimir pressure vs plate gap on log-log axes, crossing one atmosphere near 10 nm</figcaption></figure><div class="card"><pre>Casimir effect: vacuum pushes two plates together, P = pi^2 hbar c / (240 d^4)
+
+       gap d        pressure   force on 1 cm^2
+       10 nm     1.30e+05 Pa   13001257.724 uN
+      100 nm     1.30e+01 Pa       1300.126 uN
+        1 um     1.30e-03 Pa          0.130 uN
+       10 um     1.30e-07 Pa        1.30e-11 N
+        1 mm     1.30e-15 Pa        1.30e-19 N
+
+  At d = 10.6 nm the Casimir pressure equals one atmosphere. The force is pure
+  quantum vacuum -- only the modes that fit between the plates survive inside, so
+  the fuller outside vacuum presses them together. The d^-4 law makes it invisible
+  at human scales but dominant in MEMS, where it sticks micro-parts together (stiction).
+
+  wrote examples/output\casimir.svg</pre></div></div>
   </section>
 
   <section>

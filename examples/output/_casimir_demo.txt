@@ -1,0 +1,15 @@
+Casimir effect: vacuum pushes two plates together, P = pi^2 hbar c / (240 d^4)
+
+       gap d        pressure   force on 1 cm^2
+       10 nm     1.30e+05 Pa   13001257.724 uN
+      100 nm     1.30e+01 Pa       1300.126 uN
+        1 um     1.30e-03 Pa          0.130 uN
+       10 um     1.30e-07 Pa        1.30e-11 N
+        1 mm     1.30e-15 Pa        1.30e-19 N
+
+  At d = 10.6 nm the Casimir pressure equals one atmosphere. The force is pure
+  quantum vacuum -- only the modes that fit between the plates survive inside, so
+  the fuller outside vacuum presses them together. The d^-4 law makes it invisible
+  at human scales but dominant in MEMS, where it sticks micro-parts together (stiction).
+
+  wrote examples/output\casimir.svg

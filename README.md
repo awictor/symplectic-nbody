@@ -170,6 +170,7 @@ ruins a long non-symplectic integration.
 | `src/knudsen.py` | Knudsen number: mean free path, flow regimes, continuum-to-free-molecular |
 | `src/richardson.py` | Richardson number: stratified-shear stability, Kelvin-Helmholtz onset |
 | `src/kolmogorov.py` | Kolmogorov cascade: -5/3 spectrum, dissipation microscales, Re^(3/4) range |
+| `src/casimir.py` | Casimir effect: vacuum pressure/force/energy between plates, d^-4 law |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -331,6 +332,7 @@ ruins a long non-symplectic integration.
 | `examples/knudsen_demo.py` | Per-system regime table + the size-pressure regime map |
 | `examples/richardson_demo.py` | Per-layer stability table + the Ri map & KH-billow sketch |
 | `examples/kolmogorov_demo.py` | Per-flow microscale table + the -5/3 energy-spectrum figure |
+| `examples/casimir_demo.py` | Pressure/force-vs-gap table + the d^-4 pressure figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3874,6 +3876,30 @@ why a weather-scale flow holds millions of eddy sizes and costs `~Re^(9/4)` grid
 simulate in 3-D. The tests verify `epsilon = u^3/L`, the microscales and their unit eddy
 Reynolds number, the -5/3 spectral slope, the `l^(2/3)` eddy-turnover scaling, and the
 `Re^(3/4)` scale separation.
+
+## The Casimir effect: pushed together by empty space
+
+Two plates in a vacuum are drawn together by the quantum zero-point field. `casimir.py`:
+
+```
+$ python examples/casimir_demo.py examples/output
+
+  gap d      pressure       force on 1 cm^2
+  100 nm     1.30e+01 Pa    1300 uN
+  1 um       1.30e-03 Pa    0.13 uN
+
+  1 atmosphere of Casimir pressure at d = 10.6 nm
+```
+
+Every electromagnetic mode carries a zero-point energy `hbar omega/2`. Between two conducting
+plates only the modes whose wavelengths fit in the gap survive, so the vacuum inside holds
+fewer modes than outside and the plates are pressed together by `P = pi^2 hbar c/(240 d^4)`,
+with energy per area `-pi^2 hbar c/(720 d^3)`. Predicted by Casimir in 1948 and measured to a
+few percent in 1997, the `d^-4` law makes the force utterly negligible at macroscopic gaps
+but crushing below ~100 nm -- reaching one atmosphere by ~10 nm -- where it causes stiction in
+micro-electromechanical systems. The tests reproduce the ~13 Pa pressure at 100 nm, the
+`d^-4` and `d^-3` scalings, the pressure-as-energy-gradient relation, the ~10 nm one-
+atmosphere gap, and Casimir's dominance over gravity between thin plates.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

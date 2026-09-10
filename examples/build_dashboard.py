@@ -212,6 +212,7 @@ def main():
     import knudsen_demo
     import richardson_demo
     import kolmogorov_demo
+    import casimir_demo
 
     import plot_orbits
 
@@ -393,6 +394,7 @@ def main():
     knudsen_txt = run("knudsen_demo", knudsen_demo.main, True)
     richardson_txt = run("richardson_demo", richardson_demo.main, True)
     kolmogorov_txt = run("kolmogorov_demo", kolmogorov_demo.main, True)
+    casimir_txt = run("casimir_demo", casimir_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2080,6 +2082,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("kolmogorov.svg"), "the E(k) spectrum with its -5/3 inertial range between injection and dissipation")
             + f'<div class="card">{pre(kolmogorov_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Casimir effect: pushed together by empty space",
+            "The quantum vacuum has a zero-point energy in every field mode. Slide two "
+            "conducting plates close and only the modes that fit in the gap survive between "
+            "them, so the fuller vacuum outside presses them together with a pressure "
+            "P = pi^2 hbar c/(240 d^4) -- a force from nothing but the structure of empty "
+            "space, predicted in 1948 and measured in 1997. The steep d^-4 law makes it "
+            "invisible at human gaps but crushing below 100 nm (an atmosphere by ~10 nm), "
+            "where it sticks micro-machine parts together.",
+            '<div class="grid">'
+            + svg_card(out("casimir.svg"), "Casimir pressure vs plate gap on log-log axes, crossing one atmosphere near 10 nm")
+            + f'<div class="card">{pre(casimir_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
