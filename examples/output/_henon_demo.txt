@@ -1,0 +1,16 @@
+Henon map: x'=1-a x^2+y, y'=b x  (a=1.4, b=0.3)
+
+  Area contraction per step |det J| = |b| = 0.30 (dissipative -> attractor)
+  Fixed points:
+    (+0.6314, +0.1894)
+    (-1.1314, -0.3394)
+
+  Largest Lyapunov exponent = 0.421 nat/iteration (positive -> chaos).
+  Fractal (correlation) dimension ~ 1.26 -- between a curve and a filled region.
+
+  The map stretches and folds the plane each step: a blob shrinks in area (by |b|)
+  yet is pulled apart along the unstable direction, so it collapses onto a fractal
+  of nested arcs. Zoom in and each arc is really a Cantor set of finer strands --
+  the hallmark of a strange attractor, chaos with structure at every scale.
+
+  wrote examples/output\henon.svg

@@ -196,6 +196,7 @@ ruins a long non-symplectic integration.
 | `src/buffon.py` | Buffon's needle: crossing probability, Monte Carlo pi, 1/sqrt(N) convergence |
 | `src/metropolis.py` | Metropolis MCMC on the 2D Ising model: acceptance rule, Onsager T_c |
 | `src/logistic_map.py` | Logistic map: period doubling, attractor, Lyapunov exponent, Feigenbaum |
+| `src/henon.py` | Henon map: strange attractor, area contraction, fixed points, Lyapunov |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -383,6 +384,7 @@ ruins a long non-symplectic integration.
 | `examples/buffon_demo.py` | Convergence table + the needle-scatter & pi-estimate figure |
 | `examples/metropolis_demo.py` | Simulated m(T) table + the transition curve & spin-snapshot figure |
 | `examples/logistic_map_demo.py` | Period/Lyapunov table + the bifurcation diagram & Lyapunov figure |
+| `examples/henon_demo.py` | Fixed-point/Lyapunov table + the attractor & fractal-zoom figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4521,6 +4523,27 @@ constant** `4.669`, the same for any smooth unimodal map, and the Lyapunov expon
 `<ln|r(1-2x)|>` is negative in the periodic regime and positive in chaos (reaching `ln 2` at
 `r=4`). The tests reproduce the `1-1/r` fixed point and its stability, the period 1/2/4 and
 period-3 window, the negative-to-positive Lyapunov crossover, and the Feigenbaum constant.
+
+## The Henon map: a strange attractor in two lines
+
+A two-line map holds a full fractal attractor. `henon.py`:
+
+```
+$ python examples/henon_demo.py examples/output
+
+  fixed points: (+0.631, +0.189), (-1.131, -0.339)
+  area contraction |det J| = |b| = 0.30       Lyapunov = 0.421 (chaos)
+```
+
+Henon's map `x' = 1 - a x^2 + y, y' = b x` at `a=1.4, b=0.3` is the canonical low-dimensional
+strange attractor: the iterates never settle and never repeat, tracing a fractal of nested
+arcs that resolve, on zoom, into a Cantor set of ever-finer strands. It is dissipative -- each
+step contracts area by the constant Jacobian `|det J| = |b|` -- yet chaotic, with a positive
+largest Lyapunov exponent (~0.42 nat/iteration) so nearby points separate exponentially. The
+squeeze-in-area-while-stretching-along-the-unstable-direction is what collapses a blob onto a
+fractal of dimension ~1.26. The tests reproduce the map formula, the bounded spanning
+attractor, the `|b|` area contraction, the two fixed points (verified as fixed), the ~0.42
+classic Lyapunov exponent, and a non-chaotic small-`a` case.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

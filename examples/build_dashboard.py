@@ -238,6 +238,7 @@ def main():
     import buffon_demo
     import metropolis_demo
     import logistic_map_demo
+    import henon_demo
 
     import plot_orbits
 
@@ -445,6 +446,7 @@ def main():
     buffon_txt = run("buffon_demo", buffon_demo.main, True)
     metropolis_txt = run("metropolis_demo", metropolis_demo.main, True)
     logistic_map_txt = run("logistic_map_demo", logistic_map_demo.main, True)
+    henon_txt = run("henon_demo", henon_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2473,6 +2475,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("logistic_map.svg"), "the bifurcation diagram doubling into chaos, above the Lyapunov exponent turning positive")
             + f'<div class="card">{pre(logistic_map_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Henon map: a strange attractor in two lines",
+            "Henon's 1976 map, x' = 1 - a x^2 + y, y' = b x, is the canonical low-dimensional "
+            "strange attractor. At a=1.4, b=0.3 the iterates never settle and never repeat, "
+            "tracing a fractal of nested arcs that -- zoomed in -- resolve into a Cantor set of "
+            "ever-finer strands. It is dissipative (areas shrink by |b| each step) yet chaotic "
+            "(largest Lyapunov exponent ~0.42): a blob is squeezed in area while stretched and "
+            "folded, collapsing onto a fractal of dimension ~1.26. Chaos with structure at "
+            "every scale.",
+            '<div class="grid">'
+            + svg_card(out("henon.svg"), "the Henon attractor and a zoom revealing the fractal Cantor strands")
+            + f'<div class="card">{pre(henon_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
