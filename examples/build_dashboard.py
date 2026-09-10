@@ -130,6 +130,7 @@ def main():
     import jeans_escape_demo
     import snow_line_demo
     import poynting_robertson_demo
+    import toomre_demo
 
     import plot_orbits
 
@@ -229,6 +230,7 @@ def main():
     jeansesc_txt = run("jeans_escape_demo", jeans_escape_demo.main, True)
     snowline_txt = run("snow_line_demo", snow_line_demo.main, True)
     prdrag_txt = run("poynting_robertson_demo", poynting_robertson_demo.main, True)
+    toomre_txt = run("toomre_demo", toomre_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -907,6 +909,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("poynting_robertson.svg"), "inspiral time vs grain size, blow-out and solar age marked")
             + f'<div class="card">{pre(prdrag_txt)}</div>'
+            + '</div>'),
+        section(
+            "Toomre Q & disk stability",
+            "A rotating disk balances self-gravity against pressure (small scales) "
+            "and rotation via the epicyclic frequency (large scales). Toomre's "
+            "Q = c_s kappa / (pi G Sigma) captures it in one number: Q > 1 is stable, "
+            "Q < 1 fragments into clumps and spiral arms. The Milky Way hovers at "
+            "Q ~ 1.5-2 -- marginally stable, because star formation heats a cooling "
+            "disk back up, so disks self-regulate to the stability line.",
+            '<div class="grid">'
+            + svg_card(out("toomre.svg"), "gas Q across the galactic disk with the unstable band shaded")
+            + f'<div class="card">{pre(toomre_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

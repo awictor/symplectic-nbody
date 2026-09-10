@@ -88,6 +88,7 @@ ruins a long non-symplectic integration.
 | `src/jeans_escape.py` | Jeans escape: which gases a world keeps, which leak to space |
 | `src/snow_line.py` | The snow line: disk temperature & the rocky/icy divide at ~3 AU |
 | `src/poynting_robertson.py` | Poynting-Robertson drag: dust spiralling into the Sun |
+| `src/toomre.py` | Toomre Q: when a rotating disk fragments into clumps and arms |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -167,6 +168,7 @@ ruins a long non-symplectic integration.
 | `examples/jeans_escape_demo.py` | Gas-retention table + the escape-vs-thermal-speed shoreline |
 | `examples/snow_line_demo.py` | Disk T at each planet + the frost-line temperature profile |
 | `examples/poynting_robertson_demo.py` | Inspiral time vs grain size with blow-out & solar age |
+| `examples/toomre_demo.py` | Q across the galactic disk with the unstable band shaded |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1587,6 +1589,36 @@ of the solar system. The zodiacal cloud therefore cannot be primordial; it must 
 continuously resupplied by comet trails and asteroid collisions. The tests verify the
 `beta ~ 1/s` law, the ~0.1-0.5 micron blow-out size, the `r^2` and `s` inspiral scalings,
 and the fast micron-grain infall.
+
+## Toomre Q: when a rotating disk fragments
+
+A thin, rotating disk is caught between self-gravity (which collapses overdense patches),
+pressure or velocity dispersion (which resists collapse on small scales) and rotation via
+the epicyclic frequency kappa (which resists it on large scales). Toomre's `Q` sets the
+balance in one number. `toomre.py`:
+
+```
+$ python examples/toomre_demo.py examples/output
+
+    R (kpc)  kappa (/Gyr)    gas Q       state
+  --------------------------------------------
+          2         159.1     2.61      stable
+          4          79.6     1.82      stable
+          6          53.0     1.69      stable
+          8          39.8     1.77      stable
+         10          31.8     1.98      stable
+         14          22.7     2.75      stable
+         18          17.7     4.17      stable
+```
+
+With `Q = c_s kappa / (pi G Sigma)` for gas (and `sigma_R kappa / 3.36 G Sigma` for stars),
+`Q > 1` is stable at every wavelength while `Q < 1` opens an unstable band that fragments
+into clumps and spiral arms; the most-unstable Toomre wavelength `4 pi^2 G Sigma / kappa^2`
+sets their ~kpc size. The Milky Way hovers at `Q ~ 1.5-2` -- marginally stable, and not by
+chance: a disk cooling toward `Q < 1` forms stars that heat it back up, so disks
+self-regulate to the stability line. The tests verify the marginally-stable solar
+neighbourhood, the stability verdict, the `c_s` and `Sigma` scalings, the critical
+dispersion at `Q = 1`, and the kpc-scale Toomre wavelength.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
