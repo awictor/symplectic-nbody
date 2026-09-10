@@ -196,6 +196,7 @@ def main():
     import diffusion_demo
     import peclet_demo
     import convection_demo
+    import stefan_demo
 
     import plot_orbits
 
@@ -361,6 +362,7 @@ def main():
     diffusion_txt = run("diffusion_demo", diffusion_demo.main, True)
     peclet_txt = run("peclet_demo", peclet_demo.main, True)
     convection_txt = run("convection_demo", convection_demo.main, True)
+    stefan_txt = run("stefan_demo", stefan_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1834,6 +1836,20 @@ def main():
             '<div class="grid">'
             + svg_card(out("convection.svg"), "a hot block cooling: time constant shrinks from still air to forced water")
             + f'<div class="card">{pre(convection_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Stefan problem: a freezing front as sqrt(t)",
+            "A melting or freezing interface is driven by latent heat, not temperature alone: "
+            "the heat released as water freezes must conduct out through the ice already "
+            "formed, so the front advances as X = 2 lambda sqrt(alpha t), slowing as it "
+            "deepens. The growth coefficient lambda solves the Stefan condition "
+            "lambda e^(lambda^2) erf(lambda) = St/sqrt(pi), where the Stefan number "
+            "St = c_p dT/L weighs sensible against latent heat. It reproduces Stefan's classic "
+            "estimate -- about 10 cm of ice after a day of hard frost -- and the depth^2 time "
+            "law that makes the next foot take weeks.",
+            '<div class="grid">'
+            + svg_card(out("stefan.svg"), "ice thickness vs time for light, hard and arctic frost -- the sqrt(t) slowdown")
+            + f'<div class="card">{pre(stefan_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

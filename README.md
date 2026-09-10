@@ -154,6 +154,7 @@ ruins a long non-symplectic integration.
 | `src/diffusion.py` | Fick's laws: Gaussian/erfc profiles, sqrt(t) spread, diffusion length, Stokes-Einstein |
 | `src/peclet.py` | Peclet number Pe=UL/D + Prandtl/Schmidt/Lewis: advection vs diffusion |
 | `src/convection.py` | Convective heat transfer: Newton cooling, Nusselt correlations, Biot, lumped cooling |
+| `src/stefan.py` | The Stefan problem: melting/freezing front X=2 lambda sqrt(alpha t), latent heat |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -299,6 +300,7 @@ ruins a long non-symplectic integration.
 | `examples/diffusion_demo.py` | Diffusion length/time table + the spreading-Gaussian fan |
 | `examples/peclet_demo.py` | Per-system Peclet table + the advection-diffusion regime map |
 | `examples/convection_demo.py` | Cooling-regime table + the Newtonian cooling curves |
+| `examples/stefan_demo.py` | Ice-growth table by frost severity + the sqrt(t) front curves |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3457,6 +3459,30 @@ isothermal). So an aluminium block sheds heat in an hour in still air but in sec
 forced water -- same law, hundred-fold `h`. The tests check the Dittus-Boelter and flat-plate
 correlations, the `Re^0.8`/`sqrt(Re)` scalings, the lumped/non-lumped Biot split, and the
 `1/e`-per-tau exponential decay.
+
+## The Stefan problem: a freezing front as the root of time
+
+A melting or freezing interface moves at a rate set by latent heat. `stefan.py`:
+
+```
+$ python examples/stefan_demo.py examples/output
+
+  frost                 St    lambda   ice @ 1 day   ice @ 1 wk
+  light frost (-5 C)   0.031   0.125      7.8 cm       20.7 cm
+  hard frost (-15 C)   0.094   0.214     13.4 cm       35.6 cm
+  arctic (-40 C)       0.251   0.341     21.4 cm       56.7 cm
+```
+
+The front position obeys `X(t) = 2 lambda sqrt(alpha t)`, where the latent heat released at
+the interface must conduct out through the ice already formed, so the front slows as it
+deepens. The growth coefficient `lambda` solves the transcendental Stefan condition
+`lambda e^(lambda^2) erf(lambda) = St/sqrt(pi)` (by bisection here), with the Stefan number
+`St = c_p dT/L` weighing the sensible heat available against the latent heat needed -- small
+`St` (latent-dominated) gives a slow front, `lambda ~ sqrt(St/2)`. This reproduces Stefan's
+classic ice result (~10 cm after a day of hard frost) and the `depth^2` time law that makes
+thin ice form in hours and the next foot take weeks; the same physics crusts a cooling lava
+lake. The tests check the Stefan number, the small-`St` limit, the Stefan condition itself,
+the `sqrt(t)` advance, the `depth^2` scaling, and the latent-heat dependence.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

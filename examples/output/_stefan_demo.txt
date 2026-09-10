@@ -1,0 +1,20 @@
+Stefan problem: freezing front X(t) = 2 lambda sqrt(alpha t)
+
+  ice: alpha = 1.14e-06 m^2/s,  latent heat L = 334 kJ/kg
+
+  frost                       St   lambda   ice @ 1 day   ice @ 1 wk
+  light frost (-5 C)       0.031    0.125        7.8 cm      20.7 cm
+  hard frost (-15 C)       0.094    0.214       13.4 cm      35.6 cm
+  arctic (-40 C)           0.251    0.341       21.4 cm      56.7 cm
+
+  To reach a given thickness (hard frost, -15 C):
+      5 cm  ->  0.1 days
+     10 cm  ->  0.6 days
+     30 cm  ->  5.0 days
+     50 cm  ->  13.8 days
+
+  The front slows as sqrt(t): the latent heat released at the interface must
+  conduct out through the ice already formed, and that layer thickens, so the
+  first few cm come in hours but the next foot takes weeks. Same law crusts lava.
+
+  wrote examples/output\stefan.svg
