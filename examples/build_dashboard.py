@@ -97,6 +97,7 @@ def main():
     import tidal_heating_demo
     import lense_thirring_demo
     import oberth_demo
+    import dynamical_friction_demo
 
     import plot_orbits
 
@@ -163,6 +164,7 @@ def main():
     tidalheat_txt = run("tidal_heating_demo", tidal_heating_demo.main, True)
     lt_txt = run("lense_thirring_demo", lense_thirring_demo.main, True)
     oberth_txt = run("oberth_demo", oberth_demo.main, True)
+    df_txt = run("dynamical_friction_demo", dynamical_friction_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -254,6 +256,16 @@ def main():
             + svg_card(out("galaxy_t2.svg"), "close passage")
             + svg_card(out("galaxy_t4.svg"), "tidal tails")
             + f'<div class="card">{pre(galaxy_txt)}</div>'
+            + '</div>'),
+        section(
+            "Dynamical friction: satellites spiralling in",
+            "A massive body moving through a star field pulls a wake behind it "
+            "that drags it back (Chandrasekhar friction ~ M^2 rho / v^2). "
+            "Satellites and globular clusters spiral into their host on a time "
+            "that scales as 1/M -- heavier sinks faster, dragging black holes to centres.",
+            '<div class="grid">'
+            + svg_card(out("dynamical_friction.svg"), "drag vs speed: zero at rest, peaks, then 1/v^2")
+            + f'<div class="card">{pre(df_txt)}</div>'
             + '</div>'),
         section(
             "Sitnikov problem: a clean route to chaos",

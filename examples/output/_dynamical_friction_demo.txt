@@ -1,0 +1,14 @@
+Chandrasekhar dynamical friction: satellites spiralling in
+
+  sinking time into a Milky-Way-like halo (r0=50 kpc, v_circ=220 km/s):
+      satellite mass    sinking time
+  ----------------------------------
+  globular cluster (1e+08)       292.55 Gyr
+   LMC-scale (1e+10)         2.93 Gyr
+  massive dwarf (1e+11)         0.29 Gyr
+
+  Heavier objects sink faster (t ~ 1/M): a massive satellite merges in a
+  few Gyr, while a light globular cluster survives ~a Hubble time. This
+  drags massive black holes to galactic centres and erodes cluster orbits.
+
+  wrote examples/output\dynamical_friction.svg

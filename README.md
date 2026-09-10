@@ -102,6 +102,7 @@ ruins a long non-symplectic integration.
 | `src/poincare.py` | Poincare surface-of-section for the CR3BP (tori vs chaos) |
 | `src/sitnikov.py` | The Sitnikov problem: on-axis test particle, integrable-to-chaotic |
 | `src/galaxy.py` | Disk-galaxy generator and two-galaxy tidal encounters |
+| `src/dynamical_friction.py` | Chandrasekhar friction: satellites sinking into galaxies |
 | `src/gravwave.py` | 2.5PN radiation reaction: gravitational-wave inspiral & chirp |
 | `src/systems.py` | Test systems: two-body, figure-eight, pythagorean 3-body, **Plummer-sphere star cluster** (any N) |
 | `tests/test_conservation.py` | Automated checks of every conservation claim |
@@ -148,6 +149,7 @@ ruins a long non-symplectic integration.
 | `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
 | `examples/sitnikov_demo.py` | Stroboscopic maps: circular binary (tori) vs eccentric (chaos) |
 | `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
+| `examples/dynamical_friction_demo.py` | Sinking times by mass + drag-vs-speed curve |
 | `examples/gravwave_demo.py` | Inspiral chirp, energy loss validated against Peters (1964) |
 | `examples/circularization_demo.py` | Peters (a, e) tracks: all binaries circularize before merger |
 | `examples/build_dashboard.py` | Assemble all demos into one self-contained `index.html` |
@@ -242,6 +244,28 @@ adaptive step scaled to the local `a/|da/dt|` timescale. The tests confirm both
 rates are negative, a circular orbit stays circular, the eccentricity decreases
 monotonically, and the orbit-averaged `de/da` agrees with a full 2.5PN
 integration. This is why LIGO's merger templates can assume circular orbits.
+
+## Dynamical friction: satellites spiralling in
+
+A massive body moving through a sea of stars focuses them into a trailing wake
+whose pull drags it backward. `dynamical_friction.py` gives Chandrasekhar's drag
+and the resulting sinking time:
+
+```
+$ python examples/dynamical_friction_demo.py examples/output
+
+  satellite mass       sinking time
+  globular cluster (1e8)     292.55 Gyr
+  LMC-scale (1e10)             2.93 Gyr
+  massive dwarf (1e11)         0.29 Gyr
+```
+
+The drag goes as `M^2 rho / v^2`, so the sinking time scales as `1/M` -- a heavy
+satellite merges in a few Gyr while a light globular cluster survives a Hubble
+time. The velocity dependence is non-monotonic (zero at rest, peaking near the
+dispersion, falling as `1/v^2` when fast). This is what drags massive black holes
+to galactic centres. The tests verify the `1/M` sinking time, the linear
+mass/density dependence, and the velocity profile.
 
 ## Galaxy collisions: tidal tails from gravity alone
 
