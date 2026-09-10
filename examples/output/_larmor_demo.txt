@@ -1,0 +1,17 @@
+The Larmor formula: accelerating charges radiate (P ~ a^2)
+
+  non-relativistic power at a=1e+20 m/s^2: 5.71e-14 W
+
+     gamma    perp (gamma^4)  parallel (gamma^6)
+  ----------------------------------------------
+         1          5.71e-14            5.71e-14
+        10          5.71e-10            5.71e-08
+       100          5.71e-06            5.71e-02
+      1000          5.71e-02            5.71e+04
+
+  classical hydrogen atom collapse time: 1.55e-11 s
+  -- an orbiting electron radiating by Larmor spirals in almost instantly.
+  That catastrophe is what quantum mechanics had to fix. The same formula,
+  boosted by gamma^4, is the engine of synchrotron radiation.
+
+  wrote examples/output\larmor.svg

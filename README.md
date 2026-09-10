@@ -103,6 +103,7 @@ ruins a long non-symplectic integration.
 | `src/cmb.py` | CMB acoustic scale: sound horizon & the l~220 first peak |
 | `src/blackbody.py` | Blackbody radiation: Planck law, Wien peak, Stefan-Boltzmann |
 | `src/compton.py` | Compton & inverse-Compton scattering (photon-electron energy exchange) |
+| `src/larmor.py` | Larmor formula: power radiated by an accelerating charge |
 | `src/synchrotron.py` | Synchrotron radiation: critical frequency, power, spectral index |
 | `src/bbn.py` | Big Bang nucleosynthesis: n/p freeze-out & primordial helium |
 | `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
@@ -166,6 +167,7 @@ ruins a long non-symplectic integration.
 | `examples/cmb_demo.py` | Sound horizon, acoustic angle & the l~220 peak comb |
 | `examples/blackbody_demo.py` | Peak wavelengths (CMB->B-star) + Planck spectra |
 | `examples/compton_demo.py` | Compton shift/energy vs angle + inverse-Compton boost |
+| `examples/larmor_demo.py` | Radiated power vs gamma (gamma^4 circular, gamma^6 linear) |
 | `examples/synchrotron_demo.py` | Critical frequency/power/cooling vs energy + spectral index |
 | `examples/bbn_demo.py` | n/p freeze-out chain and the Y_p ~ 0.25 helium fraction |
 | `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
@@ -606,6 +608,27 @@ helium-4, giving `Y_p = 2(n/p)/(1+n/p) ~ 0.25`. That quarter-helium abundance,
 observed everywhere in the universe, is one of the strongest confirmations of the
 hot Big Bang. The tests verify the equilibrium limits, the freeze-out ratio, the
 decay, and the ~0.25 helium fraction.
+
+## The Larmor formula: radiation from acceleration
+
+The root of every classical radiation process. `larmor.py` gives the power an
+accelerating charge emits:
+
+```
+$ python examples/larmor_demo.py examples/output
+
+     gamma    perp (gamma^4)  parallel (gamma^6)
+        10          5.71e-10            5.71e-08
+      1000          5.71e-02            5.71e+04
+  classical hydrogen atom collapse time: 1.55e-11 s
+```
+
+`P = q^2 a^2 / (6 pi eps0 c^3)` is quadratic in acceleration; relativistically a
+circular accelerator boosts it by `gamma^4` and a linear one by `gamma^6`. The
+same formula predicts a classical hydrogen atom collapses in `~1.6e-11 s` -- the
+catastrophe quantum mechanics had to resolve -- and, boosted by `gamma^4`, is the
+engine of synchrotron radiation in the next section. The tests verify the `a^2`
+law, the `gamma^4`/`gamma^6` boosts, and the atom-collapse time.
 
 ## Synchrotron radiation: the cosmic radio glow
 

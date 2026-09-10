@@ -114,6 +114,7 @@ def main():
     import sz_demo
     import kelvin_helmholtz_demo
     import atmosphere_demo
+    import larmor_demo
 
     import plot_orbits
 
@@ -197,6 +198,7 @@ def main():
     sz_txt = run("sz_demo", sz_demo.main, True)
     kh_txt = run("kelvin_helmholtz_demo", kelvin_helmholtz_demo.main, True)
     atm_txt = run("atmosphere_demo", atmosphere_demo.main, True)
+    larmor_txt = run("larmor_demo", larmor_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -466,6 +468,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("compton.svg"), "scattered photon energy falling with angle")
             + f'<div class="card">{pre(compton_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Larmor formula: radiation from acceleration",
+            "Any accelerating charge radiates, with power P ~ q^2 a^2. "
+            "Relativistically a circular accelerator boosts it by gamma^4 and a "
+            "linear one by gamma^6. It also dooms the classical atom (an electron "
+            "spirals in in ~1.6e-11 s) -- and it's the engine under synchrotron.",
+            '<div class="grid">'
+            + svg_card(out("larmor.svg"), "power vs gamma: gamma^4 (circular) and gamma^6 (linear)")
+            + f'<div class="card">{pre(larmor_txt)}</div>'
             + '</div>'),
         section(
             "Synchrotron radiation: cosmic radio glow",
