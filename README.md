@@ -97,6 +97,7 @@ ruins a long non-symplectic integration.
 | `src/friedmann.py` | Friedmann cosmology: scale factor a(t), expansion eras, age of the universe |
 | `src/saha.py` | Saha equation & cosmic recombination (the CMB release) |
 | `src/cmb.py` | CMB acoustic scale: sound horizon & the l~220 first peak |
+| `src/blackbody.py` | Blackbody radiation: Planck law, Wien peak, Stefan-Boltzmann |
 | `src/bbn.py` | Big Bang nucleosynthesis: n/p freeze-out & primordial helium |
 | `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
 | `src/distances.py` | Cosmological distances: luminosity/angular-diameter, cosmic acceleration |
@@ -151,6 +152,7 @@ ruins a long non-symplectic integration.
 | `examples/friedmann_demo.py` | Scale-factor curves for radiation/matter/dark-energy/LCDM |
 | `examples/saha_demo.py` | Ionization fraction plunging to zero at recombination |
 | `examples/cmb_demo.py` | Sound horizon, acoustic angle & the l~220 peak comb |
+| `examples/blackbody_demo.py` | Peak wavelengths (CMB->B-star) + Planck spectra |
 | `examples/bbn_demo.py` | n/p freeze-out chain and the Y_p ~ 0.25 helium fraction |
 | `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
 | `examples/distances_demo.py` | Hubble diagram (LCDM vs decelerating) + D_A turnover |
@@ -543,6 +545,26 @@ helium-4, giving `Y_p = 2(n/p)/(1+n/p) ~ 0.25`. That quarter-helium abundance,
 observed everywhere in the universe, is one of the strongest confirmations of the
 hot Big Bang. The tests verify the equilibrium limits, the freeze-out ratio, the
 decay, and the ~0.25 helium fraction.
+
+## Blackbody radiation: Planck, Wien, Stefan-Boltzmann
+
+The universal thermal spectrum. `blackbody.py` gives the Planck law, Wien's peak,
+and the Stefan-Boltzmann flux:
+
+```
+$ python examples/blackbody_demo.py examples/output
+
+  object              T (K)     peak    flux (W/m^2)
+  CMB                     3   1.06 mm       3.13e-06
+  Sun (G)              5772    502 nm       6.29e+07
+  hot star (B)        20000    145 nm       9.07e+09
+```
+
+`lambda_max T = 2.9 mm K` (Wien) makes hot bodies blue and cool ones red, and
+`j = sigma T^4` (Stefan-Boltzmann) makes a 20000 K star outshine the Sun 144x per
+unit area. The Sun peaks in the visible at ~500 nm; the 2.725 K CMB peaks in the
+microwave. The tests reproduce the Sun/CMB/body peaks, the numeric-vs-Wien
+agreement, the `T^4` flux, and the solar luminosity.
 
 ## The CMB acoustic scale: the 1-degree spots
 

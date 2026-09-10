@@ -1,0 +1,15 @@
+Blackbody radiation: Wien's peak and Stefan-Boltzmann
+
+  object                   T (K)          peak    flux (W/m^2)
+  ------------------------------------------------------------
+  CMB                          3       1.06 mm        3.13e-06
+  human body                 310       9348 nm        5.24e+02
+  cool star (M)             3000        966 nm        4.59e+06
+  Sun (G)                   5772        502 nm        6.29e+07
+  hot star (B)             20000        145 nm        9.07e+09
+
+  Hotter bodies peak bluer (Wien) and radiate vastly more (Stefan-
+  Boltzmann T^4): a 20000 K B-star outshines the Sun per unit area by
+  144x. The 2.725 K CMB peaks in the microwave.
+
+  wrote examples/output\blackbody.svg

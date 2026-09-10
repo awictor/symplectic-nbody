@@ -105,6 +105,7 @@ def main():
     import cluster_demo
     import roche_lobe_demo
     import degeneracy_demo
+    import blackbody_demo
 
     import plot_orbits
 
@@ -179,6 +180,7 @@ def main():
     cluster_txt = run("cluster_demo", cluster_demo.main, True)
     rochelobe_txt = run("roche_lobe_demo", roche_lobe_demo.main, True)
     degeneracy_txt = run("degeneracy_demo", degeneracy_demo.main, True)
+    blackbody_txt = run("blackbody_demo", blackbody_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -409,6 +411,15 @@ def main():
             '<div class="grid">'
             + svg_card(out("cmb.svg"), "schematic acoustic peaks with the first at l~220")
             + f'<div class="card">{pre(cmb_txt)}</div>'
+            + '</div>'),
+        section(
+            "Blackbody radiation: Planck, Wien, Stefan-Boltzmann",
+            "The universal thermal spectrum: hotter bodies peak bluer "
+            "(lambda_max T = 2.9 mm K) and radiate as T^4. It sets stellar colors, "
+            "the Sun's 500 nm peak, and the 2.725 K CMB's microwave peak.",
+            '<div class="grid">'
+            + svg_card(out("blackbody.svg"), "Planck spectra: hotter = bluer and brighter")
+            + f'<div class="card">{pre(blackbody_txt)}</div>'
             + '</div>'),
         section(
             "Big Bang nucleosynthesis: the primordial 25% helium",
