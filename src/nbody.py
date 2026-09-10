@@ -93,6 +93,17 @@ class NBody:
             if s % sample_every == 0:
                 yield t, self.total_energy(), _norm(self.angular_momentum())
 
+    def record(self, method: str, dt: float, steps: int, sample_every: int = 1):
+        """Integrate and return per-body position trajectories:
+        [[(x,y,z), ...] for each body]. Useful for plotting orbit paths."""
+        traj = [[tuple(self.pos[i])] for i in range(self.n)]
+        for s in range(steps):
+            self.step(method, dt)
+            if s % sample_every == 0:
+                for i in range(self.n):
+                    traj[i].append(tuple(self.pos[i]))
+        return traj
+
 
 def _norm(v: Vec) -> float:
     return math.sqrt(v[0] ** 2 + v[1] ** 2 + v[2] ** 2)

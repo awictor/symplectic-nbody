@@ -39,8 +39,10 @@ ruins a long non-symplectic integration.
 | `src/systems.py` | Test systems: two-body, figure-eight, pythagorean 3-body, **Plummer-sphere star cluster** (any N) |
 | `tests/test_conservation.py` | Automated checks of every conservation claim |
 | `tests/test_barnes_hut.py` | Tree force validated against exact O(N^2) summation |
+| `src/render_svg.py` | Zero-dependency SVG trajectory renderer (orbit paths -> standalone .svg) |
 | `examples/energy_drift_demo.py` | The ASCII energy-drift demo above |
 | `examples/scaling_benchmark.py` | Direct vs Barnes-Hut timing & empirical scaling exponent |
+| `examples/plot_orbits.py` | Render figure-eight / eccentric / pythagorean orbits to SVG |
 
 ## Barnes-Hut: scaling to many bodies
 
@@ -67,6 +69,18 @@ Tightening `theta` provably reduces the error — all checked in the tests. The
 `plummer_sphere(n=...)` generator builds an equilibrium cluster (positions from
 the Plummer inverse-CDF, velocities by rejection sampling the exact distribution
 function) using a tiny built-in LCG, so it's deterministic and dependency-free.
+
+## Plotting orbits (no dependencies)
+
+```
+python examples/plot_orbits.py examples/output
+```
+
+Writes standalone SVGs you can open in any browser -- see `examples/output/`.
+`render_svg.py` projects the 3D trajectory onto a chosen plane, draws each body's
+path as a polyline (hollow marker = start, filled = end), and stamps the net
+energy drift. The figure-eight closes on itself to 1 part in 1e13; the softened
+pythagorean 3-body stays energy-stable (drift ~1e-9) through its close encounters.
 
 ## The claims, checked automatically
 
