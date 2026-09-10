@@ -189,6 +189,7 @@ def main():
     import reynolds_demo
     import bernoulli_demo
     import surface_tension_demo
+    import ekman_demo
 
     import plot_orbits
 
@@ -347,6 +348,7 @@ def main():
     reynolds_txt = run("reynolds_demo", reynolds_demo.main, True)
     bernoulli_txt = run("bernoulli_demo", bernoulli_demo.main, True)
     surface_tension_txt = run("surface_tension_demo", surface_tension_demo.main, True)
+    ekman_txt = run("ekman_demo", ekman_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1730,6 +1732,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("surface_tension.svg"), "capillary rise vs tube radius on log-log axes: narrower climbs higher")
             + f'<div class="card">{pre(surface_tension_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Ekman spiral: wind, rotation & the ocean",
+            "Steady wind drags the sea surface, but Coriolis deflects the current 45 degrees "
+            "to the right of the wind (northern hemisphere). Balancing friction against "
+            "rotation, the current spirals clockwise and decays exponentially with depth over "
+            "the Ekman depth D = pi sqrt(2 A_z/|f|). The vertically integrated transport ends "
+            "up exactly 90 degrees to the right of the wind with magnitude tau/(rho |f|), "
+            "independent of viscosity -- the sideways pumping behind coastal upwelling and "
+            "the ocean gyres.",
+            '<div class="grid">'
+            + svg_card(out("ekman.svg"), "hodograph: the current vector turns clockwise and shrinks with depth")
+            + f'<div class="card">{pre(ekman_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

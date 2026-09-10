@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.09       12.10      0.8x
-   400          35.91       38.00      0.9x
-   800         145.06      113.32      1.3x
-  1600         657.04      396.62      1.7x
-  3200        2784.23     1111.29      2.5x
+   200           9.23       11.90      0.8x
+   400          36.84       36.88      1.0x
+   800         145.98      111.13      1.3x
+  1600         656.90      385.51      1.7x
+  3200        2793.44     1080.64      2.6x
 
-empirical scaling exponent  direct ~ N^2.07   barnes-hut ~ N^1.64
+empirical scaling exponent  direct ~ N^2.06   barnes-hut ~ N^1.64
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -7598,6 +7598,55 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   bubble meets a big one through a tube, the small one empties into the big.
 
   wrote examples/output\surface_tension.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>The Ekman spiral: wind, rotation &amp; the ocean</h2>
+    <p class="blurb">Steady wind drags the sea surface, but Coriolis deflects the current 45 degrees to the right of the wind (northern hemisphere). Balancing friction against rotation, the current spirals clockwise and decays exponentially with depth over the Ekman depth D = pi sqrt(2 A_z/|f|). The vertically integrated transport ends up exactly 90 degrees to the right of the wind with magnitude tau/(rho |f|), independent of viscosity -- the sideways pumping behind coastal upwelling and the ocean gyres.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<text x="20" y="34" fill="#e6edf3" font-size="18">The Ekman spiral (hodograph)</text>
+<text x="20" y="52" fill="#8b949e" font-size="12">current vector turns clockwise and shrinks with depth; 45 deg right of wind at surface</text>
+<line x1="72.0" y1="396.0" x2="676.8" y2="396.0" stroke="#21262d" stroke-width="1"/>
+<line x1="374.4" y1="93.6" x2="374.4" y2="698.4" stroke="#21262d" stroke-width="1"/>
+<line x1="374.4" y1="396.0" x2="662.4" y2="396.0" stroke="#ffd43b" stroke-width="2"/>
+<polygon points="662.4,396.0 650.4,390.0 650.4,402.0" fill="#ffd43b"/>
+<text x="658.4" y="386.0" fill="#ffd43b" font-size="12" text-anchor="end">wind</text>
+<polyline points="533.8,555.4 527.6,555.3 521.5,555.1 515.6,554.8 509.7,554.4 504.0,553.9 498.4,553.3 493.0,552.6 487.6,551.8 482.4,551.0 477.3,550.0 472.3,549.0 467.4,547.8 462.7,546.6 458.1,545.4 453.5,544.1 449.1,542.7 444.8,541.2 440.7,539.7 436.6,538.2 432.6,536.6 428.8,535.0 425.0,533.3 421.4,531.6 417.9,529.8 414.4,528.0 411.1,526.2 407.9,524.3 404.8,522.5 401.7,520.6 398.8,518.7 396.0,516.7 393.2,514.8 390.6,512.8 388.0,510.8 385.5,508.8 383.1,506.8 380.8,504.8 378.6,502.8 376.5,500.8 374.4,498.8 372.4,496.7 370.5,494.7 368.7,492.7 366.9,490.7 365.3,488.7 363.7,486.7 362.1,484.7 360.7,482.7 359.3,480.8 357.9,478.8 356.7,476.9 355.4,474.9 354.3,473.0 353.2,471.1 352.2,469.3 351.2,467.4 350.3,465.5 349.4,463.7 348.6,461.9 347.8,460.1 347.1,458.3 346.5,456.6 345.8,454.9 345.3,453.2 344.7,451.5 344.3,449.8 343.8,448.2 343.4,446.6 343.0,445.0 342.7,443.4 342.4,441.9 342.2,440.4 342.0,438.9 341.8,437.4 341.6,436.0 341.5,434.5 341.4,433.1 341.3,431.8 341.3,430.4 341.3,429.1 341.3,427.8 341.3,426.6 341.4,425.3 341.5,424.1 341.6,422.9 341.7,421.8 341.8,420.6 342.0,419.5 342.2,418.5 342.4,417.4 342.6,416.4 342.8,415.3 343.1,414.4 343.3,413.4 343.6,412.5 343.9,411.5 344.2,410.6 344.5,409.8 344.8,408.9 345.2,408.1 345.5,407.3 345.9,406.5 346.2,405.8 346.6,405.0 347.0,404.3 347.3,403.6 347.7,403.0 348.1,402.3 348.5,401.7 348.9,401.1 349.3,400.5 349.7,399.9 350.1,399.4 350.5,398.8 350.9,398.3 351.4,397.8 351.8,397.3 352.2,396.9 352.6,396.4 353.0,396.0 353.5,395.6 353.9,395.2 354.3,394.8 354.7,394.5 355.1,394.1 355.5,393.8 356.0,393.4 356.4,393.1 356.8,392.9 357.2,392.6 357.6,392.3 358.0,392.1 358.4,391.8 358.8,391.6 359.2,391.4 359.6,391.2 359.9,391.0 360.3,390.8 360.7,390.6 361.1,390.5 361.4,390.3 361.8,390.2 362.2,390.1 362.5,389.9 362.9,389.8 363.2,389.7 363.6,389.6 363.9,389.6 364.2,389.5 364.5,389.4 364.9,389.4 365.2,389.3 365.5,389.3 365.8,389.2 366.1,389.2 366.4,389.2 366.7,389.1 367.0,389.1 367.2,389.1 367.5,389.1 367.8,389.1 368.0,389.1 368.3,389.1 368.6,389.2 368.8,389.2 369.0,389.2 369.3,389.2 369.5,389.3 369.7,389.3 370.0,389.3 370.2,389.4 370.4,389.4 370.6,389.5 370.8,389.5 371.0,389.6 371.2,389.7 371.4,389.7 371.5,389.8 371.7,389.9 371.9,389.9 372.0,390.0 372.2,390.1 372.4,390.1 372.5,390.2 372.7,390.3 372.8,390.4 373.0,390.5 373.1,390.5 373.2,390.6 373.3,390.7 373.5,390.8 373.6,390.9 373.7,391.0 373.8,391.0 373.9,391.1 374.0,391.2 374.1,391.3 374.2,391.4 374.3,391.5 374.4,391.6 374.5,391.6 374.6,391.7 374.6,391.8 374.7,391.9 374.8,392.0 374.9,392.1 374.9,392.2 375.0,392.3 375.1,392.3 375.1,392.4 375.2,392.5 375.2,392.6 375.3,392.7 375.3,392.8 375.4,392.8 375.4,392.9 375.4,393.0 375.5,393.1 375.5,393.2 375.5,393.2 375.6,393.3 375.6,393.4 375.6,393.5 375.7,393.5 375.7,393.6 375.7,393.7 375.7,393.7 375.7,393.8 375.8,393.9 375.8,394.0 375.8,394.0 375.8,394.1 375.8,394.1 375.8,394.2 375.8,394.3 375.8,394.3 375.8,394.4 375.8,394.5 375.8,394.5 375.8,394.6" fill="none" stroke="#4dabf7" stroke-width="2.4"/>
+<line x1="374.4" y1="396.0" x2="533.8" y2="555.4" stroke="#06d6a0" stroke-width="1.8" opacity="0.9"/>
+<circle cx="533.8" cy="555.4" r="4" fill="#06d6a0"/>
+<text x="540.8" y="549.4" fill="#06d6a0" font-size="11">surface</text>
+<line x1="374.4" y1="396.0" x2="374.4" y2="498.8" stroke="#8338ec" stroke-width="1.8" opacity="0.9"/>
+<circle cx="374.4" cy="498.8" r="4" fill="#8338ec"/>
+<text x="381.4" y="492.8" fill="#8338ec" font-size="11">z=-0.25D</text>
+<line x1="374.4" y1="396.0" x2="341.3" y2="429.1" stroke="#ff922b" stroke-width="1.8" opacity="0.9"/>
+<circle cx="341.3" cy="429.1" r="4" fill="#ff922b"/>
+<text x="348.3" y="423.1" fill="#ff922b" font-size="11">z=-0.5D</text>
+<line x1="374.4" y1="396.0" x2="367.5" y2="389.1" stroke="#ff6b6b" stroke-width="1.8" opacity="0.9"/>
+<circle cx="367.5" cy="389.1" r="4" fill="#ff6b6b"/>
+<text x="374.5" y="383.1" fill="#ff6b6b" font-size="11">z=-1D</text>
+<circle cx="374.4" cy="396.0" r="3" fill="#8b949e"/>
+<text x="86.4" y="684.0" fill="#8b949e" font-size="11">axes: along-wind (x) & cross-wind (y) current components</text>
+</svg><figcaption>hodograph: the current vector turns clockwise and shrinks with depth</figcaption></figure><div class="card"><pre>Ekman spiral: wind-driven ocean boundary layer at 45 N
+
+  eddy viscosity A_z = 0.05 m^2/s   wind stress tau = 0.10 Pa
+  Coriolis f = 1.031e-04 /s   Ekman depth D = 97.8 m
+
+  Current spirals CLOCKWISE, decaying with depth (wind blows toward +x/east):
+     depth       speed                 direction
+    -0.0 m     4.30 cm/s               -45 deg from wind
+    -9.8 m     3.14 cm/s               -63 deg from wind
+   -24.5 m     1.96 cm/s               -90 deg from wind
+   -48.9 m     0.89 cm/s              -135 deg from wind
+   -73.4 m     0.41 cm/s              -180 deg from wind
+   -97.8 m     0.19 cm/s               135 deg from wind
+
+  Net Ekman transport = 0.946 m^2/s, directed 90 deg to the RIGHT of the wind.
+  Surface current sits 45 deg right of the wind; each deeper layer is dragged
+  further right and weaker, so the vertical sum points fully across the wind --
+  the sideways pumping that drives coastal upwelling and the ocean gyres.
+
+  wrote examples/output\ekman.svg</pre></div></div>
   </section>
 
   <section>

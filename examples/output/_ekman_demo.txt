@@ -1,0 +1,20 @@
+Ekman spiral: wind-driven ocean boundary layer at 45 N
+
+  eddy viscosity A_z = 0.05 m^2/s   wind stress tau = 0.10 Pa
+  Coriolis f = 1.031e-04 /s   Ekman depth D = 97.8 m
+
+  Current spirals CLOCKWISE, decaying with depth (wind blows toward +x/east):
+     depth       speed                 direction
+    -0.0 m     4.30 cm/s               -45 deg from wind
+    -9.8 m     3.14 cm/s               -63 deg from wind
+   -24.5 m     1.96 cm/s               -90 deg from wind
+   -48.9 m     0.89 cm/s              -135 deg from wind
+   -73.4 m     0.41 cm/s              -180 deg from wind
+   -97.8 m     0.19 cm/s               135 deg from wind
+
+  Net Ekman transport = 0.946 m^2/s, directed 90 deg to the RIGHT of the wind.
+  Surface current sits 45 deg right of the wind; each deeper layer is dragged
+  further right and weaker, so the vertical sum points fully across the wind --
+  the sideways pumping that drives coastal upwelling and the ocean gyres.
+
+  wrote examples/output\ekman.svg

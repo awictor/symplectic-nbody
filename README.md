@@ -147,6 +147,7 @@ ruins a long non-symplectic integration.
 | `src/reynolds.py` | The Reynolds number: laminar vs turbulent flow & Hagen-Poiseuille |
 | `src/bernoulli.py` | Bernoulli's principle: the Venturi effect, Pitot airspeed & Torricelli |
 | `src/surface_tension.py` | Surface tension: capillary rise (Jurin), Young-Laplace droplet/bubble pressure |
+| `src/ekman.py` | The Ekman spiral: wind-driven rotating boundary layer, transport & depth |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -285,6 +286,7 @@ ruins a long non-symplectic integration.
 | `examples/reynolds_demo.py` | Re & regime from bacterium to whale + the log-Re transition chart |
 | `examples/bernoulli_demo.py` | Pitot/Torricelli speeds + the Venturi velocity/pressure diagram |
 | `examples/surface_tension_demo.py` | Capillary rise table + rise-vs-radius log-log plot |
+| `examples/ekman_demo.py` | Current-vs-depth table + the Ekman spiral hodograph |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3268,6 +3270,29 @@ so smaller drops sit at higher pressure and empty into larger ones when connecte
 whose contact angle exceeds 90 deg, is pushed *down* instead. The tests reproduce water's
 ~1.5 cm rise in a 1 mm tube, the `1/r` scaling, mercury depression, the bubble-is-twice-a-
 droplet relation, and a water strider's weight held on the surface.
+
+## The Ekman spiral: wind, rotation, and the ocean
+
+Steady wind over a rotating ocean drives a current that Coriolis deflects. `ekman.py`:
+
+```
+$ python examples/ekman_demo.py examples/output
+
+  depth      speed        direction (from wind)
+   -0.0 m   4.30 cm/s      -45 deg   (right of wind, surface)
+  -24.5 m   1.96 cm/s      -90 deg
+  -97.8 m   0.19 cm/s     +135 deg   (~one Ekman depth, e^-pi weaker)
+```
+
+Balancing friction against the Coriolis force, the surface current turns exactly 45 degrees
+to the right of the wind (northern hemisphere), and with depth it spirals clockwise while
+decaying over the Ekman depth `D = pi sqrt(2 A_z/|f|)`. The classic hodograph -- the tip of
+the velocity vector tracing a shrinking spiral -- is the signature of the layer. Summed over
+depth, the net *Ekman transport* points 90 degrees to the right of the wind with magnitude
+`tau/(rho |f|)`, independent of the eddy viscosity; this cross-wind pumping is what drives
+coastal upwelling and helps spin the ocean gyres. The tests verify the 45-degree surface
+angle (and its hemisphere flip), the `e^-pi` decay at one Ekman depth, the clockwise
+rotation, and the viscosity-independent transport.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
