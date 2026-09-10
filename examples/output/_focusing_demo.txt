@@ -1,0 +1,19 @@
+Gravitational focusing (100 km planetesimal)
+
+  escape speed: 130 m/s
+
+   v_inf (m/s)    focusing    Safronov      regime
+  ------------------------------------------------
+             1     16775.3     8387.17     runaway
+            10       168.7       83.87     runaway
+            50         7.7        3.35     runaway
+           100         2.7        0.84   geometric
+           500         1.1        0.03   geometric
+          1000         1.0        0.01   geometric
+
+  When the swarm is dynamically cold (v_inf << v_esc) gravity bends
+  distant trajectories into collisions, so the biggest bodies grow
+  fastest -- runaway growth that seeds planetary embryos. Stir the swarm
+  up (high v_inf) and only direct hits count: growth slows to geometric.
+
+  wrote examples/output\focusing.svg

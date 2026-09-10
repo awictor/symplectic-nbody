@@ -119,6 +119,7 @@ def main():
     import exoplanet_demo
     import habitable_zone_demo
     import faber_jackson_demo
+    import focusing_demo
 
     import plot_orbits
 
@@ -207,6 +208,7 @@ def main():
     exoplanet_txt = run("exoplanet_demo", exoplanet_demo.main, True)
     hz_txt = run("habitable_zone_demo", habitable_zone_demo.main, True)
     fj_txt = run("faber_jackson_demo", faber_jackson_demo.main, True)
+    focusing_txt = run("focusing_demo", focusing_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -276,6 +278,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("habitable_zone.svg"), "HZ inner/outer edges vs stellar luminosity")
             + f'<div class="card">{pre(hz_txt)}</div>'
+            + '</div>'),
+        section(
+            "Gravitational focusing & runaway growth",
+            "Colliding bodies don't need a direct hit -- gravity bends distant "
+            "trajectories in, enhancing the cross-section by 1 + v_esc^2/v_inf^2. "
+            "In a cold planetesimal swarm this makes the biggest bodies grow "
+            "fastest (runaway growth), seeding planetary embryos.",
+            '<div class="grid">'
+            + svg_card(out("focusing.svg"), "cross-section enhancement plunging with encounter speed")
+            + f'<div class="card">{pre(focusing_txt)}</div>'
             + '</div>'),
         section(
             "Hulse-Taylor binary pulsar (GW before LIGO)",

@@ -71,6 +71,7 @@ ruins a long non-symplectic integration.
 | `src/solar_system.py` | The real 8-planet solar system from published orbital elements |
 | `src/exoplanet.py` | Exoplanet detection: transit depth & radial-velocity wobble |
 | `src/habitable_zone.py` | Habitable zone: equilibrium temperature & liquid-water bounds |
+| `src/focusing.py` | Gravitational focusing: enhanced collision cross-section & runaway growth |
 | `src/relativity.py` | First post-Newtonian gravity & Mercury's perihelion precession |
 | `src/lyapunov.py` | Largest Lyapunov exponent (Benettin shadow-trajectory method) |
 | `src/stability_map.py` | Three-body escape-time scan over a grid of initial conditions |
@@ -139,6 +140,7 @@ ruins a long non-symplectic integration.
 | `examples/solar_system_demo.py` | Integrate the real solar system, recover Kepler's third law |
 | `examples/exoplanet_demo.py` | Transit depths & RV wobbles + a transit light-curve dip |
 | `examples/habitable_zone_demo.py` | HZ bounds by stellar type + the zone-vs-luminosity band |
+| `examples/focusing_demo.py` | Cross-section enhancement vs encounter speed (runaway growth) |
 | `examples/precession_demo.py` | Mercury's 43"/century precession + a relativistic rosette SVG |
 | `examples/chaos_demo.py` | Lyapunov exponent + two trajectories diverging 6 orders of magnitude |
 | `examples/stability_map_demo.py` | Parallel escape-time heatmap revealing the fractal chaos boundary |
@@ -1418,6 +1420,28 @@ the demo amplifies GR (shrinks c) so the ellipse visibly rotates into a rosette
 and renders it to SVG. The tests confirm the 43"/century value, that numeric
 integration matches the analytic advance, that Newtonian orbits don't precess,
 and that the precession scales as 1/c^2.
+
+## Gravitational focusing: how planets grow fast
+
+Colliding bodies don't need a bullseye -- gravity curves distant trajectories
+into a hit. `focusing.py`:
+
+```
+$ python examples/focusing_demo.py examples/output   (100 km planetesimal, v_esc=130 m/s)
+
+   v_inf (m/s)    focusing    Safronov      regime
+             1     16775.3     8387.17     runaway
+            50         7.7        3.35     runaway
+          1000         1.0        0.01   geometric
+```
+
+The cross-section is `pi R^2 (1 + v_esc^2/v_inf^2)`. In a dynamically cold swarm
+(`v_inf << v_esc`) the enhancement is enormous, so the biggest bodies sweep up
+mass fastest -- runaway growth that builds planetary embryos. Stir the swarm up
+and only direct hits count, reverting to the geometric `pi R^2`. The boundary is
+the Safronov number `Theta = v_esc^2/(2 v_inf^2) = 1`. The tests verify the
+geometric limit, the runaway regime, the `Theta = 1` boundary, and the
+`1/v_inf^2` scaling.
 
 ## The habitable zone: where water can be liquid
 
