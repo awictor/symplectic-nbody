@@ -215,6 +215,7 @@ def main():
     import casimir_demo
     import hall_effect_demo
     import wiedemann_franz_demo
+    import bragg_demo
 
     import plot_orbits
 
@@ -399,6 +400,7 @@ def main():
     casimir_txt = run("casimir_demo", casimir_demo.main, True)
     hall_effect_txt = run("hall_effect_demo", hall_effect_demo.main, True)
     wiedemann_franz_txt = run("wiedemann_franz_demo", wiedemann_franz_demo.main, True)
+    bragg_txt = run("bragg_demo", bragg_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2125,6 +2127,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("wiedemann_franz.svg"), "predicted vs measured thermal conductivity: metals hug the Lorenz-number line")
             + f'<div class="card">{pre(wiedemann_franz_txt)}</div>'
+            + '</div>'),
+        section(
+            "Bragg diffraction: reading a crystal with X-rays",
+            "Shine X-rays on a crystal and bright reflections flash only where waves scattered "
+            "from successive atomic planes add in phase: n lambda = 2 d sin(theta). Because the "
+            "wavelength must match the ~0.1-0.5 nm atomic spacing, X-rays are the natural probe, "
+            "and reading the diffraction spots backwards gives the structure -- the method that "
+            "solved salt, DNA and countless proteins. For a cubic lattice each Miller plane "
+            "(hkl) has its own spacing a/sqrt(h^2+k^2+l^2) and family of Bragg angles, and "
+            "sin(theta) <= 1 caps the visible orders at 2d/lambda.",
+            '<div class="grid">'
+            + svg_card(out("bragg.svg"), "X-rays reflecting off two atomic planes with the 2 d sin(theta) path difference")
+            + f'<div class="card">{pre(bragg_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

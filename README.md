@@ -173,6 +173,7 @@ ruins a long non-symplectic integration.
 | `src/casimir.py` | Casimir effect: vacuum pressure/force/energy between plates, d^-4 law |
 | `src/hall_effect.py` | Hall effect: Hall voltage, coefficient, carrier density/sign/mobility |
 | `src/wiedemann_franz.py` | Wiedemann-Franz law: Lorenz number, thermal-from-electrical conductivity |
+| `src/bragg.py` | Bragg diffraction: n lambda = 2 d sin(theta), Miller spacings, max order |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -337,6 +338,7 @@ ruins a long non-symplectic integration.
 | `examples/casimir_demo.py` | Pressure/force-vs-gap table + the d^-4 pressure figure |
 | `examples/hall_effect_demo.py` | Per-material Hall table + the Hall-bar schematic |
 | `examples/wiedemann_franz_demo.py` | Predicted-vs-measured kappa table + the Lorenz-line figure |
+| `examples/bragg_demo.py` | Per-plane Bragg-angle table + the reflection-geometry figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3952,6 +3954,29 @@ well below `L` signals heat and charge decoupling ("strange metals"), while a hu
 not apply. The tests reproduce the Lorenz number, copper's thermal conductivity, the
 `sigma`/`T` scalings, the conductivity inversion, and the obey/violate classification for
 metals, suppressed-`kappa` cases, and phonon insulators.
+
+## Bragg diffraction: reading a crystal with X-rays
+
+Crystals flash bright reflections where scattered waves add in phase. `bragg.py`:
+
+```
+$ python examples/bragg_demo.py examples/output
+
+  (hkl)      d (nm)   1st-order angle   max order    (Cu K-alpha on silicon)
+  (1,1,1)    0.3135   14.23 deg         4
+  (2,2,0)    0.1920   23.66 deg         2
+```
+
+Bragg's law `n lambda = 2 d sin(theta)` says a crystal reflects strongly only when the extra
+path between planes spaced `d` apart is a whole number of wavelengths. Because that demands a
+wavelength comparable to the ~0.1-0.5 nm atomic spacing, X-rays (and neutrons, electrons) are
+the natural probes, and inverting the pattern of spots gives the atomic structure -- the
+foundation of crystallography from table salt to DNA to proteins. For a cubic lattice each
+Miller plane `(hkl)` has spacing `a/sqrt(h^2+k^2+l^2)` and its own family of angles, while
+`sin(theta) <= 1` caps the observable orders at `2d/lambda` (so a wavelength longer than `2d`
+diffracts from nothing, and visible light cannot resolve atoms). The tests reproduce the
+Si(111) Cu-K-alpha angle, the law itself, the order and spacing trends, the cubic Miller
+spacings, the spacing/wavelength inversions, and the maximum-order cutoff.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

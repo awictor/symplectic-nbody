@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<text x="20" y="34" fill="#e6edf3" font-size="18">Bragg reflection from atomic planes</text>
+<text x="20" y="52" fill="#8b949e" font-size="12">the lower ray travels an extra 2 d sin(theta); reflections flash when that equals n lambda</text>
+<line x1="70.0" y1="288.0" x2="650.0" y2="288.0" stroke="#30363d" stroke-width="1.5"/>
+<circle cx="70.0" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="118.3" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="166.7" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="215.0" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="263.3" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="311.7" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="360.0" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="408.3" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="456.7" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="505.0" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="553.3" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="601.7" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="650.0" cy="288.0" r="5" fill="#8b949e"/>
+<line x1="70.0" y1="432.0" x2="650.0" y2="432.0" stroke="#30363d" stroke-width="1.5"/>
+<circle cx="70.0" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="118.3" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="166.7" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="215.0" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="263.3" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="311.7" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="360.0" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="408.3" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="456.7" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="505.0" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="553.3" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="601.7" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="650.0" cy="432.0" r="5" fill="#8b949e"/>
+<line x1="110.0" y1="288.0" x2="110.0" y2="432.0" stroke="#ffd43b" stroke-width="1.2"/>
+<text x="116.0" y="360.0" fill="#ffd43b" font-size="12">d = 0.314 nm</text>
+<line x1="180.0" y1="242.4" x2="360.0" y2="288.0" stroke="#4dabf7" stroke-width="2.2"/>
+<line x1="360.0" y1="288.0" x2="540.0" y2="242.4" stroke="#4dabf7" stroke-width="2.2"/>
+<line x1="180.0" y1="386.4" x2="360.0" y2="432.0" stroke="#06d6a0" stroke-width="2.2"/>
+<line x1="360.0" y1="432.0" x2="540.0" y2="386.4" stroke="#06d6a0" stroke-width="2.2"/>
+<path d="M 310.0 288.0 A 50 50 0 0 0 311.5 275.7" fill="none" stroke="#ff922b" stroke-width="1.4"/>
+<text x="296.0" y="274.0" fill="#ff922b" font-size="12">theta = 14.2 deg</text>
+<text x="180.0" y="234.4" fill="#4dabf7" font-size="11">incident X-rays</text>
+<text x="470.0" y="234.4" fill="#4dabf7" font-size="11">reflected (in phase)</text>
+<text x="70.0" y="690.0" fill="#8b949e" font-size="11">n lambda = 2 d sin(theta) -- constructive interference builds the diffracted beam</text>
+</svg>

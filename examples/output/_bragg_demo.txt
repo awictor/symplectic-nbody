@@ -1,0 +1,21 @@
+Bragg's law n lambda = 2 d sin(theta): X-ray crystallography
+
+  Cu K-alpha (0.1541 nm) on silicon (a = 0.543 nm)
+
+     (hkl)    d (nm)   1st-order angle  max order
+  (1, 1, 1)    0.3135          14.23 deg          4
+  (2, 2, 0)    0.1920          23.66 deg          2
+  (3, 1, 1)    0.1637          28.07 deg          2
+  (4, 0, 0)    0.1358          34.58 deg          1
+
+  Orders off the (111) planes (d = 0.3135 nm):
+    n = 1  ->  theta = 14.23 deg
+    n = 2  ->  theta = 29.44 deg
+    n = 3  ->  theta = 47.50 deg
+    n = 4  ->  theta = 79.45 deg
+
+  Each family of planes flashes a reflection only where its path difference
+  2 d sin(theta) is a whole number of wavelengths. Reading the spots backwards gives
+  the atomic spacings -- how crystallography solved salt, DNA, and countless proteins.
+
+  wrote examples/output\bragg.svg

@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.23       11.96      0.8x
-   400          35.28       37.15      0.9x
-   800         141.49      110.68      1.3x
-  1600         648.42      409.99      1.6x
-  3200        2669.50     1030.95      2.6x
+   200          12.78       19.98      0.6x
+   400          52.44       63.10      0.8x
+   800         229.37      239.24      1.0x
+  1600        1091.13      691.27      1.6x
+  3200        4655.14     1639.33      2.8x
 
-empirical scaling exponent  direct ~ N^2.06   barnes-hut ~ N^1.63
+empirical scaling exponent  direct ~ N^2.14   barnes-hut ~ N^1.62
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -46011,6 +46011,75 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   a measured L well below 2.44e-8 flags heat and charge decoupling (strange metals).
 
   wrote examples/output\wiedemann_franz.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Bragg diffraction: reading a crystal with X-rays</h2>
+    <p class="blurb">Shine X-rays on a crystal and bright reflections flash only where waves scattered from successive atomic planes add in phase: n lambda = 2 d sin(theta). Because the wavelength must match the ~0.1-0.5 nm atomic spacing, X-rays are the natural probe, and reading the diffraction spots backwards gives the structure -- the method that solved salt, DNA and countless proteins. For a cubic lattice each Miller plane (hkl) has its own spacing a/sqrt(h^2+k^2+l^2) and family of Bragg angles, and sin(theta) <= 1 caps the visible orders at 2d/lambda.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<text x="20" y="34" fill="#e6edf3" font-size="18">Bragg reflection from atomic planes</text>
+<text x="20" y="52" fill="#8b949e" font-size="12">the lower ray travels an extra 2 d sin(theta); reflections flash when that equals n lambda</text>
+<line x1="70.0" y1="288.0" x2="650.0" y2="288.0" stroke="#30363d" stroke-width="1.5"/>
+<circle cx="70.0" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="118.3" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="166.7" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="215.0" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="263.3" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="311.7" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="360.0" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="408.3" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="456.7" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="505.0" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="553.3" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="601.7" cy="288.0" r="5" fill="#8b949e"/>
+<circle cx="650.0" cy="288.0" r="5" fill="#8b949e"/>
+<line x1="70.0" y1="432.0" x2="650.0" y2="432.0" stroke="#30363d" stroke-width="1.5"/>
+<circle cx="70.0" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="118.3" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="166.7" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="215.0" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="263.3" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="311.7" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="360.0" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="408.3" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="456.7" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="505.0" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="553.3" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="601.7" cy="432.0" r="5" fill="#8b949e"/>
+<circle cx="650.0" cy="432.0" r="5" fill="#8b949e"/>
+<line x1="110.0" y1="288.0" x2="110.0" y2="432.0" stroke="#ffd43b" stroke-width="1.2"/>
+<text x="116.0" y="360.0" fill="#ffd43b" font-size="12">d = 0.314 nm</text>
+<line x1="180.0" y1="242.4" x2="360.0" y2="288.0" stroke="#4dabf7" stroke-width="2.2"/>
+<line x1="360.0" y1="288.0" x2="540.0" y2="242.4" stroke="#4dabf7" stroke-width="2.2"/>
+<line x1="180.0" y1="386.4" x2="360.0" y2="432.0" stroke="#06d6a0" stroke-width="2.2"/>
+<line x1="360.0" y1="432.0" x2="540.0" y2="386.4" stroke="#06d6a0" stroke-width="2.2"/>
+<path d="M 310.0 288.0 A 50 50 0 0 0 311.5 275.7" fill="none" stroke="#ff922b" stroke-width="1.4"/>
+<text x="296.0" y="274.0" fill="#ff922b" font-size="12">theta = 14.2 deg</text>
+<text x="180.0" y="234.4" fill="#4dabf7" font-size="11">incident X-rays</text>
+<text x="470.0" y="234.4" fill="#4dabf7" font-size="11">reflected (in phase)</text>
+<text x="70.0" y="690.0" fill="#8b949e" font-size="11">n lambda = 2 d sin(theta) -- constructive interference builds the diffracted beam</text>
+</svg><figcaption>X-rays reflecting off two atomic planes with the 2 d sin(theta) path difference</figcaption></figure><div class="card"><pre>Bragg&#x27;s law n lambda = 2 d sin(theta): X-ray crystallography
+
+  Cu K-alpha (0.1541 nm) on silicon (a = 0.543 nm)
+
+     (hkl)    d (nm)   1st-order angle  max order
+  (1, 1, 1)    0.3135          14.23 deg          4
+  (2, 2, 0)    0.1920          23.66 deg          2
+  (3, 1, 1)    0.1637          28.07 deg          2
+  (4, 0, 0)    0.1358          34.58 deg          1
+
+  Orders off the (111) planes (d = 0.3135 nm):
+    n = 1  -&gt;  theta = 14.23 deg
+    n = 2  -&gt;  theta = 29.44 deg
+    n = 3  -&gt;  theta = 47.50 deg
+    n = 4  -&gt;  theta = 79.45 deg
+
+  Each family of planes flashes a reflection only where its path difference
+  2 d sin(theta) is a whole number of wavelengths. Reading the spots backwards gives
+  the atomic spacings -- how crystallography solved salt, DNA, and countless proteins.
+
+  wrote examples/output\bragg.svg</pre></div></div>
   </section>
 
   <section>
