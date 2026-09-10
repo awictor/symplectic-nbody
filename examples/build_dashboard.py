@@ -138,6 +138,7 @@ def main():
     import ram_pressure_demo
     import free_fall_demo
     import shock_jump_demo
+    import stromgren_demo
 
     import plot_orbits
 
@@ -245,6 +246,7 @@ def main():
     rampress_txt = run("ram_pressure_demo", ram_pressure_demo.main, True)
     freefall_txt = run("free_fall_demo", free_fall_demo.main, True)
     shock_txt = run("shock_jump_demo", shock_jump_demo.main, True)
+    stromgren_txt = run("stromgren_demo", stromgren_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1019,6 +1021,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("shock_jump.svg"), "density saturating at 4 while pressure and temperature diverge as M^2")
             + f'<div class="card">{pre(shock_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Stromgren sphere",
+            "A hot star's ultraviolet photons ionize a bubble of hydrogen around it. "
+            "In equilibrium every ionizing photon replaces one recombination, fixing "
+            "the Stromgren radius R = (3Q / 4 pi n^2 alpha_B)^(1/3). Because R ~ Q^(1/3) "
+            "and R ~ n^(-2/3), an O star lights up a ~25 pc nebula in diffuse gas but "
+            "only a fraction of a parsec in a dense clump -- the pink emission nebulae "
+            "(Orion, the Rosette) that flag recent massive-star formation.",
+            '<div class="grid">'
+            + svg_card(out("stromgren.svg"), "Stromgren radius shrinking as n^(-2/3) for three stellar types")
+            + f'<div class="card">{pre(stromgren_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

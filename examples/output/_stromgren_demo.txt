@@ -1,0 +1,23 @@
+Stromgren sphere: R_s = (3 Q / 4 pi n^2 alpha_B)^(1/3)
+
+  balance: every ionizing photon replaces one recombination
+
+        star (Q, /s)   n (/cc)  R_s (pc)  M_ion (Msun)
+  ----------------------------------------------------
+           O5 (5e49)        10     25.00         16172
+           O5 (5e49)       100      5.39          1617
+           O5 (5e49)      1000      1.16           162
+           O9 (5e48)        10     11.60          1617
+           O9 (5e48)       100      2.50           162
+           O9 (5e48)      1000      0.54            16
+           B0 (1e48)        10      6.79           323
+           B0 (1e48)       100      1.46            32
+           B0 (1e48)      1000      0.31             3
+
+  R shrinks as n^(-2/3): the same O star lights up a ~25 pc bubble in
+  diffuse gas but only a fraction of a parsec in a dense clump (a compact
+  HII region). These are the pink emission nebulae -- Orion, the Rosette --
+  that flag where massive stars formed in the last few million years.
+  Switch the star off and the bubble recombines in ~1219 yr.
+
+  wrote examples/output\stromgren.svg

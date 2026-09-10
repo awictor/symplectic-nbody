@@ -96,6 +96,7 @@ ruins a long non-symplectic integration.
 | `src/ram_pressure.py` | Ram-pressure stripping: how clusters strip spirals of their gas |
 | `src/free_fall.py` | Free-fall & dynamical time: the 1/sqrt(G rho) clock of gravity |
 | `src/shock_jump.py` | Sound speed & the Rankine-Hugoniot shock jumps |
+| `src/stromgren.py` | The Stromgren sphere: the ionized HII bubble around a hot star |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -183,6 +184,7 @@ ruins a long non-symplectic integration.
 | `examples/ram_pressure_demo.py` | Surviving gas radius by environment + the R_strip(v) curves |
 | `examples/free_fall_demo.py` | Free-fall time from clouds to neutron stars + the rho^(-1/2) line |
 | `examples/shock_jump_demo.py` | Jump ratios vs Mach + the density-4 ceiling and M^2 divergence |
+| `examples/stromgren_demo.py` | Radius & ionized mass by star/density + the R ~ n^(-2/3) curves |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1831,6 +1833,33 @@ valve. This is the same compression ratio the Fermi-acceleration module feeds on
 jump that drives the Sedov blast wave. The tests verify the ~340 m/s air sound speed, the
 Mach-1 identity, the compression ceiling of 4, the unbounded `M^2` pressure growth, and the
 subsonic post-shock flow.
+
+## The Stromgren sphere: the ionized bubble around a hot star
+
+A hot, massive star floods its surroundings with photons above 13.6 eV, carving out a sphere
+of ionized hydrogen (an HII region). Its size is set by balance: every ionizing photon the
+star emits replaces one recombination inside the sphere. `stromgren.py`:
+
+```
+$ python examples/stromgren_demo.py examples/output
+
+        star (Q, /s)   n (/cc)  R_s (pc)  M_ion (Msun)
+  ----------------------------------------------------
+           O5 (5e49)        10     25.00         16172
+           O5 (5e49)       100      5.39          1617
+           O5 (5e49)      1000      1.16           162
+           O9 (5e48)       100      2.50           162
+           B0 (1e48)       100      1.46            32
+```
+
+Setting the star's output `Q` equal to the enclosed recombination rate
+`(4/3) pi R^3 n^2 alpha_B` gives `R_s = (3Q / 4 pi n^2 alpha_B)^(1/3)`. Because `R ~ Q^(1/3)`
+and `R ~ n^(-2/3)`, an O star lights up a ~25 pc bubble in diffuse gas but only a fraction of
+a parsec in a dense clump (a compact HII region). These are the pink emission-line nebulae --
+Orion, the Rosette, the Eagle -- that trace where massive stars formed in the last few
+million years, and the same physics sizes the ionized bubbles of cosmic reionization. The
+tests verify the ~pc-scale O-star sphere, the smaller B-star sphere, the `Q^(1/3)` and
+`n^(-2/3)` scalings, the recombination-output balance, and the ~1000-year recombination time.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
