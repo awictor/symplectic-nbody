@@ -104,6 +104,7 @@ def main():
     import bbn_demo
     import cluster_demo
     import roche_lobe_demo
+    import degeneracy_demo
 
     import plot_orbits
 
@@ -177,6 +178,7 @@ def main():
     bbn_txt = run("bbn_demo", bbn_demo.main, True)
     cluster_txt = run("cluster_demo", cluster_demo.main, True)
     rochelobe_txt = run("roche_lobe_demo", roche_lobe_demo.main, True)
+    degeneracy_txt = run("degeneracy_demo", degeneracy_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -337,6 +339,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("tov.svg"), "neutron-star mass-radius curve with a maximum mass")
             + f'<div class="card">{pre(tov_txt)}</div>'
+            + '</div>'),
+        section(
+            "Fermi degeneracy pressure",
+            "The Pauli principle makes a cold, dense electron gas resist "
+            "compression -- the quantum pressure that supports white dwarfs. It "
+            "softens from P ~ n^5/3 to P ~ n^4/3 as electrons turn relativistic, "
+            "and that softer exponent is the seed of the Chandrasekhar mass.",
+            '<div class="grid">'
+            + svg_card(out("degeneracy.svg"), "pressure laws vs density with the relativistic transition")
+            + f'<div class="card">{pre(degeneracy_txt)}</div>'
             + '</div>'),
         section(
             "The Chandrasekhar mass",

@@ -1,0 +1,17 @@
+Fermi degeneracy pressure: the quantum floor under dead stars
+
+  relativistic transition density: 5.87e+35 /m^3
+
+      n (/m^3)            regime        P (Pa)
+  ----------------------------------------------
+         1e+29           non-rel      5.03e+10
+         1e+32           non-rel      5.03e+15
+         1e+35           non-rel      5.03e+20
+         1e+36      relativistic      2.45e+22
+         1e+38      relativistic      1.13e+25
+
+  Below the transition the pressure goes as n^5/3; above it, as n^4/3.
+  That softer exponent is exactly why gravity eventually wins in a
+  massive white dwarf -- the origin of the Chandrasekhar mass.
+
+  wrote examples/output\degeneracy.svg

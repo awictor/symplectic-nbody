@@ -100,6 +100,7 @@ ruins a long non-symplectic integration.
 | `src/bbn.py` | Big Bang nucleosynthesis: n/p freeze-out & primordial helium |
 | `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
 | `src/distances.py` | Cosmological distances: luminosity/angular-diameter, cosmic acceleration |
+| `src/degeneracy.py` | Fermi degeneracy pressure: the quantum support of dead stars |
 | `src/chandrasekhar.py` | White-dwarf structure & the Chandrasekhar mass (~1.44 M_sun) |
 | `src/tov.py` | Neutron-star structure via the TOV equation & the GR maximum mass |
 | `src/jeans.py` | Jeans instability: the gravitational-collapse / star-formation threshold |
@@ -153,6 +154,7 @@ ruins a long non-symplectic integration.
 | `examples/bbn_demo.py` | n/p freeze-out chain and the Y_p ~ 0.25 helium fraction |
 | `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
 | `examples/distances_demo.py` | Hubble diagram (LCDM vs decelerating) + D_A turnover |
+| `examples/degeneracy_demo.py` | Degeneracy-pressure laws vs density with the relativistic transition |
 | `examples/chandrasekhar_demo.py` | White-dwarf mass-radius curve approaching 1.44 M_sun |
 | `examples/tov_demo.py` | Neutron-star mass-radius curve with a maximum mass; GR vs Newton |
 | `examples/jeans_demo.py` | Dispersion relation: sound waves vs collapse across the Jeans length |
@@ -426,6 +428,29 @@ which no static star exists and collapse to a black hole is inevitable. The
 Newtonian version has no such limit -- its mass grows without bound. The tests
 check the neutron-star scale (R ~ 10 km, M ~ 1 M_sun), the TOV turnover, the
 absence of a Newtonian maximum, and that GR caps the mass below Newton.
+
+## Fermi degeneracy pressure: the quantum floor
+
+The Pauli exclusion principle makes a cold, dense electron gas resist
+compression even at zero temperature -- the pressure that holds up white dwarfs.
+`degeneracy.py`:
+
+```
+$ python examples/degeneracy_demo.py examples/output
+
+  relativistic transition density: 5.87e35 /m^3
+      n (/m^3)          regime        P (Pa)
+         1e+35         non-rel      5.03e+20
+         1e+36    relativistic      2.45e+22
+```
+
+Filling momentum states to the Fermi momentum gives `P ~ n^{5/3}` while
+electrons are non-relativistic, softening to `P ~ n^{4/3}` once they turn
+relativistic (above `n ~ 6e35 /m^3`, white-dwarf densities). That softer exponent
+is precisely why gravity eventually overwhelms a massive white dwarf -- the seed
+of the Chandrasekhar mass in the next section. The tests verify both scalings,
+the relativistic transition, and that metals are non-relativistic while white
+dwarfs are.
 
 ## The Chandrasekhar mass: the limit of a white dwarf
 

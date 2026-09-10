@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.33       12.25      0.8x
-   400          36.72       38.36      1.0x
-   800         146.73      113.12      1.3x
-  1600         596.37      370.94      1.6x
-  3200        2497.93      962.23      2.6x
+   200           9.37       12.49      0.8x
+   400          37.91       38.38      1.0x
+   800         145.38      112.68      1.3x
+  1600         777.30      523.82      1.5x
+  3200        2509.66      975.88      2.6x
 
-empirical scaling exponent  direct ~ N^2.02   barnes-hut ~ N^1.59
+empirical scaling exponent  direct ~ N^2.05   barnes-hut ~ N^1.63
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -3217,6 +3217,41 @@ wrote examples/output\poincare_section.svg</pre></div></div>
   star cannot support itself and collapses to a black hole.
 
   wrote examples/output\tov.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Fermi degeneracy pressure</h2>
+    <p class="blurb">The Pauli principle makes a cold, dense electron gas resist compression -- the quantum pressure that supports white dwarfs. It softens from P ~ n^5/3 to P ~ n^4/3 as electrons turn relativistic, and that softer exponent is the seed of the Chandrasekhar mass.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<line x1="64" y1="656" x2="656" y2="656" stroke="#30363d"/>
+<line x1="64" y1="64" x2="64" y2="656" stroke="#30363d"/>
+<line x1="490.9" y1="64" x2="490.9" y2="656" stroke="#e9c46a" stroke-dasharray="4,4"/>
+<text x="496.9" y="80" fill="#e9c46a" font-size="12">p_F = m_e c</text>
+<polyline points="64.0,656.0 69.9,650.1 75.8,644.2 81.8,638.2 87.7,632.3 93.6,626.4 99.5,620.5 105.4,614.6 111.4,608.6 117.3,602.7 123.2,596.8 129.1,590.9 135.0,585.0 141.0,579.0 146.9,573.1 152.8,567.2 158.7,561.3 164.6,555.4 170.6,549.4 176.5,543.5 182.4,537.6 188.3,531.7 194.2,525.8 200.2,519.8 206.1,513.9 212.0,508.0 217.9,502.1 223.8,496.2 229.8,490.2 235.7,484.3 241.6,478.4 247.5,472.5 253.4,466.6 259.4,460.6 265.3,454.7 271.2,448.8 277.1,442.9 283.0,437.0 289.0,431.0 294.9,425.1 300.8,419.2 306.7,413.3 312.6,407.4 318.6,401.4 324.5,395.5 330.4,389.6 336.3,383.7 342.2,377.8 348.2,371.8 354.1,365.9 360.0,360.0 365.9,354.1 371.8,348.2 377.8,342.2 383.7,336.3 389.6,330.4 395.5,324.5 401.4,318.6 407.4,312.6 413.3,306.7 419.2,300.8 425.1,294.9 431.0,289.0 437.0,283.0 442.9,277.1 448.8,271.2 454.7,265.3 460.6,259.4 466.6,253.4 472.5,247.5 478.4,241.6 484.3,235.7 490.2,229.8 496.2,223.8 502.1,217.9 508.0,212.0 513.9,206.1 519.8,200.2 525.8,194.2 531.7,188.3 537.6,182.4 543.5,176.5 549.4,170.6 555.4,164.6 561.3,158.7 567.2,152.8 573.1,146.9 579.0,141.0 585.0,135.0 590.9,129.1 596.8,123.2 602.7,117.3 608.6,111.4 614.6,105.4 620.5,99.5 626.4,93.6 632.3,87.7 638.2,81.8 644.2,75.8 650.1,69.9 656.0,64.0" fill="none" stroke="#4cc9f0" stroke-width="2"/>
+<polyline points="64.0,566.3 69.9,561.6 75.8,556.9 81.8,552.1 87.7,547.4 93.6,542.6 99.5,537.9 105.4,533.2 111.4,528.4 117.3,523.7 123.2,519.0 129.1,514.2 135.0,509.5 141.0,504.8 146.9,500.0 152.8,495.3 158.7,490.6 164.6,485.8 170.6,481.1 176.5,476.3 182.4,471.6 188.3,466.9 194.2,462.1 200.2,457.4 206.1,452.7 212.0,447.9 217.9,443.2 223.8,438.5 229.8,433.7 235.7,429.0 241.6,424.2 247.5,419.5 253.4,414.8 259.4,410.0 265.3,405.3 271.2,400.6 277.1,395.8 283.0,391.1 289.0,386.4 294.9,381.6 300.8,376.9 306.7,372.2 312.6,367.4 318.6,362.7 324.5,357.9 330.4,353.2 336.3,348.5 342.2,343.7 348.2,339.0 354.1,334.3 360.0,329.5 365.9,324.8 371.8,320.1 377.8,315.3 383.7,310.6 389.6,305.8 395.5,301.1 401.4,296.4 407.4,291.6 413.3,286.9 419.2,282.2 425.1,277.4 431.0,272.7 437.0,268.0 442.9,263.2 448.8,258.5 454.7,253.8 460.6,249.0 466.6,244.3 472.5,239.5 478.4,234.8 484.3,230.1 490.2,225.3 496.2,220.6 502.1,215.9 508.0,211.1 513.9,206.4 519.8,201.7 525.8,196.9 531.7,192.2 537.6,187.4 543.5,182.7 549.4,178.0 555.4,173.2 561.3,168.5 567.2,163.8 573.1,159.0 579.0,154.3 585.0,149.6 590.9,144.8 596.8,140.1 602.7,135.4 608.6,130.6 614.6,125.9 620.5,121.1 626.4,116.4 632.3,111.7 638.2,106.9 644.2,102.2 650.1,97.5 656.0,92.7" fill="none" stroke="#ff006e" stroke-width="2"/>
+<text x="64" y="34" fill="#e6edf3" font-size="18">Degeneracy pressure vs density (log-log)</text>
+<text x="78" y="72" fill="#4cc9f0" font-size="12">non-rel P ~ n^5/3 (steeper)</text>
+<text x="78" y="90" fill="#ff006e" font-size="12">relativistic P ~ n^4/3 (softer -> Chandrasekhar)</text>
+<text x="656" y="678" fill="#8b949e" font-size="11" text-anchor="end">log10 n (/m^3) -&gt;</text>
+<text x="54" y="56" fill="#8b949e" font-size="11">log10 P (Pa)</text>
+</svg><figcaption>pressure laws vs density with the relativistic transition</figcaption></figure><div class="card"><pre>Fermi degeneracy pressure: the quantum floor under dead stars
+
+  relativistic transition density: 5.87e+35 /m^3
+
+      n (/m^3)            regime        P (Pa)
+  ----------------------------------------------
+         1e+29           non-rel      5.03e+10
+         1e+32           non-rel      5.03e+15
+         1e+35           non-rel      5.03e+20
+         1e+36      relativistic      2.45e+22
+         1e+38      relativistic      1.13e+25
+
+  Below the transition the pressure goes as n^5/3; above it, as n^4/3.
+  That softer exponent is exactly why gravity eventually wins in a
+  massive white dwarf -- the origin of the Chandrasekhar mass.
+
+  wrote examples/output\degeneracy.svg</pre></div></div>
   </section>
 
   <section>
