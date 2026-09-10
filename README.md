@@ -161,6 +161,7 @@ ruins a long non-symplectic integration.
 | `src/nozzle.py` | de Laval nozzle: isentropic ratios, area-Mach, choked flow, exhaust velocity |
 | `src/blasius.py` | Blasius boundary layer: delta~sqrt(x), skin friction, plate drag, transition |
 | `src/strouhal.py` | Strouhal number: vortex-shedding frequency, Roshko fit, aeolian tone, lock-in |
+| `src/cluster_mass.py` | Virial cluster mass from velocity dispersion, M/L ratio, dark-matter fraction |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -313,6 +314,7 @@ ruins a long non-symplectic integration.
 | `examples/nozzle_demo.py` | Area-ratio/exit-Mach table + the converging-diverging bell figure |
 | `examples/blasius_demo.py` | Thickness/skin-friction table + the growing-boundary-layer figure |
 | `examples/strouhal_demo.py` | Shedding-frequency table + the von Karman vortex-street figure |
+| `examples/cluster_mass_demo.py` | Per-cluster virial-mass table + the mass-to-light ladder |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3648,6 +3650,30 @@ alternating side-force can build destructive vortex-induced vibration -- the rea
 chimneys wear helical strakes and why the Tacoma-era lesson still matters. The tests verify
 the `f = St U/d` scaling, the Strouhal inversion, the Roshko rise, the aeolian pitch, the
 lock-in speed, and the `~5d` vortex spacing.
+
+## Weighing clusters: the virial mass and dark matter
+
+A cluster's own motion weighs it, and the answer launched the dark-matter problem.
+`cluster_mass.py`:
+
+```
+$ python examples/cluster_mass_demo.py examples/output
+
+  cluster    sigma_los   R (Mpc)    M (Msun)     M/L
+  Virgo        700 km/s     1.5      2.6e15       ~850
+  Coma        1000 km/s     1.5      5.2e15      ~1050
+```
+
+The virial theorem gives `M = alpha sigma^2 R / G` from the velocity dispersion `sigma` and
+size `R`; since only the line-of-sight dispersion is measurable, `sigma^2 = 3 sigma_los^2` for
+an isotropic system. This is exactly Zwicky's 1933 Coma calculation: galaxies moving at
+~1000 km/s across ~1.5 Mpc need a dynamical mass of order `10^15` solar masses -- about a
+hundred times the mass of the visible stars. The resulting mass-to-light ratio climbs from a
+few for a stellar population to hundreds for a cluster, the first evidence for dark matter,
+and the module also reports the escape velocity, the (sub-Hubble) crossing time that confirms
+the system is relaxed, and the dark-matter fraction. The tests reproduce Coma's mass and M/L,
+the `sigma^2`/`R`/`alpha` scalings, the `3x` line-of-sight factor, and the ~0.95 dark-matter
+fraction.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,14 @@
+Weighing clusters by their motion: M = alpha sigma^2 R / G (virial)
+
+  cluster            sigma_los   R (Mpc)     M (Msun)     M/L
+  Virgo                 700 km/s       1.5     2.56e+15     854
+  Coma                 1000 km/s       1.5     5.23e+15    1046
+  Norma                 900 km/s       1.3     3.67e+15     918
+  Bullet               1200 km/s       2.0     1.00e+16    1674
+
+  Escape velocity from Coma (1e15 Msun, 1.5 Mpc): 2395 km/s -- its galaxies at
+  ~1000 km/s would fly apart on stellar mass alone. Zwicky (1933) found the mass
+  needed to bind Coma was ~100x its visible stars: the first case for dark matter.
+  With only ~5% of the mass luminous, the dark-matter fraction is ~95%.
+
+  wrote examples/output\cluster_mass.svg

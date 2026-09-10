@@ -203,6 +203,7 @@ def main():
     import nozzle_demo
     import blasius_demo
     import strouhal_demo
+    import cluster_mass_demo
 
     import plot_orbits
 
@@ -375,6 +376,7 @@ def main():
     nozzle_txt = run("nozzle_demo", nozzle_demo.main, True)
     blasius_txt = run("blasius_demo", blasius_demo.main, True)
     strouhal_txt = run("strouhal_demo", strouhal_demo.main, True)
+    cluster_mass_txt = run("cluster_mass_demo", cluster_mass_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1941,6 +1943,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("strouhal.svg"), "vortices peeling alternately off a cylinder into the staggered von Karman wake")
             + f'<div class="card">{pre(strouhal_txt)}</div>'
+            + '</div>'),
+        section(
+            "Weighing clusters: the virial mass & dark matter",
+            "The virial theorem turns a cluster's own motion into a scale: M = alpha sigma^2 R/G "
+            "from the velocity dispersion sigma and size R. Only the line-of-sight dispersion "
+            "is observable, so sigma^2 = 3 sigma_los^2 for an isotropic system. This is Zwicky's "
+            "1933 Coma calculation -- galaxies moving at ~1000 km/s across ~1.5 Mpc demand a "
+            "dynamical mass ~10^15 solar masses, about a hundred times the visible stars. The "
+            "mass-to-light ratio jumps from a few for stars to hundreds for clusters: the first "
+            "evidence for dark matter.",
+            '<div class="grid">'
+            + svg_card(out("cluster_mass.svg"), "the mass-to-light ladder climbing from a star to a cluster")
+            + f'<div class="card">{pre(cluster_mass_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
