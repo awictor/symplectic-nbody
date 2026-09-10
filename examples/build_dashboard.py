@@ -187,6 +187,7 @@ def main():
     import joule_thomson_demo
     import clausius_clapeyron_demo
     import reynolds_demo
+    import bernoulli_demo
 
     import plot_orbits
 
@@ -343,6 +344,7 @@ def main():
     jt_txt = run("joule_thomson_demo", joule_thomson_demo.main, True)
     cc_txt = run("clausius_clapeyron_demo", clausius_clapeyron_demo.main, True)
     reynolds_txt = run("reynolds_demo", reynolds_demo.main, True)
+    bernoulli_txt = run("bernoulli_demo", bernoulli_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1702,6 +1704,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("reynolds.svg"), "systems from bacterium to whale on a log Reynolds axis")
             + f'<div class="card">{pre(reynolds_txt)}</div>'
+            + '</div>'),
+        section(
+            "Bernoulli & the Venturi effect",
+            "Along a streamline P + 1/2 rho v^2 + rho g h is constant, so speeding up a "
+            "flow drops its pressure. A narrowing Venturi pipe is fastest and lowest-"
+            "pressure at the throat -- drawing fuel into a carburettor, reading flow in a "
+            "meter, and (with circulation) helping lift a wing. A Pitot tube runs it "
+            "backwards to give airspeed, and Torricelli's sqrt(2gh) jet is the same law "
+            "with the pressures cancelled.",
+            '<div class="grid">'
+            + svg_card(out("bernoulli.svg"), "a Venturi tube: velocity peaks and pressure dips at the throat")
+            + f'<div class="card">{pre(bernoulli_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

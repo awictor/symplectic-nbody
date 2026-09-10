@@ -145,6 +145,7 @@ ruins a long non-symplectic integration.
 | `src/joule_thomson.py` | The Joule-Thomson effect: throttling cooling & gas liquefaction |
 | `src/clausius_clapeyron.py` | Clausius-Clapeyron: vapor pressure, boiling point & latent heat |
 | `src/reynolds.py` | The Reynolds number: laminar vs turbulent flow & Hagen-Poiseuille |
+| `src/bernoulli.py` | Bernoulli's principle: the Venturi effect, Pitot airspeed & Torricelli |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -281,6 +282,7 @@ ruins a long non-symplectic integration.
 | `examples/joule_thomson_demo.py` | Inversion temperatures per gas + the mu_JT(T) crossings |
 | `examples/clausius_clapeyron_demo.py` | Boiling point vs altitude + the vapor-pressure curve |
 | `examples/reynolds_demo.py` | Re & regime from bacterium to whale + the log-Re transition chart |
+| `examples/bernoulli_demo.py` | Pitot/Torricelli speeds + the Venturi velocity/pressure diagram |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3220,6 +3222,28 @@ at `Re ~ 1e8` glides on inertia. Laminar pipe flow obeys Hagen-Poiseuille's `Q ~
 so halving a pipe's radius cuts the flow sixteen-fold. The tests verify the laminar/turbulent
 transition, the bacterium and whale Reynolds numbers, the `r^4` Poiseuille scaling, the
 kinematic/dynamic form agreement, and the critical-velocity inversion.
+
+## Bernoulli's principle: fast flow, low pressure
+
+Along a streamline `P + 1/2 rho v^2 + rho g h` is constant. `bernoulli.py`:
+
+```
+$ python examples/bernoulli_demo.py examples/output
+
+  Pitot airspeed (air):        Torricelli efflux (water):
+     50 m/s  ->  1.53 kPa        depth  1 m  ->   4.4 m/s
+    250 m/s  -> 38.28 kPa        depth 20 m  ->  19.8 m/s
+```
+
+Speeding up a flow drops its static pressure. A narrowing Venturi pipe is fastest and
+lowest-pressure at the throat (continuity `A1 v1 = A2 v2` plus Bernoulli), which draws fuel
+into a carburettor, reads flow in a meter, and -- with circulation -- helps lift a wing. A
+Pitot tube runs it backwards, stopping the flow to convert dynamic pressure into a
+measurable stagnation pressure, giving `v = sqrt(2(P_stag - P_static)/rho)`; Torricelli's
+`sqrt(2gh)` jet is the same equation with the pressure terms cancelled, equal to free-fall
+from that depth. The tests verify faster-flow-lower-pressure, the Pitot round-trip, the
+Torricelli/free-fall identity, the Venturi throat velocity, and conservation of the Bernoulli
+constant along a streamline.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
