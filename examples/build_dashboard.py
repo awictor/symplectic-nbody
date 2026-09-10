@@ -223,6 +223,7 @@ def main():
     import cherenkov_demo
     import zeeman_demo
     import rabi_demo
+    import franck_hertz_demo
 
     import plot_orbits
 
@@ -415,6 +416,7 @@ def main():
     cherenkov_txt = run("cherenkov_demo", cherenkov_demo.main, True)
     zeeman_txt = run("zeeman_demo", zeeman_demo.main, True)
     rabi_txt = run("rabi_demo", rabi_demo.main, True)
+    franck_hertz_txt = run("franck_hertz_demo", franck_hertz_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2246,6 +2248,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("rabi.svg"), "excited-state probability flopping in time for several detunings, and the Lorentzian resonance")
             + f'<div class="card">{pre(rabi_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Franck-Hertz experiment: energy levels in a current",
+            "Fire electrons through mercury vapour and ramp the accelerating voltage: the "
+            "collected current climbs, then drops sharply every 4.9 V. Electrons collide "
+            "elastically until they gain the atom's excitation energy, then dump exactly that "
+            "quantum in an inelastic collision and arrive too slow to be collected -- so the "
+            "current falls, and the evenly spaced dips are direct proof that atomic energy is "
+            "quantized (the 1914 confirmation of the Bohr atom). The excited atom relaxes by "
+            "emitting a photon at that energy, mercury's 254 nm UV line.",
+            '<div class="grid">'
+            + svg_card(out("franck_hertz.svg"), "the current-vs-voltage sawtooth with dips at multiples of the 4.9 V excitation")
+            + f'<div class="card">{pre(franck_hertz_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

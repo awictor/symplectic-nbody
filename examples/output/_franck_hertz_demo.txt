@@ -1,0 +1,24 @@
+Franck-Hertz: current dips prove quantized atomic energy (mercury, 4.9 eV)
+
+  Current dips at multiples of the excitation voltage:
+    dip 1:    4.9 V   (electron has excited the atom 1 time)
+    dip 2:    9.8 V   (electron has excited the atom 2 times)
+    dip 3:   14.7 V   (electron has excited the atom 3 times)
+    dip 4:   19.6 V   (electron has excited the atom 4 times)
+    dip 5:   24.5 V   (electron has excited the atom 5 times)
+
+  Dip spacing = 4.9 V = the mercury 6s6p excitation energy in volts.
+  Emission on relaxation: lambda = h c / E = 253 nm (the mercury UV line).
+
+     accel V   excitations   residual (eV)
+         3 V             0            3.00
+         6 V             1            1.10
+        11 V             2            1.20
+        16 V             3            1.30
+        25 V             5            0.50
+
+  Electrons collide elastically (no energy lost) until they reach 4.9 eV, then can
+  dump exactly that quantum inelastically and arrive too slow to be collected -- so
+  the current drops. Repeating dips = repeated excitations = energy is quantized.
+
+  wrote examples/output\franck_hertz.svg
