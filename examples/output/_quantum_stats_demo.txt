@@ -1,0 +1,19 @@
+Quantum statistics: occupation <n> vs (E-mu)/kT
+
+     (E-mu)/kT   Fermi-Dirac   Bose-Einstein   Maxwell-Boltz
+  ----------------------------------------------------------
+          -4.0        0.9820             inf         54.5982
+          -1.0        0.7311             inf          2.7183
+           0.5        0.3775           1.541          0.6065
+           1.0        0.2689           0.582          0.3679
+           2.0        0.1192           0.157          0.1353
+           4.0        0.0180           0.019          0.0183
+           8.0        0.0003           0.000          0.0003
+
+  Fermions can never exceed one per state (Pauli), so at low temperature
+  they stack into a sharp step up to the Fermi level -- electron degeneracy,
+  white-dwarf pressure. Bosons pile up without limit as E -> mu, condensing
+  into the ground state below a critical temperature (BEC, superfluid He).
+  Far above mu both fade into the classical Maxwell-Boltzmann exponential.
+
+  wrote examples/output\quantum_stats.svg

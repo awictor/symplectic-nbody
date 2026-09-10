@@ -137,6 +137,7 @@ ruins a long non-symplectic integration.
 | `src/radioactive_decay.py` | Radioactive decay: half-lives, dating & Bateman decay chains |
 | `src/mass_formula.py` | Semi-empirical mass formula: nuclear binding & the iron peak |
 | `src/q_value.py` | Nuclear Q-value: the energy released when nuclei rearrange |
+| `src/quantum_stats.py` | Quantum statistics: Fermi-Dirac, Bose-Einstein & the classical limit |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -265,6 +266,7 @@ ruins a long non-symplectic integration.
 | `examples/radioactive_decay_demo.py` | Dating ages + a parent/daughter chain and Bateman curve |
 | `examples/mass_formula_demo.py` | B/A for landmark nuclei + the binding-energy curve peaking at iron |
 | `examples/q_value_demo.py` | Reaction Q-values + the chemical-to-annihilation energy-density chart |
+| `examples/quantum_stats_demo.py` | Occupation vs (E-mu)/kT + the FD/BE/MB distribution curves |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3000,6 +3002,32 @@ fission, and total matter-antimatter annihilation converts 100% of the mass at t
 `c^2 ~ 9x10^16 J/kg`. The tests verify the 931.494 MeV/amu equivalence, the D-T and U-235
 Q-values, the exothermic sign, the mass-energy consistency, the binding-energy route, and the
 ~10^14 J/kg fusion energy density.
+
+## Quantum statistics: how identical particles share states
+
+Identical quantum particles come in two kinds, and the tiny +1/-1 in their occupation number
+decides everything. `quantum_stats.py`:
+
+```
+$ python examples/quantum_stats_demo.py examples/output
+
+     (E-mu)/kT     Fermi-Dirac   Bose-Einstein   Maxwell-Boltz
+  --------------------------------------------------------
+          -4.0        0.9820             inf         54.5982
+           0.5        0.3775           1.541          0.6065
+           1.0        0.2689           0.582          0.3679
+           4.0        0.0180           0.019          0.0183
+           8.0        0.0003           0.000          0.0003
+```
+
+Fermions obey `<n> = 1/(exp((E-mu)/kT)+1)`, never exceeding one per state (Pauli), so at T=0
+they fill a sharp step up to the Fermi level -- electron degeneracy and white-dwarf pressure.
+Bosons obey `<n> = 1/(exp((E-mu)/kT)-1)`, which diverges as `E -> mu`, so below a critical
+temperature a macroscopic fraction condenses into the ground state (BEC, superfluid helium).
+Far above the chemical potential (`E - mu >> kT`) both fade into the classical Maxwell-Boltzmann
+exponential, and a photon mode (`mu=0`) at `E=kT` has the Planck occupation `1/(e-1) ~ 0.58`.
+The tests verify the 0.5-at-mu Fermi value, the T=0 step, the never-above-one bound, the bosonic
+divergence, the classical high-energy limit, and the photon Planck factor.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

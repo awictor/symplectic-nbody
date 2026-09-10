@@ -179,6 +179,7 @@ def main():
     import radioactive_decay_demo
     import mass_formula_demo
     import q_value_demo
+    import quantum_stats_demo
 
     import plot_orbits
 
@@ -327,6 +328,7 @@ def main():
     decay_txt = run("radioactive_decay_demo", radioactive_decay_demo.main, True)
     semf_txt = run("mass_formula_demo", mass_formula_demo.main, True)
     qval_txt = run("q_value_demo", q_value_demo.main, True)
+    qstats_txt = run("quantum_stats_demo", quantum_stats_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1590,6 +1592,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("q_value.svg"), "fuel energy density from chemical to nuclear to pure mass-energy")
             + f'<div class="card">{pre(qval_txt)}</div>'
+            + '</div>'),
+        section(
+            "Quantum statistics",
+            "Identical particles come in two kinds. Fermions obey Pauli exclusion, so "
+            "their Fermi-Dirac occupation never exceeds one and at T=0 fills states in a "
+            "sharp step up to the Fermi level -- electron degeneracy, white-dwarf "
+            "pressure. Bosons pile up without limit (Bose-Einstein), condensing into the "
+            "ground state below a critical temperature. Far above the chemical potential "
+            "both fade into the classical Maxwell-Boltzmann exponential.",
+            '<div class="grid">'
+            + svg_card(out("quantum_stats.svg"), "the fermion step, boson divergence and classical merge")
+            + f'<div class="card">{pre(qstats_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
