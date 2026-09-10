@@ -1,0 +1,17 @@
+Percolation: occupy sites with probability p, look for a spanning cluster
+
+  2D square-lattice site threshold p_c ~ 0.5927
+
+       p          spans?   largest cluster
+    0.40            0 %              1 %
+    0.50            0 %              3 %
+    0.55           13 %              9 %
+    0.59           60 %             30 %
+    0.65          100 %             50 %
+    0.75          100 %             75 %
+
+  Below p_c occupied sites form isolated islands; right at ~0.59 a single cluster
+  abruptly spans the whole lattice -- a geometric phase transition. Same threshold
+  governs forest fires, oil in rock, disease on a contact network, and random resistor grids.
+
+  wrote examples/output\percolation.svg

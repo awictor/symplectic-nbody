@@ -190,6 +190,7 @@ ruins a long non-symplectic integration.
 | `src/bcs.py` | BCS superconductivity: gap-to-Tc ratio, gap(T), Tc from coupling, isotope effect |
 | `src/london.py` | London/Meissner: penetration depth, field expulsion, type I/II classification |
 | `src/ising_mft.py` | Mean-field Ising: Curie temperature, spontaneous magnetization, Curie-Weiss |
+| `src/percolation.py` | Site percolation: union-find clusters, spanning test, threshold sweep |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -371,6 +372,7 @@ ruins a long non-symplectic integration.
 | `examples/bcs_demo.py` | Gap/isotope/Tc table + the gap(T) & Tc-vs-coupling figure |
 | `examples/london_demo.py` | Penetration/type table + the Meissner-decay & type-boundary figure |
 | `examples/ising_mft_demo.py` | Magnetization/susceptibility table + the m(T) & chi figure |
+| `examples/percolation_demo.py` | Spanning/cluster table + the threshold curve & lattice snapshots |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4378,6 +4380,29 @@ exponent `beta = 1/2`, while the zero-field susceptibility diverges as the Curie
 `chi ~ 1/(T - T_c)` -- the signatures of a second-order phase transition. The tests reproduce
 `T_c = z J`, the `m=0` paramagnet above and `m->1` ferromagnet below, the field-induced
 magnetization, the `beta=1/2` scaling, and the diverging Curie-Weiss susceptibility.
+
+## Percolation: the sudden onset of connectivity
+
+Random occupation crosses a sharp connectivity threshold. `percolation.py`:
+
+```
+$ python examples/percolation_demo.py examples/output
+
+  p      spans?   largest cluster       p_c ~ 0.5927 (2D square site)
+  0.50   0 %      3 %
+  0.59   60 %     30 %
+  0.65   100 %    50 %
+```
+
+Occupy each lattice site with probability `p` and ask whether a connected path spans the
+system. Below the threshold `p_c` (~0.59 for a 2D square lattice) the occupied sites are
+isolated islands; above it a single cluster abruptly spans the whole lattice, and the
+largest-cluster fraction jumps from near zero to order one -- a geometric phase transition.
+Clusters are found by union-find and spanning is tested top-to-bottom (a small seeded LCG
+keeps runs reproducible without `random`). The same threshold governs forest fires, oil in
+porous rock, disease on a contact network, and current through a random resistor grid. The
+tests verify the occupation fraction, empty/full/stripe spanning, the largest-cluster growth
+with `p`, and the spanning probability sharpening from near 0 below `p_c` to near 1 above.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

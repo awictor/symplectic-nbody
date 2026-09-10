@@ -232,6 +232,7 @@ def main():
     import bcs_demo
     import london_demo
     import ising_mft_demo
+    import percolation_demo
 
     import plot_orbits
 
@@ -433,6 +434,7 @@ def main():
     bcs_txt = run("bcs_demo", bcs_demo.main, True)
     london_txt = run("london_demo", london_demo.main, True)
     ising_mft_txt = run("ising_mft_demo", ising_mft_demo.main, True)
+    percolation_txt = run("percolation_demo", percolation_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2382,6 +2384,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("ising_mft.svg"), "magnetization collapsing to zero at the Curie point, and the diverging susceptibility")
             + f'<div class="card">{pre(ising_mft_txt)}</div>'
+            + '</div>'),
+        section(
+            "Percolation: the sudden onset of connectivity",
+            "Occupy each lattice site with probability p and ask if a connected path spans the "
+            "system. Below a sharp threshold p_c (~0.59 for a 2D square lattice) the occupied "
+            "sites form isolated islands; above it a single cluster abruptly spans the whole "
+            "lattice -- a geometric phase transition. The largest-cluster fraction jumps from "
+            "near zero to order one through p_c. The same threshold governs forest fires "
+            "spreading, oil seeping through rock, disease jumping a contact network, and "
+            "current finding a path through a random resistor grid.",
+            '<div class="grid">'
+            + svg_card(out("percolation.svg"), "the spanning probability sharpening at p_c, and lattices below/at/above threshold")
+            + f'<div class="card">{pre(percolation_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
