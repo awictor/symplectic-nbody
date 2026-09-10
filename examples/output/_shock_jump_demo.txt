@@ -1,0 +1,23 @@
+Rankine-Hugoniot shock jumps (gamma = 5/3)
+
+  sound speed, ionized gas at 1e4 K: 15.1 km/s
+  sound speed, air at 288 K:         339 m/s
+
+     Mach   rho2/rho1       P2/P1       T2/T1   M2 (down)
+  -------------------------------------------------------
+        1       1.000         1.0         1.0       1.000
+      1.5       1.714         2.6         1.5       0.716
+        2       2.286         4.8         2.1       0.607
+        3       3.000        11.0         3.7       0.522
+        5       3.571        31.0         8.7       0.475
+       10       3.883       124.8        32.1       0.454
+       30       3.987      1124.8       282.1       0.448
+      100       3.999     12499.8      3125.9       0.447
+
+  Density compression saturates at (gamma+1)/(gamma-1) = 4 -- a strong shock can pack gas only
+  fourfold. But pressure and temperature jumps grow as M^2 without limit,
+  which is why strong shocks heat gas to millions of kelvin (supernova
+  remnants, re-entry plasma) while barely compressing it. The downstream
+  flow is always subsonic (M2 < 1) -- the shock is a one-way valve.
+
+  wrote examples/output\shock_jump.svg

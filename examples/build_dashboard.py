@@ -137,6 +137,7 @@ def main():
     import brunt_vaisala_demo
     import ram_pressure_demo
     import free_fall_demo
+    import shock_jump_demo
 
     import plot_orbits
 
@@ -243,6 +244,7 @@ def main():
     brunt_txt = run("brunt_vaisala_demo", brunt_vaisala_demo.main, True)
     rampress_txt = run("ram_pressure_demo", ram_pressure_demo.main, True)
     freefall_txt = run("free_fall_demo", free_fall_demo.main, True)
+    shock_txt = run("shock_jump_demo", shock_jump_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1005,6 +1007,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("free_fall.svg"), "free-fall time vs mean density from clouds to neutron stars")
             + f'<div class="card">{pre(freefall_txt)}</div>'
+            + '</div>'),
+        section(
+            "Shock jumps: Rankine-Hugoniot",
+            "Move faster than the sound speed c_s = sqrt(gamma P/rho) and the gas "
+            "cannot get out of the way -- a shock forms. Conservation of mass, "
+            "momentum and energy fix the jumps from the upstream Mach number: density "
+            "saturates at 4 (gamma=5/3), but pressure and temperature climb as M^2 "
+            "without limit, which is why strong shocks heat gas to millions of kelvin "
+            "while barely compressing it. The downstream flow is always subsonic.",
+            '<div class="grid">'
+            + svg_card(out("shock_jump.svg"), "density saturating at 4 while pressure and temperature diverge as M^2")
+            + f'<div class="card">{pre(shock_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

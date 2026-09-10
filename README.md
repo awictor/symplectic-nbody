@@ -95,6 +95,7 @@ ruins a long non-symplectic integration.
 | `src/brunt_vaisala.py` | Brunt-Vaisala buoyancy frequency & the Schwarzschild convection criterion |
 | `src/ram_pressure.py` | Ram-pressure stripping: how clusters strip spirals of their gas |
 | `src/free_fall.py` | Free-fall & dynamical time: the 1/sqrt(G rho) clock of gravity |
+| `src/shock_jump.py` | Sound speed & the Rankine-Hugoniot shock jumps |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -181,6 +182,7 @@ ruins a long non-symplectic integration.
 | `examples/brunt_vaisala_demo.py` | N & buoyancy period by layer + the N^2-vs-lapse-rate curve |
 | `examples/ram_pressure_demo.py` | Surviving gas radius by environment + the R_strip(v) curves |
 | `examples/free_fall_demo.py` | Free-fall time from clouds to neutron stars + the rho^(-1/2) line |
+| `examples/shock_jump_demo.py` | Jump ratios vs Mach + the density-4 ceiling and M^2 divergence |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1799,6 +1801,36 @@ is under a millisecond. The Sun would free-fall in ~30 minutes if fusion switche
 it shines for billions of years instead is the whole point of the Kelvin-Helmholtz and
 main-sequence modules. The tests verify the ~30-minute solar free-fall, the `rho^(-1/2)`
 scaling, size-independence, the cloud-core collapse time, and the ~84-minute surface orbit.
+
+## Shock jumps: the Rankine-Hugoniot conditions
+
+Move faster than the sound speed `c_s = sqrt(gamma P / rho)` and the gas cannot get out of
+the way -- a shock forms, a razor-thin front across which everything jumps. `shock_jump.py`:
+
+```
+$ python examples/shock_jump_demo.py examples/output
+
+     Mach   rho2/rho1       P2/P1       T2/T1   M2 (down)
+  -------------------------------------------------------
+        1       1.000         1.0         1.0       1.000
+      1.5       1.714         2.6         1.5       0.716
+        2       2.286         4.8         2.1       0.607
+        3       3.000        11.0         3.7       0.522
+        5       3.571        31.0         8.7       0.475
+       10       3.883       124.8        32.1       0.454
+       30       3.987      1124.8       282.1       0.448
+      100       3.999     12499.8      3125.9       0.447
+```
+
+Mass, momentum and energy conservation fix every downstream quantity from the upstream Mach
+number. Density compression saturates at `(gamma+1)/(gamma-1) = 4` for `gamma=5/3`, but the
+pressure and temperature jumps climb as `M^2` without limit -- which is why a strong shock
+heats gas to millions of kelvin (supernova remnants, atmospheric re-entry plasma) while
+packing it only fourfold, and the downstream flow is always subsonic (`M2 < 1`), a one-way
+valve. This is the same compression ratio the Fermi-acceleration module feeds on and the
+jump that drives the Sedov blast wave. The tests verify the ~340 m/s air sound speed, the
+Mach-1 identity, the compression ceiling of 4, the unbounded `M^2` pressure growth, and the
+subsonic post-shock flow.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
