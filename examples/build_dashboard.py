@@ -134,6 +134,7 @@ def main():
     import accretion_disk_demo
     import fermi_acceleration_demo
     import opacity_demo
+    import brunt_vaisala_demo
 
     import plot_orbits
 
@@ -237,6 +238,7 @@ def main():
     accdisk_txt = run("accretion_disk_demo", accretion_disk_demo.main, True)
     fermi_txt = run("fermi_acceleration_demo", fermi_acceleration_demo.main, True)
     opacity_txt = run("opacity_demo", opacity_demo.main, True)
+    brunt_txt = run("brunt_vaisala_demo", brunt_vaisala_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -963,6 +965,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("opacity.svg"), "Kramers T^-3.5 fall-off flattening onto the electron-scattering floor")
             + f'<div class="card">{pre(opacity_txt)}</div>'
+            + '</div>'),
+        section(
+            "Brunt-Vaisala frequency & convection",
+            "Displace a fluid parcel upward: if it ends up denser than its new "
+            "surroundings, gravity pulls it back and it oscillates at the buoyancy "
+            "frequency N (internal gravity waves, ~5-10 min in the troposphere). If "
+            "it ends up lighter, buoyancy runs away and the layer convects. N^2 > 0 "
+            "means stable, N^2 < 0 unstable -- the sign change is exactly the "
+            "Schwarzschild convection criterion, set by the adiabatic lapse rate.",
+            '<div class="grid">'
+            + svg_card(out("brunt_vaisala.svg"), "N^2 vs lapse rate, with the convective region beyond adiabatic shaded")
+            + f'<div class="card">{pre(brunt_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

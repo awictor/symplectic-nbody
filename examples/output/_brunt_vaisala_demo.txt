@@ -1,0 +1,20 @@
+Brunt-Vaisala buoyancy frequency: N^2 = (g/T)(dT/dz + g/c_p)
+
+  dry adiabatic lapse rate g/c_p = 9.76 K/km (the stability threshold)
+
+                   layer  dT/dz (K/km)   N (1/s)      period        state
+  -----------------------------------------------------------------------
+        strong inversion          10.0    0.0266     3.9 min       stable
+            stratosphere           2.0    0.0229     4.6 min       stable
+              isothermal           0.0    0.0187     5.6 min       stable
+     typical troposphere          -6.5    0.0108     9.7 min       stable
+           dry adiabatic          -9.8    0.0000         --    CONVECTIVE
+          superadiabatic         -15.0    0.0000         --    CONVECTIVE
+
+  A parcel displaced in a stable layer overshoots and oscillates at N --
+  these buoyancy (internal gravity) waves ripple through the stratosphere
+  and the Sun's radiative core. Once the environment cools faster than the
+  adiabatic lapse rate, N^2 flips negative: buoyancy runs away and the
+  layer convects. That sign change IS the Schwarzschild convection criterion.
+
+  wrote examples/output\brunt_vaisala.svg

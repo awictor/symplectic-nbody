@@ -92,6 +92,7 @@ ruins a long non-symplectic integration.
 | `src/accretion_disk.py` | Shakura-Sunyaev disk: the X-ray/UV glow of accreting black holes |
 | `src/fermi_acceleration.py` | Diffusive shock acceleration & the universal E^(-2) cosmic-ray spectrum |
 | `src/opacity.py` | Stellar opacity: electron scattering, Kramers law & the photon mean free path |
+| `src/brunt_vaisala.py` | Brunt-Vaisala buoyancy frequency & the Schwarzschild convection criterion |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -175,6 +176,7 @@ ruins a long non-symplectic integration.
 | `examples/accretion_disk_demo.py` | T(r) for stellar-mass vs supermassive disks + wavebands |
 | `examples/fermi_acceleration_demo.py` | Spectral index vs Mach + power-law spectra toward p=2 |
 | `examples/opacity_demo.py` | Opacity by region + the Kramers/electron-floor T profile |
+| `examples/brunt_vaisala_demo.py` | N & buoyancy period by layer + the N^2-vs-lapse-rate curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -1707,6 +1709,35 @@ m^2/kg and the photon mean free path is only ~60 microns, so light random-walks 
 ~100,000 years. The tests verify the electron-scattering value and constancy, the `T^(-7/2)`
 and density scalings, the solar-centre magnitude, the high-T approach to the floor, and the
 sub-millimetre mean free path.
+
+## Brunt-Vaisala frequency: buoyancy waves and convection
+
+Displace a fluid parcel upward in a stratified medium: if it ends up denser than its new
+surroundings gravity pulls it back and it overshoots, oscillating at the Brunt-Vaisala
+frequency N; if it ends up lighter, buoyancy runs away and the layer convects.
+`brunt_vaisala.py`:
+
+```
+$ python examples/brunt_vaisala_demo.py examples/output
+
+                   layer  dT/dz (K/km)   N (1/s)      period        state
+  -----------------------------------------------------------------------
+        strong inversion          10.0    0.0266     3.9 min       stable
+            stratosphere           2.0    0.0229     4.6 min       stable
+              isothermal           0.0    0.0187     5.6 min       stable
+     typical troposphere          -6.5    0.0108     9.7 min       stable
+           dry adiabatic          -9.8    0.0000         --    CONVECTIVE
+          superadiabatic         -15.0    0.0000         --    CONVECTIVE
+```
+
+For an ideal gas `N^2 = (g/T)(dT/dz + g/c_p)`, comparing the environmental temperature
+gradient to the dry adiabatic lapse rate `g/c_p ~ 9.8 K/km`. When `N^2 > 0` the layer is
+stably stratified and rings with internal gravity waves (buoyancy period `2 pi / N`, ~5-10
+min in the troposphere and threading the Sun's radiative core as g-modes); when `N^2 < 0`
+it convects. That sign change is precisely the Schwarzschild convection criterion that
+decides how stars and atmospheres carry heat. The tests verify the lapse rate, the stable
+subadiabatic and isothermal layers, the superadiabatic convective instability, the absence
+of a real oscillation frequency when unstable, and the `2 pi / N` period.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
