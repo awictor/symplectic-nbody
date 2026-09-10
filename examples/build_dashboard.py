@@ -68,6 +68,7 @@ def main():
     import galaxy_collision_demo
     import hermite_demo
     import gravwave_demo
+    import circularization_demo
 
     # make sure all SVGs exist
     import plot_orbits
@@ -89,6 +90,8 @@ def main():
     galaxy_collision_demo.main()
     sys.argv = ["gravwave_demo", outdir]
     gravwave_demo.main()
+    sys.argv = ["circularization_demo", outdir]
+    circularization_demo.main()
     sys.argv = _old_argv
 
     print("capturing demo outputs...")
@@ -109,6 +112,8 @@ def main():
     galaxy_txt = capture(galaxy_collision_demo.main)
     sys.argv = ["gravwave_demo", outdir]
     gw_txt = capture(gravwave_demo.main)
+    sys.argv = ["circularization_demo", outdir]
+    circ_txt = capture(circularization_demo.main)
     sys.argv = _old_argv
     hermite_txt = capture(hermite_demo.main)
     # scaling benchmark is slow; run a lighter inline version
@@ -172,6 +177,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("gw_inspiral.svg"), "relative orbit spiralling to merger")
             + f'<div class="card">{pre(gw_txt)}</div>'
+            + '</div>'),
+        section(
+            "Gravitational waves circularize binaries (Peters 1964)",
+            "The coupled Peters (a, e) equations: as a binary radiates, both its "
+            "size and its eccentricity shrink, with e falling faster near merger. "
+            "Every orbit -- even a wildly eccentric one -- is nearly circular by "
+            "the time it merges.",
+            '<div class="grid">'
+            + svg_card(out("circularization.svg"), "(a, e) tracks all bending to e=0")
+            + f'<div class="card">{pre(circ_txt)}</div>'
             + '</div>'),
         section(
             "Galaxy collision & tidal tails",

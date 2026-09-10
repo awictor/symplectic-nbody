@@ -65,6 +65,7 @@ ruins a long non-symplectic integration.
 | `examples/poincare_demo.py` | Overlaid surface-of-section: KAM tori amid the chaotic sea |
 | `examples/galaxy_collision_demo.py` | Two disk galaxies collide, grow tidal tails (Barnes-Hut) |
 | `examples/gravwave_demo.py` | Inspiral chirp, energy loss validated against Peters (1964) |
+| `examples/circularization_demo.py` | Peters (a, e) tracks: all binaries circularize before merger |
 | `examples/build_dashboard.py` | Assemble all demos into one self-contained `index.html` |
 
 ## Barnes-Hut: scaling to many bodies
@@ -113,6 +114,29 @@ The energy-loss rate matches Peters' (1964) circular formula
 the orbit only ever shrinks, the frequency chirps upward, the loss scales as
 `1/c^5`, and switching radiation off leaves a closed orbit. As with the
 perihelion demo, `c` is shrunk to bring the effect into view.
+
+## Gravitational waves circularize binaries (Peters 1964)
+
+The companion to the chirp: `gravwave.py` also carries the orbit-averaged Peters
+equations for the coupled decay of semi-major axis and eccentricity. Both shrink,
+but `e` falls faster and faster near merger, so binaries are driven toward
+circular orbits:
+
+```
+$ python examples/circularization_demo.py examples/output
+
+    e0     a_final     e_final   e reduction
+  0.20      0.0098      0.0001       1406.2x
+  0.60      0.0098      0.0009        688.1x
+  0.90      0.0099      0.0099         90.9x
+```
+
+The `(a, e)` tracks all bend toward `e = 0`. The rates stiffen dramatically as
+`a -> 0` and `e -> 1` (the `(1-e^2)^{-7/2}` factor), so `peters_evolve` uses an
+adaptive step scaled to the local `a/|da/dt|` timescale. The tests confirm both
+rates are negative, a circular orbit stays circular, the eccentricity decreases
+monotonically, and the orbit-averaged `de/da` agrees with a full 2.5PN
+integration. This is why LIGO's merger templates can assume circular orbits.
 
 ## Galaxy collisions: tidal tails from gravity alone
 

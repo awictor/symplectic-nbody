@@ -81,6 +81,62 @@ def coalescence_time(a0: float, e0: float, m1: float, m2: float,
     return t_circ * (1.0 - e0 * e0) ** 3.5
 
 
+def peters_dadt(a: float, e: float, m1: float, m2: float, c: float = C_LIGHT) -> float:
+    """Peters (1964) orbit-averaged semi-major-axis decay rate:
+    da/dt = -(64/5) G^3 mu M^2 / (c^5 a^3 (1-e^2)^{7/2}) (1 + 73/24 e^2 + 37/96 e^4)."""
+    M = m1 + m2
+    mu = m1 * m2 / M
+    return (-(64.0 / 5.0) * G ** 3 * mu * M * M
+            / (c ** 5 * a ** 3 * (1.0 - e * e) ** 3.5)
+            * (1.0 + (73.0 / 24.0) * e * e + (37.0 / 96.0) * e ** 4))
+
+
+def peters_dedt(a: float, e: float, m1: float, m2: float, c: float = C_LIGHT) -> float:
+    """Peters (1964) orbit-averaged eccentricity decay rate:
+    de/dt = -(304/15) e G^3 mu M^2 / (c^5 a^4 (1-e^2)^{5/2}) (1 + 121/304 e^2).
+    Always negative for e>0: gravitational-wave emission CIRCULARIZES binaries."""
+    M = m1 + m2
+    mu = m1 * m2 / M
+    return (-(304.0 / 15.0) * e * G ** 3 * mu * M * M
+            / (c ** 5 * a ** 4 * (1.0 - e * e) ** 2.5)
+            * (1.0 + (121.0 / 304.0) * e * e))
+
+
+def peters_evolve(a0: float, e0: float, m1: float, m2: float, c: float,
+                  dt: float = None, n_steps: int = 2000, sample_every: int = 1,
+                  a_stop: float = 1e-2):
+    """Integrate the coupled Peters (a, e) ODEs with adaptive-step RK4. The decay
+    rates blow up as a shrinks and as e -> 1 (the (1-e^2)^{-7/2} factor), so the
+    step is scaled to the local timescale a/|da/dt| to stay stable and resolve
+    the accelerating late inspiral. Returns (times, a_values, e_values); stops at
+    a_stop*a0 (merger). `dt` sets the step as a fraction of that timescale."""
+    frac = dt if dt is not None else 0.02
+    a, e, t = a0, e0, 0.0
+    ts, as_, es = [0.0], [a0], [e0]
+
+    def deriv(a, e):
+        return peters_dadt(a, e, m1, m2, c), peters_dedt(a, e, m1, m2, c)
+
+    for s in range(n_steps):
+        da0, _de0 = deriv(a, e)
+        # local timescale; step a small fraction of it (never past merger)
+        tscale = a / abs(da0) if da0 != 0 else 1.0
+        h = frac * tscale
+        ka1, ke1 = deriv(a, e)
+        ka2, ke2 = deriv(a + 0.5 * h * ka1, max(0.0, e + 0.5 * h * ke1))
+        ka3, ke3 = deriv(a + 0.5 * h * ka2, max(0.0, e + 0.5 * h * ke2))
+        ka4, ke4 = deriv(a + h * ka3, max(0.0, e + h * ke3))
+        a += h / 6.0 * (ka1 + 2 * ka2 + 2 * ka3 + ka4)
+        e = max(0.0, e + h / 6.0 * (ke1 + 2 * ke2 + 2 * ke3 + ke4))
+        t += h
+        if a <= a_stop * a0:
+            ts.append(t); as_.append(a); es.append(e)
+            break
+        if s % sample_every == 0:
+            ts.append(t); as_.append(a); es.append(e)
+    return ts, as_, es
+
+
 def inspiral(a0: float, m1: float, m2: float, c: float,
              dt: float, n_steps: int, sample_every: int = 1
              ) -> Tuple[List[float], List[float], List[float]]:
