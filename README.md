@@ -86,6 +86,7 @@ ruins a long non-symplectic integration.
 | `src/tisserand.py` | Tisserand parameter: the near-invariant of a gravity assist |
 | `src/lensing.py` | Gravitational lensing: deflection, Einstein ring, microlensing |
 | `src/rotation_curve.py` | Galaxy rotation curves: Keplerian disk vs flat dark-halo curve |
+| `src/faber_jackson.py` | Faber-Jackson L ~ sigma^4 relation for elliptical galaxies |
 | `src/mond.py` | MOND: modified gravity, flat curves & baryonic Tully-Fisher |
 | `src/schwarzschild.py` | Black-hole orbits: effective potential, ISCO, photon sphere, plunge |
 | `src/kerr.py` | Rotating black holes: horizons, ergosphere, spin-dependent ISCO |
@@ -153,6 +154,7 @@ ruins a long non-symplectic integration.
 | `examples/tisserand_demo.py` | a & e jump across a flyby while Tisserand stays flat |
 | `examples/lensing_demo.py` | Microlensing light curve + Einstein-ring image diagram (SVG) |
 | `examples/rotation_curve_demo.py` | Visible (declining) vs disk+halo (flat) rotation curves |
+| `examples/faber_jackson_demo.py` | L ~ sigma^4 from dwarf to giant ellipticals |
 | `examples/mond_demo.py` | MOND (flat) vs Newton-on-baryons (declining) + Tully-Fisher |
 | `examples/schwarzschild_demo.py` | Precessing & plunging black-hole orbits with ISCO/photon sphere |
 | `examples/kerr_demo.py` | ISCO-vs-spin curves + horizon/ergosphere diagram |
@@ -1068,6 +1070,26 @@ remarkably little scatter. This is the same flat-curve observation as the dark-
 matter section, explained the opposite way; the repo lets you compare them side
 by side. The tests check the interpolating-function limits, the deep-MOND
 `sqrt(g_N a0)` law, the flattening, and the `v ~ M^{1/4}` Tully-Fisher slope.
+
+## Faber-Jackson: ellipticals from their motion
+
+The elliptical-galaxy analog of Tully-Fisher. `faber_jackson.py`:
+
+```
+$ python examples/faber_jackson_demo.py examples/output
+
+  sigma (km/s)     L (L_sun)  virial M (M_sun)
+            50      7.81e+07          2.91e+09
+           200      2.00e+10          4.65e+10
+           400      3.20e+11          1.86e+11
+```
+
+Luminosity climbs as the fourth power of the stellar velocity dispersion,
+`L ~ sigma^4` -- a consequence of the virial theorem with a roughly constant
+mass-to-light ratio and surface brightness. Because the dependence is so steep, a
+spectral line width fixes a galaxy's luminosity and, against its apparent
+brightness, its distance. The tests verify the `sigma^4` slope, the `L*` and
+giant-elliptical luminosities, the virial-mass scale, and the inversion.
 
 ## Galaxy rotation curves: the case for dark matter
 

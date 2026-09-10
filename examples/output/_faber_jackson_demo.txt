@@ -1,0 +1,16 @@
+The Faber-Jackson relation: L ~ sigma^4 for ellipticals
+
+  sigma (km/s)     L (L_sun)  virial M (M_sun)
+  --------------------------------------------
+            50      7.81e+07          2.91e+09
+           100      1.25e+09          1.16e+10
+           200      2.00e+10          4.65e+10
+           300      1.01e+11          1.05e+11
+           400      3.20e+11          1.86e+11
+
+  Luminosity climbs as the fourth power of the velocity dispersion, so
+  a spectral line width (sigma) pins a galaxy's luminosity -- and,
+  against its apparent brightness, its distance. It is the elliptical-
+  galaxy twin of the Tully-Fisher relation for spirals.
+
+  wrote examples/output\faber_jackson.svg

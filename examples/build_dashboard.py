@@ -118,6 +118,7 @@ def main():
     import optical_depth_demo
     import exoplanet_demo
     import habitable_zone_demo
+    import faber_jackson_demo
 
     import plot_orbits
 
@@ -205,6 +206,7 @@ def main():
     optdepth_txt = run("optical_depth_demo", optical_depth_demo.main, True)
     exoplanet_txt = run("exoplanet_demo", exoplanet_demo.main, True)
     hz_txt = run("habitable_zone_demo", habitable_zone_demo.main, True)
+    fj_txt = run("faber_jackson_demo", faber_jackson_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -624,6 +626,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("rotation_curve.svg"), "visible declines (red), disk+halo stays flat (blue)")
             + f'<div class="card">{pre(rotcurve_txt)}</div>'
+            + '</div>'),
+        section(
+            "Faber-Jackson: elliptical galaxy scaling",
+            "Elliptical galaxies obey L ~ sigma^4 -- luminosity from the random "
+            "stellar velocity dispersion, following from the virial theorem plus a "
+            "roughly constant mass-to-light ratio. A line width gives the "
+            "luminosity, hence the distance -- the elliptical twin of Tully-Fisher.",
+            '<div class="grid">'
+            + svg_card(out("faber_jackson.svg"), "L climbing as the fourth power of sigma")
+            + f'<div class="card">{pre(fj_txt)}</div>'
             + '</div>'),
         section(
             "MOND: flat curves without dark matter",
