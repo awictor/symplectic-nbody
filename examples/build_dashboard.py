@@ -205,6 +205,7 @@ def main():
     import strouhal_demo
     import cluster_mass_demo
     import sersic_demo
+    import grashof_demo
 
     import plot_orbits
 
@@ -379,6 +380,7 @@ def main():
     strouhal_txt = run("strouhal_demo", strouhal_demo.main, True)
     cluster_mass_txt = run("cluster_mass_demo", cluster_mass_demo.main, True)
     sersic_txt = run("sersic_demo", sersic_demo.main, True)
+    grashof_txt = run("grashof_demo", grashof_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1971,6 +1973,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("sersic.svg"), "surface brightness vs radius for n=1, 2, 4 -- all crossing at the effective radius")
             + f'<div class="card">{pre(sersic_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Grashof number: heat that stirs its own wind",
+            "Natural convection has no fan -- warm fluid expands, rises, and drags cooler fluid "
+            "in behind it. The Grashof number Gr = g beta dT L^3/nu^2 measures that buoyant "
+            "drive against viscosity, playing the role Reynolds plays in forced flow. Heat "
+            "transfer correlates against the Rayleigh number Ra = Gr Pr: Nu = 0.59 Ra^(1/4) "
+            "laminar, 0.10 Ra^(1/3) turbulent past Ra ~ 1e9. The result is the gentle few "
+            "W/(m^2 K) of a radiator warming a still room, an order of magnitude below forced "
+            "convection; Gr/Re^2 tells you which regime rules.",
+            '<div class="grid">'
+            + svg_card(out("grashof.svg"), "natural-convection h vs wall height, tripping from laminar to turbulent at Ra ~ 1e9")
+            + f'<div class="card">{pre(grashof_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

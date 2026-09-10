@@ -1,0 +1,16 @@
+Grashof number Gr = g beta dT L^3 / nu^2: buoyancy-driven natural convection
+
+  Vertical wall 20 K above still air (beta=1/300, Pr=0.71):
+
+    height L          Gr          Ra      regime   h (W/m^2K)
+      0.05 m    3.63e+05    2.58e+05     laminar         6.91
+      0.30 m    7.85e+07    5.57e+07     laminar         4.42
+      1.00 m    2.91e+09    2.06e+09   turbulent         3.31
+      3.00 m    7.85e+10    5.57e+10   turbulent         3.31
+     10.00 m    2.91e+12    2.06e+12   turbulent         3.31
+
+  Buoyancy alone gives only a few W/(m^2 K) -- the gentle warmth off a radiator
+  or a sun-baked wall, an order of magnitude below a fan's forced convection. The
+  layer stays laminar until Ra ~ 1e9 (around a metre here), then trips turbulent.
+
+  wrote examples/output\grashof.svg

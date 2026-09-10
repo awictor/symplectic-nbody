@@ -163,6 +163,7 @@ ruins a long non-symplectic integration.
 | `src/strouhal.py` | Strouhal number: vortex-shedding frequency, Roshko fit, aeolian tone, lock-in |
 | `src/cluster_mass.py` | Virial cluster mass from velocity dispersion, M/L ratio, dark-matter fraction |
 | `src/sersic.py` | Sersic surface-brightness profile: b_n, total luminosity, enclosed light |
+| `src/grashof.py` | Grashof number: natural convection, Rayleigh Nu correlations, buoyancy vs forced |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -317,6 +318,7 @@ ruins a long non-symplectic integration.
 | `examples/strouhal_demo.py` | Shedding-frequency table + the von Karman vortex-street figure |
 | `examples/cluster_mass_demo.py` | Per-cluster virial-mass table + the mass-to-light ladder |
 | `examples/sersic_demo.py` | Per-index profile table + the surface-brightness curves |
+| `examples/grashof_demo.py` | Natural-convection table + the h-vs-height / transition figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -3699,6 +3701,28 @@ Gamma(2n)/b_n^{2n}`, and the enclosed-light fraction follows from the incomplete
 function. The tests verify `b_1 ~ 1.678` and `b_4 ~ 7.669`, the `I(R_e)=I_e` normalization,
 the exponential `n=1` limit, the half-light property, and that the numeric integral matches
 the closed-form luminosity.
+
+## The Grashof number: heat that stirs its own wind
+
+Natural convection is driven by buoyancy alone -- no fan. `grashof.py`:
+
+```
+$ python examples/grashof_demo.py examples/output
+
+  height L      Gr         Ra       regime     h (W/m^2K)
+   0.05 m    3.6e5      2.6e5     laminar        6.91
+   1.00 m    2.9e9      2.1e9     turbulent      3.31
+```
+
+The Grashof number `Gr = g beta dT L^3/nu^2` weighs the buoyant drive (a warm surface makes
+the fluid lighter, so it rises) against the viscosity that damps it -- the natural-convection
+analogue of the Reynolds number. Heat transfer correlates against the Rayleigh number
+`Ra = Gr Pr`: for a vertical plate `Nu = 0.59 Ra^(1/4)` laminar and `0.10 Ra^(1/3)` turbulent
+past `Ra ~ 1e9`, and `h = Nu k/L` gives the gentle few `W/(m^2 K)` of a radiator warming a
+still room -- an order of magnitude below forced convection. The ratio `Gr/Re^2` says which
+wins: `>>1` buoyancy (natural), `<<1` forced. The tests reproduce the `L^3`/`dT`/`1/nu^2`
+scalings, the `Ra = Gr Pr` relation, the laminar/turbulent branch switch, the few-`W/(m^2 K)`
+coefficient, and the natural-vs-forced crossover.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
