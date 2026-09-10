@@ -153,6 +153,7 @@ def main():
     import sackur_tetrode_demo
     import maxwell_boltzmann_demo
     import gamow_demo
+    import parallax_demo
 
     import plot_orbits
 
@@ -275,6 +276,7 @@ def main():
     sackur_txt = run("sackur_tetrode_demo", sackur_tetrode_demo.main, True)
     mb_txt = run("maxwell_boltzmann_demo", maxwell_boltzmann_demo.main, True)
     gamow_txt = run("gamow_demo", gamow_demo.main, True)
+    parallax_txt = run("parallax_demo", parallax_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -1229,6 +1231,18 @@ def main():
             '<div class="grid">'
             + svg_card(out("gamow.svg"), "the Boltzmann tail and tunnelling probability multiplying to the Gamow peak")
             + f'<div class="card">{pre(gamow_txt)}</div>'
+            + '</div>'),
+        section(
+            "Parallax & proper motion",
+            "As Earth orbits the Sun a nearby star shifts by the parallax angle p, and "
+            "the parsec is defined so d (pc) = 1/p (arcsec) -- the first rung of the "
+            "distance ladder Gaia climbed for a billion stars. Proper motion adds the "
+            "sideways drift: v_t = 4.74 mu d, combined with the Doppler radial velocity "
+            "into the space velocity. Barnard's Star, the fastest, moves at 142 km/s "
+            "through space.",
+            '<div class="grid">'
+            + svg_card(out("parallax.svg"), "the Earth-orbit baseline and the angle a nearby star subtends")
+            + f'<div class="card">{pre(parallax_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

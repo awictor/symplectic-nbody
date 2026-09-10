@@ -111,6 +111,7 @@ ruins a long non-symplectic integration.
 | `src/sackur_tetrode.py` | Sackur-Tetrode equation: the absolute entropy of an ideal gas |
 | `src/maxwell_boltzmann.py` | Maxwell-Boltzmann speed distribution & the three characteristic speeds |
 | `src/gamow.py` | The Gamow peak: the narrow energy window where stars fuse |
+| `src/parallax.py` | Parallax, proper motion & space velocity: the geometry of stellar distance |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -213,6 +214,7 @@ ruins a long non-symplectic integration.
 | `examples/sackur_tetrode_demo.py` | Predicted vs measured noble-gas entropy + S(T) curves |
 | `examples/maxwell_boltzmann_demo.py` | Characteristic speeds by gas + the f(v) distributions |
 | `examples/gamow_demo.py` | Peak energy by reaction + the tail x tunnelling = peak curves |
+| `examples/parallax_demo.py` | Distances & space velocities of nearby stars + the parallax geometry |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -2263,6 +2265,32 @@ solar p-p fusion, ~6 keV, several times the mean 1.3 keV. Because the Gamow ener
 stellar nucleosynthesis. The tests verify the ~6 keV solar p-p peak, that it sits well above
 `kT`, that the reaction integrand is maximal at `E0`, the `T^(2/3)` and `(Z1 Z2)^2` scalings,
 and that heavier nuclei need higher temperatures.
+
+## Parallax & proper motion: the geometry of stellar distance
+
+As Earth orbits the Sun a nearby star shifts against the background by the parallax angle p,
+and the parsec is defined so the trigonometry is trivial. `parallax.py`:
+
+```
+$ python examples/parallax_demo.py examples/output
+
+            star     p (")   d (pc)   d (ly)   mu ("/yr)   v_space
+  ----------------------------------------------------------------
+       Proxima Cen   0.7687     1.30      4.2       3.85     32.6k
+    Barnard's Star   0.5469     1.83      6.0      10.36    142.0k
+            Sirius   0.3792     2.64      8.6       1.34     17.6k
+              Vega   0.1305     7.66     25.0       0.35     18.8k
+        Betelgeuse   0.0055   181.82    593.0       0.03     33.9k
+```
+
+Distance follows directly, `d (pc) = 1/p (arcsec)` -- the first rung of the cosmic distance
+ladder, measured by Hipparcos and Gaia for over a billion stars. A star's proper motion mu
+(the angular drift per year) converts to a tangential velocity `v_t = 4.74 mu d`, which
+combines in quadrature with the Doppler radial velocity into the total space velocity.
+Barnard's Star, with the largest known proper motion (10.4"/yr at 1.83 pc), races across the
+sky at ~90 km/s tangential and 142 km/s through space. The tests verify the 1 pc = 1"
+definition, Proxima's 1.30 pc / 4.24 ly, the inverse parallax-distance relation, Barnard's
+~90 km/s tangential velocity, and the quadrature space velocity.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
