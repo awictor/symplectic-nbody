@@ -89,6 +89,7 @@ def main():
     import kerr_demo
     import hawking_demo
     import eddington_demo
+    import hohmann_demo
 
     import plot_orbits
 
@@ -147,6 +148,7 @@ def main():
     kerr_txt = run("kerr_demo", kerr_demo.main, True)
     hawking_txt = run("hawking_demo", hawking_demo.main, True)
     eddington_txt = run("eddington_demo", eddington_demo.main, True)
+    hohmann_txt = run("hohmann_demo", hohmann_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -473,6 +475,16 @@ def main():
             '<div class="grid">'
             + svg_card(out("lagrange.svg"), "Earth-Moon Lagrange points + Hill curves")
             + f'<div class="card">{pre(lagr_txt)}</div>'
+            + '</div>'),
+        section(
+            "Hohmann transfer & mission delta-v",
+            "The cheapest two-burn hop between circular orbits sets every mission's "
+            "delta-v budget: ~3.9 km/s from LEO to GEO, ~5.6 km/s and 259 days from "
+            "Earth to Mars. The launch phase angle is why Mars windows open only "
+            "every ~26 months.",
+            '<div class="grid">'
+            + svg_card(out("hohmann.svg"), "Earth-to-Mars transfer ellipse")
+            + f'<div class="card">{pre(hohmann_txt)}</div>'
             + '</div>'),
     ]
 

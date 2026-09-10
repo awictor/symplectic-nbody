@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.05       12.21      0.7x
-   400          36.36       38.28      0.9x
-   800         148.55      113.43      1.3x
-  1600         620.82      387.14      1.6x
-  3200        2645.71     1055.34      2.5x
+   200           9.35       12.19      0.8x
+   400          37.49       38.68      1.0x
+   800         145.53      113.46      1.3x
+  1600         630.58      378.02      1.7x
+  3200        2670.03     1063.03      2.5x
 
-empirical scaling exponent  direct ~ N^2.05   barnes-hut ~ N^1.62
+empirical scaling exponent  direct ~ N^2.04   barnes-hut ~ N^1.62
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -7827,6 +7827,38 @@ L5        0.487850   -0.866025      2.987998
 wrote examples/output\lagrange.svg
 L4/L5 (equilateral points) are stable for the Earth-Moon mass ratio;
 that&#x27;s why Trojan asteroids cluster at the Sun-Jupiter L4/L5.</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Hohmann transfer &amp; mission delta-v</h2>
+    <p class="blurb">The cheapest two-burn hop between circular orbits sets every mission's delta-v budget: ~3.9 km/s from LEO to GEO, ~5.6 km/s and 259 days from Earth to Mars. The launch phase angle is why Mars windows open only every ~26 months.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="680" height="680" viewBox="0 0 680 680" font-family="monospace">
+<rect width="680" height="680" fill="#05070d"/>
+<circle cx="340" cy="340" r="6" fill="#ffd166"/>
+<circle cx="340" cy="340" r="196.9" fill="none" stroke="#4cc9f0" stroke-width="1.5"/>
+<circle cx="340" cy="340" r="300.0" fill="none" stroke="#ff006e" stroke-width="1.5"/>
+<ellipse cx="288.4" cy="340" rx="248.4" ry="243.0" fill="none" stroke="#e9c46a" stroke-width="1.8" stroke-dasharray="6,4"/>
+<circle cx="536.9" cy="340.0" r="5" fill="#4cc9f0"/>
+<circle cx="40.0" cy="340.0" r="5" fill="#ff006e"/>
+<text x="16" y="26" fill="#e6edf3" font-size="16">Hohmann transfer: Earth (blue) -&gt; Mars (pink)</text>
+<text x="16" y="664" fill="#8b949e" font-size="11">gold dashed = transfer ellipse; burns at periapsis and apoapsis</text>
+</svg><figcaption>Earth-to-Mars transfer ellipse</figcaption></figure><div class="card"><pre>Hohmann transfer: the cheapest way between two circular orbits
+
+  LEO (200 km) -&gt; GEO (35786 km):
+    burn 1 = 2455 m/s, burn 2 = 1477 m/s, total = 3932 m/s
+    transfer time = 5.26 hours
+    propellant: m0/mf = 2.44 (LH2/LOX, ve=4.4 km/s)
+
+  Earth -&gt; Mars (heliocentric):
+    total delta-v = 5.60 km/s
+    transfer time = 259 days
+    launch phase angle = 44.4 deg
+
+  These delta-v budgets set the propellant mass via the rocket equation,
+  and the phase angle sets the launch window -- why Mars missions leave
+  Earth only every ~26 months.
+
+  wrote examples/output\hohmann.svg</pre></div></div>
   </section>
 </main>
 <footer>

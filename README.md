@@ -84,6 +84,7 @@ ruins a long non-symplectic integration.
 | `src/kerr.py` | Rotating black holes: horizons, ergosphere, spin-dependent ISCO |
 | `src/hawking.py` | Black-hole thermodynamics: Hawking temperature, entropy, evaporation |
 | `src/eddington.py` | Eddington luminosity, accretion rate & Salpeter black-hole growth |
+| `src/hohmann.py` | Hohmann transfer: mission delta-v budgets & launch windows |
 | `src/friedmann.py` | Friedmann cosmology: scale factor a(t), expansion eras, age of the universe |
 | `src/lane_emden.py` | Lane-Emden stellar structure: polytrope profiles & surface radii |
 | `src/distances.py` | Cosmological distances: luminosity/angular-diameter, cosmic acceleration |
@@ -122,6 +123,7 @@ ruins a long non-symplectic integration.
 | `examples/kerr_demo.py` | ISCO-vs-spin curves + horizon/ergosphere diagram |
 | `examples/hawking_demo.py` | Temperature & evaporation time across black-hole masses |
 | `examples/eddington_demo.py` | L_Edd across masses + Eddington-limited growth to a quasar |
+| `examples/hohmann_demo.py` | LEO->GEO & Earth->Mars delta-v budgets + transfer diagram |
 | `examples/friedmann_demo.py` | Scale-factor curves for radiation/matter/dark-energy/LCDM |
 | `examples/lane_emden_demo.py` | Polytrope density profiles + surface-radius / mass table |
 | `examples/distances_demo.py` | Hubble diagram (LCDM vs decelerating) + D_A turnover |
@@ -425,6 +427,25 @@ through radiation, matter, and dark-energy eras with distinct power laws. The
 age comes out as a look-back integral to `~0.96/H0`, the measured ~13.8 Gyr. The
 tests verify each era's exponent, the exponential dark-energy growth, and the
 LCDM age.
+
+## Hohmann transfer: the delta-v to get there
+
+The cheapest two-burn maneuver between circular orbits sets every mission's fuel
+budget. `hohmann.py` computes it:
+
+```
+$ python examples/hohmann_demo.py examples/output
+
+  LEO (200 km) -> GEO: total = 3932 m/s, 5.26 hours, m0/mf = 2.44 (LH2/LOX)
+  Earth -> Mars: total = 5.60 km/s, 259 days, launch phase angle = 44.4 deg
+```
+
+Both burns and the half-ellipse transfer time come straight from the vis-viva
+equation, and the launch phase angle -- the lead the target must have when you
+depart -- is why Mars windows open only every ~26 months. Feed the delta-v to
+Tsiolkovsky's rocket equation and you get the propellant mass. The tests
+reproduce the standard LEO->GEO (~3.9 km/s), Earth->Mars (~5.6 km/s, 259 day,
+44 deg) figures used in real mission design.
 
 ## The Eddington luminosity: the brightness limit of accretion
 

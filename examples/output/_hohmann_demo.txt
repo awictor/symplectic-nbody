@@ -1,0 +1,17 @@
+Hohmann transfer: the cheapest way between two circular orbits
+
+  LEO (200 km) -> GEO (35786 km):
+    burn 1 = 2455 m/s, burn 2 = 1477 m/s, total = 3932 m/s
+    transfer time = 5.26 hours
+    propellant: m0/mf = 2.44 (LH2/LOX, ve=4.4 km/s)
+
+  Earth -> Mars (heliocentric):
+    total delta-v = 5.60 km/s
+    transfer time = 259 days
+    launch phase angle = 44.4 deg
+
+  These delta-v budgets set the propellant mass via the rocket equation,
+  and the phase angle sets the launch window -- why Mars missions leave
+  Earth only every ~26 months.
+
+  wrote examples/output\hohmann.svg
