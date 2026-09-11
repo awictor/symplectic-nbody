@@ -1,0 +1,28 @@
+Ant colony optimization: pheromone trails solving the travelling salesman
+
+  22 cities, 120 iterations, colony of 22 ants
+
+  nearest-neighbour greedy tour: length 52.94
+  ant colony optimization:       length 42.85  (19% shorter)
+
+  Best tour length as pheromone accumulates (early rounds explore, then converge):
+    iter   0: 57.21
+    iter   5: 43.48
+    iter  15: 43.48
+    iter  40: 43.23
+    iter  80: 42.85
+    iter 119: 42.85
+
+  Pheromone on the 22 best-tour edges holds 79% of all pheromone (of 231 possible edges) -- the colony has converged.
+
+  Pheromone (alpha) vs greedy heuristic (beta) balance -- final tour length:
+      pheromone only: 76.06
+        a=1.0, b=2.0: 42.85
+        a=1.0, b=5.0: 42.85
+         greedy only: 44.77
+
+  Each ant builds a tour choosing the next city by pheromone^alpha * (1/dist)^beta;
+  pheromone evaporates then is redeposited inversely to tour length, so short tours
+  reinforce their edges and the colony converges -- swarm intelligence, no central plan.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\ant_colony.svg

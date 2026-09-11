@@ -291,6 +291,7 @@ ruins a long non-symplectic integration.
 | `src/hits.py` | HITS hubs & authorities: mutual-reinforcement power iteration, eigenvector of A'A / AA' |
 | `src/mds.py` | Classical MDS: double-centering, eigen-embedding from distances, Procrustes align |
 | `src/skiplist.py` | Skip list: probabilistic O(log n) ordered map, express lanes, range queries |
+| `src/ant_colony.py` | Ant colony optimization: pheromone-trail TSP solver, evaporation, elitist deposit |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -573,6 +574,7 @@ ruins a long non-symplectic integration.
 | `examples/hits_demo.py` | Hub vs authority rankings on a small web + PageRank comparison, dual graph figure |
 | `examples/mds_demo.py` | Rebuild a city map from a distance table, Procrustes-aligned, + eigenvalue scree |
 | `examples/skiplist_demo.py` | Express-lane tower figure, search-path trace, geometric level histogram |
+| `examples/ant_colony_demo.py` | TSP tour over a pheromone field, convergence curve, alpha/beta balance |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6928,6 +6930,29 @@ iteration, range queries, and min/max, verified against a brute-force sorted dic
 random operations (every search, deletion, and traversal agrees), that keys iterate sorted, that
 duplicates update rather than duplicate, that range queries return exactly the in-range keys, and
 that the level distribution is geometric as designed.
+
+## Ant colony optimization: pheromone trails for the TSP
+
+Simulated ants converge on short tours. `ant_colony.py`:
+
+```
+$ python examples/ant_colony_demo.py examples/output
+
+  22 cities: nearest-neighbour 52.94 -> ant colony 42.85 (19% shorter)
+  best length falls 57.2 -> 42.85 as pheromone accumulates
+  79% of all pheromone ends up on the best tour's edges (converged)
+  alpha/beta: pheromone-only 76.1, greedy-only 44.8, combined 42.85
+```
+
+Each iteration a swarm of ants each builds a tour, choosing the next city with probability
+proportional to `tau^alpha * eta^beta` (pheromone `tau` = learned memory, `eta = 1/distance` = greedy
+heuristic). Then pheromone evaporates and each ant deposits an amount inversely proportional to its
+tour length, so shorter tours reinforce their edges and the colony converges -- swarm intelligence,
+no central plan. This module implements ant system for the symmetric TSP with the standard
+transition rule, evaporation, length-weighted deposit, and elitist reinforcement, verified that it
+recovers the optimal perimeter of a square and a circle's polygon, beats the nearest-neighbour
+greedy tour on random cities, drives the best length down monotonically, and concentrates pheromone
+on short edges.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

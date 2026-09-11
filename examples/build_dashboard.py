@@ -333,6 +333,7 @@ def main():
     import hits_demo
     import mds_demo
     import skiplist_demo
+    import ant_colony_demo
 
     import plot_orbits
 
@@ -635,6 +636,7 @@ def main():
     hits_txt = run("hits_demo", hits_demo.main, True)
     mds_txt = run("mds_demo", mds_demo.main, True)
     skiplist_txt = run("skiplist_demo", skiplist_demo.main, True)
+    ant_colony_txt = run("ant_colony_demo", ant_colony_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4270,6 +4272,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("skiplist.svg"), "the skip list drawn as stacked express lanes, taller towers skipping more keys, over the fully-populated level-0 sorted list")
             + f'<div class="card">{pre(skiplist_txt)}</div>'
+            + '</div>'),
+        section(
+            "Ant colony optimization: pheromone trails for the travelling salesman",
+            "Real ants find short paths without a map: each lays a PHEROMONE trail, shorter paths "
+            "get traversed sooner so their trails are reinforced first, and other ants prefer "
+            "strongly-scented edges -- positive feedback that converges the colony onto good routes. "
+            "Ant colony optimization turns that into a TSP solver. Each iteration a swarm of "
+            "artificial ants each builds a tour, at every step choosing the next city with "
+            "probability proportional to tau^alpha * eta^beta, where tau is the learned pheromone on "
+            "an edge and eta = 1/distance is the greedy heuristic (alpha weights experience, beta "
+            "greed). Then pheromone EVAPORATES (forgetting stale trails) and each ant DEPOSITS an "
+            "amount inversely proportional to its tour length, so shorter tours leave stronger "
+            "trails and the pheromone concentrates on good edges. This module implements ant system "
+            "for the symmetric TSP with the standard transition rule, evaporation, length-weighted "
+            "deposit, and elitist reinforcement, verified that it recovers the optimal perimeter of "
+            "a square and a circle's polygon, beats the nearest-neighbour greedy tour on random "
+            "cities, drives the best length down monotonically, and concentrates pheromone on short "
+            "edges.",
+            '<div class="grid">'
+            + svg_card(out("ant_colony.svg"), "the converged tour drawn bold over the pheromone field (strong edges glowing yellow), beside the best-tour-length convergence curve")
+            + f'<div class="card">{pre(ant_colony_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
