@@ -314,6 +314,7 @@ ruins a long non-symplectic integration.
 | `src/rotating_calipers.py` | Rotating calipers: diameter, width, minimum-area bounding rectangle from the hull |
 | `src/ternary_search_tree.py` | Ternary search tree: autocomplete, longest-prefix, and '.'-wildcard string search |
 | `src/delaunay.py` | Delaunay triangulation (Bowyer-Watson, exact in-circle) and the dual Voronoi diagram |
+| `src/simplex.py` | Two-phase simplex method for linear programs (Bland's rule, mixed constraints, duality) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -619,6 +620,7 @@ ruins a long non-symplectic integration.
 | `examples/rotating_calipers_demo.py` | Point cloud with hull, diameter, and minimum-area rectangle (rotated box beats the AABB) |
 | `examples/ternary_search_tree_demo.py` | Autocomplete, longest-prefix, and wildcard search on a dictionary + the TST structure |
 | `examples/delaunay_demo.py` | Delaunay triangulation overlaid with its dual Voronoi diagram, empty-circumcircle checked live |
+| `examples/simplex_demo.py` | Production LP with the feasible polytope, objective gradient, and optimal vertex drawn |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7479,6 +7481,28 @@ triangle circumcentres. Verified that every triangle has an empty circumcircle, 
 count obeys Euler's 2n-2-h, that the triangle areas exactly fill the convex hull, that Voronoi
 vertices are equidistant from their three sites, and that each site's nearest neighbour is a Delaunay
 edge.
+
+## The simplex method: linear programming by walking polytope vertices
+
+Maximize a linear objective under linear constraints by sliding vertex to vertex. `simplex.py`:
+
+```
+$ python examples/simplex_demo.py examples/output
+
+  maximize 3x + 5y  s.t. x<=4, 2y<=12, 3x+2y<=18  -> profit 36 at (2, 6)
+  LP duality: primal 36 == dual 36
+  diet problem min 2x+3y s.t. x+y>=10, x+3y>=18   -> cost 24 at (6, 4)
+  detects unbounded and infeasible LPs
+```
+
+The feasible region of a linear program is a convex polytope, and an optimum (if one exists) sits at
+a vertex. Simplex starts at a vertex and slides along improving edges until none remain. It pivots a
+tableau -- slack variables make inequalities equalities, an entering variable is chosen by reduced
+cost and a leaving one by the minimum-ratio test -- with Bland's rule (smallest index) to prevent
+cycling, and a two-phase method with artificial variables to start from >= and = constraints. This
+module solves LPs in general form and reports optimal/unbounded/infeasible, verified against
+hand-solved textbook LPs, a brute-force vertex enumerator over 60 random LPs, the LP-duality theorem,
+and degenerate/unbounded/infeasible instances.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

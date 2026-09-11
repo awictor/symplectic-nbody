@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="440" viewBox="0 0 760 440" font-family="monospace">
+<rect width="760" height="440" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="18">Simplex: feasible polytope and the optimal vertex</text>
+<text x="20" y="47" fill="#8b949e" font-size="12">maximize 3x + 5y; green = feasible region, red = optimum, arrows = objective gradient</text>
+<polygon points="70.0,380.0 206.0,380.0 206.0,278.0 138.0,176.0 70.0,176.0" fill="#06d6a0" fill-opacity="0.18" stroke="#06d6a0" stroke-width="2"/>
+<line x1="206.0" y1="380.0" x2="206.0" y2="40.0" stroke="#8b949e" stroke-width="1" stroke-dasharray="4,3"/>
+<line x1="70.0" y1="176.0" x2="342.0" y2="176.0" stroke="#8b949e" stroke-width="1" stroke-dasharray="4,3"/>
+<line x1="70.0" y1="74.0" x2="342.0" y2="482.0" stroke="#8b949e" stroke-width="1" stroke-dasharray="4,3"/>
+<line x1="70" y1="380" x2="730" y2="380" stroke="#484f58" stroke-width="1.5"/>
+<line x1="70" y1="380" x2="70" y2="40" stroke="#484f58" stroke-width="1.5"/>
+<line x1="104.0" y1="346.0" x2="121.5" y2="316.8" stroke="#ffd43b" stroke-width="1.8"/>
+<line x1="138.0" y1="278.0" x2="155.5" y2="248.8" stroke="#ffd43b" stroke-width="1.8"/>
+<circle cx="138.0" cy="176.0" r="7" fill="#ff6b6b"/>
+<text x="148.0" y="168.0" fill="#ff6b6b" font-size="13">optimum (2,6) = 36</text>
+</svg>

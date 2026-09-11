@@ -356,6 +356,7 @@ def main():
     import rotating_calipers_demo
     import ternary_search_tree_demo
     import delaunay_demo
+    import simplex_demo
 
     import plot_orbits
 
@@ -681,6 +682,7 @@ def main():
     rotating_calipers_txt = run("rotating_calipers_demo", rotating_calipers_demo.main, True)
     ternary_search_tree_txt = run("ternary_search_tree_demo", ternary_search_tree_demo.main, True)
     delaunay_txt = run("delaunay_demo", delaunay_demo.main, True)
+    simplex_txt = run("simplex_demo", simplex_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4799,6 +4801,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("delaunay.svg"), "a point set's Delaunay triangulation (blue) overlaid with its dual Voronoi diagram (orange); Voronoi edges join the circumcentres of adjacent triangles")
             + f'<div class="card">{pre(delaunay_txt)}</div>'
+            + '</div>'),
+        section(
+            "The simplex method: linear programming by walking polytope vertices",
+            "LINEAR PROGRAMMING maximizes or minimizes a linear objective under linear constraints -- "
+            "the backbone of operations research, from diet and blending problems to scheduling, "
+            "network flows, and the LP relaxations inside integer-programming solvers. The feasible "
+            "region is a convex POLYTOPE, and a fundamental theorem guarantees that if an optimum "
+            "exists it is attained at a VERTEX. The SIMPLEX METHOD, Dantzig's 1947 invention, starts "
+            "at a vertex and repeatedly slides along an edge to an adjacent vertex that improves the "
+            "objective, stopping when no improving edge remains -- at which point the vertex is "
+            "provably optimal. It works on a TABLEAU: slack variables turn inequalities into "
+            "equalities, and each PIVOT picks an entering variable by reduced cost and a leaving one "
+            "by the minimum-ratio test, then does Gaussian elimination. BLAND'S RULE (smallest index) "
+            "prevents cycling on degenerate problems, and a TWO-PHASE approach with artificial "
+            "variables finds a starting vertex for >= and = constraints. This module solves LPs in "
+            "general form (mixed <=, >=, = constraints, maximize or minimize) and reports optimal, "
+            "unbounded, or infeasible, verified against hand-solved textbook LPs, against a "
+            "brute-force solver that enumerates every basic vertex (60 random LPs), against the "
+            "LP-duality theorem (primal optimum equals dual optimum), and on degenerate, unbounded, "
+            "and infeasible instances.",
+            '<div class="grid">'
+            + svg_card(out("simplex.svg"), "a 2-D production LP: the green feasible polytope bounded by dashed constraint lines, the yellow objective gradient, and the red optimal vertex the simplex walk terminates at")
+            + f'<div class="card">{pre(simplex_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

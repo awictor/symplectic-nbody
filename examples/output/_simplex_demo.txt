@@ -1,0 +1,20 @@
+The simplex method: linear programming by walking polytope vertices
+
+  Factory problem: maximize profit 3x + 5y
+    subject to  x <= 4,  2y <= 12,  3x + 2y <= 18,  x,y >= 0
+    -> status optimal, optimal profit 36.0 at x = 2.00, y = 6.00
+
+  Dual problem (minimize resource prices b.y): optimum 36.0
+    LP duality: primal 36.0 == dual 36.0  -> True
+
+  Diet problem: minimize cost 2x + 3y s.t. x+y>=10, x+3y>=18
+    -> minimum cost 24.0 at x = 6.00, y = 4.00
+
+  Detects unbounded LPs: unbounded
+  Detects infeasible LPs: infeasible
+
+  Simplex starts at a vertex of the feasible polytope and slides to an adjacent vertex
+  that improves the objective, until none does -- then that vertex is provably optimal.
+  Bland's rule (smallest-index pivot) prevents cycling on degenerate problems.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\simplex.svg
