@@ -1,0 +1,29 @@
+Hierarchical agglomerative clustering: a tree of nested groupings
+
+  24 points, Ward linkage, 23 merges to one cluster
+
+  Merge heights climb monotonically (no dendrogram inversions):
+    merge  0: height 0.113
+    merge  1: height 0.181
+    merge  2: height 0.210
+    merge 11: height 0.598
+    merge 21: height 16.961
+    merge 22: height 18.230
+  monotone: True
+
+  Largest jump in merge height is before the final 3 merges -> suggests 3 clusters.
+
+  Cutting into 3 clusters gives sizes {0: 8, 1: 8, 2: 8}
+  clusters recover the true blobs: True
+
+  Linkage changes cluster shape -- on a long chain of 24 evenly-spaced points, cut in 2:
+       single: split sizes [5, 19]  chains (peels an end)
+     complete: split sizes [10, 14]  compact (even split)
+      average: split sizes [10, 14]  
+         ward: split sizes [10, 14]  
+
+  Every merge is recorded with the distance at which it happened, so one run yields
+  the entire family of clusterings: cut the tree low for many tight groups, high for a
+  few broad ones. No k needed up front -- read it off the biggest gap in merge heights.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\hierarchical.svg

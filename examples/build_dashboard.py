@@ -313,6 +313,7 @@ def main():
     import gaussian_process_demo
     import bayes_opt_demo
     import dbscan_demo
+    import hierarchical_demo
 
     import plot_orbits
 
@@ -595,6 +596,7 @@ def main():
     gp_txt = run("gaussian_process_demo", gaussian_process_demo.main, True)
     bayes_opt_txt = run("bayes_opt_demo", bayes_opt_demo.main, True)
     dbscan_txt = run("dbscan_demo", dbscan_demo.main, True)
+    hierarchical_txt = run("hierarchical_demo", hierarchical_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3827,6 +3829,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("dbscan.svg"), "two moons coloured by discovered cluster with noise points marked as grey crosses, and the k-distance graph whose elbow suggests eps")
             + f'<div class="card">{pre(dbscan_txt)}</div>'
+            + '</div>'),
+        section(
+            "Hierarchical clustering: a tree of nested groupings",
+            "k-means and DBSCAN give one flat partition; hierarchical clustering gives the whole "
+            "family at once, as a tree. Agglomerative clustering starts with every point its own "
+            "cluster and repeatedly merges the two closest, recording each merge and the distance "
+            "at which it happened -- the DENDROGRAM. Cut it at any height to read off a flat "
+            "clustering, so the number of clusters comes from where you cut, often the biggest gap "
+            "in merge heights, rather than being fixed in advance. What 'closest' means is the "
+            "LINKAGE: SINGLE (nearest points, tends to chain along filaments), COMPLETE (farthest "
+            "points, compact clusters), AVERAGE (mean pairwise, UPGMA), and WARD (least increase in "
+            "within-cluster variance, tight and spherical). Merge heights are monotone for these, "
+            "so the tree has no crossings. This module builds the full dendrogram by the "
+            "Lance-Williams update and cuts it into k clusters, verified to recover well-separated "
+            "blobs with all linkages, climb merge heights monotonically, and show single-linkage "
+            "chaining where complete linkage stays compact.",
+            '<div class="grid">'
+            + svg_card(out("hierarchical.svg"), "points coloured by the three-cluster cut beside the dendrogram whose branch heights are merge distances, with the cut line marked")
+            + f'<div class="card">{pre(hierarchical_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

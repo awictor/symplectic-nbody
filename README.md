@@ -271,6 +271,7 @@ ruins a long non-symplectic integration.
 | `src/gaussian_process.py` | Gaussian process regression: RBF kernel, posterior mean/variance, marginal likelihood |
 | `src/bayes_opt.py` | Bayesian optimization: GP surrogate, Expected Improvement, beats random search |
 | `src/dbscan.py` | DBSCAN density clustering: core/border/noise, arbitrary shapes, auto k, k-distance |
+| `src/hierarchical.py` | Agglomerative clustering: single/complete/average/Ward linkage, dendrogram, tree cut |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -533,6 +534,7 @@ ruins a long non-symplectic integration.
 | `examples/gaussian_process_demo.py` | GP fit to sparse noisy data: length-scale tuning, 2-sigma confidence band figure |
 | `examples/bayes_opt_demo.py` | BO of a multimodal function: surrogate + EI figure, convergence vs random search |
 | `examples/dbscan_demo.py` | Two moons + outliers: cluster recovery, noise flagging, k-distance elbow figure |
+| `examples/hierarchical_demo.py` | Blobs + dendrogram figure, gap-based k selection, single-vs-complete chaining contrast |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6434,6 +6436,28 @@ neighbourhoods. This module implements DBSCAN with the core/border/noise classif
 k-distance helper for choosing `eps`, verified to separate two half-moons that k-means cannot, flag
 sparse outliers as noise, discover the cluster count on its own, and degenerate sensibly at extreme
 parameters.
+
+## Hierarchical clustering: a tree of nested groupings
+
+One run yields the whole family of clusterings. `hierarchical.py`:
+
+```
+$ python examples/hierarchical_demo.py examples/output
+
+  24 points, Ward linkage, 23 merges; heights monotone 0.113 -> 18.230
+  largest jump in merge height suggests 3 clusters; cut -> sizes {0:8, 1:8, 2:8}
+  long chain cut in 2:  single [5,19] (chains),  complete [10,14] (compact)
+```
+
+Agglomerative clustering starts with every point its own cluster and repeatedly merges the two
+closest, recording each merge and its distance -- the dendrogram. Cut it at any height to read off a
+flat clustering, so `k` comes from where you cut (often the biggest gap in merge heights) rather
+than being fixed up front. The **linkage** sets what "closest" means: single (nearest points,
+chains along filaments), complete (farthest points, compact), average (UPGMA), and Ward (least
+increase in within-cluster variance, tight and spherical). Merge heights are monotone for these, so
+the tree has no crossings. This module builds the full dendrogram by the Lance-Williams update and
+cuts it into `k` clusters, verified to recover well-separated blobs with every linkage, climb merge
+heights monotonically, and show single-linkage chaining where complete linkage stays compact.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
