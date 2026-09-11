@@ -294,6 +294,7 @@ def main():
     import horner_demo
     import rootfind_demo
     import quadrature_demo
+    import spline_demo
 
     import plot_orbits
 
@@ -557,6 +558,7 @@ def main():
     horner_txt = run("horner_demo", horner_demo.main, True)
     rootfind_txt = run("rootfind_demo", rootfind_demo.main, True)
     quadrature_txt = run("quadrature_demo", quadrature_demo.main, True)
+    spline_txt = run("spline_demo", spline_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3445,6 +3447,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("quadrature.svg"), "error vs samples on log-log axes, where each method's slope is its convergence order")
             + f'<div class="card">{pre(quadrature_txt)}</div>'
+            + '</div>'),
+        section(
+            "Cubic spline interpolation: a smooth curve through every point",
+            "A single high-degree polynomial through many points oscillates wildly between them "
+            "(Runge's phenomenon). A cubic spline instead fits a separate cubic to each interval "
+            "and stitches them C^2 -- value, slope, AND curvature match at every join -- giving "
+            "the smoothest interpolant, the shape a flexible draftsman's ruler naturally takes. "
+            "The construction reduces to solving for the knot second derivatives, a tridiagonal "
+            "system solved in O(n) by the Thomas algorithm; the natural spline sets zero end "
+            "curvature, the clamped spline fixes end slopes. This module builds and evaluates "
+            "the spline and its derivatives, verified to pass through every knot, be C^2, "
+            "reproduce cubics exactly, and stay near the true Runge curve where a single "
+            "polynomial explodes to ~1.9. The interpolation behind fonts, animation, and CAD.",
+            '<div class="grid">'
+            + svg_card(out("spline.svg"), "spline (green) and single polynomial (red) through the same knots on Runge's function -- the polynomial oscillates, the spline stays smooth")
+            + f'<div class="card">{pre(spline_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

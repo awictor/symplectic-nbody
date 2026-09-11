@@ -1,0 +1,18 @@
+Cubic spline: a separate cubic per interval, stitched C^2 smooth
+
+  6 knots; spline passes through them all: True
+  natural end curvatures: M0 = 0.0, Mn = 0.0
+  value/slope/curvature at interior knot 3: 0.100 / -1.034 / -0.141
+
+  Runge's function 1/(1+25x^2), 11 equally spaced knots -- spline vs one polynomial:
+       x      true    spline   polynomial
+    0.70    0.0755    0.0747      -0.2262
+    0.80    0.0588    0.0588       0.0588
+    0.90    0.0471    0.0476       1.5787
+    0.95    0.0424    0.0429       1.9236
+
+  The single polynomial oscillates to ~1.6 near the edges (Runge's phenomenon)
+  while the spline hugs the true curve. The spline minimizes total curvature -- the
+  shape a flexible ruler takes. It's the interpolation behind fonts, animation, and CAD.
+
+  wrote examples/output\spline.svg

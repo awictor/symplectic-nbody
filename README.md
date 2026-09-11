@@ -252,6 +252,7 @@ ruins a long non-symplectic integration.
 | `src/horner.py` | Horner's method: O(n) polynomial eval, synthetic division, Newton roots |
 | `src/rootfind.py` | Bracketing root-finders: bisection, secant, false position, Brent |
 | `src/quadrature.py` | Numerical integration: trapezoid, Simpson, Romberg, adaptive, Gauss-Legendre |
+| `src/spline.py` | Cubic spline interpolation: natural/clamped C^2, Thomas solve, vs Lagrange |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -495,6 +496,7 @@ ruins a long non-symplectic integration.
 | `examples/horner_demo.py` | Eval + synthetic division + roots + the op-count & Newton-convergence figure |
 | `examples/rootfind_demo.py` | Method comparison + transcendental roots + the convergence-rate figure |
 | `examples/quadrature_demo.py` | Method accuracy + convergence-order table + the error-vs-samples figure |
+| `examples/spline_demo.py` | Spline vs polynomial on Runge + the through-the-knots curve figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5951,6 +5953,28 @@ implements all five and verifies them against integrals with known values (polyn
 trig, the Gaussian bell), confirming the convergence orders -- the trapezoid error quarters and
 Simpson's sixteenths each time the step is halved. It powers physics simulations, option
 pricing, and Bayesian evidence.
+
+## Cubic spline interpolation: a smooth curve through every point
+
+Smooth through the data, no wild oscillation. `spline.py`:
+
+```
+$ python examples/spline_demo.py examples/output
+
+       x      true    spline   polynomial
+    0.90    0.0471    0.0476       1.5787
+    0.95    0.0424    0.0429       1.9236
+```
+
+A single high-degree polynomial through many points oscillates wildly between them (Runge's
+phenomenon). A cubic spline instead fits a separate cubic to each interval and stitches them
+`C^2` -- value, slope, and curvature all match at every join -- giving the smoothest
+interpolant, the shape a flexible draftsman's ruler takes. The construction reduces to solving
+for the knot second derivatives, a tridiagonal system solved in `O(n)` by the Thomas algorithm;
+the natural spline sets zero end curvature, the clamped spline fixes end slopes. This module
+builds and evaluates the spline and its derivatives, verified to pass through every knot, be
+`C^2`, reproduce cubics exactly, and stay near the true Runge curve where a single polynomial
+explodes to ~1.9. It is the interpolation behind fonts, animation, and CAD.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
