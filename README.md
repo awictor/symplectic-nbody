@@ -262,6 +262,7 @@ ruins a long non-symplectic integration.
 | `src/kmeans.py` | k-means clustering: Lloyd's algorithm, k-means++ init, silhouette |
 | `src/regression.py` | Linear & logistic regression: QR + gradient descent, R^2, accuracy, L2 |
 | `src/decision_tree.py` | CART decision-tree classifier: Gini/entropy splits, rules, feature importance |
+| `src/random_forest.py` | Random forest: bagged CART trees, feature subsampling, out-of-bag score |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -515,6 +516,7 @@ ruins a long non-symplectic integration.
 | `examples/kmeans_demo.py` | Cluster recovery + elbow/silhouette + the coloured-clusters & elbow figure |
 | `examples/regression_demo.py` | Linear + logistic fits + log-loss decay + the line & sigmoid figure |
 | `examples/decision_tree_demo.py` | CART on 3 blobs: learned rules, importances, depth-cap sweep + region figure |
+| `examples/random_forest_demo.py` | Forest vs overfit tree on noisy data: OOB score, importances + boundary figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6196,6 +6198,29 @@ This module builds the classifier with Gini or entropy, exposes the learned rule
 importances, and is verified on separable blobs, a train/test split that generalizes, and a known
 single split. Trees are the building block of random forests and gradient boosting, the workhorses
 of tabular machine learning.
+
+## Random forests: a committee of decorrelated trees
+
+A single tree overfits; a forest averages many that disagree. `random_forest.py`:
+
+```
+$ python examples/random_forest_demo.py examples/output
+
+  single tree (unlimited): train 100%, test 70%, 64 leaves (memorized noise)
+  random forest (41 trees): train 95%, test 85%, out-of-bag 81%
+  importances: x 0.30, y 0.34, noise1..3 ~0.11 each (real features dominate)
+```
+
+A random forest weakens each tree deliberately and makes them disagree, so their errors cancel
+while their signal adds. Two randomizations decorrelate them: **bagging** trains each tree on a
+bootstrap sample (n rows drawn with replacement, ~63% distinct), and **feature subsampling** lets
+each split see only a random `sqrt(d)` subset of features so no single strong feature dominates
+every tree. Prediction is a majority vote. Because ~37% of rows are out-of-bag for each tree,
+voting each row over only its out-of-bag trees gives a free, honest validation estimate -- no
+held-out set needed. This module builds a bagged forest of the CART learner with per-node feature
+sampling, majority-vote prediction, out-of-bag scoring, and averaged feature importances, verified
+to beat an overfit single tree on a noisy problem with its OOB estimate tracking true test error.
+Forests are the strong, low-tuning default for tabular data.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

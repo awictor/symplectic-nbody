@@ -304,6 +304,7 @@ def main():
     import kmeans_demo
     import regression_demo
     import decision_tree_demo
+    import random_forest_demo
 
     import plot_orbits
 
@@ -577,6 +578,7 @@ def main():
     kmeans_txt = run("kmeans_demo", kmeans_demo.main, True)
     regression_txt = run("regression_demo", regression_demo.main, True)
     decision_tree_txt = run("decision_tree_demo", decision_tree_demo.main, True)
+    random_forest_txt = run("random_forest_demo", random_forest_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3634,6 +3636,24 @@ def main():
             '<div class="grid">'
             + svg_card(out("decision_tree.svg"), "the axis-aligned decision regions the tree carves out, with training points and the learned rules")
             + f'<div class="card">{pre(decision_tree_txt)}</div>'
+            + '</div>'),
+        section(
+            "Random forests: a committee of decorrelated trees",
+            "A single decision tree overfits -- it memorizes noise by growing pure leaves. A random "
+            "forest averages many trees deliberately weakened to disagree, so their errors cancel "
+            "while their signal adds. Two randomizations decorrelate them: BAGGING trains each tree "
+            "on a bootstrap sample (n rows drawn with replacement, ~63% distinct), and FEATURE "
+            "SUBSAMPLING lets each split consider only a random sqrt(d) subset of features so no one "
+            "strong feature dominates every tree. Prediction is a majority vote. Because ~37% of "
+            "rows are out-of-bag for each tree -- never seen by it -- voting each row over only its "
+            "out-of-bag trees gives a free, honest validation estimate needing no held-out set. "
+            "This module builds a bagged forest of the CART learner with per-node feature sampling, "
+            "majority-vote prediction, out-of-bag scoring, and averaged feature importances, "
+            "verified to beat an overfit single tree on a noisy problem with its OOB estimate "
+            "tracking true test error.",
+            '<div class="grid">'
+            + svg_card(out("random_forest.svg"), "the jagged single-tree boundary beside the smoother forest boundary on the same noisy data")
+            + f'<div class="card">{pre(random_forest_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -65,14 +65,15 @@ def _majority(labels):
     return max(counts, key=lambda k: (counts[k], k)), counts
 
 
-def _best_split(X, y, impurity):
+def _best_split(X, y, impurity, features=None):
     """Find the (feature, threshold) that most reduces impurity. Returns (feature, threshold,
-    gain) or (None, None, 0) if no split helps."""
+    gain) or (None, None, 0) if no split helps. If `features` is given, only those feature
+    indices are considered (random forests sample a subset per node)."""
     n = len(y)
     parent = impurity(y)
     best = (None, None, 0.0)
     d = len(X[0])
-    for f in range(d):
+    for f in (range(d) if features is None else features):
         # candidate thresholds: midpoints between sorted unique feature values
         vals = sorted(set(row[f] for row in X))
         for i in range(len(vals) - 1):
@@ -91,13 +92,39 @@ def _best_split(X, y, impurity):
 class DecisionTree:
     """A CART decision-tree classifier."""
 
-    def __init__(self, criterion="gini", max_depth=None, min_samples_split=2):
+    def __init__(self, criterion="gini", max_depth=None, min_samples_split=2,
+                 max_features=None, seed=0):
         self.criterion = gini if criterion == "gini" else entropy
         self.max_depth = max_depth
         self.min_samples_split = min_samples_split
+        # max_features: consider only a random subset of features per split (random-forest
+        # style). None = all features; "sqrt" = round(sqrt(d)); an int = that many.
+        self.max_features = max_features
+        self._state = seed & 0xFFFFFFFF
         self.root = None
         self.n_features = 0
         self._importance = None
+
+    def _rand(self):
+        self._state = (1664525 * self._state + 1013904223) & 0xFFFFFFFF
+        return (self._state >> 16) / 65536.0    # high bits
+
+    def _sample_features(self):
+        d = self.n_features
+        if self.max_features is None:
+            return None
+        if self.max_features == "sqrt":
+            k = max(1, round(d ** 0.5))
+        else:
+            k = max(1, min(int(self.max_features), d))
+        # partial Fisher-Yates on an index list, take first k
+        idx = list(range(d))
+        for i in range(k):
+            j = i + int(self._rand() * (d - i))
+            if j >= d:
+                j = d - 1
+            idx[i], idx[j] = idx[j], idx[i]
+        return idx[:k]
 
     def fit(self, X, y):
         self.n_features = len(X[0])
@@ -116,7 +143,7 @@ class DecisionTree:
         if (len(set(y)) == 1 or len(y) < self.min_samples_split
                 or (self.max_depth is not None and depth >= self.max_depth)):
             return node
-        f, thr, gain = _best_split(X, y, self.criterion)
+        f, thr, gain = _best_split(X, y, self.criterion, self._sample_features())
         if f is None or gain <= 0:
             return node
         node.feature, node.threshold = f, thr

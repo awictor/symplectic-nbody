@@ -1,0 +1,29 @@
+Random forest: a committee of decorrelated decision trees
+
+  350 train / 150 test points, 2 real + 3 noise features, 10% label flips
+
+  single tree (unlimited depth):  train 100.0%, test 70.0%,  64 leaves (memorized noise)
+  random forest (41 trees):       train 95.4%, test 84.7%,  out-of-bag 81.4%
+
+  Out-of-bag error is a free validation estimate -- each row is scored only by the
+  ~37% of trees that never trained on it. Here OOB tracks true test error closely.
+
+  Feature importances (real features 0,1 should dominate the 3 noise features):
+          x:  0.30 ############
+          y:  0.34 ##############
+     noise1:  0.11 ####
+     noise2:  0.11 #####
+     noise3:  0.13 #####
+
+  More trees only help -- test accuracy stabilizes as the ensemble grows:
+      1 trees: test 72.7%, oob 78.0%
+      3 trees: test 80.0%, oob 71.1%
+      9 trees: test 83.3%, oob 74.6%
+     21 trees: test 84.7%, oob 78.0%
+     41 trees: test 84.7%, oob 81.4%
+
+  Bagging (bootstrap rows) plus per-split feature subsampling decorrelate the trees
+  so their errors cancel while signal adds. The forest boundary is smoother and more
+  robust than any single tree -- the strong default for tabular data.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\random_forest.svg
