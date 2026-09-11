@@ -265,6 +265,7 @@ def main():
     import hamming_demo
     import rsa_demo
     import diffie_hellman_demo
+    import crc_demo
 
     import plot_orbits
 
@@ -499,6 +500,7 @@ def main():
     hamming_txt = run("hamming_demo", hamming_demo.main, True)
     rsa_txt = run("rsa_demo", rsa_demo.main, True)
     diffie_hellman_txt = run("diffie_hellman_demo", diffie_hellman_demo.main, True)
+    crc_txt = run("crc_demo", crc_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2912,6 +2914,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("diffie_hellman.svg"), "the exchange both sides complete to the same secret, and the attacker's sqrt(p) cost against the honest log(p)")
             + f'<div class="card">{pre(diffie_hellman_txt)}</div>'
+            + '</div>'),
+        section(
+            "CRC: catching transmission errors with polynomial division",
+            "A cyclic redundancy check is the checksum on almost every digital frame -- "
+            "Ethernet packets, ZIP files, PNG chunks, disk sectors. Treat the message as a "
+            "polynomial over GF(2) (arithmetic mod 2, addition = XOR), divide by a fixed "
+            "generator, and append the remainder; the receiver divides again and a nonzero "
+            "remainder flags corruption. A degree-r generator guarantees detection of every "
+            "single-bit error, every burst shorter than r+1 bits, and misses a random error "
+            "only with probability ~2^-r -- 1 in 4 billion for CRC-32, computed with nothing "
+            "but shifts and XORs. This module does bit-at-a-time polynomial division for "
+            "CRC-8/16/32, reproducing the published '123456789' check values and matching "
+            "zlib.crc32 exactly. The detection companion to the Hamming code (which corrects).",
+            '<div class="grid">'
+            + svg_card(out("crc.svg"), "the data-plus-CRC frame layout and the miss probability 2^-r shrinking with the number of check bits")
+            + f'<div class="card">{pre(crc_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

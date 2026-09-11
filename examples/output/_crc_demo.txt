@@ -1,0 +1,24 @@
+CRC: divide the message polynomial by a generator, send the remainder
+
+  check string '123456789':
+             CRC-8 = 0xF4
+      CRC-16-CCITT = 0x29B1
+            CRC-32 = 0xCBF43926
+
+  Frame = data + CRC. Receiver recomputes and compares:
+    data   : b'GET /index.html'
+    frame  : ...139492ad (4 CRC bytes appended), check = OK
+    corrupt one bit -> check = ERROR CAUGHT
+
+  Error-detection coverage (random multi-bit corruptions):
+             CRC  width    caught   miss ~2^-r
+           CRC-8      8    0.9960     3.91e-03
+    CRC-16-CCITT     16    0.9988     1.53e-05
+          CRC-32     32    0.9988     2.33e-10
+
+  Every single-bit error, every burst shorter than the width, and all but a
+  ~2^-r fraction of random corruptions are caught -- for 32 check bits that is a
+  miss rate of 1 in 4 billion, with nothing but shifts and XORs. The checksum on
+  Ethernet frames, ZIP files, and PNG chunks.
+
+  wrote examples/output\crc.svg

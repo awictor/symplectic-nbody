@@ -223,6 +223,7 @@ ruins a long non-symplectic integration.
 | `src/hamming.py` | Hamming codes: (7,4) SEC + SECDED, syndrome decoding, exhaustively verified |
 | `src/rsa.py` | RSA: Miller-Rabin, extended Euclid, keygen, encrypt/decrypt/sign/verify |
 | `src/diffie_hellman.py` | Diffie-Hellman: safe primes, generators, key exchange, BSGS discrete log |
+| `src/crc.py` | CRC-8/16/32: GF(2) polynomial division, frame check, matches zlib.crc32 |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -437,6 +438,7 @@ ruins a long non-symplectic integration.
 | `examples/hamming_demo.py` | Syndrome-locates-error table + the parity-coverage grid & code-rate curve |
 | `examples/rsa_demo.py` | Keygen + encrypt/decrypt/sign walkthrough + the key-flow & modexp-cost figure |
 | `examples/diffie_hellman_demo.py` | Exchange walkthrough + the flow diagram & attacker-vs-honest cost figure |
+| `examples/crc_demo.py` | Check values + frame verify/corrupt + the frame layout & miss-probability figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5224,6 +5226,30 @@ a baby-step/giant-step discrete-log solver whose `sqrt(p)` cost dwarfs the parti
 sides derive the same secret, the parameters are genuine safe primes, and BSGS cracks the small
 exchange (feasible only because p is tiny). Without authentication a man-in-the-middle can
 intercept, which is why real protocols sign the exchanged values.
+
+## CRC: catching transmission errors with polynomial division
+
+The checksum on every Ethernet frame and ZIP file. `crc.py`:
+
+```
+$ python examples/crc_demo.py examples/output
+
+  check string '123456789':
+             CRC-8 = 0xF4
+      CRC-16-CCITT = 0x29B1
+            CRC-32 = 0xCBF43926
+```
+
+A cyclic redundancy check treats the message as a polynomial over GF(2) (arithmetic mod 2,
+addition = XOR), divides by a fixed generator, and appends the remainder; the receiver divides
+again and a nonzero remainder flags corruption. A degree-r generator guarantees detection of
+every single-bit error, every burst shorter than r+1 bits, and misses a random error only with
+probability `~2^-r` -- 1 in 4 billion for CRC-32, computed with nothing but shifts and XORs.
+This module does bit-at-a-time polynomial division for CRC-8, CRC-16-CCITT, and CRC-32,
+appends and verifies frames, and demonstrates the detection guarantees. The tests reproduce the
+published `123456789` check values, match `zlib.crc32` exactly across many inputs, and confirm
+every single-bit error and short burst is caught. The error-*detection* companion to the Hamming
+code, which *corrects*.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
