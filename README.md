@@ -201,6 +201,7 @@ ruins a long non-symplectic integration.
 | `src/double_pendulum.py` | Double pendulum: RK4 equations of motion, energy, chaotic divergence |
 | `src/mandelbrot.py` | Mandelbrot set: escape time, membership, cardioid/bulb tests |
 | `src/van_der_pol.py` | Van der Pol oscillator: limit cycle, amplitude, relaxation period |
+| `src/duffing.py` | Duffing oscillator: double-well potential, regimes, resonance backbone |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -393,6 +394,7 @@ ruins a long non-symplectic integration.
 | `examples/double_pendulum_demo.py` | Energy/divergence table + the bob-trace & two-pendulum figure |
 | `examples/mandelbrot_demo.py` | Escape-time table + ASCII view & the escape-time-coloured set |
 | `examples/van_der_pol_demo.py` | Amplitude/period table + the phase-portrait & waveform figure |
+| `examples/duffing_demo.py` | Regime/backbone table + the double-well & resonance-backbone figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4641,6 +4643,29 @@ slow charges broken by fast jumps, period ~`1.614 mu`. Integrated with RK4. The 
 the vector field, amplitude growth from a tiny start, the ~2 limit-cycle amplitude for several
 `mu`, convergence of large and small starts onto the same cycle, the `mu>0` self-sustaining
 condition (and decay to rest for `mu<0`), and the small-`mu` ~2 pi period growing at large mu.
+
+## The Duffing oscillator: a spring that bends the rules
+
+A cubic spring term produces bistability and a bent resonance. `duffing.py`:
+
+```
+$ python examples/duffing_demo.py examples/output
+
+  alpha  beta  regime        minima          backbone (hardening):
+  -1.0   1.0   double-well   -1.00, +1.00    A=0 -> 1.00, A=1.5 -> 1.64
+  1.0   -0.5   softening     0
+```
+
+The equation `x'' + delta x' + alpha x + beta x^3 = gamma cos(omega t)` adds a cubic stiffness
+to a spring. Its unforced potential `V = (1/2) alpha x^2 + (1/4) beta x^4` is a single well for
+`alpha>0` but a **double well** for `alpha<0, beta>0` (minima at `+/-sqrt(-alpha/beta)`) -- a
+buckled beam or bistable switch, into one side of which a damped mass rolls. Driven, the
+resonance peak bends with amplitude along the backbone `sqrt(alpha + 3/4 beta A^2)`, so the
+response is multi-valued and jumps between branches as the drive frequency sweeps (hysteresis);
+push harder and the forced Duffing goes chaotic. The tests verify the potential and its
+`+/-1` double-well minima, the hardening/softening/double-well/linear regimes, the vector
+field, a damped mass settling into a well, and the backbone shifting up (hardening) or down
+(softening) with amplitude.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

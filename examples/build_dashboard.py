@@ -243,6 +243,7 @@ def main():
     import double_pendulum_demo
     import mandelbrot_demo
     import van_der_pol_demo
+    import duffing_demo
 
     import plot_orbits
 
@@ -455,6 +456,7 @@ def main():
     double_pendulum_txt = run("double_pendulum_demo", double_pendulum_demo.main, True)
     mandelbrot_txt = run("mandelbrot_demo", mandelbrot_demo.main, True)
     van_der_pol_txt = run("van_der_pol_demo", van_der_pol_demo.main, True)
+    duffing_txt = run("duffing_demo", duffing_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2549,6 +2551,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("van_der_pol.svg"), "two starts spiralling onto the same limit cycle, and the waveform from smooth to spiky")
             + f'<div class="card">{pre(van_der_pol_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Duffing oscillator: a spring that bends the rules",
+            "Add a cubic term to a spring -- x'' + delta x' + alpha x + beta x^3 = gamma cos(omega t) "
+            "-- and it stops behaving linearly. Its resonance peak bends over with amplitude "
+            "(the backbone sqrt(alpha + 3/4 beta A^2)), so the response is multi-valued and jumps "
+            "between branches as you sweep the drive frequency (hysteresis). With alpha<0, beta>0 "
+            "the potential is a double well -- a buckled beam or a bistable switch -- and a damped "
+            "mass rolls into one of two stable states. Driven hard, the forced Duffing is one of "
+            "the classic routes to chaos.",
+            '<div class="grid">'
+            + svg_card(out("duffing.svg"), "the double-well potential with a mass settling into a well, and the leaning resonance backbone")
+            + f'<div class="card">{pre(duffing_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
