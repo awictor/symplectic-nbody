@@ -258,6 +258,7 @@ def main():
     import gamblers_ruin_demo
     import parrondo_demo
     import galton_demo
+    import monty_hall_demo
 
     import plot_orbits
 
@@ -485,6 +486,7 @@ def main():
     gamblers_ruin_txt = run("gamblers_ruin_demo", gamblers_ruin_demo.main, True)
     parrondo_txt = run("parrondo_demo", parrondo_demo.main, True)
     galton_txt = run("galton_demo", galton_demo.main, True)
+    monty_hall_txt = run("monty_hall_demo", monty_hall_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2789,6 +2791,21 @@ def main():
             '<div class="grid">'
             + svg_card(out("galton.svg"), "the simulated slot histogram matching the CLT Gaussian, and the binomial-to-Gaussian distance falling like 1/sqrt(rows)")
             + f'<div class="card">{pre(galton_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Monty Hall problem: why switching doors wins",
+            "A car hides behind one of three doors; you pick one, and the host -- who knows "
+            "where the car is -- opens a different door revealing a goat and offers a switch. "
+            "Switching wins 2/3 of the time, staying only 1/3, because your first pick is right "
+            "just 1/3 of the time and the host's forced reveal concentrates the whole remaining "
+            "2/3 onto the other closed door. The paradox lives in the host's knowledge: if he "
+            "opened a door blindly and it happened to show a goat, switching would only be 1/2. "
+            "Generalized to N doors with the host opening all but one other, switching wins "
+            "(N-1)/N -- 99% at 100 doors. The exact stay and switch probabilities are checked "
+            "against a seeded Monte-Carlo play.",
+            '<div class="grid">'
+            + svg_card(out("monty_hall.svg"), "the classic 2/3-vs-1/3 win rates (and the 1/2 blind-host variant), and switching approaching certainty as doors grow")
+            + f'<div class="card">{pre(monty_hall_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

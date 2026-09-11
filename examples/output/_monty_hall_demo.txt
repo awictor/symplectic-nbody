@@ -1,0 +1,19 @@
+Monty Hall: the knowing host's reveal shifts the odds -- switch and win 2/3
+
+                strategy   theory      sim
+          stay (classic)    0.333    0.333
+        switch (classic)    0.667    0.667
+    switch (random host)    0.500    0.498
+
+  Scaling up: N doors, the host opens all but one other goat door, you switch:
+     doors N   stay 1/N    switch
+           3     0.3333    0.6667
+          10     0.1000    0.9000
+          50     0.0200    0.9800
+         100     0.0100    0.9900
+
+  Your first pick is right only 1/N; the host's knowing reveal piles the whole
+  remaining (N-1)/N onto the last closed door. With 100 doors, switching wins 99%.
+  (If the host opened doors blindly, the effect vanishes -- it is his knowledge.)
+
+  wrote examples/output\monty_hall.svg

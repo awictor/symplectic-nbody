@@ -132,11 +132,11 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.14       12.15      0.8x
-   400          36.67       38.19      1.0x
-   800         150.12      115.62      1.3x
-  1600         633.44      362.28      1.7x
-  3200        2544.67     1003.34      2.5x
+   200           9.16       12.26      0.7x
+   400          37.29       37.75      1.0x
+   800         150.73      116.67      1.3x
+  1600         633.38      366.47      1.7x
+  3200        2582.65      994.52      2.6x
 
 empirical scaling exponent  direct ~ N^2.04   barnes-hut ~ N^1.60
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
@@ -198283,6 +198283,78 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   limit theorem made physical. Bias the pegs and the whole pile slides to np.
 
   wrote examples/output\galton.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>The Monty Hall problem: why switching doors wins</h2>
+    <p class="blurb">A car hides behind one of three doors; you pick one, and the host -- who knows where the car is -- opens a different door revealing a goat and offers a switch. Switching wins 2/3 of the time, staying only 1/3, because your first pick is right just 1/3 of the time and the host's forced reveal concentrates the whole remaining 2/3 onto the other closed door. The paradox lives in the host's knowledge: if he opened a door blindly and it happened to show a goat, switching would only be 1/2. Generalized to N doors with the host opening all but one other, switching wins (N-1)/N -- 99% at 100 doors. The exact stay and switch probabilities are checked against a seeded Monte-Carlo play.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="380" viewBox="0 0 760 380" font-family="monospace">
+<rect width="760" height="380" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">The Monty Hall problem: always switch</text>
+<text x="20" y="44" fill="#8b949e" font-size="12">classic 3-door win rates (left); switching wins (N-1)/N as the game scales (right)</text>
+<line x1="55" y1="325" x2="360" y2="325" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="55" y1="325" x2="55" y2="65" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="55" y1="325.0" x2="360" y2="325.0" stroke="#21262d" stroke-width="1"/>
+<text x="49.0" y="328.0" fill="#8b949e" font-size="9" text-anchor="end">0.00</text>
+<line x1="55" y1="238.3" x2="360" y2="238.3" stroke="#21262d" stroke-width="1"/>
+<text x="49.0" y="241.3" fill="#8b949e" font-size="9" text-anchor="end">0.33</text>
+<line x1="55" y1="151.7" x2="360" y2="151.7" stroke="#21262d" stroke-width="1"/>
+<text x="49.0" y="154.7" fill="#8b949e" font-size="9" text-anchor="end">0.67</text>
+<line x1="55" y1="65.0" x2="360" y2="65.0" stroke="#21262d" stroke-width="1"/>
+<text x="49.0" y="68.0" fill="#8b949e" font-size="9" text-anchor="end">1.00</text>
+<rect x="80.4" y="238.3" width="50.8" height="86.7" fill="#ff6b6b"/>
+<text x="105.8" y="232.3" fill="#ff6b6b" font-size="11" text-anchor="middle">0.333</text>
+<text x="105.8" y="340.0" fill="#8b949e" font-size="9" text-anchor="middle">stay</text>
+<rect x="182.1" y="151.7" width="50.8" height="173.3" fill="#06d6a0"/>
+<text x="207.5" y="145.7" fill="#06d6a0" font-size="11" text-anchor="middle">0.667</text>
+<text x="207.5" y="340.0" fill="#8b949e" font-size="9" text-anchor="middle">switch</text>
+<rect x="283.8" y="195.0" width="50.8" height="130.0" fill="#ff922b"/>
+<text x="309.2" y="189.0" fill="#ff922b" font-size="11" text-anchor="middle">0.500</text>
+<text x="309.2" y="340.0" fill="#8b949e" font-size="9" text-anchor="middle">switch</text>
+<text x="309.2" y="351.0" fill="#8b949e" font-size="9" text-anchor="middle">(blind host)</text>
+<line x1="425" y1="325" x2="730" y2="325" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="425" y1="325" x2="425" y2="65" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="425" y1="65.0" x2="730" y2="65.0" stroke="#21262d" stroke-width="1"/>
+<polyline points="425.0,151.7 450.0,130.0 469.4,117.0 498.7,102.1 529.7,91.0 565.0,82.3 609.4,75.4 650.3,71.5 699.0,68.7 730.0,67.6" fill="none" stroke="#06d6a0" stroke-width="2.5"/>
+<polyline points="425.0,238.3 450.0,260.0 469.4,273.0 498.7,287.9 529.7,299.0 565.0,307.7 609.4,314.6 650.3,318.5 699.0,321.3 730.0,322.4" fill="none" stroke="#ff6b6b" stroke-width="2"/>
+<circle cx="425.0" cy="151.7" r="2.5" fill="#06d6a0"/>
+<circle cx="450.0" cy="130.0" r="2.5" fill="#06d6a0"/>
+<circle cx="469.4" cy="117.0" r="2.5" fill="#06d6a0"/>
+<circle cx="498.7" cy="102.1" r="2.5" fill="#06d6a0"/>
+<circle cx="529.7" cy="91.0" r="2.5" fill="#06d6a0"/>
+<circle cx="565.0" cy="82.3" r="2.5" fill="#06d6a0"/>
+<circle cx="609.4" cy="75.4" r="2.5" fill="#06d6a0"/>
+<circle cx="650.3" cy="71.5" r="2.5" fill="#06d6a0"/>
+<circle cx="699.0" cy="68.7" r="2.5" fill="#06d6a0"/>
+<circle cx="730.0" cy="67.6" r="2.5" fill="#06d6a0"/>
+<text x="419.0" y="328.0" fill="#8b949e" font-size="9" text-anchor="end">0.0</text>
+<text x="419.0" y="198.0" fill="#8b949e" font-size="9" text-anchor="end">0.5</text>
+<text x="419.0" y="68.0" fill="#8b949e" font-size="9" text-anchor="end">1.0</text>
+<text x="425.0" y="340.0" fill="#8b949e" font-size="9" text-anchor="middle">3</text>
+<text x="529.7" y="340.0" fill="#8b949e" font-size="9" text-anchor="middle">10</text>
+<text x="730.0" y="340.0" fill="#8b949e" font-size="9" text-anchor="middle">100</text>
+<text x="577.5" y="355.0" fill="#8b949e" font-size="10" text-anchor="middle">doors N (log)</text>
+<text x="730.0" y="61.6" fill="#06d6a0" font-size="9" text-anchor="end">switch (N-1)/N</text>
+<text x="730.0" y="316.4" fill="#ff6b6b" font-size="9" text-anchor="end">stay 1/N</text>
+</svg><figcaption>the classic 2/3-vs-1/3 win rates (and the 1/2 blind-host variant), and switching approaching certainty as doors grow</figcaption></figure><div class="card"><pre>Monty Hall: the knowing host&#x27;s reveal shifts the odds -- switch and win 2/3
+
+                strategy   theory      sim
+          stay (classic)    0.333    0.333
+        switch (classic)    0.667    0.667
+    switch (random host)    0.500    0.498
+
+  Scaling up: N doors, the host opens all but one other goat door, you switch:
+     doors N   stay 1/N    switch
+           3     0.3333    0.6667
+          10     0.1000    0.9000
+          50     0.0200    0.9800
+         100     0.0100    0.9900
+
+  Your first pick is right only 1/N; the host&#x27;s knowing reveal piles the whole
+  remaining (N-1)/N onto the last closed door. With 100 doors, switching wins 99%.
+  (If the host opened doors blindly, the effect vanishes -- it is his knowledge.)
+
+  wrote examples/output\monty_hall.svg</pre></div></div>
   </section>
 
   <section>

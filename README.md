@@ -216,6 +216,7 @@ ruins a long non-symplectic integration.
 | `src/gamblers_ruin.py` | Gambler's ruin: ruin probability & duration, fair/biased, infinite house |
 | `src/parrondo.py` | Parrondo's paradox: two losing games win when mixed, Markov-chain drift |
 | `src/galton.py` | Galton board: binomial slot law, CLT Gaussian limit, 1/sqrt(n) convergence |
+| `src/monty_hall.py` | Monty Hall: stay 1/N vs switch (N-1)/N, informed-vs-random host, Monte-Carlo |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -423,6 +424,7 @@ ruins a long non-symplectic integration.
 | `examples/gamblers_ruin_demo.py` | Ruin vs simulation table + the ruin curves & sample walk paths |
 | `examples/parrondo_demo.py` | Per-game drift vs simulation + capital trajectories & drift-vs-mix curve |
 | `examples/galton_demo.py` | Slot histogram vs binomial + the Gaussian overlay & 1/sqrt(n) convergence |
+| `examples/monty_hall_demo.py` | Stay/switch win rates vs simulation + the bars & (N-1)/N scaling curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5036,6 +5038,29 @@ bead drop. The tests verify the fair board is symmetric with center slot `C(10,5
 moments are `np` and `np(1-p)`, the normal peak height is `1/(sigma sqrt(2 pi))`, the distance
 follows the `1/sqrt(n)` rate, and the simulated histogram matches the binomial. No bead is
 steered, yet thousands pile into a smooth bell curve; bias the pegs and the pile slides to np.
+
+## The Monty Hall problem: why switching doors wins
+
+Switch, and the odds double. `monty_hall.py`:
+
+```
+$ python examples/monty_hall_demo.py examples/output
+
+                strategy   theory      sim
+          stay (classic)    0.333    0.333
+        switch (classic)    0.667    0.667
+    switch (random host)    0.500    0.498
+```
+
+A car hides behind one of three doors; you pick one, and the host -- who knows where the car is
+-- opens a different door revealing a goat and offers a switch. Switching wins 2/3, staying only
+1/3, because your first pick is right just 1/3 of the time and the host's forced reveal
+concentrates the whole remaining 2/3 onto the other closed door. The paradox lives in the host's
+knowledge: if he opened a door blindly and it happened to show a goat, switching would only be
+1/2. Generalized to N doors with the host opening all but one other, switching wins `(N-1)/N` --
+99% at 100 doors. This module gives the exact stay and switch probabilities for the classic and
+generalized game and the informed-vs-random-host comparison, all checked against a seeded
+Monte-Carlo play.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
