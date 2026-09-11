@@ -1,0 +1,17 @@
+QR decomposition: A = Q R, Q orthonormal, R upper-triangular
+
+  Q^T Q = I (orthonormal columns): True
+  Q R reconstructs A: True
+  R (upper-triangular): [[14.0, 21.0, -14.0], [0.0, 175.0, -70.0], [0.0, 0.0, 35.0]] 
+
+  Least-squares line fit to 25 noisy points (true slope 1.7, intercept 3.0):
+    fitted y = 1.724 x + 3.178
+    residual ||Ax - b|| = 7.408
+
+  Least-squares quadratic fit (exact data): 3.00 x^2 + -2.00 x + 5.00  (true 3, -2, 5)
+
+  QR solves least squares via R x = Q^T b -- more stable than the normal equations
+  A^T A x = A^T b (which squares the condition number). It also powers eigenvalue
+  iteration and orthogonal regression. Modified Gram-Schmidt keeps Q orthogonal.
+
+  wrote examples/output\qr.svg

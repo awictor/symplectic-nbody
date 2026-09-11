@@ -297,6 +297,7 @@ def main():
     import spline_demo
     import fft_demo
     import linsolve_demo
+    import qr_demo
 
     import plot_orbits
 
@@ -563,6 +564,7 @@ def main():
     spline_txt = run("spline_demo", spline_demo.main, True)
     fft_txt = run("fft_demo", fft_demo.main, True)
     linsolve_txt = run("linsolve_demo", linsolve_demo.main, True)
+    qr_txt = run("qr_demo", qr_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3501,6 +3503,23 @@ def main():
             '<div class="grid">'
             + svg_card(out("linsolve.svg"), "the L and U triangular factors that a pivoted matrix splits into")
             + f'<div class="card">{pre(linsolve_txt)}</div>'
+            + '</div>'),
+        section(
+            "QR decomposition and least squares: fitting more data than parameters",
+            "Any matrix A (m >= n) factors as A = Q R with Q orthonormal (Q^T Q = I) and R "
+            "upper-triangular. It is the workhorse of overdetermined systems: to fit a model to "
+            "more data points than parameters, solving the least-squares problem min ||A x - b|| "
+            "by R x = Q^T b is far more stable than the normal equations A^T A x = A^T b (which "
+            "square the condition number). The construction is the Gram-Schmidt process -- "
+            "subtract from each column the components along the earlier orthonormal directions, "
+            "then normalize -- in its modified form, which subtracts each projection immediately "
+            "to stay orthogonal under rounding. QR also drives eigenvalue iteration and "
+            "orthogonal regression. This module builds the thin QR by modified Gram-Schmidt, "
+            "solves least-squares and square systems, and verifies Q^T Q = I, Q R = A, and that "
+            "the residual is orthogonal to the column space.",
+            '<div class="grid">'
+            + svg_card(out("qr.svg"), "the least-squares best-fit line through scattered points, with the residuals it minimizes")
+            + f'<div class="card">{pre(qr_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -255,6 +255,7 @@ ruins a long non-symplectic integration.
 | `src/spline.py` | Cubic spline interpolation: natural/clamped C^2, Thomas solve, vs Lagrange |
 | `src/fft.py` | Fast Fourier Transform: radix-2 Cooley-Tukey, inverse, FFT convolution |
 | `src/linsolve.py` | Gaussian elimination / LU: partial pivoting, solve, determinant, inverse |
+| `src/qr.py` | QR decomposition: modified Gram-Schmidt, least squares, orthonormal Q |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -501,6 +502,7 @@ ruins a long non-symplectic integration.
 | `examples/spline_demo.py` | Spline vs polynomial on Runge + the through-the-knots curve figure |
 | `examples/fft_demo.py` | Two-tone spectrum + convolution + the signal & spectrum & cost figure |
 | `examples/linsolve_demo.py` | Solve + LU factors + reuse + det/inverse + the L/U heatmap figure |
+| `examples/qr_demo.py` | QR + line/quadratic least-squares fits + the best-fit-line & residual figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6025,6 +6027,28 @@ a permutation P so `P A = L U`. The determinant is the product of U's diagonal t
 permutation sign, and the inverse comes from solving against each unit column. This module builds
 the factorization, solves systems, and computes determinants and inverses, verified by residuals
 and `P A = L U` over hundreds of random systems.
+
+## QR decomposition and least squares: fitting more data than parameters
+
+Orthogonalize, then fit. `qr.py`:
+
+```
+$ python examples/qr_demo.py examples/output
+
+  Q^T Q = I: True,  Q R = A: True
+  least-squares line fit to 25 noisy points: y = 1.724 x + 3.178  (true 1.7, 3.0)
+  quadratic fit (exact data): 3.00 x^2 + -2.00 x + 5.00
+```
+
+Any matrix A (m >= n) factors as `A = Q R` with Q orthonormal (`Q^T Q = I`) and R
+upper-triangular. It is the workhorse of overdetermined systems: fitting a model to more data
+points than parameters, solving `min ||A x - b||` by `R x = Q^T b` is far more stable than the
+normal equations `A^T A x = A^T b` (which square the condition number). The construction is the
+Gram-Schmidt process -- subtract from each column the components along the earlier orthonormal
+directions, then normalize -- in its modified form, which subtracts each projection immediately
+to stay orthogonal under rounding. QR also drives eigenvalue iteration and orthogonal
+regression. This module builds the thin QR, solves least-squares and square systems, and
+verifies `Q^T Q = I`, `Q R = A`, and that the residual is orthogonal to the column space.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
