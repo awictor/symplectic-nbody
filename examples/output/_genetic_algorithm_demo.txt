@@ -1,0 +1,18 @@
+Genetic algorithm: optimization by simulated evolution
+
+  OneMax (maximize 1-bits in a 60-bit genome):
+    best fitness 60/60, reached all-ones: True
+    population mean fitness climbed 29.8 -> 58.5
+
+  Bumpy real function (many local optima):
+    GA found x = -0.761, fitness 4.650
+    true global x = -0.760, fitness 4.650
+
+  0/1 knapsack (capacity 20):
+    chose items [1, 2, 3, 5, 6], total value 28, total weight 20
+
+  Selection biases reproduction toward fit individuals; crossover recombines their
+  genes; mutation adds new variation; elitism preserves the best. The population
+  explores many basins at once -- no gradients, works on discrete or black-box problems.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\genetic_algorithm.svg

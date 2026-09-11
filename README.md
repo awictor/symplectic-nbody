@@ -278,6 +278,7 @@ ruins a long non-symplectic integration.
 | `src/spectral_clustering.py` | Spectral clustering: affinity graph, Laplacian eigenvectors, non-convex shapes |
 | `src/particle_filter.py` | Particle filter: bootstrap SIR, systematic resampling, adaptive ESS, nonlinear tracking |
 | `src/simulated_annealing.py` | Simulated annealing: Metropolis criterion, cooling schedules, TSP 2-opt solver |
+| `src/genetic_algorithm.py` | Genetic algorithm: tournament selection, crossover, mutation, elitism, knapsack |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -547,6 +548,7 @@ ruins a long non-symplectic integration.
 | `examples/spectral_clustering_demo.py` | Concentric rings split correctly + the eigenvector embedding that untangles them |
 | `examples/particle_filter_demo.py` | Nonlinear tracking beats raw sensor + ESS collapse-vs-healthy resampling figure |
 | `examples/simulated_annealing_demo.py` | TSP greedy-vs-annealed tour + cost-cooling curve, multimodal global min |
+| `examples/genetic_algorithm_demo.py` | OneMax + real optimization fitness curves, 0/1 knapsack solve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6611,6 +6613,27 @@ optimum. This module implements generic annealing over any state plus a travelli
 with 2-opt segment-reversal moves, verified to find the global minimum of a multimodal function
 greedy descent misses, converge a square TSP tour to its exact optimal perimeter, beat
 nearest-neighbour greedy on random tours, and shrink its acceptance rate as it cools.
+
+## Genetic algorithms: optimization by simulated evolution
+
+Evolve a population; let good solutions breed. `genetic_algorithm.py`:
+
+```
+$ python examples/genetic_algorithm_demo.py examples/output
+
+  OneMax (60-bit): best 60/60 (all ones), mean fitness 29.8 -> 58.5
+  bumpy real function: GA found x=-0.761 (true global -0.760)
+  0/1 knapsack (cap 20): value 28 at weight 20
+```
+
+Where simulated annealing perturbs a single state, a GA evolves a whole population. Each generation
+**selects** parents biased toward fitness (tournament: best of k random individuals), applies
+**crossover** to splice two parents' genes, **mutates** for new variation, and keeps the best few
+via **elitism** so the best-so-far never regresses. Population-based, it explores many basins at
+once and needs no gradients -- strong on rugged, discrete, or black-box landscapes. This module
+implements a generic GA over binary and real-valued genomes plus a 0/1 knapsack solver, verified to
+solve OneMax to all-ones, maximize a multimodal real function, match the brute-force knapsack
+optimum, keep the best fitness monotone under elitism, and beat random search at equal budget.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

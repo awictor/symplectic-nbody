@@ -320,6 +320,7 @@ def main():
     import spectral_clustering_demo
     import particle_filter_demo
     import simulated_annealing_demo
+    import genetic_algorithm_demo
 
     import plot_orbits
 
@@ -609,6 +610,7 @@ def main():
     spectral_txt = run("spectral_clustering_demo", spectral_clustering_demo.main, True)
     particle_filter_txt = run("particle_filter_demo", particle_filter_demo.main, True)
     simulated_annealing_txt = run("simulated_annealing_demo", simulated_annealing_demo.main, True)
+    genetic_algorithm_txt = run("genetic_algorithm_demo", genetic_algorithm_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3982,6 +3984,24 @@ def main():
             '<div class="grid">'
             + svg_card(out("simulated_annealing.svg"), "the greedy nearest-neighbour tour beside the shorter annealed tour, and the tour length falling as the temperature cools with early uphill excursions")
             + f'<div class="card">{pre(simulated_annealing_txt)}</div>'
+            + '</div>'),
+        section(
+            "Genetic algorithms: optimization by simulated evolution",
+            "Where simulated annealing perturbs a single state, a genetic algorithm evolves a whole "
+            "POPULATION, letting good solutions breed -- a direct metaphor for natural selection. "
+            "Each generation SELECTS parents biased toward high fitness (tournament: the best of k "
+            "random individuals), applies CROSSOVER to splice two parents' genes into offspring, "
+            "MUTATES to inject new variation, and keeps the best few via ELITISM so the best-so-far "
+            "never regresses. Being population-based it explores many basins at once and needs no "
+            "gradients, making it strong on rugged, discrete, or black-box landscapes. This module "
+            "implements a generic GA (tournament selection, one-point crossover, elitism) over both "
+            "binary and real-valued genomes plus a 0/1 knapsack solver, verified to solve the "
+            "OneMax bit problem to all-ones, maximize a multimodal real function, match the "
+            "brute-force optimum of a small knapsack, keep the best fitness monotone under elitism, "
+            "and beat random search at equal budget.",
+            '<div class="grid">'
+            + svg_card(out("genetic_algorithm.svg"), "the best and mean population fitness climbing each generation on the OneMax bit problem and the bumpy real-function optimization")
+            + f'<div class="card">{pre(genetic_algorithm_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
