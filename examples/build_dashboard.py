@@ -290,6 +290,7 @@ def main():
     import box_muller_demo
     import rejection_sampling_demo
     import welford_demo
+    import kahan_demo
 
     import plot_orbits
 
@@ -549,6 +550,7 @@ def main():
     box_muller_txt = run("box_muller_demo", box_muller_demo.main, True)
     rejection_sampling_txt = run("rejection_sampling_demo", rejection_sampling_demo.main, True)
     welford_txt = run("welford_demo", welford_demo.main, True)
+    kahan_txt = run("kahan_demo", kahan_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3373,6 +3375,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("welford.svg"), "the running mean and standard deviation converging onto their true values as the stream flows")
             + f'<div class="card">{pre(welford_txt)}</div>'
+            + '</div>'),
+        section(
+            "Kahan summation: adding floats without losing the small ones",
+            "Add a million small numbers naively and the answer drifts: once the total is large, "
+            "each tiny addend has fewer mantissa bits to land in and its low-order part is "
+            "rounded away, so the error grows with n. Kahan's compensated summation carries a "
+            "correction term c for the bits lost on the previous addition -- y = x - c; t = sum "
+            "+ y; c = (t - sum) - y -- so the error stays bounded by a small constant, as if the "
+            "sum were computed in twice the precision. Neumaier's variant also handles the case "
+            "where the next addend exceeds the running total (catastrophic cancellation), and "
+            "pairwise summation gives O(log n) error growth with no correction term. This module "
+            "implements all of these plus a compensated dot product and running-mean "
+            "accumulator, verified against Python's exact math.fsum on ill-conditioned inputs.",
+            '<div class="grid">'
+            + svg_card(out("kahan.svg"), "the relative error versus the number of terms: naive climbs with n while Kahan stays flat at machine precision")
+            + f'<div class="card">{pre(kahan_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

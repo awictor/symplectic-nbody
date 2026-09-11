@@ -248,6 +248,7 @@ ruins a long non-symplectic integration.
 | `src/box_muller.py` | Box-Muller: uniform->Gaussian transform, Marsaglia polar, moment-verified |
 | `src/rejection_sampling.py` | Rejection sampling: sample any evaluable density, box + general proposal |
 | `src/welford.py` | Welford online mean/variance: one stable pass, higher moments, mergeable |
+| `src/kahan.py` | Kahan/Neumaier compensated summation: bounded error, pairwise sum, dot product |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -487,6 +488,7 @@ ruins a long non-symplectic integration.
 | `examples/box_muller_demo.py` | Moments + 68-95-99.7 + the histogram-vs-Gaussian-density figure |
 | `examples/rejection_sampling_demo.py` | Acceptance rate + the accepted/rejected darts & histogram figure |
 | `examples/welford_demo.py` | Running stats + naive-vs-Welford offset table + the convergence figure |
+| `examples/kahan_demo.py` | Error-vs-n table + cancellation case + the error-growth figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5851,6 +5853,29 @@ and kurtosis, and two accumulators merge by combining counts, means, and M2 with
 so statistics over shards combine in parallel, exactly. This module provides the accumulator and
 merge, verified against a two-pass computation over 200 random datasets and shown staying exact
 (variance 2.0) at a 1e12 offset where the naive formula returns -134 million.
+
+## Kahan summation: adding floats without losing the small ones
+
+Bounded error over any number of terms. `kahan.py`:
+
+```
+$ python examples/kahan_demo.py examples/output
+
+           n     naive error   Kahan error    pairwise
+     1000000        1.33e-11      0.00e+00    2.33e-15
+    10000000        1.61e-10      0.00e+00    1.40e-15
+```
+
+Add a million small numbers naively and the answer drifts: once the total is large, each tiny
+addend has fewer mantissa bits to land in, so the error grows with n. Kahan's compensated
+summation carries a correction term for the bits lost on the previous addition -- `y = x - c;
+t = sum + y; c = (t - sum) - y` -- keeping the error bounded, as if the sum were done in twice
+the precision. Neumaier's variant also handles catastrophic cancellation (`[1, 1e100, 1, -1e100]`
+sums to 2, not 0), and pairwise summation gives `O(log n)` error growth with no correction term.
+This module implements all of these plus a compensated dot product and running-mean accumulator,
+verified against Python's exact `math.fsum` on ill-conditioned inputs: Kahan drives the
+million-term error from 1.3e-11 to zero. It matters for long dot products, running averages, and
+any accumulation over millions of terms.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
