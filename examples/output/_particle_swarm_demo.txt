@@ -1,0 +1,23 @@
+Particle swarm optimization: a flock of solutions homing on the optimum
+
+      Sphere (min at origin): cost 0.00000 at (0.000, 0.000)
+   Rastrigin (min at origin): cost 0.00000 at (0.000, -0.000)
+  Rosenbrock (min at (1,1)): cost 0.00000 at (1.000, 1.000)
+
+  PSO vs random search at equal budget (40x300 = 12000 evaluations):
+        Sphere: PSO 0.00000   random 0.00001
+     Rastrigin: PSO 0.00000   random 0.00166
+
+  Rastrigin convergence (global best cost) -- decaying inertia converges faster:
+    iter   0: decaying-w   7.507   fixed-w   7.507
+    iter  10: decaying-w   0.485   fixed-w   0.010
+    iter  30: decaying-w   0.161   fixed-w   0.002
+    iter  60: decaying-w   0.001   fixed-w   0.002
+    iter 120: decaying-w   0.000   fixed-w   0.001
+    iter 199: decaying-w   0.000   fixed-w   0.000
+
+  Each particle coasts on inertia, is pulled toward its own best spot (cognitive) and
+  the swarm's best (social); r1,r2 keep it stochastic. High inertia explores, low
+  inertia exploits -- decaying it does both in turn. No gradients, just local rules.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\particle_swarm.svg

@@ -279,6 +279,7 @@ ruins a long non-symplectic integration.
 | `src/particle_filter.py` | Particle filter: bootstrap SIR, systematic resampling, adaptive ESS, nonlinear tracking |
 | `src/simulated_annealing.py` | Simulated annealing: Metropolis criterion, cooling schedules, TSP 2-opt solver |
 | `src/genetic_algorithm.py` | Genetic algorithm: tournament selection, crossover, mutation, elitism, knapsack |
+| `src/particle_swarm.py` | Particle swarm optimization: inertia/cognitive/social velocity, benchmark functions |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -549,6 +550,7 @@ ruins a long non-symplectic integration.
 | `examples/particle_filter_demo.py` | Nonlinear tracking beats raw sensor + ESS collapse-vs-healthy resampling figure |
 | `examples/simulated_annealing_demo.py` | TSP greedy-vs-annealed tour + cost-cooling curve, multimodal global min |
 | `examples/genetic_algorithm_demo.py` | OneMax + real optimization fitness curves, 0/1 knapsack solve |
+| `examples/particle_swarm_demo.py` | Sphere/Rastrigin/Rosenbrock solves, swarm scatter + inertia-decay convergence |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6634,6 +6636,27 @@ once and needs no gradients -- strong on rugged, discrete, or black-box landscap
 implements a generic GA over binary and real-valued genomes plus a 0/1 knapsack solver, verified to
 solve OneMax to all-ones, maximize a multimodal real function, match the brute-force knapsack
 optimum, keep the best fitness monotone under elitism, and beat random search at equal budget.
+
+## Particle swarm optimization: a flock homing on the optimum
+
+A swarm of solutions with velocity, memory, and shared knowledge. `particle_swarm.py`:
+
+```
+$ python examples/particle_swarm_demo.py examples/output
+
+  Sphere / Rastrigin / Rosenbrock: all solved to cost ~0 (Rosenbrock at (1,1))
+  PSO vs random search (12000 evals): Rastrigin PSO 0.00000 vs random 0.00166
+  decaying inertia converges faster than fixed
+```
+
+A swarm of candidate solutions flies through the search space, each pulled by three terms:
+**inertia** (coast on the old velocity `w*v`, exploring), **cognitive** (`c1*r1*(pbest - x)`, toward
+its own best), and **social** (`c2*r2*(gbest - x)`, toward the swarm's best), then `x <- x + v`.
+High inertia explores, low inertia exploits, so `w` is often decayed. No gradients, just local
+rules balancing exploration and convergence. This module implements PSO over a bounded box with
+velocity clamping and linearly-decaying inertia, verified to find the global minimum of the Sphere,
+Rastrigin, and Rosenbrock benchmarks, drive the global best down monotonically, beat random search
+at equal budget, and converge faster when inertia decays.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

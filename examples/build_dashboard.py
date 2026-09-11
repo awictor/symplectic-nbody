@@ -321,6 +321,7 @@ def main():
     import particle_filter_demo
     import simulated_annealing_demo
     import genetic_algorithm_demo
+    import particle_swarm_demo
 
     import plot_orbits
 
@@ -611,6 +612,7 @@ def main():
     particle_filter_txt = run("particle_filter_demo", particle_filter_demo.main, True)
     simulated_annealing_txt = run("simulated_annealing_demo", simulated_annealing_demo.main, True)
     genetic_algorithm_txt = run("genetic_algorithm_demo", genetic_algorithm_demo.main, True)
+    particle_swarm_txt = run("particle_swarm_demo", particle_swarm_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4002,6 +4004,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("genetic_algorithm.svg"), "the best and mean population fitness climbing each generation on the OneMax bit problem and the bumpy real-function optimization")
             + f'<div class="card">{pre(genetic_algorithm_txt)}</div>'
+            + '</div>'),
+        section(
+            "Particle swarm optimization: a flock homing on the optimum",
+            "A third metaheuristic beside simulated annealing (one state) and genetic algorithms "
+            "(breeding a population): a SWARM of candidate solutions flies through the search space, "
+            "each remembering its own best spot and pulled toward the best any member has found -- "
+            "inspired by flocking birds. Each particle carries a position and a VELOCITY updated by "
+            "three pulls: INERTIA (coast on the old velocity, exploring), COGNITIVE (toward this "
+            "particle's own best, individual memory), and SOCIAL (toward the swarm's global best, "
+            "shared knowledge), with fresh randoms keeping it stochastic. High inertia explores, low "
+            "inertia exploits, so it is often decayed over the run. No gradients, just local rules, "
+            "and the swarm balances exploration against convergence. This module implements PSO over "
+            "a bounded box with velocity clamping and linearly-decaying inertia, verified to find "
+            "the global minimum of the Sphere, Rastrigin, and Rosenbrock benchmarks, drive the "
+            "global best down monotonically, beat random search at equal budget, and converge faster "
+            "when inertia decays.",
+            '<div class="grid">'
+            + svg_card(out("particle_swarm.svg"), "the final swarm clustered at the Rastrigin optimum, beside the global-best convergence with decaying vs fixed inertia on a log scale")
+            + f'<div class="card">{pre(particle_swarm_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
