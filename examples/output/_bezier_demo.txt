@@ -1,0 +1,25 @@
+Bezier curves: shaped by control points, evaluated by de Casteljau
+
+  Quadratic Bezier, control points [(0, 0), (2, 4), (4, 0)]
+    B(0) = (0, 0)  (first control point)
+    B(0.5) = (2.0, 2.0)
+    B(1) = (4, 0)  (last control point)
+    arc length 5.9158, tangent at 0.5 = (4.0, 0.0)
+
+  Cubic Bezier, control points [(0, 0), (1, 4), (3, -2), (4, 2)]
+    arc length 5.9769
+    every sampled point inside the control hull: True
+
+  Subdivision at t=0.5 splits into two cubics that reproduce the curve: True
+    left control points:  [(0, 0), (0.5, 2.0), (1.25, 1.5), (2.0, 1.0)]
+    right control points: [(2.0, 1.0), (2.75, 0.5), (3.5, 0.0), (4, 2)]
+
+  Degree elevation: the quadratic rewritten as a cubic (same shape: True)
+    new control points: [(0, 0), (1.33, 2.67), (2.67, 2.67), (4, 0)]
+
+  de Casteljau evaluates B(t) by repeated linear interpolation of the control points:
+  interpolate adjacent pairs at t, then interpolate the results, until one point remains
+  -- that point is on the curve. Keeping the triangle's outer edges splits the curve in
+  two. It is numerically stable and the basis of every vector-graphics renderer.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\bezier.svg

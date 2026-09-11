@@ -344,6 +344,7 @@ def main():
     import marching_squares_demo
     import bresenham_demo
     import flood_fill_demo
+    import bezier_demo
 
     import plot_orbits
 
@@ -657,6 +658,7 @@ def main():
     marching_squares_txt = run("marching_squares_demo", marching_squares_demo.main, True)
     bresenham_txt = run("bresenham_demo", bresenham_demo.main, True)
     flood_fill_txt = run("flood_fill_demo", flood_fill_demo.main, True)
+    bezier_txt = run("bezier_demo", bezier_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4515,6 +4517,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("flood_fill.svg"), "an interior region filled inside a wall (barrier respected), and a grid coloured by connected-component label")
             + f'<div class="card">{pre(flood_fill_txt)}</div>'
+            + '</div>'),
+        section(
+            "Bezier curves: control-point curves via de Casteljau",
+            "A Bezier curve is defined not by points it passes through but by CONTROL POINTS that "
+            "pull it into shape -- it starts at the first, ends at the last, and is tugged toward "
+            "the ones between. That handles behaviour is why Bezier curves are the primitive of SVG "
+            "and PDF paths, TrueType fonts, and animation easing. A degree-n curve blends its n+1 "
+            "control points by the Bernstein polynomials, but the elegant, numerically stable way to "
+            "evaluate it is DE CASTELJAU's algorithm: repeatedly take pairwise linear "
+            "interpolations of the control points at parameter t until one point remains -- that is "
+            "B(t). The same construction, kept rather than discarded, SPLITS the curve at t into two "
+            "Bezier curves (subdivision, the basis of adaptive rendering). This module implements de "
+            "Casteljau evaluation, the derivative (tangents), subdivision, degree elevation, and arc "
+            "length by adaptive subdivision, verified that the curve hits its first and last control "
+            "points, that de Casteljau matches the Bernstein sum, that a linear curve is exactly the "
+            "straight segment, that the curve stays within the convex hull of its control points, "
+            "that subdivision reproduces the original and degree elevation preserves the shape, and "
+            "that a linear curve's arc length is the endpoint distance.",
+            '<div class="grid">'
+            + svg_card(out("bezier.svg"), "a quadratic and a cubic Bezier curve drawn solid with their dashed control polygons and the de Casteljau midpoint marked")
+            + f'<div class="card">{pre(bezier_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

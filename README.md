@@ -302,6 +302,7 @@ ruins a long non-symplectic integration.
 | `src/marching_squares.py` | Marching squares: iso-contour extraction from a scalar grid, 16-case + interpolation |
 | `src/bresenham.py` | Bresenham rasterization: integer-only line, midpoint circle, filled disk |
 | `src/flood_fill.py` | Flood fill: queue/stack/scanline, 4/8-connectivity, connected-component labeling |
+| `src/bezier.py` | Bezier curves: de Casteljau, derivative, subdivision, degree elevation, arc length |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -595,6 +596,7 @@ ruins a long non-symplectic integration.
 | `examples/marching_squares_demo.py` | Circular contours of a radial field + Gaussian-terrain iso-lines figure |
 | `examples/bresenham_demo.py` | ASCII line-fan and circle rasterization, sub-pixel accuracy, circumference scaling |
 | `examples/flood_fill_demo.py` | Paint-bucket inside a wall, three strategies agree, connected components + connectivity |
+| `examples/bezier_demo.py` | Quadratic/cubic curves with control polygons, subdivision, elevation, arc length |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7185,6 +7187,28 @@ all three fills (4/8-connected) plus component labeling and sizing, verified tha
 produce identical results, that fills respect barriers and the grid edge, that 8-connectivity merges
 diagonal regions 4-connectivity separates, that a bounded region leaves the rest untouched, and that
 a checkerboard has 9 components under 4-connectivity but 2 under 8.
+
+## Bezier curves: control-point curves via de Casteljau
+
+Shaped by control points, evaluated by repeated interpolation. `bezier.py`:
+
+```
+$ python examples/bezier_demo.py examples/output
+
+  quadratic B(0.5)=(2,2), hits its endpoints, arc length 5.92
+  subdivision at 0.5 splits into two cubics reproducing the curve
+  degree elevation rewrites a quadratic as a cubic with the same shape
+```
+
+A Bezier curve starts at its first control point, ends at its last, and is tugged toward the ones
+between. De Casteljau's algorithm evaluates `B(t)` by repeatedly taking pairwise linear
+interpolations of the control points until one point remains; keeping the triangle's outer edges
+splits the curve in two (subdivision). This module implements de Casteljau evaluation, the
+derivative (tangents), subdivision, degree elevation, and arc length by adaptive subdivision,
+verified that the curve hits its first and last control points, that de Casteljau matches the
+Bernstein sum, that a linear curve is exactly the straight segment, that the curve stays within its
+control points' convex hull, that subdivision reproduces the original and degree elevation preserves
+the shape, and that a linear curve's arc length is the endpoint distance.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
