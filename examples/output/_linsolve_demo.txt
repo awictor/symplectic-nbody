@@ -1,0 +1,24 @@
+Gaussian elimination / LU: solve A x = b, factor once, reuse
+
+  A = [[2, 1, -1], [-3, -1, 2], [-2, 1, 2]],  b = [8, -11, -3]
+  solution x = [2.0, 3.0, -1.0]   residual ||Ax-b|| = 4.4e-16
+
+  LU factorization (P A = L U), row permutation [1, 2, 0]:
+    L (unit lower): [[1.0, 0.0, 0.0], [0.667, 1.0, 0.0], [-0.667, 0.2, 1.0]]
+    U (upper):      [[-3.0, -1.0, 2.0], [0.0, 1.667, 0.667], [0.0, 0.0, 0.2]]
+    check P A == L U: True
+
+  Reusing the factorization for several right-hand sides (each O(n^2)):
+    b = [8, -11, -3]  ->  x = [2.0, 3.0, -1.0]
+    b = [1, 0, 0]  ->  x = [4.0, -2.0, 5.0]
+    b = [0, 5, 5]  ->  x = [10.0, -5.0, 15.0]
+
+  determinant = -1  (sign 1 x product of U's diagonal)
+  inverse row 0 = [4.0, 3.0, -1.0]
+  A * inverse = identity: True
+
+  Factor once in O(n^3), then every new b costs O(n^2): the reason LU beats
+  re-eliminating from scratch. Partial pivoting (swap in the largest pivot) keeps it
+  numerically stable -- it underlies circuit analysis, FEM, and every linear solve.
+
+  wrote examples/output\linsolve.svg

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="360" viewBox="0 0 760 360" font-family="monospace">
+<rect width="760" height="360" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">LU decomposition: A splits into triangular L and U</text>
+<text x="20" y="44" fill="#8b949e" font-size="12">L unit-lower-triangular (left), U upper-triangular (right); together they factor the pivoted A</text>
+<text x="144.0" y="78.0" fill="#e6edf3" font-size="13" text-anchor="middle">L</text>
+<rect x="60" y="90" width="54" height="54" fill="#4dabf7" stroke="#0d1117" stroke-width="1"/>
+<text x="87.0" y="122.0" fill="#e6edf3" font-size="11" text-anchor="middle">1.00</text>
+<rect x="116" y="90" width="54" height="54" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="143.0" y="122.0" fill="#8b949e" font-size="11" text-anchor="middle">0.00</text>
+<rect x="172" y="90" width="54" height="54" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="199.0" y="122.0" fill="#8b949e" font-size="11" text-anchor="middle">0.00</text>
+<rect x="60" y="146" width="54" height="54" fill="#3a7bb0" stroke="#0d1117" stroke-width="1"/>
+<text x="87.0" y="178.0" fill="#e6edf3" font-size="11" text-anchor="middle">0.67</text>
+<rect x="116" y="146" width="54" height="54" fill="#4dabf7" stroke="#0d1117" stroke-width="1"/>
+<text x="143.0" y="178.0" fill="#e6edf3" font-size="11" text-anchor="middle">1.00</text>
+<rect x="172" y="146" width="54" height="54" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="199.0" y="178.0" fill="#8b949e" font-size="11" text-anchor="middle">0.00</text>
+<rect x="60" y="202" width="54" height="54" fill="#3a7bb0" stroke="#0d1117" stroke-width="1"/>
+<text x="87.0" y="234.0" fill="#e6edf3" font-size="11" text-anchor="middle">-0.67</text>
+<rect x="116" y="202" width="54" height="54" fill="#21374c" stroke="#0d1117" stroke-width="1"/>
+<text x="143.0" y="234.0" fill="#e6edf3" font-size="11" text-anchor="middle">0.20</text>
+<rect x="172" y="202" width="54" height="54" fill="#4dabf7" stroke="#0d1117" stroke-width="1"/>
+<text x="199.0" y="234.0" fill="#e6edf3" font-size="11" text-anchor="middle">1.00</text>
+<text x="392.0" y="78.0" fill="#e6edf3" font-size="13" text-anchor="middle">U</text>
+<rect x="308" y="90" width="54" height="54" fill="#06d66a" stroke="#0d1117" stroke-width="1"/>
+<text x="335.0" y="122.0" fill="#e6edf3" font-size="11" text-anchor="middle">-3.00</text>
+<rect x="364" y="90" width="54" height="54" fill="#10593a" stroke="#0d1117" stroke-width="1"/>
+<text x="391.0" y="122.0" fill="#e6edf3" font-size="11" text-anchor="middle">-1.00</text>
+<rect x="420" y="90" width="54" height="54" fill="#0b9752" stroke="#0d1117" stroke-width="1"/>
+<text x="447.0" y="122.0" fill="#e6edf3" font-size="11" text-anchor="middle">2.00</text>
+<rect x="308" y="146" width="54" height="54" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="335.0" y="178.0" fill="#8b949e" font-size="11" text-anchor="middle">0.00</text>
+<rect x="364" y="146" width="54" height="54" fill="#0d824a" stroke="#0d1117" stroke-width="1"/>
+<text x="391.0" y="178.0" fill="#e6edf3" font-size="11" text-anchor="middle">1.67</text>
+<rect x="420" y="146" width="54" height="54" fill="#124432" stroke="#0d1117" stroke-width="1"/>
+<text x="447.0" y="178.0" fill="#e6edf3" font-size="11" text-anchor="middle">0.67</text>
+<rect x="308" y="202" width="54" height="54" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="335.0" y="234.0" fill="#8b949e" font-size="11" text-anchor="middle">0.00</text>
+<rect x="364" y="202" width="54" height="54" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="391.0" y="234.0" fill="#8b949e" font-size="11" text-anchor="middle">0.00</text>
+<rect x="420" y="202" width="54" height="54" fill="#142726" stroke="#0d1117" stroke-width="1"/>
+<text x="447.0" y="234.0" fill="#e6edf3" font-size="11" text-anchor="middle">0.20</text>
+</svg>

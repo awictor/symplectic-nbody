@@ -254,6 +254,7 @@ ruins a long non-symplectic integration.
 | `src/quadrature.py` | Numerical integration: trapezoid, Simpson, Romberg, adaptive, Gauss-Legendre |
 | `src/spline.py` | Cubic spline interpolation: natural/clamped C^2, Thomas solve, vs Lagrange |
 | `src/fft.py` | Fast Fourier Transform: radix-2 Cooley-Tukey, inverse, FFT convolution |
+| `src/linsolve.py` | Gaussian elimination / LU: partial pivoting, solve, determinant, inverse |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -499,6 +500,7 @@ ruins a long non-symplectic integration.
 | `examples/quadrature_demo.py` | Method accuracy + convergence-order table + the error-vs-samples figure |
 | `examples/spline_demo.py` | Spline vs polynomial on Runge + the through-the-knots curve figure |
 | `examples/fft_demo.py` | Two-tone spectrum + convolution + the signal & spectrum & cost figure |
+| `examples/linsolve_demo.py` | Solve + LU factors + reuse + det/inverse + the L/U heatmap figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6001,6 +6003,28 @@ implements the radix-2 FFT, inverse, a naive DFT check, and FFT convolution usin
 built-in complex numbers, verified to match the DFT, round-trip exactly, recover known
 frequencies, and satisfy Parseval's identity. Often called the most important numerical algorithm
 of the 20th century.
+
+## Gaussian elimination and LU decomposition: solving A x = b
+
+The most-solved problem in computation. `linsolve.py`:
+
+```
+$ python examples/linsolve_demo.py examples/output
+
+  solution x = [2.0, 3.0, -1.0]   residual ||Ax-b|| = 4.4e-16
+  P A = L U (permutation [1, 2, 0]); det = -1
+  reuse the factorization: b=[1,0,0] -> x=[4,-2,5], b=[0,5,5] -> x=[10,-5,15]
+```
+
+`A x = b` -- n equations in n unknowns -- underlies circuit analysis, structural mechanics,
+least squares, and the linearized step of every nonlinear solver. Gaussian elimination
+row-reduces to triangular form and back-substitutes in `O(n^3)`, and done once it factors
+`A = L U`, after which each new right-hand side is solved in `O(n^2)` by two triangular sweeps.
+Partial pivoting swaps in the largest pivot at each step to stay numerically stable, recorded as
+a permutation P so `P A = L U`. The determinant is the product of U's diagonal times the
+permutation sign, and the inverse comes from solving against each unit column. This module builds
+the factorization, solves systems, and computes determinants and inverses, verified by residuals
+and `P A = L U` over hundreds of random systems.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

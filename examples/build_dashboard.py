@@ -296,6 +296,7 @@ def main():
     import quadrature_demo
     import spline_demo
     import fft_demo
+    import linsolve_demo
 
     import plot_orbits
 
@@ -561,6 +562,7 @@ def main():
     quadrature_txt = run("quadrature_demo", quadrature_demo.main, True)
     spline_txt = run("spline_demo", spline_demo.main, True)
     fft_txt = run("fft_demo", fft_demo.main, True)
+    linsolve_txt = run("linsolve_demo", linsolve_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3482,6 +3484,23 @@ def main():
             '<div class="grid">'
             + svg_card(out("fft.svg"), "a two-tone signal in time decomposing into two sharp peaks in its frequency spectrum")
             + f'<div class="card">{pre(fft_txt)}</div>'
+            + '</div>'),
+        section(
+            "Gaussian elimination and LU decomposition: solving A x = b",
+            "A x = b -- n equations in n unknowns -- is the most-solved problem in computation: "
+            "circuit analysis, structural mechanics, least squares, the linearized step of every "
+            "nonlinear solver. Gaussian elimination row-reduces to triangular form and "
+            "back-substitutes in O(n^3), and done once it factors A = L U into lower- and "
+            "upper-triangular matrices, after which each new right-hand side is solved in O(n^2) "
+            "by two triangular sweeps. Partial pivoting swaps in the largest pivot at each step "
+            "to keep it numerically stable, recorded as a permutation P so P A = L U. The "
+            "determinant is the product of U's diagonal times the permutation sign, and the "
+            "inverse comes from solving against each unit column. This module builds the "
+            "factorization, solves systems, and computes determinants and inverses, verified by "
+            "residuals and P A = L U over hundreds of random systems.",
+            '<div class="grid">'
+            + svg_card(out("linsolve.svg"), "the L and U triangular factors that a pivoted matrix splits into")
+            + f'<div class="card">{pre(linsolve_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
