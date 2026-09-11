@@ -1,0 +1,24 @@
+Gaussian process regression: prediction with honest error bars
+
+  8 noisy observations of a smooth function, with a gap in the middle
+
+  length scale chosen by max marginal likelihood: l = 0.7 (log ML -7.12)
+  marginal likelihood across the grid:
+    l =  0.2: log ML   -9.98
+    l = 0.35: log ML   -9.37
+    l =  0.5: log ML   -8.38
+    l =  0.7: log ML   -7.12  <- selected
+    l =  1.0: log ML   -7.48
+    l =  1.4: log ML  -12.20
+    l =  2.0: log ML  -22.94
+    l =  3.0: log ML  -50.10
+
+  Posterior 2-sigma band: ~0.16 at the data, ~1.99 in the middle gap -- uncertainty tracks where data is.
+  100% of the true curve lies inside the 2-sigma band (well-calibrated).
+
+  A GP places a prior over smooth functions via a kernel, then conditions on the data
+  in closed form -- one Cholesky solve gives both the mean and the variance. The band
+  pinches to zero at noise-free data and flares back to the prior far away: uncertainty
+  you can actually trust, which is why GPs drive Bayesian optimization and active learning.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\gaussian_process.svg

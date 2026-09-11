@@ -310,6 +310,7 @@ def main():
     import kalman_demo
     import pagerank_demo
     import lu_demo
+    import gaussian_process_demo
 
     import plot_orbits
 
@@ -589,6 +590,7 @@ def main():
     kalman_txt = run("kalman_demo", kalman_demo.main, True)
     pagerank_txt = run("pagerank_demo", pagerank_demo.main, True)
     lu_txt = run("lu_demo", lu_demo.main, True)
+    gp_txt = run("gaussian_process_demo", gaussian_process_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3762,6 +3764,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("lu.svg"), "the L and U factors of A and the L, L' factors of an SPD matrix, shaded by magnitude so the triangular zero-structure shows")
             + f'<div class="card">{pre(lu_txt)}</div>'
+            + '</div>'),
+        section(
+            "Gaussian process regression: prediction with honest error bars",
+            "Where linear regression fits fixed coefficients, a Gaussian process fits a "
+            "distribution over FUNCTIONS and returns a calibrated error bar that widens where there "
+            "is no data. It assumes any finite set of function values is jointly Gaussian with "
+            "covariance set by a KERNEL -- the RBF kernel k(x,x') = sigma^2 exp(-||x-x'||^2/2l^2) "
+            "encoding 'smooth, with length scale l'. Conditioning that joint Gaussian on the "
+            "observations gives the posterior in closed form: mean = k*'(K+sigma_n^2 I)^-1 y and "
+            "variance = k(x*,x*) - k*'(K+sigma_n^2 I)^-1 k*, the single linear solve done by a "
+            "Cholesky factorization of the SPD matrix (K + noise) and reused for the log MARGINAL "
+            "LIKELIHOOD that scores hyperparameters. Noise-free, the posterior interpolates the "
+            "data exactly with zero variance there; far from data the variance rises back to the "
+            "prior. This module builds GP regression with the RBF kernel, posterior mean and "
+            "variance, and marginal-likelihood length-scale selection -- verified to interpolate "
+            "noise-free data exactly, grow uncertainty away from data, recover a known smooth "
+            "function, and peak the marginal likelihood near the true length scale.",
+            '<div class="grid">'
+            + svg_card(out("gaussian_process.svg"), "the posterior mean tracking the true function with a 2-sigma band that pinches shut at observations and flares wide in the gap and beyond")
+            + f'<div class="card">{pre(gp_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

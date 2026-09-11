@@ -268,6 +268,7 @@ ruins a long non-symplectic integration.
 | `src/kalman.py` | Kalman filter + RTS smoother: predict/update, Kalman gain, self-contained matrix ops |
 | `src/pagerank.py` | PageRank: sparse power iteration, damping, dangling nodes, personalized teleport |
 | `src/lu.py` | LU (partial pivot) & Cholesky: solve, determinant, inverse, positive-definite test |
+| `src/gaussian_process.py` | Gaussian process regression: RBF kernel, posterior mean/variance, marginal likelihood |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -527,6 +528,7 @@ ruins a long non-symplectic integration.
 | `examples/kalman_demo.py` | Noisy tracking: filter/smoother beat raw measurements, variance-collapse + track figure |
 | `examples/pagerank_demo.py` | Small web graph: ranks, personalization, geometric convergence + node-sized graph figure |
 | `examples/lu_demo.py` | P A = L U and A = L L' factorizations, multi-RHS solves, SPD test + shaded factor grids |
+| `examples/gaussian_process_demo.py` | GP fit to sparse noisy data: length-scale tuning, 2-sigma confidence band figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6356,6 +6358,32 @@ the backbone of least squares and Kalman filters. This module implements LU with
 Cholesky, triangular and general solves, determinant, and inverse, verified by reconstructing
 `P A = L U` and `A = L L'`, cross-checking determinants against cofactors, confirming Cholesky
 rejects non-positive-definite matrices, and round-tripping `A A^-1 = I`.
+
+## Gaussian process regression: prediction with honest error bars
+
+Fit a distribution over functions, get a calibrated error bar for free. `gaussian_process.py`:
+
+```
+$ python examples/gaussian_process_demo.py examples/output
+
+  8 noisy observations of a smooth function, with a gap in the middle
+  length scale by max marginal likelihood: l = 0.7 (interior peak, not boundary)
+  2-sigma band ~0.16 at the data, ~1.99 in the middle gap
+  100% of the true curve lies inside the 2-sigma band (well-calibrated)
+```
+
+Where linear regression fits fixed coefficients, a GP fits a distribution over functions and
+returns an error bar that widens where there is no data. It assumes any finite set of function
+values is jointly Gaussian with covariance set by a kernel -- the RBF kernel
+`k(x,x') = sigma^2 exp(-||x-x'||^2 / 2 l^2)` encoding "smooth, length scale l". Conditioning on the
+observations gives the posterior in closed form: `mean = k*' (K + sigma_n^2 I)^-1 y` and
+`var = k(x*,x*) - k*' (K + sigma_n^2 I)^-1 k*`, the single solve done by a Cholesky factorization of
+the SPD matrix `(K + noise)` and reused for the log marginal likelihood that scores
+hyperparameters. Noise-free, the posterior interpolates the data exactly with zero variance there;
+far from data the variance rises back to the prior. This module builds GP regression with the RBF
+kernel, posterior mean and variance, and marginal-likelihood length-scale selection, verified to
+interpolate noise-free data exactly, grow uncertainty away from data, recover a known smooth
+function, and peak the marginal likelihood near the true length scale. Built on the Cholesky solver.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
