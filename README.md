@@ -232,6 +232,7 @@ ruins a long non-symplectic integration.
 | `src/dijkstra.py` | Dijkstra shortest paths: from-scratch min-heap, path reconstruction, Bellman-Ford check |
 | `src/kdtree.py` | k-d tree: nearest / k-nearest / radius search, brute-force verified in 2D & 3D |
 | `src/boyer_moore.py` | Boyer-Moore string search: bad-character + good-suffix skips, sublinear |
+| `src/astar.py` | A* pathfinding: f=g+h heuristic search, grid heuristics, Dijkstra-verified optimal |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -455,6 +456,7 @@ ruins a long non-symplectic integration.
 | `examples/dijkstra_demo.py` | Distances vs Bellman-Ford + a grid maze + the distance-flood & route figure |
 | `examples/kdtree_demo.py` | Nearest/k-NN/radius vs brute force + the point-cloud query figure |
 | `examples/boyer_moore_demo.py` | Match + bad-char table + the comparison-count vs pattern-length figure |
+| `examples/astar_demo.py` | A* vs Dijkstra cost/expansions + the side-by-side explored-cells figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5455,6 +5457,29 @@ already-matched suffix without undoing confirmed matches; taking the larger shif
 search safe and sublinear -- most characters are never examined. This module builds both tables
 and finds first, all, and overlapping occurrences, proven correct *exhaustively* against a naive
 search over 5000 random text/pattern pairs plus repetitive and DNA-like cases.
+
+## A* search: Dijkstra with a sense of direction
+
+Optimal paths, but explore far less. `astar.py`:
+
+```
+$ python examples/astar_demo.py examples/output
+
+              path cost  nodes expanded
+          A*         49             300
+    Dijkstra         49             360
+  same optimal cost: True   A* expanded 17% fewer nodes
+```
+
+Dijkstra explores outward in every direction equally; A* keeps the optimality guarantee but adds
+a heuristic `h(n)` estimating the distance still to go, ordering its frontier by
+`f(n) = g(n) + h(n)` -- known cost plus the guess ahead -- so it pushes toward the goal. If the
+heuristic never overestimates the true remaining cost (admissible), the path is still guaranteed
+optimal; with `h = 0` it becomes Dijkstra exactly. On a grid the Manhattan distance is
+admissible for 4-directional movement, octile for 8-directional. This module runs A* on a
+weighted grid with obstacles, returns the path and expanded-node set, and the tests verify --
+across 39 random grids -- that A* finds the same optimal cost as Dijkstra while expanding no
+more nodes. It is the standard for game and robot navigation.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

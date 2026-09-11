@@ -274,6 +274,7 @@ def main():
     import dijkstra_demo
     import kdtree_demo
     import boyer_moore_demo
+    import astar_demo
 
     import plot_orbits
 
@@ -517,6 +518,7 @@ def main():
     dijkstra_txt = run("dijkstra_demo", dijkstra_demo.main, True)
     kdtree_txt = run("kdtree_demo", kdtree_demo.main, True)
     boyer_moore_txt = run("boyer_moore_demo", boyer_moore_demo.main, True)
+    astar_txt = run("astar_demo", astar_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3075,6 +3077,23 @@ def main():
             '<div class="grid">'
             + svg_card(out("boyer_moore.svg"), "character comparisons vs pattern length: the naive scan rises while Boyer-Moore falls")
             + f'<div class="card">{pre(boyer_moore_txt)}</div>'
+            + '</div>'),
+        section(
+            "A* search: Dijkstra with a sense of direction",
+            "Dijkstra explores outward in every direction equally; A* keeps the same guarantee of "
+            "an optimal path but adds a heuristic h(n) estimating the remaining distance to the "
+            "goal, ordering its frontier by f(n) = g(n) + h(n) -- known cost so far plus the "
+            "guess ahead -- so it pushes toward the goal instead of flooding. If the heuristic "
+            "never overestimates the true remaining cost (it is admissible), the path is still "
+            "guaranteed optimal; with h = 0 it degenerates exactly to Dijkstra. On a grid the "
+            "Manhattan distance is admissible for 4-directional movement and the octile distance "
+            "for 8-directional. This module runs A* on a weighted grid with obstacles, returns "
+            "the path and the expanded-node set, and verifies A* finds the same optimal cost as "
+            "Dijkstra while expanding no more nodes -- the standard for game and robot "
+            "navigation.",
+            '<div class="grid">'
+            + svg_card(out("astar.svg"), "A* and Dijkstra side by side on the same maze: identical path, but A* explores far fewer cells")
+            + f'<div class="card">{pre(astar_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

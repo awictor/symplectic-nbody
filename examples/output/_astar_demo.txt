@@ -1,0 +1,15 @@
+A*: guide the search with a heuristic h(n) = estimated distance to the goal
+
+  grid 13x30, start (0, 0) -> goal (0, 29)
+              path cost  nodes expanded
+          A*         49             300
+    Dijkstra         49             360
+
+  same optimal cost: True   A* expanded 17% fewer nodes
+
+  A* orders its frontier by f = g + h: known cost so far plus the guess to the goal,
+  so it pushes toward the goal instead of flooding outward. With an admissible
+  heuristic (never overestimating) the path it returns is still guaranteed optimal --
+  which is why A* is the standard for game and robot navigation.
+
+  wrote examples/output\astar.svg
