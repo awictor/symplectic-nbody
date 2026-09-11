@@ -295,6 +295,7 @@ ruins a long non-symplectic integration.
 | `src/avl_tree.py` | AVL self-balancing BST: rotations, O(log n) ordered map, range queries |
 | `src/segment_tree.py` | Segment tree + lazy propagation: O(log n) range sum/min/max query and range-add |
 | `src/convex_hull.py` | Convex hull (Andrew's monotone chain): area, perimeter, point-in-hull, diameter |
+| `src/closest_pair.py` | Closest pair of points: O(n log n) divide-and-conquer with the strip merge |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -581,6 +582,7 @@ ruins a long non-symplectic integration.
 | `examples/avl_tree_demo.py` | AVL vs naive-BST height on sorted input, four rotation cases, tree figure |
 | `examples/segment_tree_demo.py` | Range sum/min/max + lazy range-add, O(log n) full-array update, tree figure |
 | `examples/convex_hull_demo.py` | Hull of a scatter with area/perimeter/diameter + outlined-boundary figure |
+| `examples/closest_pair_demo.py` | Closest pair highlighted, D&C-vs-brute scaling, agreement across sizes |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7023,6 +7025,27 @@ which always lies on the hull). This module implements all of these, verified th
 is its four corners with interior points dropped, that collinear and duplicate points are handled,
 that the hull is convex and counter-clockwise with area matching an independent shoelace, that every
 input point lies inside it, and that the diameter is the true farthest pair.
+
+## Closest pair of points: divide and conquer beats O(n^2)
+
+The two nearest points in O(n log n). `closest_pair.py`:
+
+```
+$ python examples/closest_pair_demo.py examples/output
+
+  80 points -> closest pair at distance 0.94, brute-force agrees
+  n=4096: brute does ~8.4M comparisons, divide-and-conquer ~49K (~170x saving)
+  matches brute force exactly across n = 10 .. 1000
+```
+
+Sort by x, split into halves, recurse, take the smaller distance `d`, then check only the pairs in
+the width-2d strip around the split line -- where, sorted by y, each point can beat `d` against at
+most a constant number of neighbours (a `d x 2d` rectangle holds only so many points that are all
+`>= d` apart). Linear merge, so `T(n) = 2T(n/2) + O(n) = O(n log n)`. This module implements the
+divide-and-conquer closest pair with the strip merge plus the brute-force reference, verified that
+the two agree exactly on random sets of many sizes, that it finds a planted near-coincident pair,
+handles duplicate points (distance 0), collinear and grid inputs, small `n`, and survives a crowded
+strip that would trap a naive merge.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

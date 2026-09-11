@@ -1,0 +1,29 @@
+Closest pair of points: O(n log n) divide and conquer
+
+  80 random points in a 100x100 square
+
+  closest pair: (37.39, 56.14) and (38.08, 56.79)
+  distance: 0.9444
+  brute-force agrees: True (distance 0.9444)
+
+  Distance computations vs input size (divide-and-conquer beats O(n^2)):
+         n   brute O(n^2)   D&C (approx)
+        16            120             64
+        64           2016            384
+       256          32640           2048
+      1024         523776          10240
+      4096        8386560          49152
+    -> at n=4096, brute does ~8.4M comparisons; D&C ~49K, a ~170x saving.
+
+  Divide-and-conquer matches brute force exactly:
+    n=  10: closest 92.7770  (brute 92.7770, match True)
+    n=  50: closest 19.1854  (brute 19.1854, match True)
+    n= 200: closest 5.5590  (brute 5.5590, match True)
+    n= 800: closest 1.1317  (brute 1.1317, match True)
+
+  Split the x-sorted points in half, recurse, take the smaller distance d, then check
+  only the pairs inside the width-2d strip around the split line -- where, sorted by y,
+  each point can beat d against at most a constant number of neighbours. Linear merge,
+  so T(n) = 2T(n/2) + O(n) = O(n log n): geometry beating the quadratic.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\closest_pair.svg

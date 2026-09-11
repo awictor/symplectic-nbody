@@ -337,6 +337,7 @@ def main():
     import avl_tree_demo
     import segment_tree_demo
     import convex_hull_demo
+    import closest_pair_demo
 
     import plot_orbits
 
@@ -643,6 +644,7 @@ def main():
     avl_tree_txt = run("avl_tree_demo", avl_tree_demo.main, True)
     segment_tree_txt = run("segment_tree_demo", segment_tree_demo.main, True)
     convex_hull_txt = run("convex_hull_demo", convex_hull_demo.main, True)
+    closest_pair_txt = run("closest_pair_demo", closest_pair_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4361,6 +4363,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("convex_hull.svg"), "a scatter of points with the convex-hull boundary outlined in blue, interior points grey, and the diameter (farthest pair) marked with a dashed line")
             + f'<div class="card">{pre(convex_hull_txt)}</div>'
+            + '</div>'),
+        section(
+            "Closest pair of points: divide and conquer beats O(n^2)",
+            "Finding the two closest of n points is trivially O(n^2); the elegant 1975 result is "
+            "that divide and conquer does it in O(n log n) -- one of the first proofs that geometry "
+            "could beat the brute-force quadratic. Sort by x, split into halves, recursively find "
+            "the closest pair in each, and let d be the smaller distance. The only remaining "
+            "candidates straddle the split line and must lie within a vertical STRIP of width 2d "
+            "around it -- and there, sorted by y, each point can be closer than d to at most a "
+            "constant number (7) of following points, because a d x 2d rectangle holds only so many "
+            "points that are all >= d apart. So the merge is linear and T(n) = 2T(n/2) + O(n) = "
+            "O(n log n). This module implements the divide-and-conquer closest pair with the strip "
+            "merge plus the brute-force reference, verified that the two agree exactly on random "
+            "sets of many sizes, that it finds a planted near-coincident pair, handles duplicate "
+            "points (distance 0), collinear and grid inputs, small n, and survives a crowded strip "
+            "that would trap a naive merge.",
+            '<div class="grid">'
+            + svg_card(out("closest_pair.svg"), "a scatter of points with the single closest pair ringed and connected in yellow, its distance labelled")
+            + f'<div class="card">{pre(closest_pair_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
