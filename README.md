@@ -210,6 +210,7 @@ ruins a long non-symplectic integration.
 | `src/boids.py` | Boids flocking: separation/alignment/cohesion, polarization order parameter |
 | `src/dla.py` | Diffusion-limited aggregation: fractal growth, mass-radius dimension D~1.71 |
 | `src/benford.py` | Benford's law: log10(1+1/d) leading digits, chi-square goodness-of-fit |
+| `src/coupon_collector.py` | Coupon collector: E[T]=n H_n, variance, completion CDF, Monte-Carlo |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -411,6 +412,7 @@ ruins a long non-symplectic integration.
 | `examples/boids_demo.py` | Polarization table + the scatter-to-flock & polarization-over-time figure |
 | `examples/dla_demo.py` | Size/dimension table + the cluster & log-log mass-radius scaling figure |
 | `examples/benford_demo.py` | Digit-frequency table + the Benford curve with Fibonacci vs uniform bars |
+| `examples/coupon_collector_demo.py` | E[T] vs simulation table + the progress curve & completion CDF |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4875,6 +4877,30 @@ probabilities sum to 1 and decrease from 1 to 9, that Fibonacci numbers, powers 
 factorials pass while a uniform-digit control fails, and the huge-integer and edge cases.
 Departures from the law flag fabricated ledgers and election tallies, which is why forensic
 auditors test for it.
+
+## The coupon collector: how long to collect the whole set
+
+The wait for the last few items dominates. `coupon_collector.py`:
+
+```
+$ python examples/coupon_collector_demo.py examples/output
+
+      n      E[T]   n ln n+..   std dev  sim mean
+      6     14.70       14.71      6.24     14.59
+     50    224.96      224.96     61.95    224.84
+    100    518.74      518.74    125.82    517.80
+```
+
+Each box holds one of n equally likely coupons; how many boxes to collect all n? Once you hold
+k, a fresh box is new with probability `(n-k)/n`, so the next new coupon is a geometric wait of
+mean `n/(n-k)`, and summing gives `E[T] = n H_n ~ n ln n`. The last coupon alone averages n
+boxes -- the tail dominates. This module gives the expected time, its variance (bounded by
+`pi^2 n^2/6`), the completion probability `P(T <= t)` by inclusion-exclusion, the generalized
+"collect any k of n" and "collect m copies of each" expectations, and the concentration tail
+bound `P(T > n ln n + c n) <= e^{-c}`. The tests check the exact small cases (`E[T]` for n=1,2,
+a die), recover `E[T]` by summing the CDF, verify the tail bound holds, and match a seeded
+Monte-Carlo simulation to within a few percent. The same `n ln n` law sets cache warmup, random
+test-coverage, and how many samples see every category at least once.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

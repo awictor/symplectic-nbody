@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           8.97       11.61      0.8x
-   400          36.30       37.54      1.0x
-   800         142.76      111.83      1.3x
-  1600         694.18      359.16      1.9x
-  3200        2566.71     1020.05      2.5x
+   200           9.29       12.04      0.8x
+   400          36.81       37.30      1.0x
+   800         142.47      111.98      1.3x
+  1600         633.41      358.33      1.8x
+  3200        2565.51      993.48      2.6x
 
-empirical scaling exponent  direct ~ N^2.06   barnes-hut ~ N^1.62
+empirical scaling exponent  direct ~ N^2.03   barnes-hut ~ N^1.60
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -197931,6 +197931,45 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   election tallies by their departure from it.
 
   wrote examples/output\benford.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>The coupon collector: how long to collect the whole set</h2>
+    <p class="blurb">Each cereal box holds one of n equally likely coupons; how many boxes to collect all n? Once you hold k of them a fresh box is new with probability (n-k)/n, so the wait for the next new one is geometric with mean n/(n-k), and summing gives E[T] = n H_n ~ n ln n. The last few coupons dominate: collecting the final one alone averages n boxes. The number needed is sharply concentrated, with a tail bound P(T > n ln n + c n) <= e^{-c}. The same law sets cache warmup, random test-coverage of n branches, and how many samples it takes to see every category at least once -- here the analytic E[T], variance, and completion CDF are checked against a seeded Monte-Carlo run.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="380" viewBox="0 0 760 380" font-family="monospace">
+<rect width="760" height="380" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">The coupon collector: the last coupons dominate the wait</text>
+<text x="20" y="44" fill="#8b949e" font-size="12">n = 50 coupons; expected draws to collect k of them (left), completion probability (right)</text>
+<line x1="55" y1="330" x2="360" y2="330" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="55" y1="330" x2="55" y2="60" stroke="#8b949e" stroke-width="1.2"/>
+<polyline points="55.0,330.0 61.1,328.8 67.2,327.6 73.3,326.3 79.4,325.0 85.5,323.7 91.6,322.4 97.7,321.0 103.8,319.7 109.9,318.2 116.0,316.8 122.1,315.3 128.2,313.7 134.3,312.1 140.4,310.5 146.5,308.9 152.6,307.1 158.7,305.4 164.8,303.6 170.9,301.7 177.0,299.7 183.1,297.7 189.2,295.7 195.3,293.5 201.4,291.3 207.5,289.0 213.6,286.6 219.7,284.1 225.8,281.5 231.9,278.8 238.0,275.9 244.1,272.9 250.2,269.7 256.3,266.4 262.4,262.9 268.5,259.1 274.6,255.1 280.7,250.8 286.8,246.2 292.9,241.2 299.0,235.8 305.1,229.8 311.2,223.1 317.3,215.6 323.4,207.0 329.5,197.0 335.6,185.0 341.7,170.0 347.8,150.0 353.9,120.0 360.0,60.0" fill="none" stroke="#4dabf7" stroke-width="2.5"/>
+<line x1="360.0" y1="60" x2="360.0" y2="330" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="356.0" y="70.0" fill="#ff6b6b" font-size="9" text-anchor="end">last coupon costs ~n</text>
+<text x="207.5" y="352.0" fill="#8b949e" font-size="10" text-anchor="middle">coupons collected k</text>
+<text x="47.0" y="56.0" fill="#8b949e" font-size="10" text-anchor="end">draws</text>
+<line x1="420" y1="330" x2="720" y2="330" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="420" y1="330" x2="420" y2="60" stroke="#8b949e" stroke-width="1.2"/>
+<polyline points="420.0,330.0 423.0,330.0 426.1,330.0 429.1,330.0 432.1,330.0 435.2,330.0 438.2,330.0 441.3,330.0 444.3,330.0 447.3,330.0 450.4,330.0 453.4,330.0 456.4,330.0 459.5,330.0 462.5,330.0 465.5,330.0 468.6,330.0 471.6,330.0 474.7,330.0 477.7,330.0 480.7,330.0 483.8,329.9 486.8,329.7 489.8,329.3 492.9,328.7 495.9,327.7 498.9,326.1 502.0,323.8 505.0,320.7 508.1,316.7 511.1,311.7 514.1,305.8 517.2,298.9 520.2,291.2 523.2,282.7 526.3,273.5 529.3,263.8 532.3,253.7 535.4,243.3 538.4,232.9 541.5,222.5 544.5,212.1 547.5,202.0 550.6,192.2 553.6,182.8 556.6,173.7 559.7,165.1 562.7,156.9 565.7,149.2 568.8,142.0 571.8,135.2 574.9,128.9 577.9,123.0 580.9,117.6 584.0,112.6 587.0,108.0 590.0,103.7 593.1,99.8 596.1,96.2 599.1,92.9 602.2,89.9 605.2,87.2 608.3,84.7 611.3,82.4 614.3,80.3 617.4,78.4 620.4,76.7 623.4,75.2 626.5,73.7 629.5,72.4 632.6,71.3 635.6,70.2 638.6,69.2 641.7,68.4 644.7,67.6 647.7,66.8 650.8,66.2 653.8,65.6 656.8,65.1 659.9,64.6 662.9,64.1 666.0,63.8 669.0,63.4 672.0,63.1 675.1,62.8 678.1,62.5 681.1,62.3 684.2,62.1 687.2,61.9 690.2,61.7 693.3,61.5 696.3,61.4 699.4,61.2 702.4,61.1 705.4,61.0 708.5,60.9 711.5,60.8 714.5,60.7 717.6,60.7" fill="none" stroke="#06d6a0" stroke-width="2.5"/>
+<line x1="556.6" y1="60" x2="556.6" y2="330" stroke="#ffd43b" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="560.6" y="70.0" fill="#ffd43b" font-size="9">E[T]=225</text>
+<text x="414.0" y="333.0" fill="#8b949e" font-size="9" text-anchor="end">0.0</text>
+<text x="414.0" y="198.0" fill="#8b949e" font-size="9" text-anchor="end">0.5</text>
+<text x="414.0" y="63.0" fill="#8b949e" font-size="9" text-anchor="end">1.0</text>
+<text x="570.0" y="352.0" fill="#8b949e" font-size="10" text-anchor="middle">draws t -> P(complete)</text>
+</svg><figcaption>the collection-progress curve (the last coupons cost the most) and the completion-probability CDF</figcaption></figure><div class="card"><pre>Coupon collector: expected draws to collect all n coupons is E[T] = n * H_n
+
+      n      E[T]   n ln n+..   std dev  sim mean
+      6     14.70       14.71      6.24     14.59
+     20     71.95       71.96     23.80     71.58
+     50    224.96      224.96     61.95    224.84
+    100    518.74      518.74    125.82    517.80
+
+  For n = 50: the first half of the coupons costs only 34 draws, but the last one alone
+  averages another 50 -- the tail dominates. Getting from 49 to 50 takes as long
+  as getting the first 35. That n ln n law sets cache warmup, random test coverage,
+  and how many samples it takes to see every category at least once.
+
+  wrote examples/output\coupon_collector.svg</pre></div></div>
   </section>
 
   <section>

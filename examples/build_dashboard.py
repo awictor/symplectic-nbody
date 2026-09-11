@@ -252,6 +252,7 @@ def main():
     import boids_demo
     import dla_demo
     import benford_demo
+    import coupon_collector_demo
 
     import plot_orbits
 
@@ -473,6 +474,7 @@ def main():
     boids_txt = run("boids_demo", boids_demo.main, True)
     dla_txt = run("dla_demo", dla_demo.main, True)
     benford_txt = run("benford_demo", benford_demo.main, True)
+    coupon_txt = run("coupon_collector_demo", coupon_collector_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2687,6 +2689,21 @@ def main():
             '<div class="grid">'
             + svg_card(out("benford.svg"), "the Benford curve with the Fibonacci leading digits hugging it while a uniform control does not")
             + f'<div class="card">{pre(benford_txt)}</div>'
+            + '</div>'),
+        section(
+            "The coupon collector: how long to collect the whole set",
+            "Each cereal box holds one of n equally likely coupons; how many boxes to collect "
+            "all n? Once you hold k of them a fresh box is new with probability (n-k)/n, so the "
+            "wait for the next new one is geometric with mean n/(n-k), and summing gives "
+            "E[T] = n H_n ~ n ln n. The last few coupons dominate: collecting the final one "
+            "alone averages n boxes. The number needed is sharply concentrated, with a tail "
+            "bound P(T > n ln n + c n) <= e^{-c}. The same law sets cache warmup, random "
+            "test-coverage of n branches, and how many samples it takes to see every category "
+            "at least once -- here the analytic E[T], variance, and completion CDF are checked "
+            "against a seeded Monte-Carlo run.",
+            '<div class="grid">'
+            + svg_card(out("coupon_collector.svg"), "the collection-progress curve (the last coupons cost the most) and the completion-probability CDF")
+            + f'<div class="card">{pre(coupon_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -1,0 +1,14 @@
+Coupon collector: expected draws to collect all n coupons is E[T] = n * H_n
+
+      n      E[T]   n ln n+..   std dev  sim mean
+      6     14.70       14.71      6.24     14.59
+     20     71.95       71.96     23.80     71.58
+     50    224.96      224.96     61.95    224.84
+    100    518.74      518.74    125.82    517.80
+
+  For n = 50: the first half of the coupons costs only 34 draws, but the last one alone
+  averages another 50 -- the tail dominates. Getting from 49 to 50 takes as long
+  as getting the first 35. That n ln n law sets cache warmup, random test coverage,
+  and how many samples it takes to see every category at least once.
+
+  wrote examples/output\coupon_collector.svg
