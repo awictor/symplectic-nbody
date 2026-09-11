@@ -1,0 +1,34 @@
+Gaussian mixture model (EM): soft, probabilistic clustering
+
+  360 points, 3 clusters of unequal spread, 2-D
+
+  converged in 25 iterations, log-likelihood -1259.0
+
+  Recovered components (true means (2,2) sd .5, (8,8) sd 1.4, (2,8) sd .9):
+    mean ( 1.89, 8.04)  sd (0.80,0.80)  weight 0.33
+    mean ( 2.06, 2.01)  sd (0.48,0.46)  weight 0.33
+    mean ( 7.81, 7.90)  sd (1.53,1.24)  weight 0.34
+
+  EM climbs the log-likelihood monotonically (first / last 4 iterations):
+    iter  0: -2065.9
+    iter  1: -1642.4
+    iter  2: -1514.4
+    iter  3: -1496.8
+    iter 21: -1259.0
+    iter 22: -1259.0
+    iter 23: -1259.0
+    iter 24: -1259.0
+
+  BIC selects the number of components (lower is better):
+    k=1: BIC   3622.7  AIC   3607.2
+    k=2: BIC   2775.7  AIC   2740.7
+    k=3: BIC   2600.4  AIC   2546.0
+    k=4: BIC   2613.4  AIC   2539.6
+    k=5: BIC   2623.0  AIC   2529.8
+    BIC minimized at k=3 (true is 3)
+
+  Unlike k-means' hard nearest-centroid assignment, a mixture gives each point a
+  probability of belonging to each component, so clusters can differ in size, weight,
+  and spread -- and the likelihood lets BIC/AIC choose k in a principled way.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\gmm.svg

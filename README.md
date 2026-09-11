@@ -263,6 +263,7 @@ ruins a long non-symplectic integration.
 | `src/regression.py` | Linear & logistic regression: QR + gradient descent, R^2, accuracy, L2 |
 | `src/decision_tree.py` | CART decision-tree classifier: Gini/entropy splits, rules, feature importance |
 | `src/random_forest.py` | Random forest: bagged CART trees, feature subsampling, out-of-bag score |
+| `src/gmm.py` | Gaussian mixture by EM: soft clustering, log-sum-exp, AIC/BIC model selection |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -517,6 +518,7 @@ ruins a long non-symplectic integration.
 | `examples/regression_demo.py` | Linear + logistic fits + log-loss decay + the line & sigmoid figure |
 | `examples/decision_tree_demo.py` | CART on 3 blobs: learned rules, importances, depth-cap sweep + region figure |
 | `examples/random_forest_demo.py` | Forest vs overfit tree on noisy data: OOB score, importances + boundary figure |
+| `examples/gmm_demo.py` | EM on 3 unequal-spread clusters: recovered params, BIC curve + soft-responsibility figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6221,6 +6223,30 @@ held-out set needed. This module builds a bagged forest of the CART learner with
 sampling, majority-vote prediction, out-of-bag scoring, and averaged feature importances, verified
 to beat an overfit single tree on a noisy problem with its OOB estimate tracking true test error.
 Forests are the strong, low-tuning default for tabular data.
+
+## Gaussian mixtures & EM: soft, probabilistic clustering
+
+k-means assigns hard; a mixture assigns probabilities. `gmm.py`:
+
+```
+$ python examples/gmm_demo.py examples/output
+
+  360 points, 3 clusters of unequal spread; converged in 25 iterations
+  recovered: (2.06,2.01) sd 0.47, (7.81,7.90) sd ~1.4, (1.89,8.04) sd 0.80
+  log-likelihood monotone: -2065.9 -> -1259.0
+  BIC: k=1 3623, k=2 2776, k=3 2600 (min), k=4 2613  -> selects true k=3
+```
+
+A Gaussian mixture models the data as drawn from k Gaussians and asks, for each point, the
+probability it came from each -- a soft assignment that lets clusters differ in size, weight, and
+spread. Expectation-Maximization fits it: the **E-step** computes each point's responsibility
+(posterior over components) with parameters fixed, the **M-step** re-estimates each component as
+the responsibility-weighted mean, variance, and weight. Each round provably cannot decrease the
+log-likelihood -- that monotone climb is the correctness check -- and EM converges to a local
+optimum, so it is run from several inits. This module fits a diagonal-covariance mixture with
+log-sum-exp numerics, gives soft responsibilities and hard labels, and reports AIC/BIC for choosing
+k, verified to recover known parameters, climb the log-likelihood every iteration, and let BIC pick
+the true number of components.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

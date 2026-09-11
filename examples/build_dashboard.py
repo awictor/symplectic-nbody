@@ -305,6 +305,7 @@ def main():
     import regression_demo
     import decision_tree_demo
     import random_forest_demo
+    import gmm_demo
 
     import plot_orbits
 
@@ -579,6 +580,7 @@ def main():
     regression_txt = run("regression_demo", regression_demo.main, True)
     decision_tree_txt = run("decision_tree_demo", decision_tree_demo.main, True)
     random_forest_txt = run("random_forest_demo", random_forest_demo.main, True)
+    gmm_txt = run("gmm_demo", gmm_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3654,6 +3656,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("random_forest.svg"), "the jagged single-tree boundary beside the smoother forest boundary on the same noisy data")
             + f'<div class="card">{pre(random_forest_txt)}</div>'
+            + '</div>'),
+        section(
+            "Gaussian mixtures & EM: soft, probabilistic clustering",
+            "k-means assigns each point hard to its nearest centroid; a Gaussian mixture instead "
+            "models the data as drawn from k Gaussians and asks, for each point, the PROBABILITY it "
+            "came from each -- a soft assignment that lets clusters differ in size, weight, and "
+            "spread, and that comes with a likelihood. The fit is Expectation-Maximization: the "
+            "E-step computes each point's responsibility (posterior over components) with the "
+            "parameters fixed, and the M-step re-estimates each component as the "
+            "responsibility-weighted mean, variance, and weight of the data. Each round provably "
+            "cannot decrease the log-likelihood -- that monotone climb is the standard correctness "
+            "check -- and EM converges to a local optimum, so it is run from several inits and the "
+            "best kept. This module fits a diagonal-covariance mixture in any dimension with "
+            "log-sum-exp numerics, gives soft responsibilities and hard labels, and reports AIC/BIC "
+            "for choosing k -- verified to recover known mixture parameters, climb the "
+            "log-likelihood every iteration, and let BIC select the true number of components.",
+            '<div class="grid">'
+            + svg_card(out("gmm.svg"), "points tinted by their soft responsibilities with the fitted 2-sigma component ellipses, and the BIC curve dipping at the true k")
+            + f'<div class="card">{pre(gmm_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
