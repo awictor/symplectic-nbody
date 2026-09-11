@@ -317,6 +317,7 @@ def main():
     import naive_bayes_demo
     import knn_demo
     import gradient_boosting_demo
+    import spectral_clustering_demo
 
     import plot_orbits
 
@@ -603,6 +604,7 @@ def main():
     naive_bayes_txt = run("naive_bayes_demo", naive_bayes_demo.main, True)
     knn_txt = run("knn_demo", knn_demo.main, True)
     gradient_boosting_txt = run("gradient_boosting_demo", gradient_boosting_demo.main, True)
+    spectral_txt = run("spectral_clustering_demo", spectral_clustering_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3915,6 +3917,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("gradient_boosting.svg"), "the regression fit sharpening from 1 to 120 trees over the noisy data, beside the training loss falling monotonically on a log scale")
             + f'<div class="card">{pre(gradient_boosting_txt)}</div>'
+            + '</div>'),
+        section(
+            "Spectral clustering: cutting a graph by its Laplacian",
+            "k-means splits space by distance to a centroid, so it fails on non-convex shapes -- "
+            "concentric rings, interlocking moons. Spectral clustering escapes that by working on a "
+            "GRAPH: connect nearby points with weighted edges, then cut the graph into pieces dense "
+            "inside and sparse between. Remarkably, that combinatorial cut is solved (relaxed) by "
+            "linear algebra -- the eigenvectors of the graph LAPLACIAN. Build a Gaussian affinity "
+            "matrix, form the normalized Laplacian L = I - D^-1/2 W D^-1/2, take the eigenvectors of "
+            "its k smallest eigenvalues (the number near zero equals the number of connected "
+            "components), embed each point by its coordinates there, and run k-means in that space "
+            "-- where the tangled shapes become tight, linearly separable blobs. This module builds "
+            "the affinity graph and Laplacians, extracts the low eigenvectors by reusing a symmetric "
+            "eigensolver on cI - L (turning smallest into largest), and clusters the embedding, "
+            "verified to separate concentric rings and two moons that k-means cannot, and that the "
+            "Laplacian's zero-eigenvalue multiplicity counts the graph's connected components. Built "
+            "on the eigen and k-means modules.",
+            '<div class="grid">'
+            + svg_card(out("spectral_clustering.svg"), "two concentric rings correctly split by spectral clustering, beside the two-eigenvector embedding in which the tangled rings become separable point clouds")
+            + f'<div class="card">{pre(spectral_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

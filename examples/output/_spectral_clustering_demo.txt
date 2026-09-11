@@ -1,0 +1,18 @@
+Spectral clustering: cutting a graph by its Laplacian eigenvectors
+
+  44 points on two concentric rings (inner radius 1, outer 3)
+
+  spectral clustering separates the rings: True
+  plain k-means separates the rings:       False  (it can't -- centroids can't wrap a ring)
+
+  Laplacian's smallest eigenvalues: [0.0, 0.0007]
+  Two near-zero values => two clusters; the theorem: zero-eigenvalue multiplicity
+  equals the number of connected components of the affinity graph.
+
+  In the 2-eigenvector embedding the rings collapse to two tight point clouds --
+  k-means in that space is trivial. That is the whole trick: solve a hard geometric
+  clustering by an easy one after a spectral change of coordinates.
+
+  Sanity check: 3 far-apart blobs -> 3 graph components (and 3 zero Laplacian eigenvalues).
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\spectral_clustering.svg

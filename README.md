@@ -275,6 +275,7 @@ ruins a long non-symplectic integration.
 | `src/naive_bayes.py` | Naive Bayes: Gaussian & multinomial, log-space, Laplace smoothing, class posteriors |
 | `src/knn.py` | k-nearest-neighbours: classify & regress, uniform/distance weights, standardize, LOO CV |
 | `src/gradient_boosting.py` | Gradient boosting: sequential regression trees, squared-error & log-loss, shrinkage |
+| `src/spectral_clustering.py` | Spectral clustering: affinity graph, Laplacian eigenvectors, non-convex shapes |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -541,6 +542,7 @@ ruins a long non-symplectic integration.
 | `examples/naive_bayes_demo.py` | Gaussian decision regions + multinomial spam filter with per-word log-odds figure |
 | `examples/knn_demo.py` | Decision boundary jagged at k=1 vs smooth LOO-selected k, regression on a noisy sine |
 | `examples/gradient_boosting_demo.py` | Fit sharpening from 1 to 120 trees + loss curve, learning-rate/n-trees trade |
+| `examples/spectral_clustering_demo.py` | Concentric rings split correctly + the eigenvector embedding that untangles them |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6535,6 +6537,30 @@ classification over self-contained regression trees with staged predictions, ver
 loss decreases monotonically, the ensemble beats a single tree by ~250x on a noisy target, a smaller
 learning rate needs more trees, and it separates a circular class boundary. The method that wins
 most tabular-data competitions.
+
+## Spectral clustering: cutting a graph by its Laplacian
+
+Cluster non-convex shapes by an eigen-embedding, then k-means. `spectral_clustering.py`:
+
+```
+$ python examples/spectral_clustering_demo.py examples/output
+
+  44 points on two concentric rings
+  spectral clustering separates the rings: True
+  plain k-means separates the rings:       False (centroids can't wrap a ring)
+  Laplacian's smallest eigenvalues: [0.0, 0.0007]  -> two clusters
+  3 far-apart blobs -> 3 graph components, 3 zero eigenvalues
+```
+
+k-means splits space by distance to a centroid, so it fails on concentric rings or interlocking
+moons. Spectral clustering works on a graph instead: build a Gaussian affinity matrix, form the
+normalized Laplacian `L = I - D^-1/2 W D^-1/2`, take the eigenvectors of its `k` smallest
+eigenvalues (the number near zero equals the number of connected components), embed each point by
+its coordinates there, and run k-means -- where the tangled shapes become tight, separable blobs.
+This module builds the affinity graph and Laplacians, extracts the low eigenvectors by reusing a
+symmetric eigensolver on `cI - L` (turning smallest into largest), and clusters the embedding,
+verified to separate concentric rings and two moons that k-means cannot, and that the Laplacian's
+zero-eigenvalue multiplicity counts the graph's connected components.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
