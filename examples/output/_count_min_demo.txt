@@ -1,0 +1,24 @@
+Count-Min sketch: 2815 distinct items counted in a 5 x 2719 grid (13595 counters)
+
+      item    true  estimate  error
+         A    5956      5956      0
+         B    3565      3567      2
+         C    2040      2040      0
+
+  never underestimates: 0 of 2815 items fell below the truth
+  error bound e/w * total = 20.0; max observed error = 6
+
+  Wider tables mean smaller error (fixed depth 4, 20k-item stream):
+     width  counters  max error
+       128       512         87
+       256      1024         48
+       512      2048         23
+      1024      4096         15
+      2048      8192          9
+      4096     16384          7
+
+  It never undercounts (collisions can only inflate a counter, and the query takes
+  the min of the d rows), overshoots by a bounded amount, and merges by addition --
+  so counting is distributed. Powers network flow monitors and n-gram frequency tables.
+
+  wrote examples/output\count_min.svg

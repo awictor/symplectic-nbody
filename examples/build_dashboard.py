@@ -284,6 +284,7 @@ def main():
     import floyd_warshall_demo
     import misra_gries_demo
     import reservoir_demo
+    import count_min_demo
 
     import plot_orbits
 
@@ -537,6 +538,7 @@ def main():
     floyd_warshall_txt = run("floyd_warshall_demo", floyd_warshall_demo.main, True)
     misra_gries_txt = run("misra_gries_demo", misra_gries_demo.main, True)
     reservoir_txt = run("reservoir_demo", reservoir_demo.main, True)
+    count_min_txt = run("count_min_demo", count_min_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3260,6 +3262,23 @@ def main():
             '<div class="grid">'
             + svg_card(out("reservoir.svg"), "the flat selection-frequency histogram proving uniformity, and weighted sampling tracking the weights")
             + f'<div class="card">{pre(reservoir_txt)}</div>'
+            + '</div>'),
+        section(
+            "Count-Min sketch: frequency estimates in sublinear memory",
+            "How often has each item appeared, when a counter per distinct key is impossible? "
+            "The Count-Min sketch estimates every item's count from a fixed d x w grid of "
+            "counters with d hash functions. Add an item by incrementing one counter per row; "
+            "query it by taking the MINIMUM of its d counters -- since collisions only inflate a "
+            "counter, the smallest is the tightest overestimate and the true count is never "
+            "above it. With width e/epsilon and depth ln(1/delta), the estimate exceeds the "
+            "truth by more than epsilon * total with probability at most delta, so a few "
+            "kilobytes track a stream of any size. Counts combine additively, so two sketches "
+            "merge by element-wise addition -- counting is distributed. This module builds the "
+            "sketch, queries and merges, and verifies it never underestimates and stays within "
+            "the error bound across many skewed streams.",
+            '<div class="grid">'
+            + svg_card(out("count_min.svg"), "estimate-vs-true points all on or above the diagonal (never under), and the max error shrinking as the table widens")
+            + f'<div class="card">{pre(count_min_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

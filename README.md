@@ -242,6 +242,7 @@ ruins a long non-symplectic integration.
 | `src/floyd_warshall.py` | Floyd-Warshall all-pairs shortest paths: negative edges, cycle detection, closure |
 | `src/misra_gries.py` | Misra-Gries frequent items: heavy hitters over n/k, majority vote, k-1 counters |
 | `src/reservoir.py` | Reservoir sampling: uniform k-sample in one pass, weighted variant, streaming |
+| `src/count_min.py` | Count-Min sketch: frequency estimates in sublinear memory, never underestimates |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -475,6 +476,7 @@ ruins a long non-symplectic integration.
 | `examples/floyd_warshall_demo.py` | Distance matrix vs Dijkstra + path/cycle/closure + the matrix heatmap |
 | `examples/misra_gries_demo.py` | Heavy hitters vs exact + majority + the approx-count & memory figure |
 | `examples/reservoir_demo.py` | Uniformity chi-square + weighted proportions + the frequency & weight figure |
+| `examples/count_min_demo.py` | Estimate vs true + error-vs-width + the scatter & error-decay figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5703,6 +5705,30 @@ variant gives each item a key `u^(1/w)` and keeps the largest, sampling in propo
 This module implements both plus a streaming reservoir object, and the tests verify the
 uniformity with a chi-square test over tens of thousands of runs. It powers log sampling, A/B
 bucketing, and random selection from data too big to hold.
+
+## Count-Min sketch: frequency estimates in sublinear memory
+
+Every item's count in a few kilobytes. `count_min.py`:
+
+```
+$ python examples/count_min_demo.py examples/output
+
+      item    true  estimate  error
+         A    5956      5956      0
+         B    3565      3567      2
+  never underestimates: 0 of 2815 items fell below the truth
+```
+
+How often has each item appeared, when a counter per distinct key is impossible? The Count-Min
+sketch estimates every item's count from a fixed `d x w` grid with d hash functions: add by
+incrementing one counter per row, query by taking the MINIMUM of the d counters -- since
+collisions only inflate a counter, the smallest is the tightest overestimate and the true count
+is never above it. With width `e/epsilon` and depth `ln(1/delta)` the estimate exceeds the truth
+by more than `epsilon * total` with probability at most `delta`, so a few kilobytes track a
+stream of any size, and two sketches merge by element-wise addition (counting is distributed).
+This module builds the sketch, queries, merges, and finds heavy hitters, and the tests verify it
+*never* underestimates and stays within the error bound across many skewed streams. Powers
+network flow monitors, query optimizers, and n-gram frequency tables.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
