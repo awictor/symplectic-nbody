@@ -1,0 +1,31 @@
+Wavelet tree: rank, select, quantile, and range-count in O(log sigma)
+
+  sequence: [3, 1, 4, 1, 5, 2, 6, 5, 3, 5, 0, 7, 2, 6, 4]
+  alphabet range: [0, 7]
+
+  RANK -- how many times a value appears in a prefix:
+    rank(5, 15) = 3   (brute 3)
+    rank(5, 8) = 2   (brute 2)
+    rank(2, 15) = 2   (brute 2)
+
+  SELECT -- position of the j-th occurrence (0-indexed):
+    select(5, 0) = 4   (seq[4] = 5)
+    select(5, 2) = 9   (seq[9] = 5)
+    select(3, 1) = 8   (seq[8] = 3)
+
+  QUANTILE -- k-th smallest value in a range (range median and friends):
+    quantile([0,15), k=7) = 4   (sorted slice [7] = 4)
+    quantile([2,9), k=0) = 1   (sorted slice [0] = 1)
+    quantile([2,9), k=6) = 6   (sorted slice [6] = 6)
+    quantile([4,11), k=3) = 5   (sorted slice [3] = 5)
+
+  RANGE_COUNT -- values in a positional range that fall in a value window:
+    range_count([0,15), 3..5) = 7   (brute 7)
+    range_count([0,8), 0..2) = 3   (brute 3)
+    range_count([5,15), 4..7) = 6   (brute 6)
+
+  The tree splits the alphabet at its midpoint level by level; each node stores one bit
+  per element (upper half = 1, lower half = 0). Every query walks the O(log sigma)-deep
+  tree, using bit-rank to map an index into the correct child -- succinct and fast.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\wavelet_tree.svg

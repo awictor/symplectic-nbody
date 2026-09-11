@@ -319,6 +319,7 @@ ruins a long non-symplectic integration.
 | `src/cma_es.py` | CMA-ES derivative-free optimizer with full covariance adaptation (Jacobi eigensolver) |
 | `src/lbfgs.py` | L-BFGS limited-memory quasi-Newton optimizer (two-loop recursion, Wolfe line search) |
 | `src/tsne.py` | t-SNE nonlinear dimensionality reduction (perplexity calibration, KL-gradient descent) |
+| `src/wavelet_tree.py` | Wavelet tree: rank/select/quantile/range-count over a sequence in O(log sigma) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -629,6 +630,7 @@ ruins a long non-symplectic integration.
 | `examples/cma_es_demo.py` | CMA-ES convergence on sphere/Rosenbrock/Rastrigin/ellipsoid vs random search |
 | `examples/lbfgs_demo.py` | L-BFGS vs gradient descent on an ill-conditioned quadratic + a logistic-regression fit |
 | `examples/tsne_demo.py` | 8-D clusters embedded into a clear 2-D map, with the KL divergence falling over training |
+| `examples/wavelet_tree_demo.py` | Rank/select/quantile/range-count queries + the recursive alphabet-partition tree |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7597,6 +7599,27 @@ problem, letting clusters breathe apart. This module implements perplexity calib
 joint P, the Student-t affinities, and the KL-gradient descent, verified that P is a valid symmetric
 distribution, that the perplexity search hits its target, that KL falls over training, that separated
 clusters map to separated 2-D groups, and that trustworthiness is high.
+
+## Wavelet trees: rank, select, and quantile over a sequence
+
+A succinct structure answering a whole family of queries in O(log sigma). `wavelet_tree.py`:
+
+```
+$ python examples/wavelet_tree_demo.py examples/output
+
+  rank(5, 15)   = 3     (occurrences of 5 in the first 15 positions)
+  select(5, 2)  = 9     (position of the 3rd occurrence of 5)
+  quantile([4,11), k=3) = 5   (4th-smallest value in that range)
+  range_count([0,15), 3..5) = 7   (values in 3..5 across the range)
+```
+
+A wavelet tree recursively splits the alphabet at its midpoint, storing one bit per element per level
+(upper half = 1, lower half = 0), so a value is encoded by its root-to-leaf bit path. Every query
+walks the O(log sigma)-deep tree using bit-rank to map an index into the right child, yielding rank,
+select, quantile (k-th smallest in a range -- a range median generalization), and range-count -- in
+essentially the space of the sequence. This module implements all five, verified exhaustively against
+brute force (access, rank, select, quantile, and range-count) across hundreds of random sequences and
+queries.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

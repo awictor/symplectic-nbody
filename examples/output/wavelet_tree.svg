@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="460" viewBox="0 0 760 460" font-family="monospace">
+<rect width="760" height="460" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="18">Wavelet tree: recursive alphabet partition with per-node bit vectors</text>
+<text x="20" y="47" fill="#8b949e" font-size="12">each node shows its value range and bits (0 = lower half / goes left, 1 = upper half / right)</text>
+<text x="380" y="80" fill="#4dabf7" font-size="12" text-anchor="middle" font-weight="bold">[0,7]</text>
+<text x="380" y="95" fill="#8b949e" font-size="10" text-anchor="middle">001010110101011</text>
+<text x="190" y="172" fill="#4dabf7" font-size="12" text-anchor="middle" font-weight="bold">[0,3]</text>
+<text x="190" y="188" fill="#8b949e" font-size="10" text-anchor="middle">1001101</text>
+<text x="570" y="172" fill="#4dabf7" font-size="12" text-anchor="middle" font-weight="bold">[4,7]</text>
+<text x="570" y="188" fill="#8b949e" font-size="10" text-anchor="middle">00100110</text>
+<text x="95" y="265" fill="#4dabf7" font-size="12" text-anchor="middle" font-weight="bold">[0,1]</text>
+<text x="95" y="280" fill="#8b949e" font-size="10" text-anchor="middle">110</text>
+<text x="285" y="265" fill="#4dabf7" font-size="12" text-anchor="middle" font-weight="bold">[2,3]</text>
+<text x="285" y="280" fill="#8b949e" font-size="10" text-anchor="middle">1010</text>
+<text x="475" y="265" fill="#4dabf7" font-size="12" text-anchor="middle" font-weight="bold">[4,5]</text>
+<text x="475" y="280" fill="#8b949e" font-size="10" text-anchor="middle">01110</text>
+<text x="665" y="265" fill="#4dabf7" font-size="12" text-anchor="middle" font-weight="bold">[6,7]</text>
+<text x="665" y="280" fill="#8b949e" font-size="10" text-anchor="middle">010</text>
+<text x="48" y="358" fill="#ffd43b" font-size="12" text-anchor="middle" font-weight="bold">=0</text>
+<text x="48" y="372" fill="#06d6a0" font-size="10" text-anchor="middle">x1</text>
+<text x="142" y="358" fill="#ffd43b" font-size="12" text-anchor="middle" font-weight="bold">=1</text>
+<text x="142" y="372" fill="#06d6a0" font-size="10" text-anchor="middle">x2</text>
+<text x="238" y="358" fill="#ffd43b" font-size="12" text-anchor="middle" font-weight="bold">=2</text>
+<text x="238" y="372" fill="#06d6a0" font-size="10" text-anchor="middle">x2</text>
+<text x="332" y="358" fill="#ffd43b" font-size="12" text-anchor="middle" font-weight="bold">=3</text>
+<text x="332" y="372" fill="#06d6a0" font-size="10" text-anchor="middle">x2</text>
+<text x="428" y="358" fill="#ffd43b" font-size="12" text-anchor="middle" font-weight="bold">=4</text>
+<text x="428" y="372" fill="#06d6a0" font-size="10" text-anchor="middle">x2</text>
+<text x="522" y="358" fill="#ffd43b" font-size="12" text-anchor="middle" font-weight="bold">=5</text>
+<text x="522" y="372" fill="#06d6a0" font-size="10" text-anchor="middle">x3</text>
+<text x="618" y="358" fill="#ffd43b" font-size="12" text-anchor="middle" font-weight="bold">=6</text>
+<text x="618" y="372" fill="#06d6a0" font-size="10" text-anchor="middle">x2</text>
+<text x="712" y="358" fill="#ffd43b" font-size="12" text-anchor="middle" font-weight="bold">=7</text>
+<text x="712" y="372" fill="#06d6a0" font-size="10" text-anchor="middle">x1</text>
+</svg>

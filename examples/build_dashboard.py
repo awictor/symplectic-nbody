@@ -361,6 +361,7 @@ def main():
     import cma_es_demo
     import lbfgs_demo
     import tsne_demo
+    import wavelet_tree_demo
 
     import plot_orbits
 
@@ -691,6 +692,7 @@ def main():
     cma_es_txt = run("cma_es_demo", cma_es_demo.main, True)
     lbfgs_txt = run("lbfgs_demo", lbfgs_demo.main, True)
     tsne_txt = run("tsne_demo", tsne_demo.main, True)
+    wavelet_tree_txt = run("wavelet_tree_demo", wavelet_tree_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4928,6 +4930,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("tsne.svg"), "left: the 2-D t-SNE map of 8-D clusters, each true cluster its own tight island of colour; right: the KL divergence falling as the embedding organizes itself")
             + f'<div class="card">{pre(tsne_txt)}</div>'
+            + '</div>'),
+        section(
+            "Wavelet trees: rank, select, and quantile over a sequence",
+            "A WAVELET TREE is a succinct data structure that turns a sequence over an alphabet into a "
+            "balanced tree of bit vectors, answering a remarkable range of queries in O(log sigma) "
+            "time with essentially the space of the sequence itself -- the machinery behind "
+            "FM-indexes, compressed suffix arrays, and range-search structures in geometry and "
+            "bioinformatics. It recursively partitions the ALPHABET: at each node the value range is "
+            "split at its midpoint, and a bit vector marks whether each element falls in the upper "
+            "half (1) or lower half (0); elements going left and right form the children's "
+            "subsequences, which recurse on their half of the alphabet, so a value is encoded by its "
+            "root-to-leaf bit path. Every query walks that O(log sigma)-deep tree using RANK on the "
+            "bit vectors to map an index into the correct child. From this one structure fall RANK "
+            "(occurrences of a value in a prefix), SELECT (position of the j-th occurrence, by "
+            "walking back up), QUANTILE (the k-th smallest value in a range -- a range-median "
+            "generalization array scans cannot do in sublinear time), and RANGE_COUNT (values in a "
+            "positional range that fall in a value window). This module builds a wavelet tree over "
+            "an integer sequence and implements all five, verified exhaustively against brute force: "
+            "access reproduces the sequence, rank matches a prefix count, select matches an "
+            "occurrence scan, quantile matches a sorted-slice lookup, and range-count matches a "
+            "filtered scan, across hundreds of random sequences and queries.",
+            '<div class="grid">'
+            + svg_card(out("wavelet_tree.svg"), "the wavelet tree's recursive alphabet partition: each node shows its value range and per-element bit vector, narrowing to single-value leaves at the bottom")
+            + f'<div class="card">{pre(wavelet_tree_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
