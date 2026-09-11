@@ -226,6 +226,7 @@ ruins a long non-symplectic integration.
 | `src/crc.py` | CRC-8/16/32: GF(2) polynomial division, frame check, matches zlib.crc32 |
 | `src/lz77.py` | LZ77: sliding-window dictionary coding, lossless round-trip, compression ratio |
 | `src/bloom.py` | Bloom filter: probabilistic membership, no false negatives, optimal m/k |
+| `src/hyperloglog.py` | HyperLogLog: distinct-count in fixed memory, error ~1.04/sqrt(m), mergeable |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -443,6 +444,7 @@ ruins a long non-symplectic integration.
 | `examples/crc_demo.py` | Check values + frame verify/corrupt + the frame layout & miss-probability figure |
 | `examples/lz77_demo.py` | Token stream + ratio-vs-repetition table + the stream & compression-ratio figure |
 | `examples/bloom_demo.py` | No-false-negative check + FP-rate table + the fill & optimal-k figure |
+| `examples/hyperloglog_demo.py` | Estimate-vs-true table + merge demo + the accuracy & error-band figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5301,6 +5303,30 @@ hashing (two FNV-1a hashes combined to simulate k) and computes the optimal para
 tests confirm zero false negatives, an observed false-positive rate matching theory, that the
 optimal k is a genuine minimum, and membership for ints, bytes, and tuples. Web caches, spell
 checkers, and databases use one as a fast pre-filter.
+
+## HyperLogLog: counting distinct items in kilobytes
+
+Estimate a billion distinct items in ~1.5 KB. `hyperloglog.py`:
+
+```
+$ python examples/hyperloglog_demo.py examples/output
+
+   true distinct    estimate   rel error
+             100          98     -0.0183
+           10000        9760     -0.0240
+          500000      496746     -0.0065
+```
+
+Exact distinct-counting means storing every item; HyperLogLog estimates the cardinality to a
+percent or two in fixed tiny memory. Hash each item; the longest run of leading zeros seen hints
+at the count (k zeros suggests ~2^k items). To tame the noise, the first p bits pick one of
+`m = 2^p` registers each holding its max leading-zero rank, and the harmonic mean across
+registers gives `E = alpha_m m^2 / sum 2^-M[j]` with relative error `~1.04/sqrt(m)`. Small counts
+get a linear-counting correction, and two sketches merge by register-wise max, so counts are
+trivially distributed. This module uses a splitmix64-finalized hash (plain FNV-1a leaves too many
+registers unused), the small/large-range corrections, and the merge; the tests confirm the
+estimate lands within a few standard errors across four orders of magnitude, duplicates do not
+inflate the count, and a merge recovers the union. Redis, Presto, and BigQuery all ship it.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,17 @@
+HyperLogLog: distinct-count with 4096 registers = 4096 bytes, standard error 1.62%
+
+   true distinct    estimate   rel error
+             100          98     -0.0183
+            1000         998     -0.0016
+           10000        9760     -0.0240
+          100000       99707     -0.0029
+          500000      496746     -0.0065
+
+  Memory stays fixed at ~4096 bytes whether you count 100 or 500,000 items --
+  exact counting would need a set holding all of them. A billion distinct items
+  fit in ~1.5 KB. Sketches merge by register-wise max, so counts are distributed.
+
+  merge: |A|~59700 (true 60000), |B|~59599 (true 60000)
+         |A union B|~98472 (true 100000) -- counted without a shared list.
+
+  wrote examples/output\hyperloglog.svg

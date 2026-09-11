@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.02       12.02      0.8x
-   400          36.84       37.28      1.0x
-   800         146.71      114.25      1.3x
-  1600         622.46      360.90      1.7x
-  3200        2574.19      977.26      2.6x
+   200           9.17       11.90      0.8x
+   400          35.14       37.40      0.9x
+   800         140.03      127.17      1.1x
+  1600         698.99      382.99      1.8x
+  3200        2653.09     1332.64      2.0x
 
-empirical scaling exponent  direct ~ N^2.04   barnes-hut ~ N^1.60
+empirical scaling exponent  direct ~ N^2.07   barnes-hut ~ N^1.70
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -198954,6 +198954,66 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   expensive lookup for anything the filter says is definitely not there.
 
   wrote examples/output\bloom.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>HyperLogLog: counting distinct items in kilobytes</h2>
+    <p class="blurb">How many DISTINCT items in a stream, when exact counting means storing every one? HyperLogLog estimates the cardinality to a percent or two in fixed tiny memory -- a billion distinct items in ~1.5 KB. Hash each item; the longest run of leading zeros seen hints at the count (k zeros suggests ~2^k items). To tame the noise, the first p bits pick one of m = 2^p registers each holding its max leading-zero rank, and the harmonic mean across registers gives E = alpha_m m^2 / sum 2^-M[j] with relative error ~1.04/sqrt(m). Small counts get a linear-counting correction, and two sketches merge by register-wise max, so counts are trivially distributed -- which is why Redis, Presto, and BigQuery all ship it. Verified against true cardinalities across four orders of magnitude.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="390" viewBox="0 0 760 390" font-family="monospace">
+<rect width="760" height="390" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">HyperLogLog: distinct count in fixed tiny memory</text>
+<text x="20" y="44" fill="#8b949e" font-size="12">estimate tracks the truth over 4 orders of magnitude (left); relative error stays near 1.04/sqrt(m) (right)</text>
+<line x1="60" y1="335" x2="360" y2="335" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="60" y1="335" x2="60" y2="62" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="60.0" y1="335.0" x2="360.0" y2="62.0" stroke="#8b949e" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="360.0" y="56.0" fill="#8b949e" font-size="9" text-anchor="end">exact</text>
+<polyline points="60.0,334.6 101.2,297.2 146.3,256.2 187.4,219.5 232.6,178.4 273.7,140.1 318.8,99.8 360.0,61.7" fill="none" stroke="#4dabf7" stroke-width="2"/>
+<circle cx="60.0" cy="334.6" r="3" fill="#4dabf7"/>
+<circle cx="101.2" cy="297.2" r="3" fill="#4dabf7"/>
+<circle cx="146.3" cy="256.2" r="3" fill="#4dabf7"/>
+<circle cx="187.4" cy="219.5" r="3" fill="#4dabf7"/>
+<circle cx="232.6" cy="178.4" r="3" fill="#4dabf7"/>
+<circle cx="273.7" cy="140.1" r="3" fill="#4dabf7"/>
+<circle cx="318.8" cy="99.8" r="3" fill="#4dabf7"/>
+<circle cx="360.0" cy="61.7" r="3" fill="#4dabf7"/>
+<text x="60.0" y="350.0" fill="#8b949e" font-size="8" text-anchor="middle">100</text>
+<text x="232.6" y="350.0" fill="#8b949e" font-size="8" text-anchor="middle">10,000</text>
+<text x="318.8" y="350.0" fill="#8b949e" font-size="8" text-anchor="middle">100,000</text>
+<text x="210.0" y="365.0" fill="#8b949e" font-size="10" text-anchor="middle">true distinct (log)</text>
+<text x="64.0" y="60.0" fill="#8b949e" font-size="9">estimate (log)</text>
+<rect x="425" y="153.0" width="305.0" height="91.0" fill="#264d3a" opacity="0.6"/>
+<rect x="425" y="107.5" width="305.0" height="182.0" fill="#1c2b22" opacity="0.6"/>
+<line x1="425" y1="198.5" x2="730" y2="198.5" stroke="#8b949e" stroke-width="1"/>
+<line x1="425" y1="62" x2="425" y2="335" stroke="#8b949e" stroke-width="1.2"/>
+<polyline points="425.0,163.8 468.6,171.1 512.1,170.9 555.7,235.0 599.3,234.9 642.9,163.5 686.4,224.7 730.0,176.7" fill="none" stroke="#ffd43b" stroke-width="2"/>
+<circle cx="425.0" cy="163.8" r="2.5" fill="#ffd43b"/>
+<circle cx="468.6" cy="171.1" r="2.5" fill="#ffd43b"/>
+<circle cx="512.1" cy="170.9" r="2.5" fill="#ffd43b"/>
+<circle cx="555.7" cy="235.0" r="2.5" fill="#ffd43b"/>
+<circle cx="599.3" cy="234.9" r="2.5" fill="#ffd43b"/>
+<circle cx="642.9" cy="163.5" r="2.5" fill="#ffd43b"/>
+<circle cx="686.4" cy="224.7" r="2.5" fill="#ffd43b"/>
+<circle cx="730.0" cy="176.7" r="2.5" fill="#ffd43b"/>
+<text x="728.0" y="150.0" fill="#06d6a0" font-size="9" text-anchor="end">+1 SE (1.6%)</text>
+<text x="728.0" y="254.0" fill="#06d6a0" font-size="9" text-anchor="end">-1 SE</text>
+<text x="577.5" y="353.0" fill="#8b949e" font-size="10" text-anchor="middle">cardinality sample -> relative error</text>
+</svg><figcaption>the estimate hugging the exact diagonal over four orders of magnitude, and the relative error staying within the standard-error band</figcaption></figure><div class="card"><pre>HyperLogLog: distinct-count with 4096 registers = 4096 bytes, standard error 1.62%
+
+   true distinct    estimate   rel error
+             100          98     -0.0183
+            1000         998     -0.0016
+           10000        9760     -0.0240
+          100000       99707     -0.0029
+          500000      496746     -0.0065
+
+  Memory stays fixed at ~4096 bytes whether you count 100 or 500,000 items --
+  exact counting would need a set holding all of them. A billion distinct items
+  fit in ~1.5 KB. Sketches merge by register-wise max, so counts are distributed.
+
+  merge: |A|~59700 (true 60000), |B|~59599 (true 60000)
+         |A union B|~98472 (true 100000) -- counted without a shared list.
+
+  wrote examples/output\hyperloglog.svg</pre></div></div>
   </section>
 
   <section>

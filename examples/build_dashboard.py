@@ -268,6 +268,7 @@ def main():
     import crc_demo
     import lz77_demo
     import bloom_demo
+    import hyperloglog_demo
 
     import plot_orbits
 
@@ -505,6 +506,7 @@ def main():
     crc_txt = run("crc_demo", crc_demo.main, True)
     lz77_txt = run("lz77_demo", lz77_demo.main, True)
     bloom_txt = run("bloom_demo", bloom_demo.main, True)
+    hyperloglog_txt = run("hyperloglog_demo", hyperloglog_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2966,6 +2968,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("bloom.svg"), "the false-positive rate rising as the filter fills (observed tracking theory) and the optimal number of hash functions")
             + f'<div class="card">{pre(bloom_txt)}</div>'
+            + '</div>'),
+        section(
+            "HyperLogLog: counting distinct items in kilobytes",
+            "How many DISTINCT items in a stream, when exact counting means storing every one? "
+            "HyperLogLog estimates the cardinality to a percent or two in fixed tiny memory -- a "
+            "billion distinct items in ~1.5 KB. Hash each item; the longest run of leading zeros "
+            "seen hints at the count (k zeros suggests ~2^k items). To tame the noise, the first "
+            "p bits pick one of m = 2^p registers each holding its max leading-zero rank, and "
+            "the harmonic mean across registers gives E = alpha_m m^2 / sum 2^-M[j] with "
+            "relative error ~1.04/sqrt(m). Small counts get a linear-counting correction, and "
+            "two sketches merge by register-wise max, so counts are trivially distributed -- "
+            "which is why Redis, Presto, and BigQuery all ship it. Verified against true "
+            "cardinalities across four orders of magnitude.",
+            '<div class="grid">'
+            + svg_card(out("hyperloglog.svg"), "the estimate hugging the exact diagonal over four orders of magnitude, and the relative error staying within the standard-error band")
+            + f'<div class="card">{pre(hyperloglog_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
