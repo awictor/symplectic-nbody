@@ -1,0 +1,24 @@
+Line-segment intersection via the orientation predicate
+
+                            case  intersect?  crossing point
+               proper X-crossing        True  (2.0, 2.0)
+      T-touch (endpoint on edge)        True  (2.0, 0.0)
+                 shared endpoint        True  (2.0, 2.0)
+               collinear overlap        True  -- (none / not a single point)
+                 parallel, apart       False  -- (none / not a single point)
+                        disjoint       False  -- (none / not a single point)
+
+  Simple-polygon test (no non-adjacent edges cross -- the precondition for area/PIP):
+                            square: simple = True
+                   convex pentagon: simple = True
+                arrow (non-convex): simple = True
+      figure-eight (self-crossing): simple = False
+
+  A 4x6 grid of horizontal/vertical segments has 24 crossings (4*6).
+
+  orient(a,b,c) = sign of the cross product tells which side of line ab point c is on.
+  Two segments properly cross iff each straddles the other's line (opposite orientations
+  at its endpoints); zero orientations mean collinear/touching, settled by a bounding-box
+  check. No slopes, so vertical segments are no trouble -- the robust geometric predicate.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\segment_intersection.svg

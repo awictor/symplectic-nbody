@@ -296,6 +296,7 @@ ruins a long non-symplectic integration.
 | `src/segment_tree.py` | Segment tree + lazy propagation: O(log n) range sum/min/max query and range-add |
 | `src/convex_hull.py` | Convex hull (Andrew's monotone chain): area, perimeter, point-in-hull, diameter |
 | `src/closest_pair.py` | Closest pair of points: O(n log n) divide-and-conquer with the strip merge |
+| `src/segment_intersection.py` | Segment intersection: orientation predicate, crossing point, simple-polygon test |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -583,6 +584,7 @@ ruins a long non-symplectic integration.
 | `examples/segment_tree_demo.py` | Range sum/min/max + lazy range-add, O(log n) full-array update, tree figure |
 | `examples/convex_hull_demo.py` | Hull of a scatter with area/perimeter/diameter + outlined-boundary figure |
 | `examples/closest_pair_demo.py` | Closest pair highlighted, D&C-vs-brute scaling, agreement across sizes |
+| `examples/segment_intersection_demo.py` | Crossing/touch/parallel classification + simple-vs-self-crossing polygons |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7046,6 +7048,27 @@ divide-and-conquer closest pair with the strip merge plus the brute-force refere
 the two agree exactly on random sets of many sizes, that it finds a planted near-coincident pair,
 handles duplicate points (distance 0), collinear and grid inputs, small `n`, and survives a crowded
 strip that would trap a naive merge.
+
+## Line-segment intersection: do two segments cross, and where?
+
+The geometric atom, via the orientation predicate. `segment_intersection.py`:
+
+```
+$ python examples/segment_intersection_demo.py examples/output
+
+  X-crossing -> (2,2); T-touch -> (2,0); collinear overlap -> intersect, no single point
+  parallel/disjoint -> no intersection
+  square/pentagon/arrow simple; figure-eight self-intersecting; 5x5 grid = 25 crossings
+```
+
+Two segments properly cross when each straddles the other's line -- decided from the sign of a cross
+product (`orient(a,b,c)`: +1 CCW, -1 CW, 0 collinear), with no slopes so vertical segments are no
+trouble. Zero orientations mean collinear/touching, settled by a bounding-box check; the crossing
+point comes from the 2x2 parametric system. From this atom the module builds the simple-polygon test
+(no non-adjacent edges cross -- the precondition for area and point-in-polygon) and pairwise
+intersection counting, verified on crossing, touching, collinear-overlap, parallel, and disjoint
+segments, that the intersection point is correct and lies on both segments, that a convex polygon is
+simple while a figure-eight is not, and that a 5x5 grid has exactly 25 crossings.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

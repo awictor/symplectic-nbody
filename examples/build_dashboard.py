@@ -338,6 +338,7 @@ def main():
     import segment_tree_demo
     import convex_hull_demo
     import closest_pair_demo
+    import segment_intersection_demo
 
     import plot_orbits
 
@@ -645,6 +646,7 @@ def main():
     segment_tree_txt = run("segment_tree_demo", segment_tree_demo.main, True)
     convex_hull_txt = run("convex_hull_demo", convex_hull_demo.main, True)
     closest_pair_txt = run("closest_pair_demo", closest_pair_demo.main, True)
+    segment_intersection_txt = run("segment_intersection_demo", segment_intersection_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4382,6 +4384,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("closest_pair.svg"), "a scatter of points with the single closest pair ringed and connected in yellow, its distance labelled")
             + f'<div class="card">{pre(closest_pair_txt)}</div>'
+            + '</div>'),
+        section(
+            "Line-segment intersection: do two segments cross, and where?",
+            "Deciding whether two segments intersect -- and finding the point -- is the atom of "
+            "computational geometry: collision detection, map overlays, clipping. The robust test "
+            "avoids slopes (which blow up for vertical lines) and uses the ORIENTATION of point "
+            "triples from the sign of a cross product: orient(a,b,c) is +1 counter-clockwise, -1 "
+            "clockwise, 0 collinear. Two segments PROPERLY cross when each straddles the other's "
+            "line (its endpoints have opposite orientations); the fiddly COLLINEAR/TOUCHING cases "
+            "give a zero orientation and are settled by an on-segment bounding-box check -- handling "
+            "them is what separates a toy from a usable predicate. The crossing point comes from the "
+            "2x2 parametric system. From this atom the module builds the SIMPLE-POLYGON test (no "
+            "non-adjacent edges cross, the correctness precondition for area and point-in-polygon) "
+            "and pairwise intersection counting, verified on crossing, touching, collinear-overlap, "
+            "parallel, and disjoint segments, that the intersection point is correct and lies on "
+            "both segments, that a convex polygon is simple while a figure-eight is not, and that a "
+            "5x5 grid has exactly 25 crossings.",
+            '<div class="grid">'
+            + svg_card(out("segment_intersection.svg"), "four polygons, the simple ones outlined green and the self-intersecting figure-eight red")
+            + f'<div class="card">{pre(segment_intersection_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
