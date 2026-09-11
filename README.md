@@ -207,6 +207,7 @@ ruins a long non-symplectic integration.
 | `src/cellular_automaton.py` | Elementary CA: rule table, evolution, Wolfram rules 30/90/110 |
 | `src/game_of_life.py` | Conway's Game of Life: B3/S23 update, still lifes, blinker, glider |
 | `src/reaction_diffusion.py` | Gray-Scott reaction-diffusion: Turing spots/stripes from a seed |
+| `src/boids.py` | Boids flocking: separation/alignment/cohesion, polarization order parameter |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -405,6 +406,7 @@ ruins a long non-symplectic integration.
 | `examples/cellular_automaton_demo.py` | Rule-table/class table + the rule-90/30/110 space-time figure |
 | `examples/game_of_life_demo.py` | Pattern table + glider ASCII animation & the phases/board figure |
 | `examples/reaction_diffusion_demo.py` | Growth table + ASCII field & the pattern-over-time figure |
+| `examples/boids_demo.py` | Polarization table + the scatter-to-flock & polarization-over-time figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4788,6 +4790,32 @@ ridges). Integrated with an explicit Euler step and a 5-point Laplacian. The tes
 uniform-field zero Laplacian, the bare-substrate steady state (no pattern), a seed introducing
 autocatalyst, a bounded pattern with real spatial contrast growing from the seed, and shape
 preservation.
+
+## Boids: flocking from three local rules
+
+A flock with no leader. `boids.py`:
+
+```
+$ python examples/boids_demo.py examples/output
+
+      step    polarization    mean spacing
+         0           0.146            7.90
+        30           0.282            9.04
+        80           0.337            8.28
+       200           0.727            8.54
+```
+
+Craig Reynolds' 1987 model: each "boid" steers by three rules that use only its nearby
+neighbours -- **separation** (avoid crowding), **alignment** (match average heading), and
+**cohesion** (steer toward average position). Sum those into an acceleration each step, limit
+speed, and a swarm of identical agents produces lifelike murmurations from a random scatter:
+the alignment order parameter (polarization, the magnitude of the mean unit heading) climbs
+from near 0 toward 1 while separation keeps the birds apart, all bottom-up with no flock-level
+rule anywhere. It is the model behind starling murmurations, sardine bait balls, and the
+crowds and creatures in films and games. The tests verify the random start is unaligned,
+parallel headings give polarization 1 and antiparallel 0, separation pushes crowded boids
+apart, alignment steers toward the neighbour heading, the step caps speed and wraps the
+toroidal box, and a full evolve raises polarization while holding the birds spaced.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

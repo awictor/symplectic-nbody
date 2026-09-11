@@ -249,6 +249,7 @@ def main():
     import cellular_automaton_demo
     import game_of_life_demo
     import reaction_diffusion_demo
+    import boids_demo
 
     import plot_orbits
 
@@ -467,6 +468,7 @@ def main():
     cellular_automaton_txt = run("cellular_automaton_demo", cellular_automaton_demo.main, True)
     game_of_life_txt = run("game_of_life_demo", game_of_life_demo.main, True)
     reaction_diffusion_txt = run("reaction_diffusion_demo", reaction_diffusion_demo.main, True)
+    boids_txt = run("boids_demo", boids_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2640,6 +2642,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("reaction_diffusion.svg"), "the autocatalyst field growing from a seed into standing Turing spots")
             + f'<div class="card">{pre(reaction_diffusion_txt)}</div>'
+            + '</div>'),
+        section(
+            "Boids: flocking from three local rules",
+            "Reynolds showed that a flock needs no leader -- each boid just follows its "
+            "neighbours by three rules: separation (avoid crowding), alignment (match heading), "
+            "and cohesion (stay together). Sum those urges into an acceleration and a swarm of "
+            "identical agents produces lifelike murmurations from a random scatter: the "
+            "alignment (polarization) climbs toward 1 while separation keeps them from "
+            "colliding, all bottom-up with no flock-level rule. The model behind starling "
+            "murmurations, sardine bait balls, and the crowds in films and games.",
+            '<div class="grid">'
+            + svg_card(out("boids.svg"), "a random scatter organizing into aligned flocking, with polarization rising over time")
+            + f'<div class="card">{pre(boids_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

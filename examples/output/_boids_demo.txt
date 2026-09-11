@@ -1,0 +1,13 @@
+Boids: separation + alignment + cohesion -> emergent flocking, no leader
+
+      step    polarization    mean spacing
+         0           0.146            7.90
+        30           0.282            9.04
+        80           0.337            8.28
+       200           0.727            8.54
+
+  From a random scatter (polarization near 0) the flock aligns into coherent motion
+  (polarization toward 1) while separation keeps the birds from colliding -- the
+  murmuration of starlings, the bait ball of sardines, all bottom-up from local rules.
+
+  wrote examples/output\boids.svg
