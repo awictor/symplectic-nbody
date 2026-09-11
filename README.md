@@ -208,6 +208,7 @@ ruins a long non-symplectic integration.
 | `src/game_of_life.py` | Conway's Game of Life: B3/S23 update, still lifes, blinker, glider |
 | `src/reaction_diffusion.py` | Gray-Scott reaction-diffusion: Turing spots/stripes from a seed |
 | `src/boids.py` | Boids flocking: separation/alignment/cohesion, polarization order parameter |
+| `src/dla.py` | Diffusion-limited aggregation: fractal growth, mass-radius dimension D~1.71 |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -407,6 +408,7 @@ ruins a long non-symplectic integration.
 | `examples/game_of_life_demo.py` | Pattern table + glider ASCII animation & the phases/board figure |
 | `examples/reaction_diffusion_demo.py` | Growth table + ASCII field & the pattern-over-time figure |
 | `examples/boids_demo.py` | Polarization table + the scatter-to-flock & polarization-over-time figure |
+| `examples/dla_demo.py` | Size/dimension table + the cluster & log-log mass-radius scaling figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4816,6 +4818,31 @@ crowds and creatures in films and games. The tests verify the random start is un
 parallel headings give polarization 1 and antiparallel 0, separation pushes crowded boids
 apart, alignment steers toward the neighbour heading, the step caps speed and wraps the
 toroidal box, and a full evolve raises polarization while holding the birds spaced.
+
+## Diffusion-limited aggregation: a fractal from random walkers
+
+Sparse, feathery growth from nothing but a random walk. `dla.py`:
+
+```
+$ python examples/dla_demo.py examples/output
+
+   particles    R_gyration   fractal D
+         200         10.81       1.530
+         600         21.94       1.587
+        1200         31.81       1.609
+```
+
+Release a particle far from a seed and let it random-walk (Brownian motion) until it touches
+the cluster, where it sticks forever; repeat. What grows (Witten & Sander, 1981) is not a blob
+but a self-similar fractal, because a wanderer almost always brushes an outer tip long before
+it can diffuse into an interior fjord -- the tips screen the inside and grow faster still. The
+mass inside radius `r` scales as `N(r) ~ r^D` with `D ~ 1.71` in the plane, not 2: the branches
+leave most of the plane empty. This module grows an on-lattice cluster (walkers launched on a
+circle, killed if they stray too far, stuck when they step next to an occupied cell) and
+measures `D` by the mass-radius scaling and the radius of gyration. The tests verify the
+cluster is connected, deterministic per seed, that a filled disc scales as `D ~ 2` while the
+DLA cluster comes out sparser near `1.71`, and the mass-within-radius and bounds helpers. The
+same instability draws mineral dendrites, electrodeposits, viscous fingers, lightning, and soot.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

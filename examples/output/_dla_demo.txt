@@ -1,0 +1,14 @@
+Diffusion-limited aggregation: random walkers stick to a growing seed
+
+   particles    R_gyration   fractal D
+         200         10.81       1.530
+         600         21.94       1.587
+        1200         31.81       1.609
+
+  Mass grows as N(r) ~ r^D with D ~ 1.7 in the plane, not 2: the branches
+  leave most of the plane empty. Outer tips screen the interior fjords -- a
+  wanderer brushes a tip long before it diffuses inside -- so the tips grow
+  faster and the cluster stays sparse and self-similar. Mineral dendrites,
+  electrodeposits, viscous fingers, lightning, and soot all grow this way.
+
+  wrote examples/output\dla.svg

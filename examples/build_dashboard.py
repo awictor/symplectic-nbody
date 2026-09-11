@@ -250,6 +250,7 @@ def main():
     import game_of_life_demo
     import reaction_diffusion_demo
     import boids_demo
+    import dla_demo
 
     import plot_orbits
 
@@ -469,6 +470,7 @@ def main():
     game_of_life_txt = run("game_of_life_demo", game_of_life_demo.main, True)
     reaction_diffusion_txt = run("reaction_diffusion_demo", reaction_diffusion_demo.main, True)
     boids_txt = run("boids_demo", boids_demo.main, True)
+    dla_txt = run("dla_demo", dla_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2655,6 +2657,20 @@ def main():
             '<div class="grid">'
             + svg_card(out("boids.svg"), "a random scatter organizing into aligned flocking, with polarization rising over time")
             + f'<div class="card">{pre(boids_txt)}</div>'
+            + '</div>'),
+        section(
+            "Diffusion-limited aggregation: a fractal from random walkers",
+            "Release a particle far from a seed and let it random-walk until it touches the "
+            "cluster, where it sticks; repeat. What grows is not a blob but a feathery, "
+            "self-similar fractal, because a wanderer almost always brushes an outer tip long "
+            "before it can diffuse into an interior fjord -- the tips screen the inside and "
+            "grow faster still. The cluster's mass scales as N(r) ~ r^D with D ~ 1.71 in the "
+            "plane, not 2: the branches leave most of the plane empty. The same instability "
+            "draws mineral dendrites, electrodeposits, viscous fingers in a Hele-Shaw cell, "
+            "lightning, and soot.",
+            '<div class="grid">'
+            + svg_card(out("dla.svg"), "the branching cluster and the log-log mass-radius scaling whose slope is the fractal dimension")
+            + f'<div class="card">{pre(dla_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
