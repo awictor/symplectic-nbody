@@ -237,6 +237,7 @@ ruins a long non-symplectic integration.
 | `src/levenshtein.py` | Edit distance: DP table, alignment backtrace, similarity, Damerau variant |
 | `src/knapsack.py` | 0/1 knapsack DP: optimal value + item reconstruction, subset-sum, unbounded |
 | `src/lcs.py` | Longest common subsequence: DP + backtrace, diff edit-script, indel distance |
+| `src/quickselect.py` | Quickselect + median-of-medians: O(n) k-th smallest, median, percentile |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -465,6 +466,7 @@ ruins a long non-symplectic integration.
 | `examples/levenshtein_demo.py` | Alignment + spell-check ranking + the DP-table heatmap figure |
 | `examples/knapsack_demo.py` | Chosen items vs brute force + the DP-table heatmap & value-vs-capacity figure |
 | `examples/lcs_demo.py` | LCS + a real line-diff + the DP-table heatmap with the match diagonal |
+| `examples/quickselect_demo.py` | Order statistics + the comparison-count vs sort figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5581,6 +5583,28 @@ distance `m + n - 2*LCS`. This module computes the length, one subsequence, the 
 (verified to reproduce the target), and the indel distance, all checked *exhaustively* against a
 brute-force subsequence search over 1000 random pairs. It runs version control and bioinformatics
 sequence comparison.
+
+## Quickselect: the k-th smallest without sorting
+
+Order statistics in O(n). `quickselect.py`:
+
+```
+$ python examples/quickselect_demo.py examples/output
+
+         n   quickselect   sort ~n log n   ratio
+      1024          3491           10240    2.9x
+     16384         61484          229376    3.7x
+```
+
+Finding the median, a percentile, or a top-k threshold looks like it needs a full `O(n log n)`
+sort -- it does not. Quickselect partitions the array around a pivot and recurses only into the
+side containing rank k, discarding half the data each step for `O(n)` expected time. A bad pivot
+would degrade it to `O(n^2)`, so the median-of-medians algorithm (medians of groups of five,
+recursively) picks a pivot provably better than 30% and worse than 30% of the data, guaranteeing
+worst-case linear time -- the classic proof that selection beats sorting. This module implements
+quickselect with a randomized pivot and with median-of-medians, plus median, k-th
+smallest/largest, and percentile wrappers, each verified against a full sort over 1000 random
+arrays (with varied pivots and duplicates).
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

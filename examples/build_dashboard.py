@@ -279,6 +279,7 @@ def main():
     import levenshtein_demo
     import knapsack_demo
     import lcs_demo
+    import quickselect_demo
 
     import plot_orbits
 
@@ -527,6 +528,7 @@ def main():
     levenshtein_txt = run("levenshtein_demo", levenshtein_demo.main, True)
     knapsack_txt = run("knapsack_demo", knapsack_demo.main, True)
     lcs_txt = run("lcs_demo", lcs_demo.main, True)
+    quickselect_txt = run("quickselect_demo", quickselect_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3168,6 +3170,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("lcs.svg"), "the DP length table with the match-cell diagonal that spells out the longest common subsequence")
             + f'<div class="card">{pre(lcs_txt)}</div>'
+            + '</div>'),
+        section(
+            "Quickselect: the k-th smallest without sorting",
+            "Finding the median, a percentile, or the top-k threshold looks like it needs a full "
+            "O(n log n) sort -- it does not. Quickselect partitions the array around a pivot and "
+            "recurses only into the side containing rank k, discarding half the data each step "
+            "for O(n) expected time; you never touch the elements you do not need. A bad pivot "
+            "would degrade it to O(n^2), so the median-of-medians algorithm (medians of groups "
+            "of five, recursively) picks a pivot provably better than 30% and worse than 30% of "
+            "the data, guaranteeing worst-case linear time -- the classic proof that selection "
+            "beats sorting. This module implements quickselect with a randomized pivot and with "
+            "median-of-medians, plus median, k-th smallest/largest, and percentile wrappers, "
+            "each verified against a full sort over 1000 random arrays.",
+            '<div class="grid">'
+            + svg_card(out("quickselect.svg"), "comparisons to find the median: quickselect grows linearly while a full sort grows as n log n")
+            + f'<div class="card">{pre(quickselect_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

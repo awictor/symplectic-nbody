@@ -1,0 +1,22 @@
+Quickselect: order statistics in O(n), no full sort
+
+  data: [37, 12, 91, 5, 68, 24, 50, 3, 79, 45, 18, 60]
+  min           = 3
+  median        = 41.0
+  90th pct      = 79
+  3rd largest   = 68
+  (median-of-medians agrees: True)
+
+  Comparisons to find the median: quickselect (~2n) vs a full sort (~n log n):
+         n   quickselect   sort ~n log n   ratio
+        64           238             384    1.6x
+       256           825            2048    2.5x
+      1024          3491           10240    2.9x
+      4096         13248           49152    3.7x
+     16384         61484          229376    3.7x
+
+  Discarding one partition side each step gives O(n) expected time. The
+  median-of-medians pivot (groups of five) guarantees it even in the worst case --
+  the theoretical proof that selection beats sorting when you need just one rank.
+
+  wrote examples/output\quickselect.svg
