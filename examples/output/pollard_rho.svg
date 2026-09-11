@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" font-family="monospace">
+<rect width="760" height="430" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="18">Pollard rho: iterations to find factor p scale with sqrt(p)</text>
+<text x="20" y="47" fill="#8b949e" font-size="12">blue points = measured rho iterations; yellow dashed = the sqrt(p) trend line</text>
+<line x1="70" y1="370" x2="720" y2="370" stroke="#484f58" stroke-width="1.5"/>
+<line x1="70" y1="80" x2="70" y2="370" stroke="#484f58" stroke-width="1.5"/>
+<text x="395" y="416" fill="#8b949e" font-size="12" text-anchor="middle">sqrt(smallest prime factor)</text>
+<line x1="70.0" y1="370.0" x2="720.0" y2="86.1" stroke="#ffd43b" stroke-width="1.8" stroke-dasharray="6,4"/>
+<circle cx="96.6" cy="353.7" r="5" fill="#4dabf7"/>
+<circle cx="119.5" cy="360.2" r="5" fill="#4dabf7"/>
+<circle cx="160.3" cy="337.5" r="5" fill="#4dabf7"/>
+<circle cx="240.7" cy="296.8" r="5" fill="#4dabf7"/>
+<circle cx="393.6" cy="213.8" r="5" fill="#4dabf7"/>
+<circle cx="660.9" cy="117.8" r="5" fill="#4dabf7"/>
+</svg>

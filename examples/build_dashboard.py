@@ -367,6 +367,7 @@ def main():
     import splay_tree_demo
     import van_emde_boas_demo
     import sparse_table_demo
+    import pollard_rho_demo
 
     import plot_orbits
 
@@ -703,6 +704,7 @@ def main():
     splay_tree_txt = run("splay_tree_demo", splay_tree_demo.main, True)
     van_emde_boas_txt = run("van_emde_boas_demo", van_emde_boas_demo.main, True)
     sparse_table_txt = run("sparse_table_demo", sparse_table_demo.main, True)
+    pollard_rho_txt = run("pollard_rho_demo", pollard_rho_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5083,6 +5085,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("sparse_table.svg"), "top: an array with a range-minimum query, the range in green and its minimum in yellow; bottom: a tree with two query nodes in blue and their lowest common ancestor in red")
             + f'<div class="card">{pre(sparse_table_txt)}</div>'
+            + '</div>'),
+        section(
+            "Pollard's rho: factoring integers in sqrt(p) steps",
+            "Multiplying two large primes is easy; recovering them from the product is the "
+            "FACTORIZATION problem that RSA's security rests on. Trial division works only up to tiny "
+            "factors -- factoring a 40-digit number that way would outlast the universe. POLLARD'S "
+            "RHO finds a non-trivial factor of a composite n in expected O(n^{1/4}) time and O(1) "
+            "space; for a factor p that is about sqrt(p) iterations, versus the p that trial division "
+            "needs. The idea is a probabilistic collision: iterate a pseudo-random x -> x^2 + c "
+            "(mod n), and by the BIRTHDAY PARADOX the sequence cycles after about sqrt(p) steps "
+            "MODULO a prime factor p, so when two iterates collide mod p but not mod n their "
+            "difference shares p with n and gcd(|x_i - x_j|, n) reveals it. Brent's variant (used "
+            "here) batches the gcd computations to run faster; POLLARD'S p-1 is a complementary trick "
+            "that shatters RSA primes whose p-1 is smooth. This module implements deterministic "
+            "Miller-Rabin primality, Brent's Pollard rho, Pollard p-1, and a full recursive prime "
+            "factorization, plus Euler's totient and divisor count from the factors, verified against "
+            "brute-force trial division and a sieve: the product of the returned factors equals the "
+            "input and every factor is prime, it recovers both primes of random semiprimes (the RSA "
+            "case) including a 17-digit one, primality matches a sieve, and totient and divisor "
+            "counts match brute-force enumeration.",
+            '<div class="grid">'
+            + svg_card(out("pollard_rho.svg"), "the measured number of Pollard-rho iterations to find a factor (blue) tracking the sqrt(p) trend line (yellow dashed) -- the birthday-paradox speedup over trial division's linear p")
+            + f'<div class="card">{pre(pollard_rho_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

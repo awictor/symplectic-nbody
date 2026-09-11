@@ -325,6 +325,7 @@ ruins a long non-symplectic integration.
 | `src/splay_tree.py` | Splay tree: self-adjusting BST with the working-set property (hot keys near root) |
 | `src/van_emde_boas.py` | Van Emde Boas tree: integer set with O(log log u) successor/predecessor |
 | `src/sparse_table.py` | Sparse table (O(1) range min/max/gcd) + binary-lifting LCA with tree distance |
+| `src/pollard_rho.py` | Pollard's rho / p-1 factorization + Miller-Rabin, totient, and divisor count |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -641,6 +642,7 @@ ruins a long non-symplectic integration.
 | `examples/splay_tree_demo.py` | Working-set property: average access depth sinking below log2(n) as access skews |
 | `examples/van_emde_boas_demo.py` | O(log log u) recursion depth staying flat as the universe explodes vs a BST's log u |
 | `examples/sparse_table_demo.py` | Range-minimum query on an array + lowest-common-ancestor on a tree |
+| `examples/pollard_rho_demo.py` | Factoring RSA-style semiprimes + iterations tracking the sqrt(p) trend |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7730,6 +7732,27 @@ the other's depth, then jump both up by shrinking powers until their parents mee
 tree distance for free. This module implements a generic sparse table (min/max/gcd), RMQ, and LCA,
 verified against brute force: the table matches a scan over every subrange, and LCA/distance match a
 naive ancestor walk and BFS over many random trees.
+
+## Pollard's rho: factoring integers in sqrt(p) steps
+
+Recover the prime factors that RSA relies on staying hidden. `pollard_rho.py`:
+
+```
+$ python examples/pollard_rho_demo.py examples/output
+
+  600851475143 = 71 * 839 * 1471 * 6857
+  1000036000099 = 1000003 * 1000033   (a 13-digit semiprime, instantly)
+  10000004400000259 = 100000007 * 100000037   (a 17-digit semiprime)
+  phi(720720) = 138240, divisors = 240
+```
+
+Pollard's rho iterates x -> x^2 + c (mod n); by the birthday paradox the sequence cycles after about
+sqrt(p) steps modulo a prime factor p, so gcd(|x_i - x_j|, n) exposes p in expected O(n^{1/4}) time
+and O(1) space -- versus the p of trial division. This module implements deterministic Miller-Rabin,
+Brent's Pollard rho, Pollard p-1, full recursive factorization, and Euler totient / divisor count
+from the factors, verified against brute-force trial division and a sieve: the product of the factors
+equals the input, every factor is prime, both primes of random semiprimes are recovered, and totient
+and divisor counts match brute-force enumeration.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,24 @@
+Pollard's rho: factoring integers in ~sqrt(smallest factor) steps
+
+  600851475143 = 71 * 839 * 1471 * 6857
+  1000000016000000063 = 1000000007 * 1000000009
+  720720 = 2^4 * 3^2 * 5 * 7 * 11 * 13
+  254803968 = 2^20 * 3^5
+  1000036000099 = 1000003 * 1000033
+
+  RSA-style semiprimes (product of two primes) -- the case RSA relies on being hard:
+                     10403 = 101 * 103
+                 100160063 = 10007 * 10009
+             1000036000099 = 1000003 * 1000033
+         10000004400000259 = 100000007 * 100000037
+
+  Pollard's rho finds a factor p in about sqrt(p) iterations (birthday paradox),
+  where trial division would need p/2. For a 15-digit semiprime that is the
+  difference between a few thousand steps and a hundred million.
+
+  Number-theoretic functions from the factorization:
+    n=36: phi(n)=12, number of divisors=9
+    n=100: phi(n)=40, number of divisors=9
+    n=720720: phi(n)=138240, number of divisors=240
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\pollard_rho.svg
