@@ -288,6 +288,7 @@ def main():
     import alias_method_demo
     import fisher_yates_demo
     import box_muller_demo
+    import rejection_sampling_demo
 
     import plot_orbits
 
@@ -545,6 +546,7 @@ def main():
     alias_method_txt = run("alias_method_demo", alias_method_demo.main, True)
     fisher_yates_txt = run("fisher_yates_demo", fisher_yates_demo.main, True)
     box_muller_txt = run("box_muller_demo", box_muller_demo.main, True)
+    rejection_sampling_txt = run("rejection_sampling_demo", rejection_sampling_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3335,6 +3337,23 @@ def main():
             '<div class="grid">'
             + svg_card(out("box_muller.svg"), "the transformed-uniform histogram landing exactly on the analytic Gaussian density with its 1/2/3-sigma bands")
             + f'<div class="card">{pre(box_muller_txt)}</div>'
+            + '</div>'),
+        section(
+            "Rejection sampling: drawing from any density you can evaluate",
+            "You can compute a density f(x) but cannot sample it directly -- an unnormalized "
+            "posterior, a physics distribution, a hand-drawn shape. Rejection sampling turns "
+            "'I can evaluate f' into 'I can sample f': draw a candidate from a simpler proposal "
+            "g you can sample, and accept it with probability f(x)/(M g(x)) where M bounds "
+            "f <= M g. Geometrically you throw darts uniformly under the envelope M g and keep "
+            "those below f -- the kept points are distributed exactly as f, even when f is only "
+            "known up to a constant (which is why it underlies Bayesian computation). The price "
+            "is efficiency: the acceptance rate is the area ratio 1/M, so a loose envelope or a "
+            "high dimension wastes darts. This module does box and general rejection sampling, "
+            "and the tests verify the sampled moments, the acceptance-rate theory, and a "
+            "histogram chi-square against the target.",
+            '<div class="grid">'
+            + svg_card(out("rejection_sampling.svg"), "accepted (green) and rejected (red) darts under a bimodal density, and the kept-sample histogram matching it")
+            + f'<div class="card">{pre(rejection_sampling_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -246,6 +246,7 @@ ruins a long non-symplectic integration.
 | `src/alias_method.py` | Alias method: O(1) weighted sampling after O(n) setup, Vose construction |
 | `src/fisher_yates.py` | Fisher-Yates shuffle: unbiased permutation, k-sample, Sattolo cyclic variant |
 | `src/box_muller.py` | Box-Muller: uniform->Gaussian transform, Marsaglia polar, moment-verified |
+| `src/rejection_sampling.py` | Rejection sampling: sample any evaluable density, box + general proposal |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -483,6 +484,7 @@ ruins a long non-symplectic integration.
 | `examples/alias_method_demo.py` | Target vs sampled + the alias table + the frequency & column figure |
 | `examples/fisher_yates_demo.py` | Uniform-vs-biased permutation counts + the frequency-histogram figure |
 | `examples/box_muller_demo.py` | Moments + 68-95-99.7 + the histogram-vs-Gaussian-density figure |
+| `examples/rejection_sampling_demo.py` | Acceptance rate + the accepted/rejected darts & histogram figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5803,6 +5805,27 @@ method rejects to the unit disc and reuses its coordinates, skipping the trig; s
 and shifting by mu gives any `N(mu, sigma^2)`. This module implements both, and the tests verify
 the output's mean, variance, skewness (~0), kurtosis (~3), and the 68-95-99.7 rule over large
 samples. Every simulation that needs noise starts here.
+
+## Rejection sampling: drawing from any density you can evaluate
+
+Darts under a curve. `rejection_sampling.py`:
+
+```
+$ python examples/rejection_sampling_demo.py examples/output
+
+  bimodal density, 100000 samples; acceptance 0.307 (theory 0.307)
+  envelope M=1.01 -> 0.307,  M=2 -> 0.155,  M=4 -> 0.078
+```
+
+You can compute a density `f(x)` but cannot sample it directly. Rejection sampling draws a
+candidate from a simpler proposal `g` you can sample and accepts it with probability
+`f(x)/(M g(x))`, where M bounds `f <= M g`. Geometrically you throw darts uniformly under the
+envelope `M g` and keep those below `f` -- the kept points are distributed exactly as f, even
+when f is known only up to a constant (which is why it underlies Bayesian computation). The
+acceptance rate is the area ratio `1/M`, so a loose envelope or a high dimension wastes darts.
+This module does box rejection sampling on an interval and general rejection sampling with an
+arbitrary proposal, and the tests verify the sampled moments, the acceptance-rate theory, and a
+histogram chi-square against the target (Gaussian, triangular, unnormalized, and beta shapes).
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

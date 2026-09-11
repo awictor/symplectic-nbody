@@ -1,0 +1,18 @@
+Rejection sampling: keep darts thrown under the envelope that land below f(x)
+
+  target: a bimodal density on [-4.0, 4.0] (two unequal Gaussian bumps)
+  drew 100000 samples; acceptance rate 0.307 (theory 0.307)
+  sample mean -0.0136, variance 2.6092
+  histogram chi-square vs target (12 bins): 12.73
+
+  Acceptance = area under f / area of the box, so a tighter envelope is faster:
+    envelope M  acceptance
+          1.01       0.307
+          2.00       0.155
+          4.00       0.078
+
+  It samples ANY density you can evaluate -- even unnormalized ones -- which is why
+  it underlies Bayesian computation. The cost is the wasted darts: a loose envelope
+  or a high dimension makes acceptance tiny, which is what MCMC methods work around.
+
+  wrote examples/output\rejection_sampling.svg
