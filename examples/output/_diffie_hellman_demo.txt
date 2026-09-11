@@ -1,0 +1,17 @@
+Diffie-Hellman: agree on a secret while an eavesdropper listens
+
+  public parameters:  p = 48563  (safe prime),  g = 2  (generator)
+
+              secret    sends g^secret mod p                  computes
+     Alice     12345                   30204          B^a mod p = 9050
+       Bob     54321                   20462          A^b mod p = 9050
+
+  shared secret g^(ab) mod p = 9050   (both match: True)
+  the wire carried only p, g, 30204, 20462 -- never a or b.
+
+  An eavesdropper must solve g^x = 30204 (mod 48563) for x. Baby-step/giant-step finds
+  x = 12345 in ~sqrt(p) = 220 steps -- feasible ONLY because p is tiny here.
+  Scale p to 2048 bits and sqrt(p) is ~10^308 steps: the secret is safe, even though
+  Alice and Bob each did only a few thousand multiplications. That gap is the point.
+
+  wrote examples/output\diffie_hellman.svg

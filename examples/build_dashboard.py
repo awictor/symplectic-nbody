@@ -264,6 +264,7 @@ def main():
     import kelly_demo
     import hamming_demo
     import rsa_demo
+    import diffie_hellman_demo
 
     import plot_orbits
 
@@ -497,6 +498,7 @@ def main():
     kelly_txt = run("kelly_demo", kelly_demo.main, True)
     hamming_txt = run("hamming_demo", hamming_demo.main, True)
     rsa_txt = run("rsa_demo", rsa_demo.main, True)
+    diffie_hellman_txt = run("diffie_hellman_demo", diffie_hellman_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2894,6 +2896,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("rsa.svg"), "the one-way public-key flow an eavesdropper cannot invert, and the log-time cost of modular exponentiation")
             + f'<div class="card">{pre(rsa_txt)}</div>'
+            + '</div>'),
+        section(
+            "Diffie-Hellman: agreeing on a secret in the open",
+            "Two people who have never met, on a wiretapped line, can agree on a shared secret "
+            "the eavesdropper cannot learn. Fix a prime p and generator g; Alice sends g^a mod "
+            "p, Bob sends g^b mod p, and each raises what they received to their own secret, "
+            "both landing on g^(ab) mod p while the wire carried only g^a and g^b. Stealing the "
+            "secret means recovering a from g^a mod p -- the discrete-logarithm problem, easy "
+            "to state and (for large p) astronomically hard. This module generates safe-prime "
+            "parameters, finds a generator, runs the exchange, and includes a baby-step/"
+            "giant-step discrete-log solver whose sqrt(p) cost dwarfs the parties' log(p) work "
+            "-- the gap that keeps the secret safe. Without authentication a man-in-the-middle "
+            "can still intercept, which is why real protocols sign the exchange.",
+            '<div class="grid">'
+            + svg_card(out("diffie_hellman.svg"), "the exchange both sides complete to the same secret, and the attacker's sqrt(p) cost against the honest log(p)")
+            + f'<div class="card">{pre(diffie_hellman_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

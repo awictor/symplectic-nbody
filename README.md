@@ -222,6 +222,7 @@ ruins a long non-symplectic integration.
 | `src/kelly.py` | Kelly criterion: optimal bet fraction f*=p-q/b, log-growth rate, fractional Kelly |
 | `src/hamming.py` | Hamming codes: (7,4) SEC + SECDED, syndrome decoding, exhaustively verified |
 | `src/rsa.py` | RSA: Miller-Rabin, extended Euclid, keygen, encrypt/decrypt/sign/verify |
+| `src/diffie_hellman.py` | Diffie-Hellman: safe primes, generators, key exchange, BSGS discrete log |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -435,6 +436,7 @@ ruins a long non-symplectic integration.
 | `examples/kelly_demo.py` | Growth-rate table vs simulation + the g(f) curve & bankroll trajectories |
 | `examples/hamming_demo.py` | Syndrome-locates-error table + the parity-coverage grid & code-rate curve |
 | `examples/rsa_demo.py` | Keygen + encrypt/decrypt/sign walkthrough + the key-flow & modexp-cost figure |
+| `examples/diffie_hellman_demo.py` | Exchange walkthrough + the flow diagram & attacker-vs-honest cost figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5197,6 +5199,31 @@ that fool the Fermat test), the extended Euclidean modular inverse, fast square-
 exponentiation, key generation, and full encrypt/decrypt and sign/verify round-trips, including
 byte-string chunking. The number theory behind TLS and SSH -- real deployments add OAEP/PSS
 padding, but the core is exactly this.
+
+## Diffie-Hellman: agreeing on a secret in the open
+
+A shared key over a wiretapped line, no prior meeting. `diffie_hellman.py`:
+
+```
+$ python examples/diffie_hellman_demo.py examples/output
+
+              secret    sends g^secret mod p                  computes
+     Alice     12345                   30204          B^a mod p = 9050
+       Bob     54321                   20462          A^b mod p = 9050
+
+  shared secret g^(ab) mod p = 9050   (both match: True)
+```
+
+Fix a prime p and a generator g. Alice sends `g^a mod p`, Bob sends `g^b mod p`, and each raises
+what they received to their own secret, both landing on `g^(ab) mod p` while the wire carried
+only `g^a` and `g^b`. Stealing the secret means recovering a from `g^a mod p` -- the
+discrete-logarithm problem, easy to state and (for large p) astronomically hard. This module
+generates safe-prime parameters (`p = 2q+1`), finds a generator, runs the exchange, and includes
+a baby-step/giant-step discrete-log solver whose `sqrt(p)` cost dwarfs the parties' `log(p)` work
+-- the gap that keeps the secret safe. The tests verify generators cover every residue, both
+sides derive the same secret, the parameters are genuine safe primes, and BSGS cracks the small
+exchange (feasible only because p is tiny). Without authentication a man-in-the-middle can
+intercept, which is why real protocols sign the exchanged values.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
