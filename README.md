@@ -202,6 +202,7 @@ ruins a long non-symplectic integration.
 | `src/mandelbrot.py` | Mandelbrot set: escape time, membership, cardioid/bulb tests |
 | `src/van_der_pol.py` | Van der Pol oscillator: limit cycle, amplitude, relaxation period |
 | `src/duffing.py` | Duffing oscillator: double-well potential, regimes, resonance backbone |
+| `src/kuramoto.py` | Kuramoto model: order parameter, critical coupling, sync transition |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -395,6 +396,7 @@ ruins a long non-symplectic integration.
 | `examples/mandelbrot_demo.py` | Escape-time table + ASCII view & the escape-time-coloured set |
 | `examples/van_der_pol_demo.py` | Amplitude/period table + the phase-portrait & waveform figure |
 | `examples/duffing_demo.py` | Regime/backbone table + the double-well & resonance-backbone figure |
+| `examples/kuramoto_demo.py` | Synchrony-vs-coupling table + the r(K) transition & phase-circle figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4666,6 +4668,30 @@ push harder and the forced Duffing goes chaotic. The tests verify the potential 
 `+/-1` double-well minima, the hardening/softening/double-well/linear regimes, the vector
 field, a damped mass settling into a well, and the backbone shifting up (hardening) or down
 (softening) with amplitude.
+
+## The Kuramoto model: oscillators falling into sync
+
+Coupled oscillators pull themselves into step -- a phase transition to collective order.
+`kuramoto.py`:
+
+```
+$ python examples/kuramoto_demo.py examples/output
+
+  K     order r   state             (N=50, freq spread +/-1)
+  0.5   0.13      incoherent
+  2.0   0.95      synchronized
+```
+
+Each oscillator obeys `dtheta_i/dt = omega_i + (K/N) sum sin(theta_j - theta_i)`, and the
+synchrony is the order parameter `r = |(1/N) sum e^{i theta}|` -- 0 for scattered phases, 1
+when all lock. There is a sharp critical coupling `K_c = 2/(pi g(0))` (`2 gamma` for a
+Lorentzian spread, `sigma sqrt(8/pi)` for a Gaussian): below it the oscillators drift
+independently and `r ~ 0`; above it a synchronized cluster spontaneously forms and `r` climbs
+toward 1. It is the canonical model of emergent order -- fireflies flashing in unison,
+pacemaker cells, applause locking into rhythm, power-grid generators. The tests verify `r=1`
+for aligned and `r=0` for evenly spread / antiphase, the natural-frequency drift at zero
+coupling, the Lorentzian and Gaussian `K_c`, and a simulation going from incoherent (weak `K`)
+to synchronized (strong `K`).
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,18 @@
+Kuramoto: dtheta_i/dt = omega_i + (K/N) sum sin(theta_j - theta_i)
+
+  Steady-state synchrony r vs coupling K (N=50, freq spread +/-1):
+
+       K   order r             state
+     0.0     0.100        incoherent
+     0.5     0.125        incoherent
+     1.0     0.198        incoherent
+     2.0     0.953      synchronized
+     4.0     0.989      synchronized
+     8.0     0.997      synchronized
+
+  Below a critical coupling the oscillators drift independently (r ~ 0); above it a
+  synchronized cluster spontaneously forms and r climbs toward 1 -- a phase
+  transition to collective order. Same mechanism: fireflies flashing in unison,
+  pacemaker cells, applause locking into rhythm, and generators on a power grid.
+
+  wrote examples/output\kuramoto.svg

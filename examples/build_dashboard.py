@@ -244,6 +244,7 @@ def main():
     import mandelbrot_demo
     import van_der_pol_demo
     import duffing_demo
+    import kuramoto_demo
 
     import plot_orbits
 
@@ -457,6 +458,7 @@ def main():
     mandelbrot_txt = run("mandelbrot_demo", mandelbrot_demo.main, True)
     van_der_pol_txt = run("van_der_pol_demo", van_der_pol_demo.main, True)
     duffing_txt = run("duffing_demo", duffing_demo.main, True)
+    kuramoto_txt = run("kuramoto_demo", kuramoto_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2564,6 +2566,20 @@ def main():
             '<div class="grid">'
             + svg_card(out("duffing.svg"), "the double-well potential with a mass settling into a well, and the leaning resonance backbone")
             + f'<div class="card">{pre(duffing_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Kuramoto model: oscillators falling into sync",
+            "A population of oscillators, each with its own natural frequency, pulls itself into "
+            "step through coupling: dtheta_i/dt = omega_i + (K/N) sum sin(theta_j - theta_i). "
+            "The synchrony is measured by the order parameter r (0 = phases scattered, 1 = all "
+            "in phase), and there is a sharp phase transition -- below a critical coupling K_c "
+            "the oscillators drift independently (r~0), above it a synchronized cluster "
+            "spontaneously forms and r climbs toward 1. It is the canonical model of emergent "
+            "collective order: fireflies flashing in unison, pacemaker cells, applause locking "
+            "into rhythm, generators on a grid.",
+            '<div class="grid">'
+            + svg_card(out("kuramoto.svg"), "the synchronization transition r(K), and phase circles scattered vs clustered")
+            + f'<div class="card">{pre(kuramoto_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
