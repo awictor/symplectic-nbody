@@ -1,0 +1,14 @@
+Delaunay triangulation and the dual Voronoi diagram
+
+  24 sites
+  Delaunay triangles: 37  (Euler: 2n-2-h)
+  Voronoi edges (finite): 51
+  empty-circumcircle property holds: True
+  average Delaunay degree: 5.00
+  every site's nearest neighbour is a Delaunay edge: True
+
+  The Voronoi diagram partitions the plane into 'nearest-site' cells; its straight-line
+  dual is the Delaunay triangulation, whose triangles have empty circumcircles and
+  maximize the minimum angle. Voronoi vertices are the triangle circumcentres.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\delaunay.svg

@@ -313,6 +313,7 @@ ruins a long non-symplectic integration.
 | `src/de_bruijn.py` | De Bruijn sequences B(k,n) via Eulerian circuits (Hierholzer); general Eulerian path finder |
 | `src/rotating_calipers.py` | Rotating calipers: diameter, width, minimum-area bounding rectangle from the hull |
 | `src/ternary_search_tree.py` | Ternary search tree: autocomplete, longest-prefix, and '.'-wildcard string search |
+| `src/delaunay.py` | Delaunay triangulation (Bowyer-Watson, exact in-circle) and the dual Voronoi diagram |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -617,6 +618,7 @@ ruins a long non-symplectic integration.
 | `examples/de_bruijn_demo.py` | B(2,3)/B(2,4)/PIN-pad B(10,4) sequences + the B(2,3) De Bruijn graph with Eulerian circuit |
 | `examples/rotating_calipers_demo.py` | Point cloud with hull, diameter, and minimum-area rectangle (rotated box beats the AABB) |
 | `examples/ternary_search_tree_demo.py` | Autocomplete, longest-prefix, and wildcard search on a dictionary + the TST structure |
+| `examples/delaunay_demo.py` | Delaunay triangulation overlaid with its dual Voronoi diagram, empty-circumcircle checked live |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7454,6 +7456,29 @@ completion, and -- the trick hash maps can't do cheaply -- '.'-wildcard partial-
 recurses into all three children at a wildcard position. This module implements insert with values,
 lookup, deletion, sorted iteration, autocomplete, longest-prefix-of, and wildcard search, verified
 against a plain dict and brute force over hundreds of random prefix, wildcard, and deletion queries.
+
+## Delaunay triangulation and the Voronoi diagram: two faces of proximity
+
+The dual structures of "who is near what". `delaunay.py`:
+
+```
+$ python examples/delaunay_demo.py examples/output
+
+  24 sites -> 37 Delaunay triangles (Euler 2n-2-h), 51 finite Voronoi edges
+  empty-circumcircle property holds: True
+  every site's nearest neighbour is a Delaunay edge: True
+```
+
+The Voronoi diagram cuts the plane into nearest-site cells; its straight-line dual, the Delaunay
+triangulation, connects sites whose cells touch and is characterized by the empty-circumcircle
+property (no site lies inside any triangle's circumcircle), which makes it the triangulation that
+maximizes the minimum angle. Built by Bowyer-Watson incremental insertion -- delete every triangle
+whose circumcircle contains the new point, re-triangulate the cavity -- with the in-circle predicate
+evaluated in exact rational arithmetic so the mesh is always valid. The Voronoi vertices are the
+triangle circumcentres. Verified that every triangle has an empty circumcircle, that the triangle
+count obeys Euler's 2n-2-h, that the triangle areas exactly fill the convex hull, that Voronoi
+vertices are equidistant from their three sites, and that each site's nearest neighbour is a Delaunay
+edge.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

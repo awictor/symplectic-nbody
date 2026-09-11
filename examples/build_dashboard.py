@@ -355,6 +355,7 @@ def main():
     import de_bruijn_demo
     import rotating_calipers_demo
     import ternary_search_tree_demo
+    import delaunay_demo
 
     import plot_orbits
 
@@ -679,6 +680,7 @@ def main():
     de_bruijn_txt = run("de_bruijn_demo", de_bruijn_demo.main, True)
     rotating_calipers_txt = run("rotating_calipers_demo", rotating_calipers_demo.main, True)
     ternary_search_tree_txt = run("ternary_search_tree_demo", ternary_search_tree_demo.main, True)
+    delaunay_txt = run("delaunay_demo", delaunay_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4773,6 +4775,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("ternary_search_tree.svg"), "the TST for a small dictionary: green middle links advance to the next character (spelling keys), gray left/right links are the per-position BST, and gold rings mark where a key ends")
             + f'<div class="card">{pre(ternary_search_tree_txt)}</div>'
+            + '</div>'),
+        section(
+            "Delaunay triangulation and the Voronoi diagram: two faces of proximity",
+            "Given a scatter of points, two dual structures capture who is near what. The VORONOI "
+            "DIAGRAM cuts the plane into one cell per site -- the region closer to that site than to "
+            "any other -- so a single point location answers a nearest-neighbour query. Its "
+            "straight-line dual is the DELAUNAY TRIANGULATION, connecting two sites whenever their "
+            "Voronoi cells touch. The Delaunay triangulation is the 'roundest' triangulation: it "
+            "maximizes the minimum angle (avoiding slivers) and is characterized by the "
+            "EMPTY-CIRCUMCIRCLE property -- the circle through any triangle's three vertices contains "
+            "no other site. Both are workhorses of mesh generation, terrain modelling, "
+            "interpolation, and spatial statistics. The construction here is BOWYER-WATSON: enclose "
+            "the sites in a super-triangle, then insert points one by one, deleting every triangle "
+            "whose circumcircle contains the new point and re-triangulating the star-shaped cavity "
+            "that opens up. The in-circle test is evaluated in EXACT rational arithmetic so adjacent "
+            "triangles never disagree and the mesh stays a valid triangulation. The Voronoi diagram "
+            "falls out for free -- its vertices are the triangles' circumcentres. Verified that every "
+            "output triangle has an empty circumcircle against all sites, that the triangle count "
+            "obeys Euler's 2n-2-h, that the triangle areas exactly fill the convex hull (no gaps or "
+            "overlaps), that Voronoi vertices are equidistant from their three sites, and that each "
+            "site's nearest neighbour is always a Delaunay edge.",
+            '<div class="grid">'
+            + svg_card(out("delaunay.svg"), "a point set's Delaunay triangulation (blue) overlaid with its dual Voronoi diagram (orange); Voronoi edges join the circumcentres of adjacent triangles")
+            + f'<div class="card">{pre(delaunay_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
