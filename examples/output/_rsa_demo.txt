@@ -1,0 +1,21 @@
+RSA from scratch: two primes -> a public key anyone can encrypt to
+
+  public key  (e, n): e = 65537
+                      n = 88411744846329904466854580393080427256266851130989221887466523070287323859577
+  private key (d, n): d = 35466145414193710246633305133498396822429053497000535443257497919929133786793
+
+  message   m = 42424242
+  encrypt   c = m^e mod n = 84839668179731333482683177734528306802513032577352587067916241783443511071227
+  decrypt   m'= c^d mod n = 42424242   -> round-trip OK
+
+  sign      s = m^d mod n = 26946381523425824622003667727963989899574990650435005788254097895555661275214
+  verify    s^e mod n = m ? True   (tampered: False)
+
+  bytes: b'public-key crypto, no shared secret'
+    -> 2 ciphertext blocks -> decrypts to b'public-key crypto, no shared secret'  (OK)
+
+  Multiplying the primes is easy; factoring n back apart is not -- that gap is the
+  whole of RSA's security. Modular exponentiation costs ~log2(e) multiplications by
+  square-and-multiply, so even a 2048-bit exponent is fast.
+
+  wrote examples/output\rsa.svg

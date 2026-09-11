@@ -221,6 +221,7 @@ ruins a long non-symplectic integration.
 | `src/shannon.py` | Shannon entropy & Huffman coding: H = -sum p log p, optimal prefix code, H<=L<H+1 |
 | `src/kelly.py` | Kelly criterion: optimal bet fraction f*=p-q/b, log-growth rate, fractional Kelly |
 | `src/hamming.py` | Hamming codes: (7,4) SEC + SECDED, syndrome decoding, exhaustively verified |
+| `src/rsa.py` | RSA: Miller-Rabin, extended Euclid, keygen, encrypt/decrypt/sign/verify |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -433,6 +434,7 @@ ruins a long non-symplectic integration.
 | `examples/shannon_demo.py` | Huffman code table + the binary-entropy curve & codeword-length figure |
 | `examples/kelly_demo.py` | Growth-rate table vs simulation + the g(f) curve & bankroll trajectories |
 | `examples/hamming_demo.py` | Syndrome-locates-error table + the parity-coverage grid & code-rate curve |
+| `examples/rsa_demo.py` | Keygen + encrypt/decrypt/sign walkthrough + the key-flow & modexp-cost figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5170,6 +5172,31 @@ Every Hamming code has minimum distance 3, and one extra overall parity bit give
 computes the syndrome, decodes with correction, and does SECDED -- and the tests prove
 correctness *exhaustively*, correcting every single-bit error in every codeword of the (7,4) and
 (15,11) codes.
+
+## RSA: public-key cryptography from the hardness of factoring
+
+Two strangers, a secret channel, no shared key. `rsa.py`:
+
+```
+$ python examples/rsa_demo.py examples/output
+
+  message   m = 42424242
+  encrypt   c = m^e mod n = 8483966817973133348...
+  decrypt   m'= c^d mod n = 42424242   -> round-trip OK
+  sign      s = m^d mod n = 2694638152342582462...
+  verify    s^e mod n = m ? True   (tampered: False)
+```
+
+RSA rests on one asymmetry: multiplying two large primes into `n = pq` is easy, but factoring n
+back apart is astronomically hard. Pick primes p, q, take `phi = (p-1)(q-1)`, a public exponent
+e coprime to phi, and the private `d = e^-1 mod phi`; then `c = m^e mod n` encrypts and
+`m = c^d mod n` decrypts, undoing each other because `ed = 1 mod phi` by Euler's theorem. The
+same keys sign (encrypt a message with the private key, verify with the public). This pure-stdlib
+educational reference implements Miller-Rabin primality (which catches the Carmichael numbers
+that fool the Fermat test), the extended Euclidean modular inverse, fast square-and-multiply
+exponentiation, key generation, and full encrypt/decrypt and sign/verify round-trips, including
+byte-string chunking. The number theory behind TLS and SSH -- real deployments add OAEP/PSS
+padding, but the core is exactly this.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

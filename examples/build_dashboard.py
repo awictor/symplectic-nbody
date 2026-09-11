@@ -263,6 +263,7 @@ def main():
     import shannon_demo
     import kelly_demo
     import hamming_demo
+    import rsa_demo
 
     import plot_orbits
 
@@ -495,6 +496,7 @@ def main():
     shannon_txt = run("shannon_demo", shannon_demo.main, True)
     kelly_txt = run("kelly_demo", kelly_demo.main, True)
     hamming_txt = run("hamming_demo", hamming_demo.main, True)
+    rsa_txt = run("rsa_demo", rsa_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2876,6 +2878,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("hamming.svg"), "each parity bit's coverage that makes the syndrome name the error position, and the code rate rising toward 1")
             + f'<div class="card">{pre(hamming_txt)}</div>'
+            + '</div>'),
+        section(
+            "RSA: public-key cryptography from the hardness of factoring",
+            "RSA lets two strangers communicate secretly without ever sharing a key, resting on "
+            "one asymmetry: multiplying two large primes into n = pq is easy, but factoring n "
+            "back apart is (as far as anyone knows) astronomically hard. Pick primes p, q, take "
+            "phi = (p-1)(q-1), a public exponent e coprime to phi, and the private d = e^-1 mod "
+            "phi. Encryption is c = m^e mod n, decryption m = c^d mod n, and they undo each "
+            "other because ed = 1 mod phi (Euler). The same keys sign: encrypt with the private "
+            "key, verify with the public. This pure-stdlib reference implements Miller-Rabin "
+            "primality (catching Carmichael numbers that fool Fermat), the extended Euclidean "
+            "inverse, fast square-and-multiply exponentiation, and full encrypt/decrypt/sign/"
+            "verify round-trips -- the number theory behind TLS and SSH.",
+            '<div class="grid">'
+            + svg_card(out("rsa.svg"), "the one-way public-key flow an eavesdropper cannot invert, and the log-time cost of modular exponentiation")
+            + f'<div class="card">{pre(rsa_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
