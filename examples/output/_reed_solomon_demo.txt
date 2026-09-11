@@ -1,0 +1,22 @@
+Reed-Solomon error correction over GF(256)
+
+  message: 'REED-SOLOMON'  (12 bytes)
+  parity : 8 bytes  ->  corrects up to t = 4 byte-errors per block
+  codeword (20 bytes): 52 45 45 44 2d 53 4f 4c 4f 4d 4f 4e b2 24 3b b8 39 e9 27 8a
+
+  corrupting 4 bytes at positions [2, 3, 9, 13] (a scratch / noise burst):
+  received (20 bytes): 52 45 1f bb 2d 53 4f 4c 4f 4c 4f 4e b2 5a 3b b8 39 e9 27 8a
+  syndromes (nonzero => error detected): nonzero -> [218, 230, 113, 0]...
+
+  decoded: corrected 4 byte-errors
+  recovered codeword matches original: True
+  recovered message: 'REED-SOLOMON'  (correct: True)
+
+  12+8 block with 5 errors (one past the limit): correctly flagged as uncorrectable.
+
+  A message is the coefficients of a polynomial over GF(256); parity makes the codeword
+  divisible by the generator. Corruption breaks that divisibility, and the syndromes ->
+  Berlekamp-Massey -> Chien -> Forney pipeline recovers both the error positions and
+  their values. This is the code in QR codes, CDs, and deep-space telemetry.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\reed_solomon.svg

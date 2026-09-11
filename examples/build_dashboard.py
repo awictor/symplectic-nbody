@@ -322,6 +322,7 @@ def main():
     import simulated_annealing_demo
     import genetic_algorithm_demo
     import particle_swarm_demo
+    import reed_solomon_demo
 
     import plot_orbits
 
@@ -613,6 +614,7 @@ def main():
     simulated_annealing_txt = run("simulated_annealing_demo", simulated_annealing_demo.main, True)
     genetic_algorithm_txt = run("genetic_algorithm_demo", genetic_algorithm_demo.main, True)
     particle_swarm_txt = run("particle_swarm_demo", particle_swarm_demo.main, True)
+    reed_solomon_txt = run("reed_solomon_demo", reed_solomon_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4023,6 +4025,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("particle_swarm.svg"), "the final swarm clustered at the Rastrigin optimum, beside the global-best convergence with decaying vs fixed inertia on a log scale")
             + f'<div class="card">{pre(particle_swarm_txt)}</div>'
+            + '</div>'),
+        section(
+            "Reed-Solomon codes: recovering data from errors",
+            "The error-correcting code behind QR codes, CDs, DVDs, and deep-space probes. "
+            "Reed-Solomon treats a message as the coefficients of a polynomial over the finite "
+            "field GF(256) and appends 2t parity symbols so the whole codeword is divisible by a "
+            "fixed generator polynomial. Any corruption breaks that divisibility in a way that "
+            "pinpoints both WHERE the errors are and WHAT they should have been -- correcting up to "
+            "t byte-errors per block no matter how they are distributed, which is why it survives a "
+            "scratch on a disc or a fading radio link. The field is GF(2^8): bytes with XOR as "
+            "addition and multiplication modulo 0x11d, so every nonzero byte is a power of the "
+            "generator and multiplication is log-table addition. Decoding is the classic pipeline: "
+            "SYNDROMES (evaluate at the code roots), BERLEKAMP-MASSEY (the error-locator "
+            "polynomial), a CHIEN search (its roots = error positions), and FORNEY's formula (the "
+            "error magnitudes). This module implements GF(256) arithmetic, encoding, and full "
+            "syndrome decoding, verified that a clean codeword is unchanged, that up to t corrupted "
+            "bytes anywhere (including in the parity) are corrected exactly across dozens of random "
+            "trials, and that one error past the limit is flagged rather than mis-corrected.",
+            '<div class="grid">'
+            + svg_card(out("reed_solomon.svg"), "the received codeword with injected errors in red, and the decoded codeword with the same positions repaired in green, split at the message/parity boundary")
+            + f'<div class="card">{pre(reed_solomon_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

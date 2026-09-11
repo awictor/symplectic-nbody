@@ -280,6 +280,7 @@ ruins a long non-symplectic integration.
 | `src/simulated_annealing.py` | Simulated annealing: Metropolis criterion, cooling schedules, TSP 2-opt solver |
 | `src/genetic_algorithm.py` | Genetic algorithm: tournament selection, crossover, mutation, elitism, knapsack |
 | `src/particle_swarm.py` | Particle swarm optimization: inertia/cognitive/social velocity, benchmark functions |
+| `src/reed_solomon.py` | Reed-Solomon codes: GF(256), encode, syndrome/Berlekamp-Massey/Chien/Forney decode |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -551,6 +552,7 @@ ruins a long non-symplectic integration.
 | `examples/simulated_annealing_demo.py` | TSP greedy-vs-annealed tour + cost-cooling curve, multimodal global min |
 | `examples/genetic_algorithm_demo.py` | OneMax + real optimization fitness curves, 0/1 knapsack solve |
 | `examples/particle_swarm_demo.py` | Sphere/Rastrigin/Rosenbrock solves, swarm scatter + inertia-decay convergence |
+| `examples/reed_solomon_demo.py` | Corrupt bytes in a message and recover it; byte-grid error/repair figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6657,6 +6659,30 @@ rules balancing exploration and convergence. This module implements PSO over a b
 velocity clamping and linearly-decaying inertia, verified to find the global minimum of the Sphere,
 Rastrigin, and Rosenbrock benchmarks, drive the global best down monotonically, beat random search
 at equal budget, and converge faster when inertia decays.
+
+## Reed-Solomon codes: recovering data from errors
+
+The error correction behind QR codes, CDs, and deep-space probes. `reed_solomon.py`:
+
+```
+$ python examples/reed_solomon_demo.py examples/output
+
+  message 'REED-SOLOMON' (12 bytes) + 8 parity -> corrects up to t=4 errors
+  corrupt 4 bytes (a scratch): recovered 'REED-SOLOMON' exactly
+  5 errors (one past the limit): correctly flagged as uncorrectable
+```
+
+Reed-Solomon treats a message as the coefficients of a polynomial over GF(256) and appends `2t`
+parity symbols so the codeword is divisible by a fixed generator. Corruption breaks that
+divisibility in a way that pinpoints both where the errors are and what they should have been --
+correcting up to `t` byte-errors per block however they are distributed. The field is GF(2^8): XOR
+addition, multiplication mod `0x11d`, so multiplication becomes log-table addition. Decoding is the
+classic pipeline: **syndromes** (evaluate at the code roots), **Berlekamp-Massey** (the
+error-locator polynomial), a **Chien** search (its roots = error positions), and **Forney**'s
+formula (the magnitudes). This module implements GF(256) arithmetic, encoding, and full syndrome
+decoding, verified that a clean codeword is unchanged, that up to `t` corrupted bytes anywhere
+(including in the parity) are corrected exactly across dozens of random trials, and that one error
+past the limit is flagged rather than mis-corrected.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
