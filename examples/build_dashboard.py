@@ -335,6 +335,7 @@ def main():
     import skiplist_demo
     import ant_colony_demo
     import avl_tree_demo
+    import segment_tree_demo
 
     import plot_orbits
 
@@ -639,6 +640,7 @@ def main():
     skiplist_txt = run("skiplist_demo", skiplist_demo.main, True)
     ant_colony_txt = run("ant_colony_demo", ant_colony_demo.main, True)
     avl_tree_txt = run("avl_tree_demo", avl_tree_demo.main, True)
+    segment_tree_txt = run("segment_tree_demo", segment_tree_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4316,6 +4318,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("avl_tree.svg"), "a balanced AVL tree drawn in-order left-to-right and by depth top-to-bottom, staying log-deep regardless of insertion order")
             + f'<div class="card">{pre(avl_tree_txt)}</div>'
+            + '</div>'),
+        section(
+            "Segment trees with lazy propagation: range query and range update",
+            "A Fenwick tree answers prefix sums with point updates; a SEGMENT TREE handles arbitrary "
+            "RANGE queries (sum, min, max, ...) AND RANGE updates -- add a value to every element in "
+            "[l, r] -- all in O(log n). Each node stores the aggregate of a contiguous segment; the "
+            "root covers everything and each node splits its range in half between two children, so "
+            "a query descends only into the O(log n) nodes whose segments tile the range. The trick "
+            "for range UPDATES is LAZY PROPAGATION: rather than touch every leaf (O(n)), a node "
+            "records a pending update as a lazy tag, applies it to itself immediately, and pushes it "
+            "down to its children only when a later operation actually visits them -- so a full-array "
+            "update touches ~2 log n nodes, not n. This module implements a segment tree "
+            "parameterized by the aggregate (sum, min, or max) with lazy range-add updates, point "
+            "updates, and range queries, verified against a brute-force array over 3000 random mixed "
+            "operations for all three aggregates, that overlapping range-adds accumulate correctly, "
+            "that point updates match a plain list, and that it handles single-element and "
+            "full-array edge ranges.",
+            '<div class="grid">'
+            + svg_card(out("segment_tree.svg"), "the segment tree drawn as a binary tree of segment sums, the root covering the whole array and each level halving the range")
+            + f'<div class="card">{pre(segment_tree_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

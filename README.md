@@ -293,6 +293,7 @@ ruins a long non-symplectic integration.
 | `src/skiplist.py` | Skip list: probabilistic O(log n) ordered map, express lanes, range queries |
 | `src/ant_colony.py` | Ant colony optimization: pheromone-trail TSP solver, evaporation, elitist deposit |
 | `src/avl_tree.py` | AVL self-balancing BST: rotations, O(log n) ordered map, range queries |
+| `src/segment_tree.py` | Segment tree + lazy propagation: O(log n) range sum/min/max query and range-add |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -577,6 +578,7 @@ ruins a long non-symplectic integration.
 | `examples/skiplist_demo.py` | Express-lane tower figure, search-path trace, geometric level histogram |
 | `examples/ant_colony_demo.py` | TSP tour over a pheromone field, convergence curve, alpha/beta balance |
 | `examples/avl_tree_demo.py` | AVL vs naive-BST height on sorted input, four rotation cases, tree figure |
+| `examples/segment_tree_demo.py` | Range sum/min/max + lazy range-add, O(log n) full-array update, tree figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6977,6 +6979,27 @@ insert, delete, search, ordered traversal, range queries, and min/max, verified 
 brute-force sorted dictionary over 5000 random operations, that the balance invariant holds
 throughout, that the height stays O(log n) even for sorted insertions (where a naive BST would be
 linear), and that all four rotation cases trigger.
+
+## Segment trees with lazy propagation: range query and range update
+
+Both in O(log n), where a Fenwick tree can only do point updates. `segment_tree.py`:
+
+```
+$ python examples/segment_tree_demo.py examples/output
+
+  sum[2..5]=19; after +10 to [2..5] sum[2..5]=59; after +100 to [0..7] sum=871
+  min/max over sub-ranges; range-add shifts them
+  full-array update visits ~2 log n nodes (65536 -> ~34), not n
+```
+
+Each node stores the aggregate of a contiguous segment; a query descends only into the O(log n)
+nodes whose segments tile the range. Range updates use **lazy propagation**: a node records a
+pending update as a lazy tag, applies it to itself, and pushes it to children only when a later
+operation visits them -- so a full-array add touches ~2 log n nodes, not n. This module implements a
+segment tree parameterized by the aggregate (sum, min, or max) with lazy range-add updates, point
+updates, and range queries, verified against a brute-force array over 3000 random mixed operations
+for all three aggregates, that overlapping range-adds accumulate, that point updates match a plain
+list, and that it handles single-element and full-array edge ranges.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
