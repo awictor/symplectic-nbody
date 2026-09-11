@@ -266,6 +266,7 @@ def main():
     import rsa_demo
     import diffie_hellman_demo
     import crc_demo
+    import lz77_demo
 
     import plot_orbits
 
@@ -501,6 +502,7 @@ def main():
     rsa_txt = run("rsa_demo", rsa_demo.main, True)
     diffie_hellman_txt = run("diffie_hellman_demo", diffie_hellman_demo.main, True)
     crc_txt = run("crc_demo", crc_demo.main, True)
+    lz77_txt = run("lz77_demo", lz77_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2930,6 +2932,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("crc.svg"), "the data-plus-CRC frame layout and the miss probability 2^-r shrinking with the number of check bits")
             + f'<div class="card">{pre(crc_txt)}</div>'
+            + '</div>'),
+        section(
+            "LZ77: compression by pointing back at what you have seen",
+            "Lempel and Ziv's 1977 algorithm is the engine inside ZIP, gzip, and PNG. Scanning "
+            "the data, whenever the next bytes have appeared recently it emits a back-reference "
+            "-- a (distance, length) pair meaning 'copy length bytes from distance back' -- "
+            "instead of repeating them; only genuinely new bytes are stored literally. A "
+            "sliding window holds the recent history, and the decompressor replays the tokens "
+            "from its own growing output, so an overlapping copy expands a whole run from one "
+            "token. Repetitive data (text, code, logs) compresses enormously while random data "
+            "cannot shrink at all -- Shannon's entropy limit showing through. This module "
+            "implements the encoder and decoder with a guaranteed lossless round-trip; LZ77 "
+            "plus Huffman together are DEFLATE.",
+            '<div class="grid">'
+            + svg_card(out("lz77.svg"), "the token stream of literals and back-references, and the compression ratio climbing with repetition")
+            + f'<div class="card">{pre(lz77_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -1,0 +1,21 @@
+LZ77: replace repeats with (distance, length) back-references
+
+  input (46 bytes): the cat sat on the mat, the cat sat on the hat
+
+  token stream:
+   the cat s[<-4,3]on [<-15,4]mat,[<-9,5]c[<-24,14]hat
+
+  16 literals + 4 back-references, round-trip: OK
+  compression ratio ~ 1.44x
+
+  Ratio climbs with repetition, but incompressible data stays ~1 (Shannon's limit):
+                        data  bytes   ratio
+               one 'ab' pair      2    1.00
+                    'ab' x 5     10    2.00
+                   'ab' x 50    100   20.00
+           English text x 20    400   14.81
+         pseudo-random bytes    400    1.00
+
+  LZ77 + Huffman together are DEFLATE -- the algorithm inside gzip, ZIP, and PNG.
+
+  wrote examples/output\lz77.svg

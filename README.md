@@ -224,6 +224,7 @@ ruins a long non-symplectic integration.
 | `src/rsa.py` | RSA: Miller-Rabin, extended Euclid, keygen, encrypt/decrypt/sign/verify |
 | `src/diffie_hellman.py` | Diffie-Hellman: safe primes, generators, key exchange, BSGS discrete log |
 | `src/crc.py` | CRC-8/16/32: GF(2) polynomial division, frame check, matches zlib.crc32 |
+| `src/lz77.py` | LZ77: sliding-window dictionary coding, lossless round-trip, compression ratio |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -439,6 +440,7 @@ ruins a long non-symplectic integration.
 | `examples/rsa_demo.py` | Keygen + encrypt/decrypt/sign walkthrough + the key-flow & modexp-cost figure |
 | `examples/diffie_hellman_demo.py` | Exchange walkthrough + the flow diagram & attacker-vs-honest cost figure |
 | `examples/crc_demo.py` | Check values + frame verify/corrupt + the frame layout & miss-probability figure |
+| `examples/lz77_demo.py` | Token stream + ratio-vs-repetition table + the stream & compression-ratio figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5250,6 +5252,30 @@ appends and verifies frames, and demonstrates the detection guarantees. The test
 published `123456789` check values, match `zlib.crc32` exactly across many inputs, and confirm
 every single-bit error and short burst is caught. The error-*detection* companion to the Hamming
 code, which *corrects*.
+
+## LZ77: compression by pointing back at what you have seen
+
+The engine inside ZIP, gzip, and PNG. `lz77.py`:
+
+```
+$ python examples/lz77_demo.py examples/output
+
+                        data  bytes   ratio
+                    'ab' x 50    100   20.00
+           English text x 20    400   14.81
+         pseudo-random bytes    400    1.00
+```
+
+Scanning the data, whenever the next bytes have appeared recently LZ77 emits a back-reference --
+a `(distance, length)` pair meaning "copy length bytes from distance back" -- instead of
+repeating them; only genuinely new bytes are stored literally. A sliding window holds the recent
+history, and the decompressor replays the tokens from its own growing output, so an overlapping
+copy (length > distance) expands a whole run from a single token. Repetitive data compresses
+enormously while random data cannot shrink at all -- Shannon's entropy limit showing through.
+This module implements the sliding-window encoder and the replay decoder, measures the
+compression ratio and token counts, and guarantees a lossless round-trip (verified on empty,
+single-byte, text, binary, and long-run inputs). LZ77 plus Huffman together are DEFLATE, the
+heart of gzip.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
