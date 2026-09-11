@@ -284,6 +284,7 @@ ruins a long non-symplectic integration.
 | `src/mutual_information.py` | Mutual information: joint/conditional entropy, KL divergence, normalized MI, info gain |
 | `src/lru_cache.py` | LRU & LFU caches: O(1) get/put via hash map + linked list / frequency buckets |
 | `src/trie.py` | Trie: O(len) insert/search/prefix, autocomplete, delete-with-pruning, suffix index |
+| `src/sorting.py` | Comparison sorts: insertion/merge/quick/heap + binary heap, stability, comparison counts |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -559,6 +560,7 @@ ruins a long non-symplectic integration.
 | `examples/mutual_information_demo.py` | MI vs channel noise (matches 1-H(f)), nonlinear catch, feature ranking, KL |
 | `examples/lru_cache_demo.py` | LRU eviction trace + LRU-vs-LFU hit rates across uniform/skewed/looping workloads |
 | `examples/trie_demo.py` | Autocomplete (alpha + frequency-ranked), longest-prefix, substring index + tree figure |
+| `examples/sorting_demo.py` | Comparison-count scaling (log-log), stability contrast, heap priority queue |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6757,6 +6759,29 @@ frequency-ranked), deletion with pruning, longest-prefix matching, and a suffix-
 index, verified that it distinguishes a stored word from a mere prefix, autocompletes exactly the
 words under a prefix, deletes without disturbing siblings or shared prefixes, and finds substrings
 and their positions.
+
+## Comparison sorts: the classic four and their trade-offs
+
+Same O(n log n) floor, four different trades. `sorting.py`:
+
+```
+$ python examples/sorting_demo.py examples/output
+
+  n comparisons:  insertion O(n^2) grows ~4x per doubling; merge/quick/heap ~2x
+  stability: insertion & merge stable; quick & heap reorder equal keys
+  heap doubles as a priority queue: pop by priority -> fire, bug, email, meeting, lunch
+```
+
+Insertion sort is O(n^2) but fast on nearly-sorted data (the base case big sorts fall back to);
+merge sort is O(n log n) always and stable but needs O(n) scratch; quick sort is usually fastest and
+in-place but O(n^2) on adversarial input unless the pivot is good (here median-of-three plus an
+insertion cutoff); heap sort is O(n log n) worst-case AND in-place, built on a binary heap that
+doubles as a priority queue. This module implements all four plus the heap with a comparison counter
+and key function, verified that every sort matches Python's built-in on random, sorted, reverse, and
+duplicate-heavy inputs, that merge and insertion are stable while quick and heap are not, that
+comparison counts scale as O(n log n) for the good sorts and O(n^2) for insertion, that
+median-of-three keeps quick sort fast on its sorted/reverse adversaries, and that the heap is a
+correct priority queue.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

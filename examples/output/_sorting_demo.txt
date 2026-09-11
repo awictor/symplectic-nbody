@@ -1,0 +1,33 @@
+Comparison sorts: speed, stability, and worst-case trade-offs
+
+  All four match Python's sorted() exactly; they differ in HOW they get there:
+
+    algorithm  time           stable  in-place  note
+    insertion  O(n^2)         yes     yes       great on nearly-sorted / tiny arrays
+    merge      O(n log n)     yes     no        O(n) scratch; never degrades
+    quick      O(n log n)*    no      yes       *O(n^2) worst; median-of-3 avoids it
+    heap       O(n log n)     no      yes       worst-case AND in-place
+
+  Comparisons vs input size (random data):
+    n       insertion      merge      quick       heap
+    100          2554        544        642       1016
+    200          9545       1277       1552       2460
+    400         42183       2958       3784       5728
+    800        159812       6725       8665      13033
+    1600       647433      15071      17964      29259
+    (insertion's column grows ~4x when n doubles = O(n^2); the rest ~2x = O(n log n))
+
+  Stability -- sort (key, original-index) pairs by key; do equal keys keep their order?
+    insertion : stable (0 reorderings)
+    merge     : stable (0 reorderings)
+    quick     : UNstable (10 reorderings)
+    heap      : UNstable (16 reorderings)
+
+  The binary heap behind heap sort is also a priority queue:
+    popped by priority: ['fire', 'bug', 'email', 'meeting', 'lunch']
+
+  Every comparison sort is bounded below by O(n log n); the interesting differences are
+  the constants, the memory (merge needs scratch, heap and quick don't), stability, and
+  the worst case (merge and heap never degrade; quick can without a good pivot).
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\sorting.svg

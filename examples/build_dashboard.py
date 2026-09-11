@@ -326,6 +326,7 @@ def main():
     import mutual_information_demo
     import lru_cache_demo
     import trie_demo
+    import sorting_demo
 
     import plot_orbits
 
@@ -621,6 +622,7 @@ def main():
     mutual_information_txt = run("mutual_information_demo", mutual_information_demo.main, True)
     lru_cache_txt = run("lru_cache_demo", lru_cache_demo.main, True)
     trie_txt = run("trie_demo", trie_demo.main, True)
+    sorting_txt = run("sorting_demo", sorting_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4112,6 +4114,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("trie.svg"), "the trie drawn as a character-labelled tree with word-ending nodes filled green and interior prefix nodes outlined")
             + f'<div class="card">{pre(trie_txt)}</div>'
+            + '</div>'),
+        section(
+            "Comparison sorts: the classic four and their trade-offs",
+            "Sorting is computing's most-studied problem, and the classic comparison algorithms each "
+            "make a different trade among speed, memory, stability, and worst case -- all bounded "
+            "below by the O(n log n) decision-tree limit. INSERTION sort is O(n^2) but fast on "
+            "nearly-sorted data and the base case big sorts fall back to; MERGE sort is O(n log n) "
+            "ALWAYS and stable but needs O(n) scratch; QUICK sort is usually fastest and in-place "
+            "but O(n^2) on adversarial input unless the pivot is chosen well (here median-of-three "
+            "plus an insertion cutoff); HEAP sort is O(n log n) worst-case AND in-place, built on a "
+            "binary heap that doubles as a priority queue. This module implements all four plus the "
+            "heap with a comparison counter and a key function, verified that every sort matches "
+            "Python's built-in on random, sorted, reverse, and duplicate-heavy inputs, that merge "
+            "and insertion are stable while quick and heap are not, that comparison counts scale as "
+            "O(n log n) for the good sorts and O(n^2) for insertion, that median-of-three keeps "
+            "quick sort fast on its classic sorted/reverse adversaries, and that the heap is a "
+            "correct priority queue.",
+            '<div class="grid">'
+            + svg_card(out("sorting.svg"), "comparison counts vs input size on a log-log plot, insertion's O(n^2) slope pulling away from the parallel O(n log n) lines of merge, quick, and heap")
+            + f'<div class="card">{pre(sorting_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
