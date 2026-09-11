@@ -1,0 +1,20 @@
+Boyer-Moore: match right-to-left and jump ahead on a mismatch
+
+  text    : GCATCGCAGAGAGTATACAGTACG
+  pattern : GCAGAGAG
+  found at: [5]  (naive agrees: True)
+
+  bad-character table (last index of each pattern character):
+   G:7  C:1  A:6
+
+  Character comparisons, Boyer-Moore vs naive (English text, longer patterns win):
+                 pattern  BM comps    naive  speedup
+                     fox      1079     2818     2.6x
+                lazy dog       781     3113     4.0x
+          jumps over the      1255     3467     2.8x
+    the quick brown fox       1559     4352     2.8x
+
+  A longer pattern with a rare mismatch character leaps forward by nearly its whole
+  length, so most of the text is never even examined -- the search is sublinear.
+
+  wrote examples/output\boyer_moore.svg

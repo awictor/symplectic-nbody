@@ -273,6 +273,7 @@ def main():
     import union_find_demo
     import dijkstra_demo
     import kdtree_demo
+    import boyer_moore_demo
 
     import plot_orbits
 
@@ -515,6 +516,7 @@ def main():
     union_find_txt = run("union_find_demo", union_find_demo.main, True)
     dijkstra_txt = run("dijkstra_demo", dijkstra_demo.main, True)
     kdtree_txt = run("kdtree_demo", kdtree_demo.main, True)
+    boyer_moore_txt = run("boyer_moore_demo", boyer_moore_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3056,6 +3058,23 @@ def main():
             '<div class="grid">'
             + svg_card(out("kdtree.svg"), "a point cloud with the query, its nearest neighbour, its five nearest, and a radius query circle")
             + f'<div class="card">{pre(kdtree_txt)}</div>'
+            + '</div>'),
+        section(
+            "Boyer-Moore: the string search that skips ahead",
+            "Finding a pattern in text is one of computing's most-run operations. The naive scan "
+            "checks every position in O(n*m); Boyer-Moore -- the algorithm your editor's find "
+            "actually uses -- matches the pattern right-to-left and, on a mismatch, jumps forward "
+            "by more than one position, often by nearly the whole pattern. Two precomputed rules "
+            "set the skip: the bad-character rule shifts so the last occurrence of the mismatched "
+            "text character lines up (or past it entirely if absent), and the good-suffix rule "
+            "realigns an already-matched suffix without undoing confirmed matches. Taking the "
+            "larger shift keeps it safe and makes it sublinear on real text -- most characters "
+            "are never examined. This module builds both tables and finds first/all/overlapping "
+            "occurrences, proven correct exhaustively against a naive search over 5000 random "
+            "cases.",
+            '<div class="grid">'
+            + svg_card(out("boyer_moore.svg"), "character comparisons vs pattern length: the naive scan rises while Boyer-Moore falls")
+            + f'<div class="card">{pre(boyer_moore_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

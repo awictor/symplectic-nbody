@@ -231,6 +231,7 @@ ruins a long non-symplectic integration.
 | `src/union_find.py` | Union-Find: path compression + union by rank, components, Kruskal MST |
 | `src/dijkstra.py` | Dijkstra shortest paths: from-scratch min-heap, path reconstruction, Bellman-Ford check |
 | `src/kdtree.py` | k-d tree: nearest / k-nearest / radius search, brute-force verified in 2D & 3D |
+| `src/boyer_moore.py` | Boyer-Moore string search: bad-character + good-suffix skips, sublinear |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -453,6 +454,7 @@ ruins a long non-symplectic integration.
 | `examples/union_find_demo.py` | Component-merge trace + Kruskal MST + the MST-edge & merge figure |
 | `examples/dijkstra_demo.py` | Distances vs Bellman-Ford + a grid maze + the distance-flood & route figure |
 | `examples/kdtree_demo.py` | Nearest/k-NN/radius vs brute force + the point-cloud query figure |
+| `examples/boyer_moore_demo.py` | Match + bad-char table + the comparison-count vs pattern-length figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5431,6 +5433,28 @@ tree by recursive median splitting and does exact nearest, k-nearest, and radius
 cross-checked against a brute-force scan in 2D and 3D (including duplicate points and
 query-on-a-point edge cases). It powers k-NN classification, particle neighbour lists, and
 map/geographic search.
+
+## Boyer-Moore: the string search that skips ahead
+
+The find in your editor, matching right-to-left. `boyer_moore.py`:
+
+```
+$ python examples/boyer_moore_demo.py examples/output
+
+                 pattern  BM comps    naive  speedup
+                     fox      1079     2818     2.6x
+                lazy dog       781     3113     4.0x
+    the quick brown fox       1559     4352     2.8x
+```
+
+The naive substring scan checks every position in `O(n*m)`; Boyer-Moore matches the pattern
+right-to-left and, on a mismatch, jumps forward by more than one position -- often nearly the
+whole pattern. The bad-character rule shifts so the last occurrence of the mismatched text
+character lines up (or past it entirely if absent), and the good-suffix rule realigns an
+already-matched suffix without undoing confirmed matches; taking the larger shift keeps the
+search safe and sublinear -- most characters are never examined. This module builds both tables
+and finds first, all, and overlapping occurrences, proven correct *exhaustively* against a naive
+search over 5000 random text/pattern pairs plus repetitive and DNA-like cases.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
