@@ -368,6 +368,7 @@ def main():
     import van_emde_boas_demo
     import sparse_table_demo
     import pollard_rho_demo
+    import perlin_demo
 
     import plot_orbits
 
@@ -705,6 +706,7 @@ def main():
     van_emde_boas_txt = run("van_emde_boas_demo", van_emde_boas_demo.main, True)
     sparse_table_txt = run("sparse_table_demo", sparse_table_demo.main, True)
     pollard_rho_txt = run("pollard_rho_demo", pollard_rho_demo.main, True)
+    perlin_txt = run("perlin_demo", perlin_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5108,6 +5110,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("pollard_rho.svg"), "the measured number of Pollard-rho iterations to find a factor (blue) tracking the sqrt(p) trend line (yellow dashed) -- the birthday-paradox speedup over trial division's linear p")
             + f'<div class="card">{pre(pollard_rho_txt)}</div>'
+            + '</div>'),
+        section(
+            "Perlin noise: smooth gradient fields for procedural generation",
+            "Random numbers are jagged; nature is smooth. PERLIN NOISE, Ken Perlin's 1983 invention "
+            "(and an Academy Award winner for its use in film), produces a random-looking but "
+            "CONTINUOUS field -- values that vary smoothly across space with no visible grid -- the "
+            "foundation of procedurally generated terrain, clouds, textures, and fire. Unlike white "
+            "noise, it has controllable feature size and looks organic because it is differentiable. "
+            "The construction is GRADIENT noise: lay an integer lattice over space and give each "
+            "lattice point a pseudo-random unit gradient (deterministically, from a hashed "
+            "permutation table, so the field is reproducible and infinite); to evaluate a point, take "
+            "at each surrounding corner the dot product of that corner's gradient with the vector to "
+            "the point, and interpolate with the SMOOTHSTEP fade 6t^5 - 15t^4 + 10t^3 (whose first "
+            "and second derivatives vanish at the ends, which is what makes it seamless). The noise "
+            "passes through zero on the grid and undulates between. Layering copies at doubling "
+            "frequency and halving amplitude -- FRACTAL BROWNIAN MOTION -- adds detail at every "
+            "scale, the standard terrain recipe. This module implements reproducible 1-D and 2-D "
+            "Perlin noise and fBm, verified that the noise is exactly zero at integer lattice points "
+            "(the defining property), stays within bounds, is deterministic per seed and continuous "
+            "(a 1e-3 step moves the output by under 0.003), has near-zero mean over a large region, "
+            "and that fBm with more octaves adds high-frequency detail while staying bounded.",
+            '<div class="grid">'
+            + svg_card(out("perlin.svg"), "left: a 2-D fractal-Brownian-motion heightfield with a terrain palette (blue lows through green and tan to white peaks); right: a 1-D fBm cross-section, the organic undulation of layered gradient noise")
+            + f'<div class="card">{pre(perlin_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

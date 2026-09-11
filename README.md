@@ -326,6 +326,7 @@ ruins a long non-symplectic integration.
 | `src/van_emde_boas.py` | Van Emde Boas tree: integer set with O(log log u) successor/predecessor |
 | `src/sparse_table.py` | Sparse table (O(1) range min/max/gcd) + binary-lifting LCA with tree distance |
 | `src/pollard_rho.py` | Pollard's rho / p-1 factorization + Miller-Rabin, totient, and divisor count |
+| `src/perlin.py` | Perlin gradient noise (1-D/2-D) + fractal Brownian motion for procedural fields |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -643,6 +644,7 @@ ruins a long non-symplectic integration.
 | `examples/van_emde_boas_demo.py` | O(log log u) recursion depth staying flat as the universe explodes vs a BST's log u |
 | `examples/sparse_table_demo.py` | Range-minimum query on an array + lowest-common-ancestor on a tree |
 | `examples/pollard_rho_demo.py` | Factoring RSA-style semiprimes + iterations tracking the sqrt(p) trend |
+| `examples/perlin_demo.py` | 2-D fBm terrain heightfield + a 1-D fBm cross-section |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7753,6 +7755,27 @@ Brent's Pollard rho, Pollard p-1, full recursive factorization, and Euler totien
 from the factors, verified against brute-force trial division and a sieve: the product of the factors
 equals the input, every factor is prime, both primes of random semiprimes are recovered, and totient
 and divisor counts match brute-force enumeration.
+
+## Perlin noise: smooth gradient fields for procedural generation
+
+Random-looking but continuous fields -- the basis of procedural terrain and clouds. `perlin.py`:
+
+```
+$ python examples/perlin_demo.py examples/output
+
+  noise2(3,5) = 0 exactly (zero at every integer lattice point)
+  noise2(3.5, 5.5) = 0.3535 (smooth between)
+  100x100 grid: range [-0.86, 0.86], mean -0.008
+  fractal Brownian motion layers octaves for detail at every scale
+```
+
+Perlin noise assigns each integer lattice point a pseudo-random gradient (from a hashed permutation
+table, so it is reproducible and infinite) and interpolates the corner dot products with a smoothstep
+fade 6t^5 - 15t^4 + 10t^3, giving a differentiable field that passes through zero on the grid.
+Fractal Brownian motion sums octaves at doubling frequency and halving amplitude for natural detail.
+This module implements 1-D and 2-D noise and fBm, verified that the noise is exactly zero at lattice
+points, stays bounded, is deterministic and continuous (a 1e-3 step moves output by under 0.003), has
+near-zero mean, and that more fBm octaves add high-frequency detail.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
