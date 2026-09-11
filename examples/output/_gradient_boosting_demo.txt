@@ -1,0 +1,36 @@
+Gradient boosting: shallow trees added in sequence, each fixing the last's errors
+
+  regression on 70 noisy points of sin(x) + 0.3x
+
+  final R^2 0.9997, MSE 0.0003
+
+  Training loss falls monotonically as trees are added:
+    after   1 trees: MSE 0.7882
+    after   2 trees: MSE 0.6447
+    after   5 trees: MSE 0.3595
+    after  10 trees: MSE 0.1474
+    after  30 trees: MSE 0.0083
+    after  60 trees: MSE 0.0017
+    after 120 trees: MSE 0.0003
+
+  A single depth-3 tree: MSE 0.0826 -- boosting is 252x better.
+
+  Learning rate vs number of trees (shrinkage regularizes):
+    lr=0.02 trees= 10: MSE 0.6537
+    lr=0.02 trees= 40: MSE 0.2198
+    lr=0.02 trees=120: MSE 0.0181
+    lr=0.1  trees= 10: MSE 0.1474
+    lr=0.1  trees= 40: MSE 0.0035
+    lr=0.1  trees=120: MSE 0.0003
+    lr=0.5  trees= 10: MSE 0.0031
+    lr=0.5  trees= 40: MSE 0.0001
+    lr=0.5  trees=120: MSE 0.0000
+
+  Classification on a circular boundary (a nonlinear problem for a linear model):
+    accuracy 99.5%, log-loss 0.113
+
+  Boosting is gradient descent in function space: each tree fits the residual (the
+  negative gradient of the loss), and a shrunken step of it is added to the model. Small
+  learning rates plus many shallow trees is the recipe that wins tabular competitions.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\gradient_boosting.svg

@@ -316,6 +316,7 @@ def main():
     import hierarchical_demo
     import naive_bayes_demo
     import knn_demo
+    import gradient_boosting_demo
 
     import plot_orbits
 
@@ -601,6 +602,7 @@ def main():
     hierarchical_txt = run("hierarchical_demo", hierarchical_demo.main, True)
     naive_bayes_txt = run("naive_bayes_demo", naive_bayes_demo.main, True)
     knn_txt = run("knn_demo", knn_demo.main, True)
+    gradient_boosting_txt = run("gradient_boosting_demo", gradient_boosting_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3892,6 +3894,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("knn.svg"), "the jagged k=1 decision boundary beside the smoother cross-validation-selected k on the same noisy two-class data")
             + f'<div class="card">{pre(knn_txt)}</div>'
+            + '</div>'),
+        section(
+            "Gradient boosting: shallow trees that correct each other",
+            "A random forest averages independent deep trees; gradient boosting grows trees in "
+            "SEQUENCE, each correcting the errors of those before it. It is gradient descent in "
+            "FUNCTION space: start with a constant, then repeatedly fit a small tree to the "
+            "negative gradient of the loss and add a shrunken step of it to the running model. For "
+            "squared-error regression that gradient is exactly the RESIDUAL y - F(x), so each tree "
+            "learns what the ensemble still gets wrong; for logistic classification it is "
+            "y - sigmoid(F(x)). Three knobs trade bias for variance: the number of trees adds "
+            "capacity, the LEARNING RATE shrinks each tree's contribution (small rates need more "
+            "trees but generalize better -- shrinkage is regularization), and tree DEPTH caps the "
+            "feature interactions each weak learner captures. This module implements boosting for "
+            "squared-error regression and log-loss binary classification over self-contained "
+            "regression trees, with staged predictions, verified that training loss decreases "
+            "monotonically as trees are added, that the ensemble beats a single tree by ~250x on a "
+            "noisy target, that a smaller learning rate needs more trees, and that it separates a "
+            "circular class boundary. This is the method that wins most tabular-data competitions.",
+            '<div class="grid">'
+            + svg_card(out("gradient_boosting.svg"), "the regression fit sharpening from 1 to 120 trees over the noisy data, beside the training loss falling monotonically on a log scale")
+            + f'<div class="card">{pre(gradient_boosting_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

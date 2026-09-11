@@ -274,6 +274,7 @@ ruins a long non-symplectic integration.
 | `src/hierarchical.py` | Agglomerative clustering: single/complete/average/Ward linkage, dendrogram, tree cut |
 | `src/naive_bayes.py` | Naive Bayes: Gaussian & multinomial, log-space, Laplace smoothing, class posteriors |
 | `src/knn.py` | k-nearest-neighbours: classify & regress, uniform/distance weights, standardize, LOO CV |
+| `src/gradient_boosting.py` | Gradient boosting: sequential regression trees, squared-error & log-loss, shrinkage |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -539,6 +540,7 @@ ruins a long non-symplectic integration.
 | `examples/hierarchical_demo.py` | Blobs + dendrogram figure, gap-based k selection, single-vs-complete chaining contrast |
 | `examples/naive_bayes_demo.py` | Gaussian decision regions + multinomial spam filter with per-word log-odds figure |
 | `examples/knn_demo.py` | Decision boundary jagged at k=1 vs smooth LOO-selected k, regression on a noisy sine |
+| `examples/gradient_boosting_demo.py` | Fit sharpening from 1 to 120 trees + loss curve, learning-rate/n-trees trade |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6508,6 +6510,31 @@ and regression with both weightings and leave-one-out cross-validation, verified
 the training labels, recovers separable classes and a smooth regression target, that
 distance-weighting follows the closest neighbour, that LOO selects k>1 under label noise, and that
 its neighbours agree with the k-d tree.
+
+## Gradient boosting: shallow trees that correct each other
+
+Grow trees in sequence, each fixing the last's mistakes. `gradient_boosting.py`:
+
+```
+$ python examples/gradient_boosting_demo.py examples/output
+
+  regression on noisy sin(x)+0.3x: R^2 0.9997, MSE 0.0003
+  training loss falls monotonically: 0.79 (1 tree) -> 0.0003 (120 trees)
+  single depth-3 tree MSE 0.083 -> boosting is 252x better
+  circular-boundary classification: accuracy 99.5%, log-loss 0.11
+```
+
+Where a random forest averages independent deep trees, gradient boosting grows trees in sequence,
+each correcting the errors of the last -- gradient descent in function space. Start with a constant,
+then repeatedly fit a small tree to the negative gradient of the loss (the residual `y - F(x)` for
+squared error, `y - sigmoid(F(x))` for logistic) and add a shrunken step of it. The number of
+trees adds capacity, the **learning rate** shrinks each tree's contribution (small rates need more
+trees but generalize better -- shrinkage is regularization), and tree depth caps feature
+interactions. This module implements boosting for squared-error regression and log-loss binary
+classification over self-contained regression trees with staged predictions, verified that training
+loss decreases monotonically, the ensemble beats a single tree by ~250x on a noisy target, a smaller
+learning rate needs more trees, and it separates a circular class boundary. The method that wins
+most tabular-data competitions.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
