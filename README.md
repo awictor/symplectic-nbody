@@ -260,6 +260,7 @@ ruins a long non-symplectic integration.
 | `src/conjugate_gradient.py` | Conjugate gradient: iterative SPD solver, Jacobi preconditioning |
 | `src/svd.py` | SVD & PCA: A=USV^T via eigen(A^TA), low-rank approx, principal components |
 | `src/kmeans.py` | k-means clustering: Lloyd's algorithm, k-means++ init, silhouette |
+| `src/regression.py` | Linear & logistic regression: QR + gradient descent, R^2, accuracy, L2 |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -511,6 +512,7 @@ ruins a long non-symplectic integration.
 | `examples/conjugate_gradient_demo.py` | CG vs steepest descent + the residual-decay figure |
 | `examples/svd_demo.py` | SVD + low-rank + PCA + the data-cloud axes & singular-value figure |
 | `examples/kmeans_demo.py` | Cluster recovery + elbow/silhouette + the coloured-clusters & elbow figure |
+| `examples/regression_demo.py` | Linear + logistic fits + log-loss decay + the line & sigmoid figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6145,6 +6147,27 @@ distance from the nearest chosen one, and a few restarts keep the best. The iner
 silhouette score both flag the natural cluster count. This module implements Lloyd's with random
 and k-means++ initialization, multi-restart selection, and the silhouette, verified to recover
 well-separated blobs (centroids on the true centres, sizes 30/30/30) with monotone inertia.
+
+## Linear and logistic regression: fitting a line and a decision boundary
+
+The base of supervised learning. `regression.py`:
+
+```
+$ python examples/regression_demo.py examples/output
+
+  linear: y = 1.44 x + 2.45 (true 1.5, 2.0), R^2 = 0.78
+  logistic: accuracy 100%, boundary x = 5.23, log-loss 0.58 -> 0.03 over training
+```
+
+Linear regression fits `y = w.x + b` by minimizing squared error -- solved in closed form by QR
+least squares (avoiding the normal equations' condition-number squaring) or by gradient descent
+for large data. Logistic regression predicts a probability `sigmoid(w.x + b)` for binary labels,
+fit by gradient descent on the convex log-loss, and its decision boundary `w.x + b = 0` is a
+separating hyperplane. Both are linear models; logistic just squashes through the sigmoid to stay
+a probability, and an L2 penalty shrinks the weights for generalization. This module fits linear
+regression by both QR and gradient descent, logistic by gradient descent with optional L2, and
+reports R^2 for regression and accuracy / log-loss for classification, verified against exact
+fits and separable data.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

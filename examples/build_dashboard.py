@@ -302,6 +302,7 @@ def main():
     import conjugate_gradient_demo
     import svd_demo
     import kmeans_demo
+    import regression_demo
 
     import plot_orbits
 
@@ -573,6 +574,7 @@ def main():
     conjugate_gradient_txt = run("conjugate_gradient_demo", conjugate_gradient_demo.main, True)
     svd_txt = run("svd_demo", svd_demo.main, True)
     kmeans_txt = run("kmeans_demo", kmeans_demo.main, True)
+    regression_txt = run("regression_demo", regression_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3596,6 +3598,23 @@ def main():
             '<div class="grid">'
             + svg_card(out("kmeans.svg"), "points coloured by recovered cluster with their centroids, and the inertia elbow marking the true k")
             + f'<div class="card">{pre(kmeans_txt)}</div>'
+            + '</div>'),
+        section(
+            "Linear and logistic regression: fitting a line and a decision boundary",
+            "The two workhorses of supervised learning. Linear regression fits y = w.x + b by "
+            "minimizing squared error -- solved in closed form by QR least squares (avoiding the "
+            "normal equations' condition-number squaring) or by gradient descent for large data. "
+            "Logistic regression predicts a probability sigmoid(w.x + b) for binary labels, fit "
+            "by gradient descent on the convex log-loss, and its decision boundary w.x + b = 0 "
+            "is a separating hyperplane. Both are linear models; logistic just squashes through "
+            "the sigmoid to stay a probability, and an L2 penalty shrinks the weights for "
+            "generalization. This module fits linear regression by both QR and gradient descent, "
+            "logistic by gradient descent with optional L2, and reports R^2 for regression and "
+            "accuracy / log-loss for classification, verified against exact fits and separable "
+            "data.",
+            '<div class="grid">'
+            + svg_card(out("regression.svg"), "the least-squares line through noisy points, and the logistic sigmoid crossing 0.5 at the decision boundary")
+            + f'<div class="card">{pre(regression_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

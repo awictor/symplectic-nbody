@@ -1,0 +1,21 @@
+Linear regression: least-squares line through noisy data
+
+  QR fit:   y = 1.442 x + 2.452  (true slope 1.5, intercept 2.0)
+  GD fit:   y = 1.442 x + 2.452  (matches QR)
+  R^2 = 0.7831
+
+Logistic regression: probability of class 1 vs x (boundary where p = 0.5)
+  accuracy 100.0%, log-loss 0.0314
+  decision boundary at x = 5.23  (data splits at 5)
+
+  Log-loss falls as gradient descent proceeds:
+       10 epochs: log-loss 0.5806
+      100 epochs: log-loss 0.1399
+     1000 epochs: log-loss 0.0638
+     6000 epochs: log-loss 0.0314
+
+  Linear regression fits a line by minimizing squared error (closed form or GD);
+  logistic squashes w.x+b through the sigmoid to a probability and minimizes log-loss,
+  a convex objective with one global minimum. Both are the base of modern ML pipelines.
+
+  wrote examples/output\regression.svg
