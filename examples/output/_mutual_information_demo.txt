@@ -1,0 +1,33 @@
+Mutual information: how much one variable tells you about another
+
+  Binary symmetric channel, Y = X flipped with probability f:
+  (I falls from H(X)=1 bit at f=0 to 0 at f=0.5, the fully-noisy channel)
+
+    f = 0.00: I(X;Y) = 1.000 bits ########################################
+    f = 0.05: I(X;Y) = 0.712 bits ############################
+    f = 0.10: I(X;Y) = 0.542 bits ######################
+    f = 0.20: I(X;Y) = 0.287 bits ###########
+    f = 0.30: I(X;Y) = 0.123 bits #####
+    f = 0.40: I(X;Y) = 0.027 bits #
+    f = 0.50: I(X;Y) = 0.000 bits 
+
+  MI sees nonlinear dependence that (linear) correlation misses:
+    Y = X^2 (deterministic): correlation -0.002 (near 0, looks 'unrelated')
+                             mutual information 1.522 bits (= H(X), fully dependent)
+
+  Feature selection -- rank features by information gain about the label:
+    informative: information gain 0.5054 bits
+           weak: information gain 0.0702 bits
+          noise: information gain 0.0003 bits
+
+  KL divergence D(p||q) -- extra bits to code p-samples with a q-code:
+    D([0.5,0.50] || fair) = 0.0000 bits
+    D([0.7,0.30] || fair) = 0.1187 bits
+    D([0.9,0.10] || fair) = 0.5310 bits
+    D([0.99,0.01] || fair) = 0.9192 bits
+
+  Mutual information is the shared information I(X;Y) = H(X)+H(Y)-H(X,Y): zero iff
+  independent, maximal for a deterministic relationship, and blind to nothing -- it
+  catches any dependency, which is why it drives feature selection and tree splits.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\mutual_information.svg

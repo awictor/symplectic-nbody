@@ -281,6 +281,7 @@ ruins a long non-symplectic integration.
 | `src/genetic_algorithm.py` | Genetic algorithm: tournament selection, crossover, mutation, elitism, knapsack |
 | `src/particle_swarm.py` | Particle swarm optimization: inertia/cognitive/social velocity, benchmark functions |
 | `src/reed_solomon.py` | Reed-Solomon codes: GF(256), encode, syndrome/Berlekamp-Massey/Chien/Forney decode |
+| `src/mutual_information.py` | Mutual information: joint/conditional entropy, KL divergence, normalized MI, info gain |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -553,6 +554,7 @@ ruins a long non-symplectic integration.
 | `examples/genetic_algorithm_demo.py` | OneMax + real optimization fitness curves, 0/1 knapsack solve |
 | `examples/particle_swarm_demo.py` | Sphere/Rastrigin/Rosenbrock solves, swarm scatter + inertia-decay convergence |
 | `examples/reed_solomon_demo.py` | Corrupt bytes in a message and recover it; byte-grid error/repair figure |
+| `examples/mutual_information_demo.py` | MI vs channel noise (matches 1-H(f)), nonlinear catch, feature ranking, KL |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6683,6 +6685,28 @@ formula (the magnitudes). This module implements GF(256) arithmetic, encoding, a
 decoding, verified that a clean codeword is unchanged, that up to `t` corrupted bytes anywhere
 (including in the parity) are corrected exactly across dozens of random trials, and that one error
 past the limit is flagged rather than mis-corrected.
+
+## Mutual information: measuring dependence between variables
+
+How much one variable tells you about another. `mutual_information.py`:
+
+```
+$ python examples/mutual_information_demo.py examples/output
+
+  binary channel Y=X flipped w.p. f: I falls 1.000 bit (f=0) -> 0 (f=0.5), matches 1-H(f)
+  Y = X^2 (deterministic): correlation -0.002, mutual information 1.52 bits
+  feature info gain: informative 0.505, weak 0.070, noise 0.000 bits
+  KL(D([0.9,0.1] || fair)) = 0.531 bits
+```
+
+Mutual information `I(X;Y) = H(X) + H(Y) - H(X,Y)` measures the shared information -- zero exactly
+when X and Y are independent, `H(X)` for a deterministic copy, and blind to nothing (it catches
+nonlinear dependence that correlation reports as ~0). The KL divergence `D(p||q) = sum p log2(p/q)`
+is the extra bits to code p-samples with a q-code, and information gain (the decision-tree split
+criterion) is exactly `I(feature; label)`. This module estimates entropies and mutual information
+from samples or a joint distribution with KL divergence and normalized MI, verified that
+independent variables have zero MI, a copy has maximal `I = H`, the entropy identities hold, KL is
+nonnegative and zero only for equal distributions, and against hand-computed values.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

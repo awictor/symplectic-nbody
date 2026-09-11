@@ -323,6 +323,7 @@ def main():
     import genetic_algorithm_demo
     import particle_swarm_demo
     import reed_solomon_demo
+    import mutual_information_demo
 
     import plot_orbits
 
@@ -615,6 +616,7 @@ def main():
     genetic_algorithm_txt = run("genetic_algorithm_demo", genetic_algorithm_demo.main, True)
     particle_swarm_txt = run("particle_swarm_demo", particle_swarm_demo.main, True)
     reed_solomon_txt = run("reed_solomon_demo", reed_solomon_demo.main, True)
+    mutual_information_txt = run("mutual_information_demo", mutual_information_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4046,6 +4048,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("reed_solomon.svg"), "the received codeword with injected errors in red, and the decoded codeword with the same positions repaired in green, split at the message/parity boundary")
             + f'<div class="card">{pre(reed_solomon_txt)}</div>'
+            + '</div>'),
+        section(
+            "Mutual information: measuring dependence between variables",
+            "Entropy measures the uncertainty in one variable; MUTUAL INFORMATION I(X;Y) measures "
+            "how much knowing one reduces the uncertainty in the other -- the shared information. "
+            "Unlike correlation it captures ANY relationship, linear or not: I = 0 exactly when X "
+            "and Y are independent, and it equals H(X) for a deterministic copy. Everything is "
+            "built from Shannon entropy: I(X;Y) = H(X) + H(Y) - H(X,Y) = H(X) - H(X|Y). The "
+            "Kullback-Leibler divergence D(p||q) = sum p log2(p/q) -- the extra bits to code "
+            "p-samples with a q-code -- is the asymmetric distance from which MI is the divergence "
+            "of the joint from the product of marginals, and INFORMATION GAIN (the decision-tree "
+            "split criterion) is exactly the mutual information between a feature and the label. "
+            "This module estimates entropies and mutual information from samples or a joint "
+            "distribution with KL divergence and normalized MI, verified that independent variables "
+            "have zero MI, a copy has I = H (maximal), the H(X)+H(Y)-H(X,Y) and conditional-entropy "
+            "identities hold, KL is nonnegative and zero only for equal distributions, and against "
+            "hand-computed values -- and it catches a nonlinear dependence that correlation reports "
+            "as ~0.",
+            '<div class="grid">'
+            + svg_card(out("mutual_information.svg"), "mutual information falling from 1 bit to 0 as a binary channel's flip probability rises, matching the theoretical 1 - H(f) curve")
+            + f'<div class="card">{pre(mutual_information_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
