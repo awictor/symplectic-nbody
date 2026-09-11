@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.35       11.85      0.8x
-   400          36.83       37.25      1.0x
-   800         145.88      111.48      1.3x
-  1600         654.37      361.33      1.8x
-  3200        2869.92     1133.02      2.5x
+   200           8.97       11.61      0.8x
+   400          36.30       37.54      1.0x
+   800         142.76      111.83      1.3x
+  1600         694.18      359.16      1.9x
+  3200        2566.71     1020.05      2.5x
 
-empirical scaling exponent  direct ~ N^2.07   barnes-hut ~ N^1.64
+empirical scaling exponent  direct ~ N^2.06   barnes-hut ~ N^1.62
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -197852,6 +197852,85 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   electrodeposits, viscous fingers, lightning, and soot all grow this way.
 
   wrote examples/output\dla.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Benford&#x27;s law: why leading digits are not uniform</h2>
+    <p class="blurb">Count the leading digit of river areas, physical constants, stock prices, or file sizes and you do not get each of 1-9 a ninth of the time: 1 leads about 30% and 9 barely 4.6%, following P(d) = log10(1 + 1/d). The reason is scale invariance -- a quantity spanning many orders of magnitude is uniform in its logarithm, and a uniform log-mantissa maps to this logarithmic digit law, the only distribution invariant under a change of units. Multiplicative data (Fibonacci numbers, powers, factorials, populations) obey it, and departures flag fabricated accounting and election returns, which is why forensic auditors test for it.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420" font-family="monospace">
+<rect width="760" height="420" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">Benford's law: leading digits follow log10(1 + 1/d)</text>
+<line x1="60" y1="350.0" x2="720" y2="350.0" stroke="#21262d" stroke-width="1"/>
+<text x="52" y="353.0" fill="#8b949e" font-size="9" text-anchor="end">0.0</text>
+<line x1="60" y1="261.4" x2="720" y2="261.4" stroke="#21262d" stroke-width="1"/>
+<text x="52" y="264.4" fill="#8b949e" font-size="9" text-anchor="end">0.1</text>
+<line x1="60" y1="172.9" x2="720" y2="172.9" stroke="#21262d" stroke-width="1"/>
+<text x="52" y="175.9" fill="#8b949e" font-size="9" text-anchor="end">0.2</text>
+<line x1="60" y1="84.3" x2="720" y2="84.3" stroke="#21262d" stroke-width="1"/>
+<text x="52" y="87.3" fill="#8b949e" font-size="9" text-anchor="end">0.3</text>
+<rect x="75.1" y="83.4" width="20.5" height="266.6" fill="#4dabf7"/>
+<rect x="97.7" y="193.4" width="20.5" height="156.6" fill="#ff922b"/>
+<text x="96.7" y="366.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="148.5" y="193.2" width="20.5" height="156.8" fill="#4dabf7"/>
+<rect x="171.0" y="208.9" width="20.5" height="141.1" fill="#ff922b"/>
+<text x="170.0" y="366.0" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<rect x="221.8" y="239.3" width="20.5" height="110.7" fill="#4dabf7"/>
+<rect x="244.3" y="236.8" width="20.5" height="113.2" fill="#ff922b"/>
+<text x="243.3" y="366.0" fill="#8b949e" font-size="11" text-anchor="middle">3</text>
+<rect x="295.1" y="265.0" width="20.5" height="85.0" fill="#4dabf7"/>
+<rect x="317.7" y="272.9" width="20.5" height="77.1" fill="#ff922b"/>
+<text x="316.7" y="366.0" fill="#8b949e" font-size="11" text-anchor="middle">4</text>
+<rect x="368.5" y="279.1" width="20.5" height="70.9" fill="#4dabf7"/>
+<rect x="391.0" y="272.1" width="20.5" height="77.9" fill="#ff922b"/>
+<text x="390.0" y="366.0" fill="#8b949e" font-size="11" text-anchor="middle">5</text>
+<rect x="441.8" y="290.7" width="20.5" height="59.3" fill="#4dabf7"/>
+<rect x="464.3" y="271.3" width="20.5" height="78.7" fill="#ff922b"/>
+<text x="463.3" y="366.0" fill="#8b949e" font-size="11" text-anchor="middle">6</text>
+<rect x="515.1" y="300.4" width="20.5" height="49.6" fill="#4dabf7"/>
+<rect x="537.7" y="270.4" width="20.5" height="79.6" fill="#ff922b"/>
+<text x="536.7" y="366.0" fill="#8b949e" font-size="11" text-anchor="middle">7</text>
+<rect x="588.5" y="303.1" width="20.5" height="46.9" fill="#4dabf7"/>
+<rect x="611.0" y="269.6" width="20.5" height="80.4" fill="#ff922b"/>
+<text x="610.0" y="366.0" fill="#8b949e" font-size="11" text-anchor="middle">8</text>
+<rect x="661.8" y="310.1" width="20.5" height="39.9" fill="#4dabf7"/>
+<rect x="684.3" y="268.8" width="20.5" height="81.2" fill="#ff922b"/>
+<text x="683.3" y="366.0" fill="#8b949e" font-size="11" text-anchor="middle">9</text>
+<polyline points="96.7,83.4 170.0,194.0 243.3,239.3 316.7,264.2 390.0,279.9 463.3,290.7 536.7,298.6 610.0,304.7 683.3,309.5" fill="none" stroke="#06d6a0" stroke-width="2.5"/>
+<circle cx="96.7" cy="83.4" r="3" fill="#06d6a0"/>
+<circle cx="170.0" cy="194.0" r="3" fill="#06d6a0"/>
+<circle cx="243.3" cy="239.3" r="3" fill="#06d6a0"/>
+<circle cx="316.7" cy="264.2" r="3" fill="#06d6a0"/>
+<circle cx="390.0" cy="279.9" r="3" fill="#06d6a0"/>
+<circle cx="463.3" cy="290.7" r="3" fill="#06d6a0"/>
+<circle cx="536.7" cy="298.6" r="3" fill="#06d6a0"/>
+<circle cx="610.0" cy="304.7" r="3" fill="#06d6a0"/>
+<circle cx="683.3" cy="309.5" r="3" fill="#06d6a0"/>
+<text x="390.0" y="390.0" fill="#8b949e" font-size="11" text-anchor="middle">leading digit</text>
+<rect x="570" y="46" width="10" height="10" fill="#06d6a0"/><text x="585" y="55" fill="#e6edf3" font-size="10">Benford P(d)</text>
+<rect x="570" y="62" width="10" height="10" fill="#4dabf7"/><text x="585" y="71" fill="#e6edf3" font-size="10">Fibonacci (fits)</text>
+<rect x="570" y="78" width="10" height="10" fill="#ff922b"/><text x="585" y="87" fill="#e6edf3" font-size="10">uniform (fails)</text>
+</svg><figcaption>the Benford curve with the Fibonacci leading digits hugging it while a uniform control does not</figcaption></figure><div class="card"><pre>Benford&#x27;s law: P(d) = log10(1 + 1/d) -- 1 leads ~30% of the time, 9 only ~4.6%
+
+   digit   Benford   Fibonacci   uniform
+       1     0.301       0.301     0.177
+       2     0.176       0.177     0.159
+       3     0.125       0.125     0.128
+       4     0.097       0.096     0.087
+       5     0.079       0.080     0.088
+       6     0.067       0.067     0.089
+       7     0.058       0.056     0.090
+       8     0.051       0.053     0.091
+       9     0.046       0.045     0.092
+
+  Fibonacci:  chi2 =   0.17   TV dist = 0.0037   -&gt; follows Benford
+  uniform:    chi2 =  168.7   TV dist = 0.1509   -&gt; does NOT
+
+  Multiplicative data (Fibonacci, powers, factorials, populations) spans many
+  orders of magnitude, so its mantissa is uniform in log space -- and that maps
+  to the logarithmic digit law. Forensic auditors flag fabricated ledgers and
+  election tallies by their departure from it.
+
+  wrote examples/output\benford.svg</pre></div></div>
   </section>
 
   <section>

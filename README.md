@@ -209,6 +209,7 @@ ruins a long non-symplectic integration.
 | `src/reaction_diffusion.py` | Gray-Scott reaction-diffusion: Turing spots/stripes from a seed |
 | `src/boids.py` | Boids flocking: separation/alignment/cohesion, polarization order parameter |
 | `src/dla.py` | Diffusion-limited aggregation: fractal growth, mass-radius dimension D~1.71 |
+| `src/benford.py` | Benford's law: log10(1+1/d) leading digits, chi-square goodness-of-fit |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -409,6 +410,7 @@ ruins a long non-symplectic integration.
 | `examples/reaction_diffusion_demo.py` | Growth table + ASCII field & the pattern-over-time figure |
 | `examples/boids_demo.py` | Polarization table + the scatter-to-flock & polarization-over-time figure |
 | `examples/dla_demo.py` | Size/dimension table + the cluster & log-log mass-radius scaling figure |
+| `examples/benford_demo.py` | Digit-frequency table + the Benford curve with Fibonacci vs uniform bars |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4843,6 +4845,36 @@ measures `D` by the mass-radius scaling and the radius of gyration. The tests ve
 cluster is connected, deterministic per seed, that a filled disc scales as `D ~ 2` while the
 DLA cluster comes out sparser near `1.71`, and the mass-within-radius and bounds helpers. The
 same instability draws mineral dendrites, electrodeposits, viscous fingers, lightning, and soot.
+
+## Benford's law: why leading digits are not uniform
+
+The first digit of real-world numbers is not one-in-nine. `benford.py`:
+
+```
+$ python examples/benford_demo.py examples/output
+
+   digit   Benford   Fibonacci   uniform
+       1     0.301       0.301     0.177
+       2     0.176       0.177     0.159
+       ...
+       9     0.046       0.045     0.092
+
+  Fibonacci:  chi2 =   0.17   -> follows Benford
+  uniform:    chi2 = 168.7    -> does NOT
+```
+
+Count the leading digit of river areas, physical constants, stock prices, or file sizes and 1
+leads about 30% of the time while 9 barely reaches 4.6%, following `P(d) = log10(1 + 1/d)`
+(Newcomb 1881, Benford 1938). The reason is scale invariance: a quantity spanning many orders
+of magnitude is effectively uniform in its logarithm, and a uniform log-mantissa maps to this
+logarithmic digit law -- the only distribution invariant under a change of units. This module
+extracts leading digits (from a fractional-log10 so arbitrarily large integers like `300!`
+never overflow), gives the first- and general-position digit probabilities, and scores a
+dataset with a chi-square statistic and total-variation distance. The tests confirm the
+probabilities sum to 1 and decrease from 1 to 9, that Fibonacci numbers, powers of 2, and
+factorials pass while a uniform-digit control fails, and the huge-integer and edge cases.
+Departures from the law flag fabricated ledgers and election tallies, which is why forensic
+auditors test for it.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

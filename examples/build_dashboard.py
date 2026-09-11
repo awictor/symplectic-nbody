@@ -251,6 +251,7 @@ def main():
     import reaction_diffusion_demo
     import boids_demo
     import dla_demo
+    import benford_demo
 
     import plot_orbits
 
@@ -471,6 +472,7 @@ def main():
     reaction_diffusion_txt = run("reaction_diffusion_demo", reaction_diffusion_demo.main, True)
     boids_txt = run("boids_demo", boids_demo.main, True)
     dla_txt = run("dla_demo", dla_demo.main, True)
+    benford_txt = run("benford_demo", benford_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2671,6 +2673,20 @@ def main():
             '<div class="grid">'
             + svg_card(out("dla.svg"), "the branching cluster and the log-log mass-radius scaling whose slope is the fractal dimension")
             + f'<div class="card">{pre(dla_txt)}</div>'
+            + '</div>'),
+        section(
+            "Benford's law: why leading digits are not uniform",
+            "Count the leading digit of river areas, physical constants, stock prices, or file "
+            "sizes and you do not get each of 1-9 a ninth of the time: 1 leads about 30% and 9 "
+            "barely 4.6%, following P(d) = log10(1 + 1/d). The reason is scale invariance -- a "
+            "quantity spanning many orders of magnitude is uniform in its logarithm, and a "
+            "uniform log-mantissa maps to this logarithmic digit law, the only distribution "
+            "invariant under a change of units. Multiplicative data (Fibonacci numbers, powers, "
+            "factorials, populations) obey it, and departures flag fabricated accounting and "
+            "election returns, which is why forensic auditors test for it.",
+            '<div class="grid">'
+            + svg_card(out("benford.svg"), "the Benford curve with the Fibonacci leading digits hugging it while a uniform control does not")
+            + f'<div class="card">{pre(benford_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
