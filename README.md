@@ -308,6 +308,7 @@ ruins a long non-symplectic integration.
 | `src/sequence_alignment.py` | Needleman-Wunsch & Smith-Waterman: global/local DP, traceback, scoring |
 | `src/string_matching.py` | KMP prefix function, Z-algorithm, Manacher longest palindrome, linear-time |
 | `src/suffix_array.py` | Suffix array (prefix doubling) + LCP (Kasai): search, longest repeated/common substring |
+| `src/quadtree.py` | Point-region quadtree: rectangle/circle range queries, nearest neighbour |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -607,6 +608,7 @@ ruins a long non-symplectic integration.
 | `examples/sequence_alignment_demo.py` | Global vs local alignments with match rulers + DP-matrix traceback figure |
 | `examples/string_matching_demo.py` | Prefix function, KMP/Z/brute agreement, overlapping matches, Manacher palindromes |
 | `examples/suffix_array_demo.py` | Sorted-suffix + LCP table, binary-search patterns, longest repeated/common substring |
+| `examples/quadtree_demo.py` | Point cloud with adaptive cell boundaries + rectangle/circle/nearest queries |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7329,6 +7331,28 @@ substring search, and the longest repeated and common substrings, verified that 
 the true sorted order (checked against a brute-force sort over 150 strings), that search finds
 exactly the same occurrences as a scan, that the LCP array matches the direct prefix computation,
 and that the longest repeated and common substrings match brute force.
+
+## Quadtrees: recursive spatial partition for region queries
+
+Index the plane; answer "which points are in here?" fast. `quadtree.py`:
+
+```
+$ python examples/quadtree_demo.py examples/output
+
+  180 points, depth 6 (a dense corner cluster subdivides deeper)
+  rectangle and circle range queries match a brute-force scan
+  nearest to (50,50) found; out-of-bounds points rejected
+```
+
+A quadtree splits a square into four quadrants whenever a node exceeds its capacity, so empty
+regions stay shallow and crowded ones subdivide deeply. A range query visits only the cells whose
+square overlaps the query, pruning whole branches -- the basis of collision broad-phase and the
+Barnes-Hut n-body approximation. Where a k-d tree splits on one coordinate at a time, a quadtree
+splits on both at once. This module implements insert (with a max-depth guard so coincident points
+don't subdivide forever), rectangle and circular range queries, and nearest-neighbour, verified that
+rectangle and radius queries return exactly the same points as a linear scan across 80 random
+queries, that nearest matches brute force, that out-of-bounds points are rejected, that a dense
+cluster subdivides deeply while spread data stays shallow, and that duplicate points are all stored.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

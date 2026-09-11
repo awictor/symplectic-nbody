@@ -1,0 +1,15 @@
+Quadtree: recursive 2-D spatial partition for region queries
+
+  180 points over a 100x100 area, node capacity 4
+  tree depth 6 (denser regions subdivide deeper)
+
+  Rectangle query [30,20]-[70,60]: 24 points (matches brute force: True)
+  Circle query centre (22,82) r=12 (in the dense cluster): 66 points (matches brute force: True)
+  Nearest point to (50,50): (55.5, 47.3) (matches brute force: True)
+
+  A quadtree splits a square into four quadrants whenever a node exceeds its capacity,
+  so empty regions stay shallow and crowded ones subdivide deeply. A range query visits
+  only the cells whose square overlaps the query, pruning whole branches -- the basis of
+  collision broad-phase and the Barnes-Hut n-body approximation.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\quadtree.svg

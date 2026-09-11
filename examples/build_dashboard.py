@@ -350,6 +350,7 @@ def main():
     import sequence_alignment_demo
     import string_matching_demo
     import suffix_array_demo
+    import quadtree_demo
 
     import plot_orbits
 
@@ -669,6 +670,7 @@ def main():
     sequence_alignment_txt = run("sequence_alignment_demo", sequence_alignment_demo.main, True)
     string_matching_txt = run("string_matching_demo", string_matching_demo.main, True)
     suffix_array_txt = run("suffix_array_demo", suffix_array_demo.main, True)
+    quadtree_txt = run("quadtree_demo", quadtree_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4651,6 +4653,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("suffix_array.svg"), "the sorted suffixes of a string with their LCP bars, the largest bar marking the longest repeated substring")
             + f'<div class="card">{pre(suffix_array_txt)}</div>'
+            + '</div>'),
+        section(
+            "Quadtrees: recursive spatial partition for region queries",
+            "A quadtree indexes 2-D points by recursively splitting a square region into four "
+            "QUADRANTS whenever a node exceeds a small CAPACITY, so empty regions stay shallow and "
+            "crowded regions subdivide deeply -- the tree adapts to the data's density. It is the "
+            "2-D workhorse for spatial queries (which points are in this rectangle?), collision "
+            "broad-phase, image compression, and the Barnes-Hut n-body approximation, answering a "
+            "range query by visiting only the nodes whose square OVERLAPS the query and pruning "
+            "whole branches that fall outside. Where a k-d tree splits alternately on one coordinate "
+            "(a binary tree), a quadtree splits on both at once (a 4-way tree tied to axis-aligned "
+            "squares), making rectangle and circle range queries especially natural. This module "
+            "implements a point-region quadtree with insert (and a max-depth guard so coincident "
+            "points do not subdivide forever), rectangle and circular range queries, and "
+            "nearest-neighbour, verified that rectangle and radius queries return exactly the same "
+            "points as a linear scan across 80 random queries, that nearest matches the brute-force "
+            "nearest, that out-of-bounds points are rejected, that a dense cluster subdivides deeply "
+            "while spread data stays shallow, and that duplicate points are all stored.",
+            '<div class="grid">'
+            + svg_card(out("quadtree.svg"), "a point cloud with the quadtree's cell boundaries subdividing where points crowd, and a query rectangle with its contained points highlighted")
+            + f'<div class="card">{pre(quadtree_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
