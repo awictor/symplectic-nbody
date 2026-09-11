@@ -1,0 +1,17 @@
+Fisher-Yates: swap each position with a random one in the UNSHUFFLED tail
+
+  ABCDEFGH  ->  EDGBFHCA
+
+  Uniformity over all 24 permutations of 4 items, 60000 trials each:
+    Fisher-Yates: 24/24 permutations seen, chi-square 4.9  -> uniform
+    naive swap:   24/24 permutations seen, chi-square 1777.2  -> BIASED
+    (23 dof, 5% critical ~ 35.2; the naive method fails by orders of magnitude)
+
+  sample 5 without replacement from 0..19: [7, 9, 18, 16, 15]
+  Sattolo cyclic shuffle of 0..7: [7, 6, 4, 0, 3, 1, 2, 5]  (single 8-cycle: True)
+
+  The naive 'swap with any position' makes n^n equally likely swap sequences but
+  only n! permutations -- and n^n isn't divisible by n!, so some orderings win. Only
+  the shrinking range makes every permutation exactly equally likely.
+
+  wrote examples/output\fisher_yates.svg

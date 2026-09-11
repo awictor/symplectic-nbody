@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="390" viewBox="0 0 760 390" font-family="monospace">
+<rect width="760" height="390" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">Fisher-Yates is flat; the naive shuffle is lumpy</text>
+<text x="20" y="44" fill="#8b949e" font-size="12">how often each of the 24 permutations appears -- Fisher-Yates (green) hugs the uniform line, naive (red) does not</text>
+<line x1="55" y1="335" x2="730" y2="335" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="55" y1="335" x2="55" y2="70" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="55" y1="163.5" x2="730" y2="163.5" stroke="#8b949e" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="728.0" y="159.5" fill="#8b949e" font-size="9" text-anchor="end">uniform = trials/n!</text>
+<rect x="58.4" y="174.9" width="10.1" height="160.1" fill="#ff6b6b" opacity="0.85"/>
+<rect x="69.6" y="162.4" width="10.1" height="172.6" fill="#06d6a0" opacity="0.85"/>
+<rect x="86.6" y="174.1" width="10.1" height="160.9" fill="#ff6b6b" opacity="0.85"/>
+<rect x="97.7" y="165.0" width="10.1" height="170.0" fill="#06d6a0" opacity="0.85"/>
+<rect x="114.7" y="173.6" width="10.1" height="161.4" fill="#ff6b6b" opacity="0.85"/>
+<rect x="125.8" y="165.4" width="10.1" height="169.6" fill="#06d6a0" opacity="0.85"/>
+<rect x="142.8" y="111.4" width="10.1" height="223.6" fill="#ff6b6b" opacity="0.85"/>
+<rect x="153.9" y="162.1" width="10.1" height="172.9" fill="#06d6a0" opacity="0.85"/>
+<rect x="170.9" y="156.7" width="10.1" height="178.3" fill="#ff6b6b" opacity="0.85"/>
+<rect x="182.1" y="163.9" width="10.1" height="171.1" fill="#06d6a0" opacity="0.85"/>
+<rect x="199.1" y="190.5" width="10.1" height="144.5" fill="#ff6b6b" opacity="0.85"/>
+<rect x="210.2" y="164.4" width="10.1" height="170.6" fill="#06d6a0" opacity="0.85"/>
+<rect x="227.2" y="174.3" width="10.1" height="160.7" fill="#ff6b6b" opacity="0.85"/>
+<rect x="238.3" y="165.0" width="10.1" height="170.0" fill="#06d6a0" opacity="0.85"/>
+<rect x="255.3" y="94.1" width="10.1" height="240.9" fill="#ff6b6b" opacity="0.85"/>
+<rect x="266.4" y="161.9" width="10.1" height="173.1" fill="#06d6a0" opacity="0.85"/>
+<rect x="283.4" y="110.4" width="10.1" height="224.6" fill="#ff6b6b" opacity="0.85"/>
+<rect x="294.6" y="162.8" width="10.1" height="172.2" fill="#06d6a0" opacity="0.85"/>
+<rect x="311.6" y="108.9" width="10.1" height="226.1" fill="#ff6b6b" opacity="0.85"/>
+<rect x="322.7" y="161.6" width="10.1" height="173.4" fill="#06d6a0" opacity="0.85"/>
+<rect x="339.7" y="156.9" width="10.1" height="178.1" fill="#ff6b6b" opacity="0.85"/>
+<rect x="350.8" y="166.9" width="10.1" height="168.1" fill="#06d6a0" opacity="0.85"/>
+<rect x="367.8" y="158.0" width="10.1" height="177.0" fill="#ff6b6b" opacity="0.85"/>
+<rect x="378.9" y="164.0" width="10.1" height="171.0" fill="#06d6a0" opacity="0.85"/>
+<rect x="395.9" y="157.7" width="10.1" height="177.3" fill="#ff6b6b" opacity="0.85"/>
+<rect x="407.1" y="162.1" width="10.1" height="172.9" fill="#06d6a0" opacity="0.85"/>
+<rect x="424.1" y="157.4" width="10.1" height="177.6" fill="#ff6b6b" opacity="0.85"/>
+<rect x="435.2" y="165.0" width="10.1" height="170.0" fill="#06d6a0" opacity="0.85"/>
+<rect x="452.2" y="190.5" width="10.1" height="144.5" fill="#ff6b6b" opacity="0.85"/>
+<rect x="463.3" y="163.0" width="10.1" height="172.0" fill="#06d6a0" opacity="0.85"/>
+<rect x="480.3" y="159.3" width="10.1" height="175.7" fill="#ff6b6b" opacity="0.85"/>
+<rect x="491.4" y="165.7" width="10.1" height="169.3" fill="#06d6a0" opacity="0.85"/>
+<rect x="508.4" y="159.0" width="10.1" height="176.0" fill="#ff6b6b" opacity="0.85"/>
+<rect x="519.6" y="164.1" width="10.1" height="170.9" fill="#06d6a0" opacity="0.85"/>
+<rect x="536.6" y="173.8" width="10.1" height="161.2" fill="#ff6b6b" opacity="0.85"/>
+<rect x="547.7" y="165.2" width="10.1" height="169.8" fill="#06d6a0" opacity="0.85"/>
+<rect x="564.7" y="207.4" width="10.1" height="127.6" fill="#ff6b6b" opacity="0.85"/>
+<rect x="575.8" y="162.0" width="10.1" height="173.0" fill="#06d6a0" opacity="0.85"/>
+<rect x="592.8" y="188.9" width="10.1" height="146.1" fill="#ff6b6b" opacity="0.85"/>
+<rect x="603.9" y="163.1" width="10.1" height="171.9" fill="#06d6a0" opacity="0.85"/>
+<rect x="620.9" y="190.2" width="10.1" height="144.8" fill="#ff6b6b" opacity="0.85"/>
+<rect x="632.1" y="160.9" width="10.1" height="174.1" fill="#06d6a0" opacity="0.85"/>
+<rect x="649.1" y="206.1" width="10.1" height="128.9" fill="#ff6b6b" opacity="0.85"/>
+<rect x="660.2" y="162.4" width="10.1" height="172.6" fill="#06d6a0" opacity="0.85"/>
+<rect x="677.2" y="173.8" width="10.1" height="161.2" fill="#ff6b6b" opacity="0.85"/>
+<rect x="688.3" y="162.1" width="10.1" height="172.9" fill="#06d6a0" opacity="0.85"/>
+<rect x="705.3" y="175.1" width="10.1" height="159.9" fill="#ff6b6b" opacity="0.85"/>
+<rect x="716.4" y="162.0" width="10.1" height="173.0" fill="#06d6a0" opacity="0.85"/>
+<text x="392.5" y="353.0" fill="#8b949e" font-size="10" text-anchor="middle">the 24 permutations (each a bar pair)</text>
+<rect x="63" y="70" width="9" height="9" fill="#06d6a0"/><text x="76" y="78" fill="#e6edf3" font-size="9">Fisher-Yates (uniform)</text>
+<rect x="63" y="84" width="9" height="9" fill="#ff6b6b"/><text x="76" y="92" fill="#e6edf3" font-size="9">naive (biased)</text>
+</svg>

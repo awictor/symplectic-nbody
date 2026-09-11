@@ -244,6 +244,7 @@ ruins a long non-symplectic integration.
 | `src/reservoir.py` | Reservoir sampling: uniform k-sample in one pass, weighted variant, streaming |
 | `src/count_min.py` | Count-Min sketch: frequency estimates in sublinear memory, never underestimates |
 | `src/alias_method.py` | Alias method: O(1) weighted sampling after O(n) setup, Vose construction |
+| `src/fisher_yates.py` | Fisher-Yates shuffle: unbiased permutation, k-sample, Sattolo cyclic variant |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -479,6 +480,7 @@ ruins a long non-symplectic integration.
 | `examples/reservoir_demo.py` | Uniformity chi-square + weighted proportions + the frequency & weight figure |
 | `examples/count_min_demo.py` | Estimate vs true + error-vs-width + the scatter & error-decay figure |
 | `examples/alias_method_demo.py` | Target vs sampled + the alias table + the frequency & column figure |
+| `examples/fisher_yates_demo.py` | Uniform-vs-biased permutation counts + the frequency-histogram figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5755,6 +5757,29 @@ and the long-run frequencies exactly equal the weights. This module builds the t
 algorithm and samples from it, verified against the target weights with chi-square tests over
 tens of thousands of draws. The standard for loot tables, particle spawning, and any hot loop
 sampling one categorical distribution.
+
+## Fisher-Yates: the only correct way to shuffle
+
+Every permutation equally likely. `fisher_yates.py`:
+
+```
+$ python examples/fisher_yates_demo.py examples/output
+
+  Uniformity over all 24 permutations of 4 items, 60000 trials:
+    Fisher-Yates: chi-square 4.9    -> uniform
+    naive swap:   chi-square 1777.2 -> BIASED
+```
+
+Shuffling looks trivial and almost everyone gets it wrong: the naive "swap each position with a
+random position anywhere" makes `n^n` equally likely swap sequences but only `n!` permutations,
+and since `n^n` is not divisible by `n!` some orderings come up more often. Fisher-Yates fixes it
+by shrinking the range -- to place position i, swap it with a random position in `[i, n)`, only
+the unshuffled tail -- so each of the `n!` permutations results from exactly one choice sequence
+and every ordering is equally likely. The same sweep gives a partial-shuffle k-sample (uniform
+without replacement), and restricting swaps to strictly earlier positions (Sattolo) yields a
+uniform random single cycle. This module implements all of these and demonstrates the bias by
+enumerating every permutation over tens of thousands of trials: Fisher-Yates is flat (chi-square
+~5), the naive shuffle measurably lumpy (chi-square ~1800).
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

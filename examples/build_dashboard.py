@@ -286,6 +286,7 @@ def main():
     import reservoir_demo
     import count_min_demo
     import alias_method_demo
+    import fisher_yates_demo
 
     import plot_orbits
 
@@ -541,6 +542,7 @@ def main():
     reservoir_txt = run("reservoir_demo", reservoir_demo.main, True)
     count_min_txt = run("count_min_demo", count_min_demo.main, True)
     alias_method_txt = run("alias_method_demo", alias_method_demo.main, True)
+    fisher_yates_txt = run("fisher_yates_demo", fisher_yates_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3298,6 +3300,23 @@ def main():
             '<div class="grid">'
             + svg_card(out("alias_method.svg"), "the sampled frequencies matching the target weights, and the equal-area alias columns each split main/alias")
             + f'<div class="card">{pre(alias_method_txt)}</div>'
+            + '</div>'),
+        section(
+            "Fisher-Yates: the only correct way to shuffle",
+            "Shuffling looks trivial and almost everyone gets it wrong: the naive 'swap each "
+            "position with a random position anywhere' makes n^n equally likely swap sequences "
+            "but only n! permutations, and since n^n is not divisible by n! some orderings come "
+            "up more often. Fisher-Yates fixes it by shrinking the range -- to place position i, "
+            "swap it with a random position in [i, n), only the unshuffled tail -- so each of "
+            "the n! permutations results from exactly one choice sequence and every ordering is "
+            "equally likely. The same sweep gives a partial-shuffle k-sample (uniform without "
+            "replacement), and restricting swaps to strictly earlier positions (Sattolo) yields "
+            "a uniform random single cycle. This module implements all of these and demonstrates "
+            "the bias by enumerating every permutation: Fisher-Yates is flat, the naive shuffle "
+            "measurably lumpy.",
+            '<div class="grid">'
+            + svg_card(out("fisher_yates.svg"), "permutation frequencies: Fisher-Yates hugs the uniform line while the naive shuffle is visibly biased")
+            + f'<div class="card">{pre(fisher_yates_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
