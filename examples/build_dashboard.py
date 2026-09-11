@@ -261,6 +261,7 @@ def main():
     import monty_hall_demo
     import bayes_test_demo
     import shannon_demo
+    import kelly_demo
 
     import plot_orbits
 
@@ -491,6 +492,7 @@ def main():
     monty_hall_txt = run("monty_hall_demo", monty_hall_demo.main, True)
     bayes_test_txt = run("bayes_test_demo", bayes_test_demo.main, True)
     shannon_txt = run("shannon_demo", shannon_demo.main, True)
+    kelly_txt = run("kelly_demo", kelly_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2840,6 +2842,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("shannon.svg"), "the binary-entropy curve peaking at a fair coin, and Huffman codeword lengths hugging the entropy limit")
             + f'<div class="card">{pre(shannon_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Kelly criterion: how much to bet to grow fastest",
+            "Given an edge -- a bet paying b-to-1 that wins with probability p above break-even "
+            "-- how much of your bankroll should you stake? Kelly's answer maximizes long-run "
+            "compound growth and is a fixed fraction f* = p - (1-p)/b, the edge over the odds. "
+            "The growth rate g(f) = p ln(1+bf) + (1-p) ln(1-f) is a concave curve peaking at "
+            "f*: betting less is safe but slow, betting past 2f* drives the growth rate "
+            "negative and you go broke despite a winning edge. Half-Kelly keeps about 3/4 of "
+            "the growth at far less volatility, which is why traders bet fractional Kelly. The "
+            "same log-optimal rule (which Kelly derived from Shannon's channel capacity) sizes "
+            "positions in quantitative finance -- here it is checked against a seeded "
+            "Monte-Carlo of the compounding bankroll.",
+            '<div class="grid">'
+            + svg_card(out("kelly.svg"), "the growth-rate curve peaking at f* and going negative past break-even, with sample bankrolls under-, Kelly-, and over-betting")
+            + f'<div class="card">{pre(kelly_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

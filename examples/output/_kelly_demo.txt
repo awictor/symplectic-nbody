@@ -1,0 +1,22 @@
+Kelly criterion: even-money bet, win probability p=0.6, edge 20%
+
+  optimal fraction f*     = 0.200  (bet 20% of bankroll each time)
+  growth rate g(f*)       = 0.0201 per bet
+  Monte-Carlo growth      = 0.0204
+  doubling time           = 34.4 bets
+  break-even fraction     = 0.389  (overbetting past this loses)
+
+    fraction    growth   vs f*
+        0.05    0.0088    0.43
+        0.10    0.0150    0.75
+        0.20    0.0201    1.00  <- Kelly
+        0.30    0.0147    0.73
+        0.40   -0.0024   -0.12
+        0.50   -0.0340   -1.69
+
+  Bet the Kelly fraction and the bankroll compounds fastest in the long run. Bet
+  more and volatility eats the growth -- past 2f* the growth rate goes negative and
+  you go broke despite a winning edge. Half-Kelly keeps ~3/4 the growth at far less
+  risk, which is why real traders and gamblers bet fractional Kelly.
+
+  wrote examples/output\kelly.svg

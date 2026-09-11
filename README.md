@@ -219,6 +219,7 @@ ruins a long non-symplectic integration.
 | `src/monty_hall.py` | Monty Hall: stay 1/N vs switch (N-1)/N, informed-vs-random host, Monte-Carlo |
 | `src/bayes_test.py` | Bayes & base-rate fallacy: PPV/NPV, likelihood ratios, retest odds, Monte-Carlo |
 | `src/shannon.py` | Shannon entropy & Huffman coding: H = -sum p log p, optimal prefix code, H<=L<H+1 |
+| `src/kelly.py` | Kelly criterion: optimal bet fraction f*=p-q/b, log-growth rate, fractional Kelly |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -429,6 +430,7 @@ ruins a long non-symplectic integration.
 | `examples/monty_hall_demo.py` | Stay/switch win rates vs simulation + the bars & (N-1)/N scaling curve |
 | `examples/bayes_test_demo.py` | Rare-disease posterior vs simulation + the PPV-vs-prevalence curve & cohort |
 | `examples/shannon_demo.py` | Huffman code table + the binary-entropy curve & codeword-length figure |
+| `examples/kelly_demo.py` | Growth-rate table vs simulation + the g(f) curve & bankroll trajectories |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5117,6 +5119,31 @@ code, measures its efficiency, and round-trips encode/decode losslessly. The tes
 entropy of known sources, the Shannon bound, that a dyadic source is coded at 100% efficiency,
 and the prefix-free/Kraft/round-trip properties -- the Huffman stage that sits inside ZIP, JPEG,
 and MP3.
+
+## The Kelly criterion: how much to bet to grow fastest
+
+Bet the edge over the odds, no more. `kelly.py`:
+
+```
+$ python examples/kelly_demo.py examples/output
+
+    fraction    growth   vs f*
+        0.10    0.0150    0.75
+        0.20    0.0201    1.00  <- Kelly
+        0.40   -0.0024   -0.12
+        0.50   -0.0340   -1.69
+```
+
+Given an edge -- a bet paying b-to-1 that wins with probability p above break-even -- Kelly's
+rule maximizes long-run compound growth by staking a fixed fraction `f* = p - (1-p)/b`, the edge
+over the odds. The growth rate `g(f) = p ln(1+bf) + (1-p) ln(1-f)` is concave and peaks at f*;
+betting less is safe but slow, and betting past `2f*` drives the growth rate negative -- you go
+broke despite a winning edge. This module gives the optimal fraction, the growth rate at any
+fraction, the break-even (zero-growth) fraction, the doubling time, and a seeded Monte-Carlo of
+the compounding bankroll. The tests verify f* for even-money and b-to-1 odds, that a grid search
+confirms f* is the growth argmax, that overbetting loses, that half-Kelly keeps ~3/4 of the
+growth, and that simulation grows fastest exactly at f*. Kelly derived it from Shannon's channel
+capacity, and it sizes positions in quantitative finance.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
