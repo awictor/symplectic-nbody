@@ -241,6 +241,7 @@ ruins a long non-symplectic integration.
 | `src/aho_corasick.py` | Aho-Corasick: trie + failure links, all patterns in one pass |
 | `src/floyd_warshall.py` | Floyd-Warshall all-pairs shortest paths: negative edges, cycle detection, closure |
 | `src/misra_gries.py` | Misra-Gries frequent items: heavy hitters over n/k, majority vote, k-1 counters |
+| `src/reservoir.py` | Reservoir sampling: uniform k-sample in one pass, weighted variant, streaming |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -473,6 +474,7 @@ ruins a long non-symplectic integration.
 | `examples/aho_corasick_demo.py` | Overlapping matches + log scan + the trie-with-failure-links figure |
 | `examples/floyd_warshall_demo.py` | Distance matrix vs Dijkstra + path/cycle/closure + the matrix heatmap |
 | `examples/misra_gries_demo.py` | Heavy hitters vs exact + majority + the approx-count & memory figure |
+| `examples/reservoir_demo.py` | Uniformity chi-square + weighted proportions + the frequency & weight figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5680,6 +5682,27 @@ survivors exactly to drop the false positives, and the carried counts underestim
 with a single counter. This module builds the summary, verifies candidates, and does majority
 vote, all checked *exhaustively* against exact counting over thousands of random streams. Used
 for network traffic monitors, trending queries, and word-frequency counting.
+
+## Reservoir sampling: a uniform sample from an endless stream
+
+A uniform k-sample in one pass, unknown length. `reservoir.py`:
+
+```
+$ python examples/reservoir_demo.py examples/output
+
+  sample 4 of 12, 60000 times: each picked ~20000, chi-square 0.78 -> uniform
+  weighted (1:3:12): sampled 6.0% / 18.8% / 75.2% vs weight 6.2% / 18.8% / 75.0%
+```
+
+Keep a uniform random sample of k items from a stream whose length you do not know and cannot
+store. Vitter's Algorithm R does it in one pass with `O(k)` memory: fill the reservoir with the
+first k items, then keep the i-th with probability `k/i`, evicting a random existing one -- and
+every item ever seen ends up in the sample with probability exactly `k/n`, whatever n turns out
+to be (k=1 is the classic "random line from a huge file"). The weighted Efraimidis-Spirakis
+variant gives each item a key `u^(1/w)` and keeps the largest, sampling in proportion to weight.
+This module implements both plus a streaming reservoir object, and the tests verify the
+uniformity with a chi-square test over tens of thousands of runs. It powers log sampling, A/B
+bucketing, and random selection from data too big to hold.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

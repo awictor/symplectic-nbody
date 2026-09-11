@@ -283,6 +283,7 @@ def main():
     import aho_corasick_demo
     import floyd_warshall_demo
     import misra_gries_demo
+    import reservoir_demo
 
     import plot_orbits
 
@@ -535,6 +536,7 @@ def main():
     aho_corasick_txt = run("aho_corasick_demo", aho_corasick_demo.main, True)
     floyd_warshall_txt = run("floyd_warshall_demo", floyd_warshall_demo.main, True)
     misra_gries_txt = run("misra_gries_demo", misra_gries_demo.main, True)
+    reservoir_txt = run("reservoir_demo", reservoir_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3242,6 +3244,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("misra_gries.svg"), "the summary's underestimated counts against the true counts, and its fixed memory versus exact counting")
             + f'<div class="card">{pre(misra_gries_txt)}</div>'
+            + '</div>'),
+        section(
+            "Reservoir sampling: a uniform sample from an endless stream",
+            "Keep a uniform random sample of k items from a stream whose length you do not know "
+            "and cannot store -- log lines, sensor readings, a file too big for memory. "
+            "Vitter's Algorithm R does it in one pass with O(k) memory: fill the reservoir with "
+            "the first k items, then keep the i-th item with probability k/i, evicting a random "
+            "existing one. A short induction shows every item ever seen is in the final sample "
+            "with probability exactly k/n, whatever n turns out to be (k=1 is the classic "
+            "'random line from a file'). The weighted Efraimidis-Spirakis variant gives each "
+            "item a key u^(1/w) and keeps the largest, sampling in proportion to weight. This "
+            "module implements both plus a streaming reservoir object, and verifies the "
+            "uniformity with a chi-square test over tens of thousands of runs.",
+            '<div class="grid">'
+            + svg_card(out("reservoir.svg"), "the flat selection-frequency histogram proving uniformity, and weighted sampling tracking the weights")
+            + f'<div class="card">{pre(reservoir_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

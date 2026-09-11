@@ -1,0 +1,19 @@
+Reservoir sampling: keep a uniform k-sample of a stream of unknown length
+
+  one pass, O(k) memory; a 5-sample of a million-item stream: [668303, 839595, 938864, 958802, 959292]
+
+  Uniformity check: sample 4 of 12 items, 60000 times.
+  each element should be picked ~ trials*k/n = 20000 times:
+    min 19942, max 20062, chi-square 0.78 (11 dof, 1% critical ~ 24.7)  -> uniform
+
+  Weighted reservoir (Efraimidis-Spirakis): chance tracks weight.
+        item  weight  sampled %  weight %
+        rare       1       6.0%      6.2%
+      common       3      18.8%     18.8%
+    dominant      12      75.2%     75.0%
+
+  Every item ever seen ends up in the sample with probability exactly k/n, no
+  matter how long the stream. It powers log sampling, A/B test bucketing, and
+  random line selection from a file too big to hold in memory.
+
+  wrote examples/output\reservoir.svg
