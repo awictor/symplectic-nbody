@@ -1,0 +1,15 @@
+CMA-ES: covariance matrix adaptation for black-box minimization
+
+  sphere (4D)                   : fx = 6.376e-13 in 952 evals, x ~ [-0.000, -0.000, 0.000...]
+  Rosenbrock (2D banana)        : fx = 7.890e-13 in 870 evals, x ~ [1.000, 1.000]
+  Rastrigin (2D, multimodal)    : fx = 9.950e-01 in 12000 evals, x ~ [-0.995, -0.000]
+  ellipsoid (3D, cond 1e6)      : fx = 5.062e-13 in 1540 evals, x ~ [-0.000, -0.000, -0.000]
+
+  On the sphere, 952 evaluations of random search reach only 2.687e+00,
+  while CMA-ES reaches 6.376e-13 -- a difference of many orders.
+
+  CMA-ES samples from a Gaussian and, each generation, moves its mean to the best
+  samples, adapts the step size from the length of its cumulative path, and bends the
+  covariance toward recent progress -- learning the landscape's curvature without gradients.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\cma_es.svg

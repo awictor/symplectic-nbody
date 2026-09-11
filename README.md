@@ -316,6 +316,7 @@ ruins a long non-symplectic integration.
 | `src/delaunay.py` | Delaunay triangulation (Bowyer-Watson, exact in-circle) and the dual Voronoi diagram |
 | `src/simplex.py` | Two-phase simplex method for linear programs (Bland's rule, mixed constraints, duality) |
 | `src/minhash.py` | MinHash Jaccard estimation + banded LSH near-duplicate detection (universal hashing) |
+| `src/cma_es.py` | CMA-ES derivative-free optimizer with full covariance adaptation (Jacobi eigensolver) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -623,6 +624,7 @@ ruins a long non-symplectic integration.
 | `examples/delaunay_demo.py` | Delaunay triangulation overlaid with its dual Voronoi diagram, empty-circumcircle checked live |
 | `examples/simplex_demo.py` | Production LP with the feasible polytope, objective gradient, and optimal vertex drawn |
 | `examples/minhash_demo.py` | Document near-duplicate detection + the estimate error tracking the 1/sqrt(k) curve |
+| `examples/cma_es_demo.py` | CMA-ES convergence on sphere/Rosenbrock/Rastrigin/ellipsoid vs random search |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7527,6 +7529,29 @@ and near-duplicate search becomes a few lookups instead of all-pairs comparison.
 implements MinHash signatures with universal hashing, the Jaccard estimator, and banded LSH, verified
 that the estimate converges to the true Jaccard as k grows, that identical sets estimate 1 and
 disjoint ~0, and that LSH recalls every high-Jaccard pair while filtering dissimilar ones.
+
+## CMA-ES: covariance matrix adaptation for black-box optimization
+
+The de-facto standard derivative-free optimizer for hard continuous problems. `cma_es.py`:
+
+```
+$ python examples/cma_es_demo.py examples/output
+
+  sphere (4D)               : fx = 6.4e-13 in 952 evals
+  Rosenbrock (2D banana)    : fx = 7.9e-13, x ~ (1.000, 1.000)
+  ellipsoid (3D, cond 1e6)  : fx = 5.1e-13   (covariance adaptation beats the conditioning)
+  random search same budget : 2.7e+00        (CMA-ES wins by ~12 orders)
+```
+
+CMA-ES samples candidates from a multivariate normal and, each generation, moves the mean to the
+best samples, adapts the step size from the length of a cumulative path (lengthen if progress is
+consistent, shorten if it doubles back), and bends the full covariance matrix toward recent progress
+so the search ellipsoid learns the landscape's curvature -- a second-order-like method with no
+derivatives. This module implements a faithful (mu/mu_w, lambda)-CMA-ES with the standard strategy
+parameters and a self-contained Jacobi eigensolver for the covariance decomposition, verified that it
+converges to the global optimum of the sphere, Rosenbrock, ill-conditioned ellipsoid, and shifted
+problems to near machine precision, beats random search by many orders under an equal budget, handles
+a rotated anisotropic bowl, and is fully reproducible from a seed.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

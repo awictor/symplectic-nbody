@@ -358,6 +358,7 @@ def main():
     import delaunay_demo
     import simplex_demo
     import minhash_demo
+    import cma_es_demo
 
     import plot_orbits
 
@@ -685,6 +686,7 @@ def main():
     delaunay_txt = run("delaunay_demo", delaunay_demo.main, True)
     simplex_txt = run("simplex_demo", simplex_demo.main, True)
     minhash_txt = run("minhash_demo", minhash_demo.main, True)
+    cma_es_txt = run("cma_es_demo", cma_es_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4851,6 +4853,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("minhash.svg"), "the mean Jaccard-estimation error falling as the number of hashes k grows, the measured curve (blue) hugging the 1/sqrt(k) theory curve (yellow dashed)")
             + f'<div class="card">{pre(minhash_txt)}</div>'
+            + '</div>'),
+        section(
+            "CMA-ES: covariance matrix adaptation for black-box optimization",
+            "For minimizing a function with no gradient -- possibly noisy, non-convex, or badly "
+            "scaled -- the COVARIANCE MATRIX ADAPTATION EVOLUTION STRATEGY is among the most powerful "
+            "derivative-free optimizers known, the de-facto standard for hard continuous problems. It "
+            "samples candidate solutions from a MULTIVARIATE NORMAL distribution and, generation by "
+            "generation, reshapes that distribution toward better regions by adapting three things: "
+            "the MEAN (moved to the weighted average of the best samples), the STEP SIZE (grown or "
+            "shrunk by comparing the length of the path actually taken to the length expected under "
+            "pure randomness), and the full COVARIANCE MATRIX (bent to align with the directions of "
+            "recent progress, so the search ellipsoid learns the local curvature -- much like a "
+            "second-order method learns the inverse Hessian, but with no derivatives). That "
+            "self-adaptation is what lets it crack badly-conditioned and rotated problems that defeat "
+            "coordinate-wise methods. This module implements a faithful (mu/mu_w, lambda)-CMA-ES with "
+            "the standard strategy parameters and a self-contained Jacobi eigensolver for the "
+            "covariance decomposition, verified that it converges to the global optimum of the "
+            "sphere, Rosenbrock, ill-conditioned ellipsoid (condition 1e6), and shifted problems to "
+            "near machine precision, that it beats random search by many orders of magnitude under an "
+            "equal budget, that it handles a rotated anisotropic bowl (rotation invariance), and that "
+            "it is fully reproducible from a seed.",
+            '<div class="grid">'
+            + svg_card(out("cma_es.svg"), "log-scale convergence curves: best fitness plunging toward machine precision as CMA-ES adapts its covariance to each benchmark landscape, versus the near-flat progress of undirected search")
+            + f'<div class="card">{pre(cma_es_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
