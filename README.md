@@ -228,6 +228,7 @@ ruins a long non-symplectic integration.
 | `src/bloom.py` | Bloom filter: probabilistic membership, no false negatives, optimal m/k |
 | `src/hyperloglog.py` | HyperLogLog: distinct-count in fixed memory, error ~1.04/sqrt(m), mergeable |
 | `src/fenwick.py` | Fenwick tree: O(log n) prefix sums & point updates, cumulative select |
+| `src/union_find.py` | Union-Find: path compression + union by rank, components, Kruskal MST |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -447,6 +448,7 @@ ruins a long non-symplectic integration.
 | `examples/bloom_demo.py` | No-false-negative check + FP-rate table + the fill & optimal-k figure |
 | `examples/hyperloglog_demo.py` | Estimate-vs-true table + merge demo + the accuracy & error-band figure |
 | `examples/fenwick_demo.py` | Prefix/range/select walkthrough + the coverage-range & cost figure |
+| `examples/union_find_demo.py` | Component-merge trace + Kruskal MST + the MST-edge & merge figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5353,6 +5355,31 @@ you can binary-search the tree for the smallest index whose prefix reaches a tar
 prefix/range sums, set, and the cumulative search; every operation is cross-checked against a
 brute-force array over thousands of mixed updates and queries. It powers competitive-programming
 range queries, database index statistics, and streaming quantiles.
+
+## Union-Find: connectivity in near-constant time, and Kruskal's MST
+
+Merge groups and query connectivity in effectively O(1). `union_find.py`:
+
+```
+$ python examples/union_find_demo.py examples/output
+
+  Kruskal's MST (add cheapest edge that joins two components):
+   weight      edge
+        5   0--3
+        5   2--4
+  total spanning-tree weight = 39  (6 edges for 7 nodes)
+```
+
+Given a stream of "these two are connected" facts, Union-Find answers whether any two items
+share a group, running m operations in `O(m alpha(n))` time -- the inverse Ackermann `alpha(n)`
+is at most 4 for any conceivable n, so effectively constant. Each set is a tree with a
+representative root; union by rank hangs the shorter tree under the taller, and path compression
+repoints every node visited during a find straight at the root, keeping trees flat. A cycle is
+exactly two endpoints already in the same set, which makes Union-Find the whole of Kruskal's
+minimum-spanning-tree algorithm. This module implements find with path compression, union by
+rank, component counting, and Kruskal's MST; the tests cross-check component counts against a
+brute-force flood fill and confirm the MST is minimal, cycle-free, and spanning. It also drives
+image segmentation, percolation, and account-merging.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

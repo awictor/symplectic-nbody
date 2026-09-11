@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.28       12.29      0.8x
-   400          38.15       37.45      1.0x
-   800         146.91      119.73      1.2x
-  1600         613.49      367.29      1.7x
-  3200        2579.57     1004.00      2.6x
+   200           8.92       11.99      0.7x
+   400          36.88       38.01      1.0x
+   800         147.71      118.96      1.2x
+  1600         611.49      353.88      1.7x
+  3200        2484.13      973.18      2.6x
 
-empirical scaling exponent  direct ~ N^2.02   barnes-hut ~ N^1.60
+empirical scaling exponent  direct ~ N^2.03   barnes-hut ~ N^1.59
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -199097,6 +199097,102 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   streaming quantiles.
 
   wrote examples/output\fenwick.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Union-Find: connectivity in near-constant time, and Kruskal&#x27;s MST</h2>
+    <p class="blurb">Given a stream of 'these two are connected' facts, answer whether any two items are in the same group -- the disjoint-set problem. Union-Find solves a sequence of m operations in O(m alpha(n)) time, where the inverse Ackermann alpha(n) is at most 4 for any conceivable n: effectively constant. Each set is a tree with a representative root; union by rank hangs the shorter tree under the taller, and path compression repoints every node visited during a find straight at the root, so trees stay flat. A cycle in a graph is exactly two endpoints already in the same set, which makes Union-Find the whole of Kruskal's minimum-spanning-tree algorithm. It also drives image segmentation, percolation, and account-merging. Verified against a brute-force flood fill and known minimum spanning trees.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="390" viewBox="0 0 760 390" font-family="monospace">
+<rect width="760" height="390" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">Union-Find &amp; Kruskal: build a minimum spanning tree</text>
+<text x="20" y="44" fill="#8b949e" font-size="12">graph with all edges, MST edges highlighted (left); components merging as edges are added (right)</text>
+<line x1="195.0" y1="90.0" x2="288.8" y2="135.2" stroke="#06d6a0" stroke-width="3"/>
+<text x="241.9" y="112.6" fill="#06d6a0" font-size="9" text-anchor="middle">7</text>
+<line x1="195.0" y1="90.0" x2="247.1" y2="318.1" stroke="#06d6a0" stroke-width="3"/>
+<text x="221.0" y="204.1" fill="#06d6a0" font-size="9" text-anchor="middle">5</text>
+<line x1="288.8" y1="135.2" x2="312.0" y2="236.7" stroke="#30363d" stroke-width="1"/>
+<text x="300.4" y="185.9" fill="#6e7681" font-size="9" text-anchor="middle">8</text>
+<line x1="288.8" y1="135.2" x2="247.1" y2="318.1" stroke="#30363d" stroke-width="1"/>
+<text x="267.9" y="226.6" fill="#6e7681" font-size="9" text-anchor="middle">9</text>
+<line x1="288.8" y1="135.2" x2="142.9" y2="318.1" stroke="#06d6a0" stroke-width="3"/>
+<text x="215.9" y="226.6" fill="#06d6a0" font-size="9" text-anchor="middle">7</text>
+<line x1="312.0" y1="236.7" x2="142.9" y2="318.1" stroke="#06d6a0" stroke-width="3"/>
+<text x="227.5" y="277.4" fill="#06d6a0" font-size="9" text-anchor="middle">5</text>
+<line x1="247.1" y1="318.1" x2="142.9" y2="318.1" stroke="#30363d" stroke-width="1"/>
+<text x="195.0" y="318.1" fill="#6e7681" font-size="9" text-anchor="middle">15</text>
+<line x1="247.1" y1="318.1" x2="78.0" y2="236.7" stroke="#06d6a0" stroke-width="3"/>
+<text x="162.5" y="277.4" fill="#06d6a0" font-size="9" text-anchor="middle">6</text>
+<line x1="142.9" y1="318.1" x2="78.0" y2="236.7" stroke="#30363d" stroke-width="1"/>
+<text x="110.5" y="277.4" fill="#6e7681" font-size="9" text-anchor="middle">8</text>
+<line x1="142.9" y1="318.1" x2="101.2" y2="135.2" stroke="#06d6a0" stroke-width="3"/>
+<text x="122.1" y="226.6" fill="#06d6a0" font-size="9" text-anchor="middle">9</text>
+<line x1="78.0" y1="236.7" x2="101.2" y2="135.2" stroke="#30363d" stroke-width="1"/>
+<text x="89.6" y="185.9" fill="#6e7681" font-size="9" text-anchor="middle">11</text>
+<circle cx="195.0" cy="90.0" r="14" fill="#161b22" stroke="#4dabf7" stroke-width="1.5"/>
+<text x="195.0" y="94.0" fill="#4dabf7" font-size="11" text-anchor="middle">0</text>
+<circle cx="288.8" cy="135.2" r="14" fill="#161b22" stroke="#4dabf7" stroke-width="1.5"/>
+<text x="288.8" y="139.2" fill="#4dabf7" font-size="11" text-anchor="middle">1</text>
+<circle cx="312.0" cy="236.7" r="14" fill="#161b22" stroke="#4dabf7" stroke-width="1.5"/>
+<text x="312.0" y="240.7" fill="#4dabf7" font-size="11" text-anchor="middle">2</text>
+<circle cx="247.1" cy="318.1" r="14" fill="#161b22" stroke="#4dabf7" stroke-width="1.5"/>
+<text x="247.1" y="322.1" fill="#4dabf7" font-size="11" text-anchor="middle">3</text>
+<circle cx="142.9" cy="318.1" r="14" fill="#161b22" stroke="#4dabf7" stroke-width="1.5"/>
+<text x="142.9" y="322.1" fill="#4dabf7" font-size="11" text-anchor="middle">4</text>
+<circle cx="78.0" cy="236.7" r="14" fill="#161b22" stroke="#4dabf7" stroke-width="1.5"/>
+<text x="78.0" y="240.7" fill="#4dabf7" font-size="11" text-anchor="middle">5</text>
+<circle cx="101.2" cy="135.2" r="14" fill="#161b22" stroke="#4dabf7" stroke-width="1.5"/>
+<text x="101.2" y="139.2" fill="#4dabf7" font-size="11" text-anchor="middle">6</text>
+<text x="195.0" y="380.0" fill="#8b949e" font-size="10" text-anchor="middle">green = MST edges (cheapest, cycle-free)</text>
+<line x1="430" y1="330" x2="730" y2="330" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="430" y1="330" x2="430" y2="80" stroke="#8b949e" stroke-width="1.2"/>
+<polyline points="430.0,80.0 457.3,121.7 484.5,163.3 511.8,205.0 539.1,246.7 566.4,288.3 593.6,288.3 620.9,288.3 648.2,288.3 675.5,330.0 702.7,330.0 730.0,330.0" fill="none" stroke="#ff922b" stroke-width="2.5"/>
+<circle cx="430.0" cy="80.0" r="2.5" fill="#ff922b"/>
+<circle cx="457.3" cy="121.7" r="2.5" fill="#ff922b"/>
+<circle cx="484.5" cy="163.3" r="2.5" fill="#ff922b"/>
+<circle cx="511.8" cy="205.0" r="2.5" fill="#ff922b"/>
+<circle cx="539.1" cy="246.7" r="2.5" fill="#ff922b"/>
+<circle cx="566.4" cy="288.3" r="2.5" fill="#ff922b"/>
+<circle cx="593.6" cy="288.3" r="2.5" fill="#ff922b"/>
+<circle cx="620.9" cy="288.3" r="2.5" fill="#ff922b"/>
+<circle cx="648.2" cy="288.3" r="2.5" fill="#ff922b"/>
+<circle cx="675.5" cy="330.0" r="2.5" fill="#ff922b"/>
+<circle cx="702.7" cy="330.0" r="2.5" fill="#ff922b"/>
+<circle cx="730.0" cy="330.0" r="2.5" fill="#ff922b"/>
+<line x1="430" y1="330.0" x2="730" y2="330.0" stroke="#21262d" stroke-width="1"/>
+<text x="728.0" y="326.0" fill="#8b949e" font-size="9" text-anchor="end">1 (connected)</text>
+<text x="424.0" y="333.0" fill="#8b949e" font-size="9" text-anchor="end">1</text>
+<text x="424.0" y="83.0" fill="#8b949e" font-size="9" text-anchor="end">7</text>
+<text x="580.0" y="348.0" fill="#8b949e" font-size="10" text-anchor="middle">edges added -> component count</text>
+</svg><figcaption>the MST edges chosen on a weighted graph, and the component count falling as edges are merged</figcaption></figure><div class="card"><pre>Union-Find: merge groups and query connectivity in ~O(1) amortized
+
+  start: 10 singletons
+    connect 0-1:   merge -&gt; 9 components
+    connect 2-3:   merge -&gt; 8 components
+    connect 4-5:   merge -&gt; 7 components
+    connect 1-2:   merge -&gt; 6 components
+    connect 6-7:   merge -&gt; 5 components
+    connect 5-8:   merge -&gt; 4 components
+    connect 3-6:   merge -&gt; 3 components
+
+  final components: [[0, 1, 2, 3, 6, 7], [4, 5, 8], [9]]
+  connected(0, 8)? False   connected(0, 9)? False
+  size of 0&#x27;s group: 6
+
+  Kruskal&#x27;s MST (add cheapest edge that joins two components):
+   weight      edge
+        5   0--3
+        5   2--4
+        6   3--5
+        7   0--1
+        7   1--4
+        9   4--6
+  total spanning-tree weight = 39  (6 edges for 7 nodes)
+
+  A cycle is exactly two endpoints already in the same set, so Union-Find spots it
+  in constant time -- which is the whole of Kruskal. It also drives image
+  segmentation, percolation, and &#x27;friend circle&#x27; / account-merge problems.
+
+  wrote examples/output\union_find.svg</pre></div></div>
   </section>
 
   <section>

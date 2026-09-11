@@ -270,6 +270,7 @@ def main():
     import bloom_demo
     import hyperloglog_demo
     import fenwick_demo
+    import union_find_demo
 
     import plot_orbits
 
@@ -509,6 +510,7 @@ def main():
     bloom_txt = run("bloom_demo", bloom_demo.main, True)
     hyperloglog_txt = run("hyperloglog_demo", hyperloglog_demo.main, True)
     fenwick_txt = run("fenwick_demo", fenwick_demo.main, True)
+    union_find_txt = run("union_find_demo", union_find_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3002,6 +3004,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("fenwick.svg"), "each node's low-bit-sized coverage range over the array, and the log n vs naive n cost per query")
             + f'<div class="card">{pre(fenwick_txt)}</div>'
+            + '</div>'),
+        section(
+            "Union-Find: connectivity in near-constant time, and Kruskal's MST",
+            "Given a stream of 'these two are connected' facts, answer whether any two items are "
+            "in the same group -- the disjoint-set problem. Union-Find solves a sequence of m "
+            "operations in O(m alpha(n)) time, where the inverse Ackermann alpha(n) is at most 4 "
+            "for any conceivable n: effectively constant. Each set is a tree with a "
+            "representative root; union by rank hangs the shorter tree under the taller, and "
+            "path compression repoints every node visited during a find straight at the root, so "
+            "trees stay flat. A cycle in a graph is exactly two endpoints already in the same "
+            "set, which makes Union-Find the whole of Kruskal's minimum-spanning-tree algorithm. "
+            "It also drives image segmentation, percolation, and account-merging. Verified "
+            "against a brute-force flood fill and known minimum spanning trees.",
+            '<div class="grid">'
+            + svg_card(out("union_find.svg"), "the MST edges chosen on a weighted graph, and the component count falling as edges are merged")
+            + f'<div class="card">{pre(union_find_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
