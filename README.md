@@ -229,6 +229,7 @@ ruins a long non-symplectic integration.
 | `src/hyperloglog.py` | HyperLogLog: distinct-count in fixed memory, error ~1.04/sqrt(m), mergeable |
 | `src/fenwick.py` | Fenwick tree: O(log n) prefix sums & point updates, cumulative select |
 | `src/union_find.py` | Union-Find: path compression + union by rank, components, Kruskal MST |
+| `src/dijkstra.py` | Dijkstra shortest paths: from-scratch min-heap, path reconstruction, Bellman-Ford check |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -449,6 +450,7 @@ ruins a long non-symplectic integration.
 | `examples/hyperloglog_demo.py` | Estimate-vs-true table + merge demo + the accuracy & error-band figure |
 | `examples/fenwick_demo.py` | Prefix/range/select walkthrough + the coverage-range & cost figure |
 | `examples/union_find_demo.py` | Component-merge trace + Kruskal MST + the MST-edge & merge figure |
+| `examples/dijkstra_demo.py` | Distances vs Bellman-Ford + a grid maze + the distance-flood & route figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5380,6 +5382,30 @@ minimum-spanning-tree algorithm. This module implements find with path compressi
 rank, component counting, and Kruskal's MST; the tests cross-check component counts against a
 brute-force flood fill and confirm the MST is minimal, cycle-free, and spanning. It also drives
 image segmentation, percolation, and account-merging.
+
+## Dijkstra's algorithm: shortest paths, greedily
+
+Cheapest route from a source to every node. `dijkstra.py`:
+
+```
+$ python examples/dijkstra_demo.py examples/output
+
+   node  distance  Bellman-Ford
+      0         0             0
+      4         7             7
+  shortest 0 -> 4: [0, 2, 1, 3, 4], cost 7
+```
+
+Given nonnegative edge weights, Dijkstra keeps a tentative distance to every node, repeatedly
+settles the unsettled node with the smallest distance, and relaxes its edges; once settled, a
+node's distance is final -- which holds precisely because no nonnegative detour can improve a
+shorter path. With a binary-heap priority queue it runs in `O((V+E) log V)`. This module builds
+a weighted graph, runs Dijkstra (returning distances and a predecessor tree for path
+reconstruction), reconstructs the actual path, and includes a from-scratch binary min-heap (no
+`heapq`) and a Bellman-Ford implementation used to verify every distance. The tests check the
+heap sorts, the classic shortest path, unreachable nodes, directed one-way edges, and agreement
+with Bellman-Ford across random graphs. Add a goal heuristic and it becomes A*, the workhorse of
+map and game routing -- shown here solving a grid maze.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

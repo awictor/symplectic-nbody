@@ -271,6 +271,7 @@ def main():
     import hyperloglog_demo
     import fenwick_demo
     import union_find_demo
+    import dijkstra_demo
 
     import plot_orbits
 
@@ -511,6 +512,7 @@ def main():
     hyperloglog_txt = run("hyperloglog_demo", hyperloglog_demo.main, True)
     fenwick_txt = run("fenwick_demo", fenwick_demo.main, True)
     union_find_txt = run("union_find_demo", union_find_demo.main, True)
+    dijkstra_txt = run("dijkstra_demo", dijkstra_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3020,6 +3022,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("union_find.svg"), "the MST edges chosen on a weighted graph, and the component count falling as edges are merged")
             + f'<div class="card">{pre(union_find_txt)}</div>'
+            + '</div>'),
+        section(
+            "Dijkstra's algorithm: shortest paths, greedily",
+            "Given a graph with nonnegative edge weights, Dijkstra finds the cheapest route from "
+            "a source to every node by a greedy rule: keep a tentative distance to each node, "
+            "repeatedly settle the unsettled node with the smallest distance, and relax its "
+            "edges. Once settled, a node's distance is final -- which holds precisely because "
+            "no nonnegative detour can improve a shorter path. With a binary-heap priority "
+            "queue it runs in O((V+E) log V). This module builds a weighted graph, runs "
+            "Dijkstra (returning distances and a predecessor tree for path reconstruction), and "
+            "includes a from-scratch binary min-heap and a Bellman-Ford implementation used to "
+            "verify every distance. Add a goal heuristic to the priority and it becomes A*, the "
+            "workhorse of map and game routing -- shown here solving a grid maze.",
+            '<div class="grid">'
+            + svg_card(out("dijkstra.svg"), "the distance flood from the source colouring the grid, with the shortest S-to-G route picked out")
+            + f'<div class="card">{pre(dijkstra_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

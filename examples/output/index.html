@@ -132,11 +132,11 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           8.92       11.99      0.7x
-   400          36.88       38.01      1.0x
-   800         147.71      118.96      1.2x
-  1600         611.49      353.88      1.7x
-  3200        2484.13      973.18      2.6x
+   200           9.06       11.93      0.8x
+   400          36.45       36.96      1.0x
+   800         146.52      116.33      1.3x
+  1600         616.36      343.21      1.8x
+  3200        2485.08      962.91      2.6x
 
 empirical scaling exponent  direct ~ N^2.03   barnes-hut ~ N^1.59
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
@@ -199193,6 +199193,142 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   segmentation, percolation, and &#x27;friend circle&#x27; / account-merge problems.
 
   wrote examples/output\union_find.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Dijkstra&#x27;s algorithm: shortest paths, greedily</h2>
+    <p class="blurb">Given a graph with nonnegative edge weights, Dijkstra finds the cheapest route from a source to every node by a greedy rule: keep a tentative distance to each node, repeatedly settle the unsettled node with the smallest distance, and relax its edges. Once settled, a node's distance is final -- which holds precisely because no nonnegative detour can improve a shorter path. With a binary-heap priority queue it runs in O((V+E) log V). This module builds a weighted graph, runs Dijkstra (returning distances and a predecessor tree for path reconstruction), and includes a from-scratch binary min-heap and a Bellman-Ford implementation used to verify every distance. Add a goal heuristic to the priority and it becomes A*, the workhorse of map and game routing -- shown here solving a grid maze.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420" font-family="monospace">
+<rect width="760" height="420" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">Dijkstra on a grid: distance flood and the shortest route</text>
+<text x="20" y="46" fill="#8b949e" font-size="12">cell shade = distance from S (blue near, red far); yellow = shortest path; gray = walls</text>
+<rect x="40" y="70" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<text x="56.0" y="91.0" fill="#0d1117" font-size="13" font-weight="bold" text-anchor="middle">S</text>
+<rect x="74" y="70" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="108" y="70" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="142" y="70" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="176" y="70" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="210" y="70" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="244" y="70" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="278" y="70" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="312" y="70" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="346" y="70" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="40" y="104" width="32" height="32" fill="#52a9f2" stroke="#0d1117" stroke-width="1"/>
+<rect x="74" y="104" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="108" y="104" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="142" y="104" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="176" y="104" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="210" y="104" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="244" y="104" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="278" y="104" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="312" y="104" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="346" y="104" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="40" y="138" width="32" height="32" fill="#57a7ee" stroke="#0d1117" stroke-width="1"/>
+<rect x="74" y="138" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="108" y="138" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="142" y="138" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="176" y="138" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="210" y="138" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="244" y="138" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="278" y="138" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="312" y="138" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="346" y="138" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="40" y="172" width="32" height="32" fill="#5ca5ea" stroke="#0d1117" stroke-width="1"/>
+<rect x="74" y="172" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="108" y="172" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="142" y="172" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="176" y="172" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="210" y="172" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="244" y="172" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="278" y="172" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="312" y="172" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="346" y="172" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="40" y="206" width="32" height="32" fill="#61a3e6" stroke="#0d1117" stroke-width="1"/>
+<rect x="74" y="206" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="108" y="206" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="142" y="206" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="176" y="206" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="210" y="206" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="244" y="206" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="278" y="206" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="312" y="206" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="346" y="206" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="40" y="240" width="32" height="32" fill="#67a1e2" stroke="#0d1117" stroke-width="1"/>
+<rect x="74" y="240" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="108" y="240" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="142" y="240" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="176" y="240" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="210" y="240" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="244" y="240" width="32" height="32" fill="#9b8eb9" stroke="#0d1117" stroke-width="1"/>
+<rect x="278" y="240" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="312" y="240" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="346" y="240" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="40" y="274" width="32" height="32" fill="#6c9fde" stroke="#0d1117" stroke-width="1"/>
+<rect x="74" y="274" width="32" height="32" fill="#719dda" stroke="#0d1117" stroke-width="1"/>
+<rect x="108" y="274" width="32" height="32" fill="#769bd6" stroke="#0d1117" stroke-width="1"/>
+<rect x="142" y="274" width="32" height="32" fill="#7c9ad1" stroke="#0d1117" stroke-width="1"/>
+<rect x="176" y="274" width="32" height="32" fill="#8198cd" stroke="#0d1117" stroke-width="1"/>
+<rect x="210" y="274" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="244" y="274" width="32" height="32" fill="#a08cb5" stroke="#0d1117" stroke-width="1"/>
+<rect x="278" y="274" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="312" y="274" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="346" y="274" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="40" y="308" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="74" y="308" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="108" y="308" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="142" y="308" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="176" y="308" width="32" height="32" fill="#8696c9" stroke="#0d1117" stroke-width="1"/>
+<rect x="210" y="308" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="244" y="308" width="32" height="32" fill="#9b8eb9" stroke="#0d1117" stroke-width="1"/>
+<rect x="278" y="308" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="312" y="308" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="346" y="308" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="40" y="342" width="32" height="32" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<rect x="74" y="342" width="32" height="32" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<rect x="108" y="342" width="32" height="32" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<rect x="142" y="342" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="176" y="342" width="32" height="32" fill="#8b94c5" stroke="#0d1117" stroke-width="1"/>
+<rect x="210" y="342" width="32" height="32" fill="#9192c1" stroke="#0d1117" stroke-width="1"/>
+<rect x="244" y="342" width="32" height="32" fill="#9690bd" stroke="#0d1117" stroke-width="1"/>
+<rect x="278" y="342" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="312" y="342" width="32" height="32" fill="#f46e73" stroke="#0d1117" stroke-width="1"/>
+<rect x="346" y="342" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<rect x="40" y="376" width="32" height="32" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<rect x="74" y="376" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="108" y="376" width="32" height="32" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<rect x="142" y="376" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="176" y="376" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="210" y="376" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="244" y="376" width="32" height="32" fill="#30363d" stroke="#0d1117" stroke-width="1"/>
+<rect x="278" y="376" width="32" height="32" fill="#ff6b6b" stroke="#0d1117" stroke-width="1"/>
+<rect x="312" y="376" width="32" height="32" fill="#f96c6f" stroke="#0d1117" stroke-width="1"/>
+<rect x="346" y="376" width="32" height="32" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<text x="362.0" y="397.0" fill="#0d1117" font-size="13" font-weight="bold" text-anchor="middle">G</text>
+</svg><figcaption>the distance flood from the source colouring the grid, with the shortest S-to-G route picked out</figcaption></figure><div class="card"><pre>Dijkstra: cheapest route from a source to every node
+
+   node  distance  Bellman-Ford
+      0         0             0
+      1         3             3
+      2         1             1
+      3         4             4
+      4         7             7
+
+  shortest 0 -&gt; 4: [0, 2, 1, 3, 4], cost 7  (Dijkstra == Bellman-Ford: True)
+
+  Grid maze (10x10): shortest S-&gt;G path length = 32
+  &#x27;#&#x27; walls, &#x27;*&#x27; the path Dijkstra found:
+    S****#****
+    .###*#*##*
+    .#***#*#**
+    .#*###*#*#
+    .#*****#*#
+    .#####.#*#
+    .....#.#**
+    ####.#.##*
+    ...#...#.*
+    .#.####..G
+
+  wrote examples/output\dijkstra.svg</pre></div></div>
   </section>
 
   <section>
