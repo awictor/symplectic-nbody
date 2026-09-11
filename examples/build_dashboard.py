@@ -295,6 +295,7 @@ def main():
     import rootfind_demo
     import quadrature_demo
     import spline_demo
+    import fft_demo
 
     import plot_orbits
 
@@ -559,6 +560,7 @@ def main():
     rootfind_txt = run("rootfind_demo", rootfind_demo.main, True)
     quadrature_txt = run("quadrature_demo", quadrature_demo.main, True)
     spline_txt = run("spline_demo", spline_demo.main, True)
+    fft_txt = run("fft_demo", fft_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3463,6 +3465,23 @@ def main():
             '<div class="grid">'
             + svg_card(out("spline.svg"), "spline (green) and single polynomial (red) through the same knots on Runge's function -- the polynomial oscillates, the spline stays smooth")
             + f'<div class="card">{pre(spline_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Fast Fourier Transform: O(n log n) instead of O(n^2)",
+            "The discrete Fourier transform turns n samples into their n frequency components -- "
+            "the recipe behind audio and image compression, spectrum analysis, and fast "
+            "polynomial multiplication. Computed directly it costs O(n^2); the Cooley-Tukey FFT "
+            "does the same transform in O(n log n) by splitting the samples into even- and "
+            "odd-indexed halves, transforming each recursively, and combining them with "
+            "twiddle-factor butterflies -- collapsing a million-sample transform from 10^12 "
+            "operations to ~2x10^7, ~50,000x faster. The same butterfly runs backwards for the "
+            "inverse, and the convolution theorem turns an O(n^2) convolution into three FFTs. "
+            "This module implements the radix-2 FFT, inverse, naive DFT check, and FFT "
+            "convolution using only built-in complex numbers, verified to match the DFT, "
+            "round-trip exactly, recover known frequencies, and satisfy Parseval's identity.",
+            '<div class="grid">'
+            + svg_card(out("fft.svg"), "a two-tone signal in time decomposing into two sharp peaks in its frequency spectrum")
+            + f'<div class="card">{pre(fft_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

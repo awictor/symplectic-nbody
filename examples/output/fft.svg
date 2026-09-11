@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" font-family="monospace">
+<rect width="760" height="430" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">FFT: a two-tone signal and its frequency spectrum</text>
+<text x="20" y="44" fill="#8b949e" font-size="12">the signal in time (top) decomposes into two sharp peaks in frequency (bottom)</text>
+<line x1="45" y1="115.0" x2="730" y2="115.0" stroke="#30363d" stroke-width="1"/>
+<polyline points="45.0,69.5 55.9,81.2 66.7,104.3 77.6,117.4 88.5,115.0 99.4,112.6 110.2,125.7 121.1,148.8 132.0,160.5 142.9,148.8 153.7,125.7 164.6,112.6 175.5,115.0 186.3,117.4 197.2,104.3 208.1,81.2 219.0,69.5 229.8,81.2 240.7,104.3 251.6,117.4 262.5,115.0 273.3,112.6 284.2,125.7 295.1,148.8 306.0,160.5 316.8,148.8 327.7,125.7 338.6,112.6 349.4,115.0 360.3,117.4 371.2,104.3 382.1,81.2 392.9,69.5 403.8,81.2 414.7,104.3 425.6,117.4 436.4,115.0 447.3,112.6 458.2,125.7 469.0,148.8 479.9,160.5 490.8,148.8 501.7,125.7 512.5,112.6 523.4,115.0 534.3,117.4 545.2,104.3 556.0,81.2 566.9,69.5 577.8,81.2 588.7,104.3 599.5,117.4 610.4,115.0 621.3,112.6 632.1,125.7 643.0,148.8 653.9,160.5 664.8,148.8 675.6,125.7 686.5,112.6 697.4,115.0 708.3,117.4 719.1,104.3 730.0,81.2" fill="none" stroke="#4dabf7" stroke-width="1.8"/>
+<text x="45.0" y="61.0" fill="#8b949e" font-size="10">time domain</text>
+<line x1="45" y1="375" x2="730" y2="375" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="45" y1="375" x2="45" y2="230" stroke="#8b949e" stroke-width="1.2"/>
+<rect x="34.8" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="56.2" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="77.6" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="99.0" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="120.4" y="243.2" width="20.4" height="131.8" fill="#06d6a0"/>
+<rect x="141.8" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="163.2" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="184.6" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="206.0" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="227.5" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="248.9" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="270.3" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="291.7" y="309.1" width="20.4" height="65.9" fill="#06d6a0"/>
+<rect x="313.1" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="334.5" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="355.9" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="377.3" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="398.7" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="420.1" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="441.5" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="462.9" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="484.3" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="505.7" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="527.1" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="548.5" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="570.0" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="591.4" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="612.8" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="634.2" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="655.6" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="677.0" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="698.4" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<rect x="719.8" y="375.0" width="20.4" height="0.0" fill="#1f6f52"/>
+<text x="130.6" y="239.2" fill="#06d6a0" font-size="9" text-anchor="middle">4 Hz</text>
+<text x="301.9" y="305.1" fill="#06d6a0" font-size="9" text-anchor="middle">12 Hz</text>
+<text x="45.0" y="390.0" fill="#8b949e" font-size="8" text-anchor="middle">0</text>
+<text x="387.5" y="390.0" fill="#8b949e" font-size="8" text-anchor="middle">16</text>
+<text x="730.0" y="390.0" fill="#8b949e" font-size="8" text-anchor="middle">32</text>
+<text x="387.5" y="405.0" fill="#8b949e" font-size="10" text-anchor="middle">frequency bin -> magnitude</text>
+</svg>

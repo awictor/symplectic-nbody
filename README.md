@@ -253,6 +253,7 @@ ruins a long non-symplectic integration.
 | `src/rootfind.py` | Bracketing root-finders: bisection, secant, false position, Brent |
 | `src/quadrature.py` | Numerical integration: trapezoid, Simpson, Romberg, adaptive, Gauss-Legendre |
 | `src/spline.py` | Cubic spline interpolation: natural/clamped C^2, Thomas solve, vs Lagrange |
+| `src/fft.py` | Fast Fourier Transform: radix-2 Cooley-Tukey, inverse, FFT convolution |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -497,6 +498,7 @@ ruins a long non-symplectic integration.
 | `examples/rootfind_demo.py` | Method comparison + transcendental roots + the convergence-rate figure |
 | `examples/quadrature_demo.py` | Method accuracy + convergence-order table + the error-vs-samples figure |
 | `examples/spline_demo.py` | Spline vs polynomial on Runge + the through-the-knots curve figure |
+| `examples/fft_demo.py` | Two-tone spectrum + convolution + the signal & spectrum & cost figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5975,6 +5977,30 @@ the natural spline sets zero end curvature, the clamped spline fixes end slopes.
 builds and evaluates the spline and its derivatives, verified to pass through every knot, be
 `C^2`, reproduce cubics exactly, and stay near the true Runge curve where a single polynomial
 explodes to ~1.9. It is the interpolation behind fonts, animation, and CAD.
+
+## The Fast Fourier Transform: O(n log n) instead of O(n^2)
+
+The frequencies in a signal, computed the fast way. `fft.py`:
+
+```
+$ python examples/fft_demo.py examples/output
+
+  signal = cos(2pi*4t) + 0.5 cos(2pi*12t)  ->  peaks at 4 Hz and 12 Hz (ratio 2:1)
+           n           FFT               DFT   speedup
+     1048576    20,971,520 1,099,511,627,776   52,428x
+```
+
+The discrete Fourier transform turns n samples into their n frequency components -- the recipe
+behind audio and image compression, spectrum analysis, and fast polynomial multiplication.
+Computed directly it costs `O(n^2)`; the Cooley-Tukey FFT does the same transform in `O(n log n)`
+by splitting the samples into even- and odd-indexed halves, transforming each recursively, and
+combining them with twiddle-factor butterflies -- collapsing a million-sample transform from
+`10^12` operations to `~2x10^7`, about 50,000x faster. The same butterfly runs backwards for the
+inverse, and the convolution theorem turns an `O(n^2)` convolution into three FFTs. This module
+implements the radix-2 FFT, inverse, a naive DFT check, and FFT convolution using only Python's
+built-in complex numbers, verified to match the DFT, round-trip exactly, recover known
+frequencies, and satisfy Parseval's identity. Often called the most important numerical algorithm
+of the 20th century.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

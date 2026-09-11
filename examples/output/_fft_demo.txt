@@ -1,0 +1,25 @@
+FFT: decompose a signal into its frequency components
+
+  signal = cos(2pi*4t) + 0.5 cos(2pi*12t), 64 samples
+  FFT matches the naive DFT: True
+  round-trip ifft(fft(x)) == x: True
+
+  strongest frequency bins (0..n/2):
+    bin   4 (4 Hz): magnitude 32.00
+    bin  12 (12 Hz): magnitude 16.00
+    bin  24 (24 Hz): magnitude 0.00
+  -> peaks at 4 Hz and 12 Hz, amplitude ratio 2:1, exactly the input.
+
+  Convolution via the FFT (multiply spectra): (1+2x)(3+4x+5x^2) =
+    [3.0, 10.0, 13.0, 10.0]  (= 3 + 10x + 13x^2 + 10x^3)
+
+  Operation count, FFT (n log2 n) vs naive DFT (n^2):
+           n           FFT               DFT   speedup
+        1024        10,240         1,048,576      102x
+       32768       491,520     1,073,741,824    2,184x
+     1048576    20,971,520 1,099,511,627,776   52,428x
+
+  For a million samples the FFT is ~50,000x faster -- the difference between
+  instant and infeasible. It is why digital audio, JPEG, MP3, and MRI all exist.
+
+  wrote examples/output\fft.svg
