@@ -340,6 +340,7 @@ def main():
     import closest_pair_demo
     import segment_intersection_demo
     import point_in_polygon_demo
+    import polygon_clip_demo
 
     import plot_orbits
 
@@ -649,6 +650,7 @@ def main():
     closest_pair_txt = run("closest_pair_demo", closest_pair_demo.main, True)
     segment_intersection_txt = run("segment_intersection_demo", segment_intersection_demo.main, True)
     point_in_polygon_txt = run("point_in_polygon_demo", point_in_polygon_demo.main, True)
+    polygon_clip_txt = run("polygon_clip_demo", polygon_clip_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4426,6 +4428,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("point_in_polygon.svg"), "a concave arrow with grid points coloured by membership (both rules agree), and a pentagram whose centre the two rules classify differently")
             + f'<div class="card">{pre(point_in_polygon_txt)}</div>'
+            + '</div>'),
+        section(
+            "Polygon clipping: intersecting a polygon with a window",
+            "Clipping a polygon to a rectangular viewport -- or any convex region -- is fundamental "
+            "to rendering (nothing off-screen is drawn), CAD, and GIS overlay. The Sutherland-"
+            "Hodgman algorithm clips the SUBJECT polygon against each edge of the CONVEX CLIP "
+            "polygon in turn, feeding the output of one edge as input to the next; whatever survives "
+            "all clip edges is exactly the intersection. Each single-edge clip is a linear scan: for "
+            "every subject edge s->e, keep e if it is inside, add the crossing point when the edge "
+            "leaves or enters, drop it when both ends are outside -- 'inside' decided by the same "
+            "cross-product orientation predicate as everywhere in geometry. O(n*k) for an n-vertex "
+            "subject and k-edge window; the clip must be convex but the subject may be concave. This "
+            "module implements clipping against an arbitrary convex clip polygon plus a "
+            "rectangle-window convenience, verified that a polygon fully inside is unchanged, one "
+            "fully outside clips to empty, two overlapping squares clip to their analytic 2x2 "
+            "overlap, a square clips to a triangular or diamond window at the right area, a concave "
+            "subject stays within the window bounds, and the clipped area never exceeds the "
+            "original.",
+            '<div class="grid">'
+            + svg_card(out("polygon_clip.svg"), "a concave subject polygon (grey dashed) intersected with a rectangular window (yellow dashed) to give the clipped result (green)")
+            + f'<div class="card">{pre(polygon_clip_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

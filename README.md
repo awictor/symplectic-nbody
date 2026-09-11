@@ -298,6 +298,7 @@ ruins a long non-symplectic integration.
 | `src/closest_pair.py` | Closest pair of points: O(n log n) divide-and-conquer with the strip merge |
 | `src/segment_intersection.py` | Segment intersection: orientation predicate, crossing point, simple-polygon test |
 | `src/point_in_polygon.py` | Point-in-polygon: ray casting + winding number, signed area, centroid, boundary |
+| `src/polygon_clip.py` | Sutherland-Hodgman polygon clipping against a convex window, area |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -587,6 +588,7 @@ ruins a long non-symplectic integration.
 | `examples/closest_pair_demo.py` | Closest pair highlighted, D&C-vs-brute scaling, agreement across sizes |
 | `examples/segment_intersection_demo.py` | Crossing/touch/parallel classification + simple-vs-self-crossing polygons |
 | `examples/point_in_polygon_demo.py` | Grid membership on a concave arrow + pentagram ray-vs-winding divergence |
+| `examples/polygon_clip_demo.py` | Concave polygon clipped to rectangle/triangle/diamond windows + overlay figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7092,6 +7094,28 @@ grazing a vertex counts once) and an explicit boundary test, plus signed area (o
 centroid, verified that the methods agree on convex/concave/star polygons and across a grid, that
 boundary points are detected, and -- the textbook case -- that a pentagram's doubly-wound centre is
 classified differently by the two rules.
+
+## Polygon clipping: intersecting a polygon with a window
+
+Keep only what's inside the viewport. `polygon_clip.py`:
+
+```
+$ python examples/polygon_clip_demo.py examples/output
+
+  7-vertex concave subject clipped to [2,8]^2: 82% of the area retained
+  same subject to triangle / diamond / tiny-box windows, right areas
+  fully inside -> unchanged; fully outside -> empty
+```
+
+Sutherland-Hodgman clips the subject polygon against each edge of the convex clip polygon in turn,
+feeding the output of one edge into the next; whatever survives all edges is the intersection. Per
+edge it keeps inside vertices and adds the crossing point wherever an edge leaves or enters --
+"inside" decided by the cross-product orientation predicate. `O(n*k)` for an n-vertex subject and
+k-edge window; the clip must be convex, the subject may be concave. This module implements clipping
+against an arbitrary convex clip polygon plus a rectangle convenience, verified that a polygon fully
+inside is unchanged, one fully outside clips to empty, two overlapping squares clip to their
+analytic 2x2 overlap, a square clips to a triangular or diamond window at the right area, a concave
+subject stays within the window bounds, and the clipped area never exceeds the original.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

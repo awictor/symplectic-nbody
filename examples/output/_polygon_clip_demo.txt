@@ -1,0 +1,23 @@
+Sutherland-Hodgman polygon clipping: subject INTERSECT convex window
+
+  subject polygon: 7 vertices, area 37.00
+
+  clip to rectangle (2, 2, 8, 8): 13 vertices, area 30.25
+    retained 82% of the subject's area; clipped area <= original: True
+
+  Clipping the same subject to different convex windows:
+     rectangle [2,8]^2: clipped area  30.25 (13 vertices)
+              triangle: clipped area  29.85 (9 vertices)
+               diamond: clipped area  30.10 (11 vertices)
+       tiny centre box: clipped area   4.00 (4 vertices)
+
+  Edge cases:
+    fully inside the window -> unchanged (area 4.0)
+    fully outside -> empty ([])
+
+  The algorithm clips the subject against each clip edge in turn, feeding the output
+  of one edge into the next. Per edge it keeps vertices on the inside and adds the
+  crossing point wherever an edge exits or enters -- O(n*k) for an n-gon and k-edge
+  convex window. This is how a renderer discards geometry outside the viewport.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\polygon_clip.svg
