@@ -303,6 +303,7 @@ ruins a long non-symplectic integration.
 | `src/bresenham.py` | Bresenham rasterization: integer-only line, midpoint circle, filled disk |
 | `src/flood_fill.py` | Flood fill: queue/stack/scanline, 4/8-connectivity, connected-component labeling |
 | `src/bezier.py` | Bezier curves: de Casteljau, derivative, subdivision, degree elevation, arc length |
+| `src/bwt.py` | Burrows-Wheeler transform + inverse, move-to-front, RLE, the bzip2-style pipeline |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -597,6 +598,7 @@ ruins a long non-symplectic integration.
 | `examples/bresenham_demo.py` | ASCII line-fan and circle rasterization, sub-pixel accuracy, circumference scaling |
 | `examples/flood_fill_demo.py` | Paint-bucket inside a wall, three strategies agree, connected components + connectivity |
 | `examples/bezier_demo.py` | Quadratic/cubic curves with control polygons, subdivision, elevation, arc length |
+| `examples/bwt_demo.py` | BWT runniness gain, full pipeline compression, worked banana example |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7209,6 +7211,28 @@ verified that the curve hits its first and last control points, that de Castelja
 Bernstein sum, that a linear curve is exactly the straight segment, that the curve stays within its
 control points' convex hull, that subdivision reproduces the original and degree elevation preserves
 the shape, and that a linear curve's arc length is the endpoint distance.
+
+## Burrows-Wheeler transform: the heart of bzip2
+
+Permute the bytes so they compress, reversibly. `bwt.py`:
+
+```
+$ python examples/bwt_demo.py examples/output
+
+  BWT(banana) = 'annb$aa', reversible; DNA-like text becomes ~15x runnier
+  full pipeline on 100 repetitive chars -> 5 RLE pairs (20x fewer tokens), lossless
+  worked: banana -> BWT 'annb$aa' -> MTF [1,3,0,3,3,3,0] -> RLE -> banana
+```
+
+BWT compresses nothing on its own -- it is a reversible permutation -- but by sorting all rotations
+and taking the last column it clusters same-context bytes into runs. The bzip2 pipeline then chains
+**move-to-front** (recode each byte as its index in a running alphabet, so a run becomes zeros) and
+**run-length** encoding (collapse runs into value/count pairs); the inverse runs them backwards, and
+BWT is undone by the LF-mapping. This module implements BWT and its inverse (sentinel-terminated so
+any input works), move-to-front, run-length coding, and the full pipeline, verified that BWT
+round-trips any string, that it increases the mean run length on structured text, that MTF and RLE
+round-trip, that the pipeline is lossless across 50 random strings, and that it yields far fewer
+tokens than the input on repetitive data.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

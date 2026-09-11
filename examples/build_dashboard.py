@@ -345,6 +345,7 @@ def main():
     import bresenham_demo
     import flood_fill_demo
     import bezier_demo
+    import bwt_demo
 
     import plot_orbits
 
@@ -659,6 +660,7 @@ def main():
     bresenham_txt = run("bresenham_demo", bresenham_demo.main, True)
     flood_fill_txt = run("flood_fill_demo", flood_fill_demo.main, True)
     bezier_txt = run("bezier_demo", bezier_demo.main, True)
+    bwt_txt = run("bwt_demo", bwt_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4538,6 +4540,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("bezier.svg"), "a quadratic and a cubic Bezier curve drawn solid with their dashed control polygons and the de Casteljau midpoint marked")
             + f'<div class="card">{pre(bezier_txt)}</div>'
+            + '</div>'),
+        section(
+            "Burrows-Wheeler transform: the heart of bzip2",
+            "The Burrows-Wheeler transform is the clever core of bzip2. On its own it compresses "
+            "NOTHING -- it is a reversible PERMUTATION -- but it rearranges bytes so characters "
+            "sharing a context cluster into long runs that later stages squeeze. It sorts all "
+            "rotations of a sentinel-terminated string and takes the last column; the inverse "
+            "reconstructs the original by the LF-mapping. The bzip2 pipeline chains three "
+            "reversible stages: BWT (cluster like-context bytes into runs), MOVE-TO-FRONT (recode "
+            "each byte as its index in a running alphabet, so a run becomes a run of zeros), and "
+            "RUN-LENGTH encoding (collapse those runs into value/count pairs). This module "
+            "implements BWT and its inverse (with a sentinel so any input works), move-to-front, "
+            "run-length coding, and the full forward/backward pipeline, verified that BWT "
+            "round-trips any string, that it genuinely increases the mean run length on structured "
+            "text (DNA-like input becomes ~15x runnier), that MTF and RLE round-trip, that the whole "
+            "pipeline is lossless across 50 random strings, and that it yields far fewer tokens than "
+            "the input length on repetitive data.",
+            '<div class="grid">'
+            + svg_card(out("bwt.svg"), "the mean run length of several inputs before and after the transform, structured text gaining the most, random text barely")
+            + f'<div class="card">{pre(bwt_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
