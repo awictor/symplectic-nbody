@@ -1,0 +1,22 @@
+Marching squares: iso-contours of a scalar field
+
+  Radial field f = x^2 + y^2 -- contours should be circles:
+       level   radius  segments    length    2*pi*r
+           1     1.00        96     6.278     6.283
+           4     2.00       192    12.564    12.566
+           9     3.00       288    18.848    18.850
+          16     4.00       384    25.131    25.133
+
+  Gaussian terrain -- contour-line count at several heights:
+    height  -0.5:   98 contour segments, total length 7.85
+    height   0.0:  128 contour segments, total length 10.37
+    height   0.5:  330 contour segments, total length 26.34
+    height   1.0:  278 contour segments, total length 22.18
+    height   2.0:  100 contour segments, total length 8.00
+
+  Each grid cell's four corners are above or below the level -> a 4-bit case index
+  selecting which edges the contour crosses; linear interpolation places the crossing
+  exactly where the field equals the level, so the curve is smooth. Two ambiguous saddle
+  cases are resolved by the cell-center average. This is how every contour plot is drawn.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\marching_squares.svg

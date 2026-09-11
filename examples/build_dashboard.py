@@ -341,6 +341,7 @@ def main():
     import segment_intersection_demo
     import point_in_polygon_demo
     import polygon_clip_demo
+    import marching_squares_demo
 
     import plot_orbits
 
@@ -651,6 +652,7 @@ def main():
     segment_intersection_txt = run("segment_intersection_demo", segment_intersection_demo.main, True)
     point_in_polygon_txt = run("point_in_polygon_demo", point_in_polygon_demo.main, True)
     polygon_clip_txt = run("polygon_clip_demo", polygon_clip_demo.main, True)
+    marching_squares_txt = run("marching_squares_demo", marching_squares_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4449,6 +4451,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("polygon_clip.svg"), "a concave subject polygon (grey dashed) intersected with a rectangular window (yellow dashed) to give the clipped result (green)")
             + f'<div class="card">{pre(polygon_clip_txt)}</div>'
+            + '</div>'),
+        section(
+            "Marching squares: contour lines from a scalar field",
+            "Given a 2-D grid of scalar values -- a height map, a temperature field, a "
+            "signed-distance function -- marching squares finds the ISO-CONTOUR at a chosen level: "
+            "the curve where the field equals it (a topographic contour, an isotherm, a blob "
+            "boundary). It is the 2-D sibling of marching cubes (the isosurface method behind "
+            "medical imaging) and the workhorse behind every contour plot. The idea is local: at "
+            "each grid cell the four corners are above or below the level, giving a 4-bit CASE "
+            "INDEX (16 possibilities) that says which cell edges the contour crosses, and LINEAR "
+            "INTERPOLATION between corner values places each crossing exactly where the field equals "
+            "the level -- so the curve is smooth, not blocky. The two ambiguous saddle cases "
+            "(opposite corners high) are resolved consistently by the cell-center average. This "
+            "module builds the 16-case lookup, extracts contour segments from a grid or a sampled "
+            "function, and sums contour length, verified that a radial field contours to circles of "
+            "the right radius and circumference, a linear ramp gives straight contours, a level "
+            "outside the field range yields nothing, a diagonal saddle gives two segments, and a "
+            "closed blob's contour forms closed loops with no loose ends.",
+            '<div class="grid">'
+            + svg_card(out("marching_squares.svg"), "concentric circular contours of a radial field beside the nested iso-lines of a Gaussian terrain")
+            + f'<div class="card">{pre(marching_squares_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

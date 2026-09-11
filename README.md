@@ -299,6 +299,7 @@ ruins a long non-symplectic integration.
 | `src/segment_intersection.py` | Segment intersection: orientation predicate, crossing point, simple-polygon test |
 | `src/point_in_polygon.py` | Point-in-polygon: ray casting + winding number, signed area, centroid, boundary |
 | `src/polygon_clip.py` | Sutherland-Hodgman polygon clipping against a convex window, area |
+| `src/marching_squares.py` | Marching squares: iso-contour extraction from a scalar grid, 16-case + interpolation |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -589,6 +590,7 @@ ruins a long non-symplectic integration.
 | `examples/segment_intersection_demo.py` | Crossing/touch/parallel classification + simple-vs-self-crossing polygons |
 | `examples/point_in_polygon_demo.py` | Grid membership on a concave arrow + pentagram ray-vs-winding divergence |
 | `examples/polygon_clip_demo.py` | Concave polygon clipped to rectangle/triangle/diamond windows + overlay figure |
+| `examples/marching_squares_demo.py` | Circular contours of a radial field + Gaussian-terrain iso-lines figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7116,6 +7118,26 @@ against an arbitrary convex clip polygon plus a rectangle convenience, verified 
 inside is unchanged, one fully outside clips to empty, two overlapping squares clip to their
 analytic 2x2 overlap, a square clips to a triangular or diamond window at the right area, a concave
 subject stays within the window bounds, and the clipped area never exceeds the original.
+
+## Marching squares: contour lines from a scalar field
+
+The algorithm behind every contour plot. `marching_squares.py`:
+
+```
+$ python examples/marching_squares_demo.py examples/output
+
+  f = x^2 + y^2 contoured at 1,4,9,16 -> circles r=1,2,3,4; lengths match 2*pi*r to 3 dp
+  Gaussian terrain iso-lines at several heights, closed loops with no loose ends
+```
+
+At each grid cell the four corners are above or below the chosen level, giving a 4-bit case index
+(16 possibilities) that selects which cell edges the contour crosses; linear interpolation between
+corner values places each crossing exactly where the field equals the level, so the curve is smooth.
+The two ambiguous saddle cases are resolved by the cell-center average. This module builds the
+16-case lookup, extracts contour segments from a grid or a sampled function, and sums contour
+length, verified that a radial field contours to circles of the right radius and circumference, a
+linear ramp gives straight contours, a level outside the field range yields nothing, a diagonal
+saddle gives two segments, and a closed blob's contour forms closed loops with no loose ends.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
