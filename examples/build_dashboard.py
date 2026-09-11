@@ -291,6 +291,7 @@ def main():
     import rejection_sampling_demo
     import welford_demo
     import kahan_demo
+    import horner_demo
 
     import plot_orbits
 
@@ -551,6 +552,7 @@ def main():
     rejection_sampling_txt = run("rejection_sampling_demo", rejection_sampling_demo.main, True)
     welford_txt = run("welford_demo", welford_demo.main, True)
     kahan_txt = run("kahan_demo", kahan_demo.main, True)
+    horner_txt = run("horner_demo", horner_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3391,6 +3393,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("kahan.svg"), "the relative error versus the number of terms: naive climbs with n while Kahan stays flat at machine precision")
             + f'<div class="card">{pre(kahan_txt)}</div>'
+            + '</div>'),
+        section(
+            "Horner's method: evaluating a polynomial the fast, stable way",
+            "Evaluating a polynomial by computing each power separately costs ~2n "
+            "multiplications and sums terms of wildly different sizes. Horner rewrites it as "
+            "nested multiplication -- p(x) = (...(a_n x + a_{n-1})x + ...)x + a_0 -- evaluating "
+            "in exactly n mults and n adds with far better rounding. The same sweep IS synthetic "
+            "division: the intermediate values are the quotient of dividing by (x - r) and the "
+            "final value is the remainder p(r) (the Remainder Theorem); a second sweep gives "
+            "p'(r) for free, which makes Horner the engine of Newton's method for polynomial "
+            "roots. This module evaluates by Horner, does synthetic division and derivatives, "
+            "and finds real roots by Newton refinement plus deflation -- verified against direct "
+            "power-sum evaluation and by substituting the roots back.",
+            '<div class="grid">'
+            + svg_card(out("horner.svg"), "the multiplication count (Horner n vs direct 2n) and Newton's quadratic convergence to a root")
+            + f'<div class="card">{pre(horner_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

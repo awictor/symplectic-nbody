@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="390" viewBox="0 0 760 390" font-family="monospace">
+<rect width="760" height="390" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">Horner: fewer multiplications, and Newton root convergence</text>
+<text x="20" y="44" fill="#8b949e" font-size="12">multiplications vs polynomial degree (left); |p(x)| shrinking each Newton step (right)</text>
+<line x1="55" y1="335" x2="360" y2="335" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="55" y1="335" x2="55" y2="62" stroke="#8b949e" stroke-width="1.2"/>
+<polyline points="55.0,325.1 61.4,320.1 67.7,315.1 74.1,310.2 80.4,305.2 86.8,300.3 93.1,295.3 99.5,290.3 105.8,285.4 112.2,280.4 118.5,275.4 124.9,270.5 131.2,265.5 137.6,260.5 144.0,255.6 150.3,250.6 156.7,245.7 163.0,240.7 169.4,235.7 175.7,230.8 182.1,225.8 188.4,220.8 194.8,215.9 201.1,210.9 207.5,205.9 213.9,201.0 220.2,196.0 226.6,191.1 232.9,186.1 239.3,181.1 245.6,176.2 252.0,171.2 258.3,166.2 264.7,161.3 271.0,156.3 277.4,151.3 283.8,146.4 290.1,141.4 296.5,136.5 302.8,131.5 309.2,126.5 315.5,121.6 321.9,116.6 328.2,111.6 334.6,106.7 340.9,101.7 347.3,96.7 353.6,91.8 360.0,86.8" fill="none" stroke="#ff6b6b" stroke-width="2.5"/>
+<polyline points="55.0,330.0 61.4,327.6 67.7,325.1 74.1,322.6 80.4,320.1 86.8,317.6 93.1,315.1 99.5,312.7 105.8,310.2 112.2,307.7 118.5,305.2 124.9,302.7 131.2,300.3 137.6,297.8 144.0,295.3 150.3,292.8 156.7,290.3 163.0,287.8 169.4,285.4 175.7,282.9 182.1,280.4 188.4,277.9 194.8,275.4 201.1,273.0 207.5,270.5 213.9,268.0 220.2,265.5 226.6,263.0 232.9,260.5 239.3,258.1 245.6,255.6 252.0,253.1 258.3,250.6 264.7,248.1 271.0,245.7 277.4,243.2 283.8,240.7 290.1,238.2 296.5,235.7 302.8,233.2 309.2,230.8 315.5,228.3 321.9,225.8 328.2,223.3 334.6,220.8 340.9,218.4 347.3,215.9 353.6,213.4 360.0,210.9" fill="none" stroke="#06d6a0" stroke-width="2.5"/>
+<text x="360.0" y="80.8" fill="#ff6b6b" font-size="9" text-anchor="end">direct ~2n</text>
+<text x="360.0" y="224.9" fill="#06d6a0" font-size="9" text-anchor="end">Horner n</text>
+<text x="55.0" y="350.0" fill="#8b949e" font-size="8" text-anchor="middle">2</text>
+<text x="201.1" y="350.0" fill="#8b949e" font-size="8" text-anchor="middle">25</text>
+<text x="360.0" y="350.0" fill="#8b949e" font-size="8" text-anchor="middle">50</text>
+<text x="207.5" y="365.0" fill="#8b949e" font-size="10" text-anchor="middle">degree -> multiplications</text>
+<line x1="425" y1="335" x2="730" y2="335" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="425" y1="335" x2="425" y2="62" stroke="#8b949e" stroke-width="1.2"/>
+<polyline points="425.0,62.0 475.8,75.5 526.7,98.7 577.5,144.4 628.3,235.7 679.2,295.5 730.0,295.5" fill="none" stroke="#4dabf7" stroke-width="2.5"/>
+<circle cx="425.0" cy="62.0" r="2.5" fill="#4dabf7"/>
+<circle cx="475.8" cy="75.5" r="2.5" fill="#4dabf7"/>
+<circle cx="526.7" cy="98.7" r="2.5" fill="#4dabf7"/>
+<circle cx="577.5" cy="144.4" r="2.5" fill="#4dabf7"/>
+<circle cx="628.3" cy="235.7" r="2.5" fill="#4dabf7"/>
+<circle cx="679.2" cy="295.5" r="2.5" fill="#4dabf7"/>
+<circle cx="730.0" cy="295.5" r="2.5" fill="#4dabf7"/>
+<text x="419.0" y="338.0" fill="#8b949e" font-size="8" text-anchor="end">1e-18</text>
+<text x="419.0" y="248.5" fill="#8b949e" font-size="8" text-anchor="end">1e-12</text>
+<text x="419.0" y="159.0" fill="#8b949e" font-size="8" text-anchor="end">1e-6</text>
+<text x="419.0" y="69.5" fill="#8b949e" font-size="8" text-anchor="end">1e0</text>
+<text x="577.5" y="353.0" fill="#8b949e" font-size="10" text-anchor="middle">Newton step -> |p(x)| (log): quadratic convergence to sqrt(2)</text>
+</svg>

@@ -249,6 +249,7 @@ ruins a long non-symplectic integration.
 | `src/rejection_sampling.py` | Rejection sampling: sample any evaluable density, box + general proposal |
 | `src/welford.py` | Welford online mean/variance: one stable pass, higher moments, mergeable |
 | `src/kahan.py` | Kahan/Neumaier compensated summation: bounded error, pairwise sum, dot product |
+| `src/horner.py` | Horner's method: O(n) polynomial eval, synthetic division, Newton roots |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -489,6 +490,7 @@ ruins a long non-symplectic integration.
 | `examples/rejection_sampling_demo.py` | Acceptance rate + the accepted/rejected darts & histogram figure |
 | `examples/welford_demo.py` | Running stats + naive-vs-Welford offset table + the convergence figure |
 | `examples/kahan_demo.py` | Error-vs-n table + cancellation case + the error-growth figure |
+| `examples/horner_demo.py` | Eval + synthetic division + roots + the op-count & Newton-convergence figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5876,6 +5878,28 @@ This module implements all of these plus a compensated dot product and running-m
 verified against Python's exact `math.fsum` on ill-conditioned inputs: Kahan drives the
 million-term error from 1.3e-11 to zero. It matters for long dot products, running averages, and
 any accumulation over millions of terms.
+
+## Horner's method: evaluating a polynomial the fast, stable way
+
+Nested multiplication, and roots for free. `horner.py`:
+
+```
+$ python examples/horner_demo.py examples/output
+
+  p(x) = 2x^3 - 6x^2 + 2x - 1,  p(3) = 5
+  synthetic division by (x - 3): quotient [2, 0, 2], remainder 5 = p(3)
+  roots of x^3 - 6x^2 + 11x - 6: [1.0, 2.0, 3.0]
+```
+
+Evaluating a polynomial by separate powers costs ~2n multiplications and sums terms of wildly
+different sizes. Horner rewrites it as nested multiplication -- `p(x) = (...(a_n x + a_{n-1})x +
+...)x + a_0` -- in exactly n mults and n adds with far better rounding. The same sweep IS
+synthetic division: the intermediate values are the quotient of dividing by `(x - r)` and the
+final value is the remainder `p(r)` (the Remainder Theorem); a second sweep gives `p'(r)` for
+free, which makes Horner the engine of Newton's method for polynomial roots. This module
+evaluates by Horner, does synthetic division and derivatives, and finds real roots by Newton
+refinement plus deflation, verified against direct power-sum evaluation over 2000 random
+polynomials and by substituting the roots back.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
