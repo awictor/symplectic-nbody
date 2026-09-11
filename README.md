@@ -240,6 +240,7 @@ ruins a long non-symplectic integration.
 | `src/quickselect.py` | Quickselect + median-of-medians: O(n) k-th smallest, median, percentile |
 | `src/aho_corasick.py` | Aho-Corasick: trie + failure links, all patterns in one pass |
 | `src/floyd_warshall.py` | Floyd-Warshall all-pairs shortest paths: negative edges, cycle detection, closure |
+| `src/misra_gries.py` | Misra-Gries frequent items: heavy hitters over n/k, majority vote, k-1 counters |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -471,6 +472,7 @@ ruins a long non-symplectic integration.
 | `examples/quickselect_demo.py` | Order statistics + the comparison-count vs sort figure |
 | `examples/aho_corasick_demo.py` | Overlapping matches + log scan + the trie-with-failure-links figure |
 | `examples/floyd_warshall_demo.py` | Distance matrix vs Dijkstra + path/cycle/closure + the matrix heatmap |
+| `examples/misra_gries_demo.py` | Heavy hitters vs exact + majority + the approx-count & memory figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5655,6 +5657,29 @@ pair reconstructs the routes; a negative value on the diagonal means a negative 
 swapping min for boolean OR gives the transitive closure. This module computes the distance
 matrix, paths, cycle detection, and closure, verified against running Dijkstra from every source
 on 300 random graphs. Used for routing tables and network distance matrices.
+
+## Misra-Gries: frequent items of a stream in tiny memory
+
+Heavy hitters with only k-1 counters. `misra_gries.py`:
+
+```
+$ python examples/misra_gries_demo.py examples/output
+
+  distinct items: 455 (exact counting would need 455 counters)
+  Misra-Gries uses only k-1 = 3
+  heavy hitters (verified): {'A': 1736}   matches exact: True
+```
+
+Which items appear more than `n/k` times, when a counter per distinct value is impossible for
+billions of distinct items? The Misra-Gries summary finds every such heavy hitter with only
+`k-1` counters in one pass, by a generalized vote: increment a tracked item, start tracking a
+new one if a slot is free, else decrement every counter (the incoming item cancels one of each).
+Any item over `n/k` is guaranteed to survive (no false negatives); a cheap second pass counts the
+survivors exactly to drop the false positives, and the carried counts underestimate by at most
+`n/k`. The special case `k=2` is the Boyer-Moore majority vote -- the strict-majority element
+with a single counter. This module builds the summary, verifies candidates, and does majority
+vote, all checked *exhaustively* against exact counting over thousands of random streams. Used
+for network traffic monitors, trending queries, and word-frequency counting.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

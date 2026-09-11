@@ -282,6 +282,7 @@ def main():
     import quickselect_demo
     import aho_corasick_demo
     import floyd_warshall_demo
+    import misra_gries_demo
 
     import plot_orbits
 
@@ -533,6 +534,7 @@ def main():
     quickselect_txt = run("quickselect_demo", quickselect_demo.main, True)
     aho_corasick_txt = run("aho_corasick_demo", aho_corasick_demo.main, True)
     floyd_warshall_txt = run("floyd_warshall_demo", floyd_warshall_demo.main, True)
+    misra_gries_txt = run("misra_gries_demo", misra_gries_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3223,6 +3225,23 @@ def main():
             '<div class="grid">'
             + svg_card(out("floyd_warshall.svg"), "the all-pairs distance matrix as a heatmap, nearer pairs darker and unreachable pairs gray")
             + f'<div class="card">{pre(floyd_warshall_txt)}</div>'
+            + '</div>'),
+        section(
+            "Misra-Gries: frequent items of a stream in tiny memory",
+            "Which items appear more than n/k times in a stream, when a counter per distinct "
+            "value is impossible for billions of distinct items? The Misra-Gries summary finds "
+            "every such heavy hitter with only k-1 counters in a single pass. Its rule is a "
+            "generalized vote: increment a tracked item, start tracking a new one if a slot is "
+            "free, else decrement every counter (the incoming item cancels one of each). Any "
+            "item over n/k is guaranteed to survive (no false negatives), and a cheap second "
+            "pass counts the survivors exactly to drop the false positives; the carried counts "
+            "underestimate by at most n/k. The special case k=2 is the Boyer-Moore majority "
+            "vote -- the strict-majority element with one counter. This module builds the "
+            "summary, verifies candidates, and does majority vote, all checked exhaustively "
+            "against exact counting.",
+            '<div class="grid">'
+            + svg_card(out("misra_gries.svg"), "the summary's underestimated counts against the true counts, and its fixed memory versus exact counting")
+            + f'<div class="card">{pre(misra_gries_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
