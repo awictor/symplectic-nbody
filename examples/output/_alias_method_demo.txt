@@ -1,0 +1,22 @@
+Alias method: O(n) setup, then O(1) per weighted draw
+
+     outcome  weight   target  sampled
+      common      12    0.571    0.569
+   sometimes       5    0.238    0.239
+        rare       1    0.048    0.048
+    uncommon       3    0.143    0.144
+
+  chi-square vs target over 100000 draws: 0.09 (3 dof, 5% critical ~ 7.8) -> matches
+
+  The alias table (each column holds a main outcome + an alias, both equal-area):
+    column  P(main)        main       alias
+         0    1.000      common      common
+         1    0.952   sometimes      common
+         2    0.190        rare      common
+         3    0.571    uncommon      common
+
+  A draw is one integer roll (pick a column) plus one float (main or its alias) --
+  two operations, no search, however many outcomes there are. It is the standard for
+  loot tables, particle spawning, and any hot loop sampling the same distribution.
+
+  wrote examples/output\alias_method.svg

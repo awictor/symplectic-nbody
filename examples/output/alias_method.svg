@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="390" viewBox="0 0 760 390" font-family="monospace">
+<rect width="760" height="390" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">Alias method: sampled frequencies match the weights</text>
+<text x="20" y="44" fill="#8b949e" font-size="12">target vs sampled probability (left); the equal-area alias columns (right)</text>
+<line x1="55" y1="330" x2="360" y2="330" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="55" y1="330" x2="55" y2="70" stroke="#8b949e" stroke-width="1.2"/>
+<rect x="69.2" y="103.9" width="22.9" height="226.1" fill="#4dabf7"/>
+<rect x="94.1" y="104.7" width="22.9" height="225.3" fill="#06d6a0"/>
+<text x="93.1" y="344.0" fill="#8b949e" font-size="8" text-anchor="middle">common</text>
+<rect x="145.5" y="235.8" width="22.9" height="94.2" fill="#4dabf7"/>
+<rect x="170.4" y="235.5" width="22.9" height="94.5" fill="#06d6a0"/>
+<text x="169.4" y="344.0" fill="#8b949e" font-size="8" text-anchor="middle">someti</text>
+<rect x="221.8" y="311.2" width="22.9" height="18.8" fill="#4dabf7"/>
+<rect x="246.6" y="311.1" width="22.9" height="18.9" fill="#06d6a0"/>
+<text x="245.6" y="344.0" fill="#8b949e" font-size="8" text-anchor="middle">rare</text>
+<rect x="298.0" y="273.5" width="22.9" height="56.5" fill="#4dabf7"/>
+<rect x="322.9" y="273.1" width="22.9" height="56.9" fill="#06d6a0"/>
+<text x="321.9" y="344.0" fill="#8b949e" font-size="8" text-anchor="middle">uncomm</text>
+<rect x="63" y="70" width="9" height="9" fill="#4dabf7"/><text x="76" y="78" fill="#e6edf3" font-size="9">target</text>
+<rect x="63" y="84" width="9" height="9" fill="#06d6a0"/><text x="76" y="92" fill="#e6edf3" font-size="9">sampled</text>
+<rect x="427.0" y="70.0" width="72.2" height="260.0" fill="#4dabf7" opacity="0.85"/>
+<text x="463.1" y="344.0" fill="#8b949e" font-size="8" text-anchor="middle">col0</text>
+<rect x="503.2" y="82.4" width="72.2" height="247.6" fill="#ffd43b" opacity="0.85"/>
+<rect x="503.2" y="70.0" width="72.2" height="12.4" fill="#4dabf7" opacity="0.85"/>
+<text x="539.4" y="344.0" fill="#8b949e" font-size="8" text-anchor="middle">col1</text>
+<rect x="579.5" y="280.5" width="72.2" height="49.5" fill="#ff6b6b" opacity="0.85"/>
+<rect x="579.5" y="70.0" width="72.2" height="210.5" fill="#4dabf7" opacity="0.85"/>
+<text x="615.6" y="344.0" fill="#8b949e" font-size="8" text-anchor="middle">col2</text>
+<rect x="655.8" y="181.4" width="72.2" height="148.6" fill="#8338ec" opacity="0.85"/>
+<rect x="655.8" y="70.0" width="72.2" height="111.4" fill="#4dabf7" opacity="0.85"/>
+<text x="691.9" y="344.0" fill="#8b949e" font-size="8" text-anchor="middle">col3</text>
+<text x="577.5" y="64.0" fill="#8b949e" font-size="9" text-anchor="middle">each column: main (bottom) + alias (top), equal area</text>
+</svg>

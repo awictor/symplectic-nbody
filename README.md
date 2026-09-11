@@ -243,6 +243,7 @@ ruins a long non-symplectic integration.
 | `src/misra_gries.py` | Misra-Gries frequent items: heavy hitters over n/k, majority vote, k-1 counters |
 | `src/reservoir.py` | Reservoir sampling: uniform k-sample in one pass, weighted variant, streaming |
 | `src/count_min.py` | Count-Min sketch: frequency estimates in sublinear memory, never underestimates |
+| `src/alias_method.py` | Alias method: O(1) weighted sampling after O(n) setup, Vose construction |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -477,6 +478,7 @@ ruins a long non-symplectic integration.
 | `examples/misra_gries_demo.py` | Heavy hitters vs exact + majority + the approx-count & memory figure |
 | `examples/reservoir_demo.py` | Uniformity chi-square + weighted proportions + the frequency & weight figure |
 | `examples/count_min_demo.py` | Estimate vs true + error-vs-width + the scatter & error-decay figure |
+| `examples/alias_method_demo.py` | Target vs sampled + the alias table + the frequency & column figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5729,6 +5731,30 @@ stream of any size, and two sketches merge by element-wise addition (counting is
 This module builds the sketch, queries, merges, and finds heavy hitters, and the tests verify it
 *never* underestimates and stays within the error bound across many skewed streams. Powers
 network flow monitors, query optimizers, and n-gram frequency tables.
+
+## The alias method: O(1) sampling from a weighted die
+
+Weighted draws in constant time. `alias_method.py`:
+
+```
+$ python examples/alias_method_demo.py examples/output
+
+     outcome  weight   target  sampled
+      common      12    0.571    0.569
+        rare       1    0.048    0.048
+  chi-square: 0.09 -> matches
+```
+
+To draw outcome i with probability `p_i`, the obvious way binary-searches a cumulative
+distribution at `O(log n)` per draw. Walker's alias method does it in `O(1)` per draw after
+`O(n)` setup. It chops the distribution into n equal-area columns, each holding at most two
+outcomes -- a main and an alias -- by repeatedly pairing an under-full outcome with an over-full
+one until every column has area 1. A draw is one integer roll (pick a column) plus one float
+flip (main outcome or its alias): two operations, no search, however many outcomes there are,
+and the long-run frequencies exactly equal the weights. This module builds the table by Vose's
+algorithm and samples from it, verified against the target weights with chi-square tests over
+tens of thousands of draws. The standard for loot tables, particle spawning, and any hot loop
+sampling one categorical distribution.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

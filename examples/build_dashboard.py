@@ -285,6 +285,7 @@ def main():
     import misra_gries_demo
     import reservoir_demo
     import count_min_demo
+    import alias_method_demo
 
     import plot_orbits
 
@@ -539,6 +540,7 @@ def main():
     misra_gries_txt = run("misra_gries_demo", misra_gries_demo.main, True)
     reservoir_txt = run("reservoir_demo", reservoir_demo.main, True)
     count_min_txt = run("count_min_demo", count_min_demo.main, True)
+    alias_method_txt = run("alias_method_demo", alias_method_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3279,6 +3281,23 @@ def main():
             '<div class="grid">'
             + svg_card(out("count_min.svg"), "estimate-vs-true points all on or above the diagonal (never under), and the max error shrinking as the table widens")
             + f'<div class="card">{pre(count_min_txt)}</div>'
+            + '</div>'),
+        section(
+            "The alias method: O(1) sampling from a weighted die",
+            "To draw outcome i with probability p_i, the obvious way builds a cumulative "
+            "distribution and binary-searches a random number at O(log n) per draw. Walker's "
+            "alias method does it in O(1) per draw after O(n) setup. It chops the distribution "
+            "into n equal-area columns, each holding at most two outcomes -- a main and an alias "
+            "-- by repeatedly pairing an under-full outcome with an over-full one until every "
+            "column has area 1. A draw is one integer roll (pick a column) plus one float flip "
+            "(main outcome or its alias): two operations, no search, however many outcomes "
+            "there are. The result is exact -- long-run frequencies equal the weights. This "
+            "module builds the table by Vose's algorithm and samples from it, verified against "
+            "the target weights with chi-square tests. The standard for loot tables, particle "
+            "spawning, and any hot loop sampling one categorical distribution.",
+            '<div class="grid">'
+            + svg_card(out("alias_method.svg"), "the sampled frequencies matching the target weights, and the equal-area alias columns each split main/alias")
+            + f'<div class="card">{pre(alias_method_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
