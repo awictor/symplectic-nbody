@@ -267,6 +267,7 @@ ruins a long non-symplectic integration.
 | `src/hmm.py` | Hidden Markov model: forward, Viterbi decode, forward-backward, Baum-Welch EM |
 | `src/kalman.py` | Kalman filter + RTS smoother: predict/update, Kalman gain, self-contained matrix ops |
 | `src/pagerank.py` | PageRank: sparse power iteration, damping, dangling nodes, personalized teleport |
+| `src/lu.py` | LU (partial pivot) & Cholesky: solve, determinant, inverse, positive-definite test |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -525,6 +526,7 @@ ruins a long non-symplectic integration.
 | `examples/hmm_demo.py` | Dishonest casino: Viterbi decode, posterior P(loaded) ribbon, Baum-Welch relearn + figure |
 | `examples/kalman_demo.py` | Noisy tracking: filter/smoother beat raw measurements, variance-collapse + track figure |
 | `examples/pagerank_demo.py` | Small web graph: ranks, personalization, geometric convergence + node-sized graph figure |
+| `examples/lu_demo.py` | P A = L U and A = L L' factorizations, multi-RHS solves, SPD test + shaded factor grids |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6329,6 +6331,31 @@ is redistributed by teleport, and it is all done sparsely without forming the de
 module computes PageRank by sparse power iteration with damping and correct dangling handling, plus
 the personalized variant, verified against the analytic stationary distribution of small chains,
 ring symmetry, and the fixed-point property.
+
+## LU & Cholesky: factoring a matrix to solve, invert, and take determinants
+
+Factor once, reuse for solves, determinants, and inverses. `lu.py`:
+
+```
+$ python examples/lu_demo.py examples/output
+
+  P A = L U (partial pivoting): pivot order [1,0,2], sign -1, max|PA-LU| = 0
+  det(A) = sign * prod(diag U) = -16.0
+  factor once, solve many:  A x = [5,-2,9] -> [1, 1, 2]
+  Cholesky A = L L' (SPD): max|LL'-A| = 0; attempting it IS the positive-definiteness test
+    SPD -> True,  indefinite [[1,2],[2,1]] -> False
+```
+
+LU decomposition writes any square matrix as `P A = L U` -- row-swap permutation (partial pivoting
+for stability), unit-lower-triangular `L`, upper-triangular `U` -- by Gaussian elimination in
+`O(n^3)` once; afterwards each solve is two `O(n^2)` triangular sweeps, the determinant is the
+signed product of `U`'s diagonal, and the inverse is `n` solves. For a symmetric positive-definite
+matrix, **Cholesky** `A = L L'` is the smaller, stabler special case: half the work, no pivoting,
+and it succeeds iff the matrix is positive definite -- so attempting it is the standard SPD test,
+the backbone of least squares and Kalman filters. This module implements LU with partial pivoting,
+Cholesky, triangular and general solves, determinant, and inverse, verified by reconstructing
+`P A = L U` and `A = L L'`, cross-checking determinants against cofactors, confirming Cholesky
+rejects non-positive-definite matrices, and round-tripping `A A^-1 = I`.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

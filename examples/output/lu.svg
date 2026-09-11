@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" font-family="monospace">
+<rect width="760" height="430" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">LU and Cholesky: a matrix as a product of triangular factors</text>
+<text x="20" y="44" fill="#8b949e" font-size="12">cells shaded by magnitude (blue negative, red positive); zeros show the triangular structure</text>
+<text x="111.0" y="76.0" fill="#e6edf3" font-size="13" text-anchor="middle">A</text>
+<text x="111.0" y="88.0" fill="#8b949e" font-size="9" text-anchor="middle">original</text>
+<rect x="45.0" y="90.0" width="42.5" height="42.5" fill="rgb(101,64,60)"/>
+<text x="67.0" y="115.0" fill="#e6edf3" font-size="9" text-anchor="middle">2.0</text>
+<rect x="89.0" y="90.0" width="42.5" height="42.5" fill="rgb(70,57,60)"/>
+<text x="111.0" y="115.0" fill="#e6edf3" font-size="9" text-anchor="middle">1.0</text>
+<rect x="133.0" y="90.0" width="42.5" height="42.5" fill="rgb(70,57,60)"/>
+<text x="155.0" y="115.0" fill="#e6edf3" font-size="9" text-anchor="middle">1.0</text>
+<rect x="45.0" y="134.0" width="42.5" height="42.5" fill="rgb(162,78,60)"/>
+<text x="67.0" y="159.0" fill="#e6edf3" font-size="9" text-anchor="middle">4.0</text>
+<rect x="89.0" y="134.0" width="42.5" height="42.5" fill="rgb(40,121,227)"/>
+<text x="111.0" y="159.0" fill="#e6edf3" font-size="9" text-anchor="middle">-6.0</text>
+<rect x="133.0" y="134.0" width="42.5" height="42.5" fill="#161b22"/>
+<text x="155.0" y="159.0" fill="#e6edf3" font-size="9" text-anchor="middle">0.0</text>
+<rect x="45.0" y="178.0" width="42.5" height="42.5" fill="rgb(40,87,115)"/>
+<text x="67.0" y="203.0" fill="#e6edf3" font-size="9" text-anchor="middle">-2.0</text>
+<rect x="89.0" y="178.0" width="42.5" height="42.5" fill="rgb(255,100,60)"/>
+<text x="111.0" y="203.0" fill="#e6edf3" font-size="9" text-anchor="middle">7.0</text>
+<rect x="133.0" y="178.0" width="42.5" height="42.5" fill="rgb(101,64,60)"/>
+<text x="155.0" y="203.0" fill="#e6edf3" font-size="9" text-anchor="middle">2.0</text>
+<text x="316.0" y="76.0" fill="#e6edf3" font-size="13" text-anchor="middle">L</text>
+<text x="316.0" y="88.0" fill="#8b949e" font-size="9" text-anchor="middle">unit lower</text>
+<rect x="250.0" y="90.0" width="42.5" height="42.5" fill="rgb(255,100,60)"/>
+<text x="272.0" y="115.0" fill="#e6edf3" font-size="9" text-anchor="middle">1.0</text>
+<rect x="294.0" y="90.0" width="42.5" height="42.5" fill="#161b22"/>
+<text x="316.0" y="115.0" fill="#e6edf3" font-size="9" text-anchor="middle">0.0</text>
+<rect x="338.0" y="90.0" width="42.5" height="42.5" fill="#161b22"/>
+<text x="360.0" y="115.0" fill="#e6edf3" font-size="9" text-anchor="middle">0.0</text>
+<rect x="250.0" y="134.0" width="42.5" height="42.5" fill="rgb(147,75,60)"/>
+<text x="272.0" y="159.0" fill="#e6edf3" font-size="9" text-anchor="middle">0.5</text>
+<rect x="294.0" y="134.0" width="42.5" height="42.5" fill="rgb(255,100,60)"/>
+<text x="316.0" y="159.0" fill="#e6edf3" font-size="9" text-anchor="middle">1.0</text>
+<rect x="338.0" y="134.0" width="42.5" height="42.5" fill="#161b22"/>
+<text x="360.0" y="159.0" fill="#e6edf3" font-size="9" text-anchor="middle">0.0</text>
+<rect x="250.0" y="178.0" width="42.5" height="42.5" fill="rgb(40,100,157)"/>
+<text x="272.0" y="203.0" fill="#e6edf3" font-size="9" text-anchor="middle">-0.5</text>
+<rect x="294.0" y="178.0" width="42.5" height="42.5" fill="rgb(255,100,60)"/>
+<text x="316.0" y="203.0" fill="#e6edf3" font-size="9" text-anchor="middle">1.0</text>
+<rect x="338.0" y="178.0" width="42.5" height="42.5" fill="rgb(255,100,60)"/>
+<text x="360.0" y="203.0" fill="#e6edf3" font-size="9" text-anchor="middle">1.0</text>
+<text x="521.0" y="76.0" fill="#e6edf3" font-size="13" text-anchor="middle">U</text>
+<text x="521.0" y="88.0" fill="#8b949e" font-size="9" text-anchor="middle">upper</text>
+<rect x="455.0" y="90.0" width="42.5" height="42.5" fill="rgb(183,83,60)"/>
+<text x="477.0" y="115.0" fill="#e6edf3" font-size="9" text-anchor="middle">4.0</text>
+<rect x="499.0" y="90.0" width="42.5" height="42.5" fill="rgb(40,130,255)"/>
+<text x="521.0" y="115.0" fill="#e6edf3" font-size="9" text-anchor="middle">-6.0</text>
+<rect x="543.0" y="90.0" width="42.5" height="42.5" fill="#161b22"/>
+<text x="565.0" y="115.0" fill="#e6edf3" font-size="9" text-anchor="middle">0.0</text>
+<rect x="455.0" y="134.0" width="42.5" height="42.5" fill="#161b22"/>
+<text x="477.0" y="159.0" fill="#e6edf3" font-size="9" text-anchor="middle">0.0</text>
+<rect x="499.0" y="134.0" width="42.5" height="42.5" fill="rgb(183,83,60)"/>
+<text x="521.0" y="159.0" fill="#e6edf3" font-size="9" text-anchor="middle">4.0</text>
+<rect x="543.0" y="134.0" width="42.5" height="42.5" fill="rgb(75,58,60)"/>
+<text x="565.0" y="159.0" fill="#e6edf3" font-size="9" text-anchor="middle">1.0</text>
+<rect x="455.0" y="178.0" width="42.5" height="42.5" fill="#161b22"/>
+<text x="477.0" y="203.0" fill="#e6edf3" font-size="9" text-anchor="middle">0.0</text>
+<rect x="499.0" y="178.0" width="42.5" height="42.5" fill="#161b22"/>
+<text x="521.0" y="203.0" fill="#e6edf3" font-size="9" text-anchor="middle">0.0</text>
+<rect x="543.0" y="178.0" width="42.5" height="42.5" fill="rgb(75,58,60)"/>
+<text x="565.0" y="203.0" fill="#e6edf3" font-size="9" text-anchor="middle">1.0</text>
+<text x="222" y="151.6" fill="#8b949e" font-size="20">=</text>
+<text x="428" y="151.6" fill="#8b949e" font-size="20">x</text>
+<text x="111.0" y="276.0" fill="#e6edf3" font-size="13" text-anchor="middle">A (SPD)</text>
+<text x="111.0" y="288.0" fill="#8b949e" font-size="9" text-anchor="middle">symmetric pos-def</text>
+<rect x="45.0" y="290.0" width="42.5" height="42.5" fill="rgb(183,83,60)"/>
+<text x="67.0" y="315.0" fill="#e6edf3" font-size="9" text-anchor="middle">4.0</text>
+<rect x="89.0" y="290.0" width="42.5" height="42.5" fill="rgb(111,66,60)"/>
+<text x="111.0" y="315.0" fill="#e6edf3" font-size="9" text-anchor="middle">2.0</text>
+<rect x="133.0" y="290.0" width="42.5" height="42.5" fill="rgb(111,66,60)"/>
+<text x="155.0" y="315.0" fill="#e6edf3" font-size="9" text-anchor="middle">2.0</text>
+<rect x="45.0" y="334.0" width="42.5" height="42.5" fill="rgb(111,66,60)"/>
+<text x="67.0" y="359.0" fill="#e6edf3" font-size="9" text-anchor="middle">2.0</text>
+<rect x="89.0" y="334.0" width="42.5" height="42.5" fill="rgb(219,91,60)"/>
+<text x="111.0" y="359.0" fill="#e6edf3" font-size="9" text-anchor="middle">5.0</text>
+<rect x="133.0" y="334.0" width="42.5" height="42.5" fill="rgb(147,75,60)"/>
+<text x="155.0" y="359.0" fill="#e6edf3" font-size="9" text-anchor="middle">3.0</text>
+<rect x="45.0" y="378.0" width="42.5" height="42.5" fill="rgb(111,66,60)"/>
+<text x="67.0" y="403.0" fill="#e6edf3" font-size="9" text-anchor="middle">2.0</text>
+<rect x="89.0" y="378.0" width="42.5" height="42.5" fill="rgb(147,75,60)"/>
+<text x="111.0" y="403.0" fill="#e6edf3" font-size="9" text-anchor="middle">3.0</text>
+<rect x="133.0" y="378.0" width="42.5" height="42.5" fill="rgb(255,100,60)"/>
+<text x="155.0" y="403.0" fill="#e6edf3" font-size="9" text-anchor="middle">6.0</text>
+<text x="316.0" y="276.0" fill="#e6edf3" font-size="13" text-anchor="middle">L</text>
+<text x="316.0" y="288.0" fill="#8b949e" font-size="9" text-anchor="middle">Cholesky</text>
+<rect x="250.0" y="290.0" width="42.5" height="42.5" fill="rgb(255,100,60)"/>
+<text x="272.0" y="315.0" fill="#e6edf3" font-size="9" text-anchor="middle">2.0</text>
+<rect x="294.0" y="290.0" width="42.5" height="42.5" fill="#161b22"/>
+<text x="316.0" y="315.0" fill="#e6edf3" font-size="9" text-anchor="middle">0.0</text>
+<rect x="338.0" y="290.0" width="42.5" height="42.5" fill="#161b22"/>
+<text x="360.0" y="315.0" fill="#e6edf3" font-size="9" text-anchor="middle">0.0</text>
+<rect x="250.0" y="334.0" width="42.5" height="42.5" fill="rgb(147,75,60)"/>
+<text x="272.0" y="359.0" fill="#e6edf3" font-size="9" text-anchor="middle">1.0</text>
+<rect x="294.0" y="334.0" width="42.5" height="42.5" fill="rgb(255,100,60)"/>
+<text x="316.0" y="359.0" fill="#e6edf3" font-size="9" text-anchor="middle">2.0</text>
+<rect x="338.0" y="334.0" width="42.5" height="42.5" fill="#161b22"/>
+<text x="360.0" y="359.0" fill="#e6edf3" font-size="9" text-anchor="middle">0.0</text>
+<rect x="250.0" y="378.0" width="42.5" height="42.5" fill="rgb(147,75,60)"/>
+<text x="272.0" y="403.0" fill="#e6edf3" font-size="9" text-anchor="middle">1.0</text>
+<rect x="294.0" y="378.0" width="42.5" height="42.5" fill="rgb(147,75,60)"/>
+<text x="316.0" y="403.0" fill="#e6edf3" font-size="9" text-anchor="middle">1.0</text>
+<rect x="338.0" y="378.0" width="42.5" height="42.5" fill="rgb(255,100,60)"/>
+<text x="360.0" y="403.0" fill="#e6edf3" font-size="9" text-anchor="middle">2.0</text>
+<text x="521.0" y="276.0" fill="#e6edf3" font-size="13" text-anchor="middle">L'</text>
+<text x="521.0" y="288.0" fill="#8b949e" font-size="9" text-anchor="middle">transpose</text>
+<rect x="455.0" y="290.0" width="42.5" height="42.5" fill="rgb(255,100,60)"/>
+<text x="477.0" y="315.0" fill="#e6edf3" font-size="9" text-anchor="middle">2.0</text>
+<rect x="499.0" y="290.0" width="42.5" height="42.5" fill="rgb(147,75,60)"/>
+<text x="521.0" y="315.0" fill="#e6edf3" font-size="9" text-anchor="middle">1.0</text>
+<rect x="543.0" y="290.0" width="42.5" height="42.5" fill="rgb(147,75,60)"/>
+<text x="565.0" y="315.0" fill="#e6edf3" font-size="9" text-anchor="middle">1.0</text>
+<rect x="455.0" y="334.0" width="42.5" height="42.5" fill="#161b22"/>
+<text x="477.0" y="359.0" fill="#e6edf3" font-size="9" text-anchor="middle">0.0</text>
+<rect x="499.0" y="334.0" width="42.5" height="42.5" fill="rgb(255,100,60)"/>
+<text x="521.0" y="359.0" fill="#e6edf3" font-size="9" text-anchor="middle">2.0</text>
+<rect x="543.0" y="334.0" width="42.5" height="42.5" fill="rgb(147,75,60)"/>
+<text x="565.0" y="359.0" fill="#e6edf3" font-size="9" text-anchor="middle">1.0</text>
+<rect x="455.0" y="378.0" width="42.5" height="42.5" fill="#161b22"/>
+<text x="477.0" y="403.0" fill="#e6edf3" font-size="9" text-anchor="middle">0.0</text>
+<rect x="499.0" y="378.0" width="42.5" height="42.5" fill="#161b22"/>
+<text x="521.0" y="403.0" fill="#e6edf3" font-size="9" text-anchor="middle">0.0</text>
+<rect x="543.0" y="378.0" width="42.5" height="42.5" fill="rgb(255,100,60)"/>
+<text x="565.0" y="403.0" fill="#e6edf3" font-size="9" text-anchor="middle">2.0</text>
+<text x="222" y="351.6" fill="#8b949e" font-size="20">=</text>
+<text x="428" y="351.6" fill="#8b949e" font-size="20">x</text>
+</svg>

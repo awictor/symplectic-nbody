@@ -309,6 +309,7 @@ def main():
     import hmm_demo
     import kalman_demo
     import pagerank_demo
+    import lu_demo
 
     import plot_orbits
 
@@ -587,6 +588,7 @@ def main():
     hmm_txt = run("hmm_demo", hmm_demo.main, True)
     kalman_txt = run("kalman_demo", kalman_demo.main, True)
     pagerank_txt = run("pagerank_demo", pagerank_demo.main, True)
+    lu_txt = run("lu_demo", lu_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3741,6 +3743,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("pagerank.svg"), "a small web graph with each node sized by its PageRank, and the power-iteration convergence curve on a log scale")
             + f'<div class="card">{pre(pagerank_txt)}</div>'
+            + '</div>'),
+        section(
+            "LU & Cholesky: factoring a matrix to solve, invert, and take determinants",
+            "Solving A x = b once is easy; solving it for many right-hand sides, or getting det(A) "
+            "or A^-1, is where FACTORIZATION pays. LU decomposition writes any square matrix as "
+            "P A = L U -- a permutation of row swaps (partial pivoting, for stability), a "
+            "unit-lower-triangular L, and an upper-triangular U -- by Gaussian elimination in "
+            "O(n^3) once; afterwards each solve is two O(n^2) triangular sweeps, the determinant is "
+            "the signed product of U's diagonal, and the inverse is n solves. For a symmetric "
+            "positive-definite matrix, CHOLESKY A = L L' is the smaller, stabler special case: half "
+            "the work, no pivoting, and it succeeds if and only if the matrix is positive definite "
+            "-- so attempting it IS the standard SPD test, the backbone of least squares and Kalman "
+            "filters. This module implements LU with partial pivoting, Cholesky, triangular and "
+            "general solves, determinant, and inverse, verified by reconstructing P A = L U and "
+            "A = L L', cross-checking determinants against cofactors, confirming Cholesky rejects "
+            "non-positive-definite matrices, and round-tripping A A^-1 = I.",
+            '<div class="grid">'
+            + svg_card(out("lu.svg"), "the L and U factors of A and the L, L' factors of an SPD matrix, shaded by magnitude so the triangular zero-structure shows")
+            + f'<div class="card">{pre(lu_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
