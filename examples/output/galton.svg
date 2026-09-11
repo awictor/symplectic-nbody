@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="400" viewBox="0 0 760 400" font-family="monospace">
+<rect width="760" height="400" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">The Galton board: coin flips converge to a bell curve</text>
+<text x="20" y="44" fill="#8b949e" font-size="12">simulated slot histogram with the CLT Gaussian (left); binomial-to-Gaussian distance ~ 1/sqrt(rows) (right)</text>
+<line x1="55" y1="350" x2="370" y2="350" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="55" y1="350" x2="55" y2="62" stroke="#8b949e" stroke-width="1.2"/>
+<rect x="56.0" y="350.0" width="13.0" height="0.0" fill="#4dabf7" opacity="0.8"/>
+<rect x="71.0" y="350.0" width="13.0" height="0.0" fill="#4dabf7" opacity="0.8"/>
+<rect x="86.0" y="349.8" width="13.0" height="0.2" fill="#4dabf7" opacity="0.8"/>
+<rect x="101.0" y="348.0" width="13.0" height="2.0" fill="#4dabf7" opacity="0.8"/>
+<rect x="116.0" y="343.6" width="13.0" height="6.4" fill="#4dabf7" opacity="0.8"/>
+<rect x="131.0" y="328.6" width="13.0" height="21.4" fill="#4dabf7" opacity="0.8"/>
+<rect x="146.0" y="297.1" width="13.0" height="52.9" fill="#4dabf7" opacity="0.8"/>
+<rect x="161.0" y="244.6" width="13.0" height="105.4" fill="#4dabf7" opacity="0.8"/>
+<rect x="176.0" y="174.0" width="13.0" height="176.0" fill="#4dabf7" opacity="0.8"/>
+<rect x="191.0" y="116.8" width="13.0" height="233.2" fill="#4dabf7" opacity="0.8"/>
+<rect x="206.0" y="99.9" width="13.0" height="250.1" fill="#4dabf7" opacity="0.8"/>
+<rect x="221.0" y="116.5" width="13.0" height="233.5" fill="#4dabf7" opacity="0.8"/>
+<rect x="236.0" y="178.7" width="13.0" height="171.3" fill="#4dabf7" opacity="0.8"/>
+<rect x="251.0" y="245.3" width="13.0" height="104.7" fill="#4dabf7" opacity="0.8"/>
+<rect x="266.0" y="296.4" width="13.0" height="53.6" fill="#4dabf7" opacity="0.8"/>
+<rect x="281.0" y="328.6" width="13.0" height="21.4" fill="#4dabf7" opacity="0.8"/>
+<rect x="296.0" y="342.6" width="13.0" height="7.4" fill="#4dabf7" opacity="0.8"/>
+<rect x="311.0" y="348.4" width="13.0" height="1.6" fill="#4dabf7" opacity="0.8"/>
+<rect x="326.0" y="349.9" width="13.0" height="0.1" fill="#4dabf7" opacity="0.8"/>
+<rect x="341.0" y="350.0" width="13.0" height="0.0" fill="#4dabf7" opacity="0.8"/>
+<rect x="356.0" y="350.0" width="13.0" height="0.0" fill="#4dabf7" opacity="0.8"/>
+<polyline points="62.5,350.0 65.0,350.0 67.5,350.0 70.0,350.0 72.5,350.0 75.0,349.9 77.5,349.9 80.0,349.9 82.5,349.9 85.0,349.8 87.5,349.8 90.0,349.7 92.5,349.6 95.0,349.4 97.5,349.3 100.0,349.1 102.5,348.8 105.0,348.5 107.5,348.1 110.0,347.6 112.5,347.0 115.0,346.2 117.5,345.3 120.0,344.3 122.5,343.0 125.0,341.4 127.5,339.6 130.0,337.5 132.5,335.0 135.0,332.2 137.5,328.9 140.0,325.1 142.5,320.9 145.0,316.1 147.5,310.7 150.0,304.7 152.5,298.1 155.0,290.8 157.5,283.0 160.0,274.5 162.5,265.4 165.0,255.7 167.5,245.5 170.0,234.8 172.5,223.7 175.0,212.4 177.5,200.8 180.0,189.2 182.5,177.6 185.0,166.3 187.5,155.2 190.0,144.7 192.5,134.7 195.0,125.6 197.5,117.3 200.0,110.1 202.5,104.0 205.0,99.2 207.5,95.7 210.0,93.6 212.5,92.9 215.0,93.6 217.5,95.7 220.0,99.2 222.5,104.0 225.0,110.1 227.5,117.3 230.0,125.6 232.5,134.7 235.0,144.7 237.5,155.2 240.0,166.3 242.5,177.6 245.0,189.2 247.5,200.8 250.0,212.4 252.5,223.7 255.0,234.8 257.5,245.5 260.0,255.7 262.5,265.4 265.0,274.5 267.5,283.0 270.0,290.8 272.5,298.1 275.0,304.7 277.5,310.7 280.0,316.1 282.5,320.9 285.0,325.1 287.5,328.9 290.0,332.2 292.5,335.0 295.0,337.5 297.5,339.6 300.0,341.4 302.5,343.0 305.0,344.3 307.5,345.3 310.0,346.2 312.5,347.0 315.0,347.6 317.5,348.1 320.0,348.5 322.5,348.8 325.0,349.1 327.5,349.3 330.0,349.4 332.5,349.6 335.0,349.7 337.5,349.8 340.0,349.8 342.5,349.9 345.0,349.9 347.5,349.9 350.0,349.9 352.5,350.0 355.0,350.0 357.5,350.0 360.0,350.0 362.5,350.0" fill="none" stroke="#ff6b6b" stroke-width="2.5"/>
+<text x="62.5" y="365.0" fill="#8b949e" font-size="9" text-anchor="middle">0</text>
+<text x="212.5" y="365.0" fill="#8b949e" font-size="9" text-anchor="middle">10</text>
+<text x="362.5" y="365.0" fill="#8b949e" font-size="9" text-anchor="middle">20</text>
+<text x="212.5" y="380.0" fill="#8b949e" font-size="10" text-anchor="middle">slot (20 rows)</text>
+<rect x="63" y="62" width="9" height="9" fill="#4dabf7"/><text x="76" y="70" fill="#e6edf3" font-size="9">simulated beads</text>
+<rect x="63" y="76" width="9" height="9" fill="#ff6b6b"/><text x="76" y="84" fill="#e6edf3" font-size="9">CLT Gaussian</text>
+<line x1="420" y1="350" x2="730" y2="350" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="420" y1="350" x2="420" y2="62" stroke="#8b949e" stroke-width="1.2"/>
+<polyline points="420.0,88.2 471.7,164.9 523.3,219.1 575.0,257.4 626.7,284.5 678.3,303.7 730.0,317.3" fill="none" stroke="#8b949e" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="730.0" y="312.3" fill="#8b949e" font-size="9" text-anchor="end">1/sqrt(n)</text>
+<polyline points="420.0,88.2 471.7,218.0 523.3,276.6 575.0,315.4 626.7,332.9 678.3,341.3 730.0,345.7" fill="none" stroke="#06d6a0" stroke-width="2"/>
+<circle cx="420.0" cy="88.2" r="2.5" fill="#06d6a0"/>
+<text x="420.0" y="365.0" fill="#8b949e" font-size="8" text-anchor="middle">4</text>
+<circle cx="471.7" cy="218.0" r="2.5" fill="#06d6a0"/>
+<text x="471.7" y="365.0" fill="#8b949e" font-size="8" text-anchor="middle">8</text>
+<circle cx="523.3" cy="276.6" r="2.5" fill="#06d6a0"/>
+<text x="523.3" y="365.0" fill="#8b949e" font-size="8" text-anchor="middle">16</text>
+<circle cx="575.0" cy="315.4" r="2.5" fill="#06d6a0"/>
+<text x="575.0" y="365.0" fill="#8b949e" font-size="8" text-anchor="middle">32</text>
+<circle cx="626.7" cy="332.9" r="2.5" fill="#06d6a0"/>
+<text x="626.7" y="365.0" fill="#8b949e" font-size="8" text-anchor="middle">64</text>
+<circle cx="678.3" cy="341.3" r="2.5" fill="#06d6a0"/>
+<text x="678.3" y="365.0" fill="#8b949e" font-size="8" text-anchor="middle">128</text>
+<circle cx="730.0" cy="345.7" r="2.5" fill="#06d6a0"/>
+<text x="730.0" y="365.0" fill="#8b949e" font-size="8" text-anchor="middle">256</text>
+<text x="575.0" y="380.0" fill="#8b949e" font-size="10" text-anchor="middle">rows n (log)</text>
+<text x="414.0" y="60.0" fill="#8b949e" font-size="9" text-anchor="end">TV dist</text>
+</svg>

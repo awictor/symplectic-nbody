@@ -257,6 +257,7 @@ def main():
     import birthday_demo
     import gamblers_ruin_demo
     import parrondo_demo
+    import galton_demo
 
     import plot_orbits
 
@@ -483,6 +484,7 @@ def main():
     birthday_txt = run("birthday_demo", birthday_demo.main, True)
     gamblers_ruin_txt = run("gamblers_ruin_demo", gamblers_ruin_demo.main, True)
     parrondo_txt = run("parrondo_demo", parrondo_demo.main, True)
+    galton_txt = run("galton_demo", galton_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2772,6 +2774,21 @@ def main():
             '<div class="grid">'
             + svg_card(out("parrondo.svg"), "capital rising for the mixture while both games fall, and the winning window in the mixing fraction")
             + f'<div class="card">{pre(parrondo_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Galton board: coin flips converge to a bell curve",
+            "Galton's bean machine is a board of n staggered peg rows; a bead bounces left or "
+            "right with probability 1/2 at each row and lands in one of n+1 slots. Its slot is "
+            "just the number of right-bounces in n coin flips, so the slot occupancy is the "
+            "binomial C(n,k) p^k (1-p)^(n-k) -- and because it is a sum of n independent steps, "
+            "the central limit theorem makes the histogram converge to a Gaussian of mean np "
+            "and variance np(1-p) as n grows. It is the CLT made physical: no bead is steered, "
+            "yet thousands pile into a smooth bell curve, and biasing the pegs slides the peak "
+            "to np. The binomial-to-Gaussian distance shrinks like 1/sqrt(n), verified here "
+            "against exact values and a seeded Monte-Carlo bead drop.",
+            '<div class="grid">'
+            + svg_card(out("galton.svg"), "the simulated slot histogram matching the CLT Gaussian, and the binomial-to-Gaussian distance falling like 1/sqrt(rows)")
+            + f'<div class="card">{pre(galton_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

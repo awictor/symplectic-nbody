@@ -215,6 +215,7 @@ ruins a long non-symplectic integration.
 | `src/birthday.py` | Birthday problem: collision probability, sqrt(d) law, birthday-attack cost |
 | `src/gamblers_ruin.py` | Gambler's ruin: ruin probability & duration, fair/biased, infinite house |
 | `src/parrondo.py` | Parrondo's paradox: two losing games win when mixed, Markov-chain drift |
+| `src/galton.py` | Galton board: binomial slot law, CLT Gaussian limit, 1/sqrt(n) convergence |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -421,6 +422,7 @@ ruins a long non-symplectic integration.
 | `examples/birthday_demo.py` | Collision-probability table + the P vs k curve & sqrt(days) crossover |
 | `examples/gamblers_ruin_demo.py` | Ruin vs simulation table + the ruin curves & sample walk paths |
 | `examples/parrondo_demo.py` | Per-game drift vs simulation + capital trajectories & drift-vs-mix curve |
+| `examples/galton_demo.py` | Slot histogram vs binomial + the Gaussian overlay & 1/sqrt(n) convergence |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5009,6 +5011,31 @@ tests verify the stationary distribution is a genuine fixed point, that game B o
 bad state, that A and B lose while the mix wins (even at eps=0, where both are exactly fair),
 and agreement with simulation. The same flashing-ratchet mechanism drives molecular motors,
 pumping directed motion from noise.
+
+## The Galton board: coin flips converge to a bell curve
+
+The central limit theorem, made physical. `galton.py`:
+
+```
+$ python examples/galton_demo.py examples/output
+
+  binomial -> Gaussian distance shrinks like 1/sqrt(rows):
+    rows =    8:  TV distance = 0.0139
+    rows =   32:  TV distance = 0.0037
+    rows =  128:  TV distance = 0.0009
+```
+
+Galton's bean machine is a board of n staggered peg rows; a bead bounces left or right with
+probability 1/2 at each row and lands in one of n+1 slots. Its slot is the number of
+right-bounces in n coin flips, so the slot occupancy is the binomial `C(n,k) p^k (1-p)^(n-k)`
+-- and because it is a sum of n independent steps, the central limit theorem makes the
+histogram converge to a Gaussian of mean `np` and variance `np(1-p)`. This module gives the
+exact binomial slot probabilities and their moments, the CLT normal approximation, the
+total-variation distance between them (shrinking like `1/sqrt(n)`), and a seeded Monte-Carlo
+bead drop. The tests verify the fair board is symmetric with center slot `C(10,5)/2^10`, the
+moments are `np` and `np(1-p)`, the normal peak height is `1/(sigma sqrt(2 pi))`, the distance
+follows the `1/sqrt(n)` rate, and the simulated histogram matches the binomial. No bead is
+steered, yet thousands pile into a smooth bell curve; bias the pegs and the pile slides to np.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

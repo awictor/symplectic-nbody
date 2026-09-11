@@ -1,0 +1,29 @@
+Galton board: 12 peg rows, each bead L/R by a coin flip -> binomial -> Gaussian
+
+   slot   simulated   binomial
+      0      0.0002     0.0002  
+      1      0.0033     0.0029  
+      2      0.0161     0.0161  ##
+      3      0.0547     0.0537  #######
+      4      0.1188     0.1208  ##############
+      5      0.1952     0.1934  #######################
+      6      0.2264     0.2256  ###########################
+      7      0.1940     0.1934  #######################
+      8      0.1189     0.1208  ##############
+      9      0.0541     0.0537  ######
+     10      0.0149     0.0161  ##
+     11      0.0033     0.0029  
+     12      0.0002     0.0002  
+
+  mean = np = 6.0, variance = np(1-p) = 3.00
+  binomial -> Gaussian distance shrinks like 1/sqrt(rows):
+    rows =    8:  TV distance = 0.0139
+    rows =   16:  TV distance = 0.0077
+    rows =   32:  TV distance = 0.0037
+    rows =   64:  TV distance = 0.0018
+    rows =  128:  TV distance = 0.0009
+
+  No bead is steered, yet thousands pile into a smooth bell curve -- the central
+  limit theorem made physical. Bias the pegs and the whole pile slides to np.
+
+  wrote examples/output\galton.svg
