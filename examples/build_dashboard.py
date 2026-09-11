@@ -299,6 +299,7 @@ def main():
     import linsolve_demo
     import qr_demo
     import eigen_demo
+    import conjugate_gradient_demo
 
     import plot_orbits
 
@@ -567,6 +568,7 @@ def main():
     linsolve_txt = run("linsolve_demo", linsolve_demo.main, True)
     qr_txt = run("qr_demo", qr_demo.main, True)
     eigen_txt = run("eigen_demo", eigen_demo.main, True)
+    conjugate_gradient_txt = run("conjugate_gradient_demo", conjugate_gradient_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3539,6 +3541,23 @@ def main():
             '<div class="grid">'
             + svg_card(out("eigen.svg"), "the Rayleigh quotient converging to the dominant eigenvalue, and the full spectrum recovered by deflation")
             + f'<div class="card">{pre(eigen_txt)}</div>'
+            + '</div>'),
+        section(
+            "Conjugate gradient: huge sparse SPD systems without a factorization",
+            "For a symmetric positive-definite A, solving A x = b by LU costs O(n^3) and stores "
+            "the whole factorization -- impossible at millions of rows (finite-element meshes, "
+            "image operators, graph Laplacians). Conjugate gradient solves it with nothing but "
+            "matrix-vector products, so a sparse A costs O(nnz) per step and O(n) memory. It "
+            "minimizes the energy (1/2)x^T A x - b^T x, choosing each search direction "
+            "A-conjugate to all previous ones so it never undoes earlier progress -- converging "
+            "in at most n steps exactly, far fewer in practice at a rate set by sqrt(kappa), "
+            "which is why preconditioning (here the Jacobi diagonal) is the whole game. This "
+            "module implements CG and preconditioned CG, verified against a dense LU solve, the "
+            "<= n step guarantee, and the monotone residual decay, and shown beating steepest "
+            "descent's zig-zag.",
+            '<div class="grid">'
+            + svg_card(out("conjugate_gradient.svg"), "the residual plunging to machine precision under CG while steepest descent crawls (log scale)")
+            + f'<div class="card">{pre(conjugate_gradient_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

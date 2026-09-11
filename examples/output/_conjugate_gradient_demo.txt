@@ -1,0 +1,18 @@
+Conjugate gradient: minimize (1/2)x^T A x - b^T x with mat-vecs only
+
+  20x20 SPD system:
+    CG converged in 12 iterations (<= n = 20)
+    residual ||A x - b|| = 1.96e-09
+    matches LU: True
+
+  Steepest descent on the same system: 22 iterations to the same tol
+    -- CG picks A-conjugate directions so it never undoes earlier progress;
+    steepest descent zig-zags: 1.8x as many steps.
+
+  Jacobi-preconditioned CG: 12 iterations (residual 2.7e-09)
+
+  No factorization, O(nnz) per step, O(n) memory: CG (and its preconditioned
+  cousins) solve the million-unknown SPD systems of finite elements, image
+  reconstruction, and graph Laplacians that a dense LU could never store.
+
+  wrote examples/output\conjugate_gradient.svg

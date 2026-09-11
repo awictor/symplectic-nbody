@@ -257,6 +257,7 @@ ruins a long non-symplectic integration.
 | `src/linsolve.py` | Gaussian elimination / LU: partial pivoting, solve, determinant, inverse |
 | `src/qr.py` | QR decomposition: modified Gram-Schmidt, least squares, orthonormal Q |
 | `src/eigen.py` | Power iteration eigenvalues: Rayleigh quotient, inverse iteration, deflation |
+| `src/conjugate_gradient.py` | Conjugate gradient: iterative SPD solver, Jacobi preconditioning |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -505,6 +506,7 @@ ruins a long non-symplectic integration.
 | `examples/linsolve_demo.py` | Solve + LU factors + reuse + det/inverse + the L/U heatmap figure |
 | `examples/qr_demo.py` | QR + line/quadratic least-squares fits + the best-fit-line & residual figure |
 | `examples/eigen_demo.py` | Dominant + inverse + full spectrum + the convergence & spectrum figure |
+| `examples/conjugate_gradient_demo.py` | CG vs steepest descent + the residual-decay figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6073,6 +6075,27 @@ eigenvector and the Rayleigh quotient `v^T A v / v^T v` gives its eigenvalue. Sh
 iteration power-iterates `(A - mu I)^-1` to target the eigenvalue nearest mu, and deflation peels
 off found eigenpairs to recover a symmetric matrix's whole spectrum. This module implements all
 three, verified by `A v = lambda v`, the trace and determinant identities, and analytic cases.
+
+## Conjugate gradient: huge sparse SPD systems without a factorization
+
+Iterative solving with mat-vecs only. `conjugate_gradient.py`:
+
+```
+$ python examples/conjugate_gradient_demo.py examples/output
+
+  20x20 SPD system: CG converged in 12 iterations (<= n = 20), residual 2.0e-09
+  steepest descent: 22 iterations -- CG's A-conjugate directions win
+```
+
+For a symmetric positive-definite A, solving `A x = b` by LU costs `O(n^3)` and stores the whole
+factorization -- impossible at millions of rows (finite-element meshes, image operators, graph
+Laplacians). Conjugate gradient solves it with nothing but matrix-vector products, so a sparse A
+costs `O(nnz)` per step and `O(n)` memory. It minimizes the energy `(1/2)x^T A x - b^T x`,
+choosing each search direction A-conjugate to all previous ones so it never undoes earlier
+progress -- converging in at most n steps exactly, far fewer in practice at a rate set by
+`sqrt(kappa)`, which is why preconditioning (here the Jacobi diagonal) is the whole game. This
+module implements CG and preconditioned CG, verified against a dense LU solve, the `<= n` step
+guarantee, and the monotone residual decay, and shown beating steepest descent's zig-zag.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
