@@ -330,6 +330,7 @@ ruins a long non-symplectic integration.
 | `src/wave_function_collapse.py` | Tiled WFC: constraint-propagation procedural generation with contradiction restart |
 | `src/hungarian.py` | Hungarian algorithm: optimal O(n^3) assignment (Kuhn-Munkres), min or max |
 | `src/dtw.py` | Dynamic time warping: distance + warping path, Sakoe-Chiba band, multi-dimensional |
+| `src/p2_quantile.py` | P-square streaming quantile estimation (p50/p95/p99) in O(1) memory |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -651,6 +652,7 @@ ruins a long non-symplectic integration.
 | `examples/wave_function_collapse_demo.py` | A coastline map where land never touches sea + a forced checkerboard |
 | `examples/hungarian_demo.py` | Worker-job assignment beating the greedy heuristic, with the cost matrix drawn |
 | `examples/dtw_demo.py` | Two speed-varying signals aligned, DTW 6.6x smaller than Euclidean, warp path drawn |
+| `examples/p2_quantile_demo.py` | Latency p50/p90/p95/p99 from a 200k stream in 20 floats, estimate converging |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7843,6 +7845,27 @@ implements distance, path recovery, an optional band, and a multi-dimensional va
 against an independent DP and known properties: identical series score zero, DTW is symmetric and
 non-negative, invariant to time stretching, crushes the Euclidean distance on shifted signals, and
 the recovered path is monotone with unit steps whose summed cost equals the distance.
+
+## The P-square algorithm: streaming quantiles in constant memory
+
+Estimate p50/p95/p99 of an endless stream without storing any samples. `p2_quantile.py`:
+
+```
+$ python examples/p2_quantile_demo.py examples/output
+
+  200000 latency samples (heavy-tailed):
+    p50  49.96 vs exact 49.97   (0.02%)
+    p95 134.39 vs exact 134.51  (0.09%)
+    p99 212.30 vs exact 212.05  (0.12%)
+  memory: 20 floats vs 1562 KB to store and sort every sample
+```
+
+P-square tracks five markers (min, max, the target quantile, and two midpoints), each with a height
+and a desired position that grows linearly with the sample count; each new value nudges the markers
+toward their targets via parabolic interpolation, falling back to linear if the parabola breaks the
+ordering. The middle marker is the estimate. This module implements the single-quantile estimator and
+a multi-quantile histogram, verified against exact quantiles on uniform, normal, and exponential
+streams (errors near 0.01%), with exact min/max markers and a constant-stream sanity check.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

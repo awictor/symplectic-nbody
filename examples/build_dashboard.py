@@ -372,6 +372,7 @@ def main():
     import wave_function_collapse_demo
     import hungarian_demo
     import dtw_demo
+    import p2_quantile_demo
 
     import plot_orbits
 
@@ -713,6 +714,7 @@ def main():
     wfc_txt = run("wave_function_collapse_demo", wave_function_collapse_demo.main, True)
     hungarian_txt = run("hungarian_demo", hungarian_demo.main, True)
     dtw_txt = run("dtw_demo", dtw_demo.main, True)
+    p2_quantile_txt = run("p2_quantile_demo", p2_quantile_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5210,6 +5212,31 @@ def main():
             '<div class="grid">'
             + svg_card(out("dtw.svg"), "two signals of the same shape at different speeds (blue above, green below) with the gray warping path connecting each matched pair of points -- the time axis stretched to align the peaks")
             + f'<div class="card">{pre(dtw_txt)}</div>'
+            + '</div>'),
+        section(
+            "The P-square algorithm: streaming quantiles in constant memory",
+            "Computing a QUANTILE the exact way -- the median, the 99th percentile -- requires storing "
+            "and sorting all the data, impossible for a stream of billions or a sensor reporting "
+            "forever. The P-SQUARE ALGORITHM (Jain and Chlamtac, 1985) estimates any quantile using "
+            "just FIVE markers and O(1) memory, never storing the samples, with accuracy that "
+            "improves as more data arrives -- the classic tool for latency percentiles (p50/p95/p99) "
+            "in monitoring without keeping every request time. It tracks five markers along the "
+            "data: the running minimum and maximum, the current quantile estimate, and two markers "
+            "halfway between; each has a height and a position, plus a DESIRED position that grows "
+            "linearly with the sample count so the markers stay spread at the target quantile. As "
+            "each value arrives it is slotted into a marker cell, positions increment, and any marker "
+            "that drifts more than one step from its desired position is nudged back -- its height "
+            "adjusted by PARABOLIC interpolation through its neighbours, falling back to linear if "
+            "the parabola would break the ordering. The middle marker is the estimate. This module "
+            "implements the single-quantile estimator and a multi-quantile histogram, verified "
+            "against exact quantiles from the full sorted data: on uniform, normal, and exponential "
+            "streams the estimate is within a small error of the true quantile (a p99 within 0.12% "
+            "using 20 floats instead of storing 200000 samples), the median of a symmetric stream is "
+            "near its centre, the min and max markers are exact, and a constant stream returns the "
+            "constant.",
+            '<div class="grid">'
+            + svg_card(out("p2_quantile.svg"), "the P-square p95 latency estimate (blue) converging to the true final percentile (yellow dashed) as the stream grows -- computed in constant memory the whole time")
+            + f'<div class="card">{pre(p2_quantile_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

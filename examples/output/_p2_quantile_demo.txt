@@ -1,0 +1,24 @@
+P-square: streaming quantiles (latency percentiles) in constant memory
+
+  streamed 200000 latency samples (heavy-tailed, in ms):
+    percentile    P-square       exact     error
+           p50       49.96       49.97     0.02%
+           p90      106.51      106.50     0.01%
+           p95      134.39      134.51     0.09%
+           p99      212.30      212.05     0.12%
+
+  Memory: P-square keeps 5 markers per quantile = 20 floats total,
+  versus 200000 samples (1562 KB) that exact computation would need to store and sort.
+
+  The p95 estimate converges to the true value as more data arrives:
+    after    100 samples: p95 estimate  144.61  (true so far  144.10)
+    after   1000 samples: p95 estimate  142.98  (true so far  138.02)
+    after  10000 samples: p95 estimate  133.94  (true so far  134.04)
+    after  50000 samples: p95 estimate  135.24  (true so far  135.27)
+    after 200000 samples: p95 estimate  134.39  (true so far  134.51)
+
+  Five markers track the min, max, the target quantile, and two midpoints; each new
+  sample nudges the markers toward their desired positions using parabolic interpolation.
+  No samples are stored -- ideal for p99 latency monitoring on a firehose of requests.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\p2_quantile.svg
