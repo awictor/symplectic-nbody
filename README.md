@@ -213,6 +213,7 @@ ruins a long non-symplectic integration.
 | `src/coupon_collector.py` | Coupon collector: E[T]=n H_n, variance, completion CDF, Monte-Carlo |
 | `src/secretary.py` | Secretary problem: 1/e optimal-stopping rule, win probability, Monte-Carlo |
 | `src/birthday.py` | Birthday problem: collision probability, sqrt(d) law, birthday-attack cost |
+| `src/gamblers_ruin.py` | Gambler's ruin: ruin probability & duration, fair/biased, infinite house |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -417,6 +418,7 @@ ruins a long non-symplectic integration.
 | `examples/coupon_collector_demo.py` | E[T] vs simulation table + the progress curve & completion CDF |
 | `examples/secretary_demo.py` | Optimal cutoff vs simulation table + the P(win) curve & 1/e convergence |
 | `examples/birthday_demo.py` | Collision-probability table + the P vs k curve & sqrt(days) crossover |
+| `examples/gamblers_ruin_demo.py` | Ruin vs simulation table + the ruin curves & sample walk paths |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4954,6 +4956,31 @@ the bits of preimage resistance. This module gives the exact collision and disti
 probabilities, the smallest group for a target probability, the median and expected
 first-collision counts, the Poisson approximation, and the hash-attack cost, all checked
 against exact values (23, 57, 70; the pigeonhole certainty at 366) and a seeded Monte-Carlo run.
+
+## Gambler's ruin: the walk that ends at a wall
+
+A hair of edge decides everything. `gamblers_ruin.py`:
+
+```
+$ python examples/gamblers_ruin_demo.py examples/output
+
+       p     i      ruin  sim ruin    duration   sim dur
+    0.50    50    0.5000    0.5098      2500.0    2464.0
+    0.49    50    0.8808    0.8818      1904.1    1867.9
+    0.60    50    0.0000    0.0000       250.0     249.0
+```
+
+Start with i dollars, bet $1 a round with win probability p, and stop at broke (0) or a target
+N -- a random walk with two absorbing walls. In a fair game the ruin chance is exactly `1 - i/N`
+(your stake as a fraction of the table) and the game lasts `i(N-i)` rounds. Shift the odds a
+hair to p=0.49 and, starting at the halfway mark, the ruin chance leaps from 50% to 88%;
+against an infinitely rich house any `p <= 1/2` is ruin with certainty -- the origin of "the
+house always wins". This module gives the exact ruin and reach-target probabilities and the
+expected duration for fair and biased games (`(r^i-r^N)/(1-r^N)` with `r=(1-p)/p`), the
+infinite-house limit `(q/p)^i`, and a seeded Monte-Carlo sampler. The tests verify the fair
+`1-i/N` and `i(N-i)` laws, the biased small cases, that the finite ruin approaches the
+infinite-house limit as N grows, and agreement with simulation. The same absorbing-walk math
+models allele fixation in a finite population and sequential hypothesis tests.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

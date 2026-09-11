@@ -255,6 +255,7 @@ def main():
     import coupon_collector_demo
     import secretary_demo
     import birthday_demo
+    import gamblers_ruin_demo
 
     import plot_orbits
 
@@ -479,6 +480,7 @@ def main():
     coupon_txt = run("coupon_collector_demo", coupon_collector_demo.main, True)
     secretary_txt = run("secretary_demo", secretary_demo.main, True)
     birthday_txt = run("birthday_demo", birthday_demo.main, True)
+    gamblers_ruin_txt = run("gamblers_ruin_demo", gamblers_ruin_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2738,6 +2740,21 @@ def main():
             '<div class="grid">'
             + svg_card(out("birthday.svg"), "the collision-probability curve crossing 50% at 23 people, and the crossover growing like sqrt(days)")
             + f'<div class="card">{pre(birthday_txt)}</div>'
+            + '</div>'),
+        section(
+            "Gambler's ruin: the walk that ends at a wall",
+            "Start with i dollars, bet $1 a round with win probability p, and stop at broke (0) "
+            "or a target N -- a random walk with two absorbing walls. In a fair game the ruin "
+            "chance is exactly 1 - i/N (your stake as a fraction of the table) and the game "
+            "lasts i(N-i) rounds. But shift the odds a hair to p=0.49 and, starting at the "
+            "halfway mark, the ruin chance leaps from 50% to 88%; against an infinitely rich "
+            "house any p <= 1/2 is ruin with certainty. That asymmetry is why the house always "
+            "wins, and the same absorbing-walk math models allele fixation in a finite "
+            "population and sequential hypothesis tests. Exact ruin probabilities and durations "
+            "are checked against a seeded Monte-Carlo run.",
+            '<div class="grid">'
+            + svg_card(out("gamblers_ruin.svg"), "ruin probability vs starting stake for several win rates, and sample walks absorbed at a wall")
+            + f'<div class="card">{pre(gamblers_ruin_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
