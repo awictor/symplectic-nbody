@@ -1,0 +1,31 @@
+Trie: prefix tree for autocomplete and O(len) lookup
+
+  dictionary: 10 distinct words, 39 total insertions
+
+  Autocomplete 'the' (alphabetical):
+    ['the', 'their', 'them', 'there', 'they']
+  Autocomplete 't' by insertion frequency (what a search box would rank):
+    the      (typed 9x)
+    to       (typed 8x)
+    there    (typed 5x)
+    their    (typed 4x)
+    they     (typed 3x)
+
+  membership: 'the' stored = True, 'th' stored = False (prefix only)
+  starts_with 'thei' = True, 'xyz' = False
+  longest stored prefix of 'thereafter' = 'there'
+
+  Deletion prunes dead branches but spares shared prefixes:
+    after deleting 'tea': autocomplete 'te' -> ['ten'] (ten kept)
+
+  Suffix-trie substring index of 'abracadabra':
+     'abra': present at [0, 7]
+      'cad': present at [4]
+      'bra': present at [1, 8]
+      'xyz': not found
+
+  Every operation is O(length of the key), independent of how many words are stored --
+  words sharing a prefix share its path. That per-character walk is what powers
+  autocomplete, spell-check, and longest-prefix IP routing.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\trie.svg

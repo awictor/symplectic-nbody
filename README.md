@@ -283,6 +283,7 @@ ruins a long non-symplectic integration.
 | `src/reed_solomon.py` | Reed-Solomon codes: GF(256), encode, syndrome/Berlekamp-Massey/Chien/Forney decode |
 | `src/mutual_information.py` | Mutual information: joint/conditional entropy, KL divergence, normalized MI, info gain |
 | `src/lru_cache.py` | LRU & LFU caches: O(1) get/put via hash map + linked list / frequency buckets |
+| `src/trie.py` | Trie: O(len) insert/search/prefix, autocomplete, delete-with-pruning, suffix index |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -557,6 +558,7 @@ ruins a long non-symplectic integration.
 | `examples/reed_solomon_demo.py` | Corrupt bytes in a message and recover it; byte-grid error/repair figure |
 | `examples/mutual_information_demo.py` | MI vs channel noise (matches 1-H(f)), nonlinear catch, feature ranking, KL |
 | `examples/lru_cache_demo.py` | LRU eviction trace + LRU-vs-LFU hit rates across uniform/skewed/looping workloads |
+| `examples/trie_demo.py` | Autocomplete (alpha + frequency-ranked), longest-prefix, substring index + tree figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6731,6 +6733,30 @@ hit/miss statistics, verified that LRU evicts in true least-recently-used order 
 brute-force reference over 60 random workloads), that touching an item spares it, that LFU evicts
 the least-frequent breaking ties by recency, that capacity is never exceeded, and that a skewed
 hot-key workload gives LFU a higher hit rate.
+
+## Tries: the prefix tree behind autocomplete
+
+Store strings as a tree of characters; O(length) lookup. `trie.py`:
+
+```
+$ python examples/trie_demo.py examples/output
+
+  autocomplete 'the': ['the', 'their', 'them', 'there', 'they']
+  by frequency: the (9x), to (8x), there (5x), their (4x), they (3x)
+  longest stored prefix of 'thereafter' = 'there'
+  suffix index of 'abracadabra': 'abra' at [0, 7], 'bra' at [1, 8]
+```
+
+A trie stores strings as a tree where each edge is a character and each root-to-node path spells a
+prefix, so words sharing a prefix share its path and every operation is O(length of the key),
+independent of how many keys are stored. That per-character walk powers autocomplete, longest-prefix
+matching (IP routers), and spell-check. Deletion unmarks a word and prunes now-childless
+non-terminal nodes; building a trie over all suffixes of a text turns it into a substring index.
+This module implements insert, search, prefix membership, autocomplete (alphabetical or
+frequency-ranked), deletion with pruning, longest-prefix matching, and a suffix-trie substring
+index, verified that it distinguishes a stored word from a mere prefix, autocompletes exactly the
+words under a prefix, deletes without disturbing siblings or shared prefixes, and finds substrings
+and their positions.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

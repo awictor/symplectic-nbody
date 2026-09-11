@@ -325,6 +325,7 @@ def main():
     import reed_solomon_demo
     import mutual_information_demo
     import lru_cache_demo
+    import trie_demo
 
     import plot_orbits
 
@@ -619,6 +620,7 @@ def main():
     reed_solomon_txt = run("reed_solomon_demo", reed_solomon_demo.main, True)
     mutual_information_txt = run("mutual_information_demo", mutual_information_demo.main, True)
     lru_cache_txt = run("lru_cache_demo", lru_cache_demo.main, True)
+    trie_txt = run("trie_demo", trie_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4090,6 +4092,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("lru_cache.svg"), "LRU and LFU hit rates side by side across uniform, skewed, and looping workloads, showing no single policy wins everywhere")
             + f'<div class="card">{pre(lru_cache_txt)}</div>'
+            + '</div>'),
+        section(
+            "Tries: the prefix tree behind autocomplete",
+            "A trie stores strings as a tree where each edge is a character and each root-to-node "
+            "path spells a prefix. Words sharing a prefix share its path, so the structure is "
+            "naturally compressed by common beginnings and every operation runs in O(length of the "
+            "key) -- INDEPENDENT of how many keys are stored, unlike a hash set's collisions or a "
+            "balanced tree's O(log n) whole-string comparisons. That per-character walk is exactly "
+            "what powers autocomplete (every word under a prefix), longest-prefix matching (IP "
+            "routers), and dictionary spell-check. Deletion unmarks a word and prunes now-childless "
+            "non-terminal nodes on the way back up, and building a trie over all SUFFIXES of a text "
+            "turns it into a substring index -- any substring is a prefix of some suffix. This "
+            "module implements insert, search, prefix membership, autocomplete (alphabetical or "
+            "frequency-ranked), deletion with pruning, longest-prefix matching, and a suffix-trie "
+            "substring index, verified that it distinguishes a stored word from a mere prefix, "
+            "autocompletes exactly the words under a prefix, deletes without disturbing siblings or "
+            "shared prefixes, and detects substrings and their positions.",
+            '<div class="grid">'
+            + svg_card(out("trie.svg"), "the trie drawn as a character-labelled tree with word-ending nodes filled green and interior prefix nodes outlined")
+            + f'<div class="card">{pre(trie_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
