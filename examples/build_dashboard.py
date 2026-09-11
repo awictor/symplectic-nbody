@@ -363,6 +363,7 @@ def main():
     import tsne_demo
     import wavelet_tree_demo
     import fibonacci_heap_demo
+    import treap_demo
 
     import plot_orbits
 
@@ -695,6 +696,7 @@ def main():
     tsne_txt = run("tsne_demo", tsne_demo.main, True)
     wavelet_tree_txt = run("wavelet_tree_demo", wavelet_tree_demo.main, True)
     fibonacci_heap_txt = run("fibonacci_heap_demo", fibonacci_heap_demo.main, True)
+    treap_txt = run("treap_demo", treap_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4980,6 +4982,31 @@ def main():
             '<div class="grid">'
             + svg_card(out("fibonacci_heap.svg"), "the maximum root degree (blue) growing far slower than the heap size and staying under the log_phi(n) Fibonacci bound (yellow dashed) -- what keeps the tree count logarithmic")
             + f'<div class="card">{pre(fibonacci_heap_txt)}</div>'
+            + '</div>'),
+        section(
+            "Treaps: balanced search trees by randomization",
+            "A binary search tree is fast only while balanced, and the classic balancers (AVL, "
+            "red-black) achieve that with intricate rotation cases. A TREAP earns balance almost for "
+            "free: give every key a random PRIORITY and keep the tree a binary-search-tree on the "
+            "KEYS and a heap on the PRIORITIES (tree + heap = treap). Because priorities are random, "
+            "the treap's shape equals that of a BST built by inserting the keys in random order -- "
+            "balanced with high probability, O(log n) expected height, and none of the case analysis. "
+            "The structure rests on two primitives: SPLIT cuts a treap into keys < k and keys >= k, "
+            "and MERGE joins two treaps where all of one's keys precede the other's, taking the "
+            "higher-priority root to preserve heap order. Insert is split-then-merge-in; delete is "
+            "merge-around. That split/merge pair -- which AVL and red-black trees do not expose "
+            "naturally -- makes treaps the tree of choice for slicing and splicing ordered sequences. "
+            "Augmenting each node with its subtree SIZE turns it into an ORDER-STATISTICS tree "
+            "(k-th smallest and rank in O(log n)). This module implements insert, delete, membership, "
+            "select, rank, split, and merge with a seeded RNG, verified against a sorted list: "
+            "in-order traversal is always sorted, a 3000-operation random insert/delete stream keeps "
+            "the contents equal to a reference set, select and rank match a sorted array, split "
+            "produces the correct partition, merge reassembles the original, and even under "
+            "adversarial sorted insertion the height stays near 2 log2(n) where a plain BST would "
+            "degrade to n-1.",
+            '<div class="grid">'
+            + svg_card(out("treap.svg"), "the treap's height (blue) tracking 2 log2(n) even when keys are inserted in sorted order -- the case that degrades an unbalanced BST to a linear chain of height n-1")
+            + f'<div class="card">{pre(treap_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

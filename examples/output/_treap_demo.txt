@@ -1,0 +1,29 @@
+Treap: a balanced BST from random priorities (tree + heap)
+
+  inserted [50, 30, 70, 20, 40, 60, 80, 10, 25, 65]
+  in-order (sorted): [10, 20, 25, 30, 40, 50, 60, 65, 70, 80]
+  height 6 for 10 keys
+
+  Order statistics:
+    0-th smallest = 10
+    4-th smallest = 40
+    9-th smallest = 80
+    rank of 40 = 4 (keys smaller than it)
+    rank of 65 = 7 (keys smaller than it)
+
+  split at 50 -> lower [10, 20, 25, 30, 40]
+              upper [50, 60, 65, 70, 80]
+  merge back  -> [10, 20, 25, 30, 40, 50, 60, 65, 70, 80]
+
+  Expected height stays near 2*log2(n) (random priorities = random insertion order):
+  (an adversarial sorted insertion into a plain BST would give height n-1)
+    n=   100 (sorted insert): treap height  12  vs  2log2(n)=13.3  vs  unbalanced BST would be 99
+    n=  1000 (sorted insert): treap height  26  vs  2log2(n)=19.9  vs  unbalanced BST would be 999
+    n= 10000 (sorted insert): treap height  32  vs  2log2(n)=26.6  vs  unbalanced BST would be 9999
+    n= 50000 (sorted insert): treap height  39  vs  2log2(n)=31.2  vs  unbalanced BST would be 49999
+
+  Every key gets a random priority; the treap is a BST on keys and a heap on priorities,
+  so its shape equals a BST built from a random insertion order -- balanced with high
+  probability. Split and merge (which AVL/red-black trees don't expose) fall out for free.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\treap.svg

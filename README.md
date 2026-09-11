@@ -321,6 +321,7 @@ ruins a long non-symplectic integration.
 | `src/tsne.py` | t-SNE nonlinear dimensionality reduction (perplexity calibration, KL-gradient descent) |
 | `src/wavelet_tree.py` | Wavelet tree: rank/select/quantile/range-count over a sequence in O(log sigma) |
 | `src/fibonacci_heap.py` | Fibonacci heap (O(1) amortized decrease-key) + Dijkstra built on it |
+| `src/treap.py` | Treap: randomized balanced BST with split/merge and order statistics (select/rank) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -633,6 +634,7 @@ ruins a long non-symplectic integration.
 | `examples/tsne_demo.py` | 8-D clusters embedded into a clear 2-D map, with the KL divergence falling over training |
 | `examples/wavelet_tree_demo.py` | Rank/select/quantile/range-count queries + the recursive alphabet-partition tree |
 | `examples/fibonacci_heap_demo.py` | Decrease-key/merge/Dijkstra + max root degree staying within the log_phi(n) bound |
+| `examples/treap_demo.py` | Order statistics + split/merge + height near 2log2(n) even under sorted insertion |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7643,6 +7645,26 @@ module implements the full heap with node handles plus a Dijkstra built on it, v
 binary heap over a 2000-operation random stream, that a drained heap yields sorted order, that merge
 preserves elements, that the max root degree stays within the log_phi(n) bound, and that Dijkstra
 matches a binary-heap Dijkstra across 40 random graphs.
+
+## Treaps: balanced search trees by randomization
+
+Balance for free from random priorities, plus split/merge and order statistics. `treap.py`:
+
+```
+$ python examples/treap_demo.py examples/output
+
+  order statistics: 4th-smallest = 40, rank of 65 = 7
+  split at 50 -> [10,20,25,30,40] and [50,60,65,70,80]; merge reassembles
+  sorted-insert height: n=50000 -> treap 39  vs  2log2(n)=31  vs  plain BST 49999
+```
+
+A treap gives each key a random priority and stays a BST on keys and a heap on priorities, so its
+shape equals a BST from a random insertion order -- balanced with high probability. Split and merge
+(which AVL/red-black trees don't expose) make it ideal for slicing ordered sequences, and subtree-size
+augmentation gives O(log n) select and rank. This module implements insert/delete/select/rank/split/
+merge, verified against a sorted list over a 3000-operation random stream, with select/rank matching a
+sorted array, split/merge round-tripping, and the height staying near 2 log2(n) even under adversarial
+sorted insertion.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
