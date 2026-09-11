@@ -236,6 +236,7 @@ ruins a long non-symplectic integration.
 | `src/toposort.py` | Topological sort: Kahn + DFS, cycle detection, critical-path scheduling |
 | `src/levenshtein.py` | Edit distance: DP table, alignment backtrace, similarity, Damerau variant |
 | `src/knapsack.py` | 0/1 knapsack DP: optimal value + item reconstruction, subset-sum, unbounded |
+| `src/lcs.py` | Longest common subsequence: DP + backtrace, diff edit-script, indel distance |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -463,6 +464,7 @@ ruins a long non-symplectic integration.
 | `examples/toposort_demo.py` | Kahn/DFS order + critical path + the layered DAG figure |
 | `examples/levenshtein_demo.py` | Alignment + spell-check ranking + the DP-table heatmap figure |
 | `examples/knapsack_demo.py` | Chosen items vs brute force + the DP-table heatmap & value-vs-capacity figure |
+| `examples/lcs_demo.py` | LCS + a real line-diff + the DP-table heatmap with the match diagonal |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5556,6 +5558,29 @@ iterate capacity upward) are the same table. This module solves all four, recons
 items, and is verified *exhaustively* against a brute-force subset search over 1000 random
 knapsacks and 500 subset-sums. It models budget allocation, cargo loading, and portfolio
 selection under a hard cap.
+
+## Longest common subsequence: the engine behind diff
+
+The longest shared in-order thread. `lcs.py`:
+
+```
+$ python examples/lcs_demo.py examples/output
+
+  a = ABCBDAB,  b = BDCAB
+  LCS = 'BCAB' (length 4), indel edit distance 4
+  diff: keep lines, - deletions, + insertions -> reproduces v2
+```
+
+A subsequence keeps some elements in order but may skip others; the LCS of two sequences is the
+longest ordering appearing in both. It is what `diff`, git, and `patch` are built on -- the
+complement of the LCS is exactly the lines to add or delete, so a bigger LCS means a smaller
+diff. The dynamic program fills `L[i][j] = L[i-1][j-1]+1` on a match, else `max(L[i-1][j],
+L[i][j-1])`, in `O(mn)`; backtracing recovers an actual longest subsequence, and turning the walk
+into keep/delete/insert steps yields the diff. The LCS length also gives the insert/delete edit
+distance `m + n - 2*LCS`. This module computes the length, one subsequence, the diff edit-script
+(verified to reproduce the target), and the indel distance, all checked *exhaustively* against a
+brute-force subsequence search over 1000 random pairs. It runs version control and bioinformatics
+sequence comparison.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,21 @@
+Longest common subsequence: the longest in-order shared thread
+
+  a = ABCBDAB
+  b = BDCAB
+  LCS = 'BCAB' (length 4), indel edit distance 4
+
+  A line-level diff (LCS of the two files' lines):
+      import os
+    + import sys
+      def main():
+    -     x = 1
+    +     x = 2
+          return x
+    - main()
+  patch reproduces v2: True
+
+  The kept lines are the LCS; the +/- lines are its complement -- the smallest set
+  of edits. A bigger LCS means a smaller diff. This runs git, patch, and
+  bioinformatics sequence comparison.
+
+  wrote examples/output\lcs.svg

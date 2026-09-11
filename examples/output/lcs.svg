@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420" font-family="monospace">
+<rect width="760" height="420" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">LCS DP table: longest shared subsequence length</text>
+<text x="20" y="46" fill="#8b949e" font-size="12">shade = LCS length of the two prefixes; yellow = match cells that build the LCS</text>
+<text x="122.0" y="87.0" fill="#ffd43b" font-size="13" text-anchor="middle"></text>
+<text x="166.0" y="87.0" fill="#ffd43b" font-size="13" text-anchor="middle">B</text>
+<text x="210.0" y="87.0" fill="#ffd43b" font-size="13" text-anchor="middle">D</text>
+<text x="254.0" y="87.0" fill="#ffd43b" font-size="13" text-anchor="middle">C</text>
+<text x="298.0" y="87.0" fill="#ffd43b" font-size="13" text-anchor="middle">A</text>
+<text x="342.0" y="87.0" fill="#ffd43b" font-size="13" text-anchor="middle">B</text>
+<text x="78.0" y="121.0" fill="#4dabf7" font-size="13" text-anchor="middle"></text>
+<text x="78.0" y="165.0" fill="#4dabf7" font-size="13" text-anchor="middle">A</text>
+<text x="78.0" y="209.0" fill="#4dabf7" font-size="13" text-anchor="middle">B</text>
+<text x="78.0" y="253.0" fill="#4dabf7" font-size="13" text-anchor="middle">C</text>
+<text x="78.0" y="297.0" fill="#4dabf7" font-size="13" text-anchor="middle">B</text>
+<text x="78.0" y="341.0" fill="#4dabf7" font-size="13" text-anchor="middle">D</text>
+<text x="78.0" y="385.0" fill="#4dabf7" font-size="13" text-anchor="middle">A</text>
+<text x="78.0" y="429.0" fill="#4dabf7" font-size="13" text-anchor="middle">B</text>
+<rect x="100" y="95" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="121.0" y="121.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="144" y="95" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="165.0" y="121.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="188" y="95" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="209.0" y="121.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="232" y="95" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="253.0" y="121.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="276" y="95" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="297.0" y="121.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="320" y="95" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="341.0" y="121.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="100" y="139" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="121.0" y="165.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="144" y="139" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="165.0" y="165.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="188" y="139" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="209.0" y="165.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="232" y="139" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="253.0" y="165.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="276" y="139" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="297.0" y="165.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="320" y="139" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="341.0" y="165.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="100" y="183" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="121.0" y="209.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="144" y="183" width="42" height="42" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<text x="165.0" y="209.0" fill="#0d1117" font-size="11" text-anchor="middle">1</text>
+<rect x="188" y="183" width="42" height="42" fill="#8338ec" stroke="#0d1117" stroke-width="1"/>
+<text x="209.0" y="209.0" fill="#e6edf3" font-size="11" text-anchor="middle">1</text>
+<rect x="232" y="183" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="253.0" y="209.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="276" y="183" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="297.0" y="209.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="320" y="183" width="42" height="42" fill="#205c4d" stroke="#0d1117" stroke-width="1"/>
+<text x="341.0" y="209.0" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<rect x="100" y="227" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="121.0" y="253.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="144" y="227" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="165.0" y="253.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="188" y="227" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="209.0" y="253.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="232" y="227" width="42" height="42" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<text x="253.0" y="253.0" fill="#0d1117" font-size="11" text-anchor="middle">2</text>
+<rect x="276" y="227" width="42" height="42" fill="#205c4d" stroke="#0d1117" stroke-width="1"/>
+<text x="297.0" y="253.0" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<rect x="320" y="227" width="42" height="42" fill="#205c4d" stroke="#0d1117" stroke-width="1"/>
+<text x="341.0" y="253.0" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<rect x="100" y="271" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="121.0" y="297.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="144" y="271" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="165.0" y="297.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="188" y="271" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="209.0" y="297.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="232" y="271" width="42" height="42" fill="#8338ec" stroke="#0d1117" stroke-width="1"/>
+<text x="253.0" y="297.0" fill="#e6edf3" font-size="11" text-anchor="middle">2</text>
+<rect x="276" y="271" width="42" height="42" fill="#205c4d" stroke="#0d1117" stroke-width="1"/>
+<text x="297.0" y="297.0" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<rect x="320" y="271" width="42" height="42" fill="#257c62" stroke="#0d1117" stroke-width="1"/>
+<text x="341.0" y="297.0" fill="#8b949e" font-size="11" text-anchor="middle">3</text>
+<rect x="100" y="315" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="121.0" y="341.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="144" y="315" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="165.0" y="341.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="188" y="315" width="42" height="42" fill="#205c4d" stroke="#0d1117" stroke-width="1"/>
+<text x="209.0" y="341.0" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<rect x="232" y="315" width="42" height="42" fill="#8338ec" stroke="#0d1117" stroke-width="1"/>
+<text x="253.0" y="341.0" fill="#e6edf3" font-size="11" text-anchor="middle">2</text>
+<rect x="276" y="315" width="42" height="42" fill="#205c4d" stroke="#0d1117" stroke-width="1"/>
+<text x="297.0" y="341.0" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<rect x="320" y="315" width="42" height="42" fill="#257c62" stroke="#0d1117" stroke-width="1"/>
+<text x="341.0" y="341.0" fill="#8b949e" font-size="11" text-anchor="middle">3</text>
+<rect x="100" y="359" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="121.0" y="385.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="144" y="359" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="165.0" y="385.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="188" y="359" width="42" height="42" fill="#205c4d" stroke="#0d1117" stroke-width="1"/>
+<text x="209.0" y="385.0" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<rect x="232" y="359" width="42" height="42" fill="#205c4d" stroke="#0d1117" stroke-width="1"/>
+<text x="253.0" y="385.0" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<rect x="276" y="359" width="42" height="42" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<text x="297.0" y="385.0" fill="#0d1117" font-size="11" text-anchor="middle">3</text>
+<rect x="320" y="359" width="42" height="42" fill="#257c62" stroke="#0d1117" stroke-width="1"/>
+<text x="341.0" y="385.0" fill="#8b949e" font-size="11" text-anchor="middle">3</text>
+<rect x="100" y="403" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="121.0" y="429.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="144" y="403" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="165.0" y="429.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="188" y="403" width="42" height="42" fill="#205c4d" stroke="#0d1117" stroke-width="1"/>
+<text x="209.0" y="429.0" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<rect x="232" y="403" width="42" height="42" fill="#205c4d" stroke="#0d1117" stroke-width="1"/>
+<text x="253.0" y="429.0" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<rect x="276" y="403" width="42" height="42" fill="#257c62" stroke="#0d1117" stroke-width="1"/>
+<text x="297.0" y="429.0" fill="#8b949e" font-size="11" text-anchor="middle">3</text>
+<rect x="320" y="403" width="42" height="42" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<text x="341.0" y="429.0" fill="#0d1117" font-size="11" text-anchor="middle">4</text>
+<text x="320.0" y="469.0" fill="#ffd43b" font-size="11" text-anchor="end">bottom-right = LCS length (4); yellow diagonal spells "BCAB"</text>
+</svg>

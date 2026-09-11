@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.54       12.23      0.8x
-   400          36.90       37.90      1.0x
-   800         151.21      117.21      1.3x
-  1600         609.89      346.08      1.8x
-  3200        2467.84      951.20      2.6x
+   200           9.20       12.19      0.8x
+   400          36.20       37.45      1.0x
+   800         147.76      114.68      1.3x
+  1600         606.81      338.97      1.8x
+  3200        2521.22      946.70      2.7x
 
-empirical scaling exponent  direct ~ N^2.01   barnes-hut ~ N^1.58
+empirical scaling exponent  direct ~ N^2.03   barnes-hut ~ N^1.57
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -201050,6 +201050,147 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   cargo loading, and portfolio selection under a hard cap.
 
   wrote examples/output\knapsack.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Longest common subsequence: the engine behind diff</h2>
+    <p class="blurb">A subsequence keeps some elements in order but may skip others; the longest common subsequence of two sequences is the longest ordering appearing in both, and it is what diff, git, patch, and bioinformatics comparison are built on -- the complement of the LCS is exactly the lines to add or delete, so a bigger LCS means a smaller diff. The dynamic program fills L[i][j] = L[i-1][j-1]+1 on a match, else max(L[i-1][j], L[i][j-1]), in O(mn); backtracing recovers an actual longest subsequence, and turning the walk into keep/delete/insert steps yields the diff. The LCS length also gives the insert/delete edit distance, m + n - 2*LCS. This module computes the length, one subsequence, the diff edit-script, and that distance, all verified exhaustively against a brute-force subsequence search.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420" font-family="monospace">
+<rect width="760" height="420" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">LCS DP table: longest shared subsequence length</text>
+<text x="20" y="46" fill="#8b949e" font-size="12">shade = LCS length of the two prefixes; yellow = match cells that build the LCS</text>
+<text x="122.0" y="87.0" fill="#ffd43b" font-size="13" text-anchor="middle"></text>
+<text x="166.0" y="87.0" fill="#ffd43b" font-size="13" text-anchor="middle">B</text>
+<text x="210.0" y="87.0" fill="#ffd43b" font-size="13" text-anchor="middle">D</text>
+<text x="254.0" y="87.0" fill="#ffd43b" font-size="13" text-anchor="middle">C</text>
+<text x="298.0" y="87.0" fill="#ffd43b" font-size="13" text-anchor="middle">A</text>
+<text x="342.0" y="87.0" fill="#ffd43b" font-size="13" text-anchor="middle">B</text>
+<text x="78.0" y="121.0" fill="#4dabf7" font-size="13" text-anchor="middle"></text>
+<text x="78.0" y="165.0" fill="#4dabf7" font-size="13" text-anchor="middle">A</text>
+<text x="78.0" y="209.0" fill="#4dabf7" font-size="13" text-anchor="middle">B</text>
+<text x="78.0" y="253.0" fill="#4dabf7" font-size="13" text-anchor="middle">C</text>
+<text x="78.0" y="297.0" fill="#4dabf7" font-size="13" text-anchor="middle">B</text>
+<text x="78.0" y="341.0" fill="#4dabf7" font-size="13" text-anchor="middle">D</text>
+<text x="78.0" y="385.0" fill="#4dabf7" font-size="13" text-anchor="middle">A</text>
+<text x="78.0" y="429.0" fill="#4dabf7" font-size="13" text-anchor="middle">B</text>
+<rect x="100" y="95" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="121.0" y="121.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="144" y="95" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="165.0" y="121.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="188" y="95" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="209.0" y="121.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="232" y="95" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="253.0" y="121.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="276" y="95" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="297.0" y="121.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="320" y="95" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="341.0" y="121.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="100" y="139" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="121.0" y="165.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="144" y="139" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="165.0" y="165.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="188" y="139" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="209.0" y="165.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="232" y="139" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="253.0" y="165.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="276" y="139" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="297.0" y="165.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="320" y="139" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="341.0" y="165.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="100" y="183" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="121.0" y="209.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="144" y="183" width="42" height="42" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<text x="165.0" y="209.0" fill="#0d1117" font-size="11" text-anchor="middle">1</text>
+<rect x="188" y="183" width="42" height="42" fill="#8338ec" stroke="#0d1117" stroke-width="1"/>
+<text x="209.0" y="209.0" fill="#e6edf3" font-size="11" text-anchor="middle">1</text>
+<rect x="232" y="183" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="253.0" y="209.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="276" y="183" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="297.0" y="209.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="320" y="183" width="42" height="42" fill="#205c4d" stroke="#0d1117" stroke-width="1"/>
+<text x="341.0" y="209.0" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<rect x="100" y="227" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="121.0" y="253.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="144" y="227" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="165.0" y="253.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="188" y="227" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="209.0" y="253.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="232" y="227" width="42" height="42" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<text x="253.0" y="253.0" fill="#0d1117" font-size="11" text-anchor="middle">2</text>
+<rect x="276" y="227" width="42" height="42" fill="#205c4d" stroke="#0d1117" stroke-width="1"/>
+<text x="297.0" y="253.0" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<rect x="320" y="227" width="42" height="42" fill="#205c4d" stroke="#0d1117" stroke-width="1"/>
+<text x="341.0" y="253.0" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<rect x="100" y="271" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="121.0" y="297.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="144" y="271" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="165.0" y="297.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="188" y="271" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="209.0" y="297.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="232" y="271" width="42" height="42" fill="#8338ec" stroke="#0d1117" stroke-width="1"/>
+<text x="253.0" y="297.0" fill="#e6edf3" font-size="11" text-anchor="middle">2</text>
+<rect x="276" y="271" width="42" height="42" fill="#205c4d" stroke="#0d1117" stroke-width="1"/>
+<text x="297.0" y="297.0" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<rect x="320" y="271" width="42" height="42" fill="#257c62" stroke="#0d1117" stroke-width="1"/>
+<text x="341.0" y="297.0" fill="#8b949e" font-size="11" text-anchor="middle">3</text>
+<rect x="100" y="315" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="121.0" y="341.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="144" y="315" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="165.0" y="341.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="188" y="315" width="42" height="42" fill="#205c4d" stroke="#0d1117" stroke-width="1"/>
+<text x="209.0" y="341.0" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<rect x="232" y="315" width="42" height="42" fill="#8338ec" stroke="#0d1117" stroke-width="1"/>
+<text x="253.0" y="341.0" fill="#e6edf3" font-size="11" text-anchor="middle">2</text>
+<rect x="276" y="315" width="42" height="42" fill="#205c4d" stroke="#0d1117" stroke-width="1"/>
+<text x="297.0" y="341.0" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<rect x="320" y="315" width="42" height="42" fill="#257c62" stroke="#0d1117" stroke-width="1"/>
+<text x="341.0" y="341.0" fill="#8b949e" font-size="11" text-anchor="middle">3</text>
+<rect x="100" y="359" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="121.0" y="385.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="144" y="359" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="165.0" y="385.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="188" y="359" width="42" height="42" fill="#205c4d" stroke="#0d1117" stroke-width="1"/>
+<text x="209.0" y="385.0" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<rect x="232" y="359" width="42" height="42" fill="#205c4d" stroke="#0d1117" stroke-width="1"/>
+<text x="253.0" y="385.0" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<rect x="276" y="359" width="42" height="42" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<text x="297.0" y="385.0" fill="#0d1117" font-size="11" text-anchor="middle">3</text>
+<rect x="320" y="359" width="42" height="42" fill="#257c62" stroke="#0d1117" stroke-width="1"/>
+<text x="341.0" y="385.0" fill="#8b949e" font-size="11" text-anchor="middle">3</text>
+<rect x="100" y="403" width="42" height="42" fill="#161b22" stroke="#0d1117" stroke-width="1"/>
+<text x="121.0" y="429.0" fill="#8b949e" font-size="11" text-anchor="middle">0</text>
+<rect x="144" y="403" width="42" height="42" fill="#1b3b37" stroke="#0d1117" stroke-width="1"/>
+<text x="165.0" y="429.0" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<rect x="188" y="403" width="42" height="42" fill="#205c4d" stroke="#0d1117" stroke-width="1"/>
+<text x="209.0" y="429.0" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<rect x="232" y="403" width="42" height="42" fill="#205c4d" stroke="#0d1117" stroke-width="1"/>
+<text x="253.0" y="429.0" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<rect x="276" y="403" width="42" height="42" fill="#257c62" stroke="#0d1117" stroke-width="1"/>
+<text x="297.0" y="429.0" fill="#8b949e" font-size="11" text-anchor="middle">3</text>
+<rect x="320" y="403" width="42" height="42" fill="#ffd43b" stroke="#0d1117" stroke-width="1"/>
+<text x="341.0" y="429.0" fill="#0d1117" font-size="11" text-anchor="middle">4</text>
+<text x="320.0" y="469.0" fill="#ffd43b" font-size="11" text-anchor="end">bottom-right = LCS length (4); yellow diagonal spells "BCAB"</text>
+</svg><figcaption>the DP length table with the match-cell diagonal that spells out the longest common subsequence</figcaption></figure><div class="card"><pre>Longest common subsequence: the longest in-order shared thread
+
+  a = ABCBDAB
+  b = BDCAB
+  LCS = &#x27;BCAB&#x27; (length 4), indel edit distance 4
+
+  A line-level diff (LCS of the two files&#x27; lines):
+      import os
+    + import sys
+      def main():
+    -     x = 1
+    +     x = 2
+          return x
+    - main()
+  patch reproduces v2: True
+
+  The kept lines are the LCS; the +/- lines are its complement -- the smallest set
+  of edits. A bigger LCS means a smaller diff. This runs git, patch, and
+  bioinformatics sequence comparison.
+
+  wrote examples/output\lcs.svg</pre></div></div>
   </section>
 
   <section>

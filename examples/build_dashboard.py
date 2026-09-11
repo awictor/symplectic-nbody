@@ -278,6 +278,7 @@ def main():
     import toposort_demo
     import levenshtein_demo
     import knapsack_demo
+    import lcs_demo
 
     import plot_orbits
 
@@ -525,6 +526,7 @@ def main():
     toposort_txt = run("toposort_demo", toposort_demo.main, True)
     levenshtein_txt = run("levenshtein_demo", levenshtein_demo.main, True)
     knapsack_txt = run("knapsack_demo", knapsack_demo.main, True)
+    lcs_txt = run("lcs_demo", lcs_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3150,6 +3152,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("knapsack.svg"), "the DP value table filling row by row to the optimum, and the optimal value climbing with capacity")
             + f'<div class="card">{pre(knapsack_txt)}</div>'
+            + '</div>'),
+        section(
+            "Longest common subsequence: the engine behind diff",
+            "A subsequence keeps some elements in order but may skip others; the longest common "
+            "subsequence of two sequences is the longest ordering appearing in both, and it is "
+            "what diff, git, patch, and bioinformatics comparison are built on -- the complement "
+            "of the LCS is exactly the lines to add or delete, so a bigger LCS means a smaller "
+            "diff. The dynamic program fills L[i][j] = L[i-1][j-1]+1 on a match, else "
+            "max(L[i-1][j], L[i][j-1]), in O(mn); backtracing recovers an actual longest "
+            "subsequence, and turning the walk into keep/delete/insert steps yields the diff. "
+            "The LCS length also gives the insert/delete edit distance, m + n - 2*LCS. This "
+            "module computes the length, one subsequence, the diff edit-script, and that "
+            "distance, all verified exhaustively against a brute-force subsequence search.",
+            '<div class="grid">'
+            + svg_card(out("lcs.svg"), "the DP length table with the match-cell diagonal that spells out the longest common subsequence")
+            + f'<div class="card">{pre(lcs_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
