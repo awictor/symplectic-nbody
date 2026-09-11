@@ -327,6 +327,7 @@ ruins a long non-symplectic integration.
 | `src/sparse_table.py` | Sparse table (O(1) range min/max/gcd) + binary-lifting LCA with tree distance |
 | `src/pollard_rho.py` | Pollard's rho / p-1 factorization + Miller-Rabin, totient, and divisor count |
 | `src/perlin.py` | Perlin gradient noise (1-D/2-D) + fractal Brownian motion for procedural fields |
+| `src/wave_function_collapse.py` | Tiled WFC: constraint-propagation procedural generation with contradiction restart |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -645,6 +646,7 @@ ruins a long non-symplectic integration.
 | `examples/sparse_table_demo.py` | Range-minimum query on an array + lowest-common-ancestor on a tree |
 | `examples/pollard_rho_demo.py` | Factoring RSA-style semiprimes + iterations tracking the sqrt(p) trend |
 | `examples/perlin_demo.py` | 2-D fBm terrain heightfield + a 1-D fBm cross-section |
+| `examples/wave_function_collapse_demo.py` | A coastline map where land never touches sea + a forced checkerboard |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7776,6 +7778,27 @@ Fractal Brownian motion sums octaves at doubling frequency and halving amplitude
 This module implements 1-D and 2-D noise and fBm, verified that the noise is exactly zero at lattice
 points, stays bounded, is deterministic and continuous (a 1e-3 step moves output by under 0.003), has
 near-zero mean, and that more fBm octaves add high-frequency detail.
+
+## Wave function collapse: procedural generation by constraint propagation
+
+Coherent tile maps from local adjacency rules. `wave_function_collapse.py`:
+
+```
+$ python examples/wave_function_collapse_demo.py examples/output
+
+  coastline map (land never touches sea; coast always between): 0 violations
+  forced checkerboard rules -> a perfect alternating 2-coloring
+  every one of 20 seeds satisfies all adjacency rules
+```
+
+Each cell starts as a superposition of all tiles; WFC repeatedly collapses the lowest-entropy
+(most-constrained) cell to one tile by weight, then propagates -- neighbours lose any option the new
+choice forbids, cascading until the grid is arc-consistent. A cell with no options left is a
+contradiction and triggers a restart. The per-direction adjacency rules are the whole specification.
+This module implements tiled WFC with weighted collapse, lowest-entropy observation, full
+propagation, and contradiction restart, verified that every generated grid strictly satisfies the
+rules across 20 seeds, that a seed reproduces its grid, that an over-constrained rule set is reported
+unsatisfiable, and that a forcing rule set yields exactly its unique tiling.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

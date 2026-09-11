@@ -1,0 +1,31 @@
+Wave function collapse: coherent maps from local adjacency rules
+
+  Coastline map (rule: land 'L' and sea 'S' may never touch; coast 'C' between them):
+    .~~.~~~~~~~.~.~~..~~~~~~~~~~
+    ~.~.~.~~~~~~~~...~.~~~~~~~~~
+    .#.~~~~.~~.~.~~...~~~~~~~~~.
+    ~.~~~~~.~~~~~~.~~~..~~~.~~.~
+    ~~~~.~~~~~..~~~~.~..~~..~~~~
+    .~~~~~~.~~.~~.~.~~~~~~~~~.~.
+    ~~~~~~.~~~~~~~~.~~~~~~~~.#.#
+    ~.~~~~~~~~..~~~~~~~~~~.~~.~.
+    ~~~~~~~.~.~~~~~~~~~~.~~.~~~~
+    ~~~~~~~.~~~.~.~~..~~~.~~~~~.
+    .~~.~~~~~~.~~~~~..~..~.....~
+    .~~~~~~~~~~~~~~~.~.~~~~~~~~~
+    ~~~~~...~~.~~~~~.~.~~~~~.~~.
+    ~...~~~~.~~~~.~~~~~~~.~~~~~~
+    .~~~~~~.~.~..~.~~~~~~.....~~
+    #..~~~~~~~~.~..~~~.~.~~~~~~~
+
+  satisfies all adjacency rules: True
+  land-sea direct adjacencies (should be 0): 0
+
+  Forced checkerboard rules -> a perfect 2-coloring: True
+
+  Each cell begins as a superposition of all tiles. WFC repeatedly collapses the
+  lowest-entropy (most-constrained) cell to one tile, then propagates: neighbours lose
+  any option the new choice forbids, cascading until the grid is arc-consistent. A
+  contradiction (a cell with no options left) triggers a restart.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\wave_function_collapse.svg
