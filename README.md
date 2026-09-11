@@ -294,6 +294,7 @@ ruins a long non-symplectic integration.
 | `src/ant_colony.py` | Ant colony optimization: pheromone-trail TSP solver, evaporation, elitist deposit |
 | `src/avl_tree.py` | AVL self-balancing BST: rotations, O(log n) ordered map, range queries |
 | `src/segment_tree.py` | Segment tree + lazy propagation: O(log n) range sum/min/max query and range-add |
+| `src/convex_hull.py` | Convex hull (Andrew's monotone chain): area, perimeter, point-in-hull, diameter |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -579,6 +580,7 @@ ruins a long non-symplectic integration.
 | `examples/ant_colony_demo.py` | TSP tour over a pheromone field, convergence curve, alpha/beta balance |
 | `examples/avl_tree_demo.py` | AVL vs naive-BST height on sorted input, four rotation cases, tree figure |
 | `examples/segment_tree_demo.py` | Range sum/min/max + lazy range-add, O(log n) full-array update, tree figure |
+| `examples/convex_hull_demo.py` | Hull of a scatter with area/perimeter/diameter + outlined-boundary figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7000,6 +7002,27 @@ segment tree parameterized by the aggregate (sum, min, or max) with lazy range-a
 updates, and range queries, verified against a brute-force array over 3000 random mixed operations
 for all three aggregates, that overlapping range-adds accumulate, that point updates match a plain
 list, and that it handles single-element and full-array edge ranges.
+
+## Convex hull: the tightest polygon enclosing points
+
+The rubber-band boundary of a point set. `convex_hull.py`:
+
+```
+$ python examples/convex_hull_demo.py examples/output
+
+  60 random points -> hull of 11 vertices, convex & CCW, all points inside
+  area 8310, perimeter 345, diameter 123.9 (farthest pair)
+  interior points dropped: square+centre 5->4, collinear 4->2, triangle+inside 4->3
+```
+
+Andrew's monotone chain builds the hull in `O(n log n)`: sort the points, then sweep left-to-right
+for the lower hull and right-to-left for the upper, keeping only left turns (positive cross product)
+and popping any vertex that would turn right. From the hull come the enclosed area (shoelace),
+perimeter, point-in-hull (orientation tests against each edge), and the diameter (farthest pair,
+which always lies on the hull). This module implements all of these, verified that a square's hull
+is its four corners with interior points dropped, that collinear and duplicate points are handled,
+that the hull is convex and counter-clockwise with area matching an independent shoelace, that every
+input point lies inside it, and that the diameter is the true farthest pair.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

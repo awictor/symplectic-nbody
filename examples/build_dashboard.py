@@ -336,6 +336,7 @@ def main():
     import ant_colony_demo
     import avl_tree_demo
     import segment_tree_demo
+    import convex_hull_demo
 
     import plot_orbits
 
@@ -641,6 +642,7 @@ def main():
     ant_colony_txt = run("ant_colony_demo", ant_colony_demo.main, True)
     avl_tree_txt = run("avl_tree_demo", avl_tree_demo.main, True)
     segment_tree_txt = run("segment_tree_demo", segment_tree_demo.main, True)
+    convex_hull_txt = run("convex_hull_demo", convex_hull_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4338,6 +4340,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("segment_tree.svg"), "the segment tree drawn as a binary tree of segment sums, the root covering the whole array and each level halving the range")
             + f'<div class="card">{pre(segment_tree_txt)}</div>'
+            + '</div>'),
+        section(
+            "Convex hull: the tightest polygon enclosing points",
+            "The convex hull is the smallest convex polygon containing a point set -- the shape a "
+            "rubber band snaps to around a scatter of pins, and the foundation of computational "
+            "geometry (collision detection, shape analysis, path-planning boundaries). This module "
+            "builds it by ANDREW'S MONOTONE CHAIN in O(n log n): sort the points, then sweep "
+            "left-to-right building the lower hull and right-to-left the upper, keeping only left "
+            "turns. The engine is the CROSS PRODUCT, whose sign gives orientation -- (b-a) x (c-a) > "
+            "0 is a counter-clockwise turn -- so the chain pops any vertex that would make a "
+            "non-left turn, leaving only the outer boundary. From the hull come the enclosed AREA "
+            "(shoelace formula), perimeter, whether an arbitrary point lies inside (orientation "
+            "tests against each edge), and the DIAMETER (farthest pair, which always lies on the "
+            "hull). This module implements the hull, area, perimeter, point-in-hull, and diameter, "
+            "verified that a square's hull is its four corners (interior points dropped), that "
+            "collinear and duplicate points are handled, that the hull is convex and "
+            "counter-clockwise, that its area matches an independent shoelace value, that every "
+            "input point lies inside it, and that the diameter is the true farthest pair.",
+            '<div class="grid">'
+            + svg_card(out("convex_hull.svg"), "a scatter of points with the convex-hull boundary outlined in blue, interior points grey, and the diameter (farthest pair) marked with a dashed line")
+            + f'<div class="card">{pre(convex_hull_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

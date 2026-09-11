@@ -1,0 +1,35 @@
+Convex hull: the tightest polygon enclosing a set of points
+
+  60 random points -> hull of 11 vertices (18% of the points are on the boundary)
+
+  hull is convex & counter-clockwise: True
+  every input point inside or on the hull: True
+
+  enclosed area:  8310.0
+  perimeter:      345.0
+  diameter (farthest pair): 123.9  between (8.2,5.2) and (94.3,94.2)
+
+  Hull vertices in counter-clockwise order:
+    (   0.2,   60.0)
+    (   8.2,    5.2)
+    (  21.2,    2.6)
+    (  64.2,    2.0)
+    (  85.9,    5.9)
+    (  96.1,   19.5)
+    (  94.3,   94.2)
+    (  91.7,   95.4)
+    (  18.6,   96.3)
+    (  14.5,   95.6)
+    (   7.9,   89.1)
+
+  Interior points are dropped -- only the extreme points survive:
+       square + centre: 5 points -> 4 hull vertices
+             collinear: 4 points -> 2 hull vertices
+     triangle + inside: 4 points -> 3 hull vertices
+
+  Andrew's monotone chain sorts the points, then sweeps building the lower and upper
+  hulls, keeping only left turns (positive cross product) and popping any vertex that
+  would make a right turn. O(n log n), dominated by the sort. The farthest pair always
+  lies on the hull, so the diameter needs only the hull vertices.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\convex_hull.svg
