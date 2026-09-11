@@ -276,6 +276,7 @@ def main():
     import boyer_moore_demo
     import astar_demo
     import toposort_demo
+    import levenshtein_demo
 
     import plot_orbits
 
@@ -521,6 +522,7 @@ def main():
     boyer_moore_txt = run("boyer_moore_demo", boyer_moore_demo.main, True)
     astar_txt = run("astar_demo", astar_demo.main, True)
     toposort_txt = run("toposort_demo", toposort_demo.main, True)
+    levenshtein_txt = run("levenshtein_demo", levenshtein_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3113,6 +3115,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("toposort.svg"), "a dependency DAG laid out in topological layers with the critical (longest-duration) path highlighted")
             + f'<div class="card">{pre(toposort_txt)}</div>'
+            + '</div>'),
+        section(
+            "Levenshtein edit distance: how far apart are two strings",
+            "The edit distance is the fewest single-character edits -- insert, delete, "
+            "substitute -- that turn one string into another, the measure behind spell-checkers, "
+            "fuzzy search, diff, and DNA alignment. Dynamic programming fills a table where "
+            "d[i][j] is the distance between prefixes, each cell the cheapest of a match, "
+            "substitution, insertion, or deletion, in O(mn); backtracing the choices recovers "
+            "the actual alignment, not just the count. The distance is a true metric (symmetric, "
+            "zero only for equal strings, triangle-inequality-respecting). This module computes "
+            "the distance, a memory-lean two-row variant, the alignment operations, a similarity "
+            "ratio, and the Damerau variant that treats an adjacent-character swap as one edit "
+            "(the commonest typo), all verified against known values and the metric axioms.",
+            '<div class="grid">'
+            + svg_card(out("levenshtein.svg"), "the dynamic-programming cost table with the backtrace path that spells out the minimal edits")
+            + f'<div class="card">{pre(levenshtein_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

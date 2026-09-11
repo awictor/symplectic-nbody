@@ -1,0 +1,28 @@
+Levenshtein edit distance: fewest insert/delete/substitute edits
+
+  'kitten' -> 'sitting' : distance 3, similarity 0.57
+  alignment:
+    substitute k -> s
+    keep       i
+    keep       t
+    keep       t
+    substitute e -> i
+    keep       n
+    insert     g
+  applying the ops reproduces 'sitting'
+
+  spell-check 'recieve' against a small dictionary (nearest first):
+        word  distance  damerau
+     relieve         1        1
+     believe         2        2
+      recede         2        2
+     receive         2        1
+     deceive         3        2
+    receiver         3        2
+     receipt         4        3
+
+  best guess: 'relieve' -- and Damerau sees 'recieve'->'receive' as a single
+  adjacent-swap typo (distance 1), the commonest kind of mistake. The same DP powers
+  fuzzy search, diff tools, and DNA sequence alignment.
+
+  wrote examples/output\levenshtein.svg

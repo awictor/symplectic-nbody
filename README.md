@@ -234,6 +234,7 @@ ruins a long non-symplectic integration.
 | `src/boyer_moore.py` | Boyer-Moore string search: bad-character + good-suffix skips, sublinear |
 | `src/astar.py` | A* pathfinding: f=g+h heuristic search, grid heuristics, Dijkstra-verified optimal |
 | `src/toposort.py` | Topological sort: Kahn + DFS, cycle detection, critical-path scheduling |
+| `src/levenshtein.py` | Edit distance: DP table, alignment backtrace, similarity, Damerau variant |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -459,6 +460,7 @@ ruins a long non-symplectic integration.
 | `examples/boyer_moore_demo.py` | Match + bad-char table + the comparison-count vs pattern-length figure |
 | `examples/astar_demo.py` | A* vs Dijkstra cost/expansions + the side-by-side explored-cells figure |
 | `examples/toposort_demo.py` | Kahn/DFS order + critical path + the layered DAG figure |
+| `examples/levenshtein_demo.py` | Alignment + spell-check ranking + the DP-table heatmap figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5504,6 +5506,29 @@ implements both sorts, cycle detection, and the critical path, and the tests ver
 hundreds of random DAGs -- that every order respects all edges, that cycles are caught, and that
 the critical path is correct. It runs package managers, build systems, and spreadsheet
 recompute.
+
+## Levenshtein edit distance: how far apart are two strings
+
+The measure behind "did you mean...?". `levenshtein.py`:
+
+```
+$ python examples/levenshtein_demo.py examples/output
+
+  'kitten' -> 'sitting' : distance 3, similarity 0.57
+  spell-check 'recieve': receive (Levenshtein 2, Damerau 1 -- one adjacent swap)
+```
+
+The edit distance is the fewest single-character edits -- insert, delete, substitute -- that
+turn one string into another. Dynamic programming fills a table where `d[i][j]` is the distance
+between the first i and first j characters, each cell the cheapest of a match, substitution,
+insertion, or deletion, in `O(mn)`; backtracing the choices recovers the actual alignment, not
+just the count. The distance is a true metric -- symmetric, zero only for equal strings, and
+triangle-inequality-respecting. This module computes the distance, a memory-lean two-row variant
+(`O(min(m,n))` space), the alignment operations (verified to reproduce the target with exactly
+`distance` edits), a normalized similarity ratio, and the Damerau variant that counts an
+adjacent-character transposition as one edit -- the commonest typo. The tests check known
+distances, the metric axioms over 500 random triples, and the alignment on 300 random pairs. It
+powers spell-checkers, fuzzy search, diff tools, and DNA sequence alignment.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
