@@ -1,0 +1,15 @@
+Van der Pol: x'' - mu(1-x^2)x' + x = 0 -- damping that changes sign with amplitude
+
+      mu   amplitude      period           character
+     0.1        1.41        6.29     near-sinusoidal
+     0.5        2.00        6.38        transitional
+     1.0        2.01        6.66        transitional
+     3.0        2.02        8.86          relaxation
+     5.0        2.02       11.61          relaxation
+
+  The amplitude settles near 2 for every mu -- the limit cycle forgets how it
+  started, whether launched tiny (grows in) or huge (decays in). That self-regulated
+  rhythm is the model for heartbeats, firing neurons, and bowed strings; at large mu
+  it becomes relaxation oscillation, slow charges broken by fast jumps (period ~1.6 mu).
+
+  wrote examples/output\van_der_pol.svg

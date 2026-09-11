@@ -242,6 +242,7 @@ def main():
     import lorenz_demo
     import double_pendulum_demo
     import mandelbrot_demo
+    import van_der_pol_demo
 
     import plot_orbits
 
@@ -453,6 +454,7 @@ def main():
     lorenz_txt = run("lorenz_demo", lorenz_demo.main, True)
     double_pendulum_txt = run("double_pendulum_demo", double_pendulum_demo.main, True)
     mandelbrot_txt = run("mandelbrot_demo", mandelbrot_demo.main, True)
+    van_der_pol_txt = run("van_der_pol_demo", van_der_pol_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2534,6 +2536,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("mandelbrot.svg"), "the set coloured by escape time: black interior, bright fast-escape filaments")
             + f'<div class="card">{pre(mandelbrot_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Van der Pol oscillator: a self-sustaining rhythm",
+            "Unlike a pendulum that dies out, the Van der Pol oscillator x'' - mu(1-x^2)x' + x = 0 "
+            "pumps itself: its damping is negative at small amplitude (energy in) and positive "
+            "at large (energy out), so from almost any start it settles onto the same closed "
+            "loop -- a limit cycle of amplitude ~2 that forgets its initial conditions. It is the "
+            "model for self-regulated rhythms: heartbeats, firing neurons, bowed strings. Small "
+            "mu gives near-sinusoidal oscillation; large mu gives relaxation oscillation -- slow "
+            "charges broken by fast jumps, period ~1.6 mu.",
+            '<div class="grid">'
+            + svg_card(out("van_der_pol.svg"), "two starts spiralling onto the same limit cycle, and the waveform from smooth to spiky")
+            + f'<div class="card">{pre(van_der_pol_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

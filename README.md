@@ -200,6 +200,7 @@ ruins a long non-symplectic integration.
 | `src/lorenz.py` | Lorenz attractor: RK4 flow, volume contraction, fixed points, Lyapunov |
 | `src/double_pendulum.py` | Double pendulum: RK4 equations of motion, energy, chaotic divergence |
 | `src/mandelbrot.py` | Mandelbrot set: escape time, membership, cardioid/bulb tests |
+| `src/van_der_pol.py` | Van der Pol oscillator: limit cycle, amplitude, relaxation period |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -391,6 +392,7 @@ ruins a long non-symplectic integration.
 | `examples/lorenz_demo.py` | Fixed-point/Lyapunov table + the butterfly & trajectory-divergence figure |
 | `examples/double_pendulum_demo.py` | Energy/divergence table + the bob-trace & two-pendulum figure |
 | `examples/mandelbrot_demo.py` | Escape-time table + ASCII view & the escape-time-coloured set |
+| `examples/van_der_pol_demo.py` | Amplitude/period table + the phase-portrait & waveform figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4616,6 +4618,29 @@ every scale, and the real slice `[-2, 1/4]` maps onto the logistic map's period-
 to chaos. The tests reproduce the `z^2+c` step, the in-set interior points (0, -1, -0.5) and
 fast-escaping exterior ones, escape time growing toward the boundary, the exact cardioid and
 period-2-bulb membership, and the partial escaped-fraction of the bounding box.
+
+## The Van der Pol oscillator: a self-sustaining rhythm
+
+A pendulum that pumps itself onto a fixed rhythm. `van_der_pol.py`:
+
+```
+$ python examples/van_der_pol_demo.py examples/output
+
+  mu    amplitude   period    character
+  0.3   2.00        6.4       near-sinusoidal
+  5.0   2.02        11.6      relaxation
+```
+
+The equation `x'' - mu(1-x^2)x' + x = 0` has damping that is *negative* at small amplitude
+(feeding energy in) and *positive* at large (draining it), so from almost any start the system
+settles onto the same closed loop -- a **limit cycle** of amplitude ~2 that forgets its initial
+conditions, unlike a linear oscillator. It is the canonical model of a self-regulated rhythm:
+heartbeats, firing neurons, the circadian clock, a bowed string. Small `mu` gives
+near-sinusoidal oscillation at frequency ~1; large `mu` gives relaxation oscillation -- long
+slow charges broken by fast jumps, period ~`1.614 mu`. Integrated with RK4. The tests verify
+the vector field, amplitude growth from a tiny start, the ~2 limit-cycle amplitude for several
+`mu`, convergence of large and small starts onto the same cycle, the `mu>0` self-sustaining
+condition (and decay to rest for `mu<0`), and the small-`mu` ~2 pi period growing at large mu.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
