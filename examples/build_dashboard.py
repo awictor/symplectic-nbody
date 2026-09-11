@@ -312,6 +312,7 @@ def main():
     import lu_demo
     import gaussian_process_demo
     import bayes_opt_demo
+    import dbscan_demo
 
     import plot_orbits
 
@@ -593,6 +594,7 @@ def main():
     lu_txt = run("lu_demo", lu_demo.main, True)
     gp_txt = run("gaussian_process_demo", gaussian_process_demo.main, True)
     bayes_opt_txt = run("bayes_opt_demo", bayes_opt_demo.main, True)
+    dbscan_txt = run("dbscan_demo", dbscan_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3806,6 +3808,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("bayes_opt.svg"), "the GP surrogate and 2-sigma band over the true function with sampled points and the EI curve, beside the best-so-far convergence outpacing random search")
             + f'<div class="card">{pre(bayes_opt_txt)}</div>'
+            + '</div>'),
+        section(
+            "DBSCAN: density clustering of arbitrary shapes",
+            "k-means and Gaussian mixtures need you to pick k and assume blobby clusters. DBSCAN "
+            "assumes neither: it finds clusters as connected regions of high point density, "
+            "discovers their number automatically, handles arbitrary shapes (interlocking moons, "
+            "concentric rings), and explicitly labels outliers as NOISE instead of forcing every "
+            "point into a cluster. Two parameters set 'dense enough' -- a radius EPS and a count "
+            "MIN_PTS: a CORE point has at least min_pts neighbours within eps, a BORDER point is "
+            "within eps of a core but not itself core, and everything else is NOISE. A cluster "
+            "grows by starting at a core point and flood-filling through core-to-core "
+            "neighbourhoods, so an S-curve is recovered whole where k-means would slice it. This "
+            "module implements DBSCAN with the core/border/noise classification and a k-distance "
+            "helper for choosing eps, verified to separate two interlocking half-moons that k-means "
+            "cannot, flag sparse outliers as noise, discover the cluster count on its own, and "
+            "degenerate sensibly at extreme parameters.",
+            '<div class="grid">'
+            + svg_card(out("dbscan.svg"), "two moons coloured by discovered cluster with noise points marked as grey crosses, and the k-distance graph whose elbow suggests eps")
+            + f'<div class="card">{pre(dbscan_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

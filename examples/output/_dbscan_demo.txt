@@ -1,0 +1,29 @@
+DBSCAN: density-based clustering of arbitrary shapes with noise
+
+  232 points (220 on two interlocking moons + 12 outliers), eps = 0.22, min_pts = 5
+
+  clusters discovered (no k given): 2
+  points flagged as noise:          4
+
+  Point classification:
+      core: 224
+    border: 4
+     noise: 4
+
+  Cluster sizes:
+    cluster 0: 115 points
+    cluster 1: 113 points
+
+  The k-distance graph (sorted distance to the 4th neighbour) -- its elbow marks eps:
+     10th pct: 0.056 ##
+     30th pct: 0.072 ###
+     50th pct: 0.084 ###
+     70th pct: 0.103 ####
+     90th pct: 0.140 ######
+     97th pct: 0.234 #########
+
+  Because it grows clusters by local density instead of distance to a centroid, DBSCAN
+  recovers the crescents as single clusters (k-means would cut each in half), needs no k,
+  and calls sparse points noise instead of forcing them into a cluster.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\dbscan.svg

@@ -270,6 +270,7 @@ ruins a long non-symplectic integration.
 | `src/lu.py` | LU (partial pivot) & Cholesky: solve, determinant, inverse, positive-definite test |
 | `src/gaussian_process.py` | Gaussian process regression: RBF kernel, posterior mean/variance, marginal likelihood |
 | `src/bayes_opt.py` | Bayesian optimization: GP surrogate, Expected Improvement, beats random search |
+| `src/dbscan.py` | DBSCAN density clustering: core/border/noise, arbitrary shapes, auto k, k-distance |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -531,6 +532,7 @@ ruins a long non-symplectic integration.
 | `examples/lu_demo.py` | P A = L U and A = L L' factorizations, multi-RHS solves, SPD test + shaded factor grids |
 | `examples/gaussian_process_demo.py` | GP fit to sparse noisy data: length-scale tuning, 2-sigma confidence band figure |
 | `examples/bayes_opt_demo.py` | BO of a multimodal function: surrogate + EI figure, convergence vs random search |
+| `examples/dbscan_demo.py` | Two moons + outliers: cluster recovery, noise flagging, k-distance elbow figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6409,6 +6411,29 @@ large where the surrogate is both promising and unsure, so maximizing it trades 
 automatically. This module implements EI and the full loop over a bounded domain, verified to locate
 the minima of a 1-D multimodal function (within 0.001 of optimum in 20 evaluations) and the 2-D
 Branin function, and to beat random search at equal budget. Built on the Gaussian-process regressor.
+
+## DBSCAN: density clustering of arbitrary shapes
+
+Find clusters by density, discover k automatically, flag outliers as noise. `dbscan.py`:
+
+```
+$ python examples/dbscan_demo.py examples/output
+
+  232 points (two interlocking moons + 12 outliers), eps 0.22, min_pts 5
+  clusters discovered (no k given): 2;  points flagged as noise: 4
+  classification: 224 core, 4 border, 4 noise
+  k-distance graph elbow marks a good eps
+```
+
+k-means and Gaussian mixtures need you to pick `k` and assume blobby clusters; DBSCAN assumes
+neither. It finds clusters as connected regions of high point density, so interlocking moons or
+concentric rings are recovered whole where k-means would slice them. A **core** point has at least
+`min_pts` neighbours within `eps`, a **border** point is within `eps` of a core but not itself
+core, and everything else is **noise**; a cluster grows by flood-filling through core-to-core
+neighbourhoods. This module implements DBSCAN with the core/border/noise classification and a
+k-distance helper for choosing `eps`, verified to separate two half-moons that k-means cannot, flag
+sparse outliers as noise, discover the cluster count on its own, and degenerate sensibly at extreme
+parameters.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
