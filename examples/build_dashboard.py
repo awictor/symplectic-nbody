@@ -301,6 +301,7 @@ def main():
     import eigen_demo
     import conjugate_gradient_demo
     import svd_demo
+    import kmeans_demo
 
     import plot_orbits
 
@@ -571,6 +572,7 @@ def main():
     eigen_txt = run("eigen_demo", eigen_demo.main, True)
     conjugate_gradient_txt = run("conjugate_gradient_demo", conjugate_gradient_demo.main, True)
     svd_txt = run("svd_demo", svd_demo.main, True)
+    kmeans_txt = run("kmeans_demo", kmeans_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3577,6 +3579,23 @@ def main():
             '<div class="grid">'
             + svg_card(out("svd.svg"), "a tilted data cloud with its PCA principal axes, and the singular-value spectrum")
             + f'<div class="card">{pre(svd_txt)}</div>'
+            + '</div>'),
+        section(
+            "k-means clustering: finding groups in unlabelled data",
+            "Given points and a number k, k-means partitions them so each belongs to the nearest "
+            "centroid, minimizing the total within-cluster squared distance (the inertia). "
+            "Lloyd's algorithm alternates two steps -- assign each point to its nearest centroid, "
+            "then move each centroid to its members' mean -- each of which can only lower the "
+            "inertia, so it converges (to a local minimum). k-means++ seeding spreads the "
+            "initial centres by picking each with probability proportional to its squared "
+            "distance from the nearest chosen one, avoiding bad starts, and a few restarts keep "
+            "the best. The inertia elbow and the silhouette score both flag the natural number "
+            "of clusters. This module implements Lloyd's with random and k-means++ init, "
+            "multi-restart selection, and the silhouette, verified to recover well-separated "
+            "blobs with monotone inertia.",
+            '<div class="grid">'
+            + svg_card(out("kmeans.svg"), "points coloured by recovered cluster with their centroids, and the inertia elbow marking the true k")
+            + f'<div class="card">{pre(kmeans_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

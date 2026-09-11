@@ -259,6 +259,7 @@ ruins a long non-symplectic integration.
 | `src/eigen.py` | Power iteration eigenvalues: Rayleigh quotient, inverse iteration, deflation |
 | `src/conjugate_gradient.py` | Conjugate gradient: iterative SPD solver, Jacobi preconditioning |
 | `src/svd.py` | SVD & PCA: A=USV^T via eigen(A^TA), low-rank approx, principal components |
+| `src/kmeans.py` | k-means clustering: Lloyd's algorithm, k-means++ init, silhouette |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -509,6 +510,7 @@ ruins a long non-symplectic integration.
 | `examples/eigen_demo.py` | Dominant + inverse + full spectrum + the convergence & spectrum figure |
 | `examples/conjugate_gradient_demo.py` | CG vs steepest descent + the residual-decay figure |
 | `examples/svd_demo.py` | SVD + low-rank + PCA + the data-cloud axes & singular-value figure |
+| `examples/kmeans_demo.py` | Cluster recovery + elbow/silhouette + the coloured-clusters & elbow figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6120,6 +6122,29 @@ symmetric eigendecomposition of `A^T A` (reusing the power-iteration eigensolver
 component analysis is SVD of mean-centred data: the top singular vectors are the directions of
 greatest variance. This module computes the thin SVD, low-rank reconstruction, and PCA with
 explained variance, verified by `A = U S V^T`, orthonormality, and the variance ordering.
+
+## k-means clustering: finding groups in unlabelled data
+
+Partition points into k groups. `kmeans.py`:
+
+```
+$ python examples/kmeans_demo.py examples/output
+
+     k     inertia  silhouette
+     3      1105.1       0.652
+     4       102.3       0.851   <- elbow + peak silhouette at the true k
+     5        89.9       0.729
+```
+
+Given points and a number k, k-means partitions them so each belongs to the nearest centroid,
+minimizing the total within-cluster squared distance (the inertia). Lloyd's algorithm alternates
+two steps -- assign each point to its nearest centroid, then move each centroid to its members'
+mean -- each of which can only lower the inertia, so it converges (to a local minimum). k-means++
+seeding spreads the initial centres by picking each with probability proportional to its squared
+distance from the nearest chosen one, and a few restarts keep the best. The inertia elbow and the
+silhouette score both flag the natural cluster count. This module implements Lloyd's with random
+and k-means++ initialization, multi-restart selection, and the silhouette, verified to recover
+well-separated blobs (centroids on the true centres, sizes 30/30/30) with monotone inertia.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

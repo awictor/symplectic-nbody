@@ -1,0 +1,29 @@
+k-means: partition points so each is nearest its cluster's centroid
+
+  160 points, k=4: converged in 3 iterations
+  cluster sizes [40, 40, 40, 40], inertia 102.3, silhouette 0.851
+  centroids: [[11.9, 10.0], [2.0, 2.0], [9.0, 3.0], [4.9, 9.1]]
+
+  Inertia falls every Lloyd iteration (assign, then re-centre):
+    after 1 iter(s): inertia 227.2
+    after 2 iter(s): inertia 102.3  (-124.9)
+    after 3 iter(s): inertia 102.3  (-0.0)
+    after 4 iter(s): inertia 102.3  (-0.0)
+    after 5 iter(s): inertia 102.3  (-0.0)
+    after 6 iter(s): inertia 102.3  (-0.0)
+
+  The 'elbow': inertia vs k drops sharply until the true cluster count, then flattens.
+     k     inertia  silhouette
+     1      4438.1       0.000
+     2      2118.0       0.523
+     3      1105.1       0.652
+     4       102.3       0.851
+     5        89.9       0.729
+     6        80.4       0.597
+     7        69.9       0.483
+
+  The elbow at k=4 and the peak silhouette both flag the true four groups. k-means
+  powers customer segmentation, color quantization, and vector quantization -- and
+  k-means++ seeding spreads the initial centres to avoid Lloyd's bad local minima.
+
+  wrote examples/output\kmeans.svg
