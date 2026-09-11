@@ -359,6 +359,7 @@ def main():
     import simplex_demo
     import minhash_demo
     import cma_es_demo
+    import lbfgs_demo
 
     import plot_orbits
 
@@ -687,6 +688,7 @@ def main():
     simplex_txt = run("simplex_demo", simplex_demo.main, True)
     minhash_txt = run("minhash_demo", minhash_demo.main, True)
     cma_es_txt = run("cma_es_demo", cma_es_demo.main, True)
+    lbfgs_txt = run("lbfgs_demo", lbfgs_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4877,6 +4879,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("cma_es.svg"), "log-scale convergence curves: best fitness plunging toward machine precision as CMA-ES adapts its covariance to each benchmark landscape, versus the near-flat progress of undirected search")
             + f'<div class="card">{pre(cma_es_txt)}</div>'
+            + '</div>'),
+        section(
+            "L-BFGS: limited-memory quasi-Newton optimization",
+            "When a function is smooth and its GRADIENT is available, QUASI-NEWTON methods are the "
+            "fastest general-purpose minimizers. Newton's method rescales the gradient by the inverse "
+            "HESSIAN to account for curvature and converge superlinearly, but forming an n x n Hessian "
+            "costs O(n^2) memory and O(n^3) time. BFGS approximates the inverse Hessian from "
+            "successive gradient differences with no second derivatives; L-BFGS ('limited memory') "
+            "never stores the matrix at all -- it keeps only the last m pairs of (step, "
+            "gradient-change) vectors and reconstructs the inverse-Hessian action on the gradient "
+            "through the elegant TWO-LOOP RECURSION, so memory is O(m n) and each step is O(m n). It "
+            "is the workhorse behind training logistic regression and conditional random fields, "
+            "large-scale maximum likelihood, and countless scientific fits. A line search satisfying "
+            "the Wolfe conditions picks a step that decreases the objective enough without "
+            "overshooting, which also keeps the curvature pairs positive-definite. This module "
+            "implements L-BFGS with the two-loop recursion, a Wolfe line search, and an automatic "
+            "finite-difference gradient fallback, verified on the quadratic bowl, Rosenbrock (2D and "
+            "4D), a shifted optimum, and an ill-conditioned quadratic where it beats gradient descent "
+            "by eighteen orders of magnitude, plus a logistic-regression fit that recovers the "
+            "generating weights -- and its finite-difference gradients match the analytic ones.",
+            '<div class="grid">'
+            + svg_card(out("lbfgs.svg"), "L-BFGS (blue) plunging to machine precision in a few dozen iterations while gradient descent (red) barely dents an ill-conditioned quadratic in the same span")
+            + f'<div class="card">{pre(lbfgs_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

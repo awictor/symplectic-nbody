@@ -317,6 +317,7 @@ ruins a long non-symplectic integration.
 | `src/simplex.py` | Two-phase simplex method for linear programs (Bland's rule, mixed constraints, duality) |
 | `src/minhash.py` | MinHash Jaccard estimation + banded LSH near-duplicate detection (universal hashing) |
 | `src/cma_es.py` | CMA-ES derivative-free optimizer with full covariance adaptation (Jacobi eigensolver) |
+| `src/lbfgs.py` | L-BFGS limited-memory quasi-Newton optimizer (two-loop recursion, Wolfe line search) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -625,6 +626,7 @@ ruins a long non-symplectic integration.
 | `examples/simplex_demo.py` | Production LP with the feasible polytope, objective gradient, and optimal vertex drawn |
 | `examples/minhash_demo.py` | Document near-duplicate detection + the estimate error tracking the 1/sqrt(k) curve |
 | `examples/cma_es_demo.py` | CMA-ES convergence on sphere/Rosenbrock/Rastrigin/ellipsoid vs random search |
+| `examples/lbfgs_demo.py` | L-BFGS vs gradient descent on an ill-conditioned quadratic + a logistic-regression fit |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7552,6 +7554,26 @@ parameters and a self-contained Jacobi eigensolver for the covariance decomposit
 converges to the global optimum of the sphere, Rosenbrock, ill-conditioned ellipsoid, and shifted
 problems to near machine precision, beats random search by many orders under an equal budget, handles
 a rotated anisotropic bowl, and is fully reproducible from a seed.
+
+## L-BFGS: limited-memory quasi-Newton optimization
+
+Newton-like convergence on smooth problems, with O(m n) memory and no stored matrix. `lbfgs.py`:
+
+```
+$ python examples/lbfgs_demo.py examples/output
+
+  Rosenbrock (2D): fx = 2.7e-17 at (1.00000, 1.00000) in 34 iterations
+  ill-conditioned quadratic (cond 1000): L-BFGS 1.3e-18  vs gradient descent 2.19
+  logistic regression: fitted [1.55, -1.77, 0.66] vs true [1.5, -2.0, 0.5], acc 0.85
+```
+
+L-BFGS approximates the action of the inverse Hessian from the last m pairs of (step,
+gradient-change) vectors through the two-loop recursion -- no matrix stored, O(m n) per step -- and a
+Wolfe line search keeps the curvature pairs positive-definite. This module implements it with an
+automatic finite-difference gradient fallback, verified on the quadratic bowl, Rosenbrock (2D/4D), a
+shifted optimum, an ill-conditioned quadratic where it beats gradient descent by eighteen orders of
+magnitude, and a logistic-regression fit that recovers the generating weights, with finite-difference
+gradients matching the analytic ones.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

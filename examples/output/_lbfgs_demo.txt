@@ -1,0 +1,19 @@
+L-BFGS: limited-memory quasi-Newton optimization
+
+  Rosenbrock (2D banana):
+    L-BFGS: fx = 2.745e-17 at (1.00000, 1.00000) in 34 iterations
+
+  Ill-conditioned quadratic (condition number 1000):
+    L-BFGS after 26 evals:          1.343e-18
+    gradient descent after 100 steps:  2.187e+00
+    -> L-BFGS uses curvature to rescale each direction; GD crawls along the stiff axis.
+
+  Logistic regression (300 points):
+    fitted weights [1.55, -1.77, 0.66] vs true [1.5, -2.0, 0.5]
+    training accuracy 0.85 in 10 iterations
+
+  L-BFGS reconstructs the action of the inverse Hessian from the last few (step,
+  gradient-change) pairs via the two-loop recursion -- O(m n) memory, no matrix stored --
+  giving Newton-like convergence on smooth problems that cripple first-order methods.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\lbfgs.svg
