@@ -256,6 +256,7 @@ def main():
     import secretary_demo
     import birthday_demo
     import gamblers_ruin_demo
+    import parrondo_demo
 
     import plot_orbits
 
@@ -481,6 +482,7 @@ def main():
     secretary_txt = run("secretary_demo", secretary_demo.main, True)
     birthday_txt = run("birthday_demo", birthday_demo.main, True)
     gamblers_ruin_txt = run("gamblers_ruin_demo", gamblers_ruin_demo.main, True)
+    parrondo_txt = run("parrondo_demo", parrondo_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2755,6 +2757,21 @@ def main():
             '<div class="grid">'
             + svg_card(out("gamblers_ruin.svg"), "ruin probability vs starting stake for several win rates, and sample walks absorbed at a wall")
             + f'<div class="card">{pre(gamblers_ruin_txt)}</div>'
+            + '</div>'),
+        section(
+            "Parrondo's paradox: two losing games that together win",
+            "Two gambling games, each a sure loser played alone, can be alternated -- or chosen "
+            "at random each round -- to make your capital drift UP. Game A is a slightly-losing "
+            "flat coin; game B flips a terrible coin whenever your capital is a multiple of 3 "
+            "and a good one otherwise, and loses because the walk gets stuck in the bad state "
+            "too often. Mixing in game A reshuffles that state occupancy so the good coin comes "
+            "up more, and the combined drift -- the stationary average of (2p-1) over the "
+            "capital-mod-3 Markov chain -- turns positive. The same flashing-ratchet mechanism "
+            "drives molecular motors, pumping directed motion from noise. Here the exact "
+            "stationary drift is checked against a seeded Monte-Carlo trajectory.",
+            '<div class="grid">'
+            + svg_card(out("parrondo.svg"), "capital rising for the mixture while both games fall, and the winning window in the mixing fraction")
+            + f'<div class="card">{pre(parrondo_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

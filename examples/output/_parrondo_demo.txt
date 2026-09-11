@@ -1,0 +1,14 @@
+Parrondo's paradox: game A loses, game B loses, but A-and-B-mixed WINS
+
+        game   drift/round   sim drift
+     A alone      -0.01000    -0.00681
+     B alone      -0.00870    -0.00763
+   50/50 mix       0.01570     0.01846
+
+  Game A is a slightly-losing flat coin. Game B flips a terrible coin whenever your
+  capital is a multiple of 3 and a good one otherwise -- and loses because the walk
+  gets stuck visiting the bad state too often. Mixing in game A reshuffles that
+  occupancy so the good coin comes up more, and the combined drift turns positive.
+  The same flashing-ratchet trick drives molecular motors: order pumped from noise.
+
+  wrote examples/output\parrondo.svg

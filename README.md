@@ -214,6 +214,7 @@ ruins a long non-symplectic integration.
 | `src/secretary.py` | Secretary problem: 1/e optimal-stopping rule, win probability, Monte-Carlo |
 | `src/birthday.py` | Birthday problem: collision probability, sqrt(d) law, birthday-attack cost |
 | `src/gamblers_ruin.py` | Gambler's ruin: ruin probability & duration, fair/biased, infinite house |
+| `src/parrondo.py` | Parrondo's paradox: two losing games win when mixed, Markov-chain drift |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -419,6 +420,7 @@ ruins a long non-symplectic integration.
 | `examples/secretary_demo.py` | Optimal cutoff vs simulation table + the P(win) curve & 1/e convergence |
 | `examples/birthday_demo.py` | Collision-probability table + the P vs k curve & sqrt(days) crossover |
 | `examples/gamblers_ruin_demo.py` | Ruin vs simulation table + the ruin curves & sample walk paths |
+| `examples/parrondo_demo.py` | Per-game drift vs simulation + capital trajectories & drift-vs-mix curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4981,6 +4983,32 @@ infinite-house limit `(q/p)^i`, and a seeded Monte-Carlo sampler. The tests veri
 `1-i/N` and `i(N-i)` laws, the biased small cases, that the finite ruin approaches the
 infinite-house limit as N grows, and agreement with simulation. The same absorbing-walk math
 models allele fixation in a finite population and sequential hypothesis tests.
+
+## Parrondo's paradox: two losing games that together win
+
+Losing plus losing equals winning. `parrondo.py`:
+
+```
+$ python examples/parrondo_demo.py examples/output
+
+        game   drift/round   sim drift
+     A alone      -0.01000    -0.00681
+     B alone      -0.00870    -0.00763
+   50/50 mix       0.01570     0.01846
+```
+
+Two gambling games, each a sure loser played alone, can be alternated -- or chosen at random
+each round -- to make your capital drift UP. Game A is a slightly-losing flat coin; game B
+flips a terrible coin (win 1/10) whenever your capital is a multiple of 3 and a good one (win
+3/4) otherwise, and loses because the walk gets stuck visiting the bad state too often. Mixing
+in game A reshuffles that state occupancy so the good coin comes up more, and the combined
+drift -- the stationary average of `(2p_s - 1)` over the capital-mod-3 Markov chain -- turns
+positive. This module computes each game's per-state win probabilities, the exact stationary
+distribution by power iteration, the resulting drift, and a seeded Monte-Carlo trajectory. The
+tests verify the stationary distribution is a genuine fixed point, that game B over-visits the
+bad state, that A and B lose while the mix wins (even at eps=0, where both are exactly fair),
+and agreement with simulation. The same flashing-ratchet mechanism drives molecular motors,
+pumping directed motion from noise.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
