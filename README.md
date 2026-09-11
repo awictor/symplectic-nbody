@@ -290,6 +290,7 @@ ruins a long non-symplectic integration.
 | `src/nelder_mead.py` | Nelder-Mead simplex: derivative-free reflect/expand/contract/shrink, restarts |
 | `src/hits.py` | HITS hubs & authorities: mutual-reinforcement power iteration, eigenvector of A'A / AA' |
 | `src/mds.py` | Classical MDS: double-centering, eigen-embedding from distances, Procrustes align |
+| `src/skiplist.py` | Skip list: probabilistic O(log n) ordered map, express lanes, range queries |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -571,6 +572,7 @@ ruins a long non-symplectic integration.
 | `examples/nelder_mead_demo.py` | Rosenbrock simplex crawl + convergence curve, restart refinement, eval scaling |
 | `examples/hits_demo.py` | Hub vs authority rankings on a small web + PageRank comparison, dual graph figure |
 | `examples/mds_demo.py` | Rebuild a city map from a distance table, Procrustes-aligned, + eigenvalue scree |
+| `examples/skiplist_demo.py` | Express-lane tower figure, search-path trace, geometric level histogram |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6904,6 +6906,28 @@ spectrum, and Procrustes-aligns a reconstruction to a known map, verified that i
 a line, and random point sets so their reconstructed distances match, that a flat configuration has
 exactly two positive eigenvalues, and that the stress is essentially zero for Euclidean inputs.
 Built on the eigen module.
+
+## Skip lists: a probabilistic ordered dictionary
+
+Balanced-tree bounds without rotations, using coin flips. `skiplist.py`:
+
+```
+$ python examples/skiplist_demo.py examples/output
+
+  express lanes: L0 has every key, L1 ~half, L2 ~quarter, ...
+  search 21 in 3 forward hops (a level-0 scan would take 7)
+  level distribution over 4000 keys: 49% L0, 26% L1, 13% L2, 6% L3 (geometric)
+```
+
+A skip list is an ordered linked list with express lanes: each node is promoted to the next level
+with probability p (~1/2), so the lanes thin out geometrically and a search drops down from the top,
+skipping far along each level, in O(log n) expected hops -- the same bound as a balanced tree but
+with random splices instead of rotations. Insert picks a random height and links in; delete unlinks;
+no rebalancing. This module implements a skip-list ordered map with insert, search, delete, ordered
+iteration, range queries, and min/max, verified against a brute-force sorted dictionary over 4000
+random operations (every search, deletion, and traversal agrees), that keys iterate sorted, that
+duplicates update rather than duplicate, that range queries return exactly the in-range keys, and
+that the level distribution is geometric as designed.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,38 @@
+Skip list: an ordered map with express lanes for O(log n) search
+
+  10 keys: [3, 6, 7, 9, 12, 17, 19, 21, 25, 26]
+
+  The tower of shortcut lanes (level 0 has every key; higher lanes are sparser):
+    L4:  9
+    L3:  9  12
+    L2:  9  12  19
+    L1:  3   6   9  12  17  19  21  25
+    L0:  3   6   7   9  12  17  19  21  25  26
+
+  Searching for 21 (drop down from the top, skip far, descend):
+    L4: advanced to 9
+    L3: advanced to 12
+    L2: advanced to 19
+    found 21: True in 3 forward hops (a level-0 scan would take up to 7)
+
+  Level distribution over 4000 keys (geometric: ~half promoted each rung):
+    level 0: 1975 (49.4%) #########################
+    level 1: 1019 (25.5%) #############
+    level 2:  516 (12.9%) ######
+    level 3:  238 ( 5.9%) ###
+    level 4:  125 ( 3.1%) ##
+    level 5:   64 ( 1.6%) #
+    level 6:   30 ( 0.8%) 
+    level 7:   14 ( 0.4%) 
+    level 8:   11 ( 0.3%) 
+    level 9:    5 ( 0.1%) 
+    level 10:    1 ( 0.0%) 
+    level 11:    1 ( 0.0%) 
+    level 12:    1 ( 0.0%) 
+
+  Each node is promoted to the next lane by a coin flip, so the lanes thin out
+  geometrically and a search covers the list in O(log n) expected hops -- the same
+  bound as a balanced tree, but with random splices instead of rotations. No
+  rebalancing: insert picks a random height and links in; delete unlinks. (Redis uses it.)
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\skiplist.svg

@@ -332,6 +332,7 @@ def main():
     import nelder_mead_demo
     import hits_demo
     import mds_demo
+    import skiplist_demo
 
     import plot_orbits
 
@@ -633,6 +634,7 @@ def main():
     nelder_mead_txt = run("nelder_mead_demo", nelder_mead_demo.main, True)
     hits_txt = run("hits_demo", hits_demo.main, True)
     mds_txt = run("mds_demo", mds_demo.main, True)
+    skiplist_txt = run("skiplist_demo", skiplist_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4247,6 +4249,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("mds.svg"), "true city positions and the MDS reconstruction Procrustes-aligned on top of them, beside the eigenvalue scree showing two positive dimensions")
             + f'<div class="card">{pre(mds_txt)}</div>'
+            + '</div>'),
+        section(
+            "Skip lists: a probabilistic ordered dictionary",
+            "A balanced binary search tree gives O(log n) search, insert, and delete but needs "
+            "intricate rotations; a SKIP LIST reaches the same expected bounds with almost no "
+            "bookkeeping, using RANDOMNESS instead. It is an ordered linked list with EXPRESS "
+            "LANES: each node is promoted to the next level up with probability p (~1/2), so level "
+            "0 holds every element, level 1 about half, level 2 a quarter -- a tower of sparser and "
+            "sparser shortcut lists. A search drops down from the top lane, skipping far along each "
+            "level before descending, covering the list in O(log n) expected hops. Because "
+            "promotion is a coin flip there are no rotations: insert picks a random height and "
+            "splices in, delete unlinks, and the structure stays probabilistically balanced on its "
+            "own (Redis sorted sets use it). This module implements a skip-list ordered map with "
+            "insert, search, delete, ordered iteration, range queries, and min/max, verified "
+            "against a brute-force sorted dictionary over 4000 random operations (every search, "
+            "deletion, and traversal agrees), that keys iterate sorted, that duplicates update "
+            "rather than duplicate, that range queries return exactly the in-range keys, and that "
+            "the level distribution is geometric as designed.",
+            '<div class="grid">'
+            + svg_card(out("skiplist.svg"), "the skip list drawn as stacked express lanes, taller towers skipping more keys, over the fully-populated level-0 sorted list")
+            + f'<div class="card">{pre(skiplist_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
