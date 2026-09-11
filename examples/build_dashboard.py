@@ -248,6 +248,7 @@ def main():
     import sandpile_demo
     import cellular_automaton_demo
     import game_of_life_demo
+    import reaction_diffusion_demo
 
     import plot_orbits
 
@@ -465,6 +466,7 @@ def main():
     sandpile_txt = run("sandpile_demo", sandpile_demo.main, True)
     cellular_automaton_txt = run("cellular_automaton_demo", cellular_automaton_demo.main, True)
     game_of_life_txt = run("game_of_life_demo", game_of_life_demo.main, True)
+    reaction_diffusion_txt = run("reaction_diffusion_demo", reaction_diffusion_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2625,6 +2627,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("game_of_life.svg"), "the glider's four phases and a mixed board of still life, oscillator, and spaceship")
             + f'<div class="card">{pre(game_of_life_txt)}</div>'
+            + '</div>'),
+        section(
+            "Reaction-diffusion: Turing's spots and stripes",
+            "Turing showed in 1952 that patterns can form from chemistry alone: a slowly "
+            "diffusing self-promoting activator and a fast-diffusing inhibitor make a uniform "
+            "mixture unstable, and it settles into standing spots or stripes with no template. "
+            "The Gray-Scott model du/dt = Du lap(u) - u v^2 + F(1-u), dv/dt = Dv lap(v) + u v^2 "
+            "- (F+k)v produces, depending on the feed F and kill k rates, spots, stripes, mazes, "
+            "self-replicating blobs, or waves -- a working model of morphogenesis behind leopard "
+            "spots and seashell ridges.",
+            '<div class="grid">'
+            + svg_card(out("reaction_diffusion.svg"), "the autocatalyst field growing from a seed into standing Turing spots")
+            + f'<div class="card">{pre(reaction_diffusion_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
