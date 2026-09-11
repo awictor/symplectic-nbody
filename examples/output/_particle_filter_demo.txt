@@ -1,0 +1,21 @@
+Particle filter: sequential Monte-Carlo estimation of a nonlinear system
+
+  50 steps, nonlinear motion x <- x + 0.3 sin(x) + 0.5, noisy position sensor
+
+  mean absolute error vs truth:  raw measurements 0.754
+                                 particle filter  0.293  (61% better)
+
+  Effective sample size (of 500) -- resampling is what stops degeneracy:
+    adaptive resampling:  min ESS 212, 10 resamples
+    NO resampling:        min ESS 1.1 (cloud collapses to ~1 particle)
+
+  More particles, lower error (mean over 3 seeds):
+     20 particles: error 0.333
+    100 particles: error 0.303
+    500 particles: error 0.297
+
+  Unlike the Kalman filter, a particle filter needs no linearity or Gaussian noise --
+  it just pushes a cloud of samples through the true dynamics, reweights by the
+  measurement likelihood, and resamples to concentrate on where the posterior lives.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\particle_filter.svg

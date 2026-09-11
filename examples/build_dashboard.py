@@ -318,6 +318,7 @@ def main():
     import knn_demo
     import gradient_boosting_demo
     import spectral_clustering_demo
+    import particle_filter_demo
 
     import plot_orbits
 
@@ -605,6 +606,7 @@ def main():
     knn_txt = run("knn_demo", knn_demo.main, True)
     gradient_boosting_txt = run("gradient_boosting_demo", gradient_boosting_demo.main, True)
     spectral_txt = run("spectral_clustering_demo", spectral_clustering_demo.main, True)
+    particle_filter_txt = run("particle_filter_demo", particle_filter_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3937,6 +3939,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("spectral_clustering.svg"), "two concentric rings correctly split by spectral clustering, beside the two-eigenvector embedding in which the tangled rings become separable point clouds")
             + f'<div class="card">{pre(spectral_txt)}</div>'
+            + '</div>'),
+        section(
+            "Particle filters: nonlinear, non-Gaussian tracking",
+            "The Kalman filter is optimal but only for LINEAR dynamics with GAUSSIAN noise. When "
+            "the motion or sensor is nonlinear, or the belief is multimodal, its single Gaussian "
+            "breaks. A particle filter drops that assumption: it represents the belief as a CLOUD "
+            "of weighted samples and propagates them through the true, arbitrary dynamics -- "
+            "sequential Monte Carlo. Each step PREDICTS (push every particle through the motion "
+            "model plus noise), WEIGHTS (reweight by the likelihood of the actual measurement), and "
+            "RESAMPLES (draw a new equal-weight set in proportion to the weights, killing unlikely "
+            "particles and duplicating likely ones). Resampling is the crux: without it a few "
+            "particles hoard all the weight (DEGENERACY) and the cloud stops representing the "
+            "posterior. The EFFECTIVE SAMPLE SIZE 1/sum(w^2) measures that, and we resample only "
+            "when it drops below N/2, using low-variance systematic resampling. This module "
+            "implements a generic bootstrap filter with adaptive systematic resampling, verified on "
+            "a nonlinear tracking problem: its estimate beats the raw sensor by ~60%, resampling "
+            "keeps the effective sample size high where a weight-only filter collapses to a single "
+            "particle, and more particles reduce the error. Built with its own Gaussian sampler.",
+            '<div class="grid">'
+            + svg_card(out("particle_filter.svg"), "the particle-filter estimate tracking the nonlinear truth below the noisy sensor, beside the effective sample size staying healthy with resampling and collapsing without it")
+            + f'<div class="card">{pre(particle_filter_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

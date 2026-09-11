@@ -276,6 +276,7 @@ ruins a long non-symplectic integration.
 | `src/knn.py` | k-nearest-neighbours: classify & regress, uniform/distance weights, standardize, LOO CV |
 | `src/gradient_boosting.py` | Gradient boosting: sequential regression trees, squared-error & log-loss, shrinkage |
 | `src/spectral_clustering.py` | Spectral clustering: affinity graph, Laplacian eigenvectors, non-convex shapes |
+| `src/particle_filter.py` | Particle filter: bootstrap SIR, systematic resampling, adaptive ESS, nonlinear tracking |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -543,6 +544,7 @@ ruins a long non-symplectic integration.
 | `examples/knn_demo.py` | Decision boundary jagged at k=1 vs smooth LOO-selected k, regression on a noisy sine |
 | `examples/gradient_boosting_demo.py` | Fit sharpening from 1 to 120 trees + loss curve, learning-rate/n-trees trade |
 | `examples/spectral_clustering_demo.py` | Concentric rings split correctly + the eigenvector embedding that untangles them |
+| `examples/particle_filter_demo.py` | Nonlinear tracking beats raw sensor + ESS collapse-vs-healthy resampling figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6561,6 +6563,31 @@ This module builds the affinity graph and Laplacians, extracts the low eigenvect
 symmetric eigensolver on `cI - L` (turning smallest into largest), and clusters the embedding,
 verified to separate concentric rings and two moons that k-means cannot, and that the Laplacian's
 zero-eigenvalue multiplicity counts the graph's connected components.
+
+## Particle filters: nonlinear, non-Gaussian tracking
+
+Track a cloud of samples where the Kalman filter's single Gaussian breaks. `particle_filter.py`:
+
+```
+$ python examples/particle_filter_demo.py examples/output
+
+  nonlinear motion x <- x + 0.3 sin(x) + 0.5, noisy position sensor
+  mean abs error vs truth:  raw 0.754,  particle filter 0.293 (61% better)
+  effective sample size (of 500): adaptive min 212, no-resampling min 1.1 (collapses)
+  more particles -> lower error
+```
+
+The Kalman filter is optimal only for linear-Gaussian systems; a particle filter drops that,
+representing the belief as a cloud of weighted samples propagated through the true dynamics
+(sequential Monte Carlo). Each step **predicts** (push particles through the motion model plus
+noise), **weights** (by the measurement likelihood), and **resamples** (draw a new equal-weight set
+in proportion to the weights). Resampling is the crux -- without it a few particles hoard the weight
+(degeneracy) and the cloud stops representing the posterior; the effective sample size `1/sum(w^2)`
+measures that, and we resample only when it drops below `N/2` using low-variance systematic
+resampling. This module implements a generic bootstrap filter with adaptive resampling, verified on
+a nonlinear tracking problem: its estimate beats the raw sensor by ~60%, resampling keeps the
+effective sample size high where a weight-only filter collapses to a single particle, and more
+particles reduce the error.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
