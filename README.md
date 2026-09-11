@@ -305,6 +305,7 @@ ruins a long non-symplectic integration.
 | `src/bezier.py` | Bezier curves: de Casteljau, derivative, subdivision, degree elevation, arc length |
 | `src/bwt.py` | Burrows-Wheeler transform + inverse, move-to-front, RLE, the bzip2-style pipeline |
 | `src/arithmetic_coding.py` | Arithmetic coding: integer range coder, renormalization, beats Huffman on skew |
+| `src/sequence_alignment.py` | Needleman-Wunsch & Smith-Waterman: global/local DP, traceback, scoring |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -601,6 +602,7 @@ ruins a long non-symplectic integration.
 | `examples/bezier_demo.py` | Quadratic/cubic curves with control polygons, subdivision, elevation, arc length |
 | `examples/bwt_demo.py` | BWT runniness gain, full pipeline compression, worked banana example |
 | `examples/arithmetic_coding_demo.py` | Bits/symbol vs Huffman vs entropy across distributions, ~49% saving on skew |
+| `examples/sequence_alignment_demo.py` | Global vs local alignments with match rulers + DP-matrix traceback figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7257,6 +7259,28 @@ for the straddle-the-middle case), verified that encode/decode round-trips arbit
 random included), that the code length approaches the entropy, that it beats Huffman's
 one-bit-per-symbol floor on skewed data (~49% smaller at 90% skew), and that it handles
 single-symbol and uniform alphabets.
+
+## Sequence alignment: global and local dynamic programming
+
+Line up two sequences by gaps to maximize matches. `sequence_alignment.py`:
+
+```
+$ python examples/sequence_alignment_demo.py examples/output
+
+  global GCATGCU / GATTACA: score 0, 67% identity, end-to-end with gaps
+  motif GATTACA in different flanks: global score -2, LOCAL isolates it at 100% identity
+  gap penalty steers whether a gap or a mismatch is used
+```
+
+Both algorithms fill a DP matrix where cell (i,j) is the best score aligning the first i and j
+symbols via align / gap-in-a / gap-in-b. **Needleman-Wunsch** aligns end to end (global): borders are
+cumulative gap penalties, the answer is the corner cell. **Smith-Waterman** finds the best-matching
+subsequences (local): scores floor at zero so a bad stretch resets, and the answer traces back from
+the maximum cell -- ideal for a conserved motif inside dissimilar sequences. This module implements
+both with configurable match/mismatch/gap scoring and traceback to the gapped strings, verified that
+identical sequences align perfectly, the global score matches recomputing it from the alignment, a
+local alignment isolates an embedded motif the global one drags flanks into, the gap penalty steers
+gaps vs mismatches, and the score is symmetric.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

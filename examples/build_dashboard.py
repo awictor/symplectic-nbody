@@ -347,6 +347,7 @@ def main():
     import bezier_demo
     import bwt_demo
     import arithmetic_coding_demo
+    import sequence_alignment_demo
 
     import plot_orbits
 
@@ -663,6 +664,7 @@ def main():
     bezier_txt = run("bezier_demo", bezier_demo.main, True)
     bwt_txt = run("bwt_demo", bwt_demo.main, True)
     arithmetic_coding_txt = run("arithmetic_coding_demo", arithmetic_coding_demo.main, True)
+    sequence_alignment_txt = run("sequence_alignment_demo", sequence_alignment_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4582,6 +4584,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("arithmetic_coding.svg"), "bits per symbol for several distributions: arithmetic coding hugging the entropy floor while Huffman rounds up, the gap widest on skewed data")
             + f'<div class="card">{pre(arithmetic_coding_txt)}</div>'
+            + '</div>'),
+        section(
+            "Sequence alignment: global and local dynamic programming",
+            "Aligning two sequences -- lining them up to maximize matching symbols by inserting gaps "
+            "-- is the central operation of bioinformatics, spell-check, and diff tools. Where edit "
+            "distance just counts operations, alignment produces the actual correspondence and a "
+            "SCORE weighting matches, mismatches, and gaps. Both algorithms fill a DP matrix where "
+            "cell (i,j) is the best score aligning the first i and j symbols via three moves "
+            "(align, gap in a, gap in b). NEEDLEMAN-WUNSCH aligns the sequences end to end (global): "
+            "the borders are cumulative gap penalties and the answer is the corner cell. "
+            "SMITH-WATERMAN finds the best-matching SUBSEQUENCES (local): scores are floored at zero "
+            "so a bad stretch resets, and the answer traces back from the maximum cell -- ideal for "
+            "a conserved motif inside dissimilar sequences. Traceback reconstructs the two gapped "
+            "strings. This module implements both with configurable match/mismatch/gap scoring, "
+            "verified that identical sequences align perfectly, that the global score matches "
+            "recomputing it from the alignment, that a local alignment isolates an embedded motif "
+            "the global one drags flanks into, that the gap penalty steers whether gaps or "
+            "mismatches are used, and that the score is symmetric.",
+            '<div class="grid">'
+            + svg_card(out("sequence_alignment.svg"), "the Needleman-Wunsch score matrix as a heatmap with the optimal-alignment traceback path highlighted in yellow")
+            + f'<div class="card">{pre(sequence_alignment_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

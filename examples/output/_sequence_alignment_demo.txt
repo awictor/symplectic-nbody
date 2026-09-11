@@ -1,0 +1,40 @@
+Sequence alignment: global (Needleman-Wunsch) vs local (Smith-Waterman)
+
+  Global alignment of two DNA-like sequences (aligned end to end):
+    GCA-TGCU
+    | | |.|.
+    G-ATTACA
+    score 0, identity 67% (| match, . mismatch, space gap)
+
+  Global alignment of two words (KITTEN vs SITTING):
+    KITTEN-
+    .|||.| 
+    SITTING
+    score 1
+
+  A shared motif GATTACA buried in different flanks:
+    seq A = GGGGGATTACATTTTT
+    seq B = CCGATTACAAA
+
+  GLOBAL alignment drags in the mismatched flanks:
+    GGGGGATTACATTTTT
+      ..|||||||   ..
+    --CCGATTACA---AA
+    global score -2
+
+  LOCAL alignment isolates the conserved motif:
+    GATTACA
+    |||||||
+    GATTACA
+    local score 14, identity 100%
+
+  Gap penalty steers the alignment (AAAA vs ATAA):
+    gap=-1, mismatch=-10: A-AAA / AT-AA  (cheap gaps -> insert a gap)
+    gap=-10, mismatch=-1: AAAA / ATAA  (costly gaps -> keep the mismatch)
+
+  Both fill a DP matrix where cell (i,j) is the best score aligning the first i and j
+  symbols via align / gap-in-a / gap-in-b. Needleman-Wunsch seeds the borders with
+  cumulative gap penalties and reads the corner (global); Smith-Waterman floors scores
+  at zero and starts from the max cell (local). Traceback reconstructs the gapped strings.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\sequence_alignment.svg
