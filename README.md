@@ -272,6 +272,7 @@ ruins a long non-symplectic integration.
 | `src/bayes_opt.py` | Bayesian optimization: GP surrogate, Expected Improvement, beats random search |
 | `src/dbscan.py` | DBSCAN density clustering: core/border/noise, arbitrary shapes, auto k, k-distance |
 | `src/hierarchical.py` | Agglomerative clustering: single/complete/average/Ward linkage, dendrogram, tree cut |
+| `src/naive_bayes.py` | Naive Bayes: Gaussian & multinomial, log-space, Laplace smoothing, class posteriors |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -535,6 +536,7 @@ ruins a long non-symplectic integration.
 | `examples/bayes_opt_demo.py` | BO of a multimodal function: surrogate + EI figure, convergence vs random search |
 | `examples/dbscan_demo.py` | Two moons + outliers: cluster recovery, noise flagging, k-distance elbow figure |
 | `examples/hierarchical_demo.py` | Blobs + dendrogram figure, gap-based k selection, single-vs-complete chaining contrast |
+| `examples/naive_bayes_demo.py` | Gaussian decision regions + multinomial spam filter with per-word log-odds figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6458,6 +6460,28 @@ increase in within-cluster variance, tight and spherical). Merge heights are mon
 the tree has no crossings. This module builds the full dendrogram by the Lance-Williams update and
 cuts it into `k` clusters, verified to recover well-separated blobs with every linkage, climb merge
 heights monotonically, and show single-linkage chaining where complete linkage stays compact.
+
+## Naive Bayes: fast probabilistic classification
+
+A crude independence assumption, a strong baseline. `naive_bayes.py`:
+
+```
+$ python examples/naive_bayes_demo.py examples/output
+
+  Gaussian NB, 3 classes: training accuracy 100%, per-class mean/var/prior recovered
+  posterior matches exact analytic Bayes to 1e-6
+  Multinomial spam filter: log-odds free +2.54, money +1.48, meeting -2.51
+  [free, money, offer] -> spam (P=1.00);  [meeting, report, project] -> ham (P=0.00)
+```
+
+Naive Bayes applies Bayes' theorem assuming features are conditionally independent given the class,
+collapsing a joint distribution into a product of per-feature terms -- training is one counting pass,
+prediction a sum of logs: pick the class maximizing `log P(c) + sum_i log P(x_i | c)`. **Gaussian**
+NB models each continuous feature as a per-class Normal; **multinomial** NB models word counts with
+Laplace add-alpha smoothing so an unseen word never zeroes the product (the classic spam filter).
+This module implements both entirely in log space, verified that the Gaussian model separates blobs
+and matches a hand-computed posterior exactly, that the multinomial model classifies documents and
+its smoothing prevents zero probabilities, and that predicted class-probabilities are normalized.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

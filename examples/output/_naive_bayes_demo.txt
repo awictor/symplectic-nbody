@@ -1,0 +1,36 @@
+Gaussian naive Bayes: continuous features, one Gaussian per class per feature
+
+  105 points, 3 classes, training accuracy 100.0%
+
+  Learned per-class feature statistics:
+    class 0: mean (-0.16, 0.10)  sd (0.52,0.52)  prior 0.33
+    class 1: mean ( 6.06, 1.07)  sd (0.87,0.97)  prior 0.33
+    class 2: mean ( 2.10, 6.05)  sd (0.47,0.46)  prior 0.33
+
+  Posterior class probabilities at a few points:
+    [0.0, 0.0]: c0=1.00, c1=0.00, c2=0.00
+    [3.0, 3.0]: c0=0.00, c1=1.00, c2=0.00
+    [6.0, 1.0]: c0=0.00, c1=1.00, c2=0.00
+
+Multinomial naive Bayes: word counts, a classic spam filter
+
+  8 documents, vocab ['free', 'money', 'offer', 'meeting', 'report', 'project'], training accuracy 100.0%
+
+  Per-word evidence, log P(word|spam) - log P(word|ham) (positive => spammy):
+        free: +2.54 +++++++++++++++
+       money: +1.48 ++++++++
+       offer: +1.48 ++++++++
+     meeting: -2.51 ---------------
+      report: -1.53 ---------
+     project: -1.53 ---------
+
+  Classifying new documents:
+    [free, money, offer] -> spam (P(spam)=1.00)
+    [meeting, report, project] -> ham (P(spam)=0.00)
+    [free, meeting, report] -> ham (P(spam)=0.18)
+
+  The independence assumption is false -- words co-occur -- yet summing per-feature
+  log-evidence gives a fast, strong classifier trained in a single counting pass. It is
+  the baseline every fancier text or tabular model has to beat.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\naive_bayes.svg

@@ -314,6 +314,7 @@ def main():
     import bayes_opt_demo
     import dbscan_demo
     import hierarchical_demo
+    import naive_bayes_demo
 
     import plot_orbits
 
@@ -597,6 +598,7 @@ def main():
     bayes_opt_txt = run("bayes_opt_demo", bayes_opt_demo.main, True)
     dbscan_txt = run("dbscan_demo", dbscan_demo.main, True)
     hierarchical_txt = run("hierarchical_demo", hierarchical_demo.main, True)
+    naive_bayes_txt = run("naive_bayes_demo", naive_bayes_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3848,6 +3850,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("hierarchical.svg"), "points coloured by the three-cluster cut beside the dendrogram whose branch heights are merge distances, with the cut line marked")
             + f'<div class="card">{pre(hierarchical_txt)}</div>'
+            + '</div>'),
+        section(
+            "Naive Bayes: fast probabilistic classification",
+            "Naive Bayes applies Bayes' theorem with one bold simplification -- it assumes the "
+            "features are conditionally independent given the class. That is 'naive' (words and "
+            "pixels are not independent), but it collapses a joint distribution into a product of "
+            "per-feature terms, so training is a single counting pass and prediction a sum of logs. "
+            "The posterior is P(c | x) proportional to P(c) prod_i P(x_i | c); in log space we pick "
+            "the class maximizing log P(c) + sum_i log P(x_i | c). Two flavours differ only in "
+            "P(x_i | c): GAUSSIAN models each continuous feature as a per-class Normal (estimate "
+            "mean and variance), while MULTINOMIAL models word counts with Laplace add-alpha "
+            "smoothing so an unseen word never zeroes the product -- the workhorse of spam filters. "
+            "This module implements both entirely in log space, verified that the Gaussian model "
+            "separates blobs and matches a hand-computed posterior exactly, that the multinomial "
+            "model classifies documents and its smoothing prevents zero probabilities, and that the "
+            "predicted class-probabilities are normalized. Despite the crude assumption it is the "
+            "strong baseline every fancier classifier must beat.",
+            '<div class="grid">'
+            + svg_card(out("naive_bayes.svg"), "the Gaussian decision regions with per-class means, and the multinomial spam filter's per-word log-odds as a diverging bar chart")
+            + f'<div class="card">{pre(naive_bayes_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
