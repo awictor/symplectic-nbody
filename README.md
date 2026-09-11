@@ -289,6 +289,7 @@ ruins a long non-symplectic integration.
 | `src/differential_evolution.py` | Differential evolution DE/rand/1/bin: difference-vector mutation, bound reflection |
 | `src/nelder_mead.py` | Nelder-Mead simplex: derivative-free reflect/expand/contract/shrink, restarts |
 | `src/hits.py` | HITS hubs & authorities: mutual-reinforcement power iteration, eigenvector of A'A / AA' |
+| `src/mds.py` | Classical MDS: double-centering, eigen-embedding from distances, Procrustes align |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -569,6 +570,7 @@ ruins a long non-symplectic integration.
 | `examples/differential_evolution_demo.py` | Benchmark convergence curves, vs random, F sweep, scaling to 20-D |
 | `examples/nelder_mead_demo.py` | Rosenbrock simplex crawl + convergence curve, restart refinement, eval scaling |
 | `examples/hits_demo.py` | Hub vs authority rankings on a small web + PageRank comparison, dual graph figure |
+| `examples/mds_demo.py` | Rebuild a city map from a distance table, Procrustes-aligned, + eigenvalue scree |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6879,6 +6881,29 @@ This module computes HITS by power iteration with the eigenvector check, verifie
 hub-and-spoke graph scores the linker as the hub and the targets as authorities, that scores
 converge and are unit-normalized, that a pure authority has zero hub score and vice versa, and that
 the results match the dominant eigenvectors of `A'A` and `AA'`.
+
+## Classical MDS: a map from a table of distances
+
+Distances in, coordinates out. `mds.py`:
+
+```
+$ python examples/mds_demo.py examples/output
+
+  6 cities, input is only the distance matrix -> recovered layout, stress 2.4e-23
+  eigenvalue scree: 2 positive, rest ~0 -> intrinsic dimension 2
+  Procrustes-aligned reconstruction matches the true map to ~1e-12
+```
+
+Classical (Torgerson) MDS reconstructs coordinates from pairwise distances by **double centering**:
+`B = -1/2 J D2 J` turns the squared-distance matrix into the centered Gram matrix `B = X X'`, and
+eigendecomposing `B = V L V'` gives `X = V L^{1/2}` -- the top eigenvectors scaled by the square
+roots of their eigenvalues, whose sizes report how much shape each dimension carries. The map is
+unique up to rotation, reflection, and translation. This module builds the squared-distance and
+double-centered matrices, extracts the embedding by eigendecomposition, reports the eigenvalue
+spectrum, and Procrustes-aligns a reconstruction to a known map, verified that it recovers a square,
+a line, and random point sets so their reconstructed distances match, that a flat configuration has
+exactly two positive eigenvalues, and that the stress is essentially zero for Euclidean inputs.
+Built on the eigen module.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

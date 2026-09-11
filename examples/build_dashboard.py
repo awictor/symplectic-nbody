@@ -331,6 +331,7 @@ def main():
     import differential_evolution_demo
     import nelder_mead_demo
     import hits_demo
+    import mds_demo
 
     import plot_orbits
 
@@ -631,6 +632,7 @@ def main():
     differential_evolution_txt = run("differential_evolution_demo", differential_evolution_demo.main, True)
     nelder_mead_txt = run("nelder_mead_demo", nelder_mead_demo.main, True)
     hits_txt = run("hits_demo", hits_demo.main, True)
+    mds_txt = run("mds_demo", mds_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4224,6 +4226,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("hits.svg"), "the same web graph drawn twice, node size by hub score (link lists) then by authority score (cited sources), showing the two roles fall on different nodes")
             + f'<div class="card">{pre(hits_txt)}</div>'
+            + '</div>'),
+        section(
+            "Classical MDS: a map from a table of distances",
+            "Given only the pairwise DISTANCES between objects -- cities on a map, dissimilar survey "
+            "responses, aligned sequences -- multidimensional scaling reconstructs COORDINATES whose "
+            "distances match, answering 'where do these sit relative to each other?' from distances "
+            "alone. Classical (Torgerson) MDS solves it in closed form by DOUBLE CENTERING: from the "
+            "squared-distance matrix, B = -1/2 J D2 J turns distances into the centered "
+            "inner-product (Gram) matrix B = X X', and eigendecomposing B = V L V' gives the "
+            "coordinates X = V L^{1/2} -- the top k eigenvectors scaled by the square roots of "
+            "their eigenvalues, with the eigenvalues themselves reporting how much shape each "
+            "dimension carries. The map is unique only up to rotation, reflection, and translation. "
+            "This module builds the squared-distance and double-centered matrices, extracts the "
+            "embedding by eigendecomposition, reports the eigenvalue spectrum, and Procrustes-aligns "
+            "a reconstruction to a known map, verified that it recovers a square, a line, and random "
+            "point sets so their reconstructed distances match, that a flat configuration has "
+            "exactly two positive eigenvalues, and that the stress is essentially zero for Euclidean "
+            "inputs. Built on the eigen module.",
+            '<div class="grid">'
+            + svg_card(out("mds.svg"), "true city positions and the MDS reconstruction Procrustes-aligned on top of them, beside the eigenvalue scree showing two positive dimensions")
+            + f'<div class="card">{pre(mds_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -1,0 +1,40 @@
+Classical MDS: reconstructing a map from a distance table
+
+  6 cities; input is ONLY the 6x6 distance matrix.
+
+  distance table (rounded):
+             A     B     C     D     E     F
+      A   0.00  4.03  6.10  4.47  2.55  3.20
+      B   4.03  0.00  3.16  4.03  4.03  2.12
+      C   6.10  3.16  0.00  3.04  4.61  2.92
+      D   4.47  4.03  3.04  0.00  2.12  2.06
+      E   2.55  4.03  4.61  2.12  0.00  2.06
+      F   3.20  2.12  2.92  2.06  2.06  0.00
+
+  Recovered a 2-D embedding; stress (distance mismatch) = 2.43e-23
+  max pairwise-distance error after reconstruction = 2.86e-12
+
+  Eigenvalue scree (how much 'shape' each axis carries -- flat map => 2 positive):
+    axis 1:   21.283 ##############################
+    axis 2:   10.258 ##############
+    axis 3:    0.000 
+    axis 4:    0.000 
+    axis 5:    0.000 
+    axis 6:   -0.000 
+  -> 2 clearly-positive eigenvalues = intrinsic dimensionality 2
+
+  Procrustes-aligned recovered coordinates vs the true map:
+     city       true (x,y)    recovered (x,y)
+        A  ( 0.00, 0.00)    (-0.00, 0.00)
+        B  ( 4.00, 0.50)    ( 4.00, 0.50)
+        C  ( 5.00, 3.50)    ( 5.00, 3.50)
+        D  ( 2.00, 4.00)    ( 2.00, 4.00)
+        E  ( 0.50, 2.50)    ( 0.50, 2.50)
+        F  ( 2.50, 2.00)    ( 2.50, 2.00)
+
+  Double-centering the squared-distance matrix turns distances into inner products;
+  its top eigenvectors, scaled by sqrt(eigenvalue), are the coordinates. The map is
+  recovered up to rotation, reflection, and translation -- distances fix shape, not
+  orientation -- so Procrustes rotates the reconstruction back onto the known layout.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\mds.svg
