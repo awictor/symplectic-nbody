@@ -312,6 +312,7 @@ ruins a long non-symplectic integration.
 | `src/max_flow.py` | Maximum flow (Edmonds-Karp), min-cut theorem, bipartite matching by reduction |
 | `src/de_bruijn.py` | De Bruijn sequences B(k,n) via Eulerian circuits (Hierholzer); general Eulerian path finder |
 | `src/rotating_calipers.py` | Rotating calipers: diameter, width, minimum-area bounding rectangle from the hull |
+| `src/ternary_search_tree.py` | Ternary search tree: autocomplete, longest-prefix, and '.'-wildcard string search |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -615,6 +616,7 @@ ruins a long non-symplectic integration.
 | `examples/max_flow_demo.py` | Six-node flow network with capacities, min-cut edges highlighted, bipartite matching |
 | `examples/de_bruijn_demo.py` | B(2,3)/B(2,4)/PIN-pad B(10,4) sequences + the B(2,3) De Bruijn graph with Eulerian circuit |
 | `examples/rotating_calipers_demo.py` | Point cloud with hull, diameter, and minimum-area rectangle (rotated box beats the AABB) |
+| `examples/ternary_search_tree_demo.py` | Autocomplete, longest-prefix, and wildcard search on a dictionary + the TST structure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7430,6 +7432,28 @@ verified against brute force: the calipers diameter equals the O(n^2) farthest p
 the brute minimum over hull directions, and the minimum rectangle contains every point and never
 loses to the axis-aligned box, across many random and structured sets plus exact values on squares
 and triangles.
+
+## Ternary search trees: a trie's prefix power at a BST's space
+
+The string map between a trie and a BST. `ternary_search_tree.py`:
+
+```
+$ python examples/ternary_search_tree_demo.py examples/output
+
+  autocomplete 'ca'  -> car, card, care, cat, cats
+  longest_prefix_of 'doghouse' -> 'dog'
+  wildcard 'c.r'     -> car        (. matches any one letter)
+  wildcard '..t'     -> cat, dot
+```
+
+Each node holds one character and three children: left/right for the BST of alternatives at this
+position, and a middle link that advances to the next character (spelling keys, like a trie). So a
+TST keeps the prefix structure and sorted traversal of a trie while spending BST-like space, with no
+wasted k-way arrays for large alphabets. A single three-way comparison drives insert, lookup, prefix
+completion, and -- the trick hash maps can't do cheaply -- '.'-wildcard partial-match search, which
+recurses into all three children at a wildcard position. This module implements insert with values,
+lookup, deletion, sorted iteration, autocomplete, longest-prefix-of, and wildcard search, verified
+against a plain dict and brute force over hundreds of random prefix, wildcard, and deletion queries.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,28 @@
+Ternary search tree: trie prefix power with BST space
+
+  inserted 12 words: cat, cats, car, card, care, dog, do, dodge, dot, day, ape, app
+  stored (sorted): ape, app, car, card, care, cat, cats, day, do, dodge, dog, dot
+
+  Autocomplete (keys_with_prefix):
+    'ca' -> ['car', 'card', 'care', 'cat', 'cats']
+    'do' -> ['do', 'dodge', 'dog', 'dot']
+    'app' -> ['app']
+    'd' -> ['day', 'do', 'dodge', 'dog', 'dot']
+
+  Longest prefix of a query (longest_prefix_of):
+    'cards' -> 'card'
+    'doghouse' -> 'dog'
+    'dotted' -> 'dot'
+    'apex' -> 'ape'
+
+  Wildcard search ('.' matches any one letter):
+    'c.r' -> ['car']
+    'do.' -> ['dog', 'dot']
+    'ca..' -> ['card', 'care', 'cats']
+    '..t' -> ['cat', 'dot']
+
+  Each node holds one character and three children: left/right for the BST of
+  alternatives at this position, and a middle link that advances to the next character
+  (spelling a key, like a trie). One three-way comparison drives every operation.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\ternary_search_tree.svg

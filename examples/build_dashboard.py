@@ -354,6 +354,7 @@ def main():
     import max_flow_demo
     import de_bruijn_demo
     import rotating_calipers_demo
+    import ternary_search_tree_demo
 
     import plot_orbits
 
@@ -677,6 +678,7 @@ def main():
     max_flow_txt = run("max_flow_demo", max_flow_demo.main, True)
     de_bruijn_txt = run("de_bruijn_demo", de_bruijn_demo.main, True)
     rotating_calipers_txt = run("rotating_calipers_demo", rotating_calipers_demo.main, True)
+    ternary_search_tree_txt = run("ternary_search_tree_demo", ternary_search_tree_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4748,6 +4750,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("rotating_calipers.svg"), "a point cloud with its convex hull (green), the diameter as a dashed red farthest-pair line, and the minimum-area bounding rectangle (purple) rotated to hug the cloud")
             + f'<div class="card">{pre(rotating_calipers_txt)}</div>'
+            + '</div>'),
+        section(
+            "Ternary search trees: a trie's prefix power at a BST's space",
+            "A TERNARY SEARCH TREE gives every node one character and THREE children: LEFT for "
+            "characters that sort before it, RIGHT for those after, and a MIDDLE child that advances "
+            "to the next character of the key. Following the middle links spells out a key just like "
+            "a trie, but the alternatives at each position live in a little binary search tree rather "
+            "than a k-way array -- so a TST keeps a trie's prefix structure and sorted traversal "
+            "while spending BST-like space, with no wasted arrays for large alphabets and graceful "
+            "behaviour on sparse key sets. Championed by Bentley and Sedgewick, they are a classic "
+            "backing store for spell-checkers, autocomplete, and prefix routing. A single three-way "
+            "comparison drives every operation: insert and lookup walk left/right on the comparison "
+            "and drop into the middle child on a match; PREFIX COMPLETION enumerates the subtree "
+            "below a prefix in sorted order; and -- the trick hash maps cannot do cheaply -- "
+            "PARTIAL-MATCH search with '.' wildcards recurses into all three children at a wildcard "
+            "position, so 'c.t' finds cat, cot, cut in one pass. This module implements insert with "
+            "values, lookup, deletion, sorted iteration, autocomplete, longest-prefix-of, and "
+            "wildcard search, verified against a plain dict and brute force: exact keys and values, "
+            "truly sorted iteration, prefix completion matching a startswith scan, wildcard search "
+            "matching a regex scan over hundreds of random queries, and dict-like deletion.",
+            '<div class="grid">'
+            + svg_card(out("ternary_search_tree.svg"), "the TST for a small dictionary: green middle links advance to the next character (spelling keys), gray left/right links are the per-position BST, and gold rings mark where a key ends")
+            + f'<div class="card">{pre(ternary_search_tree_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
