@@ -204,6 +204,7 @@ ruins a long non-symplectic integration.
 | `src/duffing.py` | Duffing oscillator: double-well potential, regimes, resonance backbone |
 | `src/kuramoto.py` | Kuramoto model: order parameter, critical coupling, sync transition |
 | `src/sandpile.py` | Abelian sandpile: toppling dynamics, avalanches, self-organized criticality |
+| `src/cellular_automaton.py` | Elementary CA: rule table, evolution, Wolfram rules 30/90/110 |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -399,6 +400,7 @@ ruins a long non-symplectic integration.
 | `examples/duffing_demo.py` | Regime/backbone table + the double-well & resonance-backbone figure |
 | `examples/kuramoto_demo.py` | Synchrony-vs-coupling table + the r(K) transition & phase-circle figure |
 | `examples/sandpile_demo.py` | Topple/avalanche table + the relaxed-pattern & size-distribution figure |
+| `examples/cellular_automaton_demo.py` | Rule-table/class table + the rule-90/30/110 space-time figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4716,6 +4718,28 @@ final stable configuration and total topple count are independent of the order i
 unstable sites relax. The tests verify the single-topple rule, grain conservation (minus edge
 loss), the Abelian order-independence, a symmetric relaxed central stack, and heavy-tailed
 avalanche sizes (max far above the mean).
+
+## Elementary cellular automata: complexity from 8 bits
+
+The simplest computers: a row of cells updated from their neighbours. `cellular_automaton.py`:
+
+```
+$ python examples/cellular_automaton_demo.py examples/output
+
+  rule    table       class / note
+  90      01011010    Sierpinski fractal (XOR of neighbours)
+  30      00011110    chaotic (once Mathematica's RNG)
+  110     01101110    complex, Turing-complete
+```
+
+Each cell's next value depends only on itself and its two neighbours, so with 3 binary inputs
+there are `2^8 = 256` rules, numbered by their 8-bit output tables (Wolfram's convention). From
+that trivial definition come all four Wolfram classes: die to uniform (rule 0), fractal stripes
+(rule 90 draws the Sierpinski triangle by `left XOR right`), chaos indistinguishable from random
+(rule 30), and localized interacting structures (rule 110, proven Turing-complete -- a universal
+computer from an 8-bit lookup). The tests verify the rule-table decoding, rule 90 as XOR and its
+power-of-two Sierpinski populations, rule 0/255 dying/filling, rule 30's aperiodic non-dying
+evolution, and rule 110 sustaining bounded activity.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

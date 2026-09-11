@@ -246,6 +246,7 @@ def main():
     import duffing_demo
     import kuramoto_demo
     import sandpile_demo
+    import cellular_automaton_demo
 
     import plot_orbits
 
@@ -461,6 +462,7 @@ def main():
     duffing_txt = run("duffing_demo", duffing_demo.main, True)
     kuramoto_txt = run("kuramoto_demo", kuramoto_demo.main, True)
     sandpile_txt = run("sandpile_demo", sandpile_demo.main, True)
+    cellular_automaton_txt = run("cellular_automaton_demo", cellular_automaton_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2595,6 +2597,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("sandpile.svg"), "a relaxed self-similar sandpile pattern, and the heavy-tailed avalanche-size distribution")
             + f'<div class="card">{pre(sandpile_txt)}</div>'
+            + '</div>'),
+        section(
+            "Elementary cellular automata: complexity from 8 bits",
+            "A row of 0/1 cells, each updated from itself and its two neighbours -- 2^8 = 256 "
+            "possible rules, and from that trivial definition comes Wolfram's whole zoo: rule 0 "
+            "dies to uniform, rule 90 draws the Sierpinski fractal by XOR, rule 30 is chaotic "
+            "enough to have served as Mathematica's random-number generator, and rule 110 is "
+            "Turing-complete -- a universal computer from an eight-bit lookup table. That "
+            "computation needs almost no ingredients is one of the most surprising results in "
+            "the field.",
+            '<div class="grid">'
+            + svg_card(out("cellular_automaton.svg"), "space-time diagrams of rules 90 (fractal), 30 (chaos), and 110 (complex)")
+            + f'<div class="card">{pre(cellular_automaton_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -1,0 +1,37 @@
+Elementary cellular automata: 256 rules, each an 8-bit lookup on 3 cells
+
+    rule       table                      class / note
+       0    00000000                1: dies to uniform
+      90    01011010       2: Sierpinski fractal (XOR)
+      30    00011110       3: chaotic (used as an RNG)
+     110    01101110       4: complex, Turing-complete
+     184    10111000             2: traffic-flow model
+
+  Rule 90 from a single seed (the Sierpinski triangle):
+                                  #                              
+                                 # #                             
+                                #   #                            
+                               # # # #                           
+                              #       #                          
+                             # #     # #                         
+                            #   #   #   #                        
+                           # # # # # # # #                       
+                          #               #                      
+                         # #             # #                     
+                        #   #           #   #                    
+                       # # # #         # # # #                   
+                      #       #       #       #                  
+                     # #     # #     # #     # #                 
+                    #   #   #   #   #   #   #   #                
+                   # # # # # # # # # # # # # # # #               
+                  #                               #              
+                 # #                             # #             
+                #   #                           #   #            
+               # # # #                         # # # #           
+              #       #                       #       #          
+
+  From the simplest imaginable rule -- one output bit per 3-cell neighbourhood --
+  come fractals (90), chaos indistinguishable from random (30, once Mathematica's
+  RNG), and universal computation (110). Complexity needs almost no ingredients.
+
+  wrote examples/output\cellular_automaton.svg
