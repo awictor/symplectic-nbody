@@ -1,0 +1,25 @@
+Kalman filter: optimal tracking of a hidden state from noisy measurements
+
+  80 steps, position sensor with noise sd = 6.0
+
+  RMSE vs truth:  raw measurements  6.40
+                  Kalman filter     3.52   (45% better than raw)
+                  RTS smoother      2.18   (66% better than raw)
+
+  Estimate variance collapses from 24.0 to a steady 8.60 (measurement variance is 36):
+    step  0: var  24.00 ##############################
+    step  1: var  24.01 ##############################
+    step  2: var  22.51 ############################
+    step  5: var  16.39 ####################
+    step 10: var  11.05 ##############
+    step 40: var   8.60 ###########
+    step 79: var   8.60 ###########
+
+  Velocity is never measured, only inferred: final estimate 3.64 (truth ~3.60).
+
+  Predict pushes the belief through the motion model (variance grows); update folds in
+  a measurement weighted by the Kalman gain (variance shrinks). The fused estimate beats
+  either the model or the sensor alone -- and the backward smoother, using future data,
+  beats the causal filter. This is the math behind GPS, guidance, and sensor fusion.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\kalman.svg

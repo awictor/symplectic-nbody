@@ -307,6 +307,7 @@ def main():
     import random_forest_demo
     import gmm_demo
     import hmm_demo
+    import kalman_demo
 
     import plot_orbits
 
@@ -583,6 +584,7 @@ def main():
     random_forest_txt = run("random_forest_demo", random_forest_demo.main, True)
     gmm_txt = run("gmm_demo", gmm_demo.main, True)
     hmm_txt = run("hmm_demo", hmm_demo.main, True)
+    kalman_txt = run("kalman_demo", kalman_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3696,6 +3698,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("hmm.svg"), "the true hidden fair/loaded path, the Viterbi decode, the posterior P(loaded) ribbon, and the relearned emission distributions")
             + f'<div class="card">{pre(hmm_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Kalman filter: optimal tracking of a hidden state",
+            "Where a hidden Markov model tracks a DISCRETE hidden state, the Kalman filter tracks a "
+            "CONTINUOUS one -- a position and velocity, a trajectory -- from noisy measurements in "
+            "real time, with no growing history. It is the optimal estimator for a linear system "
+            "with Gaussian noise, and the math behind GPS, guidance, and sensor fusion. The world "
+            "is a linear-Gaussian state space: the true state evolves as x <- F x + process noise, "
+            "the sensor reports z = H x + measurement noise. The filter carries a Gaussian belief "
+            "(mean, covariance) and alternates PREDICT (push through the dynamics, uncertainty "
+            "grows) and UPDATE (fold in a measurement weighted by the Kalman gain "
+            "K = P H' (H P H' + R)^-1, uncertainty shrinks). Because both model and sensor are "
+            "noisy, the fused estimate beats either alone -- its variance provably below the "
+            "sensor's -- and a backward RTS smoother, using future data, beats the causal filter. "
+            "This module implements the multivariate filter and smoother with self-contained "
+            "matrix helpers, verified on constant-velocity tracking: error and variance fall below "
+            "the raw measurements', a steady-state gain is reached, a perfect sensor is trusted "
+            "exactly and a useless one ignored, and the smoother improves on the filter.",
+            '<div class="grid">'
+            + svg_card(out("kalman.svg"), "the true track, noisy measurements, filtered and smoothed estimates, and the estimate variance collapsing to a steady state")
+            + f'<div class="card">{pre(kalman_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

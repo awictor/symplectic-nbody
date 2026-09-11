@@ -265,6 +265,7 @@ ruins a long non-symplectic integration.
 | `src/random_forest.py` | Random forest: bagged CART trees, feature subsampling, out-of-bag score |
 | `src/gmm.py` | Gaussian mixture by EM: soft clustering, log-sum-exp, AIC/BIC model selection |
 | `src/hmm.py` | Hidden Markov model: forward, Viterbi decode, forward-backward, Baum-Welch EM |
+| `src/kalman.py` | Kalman filter + RTS smoother: predict/update, Kalman gain, self-contained matrix ops |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -521,6 +522,7 @@ ruins a long non-symplectic integration.
 | `examples/random_forest_demo.py` | Forest vs overfit tree on noisy data: OOB score, importances + boundary figure |
 | `examples/gmm_demo.py` | EM on 3 unequal-spread clusters: recovered params, BIC curve + soft-responsibility figure |
 | `examples/hmm_demo.py` | Dishonest casino: Viterbi decode, posterior P(loaded) ribbon, Baum-Welch relearn + figure |
+| `examples/kalman_demo.py` | Noisy tracking: filter/smoother beat raw measurements, variance-collapse + track figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6274,6 +6276,31 @@ space with log-sum-exp so long sequences never underflow. This module implements
 forward-backward posteriors, and Baum-Welch training, verified that Viterbi recovers a planted
 path, forward and backward agree on the likelihood, and Baum-Welch relearns a known loaded-die
 model with monotone log-likelihood.
+
+## The Kalman filter: optimal tracking of a hidden state
+
+Fuse a motion model with a noisy sensor. `kalman.py`:
+
+```
+$ python examples/kalman_demo.py examples/output
+
+  80 steps, position sensor noise sd = 6.0
+  RMSE vs truth:  raw 6.40,  Kalman filter 3.52 (45% better),  RTS smoother 2.18 (66% better)
+  estimate variance collapses 24.0 -> steady 8.60 (measurement variance 36)
+  velocity never measured, only inferred: final 3.64 (truth ~3.60)
+```
+
+Where an HMM tracks a discrete hidden state, the Kalman filter tracks a continuous one -- position,
+velocity, a trajectory -- optimally for a linear-Gaussian system, and it is the math behind GPS and
+sensor fusion. The world is `x <- F x + process noise`, `z = H x + measurement noise`; the filter
+carries a Gaussian belief and alternates **predict** (push through the dynamics, uncertainty grows)
+and **update** (fold in a measurement weighted by the Kalman gain `K = P H' (H P H' + R)^-1`,
+uncertainty shrinks). The fused estimate beats either model or sensor alone -- variance provably
+below the sensor's -- and a backward RTS smoother, using future data, beats the causal filter. This
+module implements the multivariate filter and smoother with self-contained matrix helpers, verified
+on constant-velocity tracking: error and variance fall below the raw measurements', a steady-state
+gain is reached, a perfect sensor is trusted exactly and a useless one ignored, and the smoother
+improves on the filter.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
