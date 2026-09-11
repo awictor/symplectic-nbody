@@ -349,6 +349,7 @@ def main():
     import arithmetic_coding_demo
     import sequence_alignment_demo
     import string_matching_demo
+    import suffix_array_demo
 
     import plot_orbits
 
@@ -667,6 +668,7 @@ def main():
     arithmetic_coding_txt = run("arithmetic_coding_demo", arithmetic_coding_demo.main, True)
     sequence_alignment_txt = run("sequence_alignment_demo", sequence_alignment_demo.main, True)
     string_matching_txt = run("string_matching_demo", string_matching_demo.main, True)
+    suffix_array_txt = run("suffix_array_demo", suffix_array_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4628,6 +4630,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("string_matching.svg"), "the KMP prefix-function bars over a pattern and the pattern's occurrences highlighted within the text")
             + f'<div class="card">{pre(string_matching_txt)}</div>'
+            + '</div>'),
+        section(
+            "Suffix arrays: a compact string index",
+            "A suffix array is the sorted order of all SUFFIXES of a string, stored as their start "
+            "indices -- packing almost everything a suffix TREE offers (fast substring search, "
+            "longest-repeated-substring, longest-common-substring) into a single length-n integer "
+            "array, which is why it underlies full-text search, bioinformatics indices, and the "
+            "bzip2 family. Once built, 'does pattern P occur?' is a BINARY SEARCH over the sorted "
+            "suffixes in O(m log n), and every occurrence is a contiguous run. It is built here by "
+            "PREFIX DOUBLING (sort by the first 1, 2, 4, ... characters using previous ranks as "
+            "keys, O(n log^2 n)), and the companion LCP ARRAY (longest common prefix of adjacent "
+            "sorted suffixes) is built in O(n) by KASAI's algorithm -- the largest LCP value is the "
+            "longest repeated substring. This module builds the suffix array, the LCP array, "
+            "substring search, longest repeated substring, and longest common substring, verified "
+            "that the suffix array is the true sorted order (checked against a brute-force sort over "
+            "150 strings), that search finds exactly the same occurrences as a scan, that the LCP "
+            "array matches the direct prefix computation, and that the longest repeated and common "
+            "substrings match brute force.",
+            '<div class="grid">'
+            + svg_card(out("suffix_array.svg"), "the sorted suffixes of a string with their LCP bars, the largest bar marking the longest repeated substring")
+            + f'<div class="card">{pre(suffix_array_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

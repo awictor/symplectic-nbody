@@ -307,6 +307,7 @@ ruins a long non-symplectic integration.
 | `src/arithmetic_coding.py` | Arithmetic coding: integer range coder, renormalization, beats Huffman on skew |
 | `src/sequence_alignment.py` | Needleman-Wunsch & Smith-Waterman: global/local DP, traceback, scoring |
 | `src/string_matching.py` | KMP prefix function, Z-algorithm, Manacher longest palindrome, linear-time |
+| `src/suffix_array.py` | Suffix array (prefix doubling) + LCP (Kasai): search, longest repeated/common substring |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -605,6 +606,7 @@ ruins a long non-symplectic integration.
 | `examples/arithmetic_coding_demo.py` | Bits/symbol vs Huffman vs entropy across distributions, ~49% saving on skew |
 | `examples/sequence_alignment_demo.py` | Global vs local alignments with match rulers + DP-matrix traceback figure |
 | `examples/string_matching_demo.py` | Prefix function, KMP/Z/brute agreement, overlapping matches, Manacher palindromes |
+| `examples/suffix_array_demo.py` | Sorted-suffix + LCP table, binary-search patterns, longest repeated/common substring |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7305,6 +7307,28 @@ Z-array and Z-based search, and Manacher's palindrome, verified that KMP and Z f
 overlapping occurrences as brute force across 400 random strings, that the prefix function matches
 its definition, and that Manacher's palindrome matches brute-force length across 100 strings and the
 known cases.
+
+## Suffix arrays: a compact string index
+
+A suffix tree's power in one length-n array. `suffix_array.py`:
+
+```
+$ python examples/suffix_array_demo.py examples/output
+
+  suffix array + LCP of 'mississippi'; 'issi' occurs at [1, 4] by binary search
+  longest repeated substring = 'issi' (the largest LCP value)
+  longest common substring of 'dogandcat' & 'thecatsat' = 'cat'
+```
+
+A suffix array is the sorted order of all suffixes, stored as start indices, so substring search is
+a binary search in O(m log n) and every occurrence is a contiguous run. It is built by prefix
+doubling (sort by the first 1, 2, 4, ... characters using previous ranks, O(n log^2 n)); the LCP
+array (longest common prefix of adjacent sorted suffixes) is built in O(n) by Kasai, and its largest
+value is the longest repeated substring. This module builds the suffix array, the LCP array,
+substring search, and the longest repeated and common substrings, verified that the suffix array is
+the true sorted order (checked against a brute-force sort over 150 strings), that search finds
+exactly the same occurrences as a scan, that the LCP array matches the direct prefix computation,
+and that the longest repeated and common substrings match brute force.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
