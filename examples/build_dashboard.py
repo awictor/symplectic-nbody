@@ -352,6 +352,7 @@ def main():
     import suffix_array_demo
     import quadtree_demo
     import max_flow_demo
+    import de_bruijn_demo
 
     import plot_orbits
 
@@ -673,6 +674,7 @@ def main():
     suffix_array_txt = run("suffix_array_demo", suffix_array_demo.main, True)
     quadtree_txt = run("quadtree_demo", quadtree_demo.main, True)
     max_flow_txt = run("max_flow_demo", max_flow_demo.main, True)
+    de_bruijn_txt = run("de_bruijn_demo", de_bruijn_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4698,6 +4700,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("max_flow.svg"), "the six-node network with edge capacities; the minimum-cut edges (the bottleneck that equals the max flow) drawn in red")
             + f'<div class="card">{pre(max_flow_txt)}</div>'
+            + '</div>'),
+        section(
+            "De Bruijn sequences: every window exactly once, via Eulerian circuits",
+            "A DE BRUIJN SEQUENCE B(k, n) is a cyclic string over a k-symbol alphabet in which every "
+            "one of the k**n possible length-n strings appears EXACTLY ONCE as a wrapped substring -- "
+            "a single string of length k**n that packs all k**n windows with zero waste. They are the "
+            "mathematics behind absolute rotary shaft encoders (read n adjacent tracks to know the "
+            "angle), the shortest string that brute-forces every PIN, card tricks, and de novo genome "
+            "assembly from overlapping k-mers. The construction is a gem: build the DE BRUIJN GRAPH "
+            "whose vertices are the k**(n-1) shorter strings and whose edges are the k**n windows, "
+            "then find an EULERIAN CIRCUIT -- a closed walk using every edge once. Because every "
+            "vertex has equal in- and out-degree, one always exists, and HIERHOLZER'S ALGORITHM finds "
+            "it in linear time by splicing detour cycles wherever unused edges remain. Reading the "
+            "appended symbol along the circuit yields the sequence. This module builds B(k, n) for "
+            "any parameters, offers the greedy prefer-largest 'Ford' construction, and exposes a "
+            "general Eulerian path/circuit finder for arbitrary directed multigraphs, verified that "
+            "every window appears exactly once (a bijection onto all k**n strings), that lengths are "
+            "exactly k**n, that B(2,3) matches the classic example, that the greedy sequence is also "
+            "valid, and that the Eulerian finder recovers a circuit using each edge once and rejects "
+            "graphs where none exists.",
+            '<div class="grid">'
+            + svg_card(out("de_bruijn.svg"), "the De Bruijn graph for B(2,3): four two-bit vertices, edges labelled by three-bit strings; an Eulerian circuit that uses every edge once reads off the sequence")
+            + f'<div class="card">{pre(de_bruijn_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

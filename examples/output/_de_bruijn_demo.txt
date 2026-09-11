@@ -1,0 +1,30 @@
+De Bruijn sequences: every length-n window exactly once
+
+  B(2,3) = 01011100   (length 8 = 2^3)
+  its 8 cyclic windows (each binary triple exactly once):
+    010
+    101
+    011
+    111
+    110
+    100
+    000
+    001
+  is a valid De Bruijn sequence: True
+
+  B(2,4) = 0100110101111000   (length 16 = 2^4)
+  all 16 nibbles appear once: True
+
+  B(10,4): the shortest cyclic string containing all 10000 four-digit PINs
+    length 10000 (vs 40000 keypresses to type each PIN separately)
+    first 40 digits: 0100020003000400050006000700080009001100...
+    every PIN appears exactly once: True
+
+  B(2,6): a 64-position absolute rotary encoder track
+    reading any 6 adjacent bits gives a unique angle: True
+
+  Each sequence is an Eulerian circuit of the De Bruijn graph: vertices are the
+  (n-1)-length strings, edges are the n-length strings, and every vertex has equal in-
+  and out-degree, so Hierholzer's cycle-splicing finds a walk using every edge once.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\de_bruijn.svg

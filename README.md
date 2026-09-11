@@ -310,6 +310,7 @@ ruins a long non-symplectic integration.
 | `src/suffix_array.py` | Suffix array (prefix doubling) + LCP (Kasai): search, longest repeated/common substring |
 | `src/quadtree.py` | Point-region quadtree: rectangle/circle range queries, nearest neighbour |
 | `src/max_flow.py` | Maximum flow (Edmonds-Karp), min-cut theorem, bipartite matching by reduction |
+| `src/de_bruijn.py` | De Bruijn sequences B(k,n) via Eulerian circuits (Hierholzer); general Eulerian path finder |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -611,6 +612,7 @@ ruins a long non-symplectic integration.
 | `examples/suffix_array_demo.py` | Sorted-suffix + LCP table, binary-search patterns, longest repeated/common substring |
 | `examples/quadtree_demo.py` | Point cloud with adaptive cell boundaries + rectangle/circle/nearest queries |
 | `examples/max_flow_demo.py` | Six-node flow network with capacities, min-cut edges highlighted, bipartite matching |
+| `examples/de_bruijn_demo.py` | B(2,3)/B(2,4)/PIN-pad B(10,4) sequences + the B(2,3) De Bruijn graph with Eulerian circuit |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7381,6 +7383,28 @@ super-sink from every right, unit capacities, and the max flow is the matching s
 hits the textbook flow of 23, that the min-cut capacity equals the flow, that conservation and
 capacity constraints hold, that residual rerouting beats the greedy trap, and that matching-by-flow
 equals a direct augmenting-path matching over 40 random graphs.
+
+## De Bruijn sequences: every window exactly once, via Eulerian circuits
+
+The shortest cyclic string containing every length-n window. `de_bruijn.py`:
+
+```
+$ python examples/de_bruijn_demo.py examples/output
+
+  B(2,3) = 01011100   (length 8 = 2^3; all 8 binary triples appear once)
+  B(10,4): 10000 digits contain all 10000 four-digit PINs, each once
+  B(2,6):  a 64-position absolute rotary encoder track
+```
+
+A De Bruijn sequence B(k, n) packs all k**n length-n strings into one cyclic string of length k**n
+with zero waste -- the maths behind rotary encoders, PIN brute-forcing, card tricks, and genome
+assembly. Build the De Bruijn graph (vertices = length-(n-1) strings, edges = length-n windows) and
+find an Eulerian circuit; every vertex has equal in- and out-degree so one exists, and Hierholzer's
+algorithm splices detour cycles to use every edge once in linear time. This module builds B(k,n) for
+any parameters, offers the greedy 'Ford' construction, and a general Eulerian path/circuit finder for
+directed multigraphs, verified that every window appears exactly once, that lengths are exactly k**n,
+that B(2,3) matches the classic example, that the greedy sequence is valid, and that the Eulerian
+finder recovers a circuit using each edge once and rejects graphs where none exists.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
