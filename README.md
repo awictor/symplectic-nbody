@@ -285,6 +285,7 @@ ruins a long non-symplectic integration.
 | `src/lru_cache.py` | LRU & LFU caches: O(1) get/put via hash map + linked list / frequency buckets |
 | `src/trie.py` | Trie: O(len) insert/search/prefix, autocomplete, delete-with-pruning, suffix index |
 | `src/sorting.py` | Comparison sorts: insertion/merge/quick/heap + binary heap, stability, comparison counts |
+| `src/newton_nd.py` | Newton's method in n-D: Jacobian (analytic/finite-diff), damping, Broyden, LU step |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -561,6 +562,7 @@ ruins a long non-symplectic integration.
 | `examples/lru_cache_demo.py` | LRU eviction trace + LRU-vs-LFU hit rates across uniform/skewed/looping workloads |
 | `examples/trie_demo.py` | Autocomplete (alpha + frequency-ranked), longest-prefix, substring index + tree figure |
 | `examples/sorting_demo.py` | Comparison-count scaling (log-log), stability contrast, heap priority queue |
+| `examples/newton_nd_demo.py` | Quadratic convergence curve, damping rescue, Broyden, 3-variable system |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6782,6 +6784,29 @@ duplicate-heavy inputs, that merge and insertion are stable while quick and heap
 comparison counts scale as O(n log n) for the good sorts and O(n^2) for insertion, that
 median-of-three keeps quick sort fast on its sorted/reverse adversaries, and that the heap is a
 correct priority queue.
+
+## Newton's method in n dimensions: solving nonlinear systems
+
+The multivariate root-finder: `J(x) delta = -F(x)`. `newton_nd.py`:
+
+```
+$ python examples/newton_nd_demo.py examples/output
+
+  x^2+y^2=4, y=x -> (sqrt2, sqrt2) in 5 steps; residual 2.9e-2 -> 5.3e-5 -> 1.7e-10 (quadratic)
+  arctan from x0=5: plain Newton diverges, damped converges to 0
+  3-variable system (sum 6, sq-sum 14, product 6) -> (1, 2, 3)
+```
+
+In n dimensions the derivative becomes the Jacobian and the division becomes solving a linear
+system `J(x) delta = -F(x)`, then `x <- x + delta`. Each step linearizes at the current point and
+jumps to that model's root; near a solution the error squares each iteration (quadratic
+convergence). When the analytic Jacobian is unavailable it is approximated by finite differences;
+because plain Newton can overshoot far from a root, a damped line search backtracks until the
+residual decreases; and a Broyden quasi-Newton mode updates a Jacobian approximation instead of
+recomputing it. This module implements all three, each solving the linear step via LU with partial
+pivoting, verified on a circle-line intersection and the Rosenbrock stationary point, that
+convergence is quadratic, that the finite-difference Jacobian matches an analytic one, that damping
+rescues a start where plain Newton diverges, and that Broyden converges too. Built on the LU solver.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

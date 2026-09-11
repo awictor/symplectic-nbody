@@ -327,6 +327,7 @@ def main():
     import lru_cache_demo
     import trie_demo
     import sorting_demo
+    import newton_nd_demo
 
     import plot_orbits
 
@@ -623,6 +624,7 @@ def main():
     lru_cache_txt = run("lru_cache_demo", lru_cache_demo.main, True)
     trie_txt = run("trie_demo", trie_demo.main, True)
     sorting_txt = run("sorting_demo", sorting_demo.main, True)
+    newton_nd_txt = run("newton_nd_demo", newton_nd_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4134,6 +4136,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("sorting.svg"), "comparison counts vs input size on a log-log plot, insertion's O(n^2) slope pulling away from the parallel O(n log n) lines of merge, quick, and heap")
             + f'<div class="card">{pre(sorting_txt)}</div>'
+            + '</div>'),
+        section(
+            "Newton's method in n dimensions: solving nonlinear systems",
+            "One-dimensional Newton iterates x <- x - f/f'; in n dimensions the derivative becomes "
+            "the JACOBIAN matrix and the division becomes solving a linear system J(x) delta = "
+            "-F(x), then x <- x + delta. Each step linearizes the system at the current point, jumps "
+            "to that linear model's root, and repeats -- and near a solution it converges "
+            "QUADRATICALLY, the number of correct digits roughly doubling each step. It is the "
+            "engine inside circuit simulation, inverse kinematics, chemical equilibrium, and "
+            "optimization. When the analytic Jacobian is unavailable it is approximated by finite "
+            "differences; because plain Newton can overshoot and diverge far from a root, a damped "
+            "line search backtracks the step until the residual actually decreases for global "
+            "robustness; and a Broyden quasi-Newton mode updates a Jacobian approximation instead "
+            "of recomputing it. This module implements all three, each solving the linear step via "
+            "LU with partial pivoting, verified on a circle-line intersection and the Rosenbrock "
+            "stationary point, that convergence is quadratic near the root, that the "
+            "finite-difference Jacobian matches an analytic one, that damping rescues a start where "
+            "plain Newton diverges (arctan from far out), and that Broyden converges too.",
+            '<div class="grid">'
+            + svg_card(out("newton_nd.svg"), "the residual norm plunging near-vertically for Newton (quadratic convergence) and a few steps slower for Broyden, on a log scale")
+            + f'<div class="card">{pre(newton_nd_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
