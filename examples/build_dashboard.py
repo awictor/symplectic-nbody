@@ -292,6 +292,7 @@ def main():
     import welford_demo
     import kahan_demo
     import horner_demo
+    import rootfind_demo
 
     import plot_orbits
 
@@ -553,6 +554,7 @@ def main():
     welford_txt = run("welford_demo", welford_demo.main, True)
     kahan_txt = run("kahan_demo", kahan_demo.main, True)
     horner_txt = run("horner_demo", horner_demo.main, True)
+    rootfind_txt = run("rootfind_demo", rootfind_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3409,6 +3411,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("horner.svg"), "the multiplication count (Horner n vs direct 2n) and Newton's quadratic convergence to a root")
             + f'<div class="card">{pre(horner_txt)}</div>'
+            + '</div>'),
+        section(
+            "Bracketing root-finders: bisection, secant, false position, Brent",
+            "Newton is fast but can diverge; when you have a bracket [a, b] where f changes sign, "
+            "bracketing methods guarantee convergence. Bisection halves the interval each step "
+            "(foolproof, linear -- one bit per iteration); the secant method fits a line through "
+            "the last two points (superlinear, order ~1.618, but not guaranteed); false position "
+            "keeps the secant inside the bracket (safe and faster than bisection); and Brent's "
+            "method combines bisection's safety with inverse quadratic interpolation's speed, "
+            "falling back to bisection when the fast step misbehaves -- which is why it is the "
+            "default root-finder in most numerical libraries. This module implements all four "
+            "with a shared bracket interface plus a sign-change scanner, verified against roots "
+            "of polynomials and transcendentals and checked to agree.",
+            '<div class="grid">'
+            + svg_card(out("rootfind.svg"), "the error per iteration on log scale: bisection's steady linear slope against the secant method's steepening superlinear one")
+            + f'<div class="card">{pre(rootfind_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

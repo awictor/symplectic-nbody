@@ -1,0 +1,21 @@
+Root-finding: four bracketing methods on x^2 - 2 = 0 (root = sqrt 2)
+
+            method              root  iters       error
+         bisection    1.414213562372     41     6.7e-13
+    false position    1.414213562373     17     2.7e-13
+             Brent    1.414213562373     26     0.0e+00
+            secant    1.414213562373      8     2.2e-16
+
+  Brent on transcendental equations (no closed form):
+       cos x = x: x = 0.7390851332  (8 iters)
+        x = e^-x: x = 0.5671432904  (6 iters)
+      e^x = 3x+1: x = 1.9038136944  (11 iters)
+
+  Locating every root by scanning for sign changes, then refining with Brent:
+    x^3 - 6x^2 + 11x - 6  ->  [1.0, 2.0, 3.0]
+
+  Bisection is foolproof but linear (one bit per step); secant is fast but can
+  fail; Brent takes the fast interpolation step when it is safe and bisects when it
+  is not -- guaranteed convergence at near-secant speed, the default in most libraries.
+
+  wrote examples/output\rootfind.svg

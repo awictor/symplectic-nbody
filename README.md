@@ -250,6 +250,7 @@ ruins a long non-symplectic integration.
 | `src/welford.py` | Welford online mean/variance: one stable pass, higher moments, mergeable |
 | `src/kahan.py` | Kahan/Neumaier compensated summation: bounded error, pairwise sum, dot product |
 | `src/horner.py` | Horner's method: O(n) polynomial eval, synthetic division, Newton roots |
+| `src/rootfind.py` | Bracketing root-finders: bisection, secant, false position, Brent |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -491,6 +492,7 @@ ruins a long non-symplectic integration.
 | `examples/welford_demo.py` | Running stats + naive-vs-Welford offset table + the convergence figure |
 | `examples/kahan_demo.py` | Error-vs-n table + cancellation case + the error-growth figure |
 | `examples/horner_demo.py` | Eval + synthetic division + roots + the op-count & Newton-convergence figure |
+| `examples/rootfind_demo.py` | Method comparison + transcendental roots + the convergence-rate figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5900,6 +5902,29 @@ free, which makes Horner the engine of Newton's method for polynomial roots. Thi
 evaluates by Horner, does synthetic division and derivatives, and finds real roots by Newton
 refinement plus deflation, verified against direct power-sum evaluation over 2000 random
 polynomials and by substituting the roots back.
+
+## Bracketing root-finders: bisection, secant, false position, Brent
+
+Guaranteed convergence when you have a bracket. `rootfind.py`:
+
+```
+$ python examples/rootfind_demo.py examples/output
+
+            method              root  iters       error
+         bisection    1.414213562372     41     6.7e-13
+             Brent    1.414213562373     26     0.0e+00
+            secant    1.414213562373      8     2.2e-16
+```
+
+Newton is fast but can diverge; when you have a bracket `[a, b]` where f changes sign, these
+methods guarantee convergence. Bisection halves the interval each step (foolproof, linear -- one
+bit per iteration); the secant method fits a line through the last two points (superlinear, order
+~1.618, but not guaranteed); false position keeps the secant inside the bracket (safe and faster
+than bisection); and Brent combines bisection's safety with inverse quadratic interpolation's
+speed, falling back to bisection when the fast step misbehaves -- the default root-finder in most
+numerical libraries. This module implements all four with a shared bracket interface plus a
+sign-change scanner, verified against roots of polynomials (1, 2, 3) and transcendentals
+(cos x = x, x = e^-x) and checked to agree.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
