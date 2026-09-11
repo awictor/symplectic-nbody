@@ -1,0 +1,39 @@
+Flood fill: paint bucket, region growing, connected components
+
+  Canvas (# = wall, . = empty):
+    ........
+    .#####..
+    .#...#..
+    .#...##.
+    .###..#.
+    ...####.
+    ........
+
+  Paint-bucket from inside the wall (8 cells filled, ~ = paint):
+    ........
+    .#####..
+    .#~~~#..
+    .#~~~##.
+    .###~~#.
+    ...####.
+    ........
+  The fill stays inside the wall -- the barrier is respected.
+
+  Filling the OUTER region by three strategies: queue 30, stack 30, scanline 30 cells -- all identical: True
+
+  Connected components of a value grid:
+    4-connectivity: 8 components, sizes [1, 2, 3, 3, 3, 3, 3, 7]
+    8-connectivity: 6 components (diagonal touches merge some)
+
+  A diagonal chain of 1s:
+    #..
+    .#.
+    ..#
+    region size from a corner: 4-conn = 1 (isolated), 8-conn = 3 (all three joined)
+
+  Flood fill spreads from a seed to same-valued neighbours until it meets a boundary.
+  The scanline variant paints whole horizontal runs at once, seeding only the rows above
+  and below -- far fewer stack operations on big flat regions. Run it from every
+  unlabeled cell and you get connected-component labeling, the atom of image analysis.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\flood_fill.svg

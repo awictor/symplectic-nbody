@@ -301,6 +301,7 @@ ruins a long non-symplectic integration.
 | `src/polygon_clip.py` | Sutherland-Hodgman polygon clipping against a convex window, area |
 | `src/marching_squares.py` | Marching squares: iso-contour extraction from a scalar grid, 16-case + interpolation |
 | `src/bresenham.py` | Bresenham rasterization: integer-only line, midpoint circle, filled disk |
+| `src/flood_fill.py` | Flood fill: queue/stack/scanline, 4/8-connectivity, connected-component labeling |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -593,6 +594,7 @@ ruins a long non-symplectic integration.
 | `examples/polygon_clip_demo.py` | Concave polygon clipped to rectangle/triangle/diamond windows + overlay figure |
 | `examples/marching_squares_demo.py` | Circular contours of a radial field + Gaussian-terrain iso-lines figure |
 | `examples/bresenham_demo.py` | ASCII line-fan and circle rasterization, sub-pixel accuracy, circumference scaling |
+| `examples/flood_fill_demo.py` | Paint-bucket inside a wall, three strategies agree, connected components + connectivity |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7161,6 +7163,28 @@ implements line drawing, the midpoint circle, and a filled disk, verified that a
 endpoints, is 8-connected, stays within half a pixel of the true line, is symmetric under reversal,
 and handles every octant, and that a circle's pixels lie within half a pixel of the true radius with
 8-fold symmetry and a count tracking the circumference.
+
+## Flood fill: paint bucket, region growing, connected components
+
+Which cells are reachable through a same-valued region? `flood_fill.py`:
+
+```
+$ python examples/flood_fill_demo.py examples/output
+
+  paint-bucket inside a wall: 8 cells filled, barrier respected
+  queue / stack / scanline strategies fill identically
+  checkerboard: 9 components under 4-connectivity, 2 under 8; diagonal chain 1 vs 3
+```
+
+From a seed, flood fill spreads to same-valued neighbours until it hits a boundary. Three strategies:
+a queue/stack fill (BFS/DFS, one visit per cell), a scanline fill (paint whole horizontal runs,
+seed only the rows above and below -- the optimization for big flat regions), and connected-component
+labeling (fill from every unlabeled cell). Connectivity is a parameter -- 4-connected (orthogonal)
+or 8-connected (with diagonals) -- which changes what counts as one region. This module implements
+all three fills (4/8-connected) plus component labeling and sizing, verified that the strategies
+produce identical results, that fills respect barriers and the grid edge, that 8-connectivity merges
+diagonal regions 4-connectivity separates, that a bounded region leaves the rest untouched, and that
+a checkerboard has 9 components under 4-connectivity but 2 under 8.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

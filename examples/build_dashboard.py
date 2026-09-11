@@ -343,6 +343,7 @@ def main():
     import polygon_clip_demo
     import marching_squares_demo
     import bresenham_demo
+    import flood_fill_demo
 
     import plot_orbits
 
@@ -655,6 +656,7 @@ def main():
     polygon_clip_txt = run("polygon_clip_demo", polygon_clip_demo.main, True)
     marching_squares_txt = run("marching_squares_demo", marching_squares_demo.main, True)
     bresenham_txt = run("bresenham_demo", bresenham_demo.main, True)
+    flood_fill_txt = run("flood_fill_demo", flood_fill_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4493,6 +4495,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("bresenham.svg"), "a fan of integer-pixel lines beside a midpoint-circle rasterization, each cell one pixel")
             + f'<div class="card">{pre(bresenham_txt)}</div>'
+            + '</div>'),
+        section(
+            "Flood fill: paint bucket, region growing, connected components",
+            "Flood fill answers 'which cells are reachable from here through a region of the same "
+            "value?' -- the paint-bucket tool, the region-grow of image segmentation, and the "
+            "reachability query behind maze solving. From a seed it spreads to same-valued "
+            "neighbours until it hits a boundary. Three strategies are here: a QUEUE/STACK fill "
+            "(BFS/DFS visiting each cell once), a SCANLINE fill (painting whole horizontal runs and "
+            "seeding only the rows above and below -- the classic optimization for big flat "
+            "regions), and CONNECTED-COMPONENT LABELING (fill from every unlabeled cell to "
+            "partition the grid into maximal same-valued regions). CONNECTIVITY is a parameter: "
+            "4-connected (orthogonal) or 8-connected (including diagonals), which changes what "
+            "counts as one region. This module implements all three fills (4- and 8-connected) plus "
+            "component labeling and sizing, verified that the strategies produce identical results, "
+            "that fills respect barriers and the grid edge, that 8-connectivity merges diagonal "
+            "regions 4-connectivity separates, that a bounded region leaves the rest untouched, and "
+            "that a checkerboard has 9 components under 4-connectivity but 2 under 8.",
+            '<div class="grid">'
+            + svg_card(out("flood_fill.svg"), "an interior region filled inside a wall (barrier respected), and a grid coloured by connected-component label")
+            + f'<div class="card">{pre(flood_fill_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
