@@ -1,0 +1,24 @@
+The Hungarian algorithm: optimal assignment in O(n^3)
+
+  Cost matrix (hours for each worker to do each job):
+             cook   clean   drive    shop
+     Ann       9      11      14      11
+     Bob       6      15      13      10
+      Cy      12      13       6       8
+     Dot      11       9      10      12
+
+  Optimal assignment (total 32.0 hours):
+     Ann ->   shop (11 h)
+     Bob ->   cook (6 h)
+      Cy ->  drive (6 h)
+     Dot ->  clean (9 h)
+
+  Brute force over all 4! = 24 permutations: 32  (matches: True)
+  Greedy (pick each row's cheapest free job): 34  -> 2.0 hours worse than optimal
+
+  The algorithm reduces rows and columns to expose zeros, selects n independent zeros
+  (one per row and column), and when fewer than n exist, covers the zeros with a minimum
+  set of lines and shifts the smallest uncovered value to create new ones -- until an
+  optimal set of independent zeros appears. O(n^3), versus n! for brute force.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\hungarian.svg

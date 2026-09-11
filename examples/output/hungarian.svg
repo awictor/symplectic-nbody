@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" font-family="monospace">
+<rect width="760" height="430" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="18">Hungarian algorithm: optimal assignment (green cells)</text>
+<text x="20" y="47" fill="#8b949e" font-size="12">cost matrix shaded by value (darker = cheaper); the chosen minimum-cost cells outlined green</text>
+<text x="187" y="80" fill="#8b949e" font-size="12" text-anchor="middle">cook</text>
+<text x="261" y="80" fill="#8b949e" font-size="12" text-anchor="middle">clean</text>
+<text x="335" y="80" fill="#8b949e" font-size="12" text-anchor="middle">drive</text>
+<text x="409" y="80" fill="#8b949e" font-size="12" text-anchor="middle">shop</text>
+<text x="138" y="131" fill="#8b949e" font-size="12" text-anchor="end">Ann</text>
+<text x="138" y="205" fill="#8b949e" font-size="12" text-anchor="end">Bob</text>
+<text x="138" y="279" fill="#8b949e" font-size="12" text-anchor="end">Cy</text>
+<text x="138" y="353" fill="#8b949e" font-size="12" text-anchor="end">Dot</text>
+<rect x="150" y="90" width="71" height="71" fill="rgb(59,79,109)"/>
+<text x="186" y="130" fill="#e6edf3" font-size="16" text-anchor="middle" font-weight="normal">9</text>
+<rect x="224" y="90" width="71" height="71" fill="rgb(79,99,129)"/>
+<text x="260" y="130" fill="#e6edf3" font-size="16" text-anchor="middle" font-weight="normal">11</text>
+<rect x="298" y="90" width="71" height="71" fill="rgb(109,129,159)"/>
+<text x="334" y="130" fill="#e6edf3" font-size="16" text-anchor="middle" font-weight="normal">14</text>
+<rect x="372" y="90" width="71" height="71" fill="rgb(79,99,129)"/>
+<rect x="372" y="90" width="71" height="71" fill="none" stroke="#06d6a0" stroke-width="3.5"/>
+<text x="408" y="130" fill="#06d6a0" font-size="16" text-anchor="middle" font-weight="bold">11</text>
+<rect x="150" y="164" width="71" height="71" fill="rgb(30,50,80)"/>
+<rect x="150" y="164" width="71" height="71" fill="none" stroke="#06d6a0" stroke-width="3.5"/>
+<text x="186" y="204" fill="#06d6a0" font-size="16" text-anchor="middle" font-weight="bold">6</text>
+<rect x="224" y="164" width="71" height="71" fill="rgb(119,139,169)"/>
+<text x="260" y="204" fill="#e6edf3" font-size="16" text-anchor="middle" font-weight="normal">15</text>
+<rect x="298" y="164" width="71" height="71" fill="rgb(99,119,149)"/>
+<text x="334" y="204" fill="#e6edf3" font-size="16" text-anchor="middle" font-weight="normal">13</text>
+<rect x="372" y="164" width="71" height="71" fill="rgb(69,89,119)"/>
+<text x="408" y="204" fill="#e6edf3" font-size="16" text-anchor="middle" font-weight="normal">10</text>
+<rect x="150" y="238" width="71" height="71" fill="rgb(89,109,139)"/>
+<text x="186" y="278" fill="#e6edf3" font-size="16" text-anchor="middle" font-weight="normal">12</text>
+<rect x="224" y="238" width="71" height="71" fill="rgb(99,119,149)"/>
+<text x="260" y="278" fill="#e6edf3" font-size="16" text-anchor="middle" font-weight="normal">13</text>
+<rect x="298" y="238" width="71" height="71" fill="rgb(30,50,80)"/>
+<rect x="298" y="238" width="71" height="71" fill="none" stroke="#06d6a0" stroke-width="3.5"/>
+<text x="334" y="278" fill="#06d6a0" font-size="16" text-anchor="middle" font-weight="bold">6</text>
+<rect x="372" y="238" width="71" height="71" fill="rgb(49,69,99)"/>
+<text x="408" y="278" fill="#e6edf3" font-size="16" text-anchor="middle" font-weight="normal">8</text>
+<rect x="150" y="312" width="71" height="71" fill="rgb(79,99,129)"/>
+<text x="186" y="352" fill="#e6edf3" font-size="16" text-anchor="middle" font-weight="normal">11</text>
+<rect x="224" y="312" width="71" height="71" fill="rgb(59,79,109)"/>
+<rect x="224" y="312" width="71" height="71" fill="none" stroke="#06d6a0" stroke-width="3.5"/>
+<text x="260" y="352" fill="#06d6a0" font-size="16" text-anchor="middle" font-weight="bold">9</text>
+<rect x="298" y="312" width="71" height="71" fill="rgb(69,89,119)"/>
+<text x="334" y="352" fill="#e6edf3" font-size="16" text-anchor="middle" font-weight="normal">10</text>
+<rect x="372" y="312" width="71" height="71" fill="rgb(89,109,139)"/>
+<text x="408" y="352" fill="#e6edf3" font-size="16" text-anchor="middle" font-weight="normal">12</text>
+<text x="150" y="414" fill="#06d6a0" font-size="14">optimal total cost = 32</text>
+</svg>

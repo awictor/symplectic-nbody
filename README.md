@@ -328,6 +328,7 @@ ruins a long non-symplectic integration.
 | `src/pollard_rho.py` | Pollard's rho / p-1 factorization + Miller-Rabin, totient, and divisor count |
 | `src/perlin.py` | Perlin gradient noise (1-D/2-D) + fractal Brownian motion for procedural fields |
 | `src/wave_function_collapse.py` | Tiled WFC: constraint-propagation procedural generation with contradiction restart |
+| `src/hungarian.py` | Hungarian algorithm: optimal O(n^3) assignment (Kuhn-Munkres), min or max |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -647,6 +648,7 @@ ruins a long non-symplectic integration.
 | `examples/pollard_rho_demo.py` | Factoring RSA-style semiprimes + iterations tracking the sqrt(p) trend |
 | `examples/perlin_demo.py` | 2-D fBm terrain heightfield + a 1-D fBm cross-section |
 | `examples/wave_function_collapse_demo.py` | A coastline map where land never touches sea + a forced checkerboard |
+| `examples/hungarian_demo.py` | Worker-job assignment beating the greedy heuristic, with the cost matrix drawn |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7799,6 +7801,26 @@ This module implements tiled WFC with weighted collapse, lowest-entropy observat
 propagation, and contradiction restart, verified that every generated grid strictly satisfies the
 rules across 20 seeds, that a seed reproduces its grid, that an over-constrained rule set is reported
 unsatisfiable, and that a forcing rule set yields exactly its unique tiling.
+
+## The Hungarian algorithm: optimal assignment in O(n^3)
+
+The exact minimum-cost one-to-one assignment, faster than trying all n! permutations. `hungarian.py`:
+
+```
+$ python examples/hungarian_demo.py examples/output
+
+  optimal worker->job assignment: 32 hours total
+  brute force over all 4! permutations: 32 (matches)
+  greedy heuristic: 34 (2 hours worse than optimal)
+```
+
+The Hungarian algorithm exploits that subtracting a constant from a full row or column leaves the
+optimal assignment unchanged, so it reduces the matrix to expose zeros, selects n independent zeros
+(one per row and column), and when fewer exist covers them with a minimum set of lines and shifts the
+smallest uncovered value to create new zeros -- until the optimum appears, in O(n^3). This module
+implements the potential/augmenting-path form for rectangular matrices (min or max), verified against
+brute-force permutation search over 60 random matrices and up to n=8, the row/column reduction
+invariant, and rectangular padding.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
