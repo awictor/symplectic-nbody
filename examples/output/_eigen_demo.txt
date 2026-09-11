@@ -1,0 +1,19 @@
+Power iteration: multiply by A and normalize -> dominant eigenvector
+
+  dominant eigenvalue = 4.745281  (converged in 30 iterations)
+  eigenvector = [0.7779, 0.5798, 0.234, 0.0625]
+  residual ||A v - lambda v|| = 2.51e-06
+
+  Shifted inverse iteration targets any eigenvalue (the one nearest the shift):
+    nearest 0.5:  lambda = 0.254719
+    nearest 2.0:  lambda = 1.822717
+    nearest 3.5:  lambda = 3.177283
+
+  Full spectrum by deflation: [4.7453, 3.1773, 1.8227, 0.2547]
+  sum of eigenvalues = 10.0000  (trace = 10) -- they match
+
+  No characteristic polynomial, no root-finding: each multiply amplifies the
+  largest-|lambda| direction, so the vector aligns with it. It is how PageRank ranks
+  the web, PCA finds data axes, and vibration modes of a structure are computed.
+
+  wrote examples/output\eigen.svg

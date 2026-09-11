@@ -256,6 +256,7 @@ ruins a long non-symplectic integration.
 | `src/fft.py` | Fast Fourier Transform: radix-2 Cooley-Tukey, inverse, FFT convolution |
 | `src/linsolve.py` | Gaussian elimination / LU: partial pivoting, solve, determinant, inverse |
 | `src/qr.py` | QR decomposition: modified Gram-Schmidt, least squares, orthonormal Q |
+| `src/eigen.py` | Power iteration eigenvalues: Rayleigh quotient, inverse iteration, deflation |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -503,6 +504,7 @@ ruins a long non-symplectic integration.
 | `examples/fft_demo.py` | Two-tone spectrum + convolution + the signal & spectrum & cost figure |
 | `examples/linsolve_demo.py` | Solve + LU factors + reuse + det/inverse + the L/U heatmap figure |
 | `examples/qr_demo.py` | QR + line/quadratic least-squares fits + the best-fit-line & residual figure |
+| `examples/eigen_demo.py` | Dominant + inverse + full spectrum + the convergence & spectrum figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6049,6 +6051,28 @@ directions, then normalize -- in its modified form, which subtracts each project
 to stay orthogonal under rounding. QR also drives eigenvalue iteration and orthogonal
 regression. This module builds the thin QR, solves least-squares and square systems, and
 verifies `Q^T Q = I`, `Q R = A`, and that the residual is orthogonal to the column space.
+
+## Power iteration: eigenvalues without the characteristic polynomial
+
+Eigenvalues by repeated multiplication. `eigen.py`:
+
+```
+$ python examples/eigen_demo.py examples/output
+
+  dominant eigenvalue = 4.745285 (converged in a few iterations)
+  full spectrum by deflation: [4.7453, 3.1773, 1.8227, 0.2547]
+  sum of eigenvalues = 10.0000 (trace = 10) -- they match
+```
+
+An eigenvector is a direction a matrix only stretches: `A v = lambda v`. They govern vibration
+modes, Markov stationary distributions, PCA axes, and PageRank -- and for anything beyond 2x2
+the characteristic polynomial is a poor way to find them. Power iteration is the simplest
+alternative: start from a vector and repeatedly multiply by A and normalize; each multiply
+amplifies the largest-|eigenvalue| direction most, so the vector converges to the dominant
+eigenvector and the Rayleigh quotient `v^T A v / v^T v` gives its eigenvalue. Shifted inverse
+iteration power-iterates `(A - mu I)^-1` to target the eigenvalue nearest mu, and deflation peels
+off found eigenpairs to recover a symmetric matrix's whole spectrum. This module implements all
+three, verified by `A v = lambda v`, the trace and determinant identities, and analytic cases.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -298,6 +298,7 @@ def main():
     import fft_demo
     import linsolve_demo
     import qr_demo
+    import eigen_demo
 
     import plot_orbits
 
@@ -565,6 +566,7 @@ def main():
     fft_txt = run("fft_demo", fft_demo.main, True)
     linsolve_txt = run("linsolve_demo", linsolve_demo.main, True)
     qr_txt = run("qr_demo", qr_demo.main, True)
+    eigen_txt = run("eigen_demo", eigen_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3520,6 +3522,23 @@ def main():
             '<div class="grid">'
             + svg_card(out("qr.svg"), "the least-squares best-fit line through scattered points, with the residuals it minimizes")
             + f'<div class="card">{pre(qr_txt)}</div>'
+            + '</div>'),
+        section(
+            "Power iteration: eigenvalues without the characteristic polynomial",
+            "An eigenvector is a direction a matrix only stretches: A v = lambda v. They govern "
+            "vibration modes, Markov stationary distributions, PCA axes, and PageRank -- and for "
+            "anything beyond 2x2 the characteristic polynomial is a poor way to find them. Power "
+            "iteration is the simplest alternative: start from a random vector and repeatedly "
+            "multiply by A and normalize; each multiply amplifies the largest-|eigenvalue| "
+            "direction most, so the vector converges to the dominant eigenvector and the "
+            "Rayleigh quotient v^T A v / v^T v gives its eigenvalue. Shifted inverse iteration "
+            "power-iterates (A - mu I)^-1 to target the eigenvalue nearest mu, and deflation "
+            "peels off found eigenpairs to recover a symmetric matrix's whole spectrum. This "
+            "module implements all three, verified by A v = lambda v, the trace/determinant "
+            "identities, and analytic cases.",
+            '<div class="grid">'
+            + svg_card(out("eigen.svg"), "the Rayleigh quotient converging to the dominant eigenvalue, and the full spectrum recovered by deflation")
+            + f'<div class="card">{pre(eigen_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

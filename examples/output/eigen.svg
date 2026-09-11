@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="390" viewBox="0 0 760 390" font-family="monospace">
+<rect width="760" height="390" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">Power iteration: the Rayleigh quotient climbs to the eigenvalue</text>
+<text x="20" y="44" fill="#8b949e" font-size="12">estimate converging to the dominant eigenvalue (left); the full spectrum by deflation (right)</text>
+<line x1="55" y1="335" x2="360" y2="335" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="55" y1="335" x2="55" y2="65" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="55" y1="151.0" x2="360" y2="151.0" stroke="#06d6a0" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="358.0" y="147.0" fill="#06d6a0" font-size="9" text-anchor="end">lambda = 4.745</text>
+<polyline points="55.0,249.0 67.7,194.5 80.4,170.5 93.1,159.8 105.8,155.0 118.5,152.8 131.2,151.8 144.0,151.4 156.7,151.2 169.4,151.1 182.1,151.1 194.8,151.1 207.5,151.0 220.2,151.0 232.9,151.0 245.6,151.0 258.3,151.0 271.0,151.0 283.8,151.0 296.5,151.0 309.2,151.0 321.9,151.0 334.6,151.0 347.3,151.0 360.0,151.0" fill="none" stroke="#4dabf7" stroke-width="2"/>
+<circle cx="55.0" cy="249.0" r="1.8" fill="#4dabf7"/>
+<circle cx="67.7" cy="194.5" r="1.8" fill="#4dabf7"/>
+<circle cx="80.4" cy="170.5" r="1.8" fill="#4dabf7"/>
+<circle cx="93.1" cy="159.8" r="1.8" fill="#4dabf7"/>
+<circle cx="105.8" cy="155.0" r="1.8" fill="#4dabf7"/>
+<circle cx="118.5" cy="152.8" r="1.8" fill="#4dabf7"/>
+<circle cx="131.2" cy="151.8" r="1.8" fill="#4dabf7"/>
+<circle cx="144.0" cy="151.4" r="1.8" fill="#4dabf7"/>
+<circle cx="156.7" cy="151.2" r="1.8" fill="#4dabf7"/>
+<circle cx="169.4" cy="151.1" r="1.8" fill="#4dabf7"/>
+<circle cx="182.1" cy="151.1" r="1.8" fill="#4dabf7"/>
+<circle cx="194.8" cy="151.1" r="1.8" fill="#4dabf7"/>
+<circle cx="207.5" cy="151.0" r="1.8" fill="#4dabf7"/>
+<circle cx="220.2" cy="151.0" r="1.8" fill="#4dabf7"/>
+<circle cx="232.9" cy="151.0" r="1.8" fill="#4dabf7"/>
+<circle cx="245.6" cy="151.0" r="1.8" fill="#4dabf7"/>
+<circle cx="258.3" cy="151.0" r="1.8" fill="#4dabf7"/>
+<circle cx="271.0" cy="151.0" r="1.8" fill="#4dabf7"/>
+<circle cx="283.8" cy="151.0" r="1.8" fill="#4dabf7"/>
+<circle cx="296.5" cy="151.0" r="1.8" fill="#4dabf7"/>
+<circle cx="309.2" cy="151.0" r="1.8" fill="#4dabf7"/>
+<circle cx="321.9" cy="151.0" r="1.8" fill="#4dabf7"/>
+<circle cx="334.6" cy="151.0" r="1.8" fill="#4dabf7"/>
+<circle cx="347.3" cy="151.0" r="1.8" fill="#4dabf7"/>
+<circle cx="360.0" cy="151.0" r="1.8" fill="#4dabf7"/>
+<text x="207.5" y="353.0" fill="#8b949e" font-size="10" text-anchor="middle">iteration -> Rayleigh quotient</text>
+<line x1="425" y1="212.5" x2="730" y2="212.5" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="702.2" y1="190.5" x2="702.2" y2="234.5" stroke="#8338ec" stroke-width="2.5"/>
+<text x="702.2" y="184.5" fill="#b197fc" font-size="9" text-anchor="middle">4.75</text>
+<line x1="615.1" y1="190.5" x2="615.1" y2="234.5" stroke="#8338ec" stroke-width="2.5"/>
+<text x="615.1" y="184.5" fill="#b197fc" font-size="9" text-anchor="middle">3.18</text>
+<line x1="539.9" y1="190.5" x2="539.9" y2="234.5" stroke="#8338ec" stroke-width="2.5"/>
+<text x="539.9" y="184.5" fill="#b197fc" font-size="9" text-anchor="middle">1.82</text>
+<line x1="452.8" y1="190.5" x2="452.8" y2="234.5" stroke="#8338ec" stroke-width="2.5"/>
+<text x="452.8" y="184.5" fill="#b197fc" font-size="9" text-anchor="middle">0.25</text>
+<text x="577.5" y="337.0" fill="#8b949e" font-size="10" text-anchor="middle">eigenvalues on the real line</text>
+</svg>
