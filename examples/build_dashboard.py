@@ -253,6 +253,7 @@ def main():
     import dla_demo
     import benford_demo
     import coupon_collector_demo
+    import secretary_demo
 
     import plot_orbits
 
@@ -475,6 +476,7 @@ def main():
     dla_txt = run("dla_demo", dla_demo.main, True)
     benford_txt = run("benford_demo", benford_demo.main, True)
     coupon_txt = run("coupon_collector_demo", coupon_collector_demo.main, True)
+    secretary_txt = run("secretary_demo", secretary_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2704,6 +2706,21 @@ def main():
             '<div class="grid">'
             + svg_card(out("coupon_collector.svg"), "the collection-progress curve (the last coupons cost the most) and the completion-probability CDF")
             + f'<div class="card">{pre(coupon_txt)}</div>'
+            + '</div>'),
+        section(
+            "The secretary problem: optimal stopping and the 1/e rule",
+            "Interview n candidates one at a time in random order, accept or reject on the spot, "
+            "and you only care about landing the single best. The optimal policy is a cutoff: "
+            "reject the first r-1 (a look phase), then take the first later candidate who beats "
+            "all seen so far. The win probability P(r) = (r-1)/n sum_{i=r}^{n} 1/(i-1) is "
+            "maximized near r ~ n/e, and as n grows both the optimal look-fraction and the win "
+            "probability tend to 1/e ~ 0.368: look at 37% of the field, then leap at the next "
+            "record, and you land the very best about 37% of the time no matter how large n is. "
+            "The same optimal-stopping law governs flat-hunting, parking, and online auctions -- "
+            "here the exact probabilities are checked against a seeded Monte-Carlo run.",
+            '<div class="grid">'
+            + svg_card(out("secretary.svg"), "the win probability peaking near the 1/e look-fraction, and the optimum converging to 1/e as n grows")
+            + f'<div class="card">{pre(secretary_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

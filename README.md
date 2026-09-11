@@ -211,6 +211,7 @@ ruins a long non-symplectic integration.
 | `src/dla.py` | Diffusion-limited aggregation: fractal growth, mass-radius dimension D~1.71 |
 | `src/benford.py` | Benford's law: log10(1+1/d) leading digits, chi-square goodness-of-fit |
 | `src/coupon_collector.py` | Coupon collector: E[T]=n H_n, variance, completion CDF, Monte-Carlo |
+| `src/secretary.py` | Secretary problem: 1/e optimal-stopping rule, win probability, Monte-Carlo |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -413,6 +414,7 @@ ruins a long non-symplectic integration.
 | `examples/dla_demo.py` | Size/dimension table + the cluster & log-log mass-radius scaling figure |
 | `examples/benford_demo.py` | Digit-frequency table + the Benford curve with Fibonacci vs uniform bars |
 | `examples/coupon_collector_demo.py` | E[T] vs simulation table + the progress curve & completion CDF |
+| `examples/secretary_demo.py` | Optimal cutoff vs simulation table + the P(win) curve & 1/e convergence |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4901,6 +4903,30 @@ bound `P(T > n ln n + c n) <= e^{-c}`. The tests check the exact small cases (`E
 a die), recover `E[T]` by summing the CDF, verify the tail bound holds, and match a seeded
 Monte-Carlo simulation to within a few percent. The same `n ln n` law sets cache warmup, random
 test-coverage, and how many samples see every category at least once.
+
+## The secretary problem: optimal stopping and the 1/e rule
+
+The best strategy is to look, then leap. `secretary.py`:
+
+```
+$ python examples/secretary_demo.py examples/output
+
+       n  r* (cutoff)  look frac   P(win)      sim
+      10            4     0.3000   0.3987   0.4045
+     100           38     0.3700   0.3710   0.3768
+    1000          369     0.3680   0.3682   0.3643
+```
+
+Interview n candidates one at a time in random order, accept or reject on the spot, and you
+only care about the single best. The optimal policy is a cutoff: reject the first r-1 (a look
+phase), then take the first later candidate who beats all seen so far. The win probability
+`P(r) = (r-1)/n * sum_{i=r}^{n} 1/(i-1)` is maximized near `r ~ n/e`, and as n grows both the
+optimal look-fraction and the win probability tend to `1/e ~ 0.368` -- look at 37% of the
+field, then leap at the next record, and you land the very best about 37% of the time no matter
+how large n is. This module gives the exact win probability for any cutoff, the optimal cutoff,
+the 1/e asymptotics, and the expected number of candidates seen, all checked against exact
+small cases (n=3 gives r=2 and P=1/2) and a seeded Monte-Carlo run. The same optimal-stopping
+law governs flat-hunting, parking, and online auctions.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
