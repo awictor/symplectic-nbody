@@ -251,6 +251,7 @@ ruins a long non-symplectic integration.
 | `src/kahan.py` | Kahan/Neumaier compensated summation: bounded error, pairwise sum, dot product |
 | `src/horner.py` | Horner's method: O(n) polynomial eval, synthetic division, Newton roots |
 | `src/rootfind.py` | Bracketing root-finders: bisection, secant, false position, Brent |
+| `src/quadrature.py` | Numerical integration: trapezoid, Simpson, Romberg, adaptive, Gauss-Legendre |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -493,6 +494,7 @@ ruins a long non-symplectic integration.
 | `examples/kahan_demo.py` | Error-vs-n table + cancellation case + the error-growth figure |
 | `examples/horner_demo.py` | Eval + synthetic division + roots + the op-count & Newton-convergence figure |
 | `examples/rootfind_demo.py` | Method comparison + transcendental roots + the convergence-rate figure |
+| `examples/quadrature_demo.py` | Method accuracy + convergence-order table + the error-vs-samples figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5925,6 +5927,30 @@ speed, falling back to bisection when the fast step misbehaves -- the default ro
 numerical libraries. This module implements all four with a shared bracket interface plus a
 sign-change scanner, verified against roots of polynomials (1, 2, 3) and transcendentals
 (cos x = x, x = e^-x) and checked to agree.
+
+## Numerical quadrature: integrating what algebra cannot
+
+Definite integrals with no closed form. `quadrature.py`:
+
+```
+$ python examples/quadrature_demo.py examples/output
+
+       n     trapezoid   ratio       Simpson   ratio
+      64      4.85e-03    4.0x      1.56e-06   16.0x
+     256      3.03e-04    4.0x      6.08e-09   16.0x
+  Romberg error 1.8e-15, Gauss-Legendre 1.2e-14
+```
+
+Most integrals have no closed form, so you approximate the area under f by sampling it. The
+trapezoid rule joins samples with lines (error `O(h^2)`); Simpson fits parabolas (`O(h^4)`,
+exact for cubics); Romberg applies Richardson extrapolation to a ladder of halved-step trapezoid
+estimates, cancelling error terms two orders at a time to reach machine precision in a handful
+of levels; adaptive Simpson subdivides only where the function is hard; and Gauss-Legendre
+places n nodes optimally to integrate polynomials of degree `2n-1` exactly. This module
+implements all five and verifies them against integrals with known values (polynomials, exp,
+trig, the Gaussian bell), confirming the convergence orders -- the trapezoid error quarters and
+Simpson's sixteenths each time the step is halved. It powers physics simulations, option
+pricing, and Bayesian evidence.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

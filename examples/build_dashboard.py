@@ -293,6 +293,7 @@ def main():
     import kahan_demo
     import horner_demo
     import rootfind_demo
+    import quadrature_demo
 
     import plot_orbits
 
@@ -555,6 +556,7 @@ def main():
     kahan_txt = run("kahan_demo", kahan_demo.main, True)
     horner_txt = run("horner_demo", horner_demo.main, True)
     rootfind_txt = run("rootfind_demo", rootfind_demo.main, True)
+    quadrature_txt = run("quadrature_demo", quadrature_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3427,6 +3429,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("rootfind.svg"), "the error per iteration on log scale: bisection's steady linear slope against the secant method's steepening superlinear one")
             + f'<div class="card">{pre(rootfind_txt)}</div>'
+            + '</div>'),
+        section(
+            "Numerical quadrature: integrating what algebra cannot",
+            "Most integrals have no closed form, so you approximate the area under f by sampling "
+            "it. The trapezoid rule joins samples with lines (error O(h^2)); Simpson fits "
+            "parabolas (O(h^4), exact for cubics); Romberg applies Richardson extrapolation to a "
+            "ladder of halved-step trapezoid estimates, cancelling error terms two orders at a "
+            "time to reach machine precision in a handful of levels; adaptive Simpson subdivides "
+            "only where the function is hard; and Gauss-Legendre places n nodes optimally to "
+            "integrate polynomials of degree 2n-1 exactly. This module implements all five and "
+            "verifies them against integrals with known values (polynomials, exp, trig, the "
+            "Gaussian bell), confirming the convergence orders -- trapezoid error quarters and "
+            "Simpson's sixteenths each time the step is halved.",
+            '<div class="grid">'
+            + svg_card(out("quadrature.svg"), "error vs samples on log-log axes, where each method's slope is its convergence order")
+            + f'<div class="card">{pre(quadrature_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

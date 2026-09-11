@@ -1,0 +1,24 @@
+Numerical quadrature: integral of e^x cos x on [0, pi]
+
+  exact value = -12.070346316390
+
+              method            estimate       error
+   trapezoid (n=100)    -12.072331874092     2.0e-03
+     Simpson (n=100)    -12.070346055171     2.6e-07
+  Gauss-Legendre (8p)    -12.070346316390     1.2e-14
+    adaptive Simpson    -12.070346316389     3.6e-13
+             Romberg    -12.070346316390     1.8e-15
+
+  Convergence order (error as the sample count n doubles):
+       n     trapezoid   ratio       Simpson   ratio
+      16      7.77e-02       -      3.95e-04       -
+      32      1.94e-02    4.0x      2.49e-05   15.9x
+      64      4.85e-03    4.0x      1.56e-06   16.0x
+     128      1.21e-03    4.0x      9.73e-08   16.0x
+     256      3.03e-04    4.0x      6.08e-09   16.0x
+
+  Trapezoid halves-the-step-quarters-the-error (O(h^2)); Simpson cuts it 16-fold
+  (O(h^4)); Romberg and Gauss-Legendre reach machine precision in a few evaluations.
+  It powers everything from physics simulations to option pricing to Bayesian evidence.
+
+  wrote examples/output\quadrature.svg
