@@ -351,6 +351,7 @@ def main():
     import string_matching_demo
     import suffix_array_demo
     import quadtree_demo
+    import max_flow_demo
 
     import plot_orbits
 
@@ -671,6 +672,7 @@ def main():
     string_matching_txt = run("string_matching_demo", string_matching_demo.main, True)
     suffix_array_txt = run("suffix_array_demo", suffix_array_demo.main, True)
     quadtree_txt = run("quadtree_demo", quadtree_demo.main, True)
+    max_flow_txt = run("max_flow_demo", max_flow_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4674,6 +4676,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("quadtree.svg"), "a point cloud with the quadtree's cell boundaries subdividing where points crowd, and a query rectangle with its contained points highlighted")
             + f'<div class="card">{pre(quadtree_txt)}</div>'
+            + '</div>'),
+        section(
+            "Maximum flow: augmenting paths, the min-cut theorem, and matching",
+            "How much can flow from a SOURCE to a SINK through a network of capacitated pipes? "
+            "Ford-Fulkerson repeatedly finds an AUGMENTING PATH with spare capacity and pushes flow "
+            "along it, maintaining a RESIDUAL graph where each used edge gains a reverse edge so later "
+            "paths can cancel and reroute earlier flow -- the trick that lets a greedy-looking method "
+            "reach the true optimum. Edmonds-Karp always takes the SHORTEST augmenting path (by BFS), "
+            "guaranteeing O(V E^2) termination independent of the capacities. The celebrated MAX-FLOW "
+            "MIN-CUT THEOREM says the maximum flow equals the minimum CUT -- the smallest total "
+            "capacity of edges whose removal severs source from sink -- and after the flow saturates, "
+            "the vertices still reachable from the source in the residual graph reveal exactly those "
+            "bottleneck edges. A classic reduction turns BIPARTITE MATCHING into flow: a super-source "
+            "into every left vertex, a super-sink from every right vertex, all capacities one, and the "
+            "max flow is the matching size. This module implements Edmonds-Karp, min-cut extraction, "
+            "and bipartite matching, verified that it hits the textbook flow of 23, that the min-cut "
+            "capacity equals the flow, that flow conservation and capacity constraints hold, that "
+            "residual rerouting achieves the true optimum on the anti-greedy network, and that "
+            "matching-by-flow equals a direct augmenting-path matching over 40 random graphs.",
+            '<div class="grid">'
+            + svg_card(out("max_flow.svg"), "the six-node network with edge capacities; the minimum-cut edges (the bottleneck that equals the max flow) drawn in red")
+            + f'<div class="card">{pre(max_flow_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

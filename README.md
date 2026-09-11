@@ -309,6 +309,7 @@ ruins a long non-symplectic integration.
 | `src/string_matching.py` | KMP prefix function, Z-algorithm, Manacher longest palindrome, linear-time |
 | `src/suffix_array.py` | Suffix array (prefix doubling) + LCP (Kasai): search, longest repeated/common substring |
 | `src/quadtree.py` | Point-region quadtree: rectangle/circle range queries, nearest neighbour |
+| `src/max_flow.py` | Maximum flow (Edmonds-Karp), min-cut theorem, bipartite matching by reduction |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -609,6 +610,7 @@ ruins a long non-symplectic integration.
 | `examples/string_matching_demo.py` | Prefix function, KMP/Z/brute agreement, overlapping matches, Manacher palindromes |
 | `examples/suffix_array_demo.py` | Sorted-suffix + LCP table, binary-search patterns, longest repeated/common substring |
 | `examples/quadtree_demo.py` | Point cloud with adaptive cell boundaries + rectangle/circle/nearest queries |
+| `examples/max_flow_demo.py` | Six-node flow network with capacities, min-cut edges highlighted, bipartite matching |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7353,6 +7355,32 @@ don't subdivide forever), rectangle and circular range queries, and nearest-neig
 rectangle and radius queries return exactly the same points as a linear scan across 80 random
 queries, that nearest matches brute force, that out-of-bounds points are rejected, that a dense
 cluster subdivides deeply while spread data stays shallow, and that duplicate points are all stored.
+
+## Maximum flow: augmenting paths, the min-cut theorem, and matching
+
+How much can flow from a source to a sink through capacitated pipes? `max_flow.py`:
+
+```
+$ python examples/max_flow_demo.py examples/output
+
+  A 6-node network (source 0, sink 5):
+    maximum flow: 23
+    minimum cut edges: [(1, 3), (4, 3), (4, 5)]
+    min-cut capacity: 23  == max flow: True
+  Bipartite matching by reduction: 8 assignments -> maximum matching of 4
+```
+
+Ford-Fulkerson pushes flow along augmenting paths and keeps a residual graph where every used edge
+gains a reverse edge, so later paths can cancel and reroute earlier flow -- the trick that makes a
+greedy-looking method reach the true optimum. Edmonds-Karp always takes the shortest augmenting path
+(BFS) for O(V E^2) time, independent of the capacities. The max-flow min-cut theorem says the maximum
+flow equals the smallest total capacity of edges whose removal severs source from sink, and after the
+flow saturates, the vertices still reachable from the source in the residual graph reveal exactly
+those bottleneck edges. Bipartite matching reduces to flow: a super-source into every left vertex, a
+super-sink from every right, unit capacities, and the max flow is the matching size. Verified that it
+hits the textbook flow of 23, that the min-cut capacity equals the flow, that conservation and
+capacity constraints hold, that residual rerouting beats the greedy trap, and that matching-by-flow
+equals a direct augmenting-path matching over 40 random graphs.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,26 @@
+Maximum flow: Edmonds-Karp, min-cut, and bipartite matching
+
+  A 6-node network (source 0, sink 5):
+    maximum flow: 23
+    minimum cut edges: [(1, 3), (4, 3), (4, 5)]
+    min-cut capacity: 23  == max flow: True
+    (the max-flow min-cut theorem: the bottleneck edges limit the whole network)
+
+  Small networks:
+    two parallel pipes (5, 3):        8
+    series with a bottleneck (10, 3): 3
+    anti-greedy (needs rerouting):    2 (residual reverse edges reroute flow)
+
+  Bipartite matching by reduction to max flow (jobs to workers):
+    8 allowed assignments -> maximum matching of 4:
+       Ann -> cook
+       Bob -> clean
+        Cy -> drive
+       Dot -> shop
+
+  Ford-Fulkerson pushes flow along augmenting paths and updates a residual graph where
+  each used edge gains a reverse edge (so later paths can cancel flow); Edmonds-Karp
+  always takes the shortest such path (BFS) for O(V E^2) time. When no augmenting path
+  remains, the source-reachable residual set defines the minimum cut = the maximum flow.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\max_flow.svg
