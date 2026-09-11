@@ -1,0 +1,23 @@
+Floyd-Warshall: all-pairs shortest paths in one O(V^3) pass
+
+  distance matrix (rows = from, cols = to):
+          0    1    2    3    4    5
+  0 :    0    7    9   20   20   11
+  1 :    .    0   10   15   21   12
+  2 :    .    .    0   11   11    2
+  3 :    .    .    .    0    6    .
+  4 :    .    .    .    .    0    .
+  5 :    .    .    .    .    9    0
+
+  shortest 0 -> 4: [0, 2, 5, 4]  (cost 20)
+  agrees with all-pairs Dijkstra: True
+
+  Negative weights are fine (Dijkstra can't do these), and a negative loop is flagged:
+    0->1->2->0 with weights 1,-3,1 has a negative cycle: True
+
+  transitive closure: node 0 can reach [0, 1, 2, 3, 4, 5]
+  Three nested loops, no priority queue -- it also gives reachability (boolean OR)
+  and detects negative cycles (a negative diagonal). Used for routing tables and
+  network distance matrices.
+
+  wrote examples/output\floyd_warshall.svg

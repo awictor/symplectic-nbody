@@ -281,6 +281,7 @@ def main():
     import lcs_demo
     import quickselect_demo
     import aho_corasick_demo
+    import floyd_warshall_demo
 
     import plot_orbits
 
@@ -531,6 +532,7 @@ def main():
     lcs_txt = run("lcs_demo", lcs_demo.main, True)
     quickselect_txt = run("quickselect_demo", quickselect_demo.main, True)
     aho_corasick_txt = run("aho_corasick_demo", aho_corasick_demo.main, True)
+    floyd_warshall_txt = run("floyd_warshall_demo", floyd_warshall_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3205,6 +3207,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("aho_corasick.svg"), "the pattern trie with its failure links (dashed) and the nodes where a pattern ends")
             + f'<div class="card">{pre(aho_corasick_txt)}</div>'
+            + '</div>'),
+        section(
+            "Floyd-Warshall: shortest paths between every pair",
+            "Dijkstra gives shortest paths from one source; for a routing table or a road-network "
+            "distance matrix you need them between ALL pairs. Floyd-Warshall does it in one "
+            "elegant O(V^3) dynamic program that also handles negative edge weights (which "
+            "Dijkstra cannot) and detects negative cycles. It allows ever-larger sets of "
+            "intermediate nodes: dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]) as k runs "
+            "over every node -- three nested loops, no priority queue. Recording the next hop per "
+            "pair reconstructs the routes; a negative value on the diagonal means a negative "
+            "cycle; and swapping min for boolean OR gives the transitive closure (who can reach "
+            "whom). This module computes the distance matrix, paths, cycle detection, and "
+            "closure, verified against running Dijkstra from every source on 300 random graphs.",
+            '<div class="grid">'
+            + svg_card(out("floyd_warshall.svg"), "the all-pairs distance matrix as a heatmap, nearer pairs darker and unreachable pairs gray")
+            + f'<div class="card">{pre(floyd_warshall_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

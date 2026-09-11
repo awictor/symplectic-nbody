@@ -239,6 +239,7 @@ ruins a long non-symplectic integration.
 | `src/lcs.py` | Longest common subsequence: DP + backtrace, diff edit-script, indel distance |
 | `src/quickselect.py` | Quickselect + median-of-medians: O(n) k-th smallest, median, percentile |
 | `src/aho_corasick.py` | Aho-Corasick: trie + failure links, all patterns in one pass |
+| `src/floyd_warshall.py` | Floyd-Warshall all-pairs shortest paths: negative edges, cycle detection, closure |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -469,6 +470,7 @@ ruins a long non-symplectic integration.
 | `examples/lcs_demo.py` | LCS + a real line-diff + the DP-table heatmap with the match diagonal |
 | `examples/quickselect_demo.py` | Order statistics + the comparison-count vs sort figure |
 | `examples/aho_corasick_demo.py` | Overlapping matches + log scan + the trie-with-failure-links figure |
+| `examples/floyd_warshall_demo.py` | Distance matrix vs Dijkstra + path/cycle/closure + the matrix heatmap |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5631,6 +5633,28 @@ state, catching overlapping and nested matches). Built once by breadth-first tra
 text pass reports all matches. This module builds the automaton and finds all matches (with
 positions), verified *exhaustively* against a brute-force per-pattern search over 1000 random
 multi-pattern cases. It powers virus scanners, spam filters, and DNA motif search.
+
+## Floyd-Warshall: shortest paths between every pair
+
+All-pairs shortest paths in one O(V^3) pass. `floyd_warshall.py`:
+
+```
+$ python examples/floyd_warshall_demo.py examples/output
+
+  shortest 0 -> 4: [0, 2, 5, 4]  (cost 20)
+  agrees with all-pairs Dijkstra: True
+  negative cycle detected: True
+```
+
+Dijkstra gives shortest paths from one source; for a routing table or a road-network distance
+matrix you need them between all pairs. Floyd-Warshall does it in one dynamic program that also
+handles negative edge weights (which Dijkstra cannot) and detects negative cycles. It allows
+ever-larger sets of intermediate nodes: `dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])`
+as k runs over every node -- three nested loops, no priority queue. Recording the next hop per
+pair reconstructs the routes; a negative value on the diagonal means a negative cycle; and
+swapping min for boolean OR gives the transitive closure. This module computes the distance
+matrix, paths, cycle detection, and closure, verified against running Dijkstra from every source
+on 300 random graphs. Used for routing tables and network distance matrices.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
