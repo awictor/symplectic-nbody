@@ -239,6 +239,7 @@ def main():
     import metropolis_demo
     import logistic_map_demo
     import henon_demo
+    import lorenz_demo
 
     import plot_orbits
 
@@ -447,6 +448,7 @@ def main():
     metropolis_txt = run("metropolis_demo", metropolis_demo.main, True)
     logistic_map_txt = run("logistic_map_demo", logistic_map_demo.main, True)
     henon_txt = run("henon_demo", henon_demo.main, True)
+    lorenz_txt = run("lorenz_demo", lorenz_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2488,6 +2490,20 @@ def main():
             '<div class="grid">'
             + svg_card(out("henon.svg"), "the Henon attractor and a zoom revealing the fractal Cantor strands")
             + f'<div class="card">{pre(henon_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Lorenz attractor: the butterfly effect",
+            "Lorenz's three equations for toy convection never repeat and cannot be forecast "
+            "for long. At sigma=10, beta=8/3, rho=28 the trajectory winds around two spiral "
+            "lobes, jumping between them unpredictably -- the butterfly-shaped strange "
+            "attractor. The flow is dissipative (phase volume shrinks at -(sigma+1+beta) so "
+            "everything collapses onto the zero-volume fractal) yet chaotic: two starts a "
+            "millionth apart diverge to opposite wings, the largest Lyapunov exponent ~0.9 "
+            "meaning prediction error grows tenfold every ~2.5 time units. The reason weather "
+            "is unforecastable beyond ~two weeks.",
+            '<div class="grid">'
+            + svg_card(out("lorenz.svg"), "the butterfly attractor and two nearby trajectories diverging exponentially")
+            + f'<div class="card">{pre(lorenz_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

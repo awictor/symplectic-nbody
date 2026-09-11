@@ -1,0 +1,24 @@
+Lorenz system (sigma=10, beta=8/3, rho=28): toy weather that never repeats
+
+  Fixed points:
+    (+0.000, +0.000, +0.000)
+    (+8.485, +8.485, +27.000)
+    (-8.485, -8.485, +27.000)
+
+  Phase-space volume contraction rate div F = -13.667 (dissipative)
+  Largest Lyapunov exponent = 0.917 (positive -> chaos).
+  Prediction error grows e^(0.92 t): 10x every ~2.5 time units.
+
+  Two starts a millionth apart, separation over time:
+    t =   0.0  ->  separation 1.000e-06
+    t =   8.0  ->  separation 2.049e-06
+    t =  16.0  ->  separation 5.507e-05
+    t =  24.0  ->  separation 2.650e-02
+    t =  32.0  ->  separation 2.086e+01
+    t =  40.0  ->  separation 1.653e+01
+
+  A millionth of a degree in the initial state grows to opposite wings of the
+  butterfly -- why weather is unforecastable beyond ~two weeks. Deterministic, yet
+  unpredictable: the discovery that founded chaos theory.
+
+  wrote examples/output\lorenz.svg

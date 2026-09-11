@@ -197,6 +197,7 @@ ruins a long non-symplectic integration.
 | `src/metropolis.py` | Metropolis MCMC on the 2D Ising model: acceptance rule, Onsager T_c |
 | `src/logistic_map.py` | Logistic map: period doubling, attractor, Lyapunov exponent, Feigenbaum |
 | `src/henon.py` | Henon map: strange attractor, area contraction, fixed points, Lyapunov |
+| `src/lorenz.py` | Lorenz attractor: RK4 flow, volume contraction, fixed points, Lyapunov |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -385,6 +386,7 @@ ruins a long non-symplectic integration.
 | `examples/metropolis_demo.py` | Simulated m(T) table + the transition curve & spin-snapshot figure |
 | `examples/logistic_map_demo.py` | Period/Lyapunov table + the bifurcation diagram & Lyapunov figure |
 | `examples/henon_demo.py` | Fixed-point/Lyapunov table + the attractor & fractal-zoom figure |
+| `examples/lorenz_demo.py` | Fixed-point/Lyapunov table + the butterfly & trajectory-divergence figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4544,6 +4546,29 @@ squeeze-in-area-while-stretching-along-the-unstable-direction is what collapses 
 fractal of dimension ~1.26. The tests reproduce the map formula, the bounded spanning
 attractor, the `|b|` area contraction, the two fixed points (verified as fixed), the ~0.42
 classic Lyapunov exponent, and a non-chaotic small-`a` case.
+
+## The Lorenz attractor: the butterfly effect
+
+Three equations for toy weather that founded chaos theory. `lorenz.py`:
+
+```
+$ python examples/lorenz_demo.py examples/output
+
+  fixed points: origin, (+/-8.485, +/-8.485, 27)
+  div F = -13.667 (dissipative)   Lyapunov = 0.917   error 10x every ~2.5 t
+```
+
+Lorenz's system `dx/dt = sigma(y-x)`, `dy/dt = x(rho-z)-y`, `dz/dt = xy - beta z` at
+`sigma=10, beta=8/3, rho=28` never repeats: the trajectory winds around two spiral lobes,
+jumping between them unpredictably, tracing the butterfly-shaped strange attractor -- the
+first for a continuous flow. It is dissipative (phase-space volume shrinks at the constant
+rate `-(sigma+1+beta)`, collapsing onto the zero-volume fractal) yet chaotic: two starts a
+millionth apart diverge to opposite wings, with a positive largest Lyapunov exponent (~0.9,
+so prediction error grows tenfold every ~2.5 time units) -- the reason weather is
+unforecastable beyond ~two weeks. Integrated here with RK4. The tests verify the fixed points
+(origin plus the two convection points for `rho>1`), the `-(sigma+1+beta)` volume contraction,
+the bounded two-lobe attractor, the ~0.9 Lyapunov exponent, and the decay to the origin for
+`rho<1`.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
