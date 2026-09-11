@@ -240,6 +240,7 @@ def main():
     import logistic_map_demo
     import henon_demo
     import lorenz_demo
+    import double_pendulum_demo
 
     import plot_orbits
 
@@ -449,6 +450,7 @@ def main():
     logistic_map_txt = run("logistic_map_demo", logistic_map_demo.main, True)
     henon_txt = run("henon_demo", henon_demo.main, True)
     lorenz_txt = run("lorenz_demo", lorenz_demo.main, True)
+    double_pendulum_txt = run("double_pendulum_demo", double_pendulum_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2504,6 +2506,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("lorenz.svg"), "the butterfly attractor and two nearby trajectories diverging exponentially")
             + f'<div class="card">{pre(lorenz_txt)}</div>'
+            + '</div>'),
+        section(
+            "The double pendulum: chaos you can hang from a nail",
+            "Hang one pendulum off another and you get the simplest chaotic mechanical system: "
+            "fully deterministic, yet two nearly identical releases flail into totally different "
+            "motions within seconds. Its coupled equations of motion have no closed form and are "
+            "integrated numerically (RK4 here). Two things stay clean: the total energy is "
+            "conserved (a stringent check the integrator passes over a well-resolved window), "
+            "and the sensitive dependence on initial conditions is real -- a hair's difference "
+            "in the start grows exponentially, the butterfly effect on a tabletop.",
+            '<div class="grid">'
+            + svg_card(out("double_pendulum.svg"), "the lower bob's never-repeating trace, and two near-identical pendulums drifting apart")
+            + f'<div class="card">{pre(double_pendulum_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

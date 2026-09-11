@@ -1,0 +1,20 @@
+Double pendulum: deterministic yet chaotic (two rods, gravity)
+
+  Energy conservation (RK4, dt=1e-5, 0.05 s run):
+    E(0) = -27.676215 J,  E(end) = -27.676315 J  (relative drift 3.6e-06)
+    (RK4 is not symplectic, so energy slowly drifts over long chaotic runs; over a
+     short well-resolved window it holds to a part in a million or better.)
+
+  Two releases 1e-4 rad apart, angle-space separation over time:
+    t =   0.0 s  ->  separation 1.000e-04
+    t =   2.0 s  ->  separation 6.552e-04
+    t =   4.0 s  ->  separation 9.042e-04
+    t =   6.0 s  ->  separation 3.022e-03
+    t =   8.0 s  ->  separation 3.079e-03
+    t =  10.0 s  ->  separation 1.200e-03
+
+  A ten-thousandth of a radian grows until the two pendulums are doing utterly
+  different things -- the same sensitive dependence that makes weather chaotic, in a
+  system you can hang from a nail. Energy is conserved; the motion is still unpredictable.
+
+  wrote examples/output\double_pendulum.svg

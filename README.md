@@ -198,6 +198,7 @@ ruins a long non-symplectic integration.
 | `src/logistic_map.py` | Logistic map: period doubling, attractor, Lyapunov exponent, Feigenbaum |
 | `src/henon.py` | Henon map: strange attractor, area contraction, fixed points, Lyapunov |
 | `src/lorenz.py` | Lorenz attractor: RK4 flow, volume contraction, fixed points, Lyapunov |
+| `src/double_pendulum.py` | Double pendulum: RK4 equations of motion, energy, chaotic divergence |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -387,6 +388,7 @@ ruins a long non-symplectic integration.
 | `examples/logistic_map_demo.py` | Period/Lyapunov table + the bifurcation diagram & Lyapunov figure |
 | `examples/henon_demo.py` | Fixed-point/Lyapunov table + the attractor & fractal-zoom figure |
 | `examples/lorenz_demo.py` | Fixed-point/Lyapunov table + the butterfly & trajectory-divergence figure |
+| `examples/double_pendulum_demo.py` | Energy/divergence table + the bob-trace & two-pendulum figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4569,6 +4571,28 @@ unforecastable beyond ~two weeks. Integrated here with RK4. The tests verify the
 (origin plus the two convection points for `rho>1`), the `-(sigma+1+beta)` volume contraction,
 the bounded two-lobe attractor, the ~0.9 Lyapunov exponent, and the decay to the origin for
 `rho<1`.
+
+## The double pendulum: chaos you can hang from a nail
+
+The simplest chaotic machine: two rods and gravity. `double_pendulum.py`:
+
+```
+$ python examples/double_pendulum_demo.py examples/output
+
+  energy conserved to ~1e-6 over a fine short run
+  two starts 1e-4 rad apart: separation 1e-4 -> 3e-3 over a few seconds (and growing)
+```
+
+Hang one pendulum off another and the coupled equations of motion (from the Lagrangian) have
+no closed-form solution -- they must be integrated numerically (RK4). The motion is fully
+deterministic yet chaotic: above a threshold energy two nearly identical releases diverge
+exponentially, flailing into completely different configurations within seconds -- sensitive
+dependence on initial conditions in a system you can build from string. Two things stay clean
+and the tests check them: the total mechanical energy is conserved along the exact motion (so
+a well-resolved RK4 run holds it to a part in a million; the slow long-time drift is the
+expected non-symplectic numerical effect), and a hair's difference in the start grows far
+beyond its initial size. The tests verify the straight-down equilibrium, energy conservation
+at a fine step, the bob positions, and the chaotic divergence outpacing a near-linear start.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
