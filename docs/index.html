@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.23       12.00      0.8x
-   400          35.97       36.74      1.0x
-   800         145.56      113.68      1.3x
-  1600         641.13      364.50      1.8x
-  3200        2570.04     1017.72      2.5x
+   200           9.17       12.16      0.8x
+   400          36.86       37.47      1.0x
+   800         143.03      110.96      1.3x
+  1600         648.03      372.29      1.7x
+  3200        2603.26      996.11      2.6x
 
-empirical scaling exponent  direct ~ N^2.04   barnes-hut ~ N^1.61
+empirical scaling exponent  direct ~ N^2.04   barnes-hut ~ N^1.60
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -198525,6 +198525,114 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   risk, which is why real traders and gamblers bet fractional Kelly.
 
   wrote examples/output\kelly.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Hamming codes: correcting a bit error from the syndrome</h2>
+    <p class="blurb">Bits flip on a noisy channel. A parity bit can detect a single error but not fix it; Hamming's 1950 codes correct it. Placing parity bits at the power-of-two positions so each data bit is covered by a unique combination of checks, the pattern of failed checks -- the syndrome -- reads out, in binary, the exact position of the flipped bit. The classic Hamming(7,4) carries 4 data bits in 7 and corrects any single error; Hamming(2^m-1, 2^m-1-m) needs only m parity bits, so the overhead shrinks as blocks grow. Every Hamming code has minimum distance 3, and one extra overall parity bit gives SECDED (single-correct, double-detect), the scheme in ECC memory. Verified by exhaustively correcting every single-bit error in every codeword.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="390" viewBox="0 0 760 390" font-family="monospace">
+<rect width="760" height="390" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">Hamming(7,4): parity coverage and the code rate</text>
+<text x="20" y="44" fill="#8b949e" font-size="12">which positions each parity bit checks (left); code rate k/n vs block size (right)</text>
+<text x="91.0" y="82.0" fill="#ffd43b" font-size="11" text-anchor="middle">1</text>
+<text x="91.0" y="68.0" fill="#8b949e" font-size="8" text-anchor="middle">P</text>
+<text x="133.0" y="82.0" fill="#ffd43b" font-size="11" text-anchor="middle">2</text>
+<text x="133.0" y="68.0" fill="#8b949e" font-size="8" text-anchor="middle">P</text>
+<text x="175.0" y="82.0" fill="#4dabf7" font-size="11" text-anchor="middle">3</text>
+<text x="175.0" y="68.0" fill="#8b949e" font-size="8" text-anchor="middle">D</text>
+<text x="217.0" y="82.0" fill="#ffd43b" font-size="11" text-anchor="middle">4</text>
+<text x="217.0" y="68.0" fill="#8b949e" font-size="8" text-anchor="middle">P</text>
+<text x="259.0" y="82.0" fill="#4dabf7" font-size="11" text-anchor="middle">5</text>
+<text x="259.0" y="68.0" fill="#8b949e" font-size="8" text-anchor="middle">D</text>
+<text x="301.0" y="82.0" fill="#4dabf7" font-size="11" text-anchor="middle">6</text>
+<text x="301.0" y="68.0" fill="#8b949e" font-size="8" text-anchor="middle">D</text>
+<text x="343.0" y="82.0" fill="#4dabf7" font-size="11" text-anchor="middle">7</text>
+<text x="343.0" y="68.0" fill="#8b949e" font-size="8" text-anchor="middle">D</text>
+<text x="58.0" y="115.0" fill="#ffd43b" font-size="11" text-anchor="end">p1</text>
+<rect x="70.0" y="90.0" width="39.0" height="39.0" fill="#8338ec" stroke="#21262d" stroke-width="1"/>
+<text x="89.5" y="115.0" fill="#e6edf3" font-size="10" text-anchor="middle">check</text>
+<rect x="112.0" y="90.0" width="39.0" height="39.0" fill="#161b22" stroke="#21262d" stroke-width="1"/>
+<rect x="154.0" y="90.0" width="39.0" height="39.0" fill="#8338ec" stroke="#21262d" stroke-width="1"/>
+<text x="173.5" y="115.0" fill="#e6edf3" font-size="10" text-anchor="middle">check</text>
+<rect x="196.0" y="90.0" width="39.0" height="39.0" fill="#161b22" stroke="#21262d" stroke-width="1"/>
+<rect x="238.0" y="90.0" width="39.0" height="39.0" fill="#8338ec" stroke="#21262d" stroke-width="1"/>
+<text x="257.5" y="115.0" fill="#e6edf3" font-size="10" text-anchor="middle">check</text>
+<rect x="280.0" y="90.0" width="39.0" height="39.0" fill="#161b22" stroke="#21262d" stroke-width="1"/>
+<rect x="322.0" y="90.0" width="39.0" height="39.0" fill="#8338ec" stroke="#21262d" stroke-width="1"/>
+<text x="341.5" y="115.0" fill="#e6edf3" font-size="10" text-anchor="middle">check</text>
+<text x="58.0" y="157.0" fill="#ffd43b" font-size="11" text-anchor="end">p2</text>
+<rect x="70.0" y="132.0" width="39.0" height="39.0" fill="#161b22" stroke="#21262d" stroke-width="1"/>
+<rect x="112.0" y="132.0" width="39.0" height="39.0" fill="#8338ec" stroke="#21262d" stroke-width="1"/>
+<text x="131.5" y="157.0" fill="#e6edf3" font-size="10" text-anchor="middle">check</text>
+<rect x="154.0" y="132.0" width="39.0" height="39.0" fill="#8338ec" stroke="#21262d" stroke-width="1"/>
+<text x="173.5" y="157.0" fill="#e6edf3" font-size="10" text-anchor="middle">check</text>
+<rect x="196.0" y="132.0" width="39.0" height="39.0" fill="#161b22" stroke="#21262d" stroke-width="1"/>
+<rect x="238.0" y="132.0" width="39.0" height="39.0" fill="#161b22" stroke="#21262d" stroke-width="1"/>
+<rect x="280.0" y="132.0" width="39.0" height="39.0" fill="#8338ec" stroke="#21262d" stroke-width="1"/>
+<text x="299.5" y="157.0" fill="#e6edf3" font-size="10" text-anchor="middle">check</text>
+<rect x="322.0" y="132.0" width="39.0" height="39.0" fill="#8338ec" stroke="#21262d" stroke-width="1"/>
+<text x="341.5" y="157.0" fill="#e6edf3" font-size="10" text-anchor="middle">check</text>
+<text x="58.0" y="199.0" fill="#ffd43b" font-size="11" text-anchor="end">p4</text>
+<rect x="70.0" y="174.0" width="39.0" height="39.0" fill="#161b22" stroke="#21262d" stroke-width="1"/>
+<rect x="112.0" y="174.0" width="39.0" height="39.0" fill="#161b22" stroke="#21262d" stroke-width="1"/>
+<rect x="154.0" y="174.0" width="39.0" height="39.0" fill="#161b22" stroke="#21262d" stroke-width="1"/>
+<rect x="196.0" y="174.0" width="39.0" height="39.0" fill="#8338ec" stroke="#21262d" stroke-width="1"/>
+<text x="215.5" y="199.0" fill="#e6edf3" font-size="10" text-anchor="middle">check</text>
+<rect x="238.0" y="174.0" width="39.0" height="39.0" fill="#8338ec" stroke="#21262d" stroke-width="1"/>
+<text x="257.5" y="199.0" fill="#e6edf3" font-size="10" text-anchor="middle">check</text>
+<rect x="280.0" y="174.0" width="39.0" height="39.0" fill="#8338ec" stroke="#21262d" stroke-width="1"/>
+<text x="299.5" y="199.0" fill="#e6edf3" font-size="10" text-anchor="middle">check</text>
+<rect x="322.0" y="174.0" width="39.0" height="39.0" fill="#8338ec" stroke="#21262d" stroke-width="1"/>
+<text x="341.5" y="199.0" fill="#e6edf3" font-size="10" text-anchor="middle">check</text>
+<text x="70.0" y="240.0" fill="#8b949e" font-size="10">A flipped bit fails exactly the checks whose bit is set in its position number,</text>
+<text x="70.0" y="254.0" fill="#8b949e" font-size="10">so the syndrome (p4 p2 p1 read as binary) IS the error position.</text>
+<line x1="450" y1="330" x2="730" y2="330" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="450" y1="330" x2="450" y2="90" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="450" y1="90.0" x2="730" y2="90.0" stroke="#21262d" stroke-width="1"/>
+<text x="728.0" y="86.0" fill="#8b949e" font-size="9" text-anchor="end">rate -> 1</text>
+<polyline points="450.0,250.0 503.4,192.9 551.4,154.0 597.2,128.7 641.9,112.9 686.1,103.2 730.0,97.5" fill="none" stroke="#06d6a0" stroke-width="2.5"/>
+<circle cx="450.0" cy="250.0" r="2.5" fill="#06d6a0"/>
+<circle cx="503.4" cy="192.9" r="2.5" fill="#06d6a0"/>
+<circle cx="551.4" cy="154.0" r="2.5" fill="#06d6a0"/>
+<circle cx="597.2" cy="128.7" r="2.5" fill="#06d6a0"/>
+<circle cx="641.9" cy="112.9" r="2.5" fill="#06d6a0"/>
+<circle cx="686.1" cy="103.2" r="2.5" fill="#06d6a0"/>
+<circle cx="730.0" cy="97.5" r="2.5" fill="#06d6a0"/>
+<text x="503.4" y="208.9" fill="#06d6a0" font-size="9" text-anchor="middle">(7,4)</text>
+<text x="444.0" y="213.0" fill="#8b949e" font-size="9" text-anchor="end">0.50</text>
+<text x="444.0" y="153.0" fill="#8b949e" font-size="9" text-anchor="end">0.75</text>
+<text x="444.0" y="93.0" fill="#8b949e" font-size="9" text-anchor="end">1.00</text>
+<text x="450.0" y="345.0" fill="#8b949e" font-size="8" text-anchor="middle">3</text>
+<text x="597.2" y="345.0" fill="#8b949e" font-size="8" text-anchor="middle">31</text>
+<text x="730.0" y="345.0" fill="#8b949e" font-size="8" text-anchor="middle">255</text>
+<text x="590.0" y="360.0" fill="#8b949e" font-size="10" text-anchor="middle">block length n (log)</text>
+</svg><figcaption>each parity bit&#x27;s coverage that makes the syndrome name the error position, and the code rate rising toward 1</figcaption></figure><div class="card"><pre>Hamming(7,4): 4 data bits -&gt; 7 transmitted bits, corrects any single error
+
+  data [1, 0, 1, 1] -&gt; codeword [0, 1, 1, 0, 0, 1, 1]   (parity bits at positions 1,2,4)
+
+   flipped pos            received  syndrome  corrected?
+             1[1, 1, 1, 0, 0, 1, 1]         1         yes
+             2[0, 0, 1, 0, 0, 1, 1]         2         yes
+             3[0, 1, 0, 0, 0, 1, 1]         3         yes
+             4[0, 1, 1, 1, 0, 1, 1]         4         yes
+             5[0, 1, 1, 0, 1, 1, 1]         5         yes
+             6[0, 1, 1, 0, 0, 0, 1]         6         yes
+             7[0, 1, 1, 0, 0, 1, 0]         7         yes
+
+  The failed parity checks spell out, in binary, the exact position of the flipped
+  bit -- flip it back and the message is restored. No retransmission needed.
+
+        code  data k  total n  rate k/n
+     (3,1)       1        3     0.333
+     (7,4)       4        7     0.571
+   (15,11)      11       15     0.733
+   (31,26)      26       31     0.839
+   (63,57)      57       63     0.905
+
+  More parity bits per block -&gt; higher rate: the (255,247) code spends just 8 bits
+  to protect 247. Add one overall parity bit for SECDED -- the scheme in ECC memory.
+
+  wrote examples/output\hamming.svg</pre></div></div>
   </section>
 
   <section>

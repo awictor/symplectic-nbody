@@ -262,6 +262,7 @@ def main():
     import bayes_test_demo
     import shannon_demo
     import kelly_demo
+    import hamming_demo
 
     import plot_orbits
 
@@ -493,6 +494,7 @@ def main():
     bayes_test_txt = run("bayes_test_demo", bayes_test_demo.main, True)
     shannon_txt = run("shannon_demo", shannon_demo.main, True)
     kelly_txt = run("kelly_demo", kelly_demo.main, True)
+    hamming_txt = run("hamming_demo", hamming_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2858,6 +2860,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("kelly.svg"), "the growth-rate curve peaking at f* and going negative past break-even, with sample bankrolls under-, Kelly-, and over-betting")
             + f'<div class="card">{pre(kelly_txt)}</div>'
+            + '</div>'),
+        section(
+            "Hamming codes: correcting a bit error from the syndrome",
+            "Bits flip on a noisy channel. A parity bit can detect a single error but not fix "
+            "it; Hamming's 1950 codes correct it. Placing parity bits at the power-of-two "
+            "positions so each data bit is covered by a unique combination of checks, the "
+            "pattern of failed checks -- the syndrome -- reads out, in binary, the exact "
+            "position of the flipped bit. The classic Hamming(7,4) carries 4 data bits in 7 and "
+            "corrects any single error; Hamming(2^m-1, 2^m-1-m) needs only m parity bits, so the "
+            "overhead shrinks as blocks grow. Every Hamming code has minimum distance 3, and "
+            "one extra overall parity bit gives SECDED (single-correct, double-detect), the "
+            "scheme in ECC memory. Verified by exhaustively correcting every single-bit error in "
+            "every codeword.",
+            '<div class="grid">'
+            + svg_card(out("hamming.svg"), "each parity bit's coverage that makes the syndrome name the error position, and the code rate rising toward 1")
+            + f'<div class="card">{pre(hamming_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

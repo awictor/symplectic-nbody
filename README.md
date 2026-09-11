@@ -220,6 +220,7 @@ ruins a long non-symplectic integration.
 | `src/bayes_test.py` | Bayes & base-rate fallacy: PPV/NPV, likelihood ratios, retest odds, Monte-Carlo |
 | `src/shannon.py` | Shannon entropy & Huffman coding: H = -sum p log p, optimal prefix code, H<=L<H+1 |
 | `src/kelly.py` | Kelly criterion: optimal bet fraction f*=p-q/b, log-growth rate, fractional Kelly |
+| `src/hamming.py` | Hamming codes: (7,4) SEC + SECDED, syndrome decoding, exhaustively verified |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -431,6 +432,7 @@ ruins a long non-symplectic integration.
 | `examples/bayes_test_demo.py` | Rare-disease posterior vs simulation + the PPV-vs-prevalence curve & cohort |
 | `examples/shannon_demo.py` | Huffman code table + the binary-entropy curve & codeword-length figure |
 | `examples/kelly_demo.py` | Growth-rate table vs simulation + the g(f) curve & bankroll trajectories |
+| `examples/hamming_demo.py` | Syndrome-locates-error table + the parity-coverage grid & code-rate curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5144,6 +5146,30 @@ the compounding bankroll. The tests verify f* for even-money and b-to-1 odds, th
 confirms f* is the growth argmax, that overbetting loses, that half-Kelly keeps ~3/4 of the
 growth, and that simulation grows fastest exactly at f*. Kelly derived it from Shannon's channel
 capacity, and it sizes positions in quantitative finance.
+
+## Hamming codes: correcting a bit error from the syndrome
+
+Detect and fix a flipped bit with a handful of parity checks. `hamming.py`:
+
+```
+$ python examples/hamming_demo.py examples/output
+
+   flipped pos            received  syndrome  corrected?
+             1[1, 1, 1, 0, 0, 1, 1]         1         yes
+             5[0, 1, 1, 0, 1, 1, 1]         5         yes
+             7[0, 1, 1, 0, 0, 1, 0]         7         yes
+```
+
+Bits flip on a noisy channel, and a plain parity bit can only detect a single error. Hamming's
+1950 codes correct it: parity bits at the power-of-two positions cover each data bit with a
+unique combination of checks, so the pattern of failed checks -- the syndrome -- reads out, in
+binary, the exact position of the flipped bit. The classic Hamming(7,4) carries 4 data bits in
+7; `Hamming(2^m-1, 2^m-1-m)` needs only m parity bits, so overhead shrinks as blocks grow.
+Every Hamming code has minimum distance 3, and one extra overall parity bit gives SECDED
+(single-error-correct, double-error-detect), the scheme in ECC memory. This module encodes,
+computes the syndrome, decodes with correction, and does SECDED -- and the tests prove
+correctness *exhaustively*, correcting every single-bit error in every codeword of the (7,4) and
+(15,11) codes.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
