@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" font-family="monospace">
+<rect width="760" height="430" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="18">Splay tree working-set property: skew lowers average access depth</text>
+<text x="20" y="47" fill="#8b949e" font-size="12">blue = splay average access depth, yellow dashed = a balanced tree's fixed log2(n)</text>
+<line x1="70" y1="370" x2="720" y2="370" stroke="#484f58" stroke-width="1.5"/>
+<line x1="70" y1="80" x2="70" y2="370" stroke="#484f58" stroke-width="1.5"/>
+<line x1="70" y1="194.7" x2="720" y2="194.7" stroke="#ffd43b" stroke-width="1.8" stroke-dasharray="6,4"/>
+<text x="716" y="188.7" fill="#ffd43b" font-size="11" text-anchor="end">balanced ~log2(n)=12.0</text>
+<polyline points="70.0,128.3 167.8,143.3 297.2,163.8 395.0,184.7 492.8,198.2 622.2,218.8 720.0,243.0" fill="none" stroke="#4dabf7" stroke-width="2.2"/>
+<circle cx="70.0" cy="128.3" r="4" fill="#4dabf7"/>
+<text x="70" y="388" fill="#8b949e" font-size="10" text-anchor="middle">1.00</text>
+<circle cx="167.8" cy="143.3" r="4" fill="#4dabf7"/>
+<text x="168" y="388" fill="#8b949e" font-size="10" text-anchor="middle">0.50</text>
+<circle cx="297.2" cy="163.8" r="4" fill="#4dabf7"/>
+<text x="297" y="388" fill="#8b949e" font-size="10" text-anchor="middle">0.20</text>
+<circle cx="395.0" cy="184.7" r="4" fill="#4dabf7"/>
+<text x="395" y="388" fill="#8b949e" font-size="10" text-anchor="middle">0.10</text>
+<circle cx="492.8" cy="198.2" r="4" fill="#4dabf7"/>
+<text x="493" y="388" fill="#8b949e" font-size="10" text-anchor="middle">0.05</text>
+<circle cx="622.2" cy="218.8" r="4" fill="#4dabf7"/>
+<text x="622" y="388" fill="#8b949e" font-size="10" text-anchor="middle">0.02</text>
+<circle cx="720.0" cy="243.0" r="4" fill="#4dabf7"/>
+<text x="720" y="388" fill="#8b949e" font-size="10" text-anchor="middle">0.01</text>
+<text x="395" y="416" fill="#8b949e" font-size="12" text-anchor="middle">hot-set fraction (smaller = more skewed access) -></text>
+</svg>

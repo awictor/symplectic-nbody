@@ -364,6 +364,7 @@ def main():
     import wavelet_tree_demo
     import fibonacci_heap_demo
     import treap_demo
+    import splay_tree_demo
 
     import plot_orbits
 
@@ -697,6 +698,7 @@ def main():
     wavelet_tree_txt = run("wavelet_tree_demo", wavelet_tree_demo.main, True)
     fibonacci_heap_txt = run("fibonacci_heap_demo", fibonacci_heap_demo.main, True)
     treap_txt = run("treap_demo", treap_demo.main, True)
+    splay_tree_txt = run("splay_tree_demo", splay_tree_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5007,6 +5009,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("treap.svg"), "the treap's height (blue) tracking 2 log2(n) even when keys are inserted in sorted order -- the case that degrades an unbalanced BST to a linear chain of height n-1")
             + f'<div class="card">{pre(treap_txt)}</div>'
+            + '</div>'),
+        section(
+            "Splay trees: self-adjusting search trees that keep hot keys near the root",
+            "Most balanced trees maintain an explicit invariant; a SPLAY TREE, from Sleator and "
+            "Tarjan, keeps NO balance information at all, yet achieves O(log n) AMORTIZED time through "
+            "one move called SPLAYING. Every access, insert, or delete rotates the touched node all "
+            "the way to the root, in careful pairs -- ZIG-ZIG when node and parent lean the same way, "
+            "ZIG-ZAG when opposite, a single ZIG at the top -- that lift the node while roughly "
+            "halving the depth of everything on its path, so long paths pay for themselves by "
+            "becoming short. This buys properties fixed-balance trees lack: the WORKING-SET property "
+            "(recently used keys sit near the root, so temporally-local workloads run far faster than "
+            "log n per access) and STATIC OPTIMALITY (on any access sequence a splay tree is within a "
+            "constant factor of the best static tree built with full knowledge of the frequencies -- "
+            "with no tuning). This module implements insert, delete, membership, find-min/max, "
+            "predecessor/successor, and ordered traversal, splaying on every access, verified against "
+            "a sorted set: in-order traversal stays sorted through a 3000-operation random stream, "
+            "the BST and parent-pointer invariants hold throughout, predecessor/successor match a "
+            "sorted array, the most-recently-accessed key is always at the root, and hammering a "
+            "small hot set drives the average access depth well below log2(n) -- the working-set "
+            "property in action.",
+            '<div class="grid">'
+            + svg_card(out("splay_tree.svg"), "average access depth (blue) sinking below a balanced tree's fixed log2(n) (yellow dashed) as the access pattern grows more skewed -- recently touched keys stay near the root")
+            + f'<div class="card">{pre(splay_tree_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

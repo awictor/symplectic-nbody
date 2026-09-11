@@ -322,6 +322,7 @@ ruins a long non-symplectic integration.
 | `src/wavelet_tree.py` | Wavelet tree: rank/select/quantile/range-count over a sequence in O(log sigma) |
 | `src/fibonacci_heap.py` | Fibonacci heap (O(1) amortized decrease-key) + Dijkstra built on it |
 | `src/treap.py` | Treap: randomized balanced BST with split/merge and order statistics (select/rank) |
+| `src/splay_tree.py` | Splay tree: self-adjusting BST with the working-set property (hot keys near root) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -635,6 +636,7 @@ ruins a long non-symplectic integration.
 | `examples/wavelet_tree_demo.py` | Rank/select/quantile/range-count queries + the recursive alphabet-partition tree |
 | `examples/fibonacci_heap_demo.py` | Decrease-key/merge/Dijkstra + max root degree staying within the log_phi(n) bound |
 | `examples/treap_demo.py` | Order statistics + split/merge + height near 2log2(n) even under sorted insertion |
+| `examples/splay_tree_demo.py` | Working-set property: average access depth sinking below log2(n) as access skews |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7665,6 +7667,26 @@ augmentation gives O(log n) select and rank. This module implements insert/delet
 merge, verified against a sorted list over a 3000-operation random stream, with select/rank matching a
 sorted array, split/merge round-tripping, and the height staying near 2 log2(n) even under adversarial
 sorted insertion.
+
+## Splay trees: self-adjusting search trees that keep hot keys near the root
+
+No balance invariant, yet O(log n) amortized -- plus the working-set property. `splay_tree.py`:
+
+```
+$ python examples/splay_tree_demo.py examples/output
+
+  access 40 -> root is now 40   (every access splays the key to the root)
+  skewed access (n=4000): avg access depth drops from 16.5 to 8.7 as it concentrates
+  a balanced tree pays log2(n) ~ 12 every time, regardless of skew
+```
+
+A splay tree rotates every touched node to the root in zig-zig / zig-zag pairs that halve the depth
+of everything on the access path, so recently used keys stay near the root (the working-set property)
+and the tree is statically optimal to within a constant on any access sequence. This module implements
+insert/delete/membership/find-min/max/predecessor/successor with splaying on every access, verified
+against a sorted set over a 3000-operation stream (BST and parent invariants hold, pred/succ match a
+sorted array, the accessed key is always at the root, and a hot access set drives the average depth
+well below log2(n)).
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
