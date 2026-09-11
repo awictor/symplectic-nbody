@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="400" viewBox="0 0 760 400" font-family="monospace">
+<rect width="760" height="400" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">KMP: the prefix function (top) and pattern matches in the text (bottom)</text>
+<text x="20" y="44" fill="#8b949e" font-size="12">prefix-function bars show self-overlap; highlighted spans are pattern occurrences</text>
+<rect x="60.0" y="150.0" width="42" height="0.0" fill="#4dabf7"/>
+<text x="81.0" y="166.0" fill="#e6edf3" font-size="13" text-anchor="middle">a</text>
+<text x="81.0" y="146.0" fill="#8b949e" font-size="9" text-anchor="middle">0</text>
+<rect x="106.0" y="150.0" width="42" height="0.0" fill="#4dabf7"/>
+<text x="127.0" y="166.0" fill="#e6edf3" font-size="13" text-anchor="middle">b</text>
+<text x="127.0" y="146.0" fill="#8b949e" font-size="9" text-anchor="middle">0</text>
+<rect x="152.0" y="130.0" width="42" height="20.0" fill="#4dabf7"/>
+<text x="173.0" y="166.0" fill="#e6edf3" font-size="13" text-anchor="middle">a</text>
+<text x="173.0" y="126.0" fill="#8b949e" font-size="9" text-anchor="middle">1</text>
+<rect x="198.0" y="110.0" width="42" height="40.0" fill="#4dabf7"/>
+<text x="219.0" y="166.0" fill="#e6edf3" font-size="13" text-anchor="middle">b</text>
+<text x="219.0" y="106.0" fill="#8b949e" font-size="9" text-anchor="middle">2</text>
+<rect x="244.0" y="90.0" width="42" height="60.0" fill="#4dabf7"/>
+<text x="265.0" y="166.0" fill="#e6edf3" font-size="13" text-anchor="middle">a</text>
+<text x="265.0" y="86.0" fill="#8b949e" font-size="9" text-anchor="middle">3</text>
+<rect x="290.0" y="150.0" width="42" height="0.0" fill="#4dabf7"/>
+<text x="311.0" y="166.0" fill="#e6edf3" font-size="13" text-anchor="middle">c</text>
+<text x="311.0" y="146.0" fill="#8b949e" font-size="9" text-anchor="middle">0</text>
+<rect x="336.0" y="130.0" width="42" height="20.0" fill="#4dabf7"/>
+<text x="357.0" y="166.0" fill="#e6edf3" font-size="13" text-anchor="middle">a</text>
+<text x="357.0" y="126.0" fill="#8b949e" font-size="9" text-anchor="middle">1</text>
+<text x="20" y="120.0" fill="#8b949e" font-size="10">pi</text>
+<text x="75.0" y="250.0" fill="#c9d1d9" font-size="12" text-anchor="middle">a</text>
+<text x="105.0" y="250.0" fill="#c9d1d9" font-size="12" text-anchor="middle">b</text>
+<rect x="120.0" y="236.0" width="29" height="20" fill="#06d6a0" opacity="0.3"/>
+<text x="135.0" y="250.0" fill="#06d6a0" font-size="12" text-anchor="middle">a</text>
+<rect x="150.0" y="236.0" width="29" height="20" fill="#06d6a0" opacity="0.3"/>
+<text x="165.0" y="250.0" fill="#06d6a0" font-size="12" text-anchor="middle">b</text>
+<rect x="180.0" y="236.0" width="29" height="20" fill="#06d6a0" opacity="0.3"/>
+<text x="195.0" y="250.0" fill="#06d6a0" font-size="12" text-anchor="middle">a</text>
+<rect x="210.0" y="236.0" width="29" height="20" fill="#06d6a0" opacity="0.3"/>
+<text x="225.0" y="250.0" fill="#06d6a0" font-size="12" text-anchor="middle">b</text>
+<rect x="240.0" y="236.0" width="29" height="20" fill="#06d6a0" opacity="0.3"/>
+<text x="255.0" y="250.0" fill="#06d6a0" font-size="12" text-anchor="middle">a</text>
+<rect x="270.0" y="236.0" width="29" height="20" fill="#06d6a0" opacity="0.3"/>
+<text x="285.0" y="250.0" fill="#06d6a0" font-size="12" text-anchor="middle">c</text>
+<rect x="300.0" y="236.0" width="29" height="20" fill="#06d6a0" opacity="0.3"/>
+<text x="315.0" y="250.0" fill="#06d6a0" font-size="12" text-anchor="middle">a</text>
+<text x="345.0" y="250.0" fill="#c9d1d9" font-size="12" text-anchor="middle">b</text>
+<rect x="360.0" y="236.0" width="29" height="20" fill="#06d6a0" opacity="0.3"/>
+<text x="375.0" y="250.0" fill="#06d6a0" font-size="12" text-anchor="middle">a</text>
+<rect x="390.0" y="236.0" width="29" height="20" fill="#06d6a0" opacity="0.3"/>
+<text x="405.0" y="250.0" fill="#06d6a0" font-size="12" text-anchor="middle">b</text>
+<rect x="420.0" y="236.0" width="29" height="20" fill="#06d6a0" opacity="0.3"/>
+<text x="435.0" y="250.0" fill="#06d6a0" font-size="12" text-anchor="middle">a</text>
+<rect x="450.0" y="236.0" width="29" height="20" fill="#06d6a0" opacity="0.3"/>
+<text x="465.0" y="250.0" fill="#06d6a0" font-size="12" text-anchor="middle">b</text>
+<rect x="480.0" y="236.0" width="29" height="20" fill="#06d6a0" opacity="0.3"/>
+<text x="495.0" y="250.0" fill="#06d6a0" font-size="12" text-anchor="middle">a</text>
+<rect x="510.0" y="236.0" width="29" height="20" fill="#06d6a0" opacity="0.3"/>
+<text x="525.0" y="250.0" fill="#06d6a0" font-size="12" text-anchor="middle">c</text>
+<rect x="540.0" y="236.0" width="29" height="20" fill="#06d6a0" opacity="0.3"/>
+<text x="555.0" y="250.0" fill="#06d6a0" font-size="12" text-anchor="middle">a</text>
+<text x="585.0" y="250.0" fill="#c9d1d9" font-size="12" text-anchor="middle">b</text>
+<text x="615.0" y="250.0" fill="#c9d1d9" font-size="12" text-anchor="middle">a</text>
+<text x="20" y="250.0" fill="#8b949e" font-size="10">text</text>
+<text x="60" y="280.0" fill="#8b949e" font-size="11">pattern 'ababaca' found at [2, 10]</text>
+</svg>

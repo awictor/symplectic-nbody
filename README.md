@@ -306,6 +306,7 @@ ruins a long non-symplectic integration.
 | `src/bwt.py` | Burrows-Wheeler transform + inverse, move-to-front, RLE, the bzip2-style pipeline |
 | `src/arithmetic_coding.py` | Arithmetic coding: integer range coder, renormalization, beats Huffman on skew |
 | `src/sequence_alignment.py` | Needleman-Wunsch & Smith-Waterman: global/local DP, traceback, scoring |
+| `src/string_matching.py` | KMP prefix function, Z-algorithm, Manacher longest palindrome, linear-time |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -603,6 +604,7 @@ ruins a long non-symplectic integration.
 | `examples/bwt_demo.py` | BWT runniness gain, full pipeline compression, worked banana example |
 | `examples/arithmetic_coding_demo.py` | Bits/symbol vs Huffman vs entropy across distributions, ~49% saving on skew |
 | `examples/sequence_alignment_demo.py` | Global vs local alignments with match rulers + DP-matrix traceback figure |
+| `examples/string_matching_demo.py` | Prefix function, KMP/Z/brute agreement, overlapping matches, Manacher palindromes |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7281,6 +7283,28 @@ both with configurable match/mismatch/gap scoring and traceback to the gapped st
 identical sequences align perfectly, the global score matches recomputing it from the alignment, a
 local alignment isolates an embedded motif the global one drags flanks into, the gap penalty steers
 gaps vs mismatches, and the score is symmetric.
+
+## Linear-time string matching: KMP, Z-algorithm, Manacher
+
+Find patterns and palindromes without rescanning. `string_matching.py`:
+
+```
+$ python examples/string_matching_demo.py examples/output
+
+  prefix function of 'ababaca': [0,0,1,2,3,0,1]
+  'ababaca' in a text: KMP, Z-algorithm, and brute force all agree ([2, 10])
+  'aa' in 'aaaaa': 4 overlapping matches; longest palindrome of 'banana' -> 'anana'
+```
+
+The naive pattern search is O(n*m); these do it in O(n). **KMP** builds the prefix function (longest
+proper prefix that is also a suffix at each position) so a mismatch shifts the pattern by more than
+one without rescanning. The **Z-algorithm** computes each position's longest prefix-match; run on
+pattern + separator + text it reads off the matches. **Manacher** finds the longest palindromic
+substring in O(n) via mirror reuse. This module implements the prefix function and KMP search, the
+Z-array and Z-based search, and Manacher's palindrome, verified that KMP and Z find exactly the same
+overlapping occurrences as brute force across 400 random strings, that the prefix function matches
+its definition, and that Manacher's palindrome matches brute-force length across 100 strings and the
+known cases.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

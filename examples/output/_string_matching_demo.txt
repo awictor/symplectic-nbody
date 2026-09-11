@@ -1,0 +1,33 @@
+Linear-time string matching: KMP, Z-algorithm, Manacher
+
+  KMP prefix function of 'ababaca':
+    index:  0 1 2 3 4 5 6
+    char:   a b a b a c a
+    pi:     0 0 1 2 3 0 1
+    (pi[i] = longest proper prefix that is also a suffix of the first i+1 chars --
+     on a mismatch the pattern shifts by more than one without rescanning the text)
+
+  Searching for 'ababaca' in 'abababacabababacaba':
+    KMP occurrences:      [2, 10]
+    Z-algorithm:          [2, 10]
+    brute-force (check):  [2, 10]
+    all three agree: True
+
+  Overlapping matches -- 'aa' in 'aaaaa': [0, 1, 2, 3] (4 occurrences)
+
+  Z-array of 'aabxaabxcaabxaab' (z[i] = match length with the prefix):
+    0 1 0 0 4 1 0 0 0 7 1 0 0 3 1 0
+
+  Longest palindromic substring (Manacher, O(n)):
+               babad -> 'bab'
+    forgeeksskeegfor -> 'geeksskeeg'
+        abacdfgdcaba -> 'aba'
+             racecar -> 'racecar'
+              banana -> 'anana'
+
+  All three exploit precomputed self-overlap to skip redundant comparisons: KMP's
+  prefix function, Z's prefix-match array, and Manacher's mirror reuse. Naive matching
+  is O(n*m) and naive palindrome search O(n^2); these are all O(n) -- the difference
+  between scanning a genome once and scanning it thousands of times.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\string_matching.svg

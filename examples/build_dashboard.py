@@ -348,6 +348,7 @@ def main():
     import bwt_demo
     import arithmetic_coding_demo
     import sequence_alignment_demo
+    import string_matching_demo
 
     import plot_orbits
 
@@ -665,6 +666,7 @@ def main():
     bwt_txt = run("bwt_demo", bwt_demo.main, True)
     arithmetic_coding_txt = run("arithmetic_coding_demo", arithmetic_coding_demo.main, True)
     sequence_alignment_txt = run("sequence_alignment_demo", sequence_alignment_demo.main, True)
+    string_matching_txt = run("string_matching_demo", string_matching_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4605,6 +4607,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("sequence_alignment.svg"), "the Needleman-Wunsch score matrix as a heatmap with the optimal-alignment traceback path highlighted in yellow")
             + f'<div class="card">{pre(sequence_alignment_txt)}</div>'
+            + '</div>'),
+        section(
+            "Linear-time string matching: KMP, Z-algorithm, Manacher",
+            "Finding a pattern in a text is the most basic string operation, and the naive "
+            "try-every-position approach is O(n*m). Three classics do fundamental string tasks in "
+            "LINEAR time by precomputing self-overlap so the search never re-examines a character. "
+            "KMP builds the PREFIX FUNCTION -- for each pattern position, the longest proper prefix "
+            "that is also a suffix -- so a mismatch shifts the pattern by more than one without "
+            "rescanning the text. The Z-ALGORITHM computes, for each position, the longest "
+            "substring there matching a prefix of the whole string; running it on pattern + "
+            "separator + text turns matching into reading off Z-values. MANACHER finds the longest "
+            "PALINDROMIC substring in O(n) by reusing mirror information where the naive approach is "
+            "O(n^2). This module implements the prefix function and KMP search, the Z-array and "
+            "Z-based search, and Manacher's palindrome, verified that KMP and the Z-search find "
+            "exactly the same (overlapping) occurrences as a brute-force scan across 400 random "
+            "strings, that the prefix function matches its definition, and that Manacher's longest "
+            "palindrome matches brute force in length across 100 strings and finds the known cases "
+            "(racecar, geeksskeeg).",
+            '<div class="grid">'
+            + svg_card(out("string_matching.svg"), "the KMP prefix-function bars over a pattern and the pattern's occurrences highlighted within the text")
+            + f'<div class="card">{pre(string_matching_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
