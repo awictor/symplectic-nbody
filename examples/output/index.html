@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.04       11.69      0.8x
-   400          36.20       37.56      1.0x
-   800         143.59      115.08      1.2x
-  1600         611.27      360.68      1.7x
-  3200        2454.57      969.19      2.5x
+   200           9.29       12.37      0.8x
+   400          37.50       38.59      1.0x
+   800         147.21      127.84      1.2x
+  1600         656.07      385.18      1.7x
+  3200        2694.31     1061.10      2.5x
 
-empirical scaling exponent  direct ~ N^2.02   barnes-hut ~ N^1.60
+empirical scaling exponent  direct ~ N^2.05   barnes-hut ~ N^1.62
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -200644,6 +200644,60 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   which is why A* is the standard for game and robot navigation.
 
   wrote examples/output\astar.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Topological sort: ordering tasks so prerequisites come first</h2>
+    <p class="blurb">A directed acyclic graph encodes dependencies -- an edge u -> v means u must come before v -- and a topological order is a linear arrangement in which every edge points forward: the order you can build the modules, install the packages, or recompute the spreadsheet cells. It exists exactly when the graph has no cycle. Kahn's algorithm repeatedly emits a node with no remaining incoming edges (BFS on in-degrees); the DFS method reverses finish-times and spots a cycle as a back-edge to a node still on the stack. Both run in O(V+E). With a duration on each task, the longest path through the DAG is the critical path -- the minimum time to finish everything. This module implements both sorts, cycle detection, and the critical path, and verifies every order it returns respects all edges across hundreds of random DAGs.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="400" viewBox="0 0 760 400" font-family="monospace">
+<rect width="760" height="400" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">Topological layers &amp; the critical path</text>
+<text x="20" y="46" fill="#8b949e" font-size="12">each column is a dependency layer; green = the critical (longest-duration) path</text>
+<line x1="92.0" y1="150.0" x2="203.0" y2="90.0" stroke="#06d6a0" stroke-width="2.5"/>
+<line x1="92.0" y1="150.0" x2="203.0" y2="160.0" stroke="#30363d" stroke-width="1"/>
+<line x1="92.0" y1="150.0" x2="203.0" y2="230.0" stroke="#30363d" stroke-width="1"/>
+<line x1="247.0" y1="90.0" x2="358.0" y2="150.0" stroke="#06d6a0" stroke-width="2.5"/>
+<line x1="247.0" y1="160.0" x2="358.0" y2="150.0" stroke="#30363d" stroke-width="1"/>
+<line x1="402.0" y1="150.0" x2="513.0" y2="150.0" stroke="#06d6a0" stroke-width="2.5"/>
+<line x1="557.0" y1="150.0" x2="668.0" y2="150.0" stroke="#06d6a0" stroke-width="2.5"/>
+<line x1="247.0" y1="230.0" x2="668.0" y2="150.0" stroke="#30363d" stroke-width="1"/>
+<ellipse cx="70.0" cy="150.0" rx="26" ry="18" fill="#161b22" stroke="#06d6a0" stroke-width="1.8"/>
+<text x="70.0" y="149.0" fill="#06d6a0" font-size="9" text-anchor="middle">design</text>
+<text x="70.0" y="160.0" fill="#8b949e" font-size="8" text-anchor="middle">5d</text>
+<ellipse cx="225.0" cy="90.0" rx="26" ry="18" fill="#161b22" stroke="#06d6a0" stroke-width="1.8"/>
+<text x="225.0" y="89.0" fill="#06d6a0" font-size="9" text-anchor="middle">backend</text>
+<text x="225.0" y="100.0" fill="#8b949e" font-size="8" text-anchor="middle">8d</text>
+<ellipse cx="225.0" cy="160.0" rx="26" ry="18" fill="#161b22" stroke="#4dabf7" stroke-width="1.8"/>
+<text x="225.0" y="159.0" fill="#4dabf7" font-size="9" text-anchor="middle">frontend</text>
+<text x="225.0" y="170.0" fill="#8b949e" font-size="8" text-anchor="middle">6d</text>
+<ellipse cx="225.0" cy="230.0" rx="26" ry="18" fill="#161b22" stroke="#4dabf7" stroke-width="1.8"/>
+<text x="225.0" y="229.0" fill="#4dabf7" font-size="9" text-anchor="middle">docs</text>
+<text x="225.0" y="240.0" fill="#8b949e" font-size="8" text-anchor="middle">7d</text>
+<ellipse cx="380.0" cy="150.0" rx="26" ry="18" fill="#161b22" stroke="#06d6a0" stroke-width="1.8"/>
+<text x="380.0" y="149.0" fill="#06d6a0" font-size="9" text-anchor="middle">integrate</text>
+<text x="380.0" y="160.0" fill="#8b949e" font-size="8" text-anchor="middle">3d</text>
+<ellipse cx="535.0" cy="150.0" rx="26" ry="18" fill="#161b22" stroke="#06d6a0" stroke-width="1.8"/>
+<text x="535.0" y="149.0" fill="#06d6a0" font-size="9" text-anchor="middle">qa</text>
+<text x="535.0" y="160.0" fill="#8b949e" font-size="8" text-anchor="middle">4d</text>
+<ellipse cx="690.0" cy="150.0" rx="26" ry="18" fill="#161b22" stroke="#06d6a0" stroke-width="1.8"/>
+<text x="690.0" y="149.0" fill="#06d6a0" font-size="9" text-anchor="middle">release</text>
+<text x="690.0" y="160.0" fill="#8b949e" font-size="8" text-anchor="middle">2d</text>
+</svg><figcaption>a dependency DAG laid out in topological layers with the critical (longest-duration) path highlighted</figcaption></figure><div class="card"><pre>Topological sort: a build order where every dependency comes first
+
+  Kahn:  fetch -&gt; compile -&gt; link -&gt; test -&gt; assets -&gt; package -&gt; deploy
+  DFS:   assets -&gt; fetch -&gt; compile -&gt; test -&gt; link -&gt; package -&gt; deploy
+  (both are valid orders; ties resolved differently)
+
+  a -&gt; b -&gt; c -&gt; a has a cycle: True (no order can exist)
+
+  Project critical path (longest chain of durations = minimum completion time):
+    design -&gt; backend -&gt; integrate -&gt; qa -&gt; release  =  22 days
+    (total task-days = 35, but the critical path bounds the schedule)
+
+  The same ordering runs package managers, build systems, spreadsheet recompute,
+  and course prerequisites -- and a cycle is a dependency that can never be resolved.
+
+  wrote examples/output\toposort.svg</pre></div></div>
   </section>
 
   <section>

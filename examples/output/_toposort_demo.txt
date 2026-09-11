@@ -1,0 +1,16 @@
+Topological sort: a build order where every dependency comes first
+
+  Kahn:  fetch -> compile -> link -> test -> assets -> package -> deploy
+  DFS:   assets -> fetch -> compile -> test -> link -> package -> deploy
+  (both are valid orders; ties resolved differently)
+
+  a -> b -> c -> a has a cycle: True (no order can exist)
+
+  Project critical path (longest chain of durations = minimum completion time):
+    design -> backend -> integrate -> qa -> release  =  22 days
+    (total task-days = 35, but the critical path bounds the schedule)
+
+  The same ordering runs package managers, build systems, spreadsheet recompute,
+  and course prerequisites -- and a cycle is a dependency that can never be resolved.
+
+  wrote examples/output\toposort.svg

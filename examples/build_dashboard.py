@@ -275,6 +275,7 @@ def main():
     import kdtree_demo
     import boyer_moore_demo
     import astar_demo
+    import toposort_demo
 
     import plot_orbits
 
@@ -519,6 +520,7 @@ def main():
     kdtree_txt = run("kdtree_demo", kdtree_demo.main, True)
     boyer_moore_txt = run("boyer_moore_demo", boyer_moore_demo.main, True)
     astar_txt = run("astar_demo", astar_demo.main, True)
+    toposort_txt = run("toposort_demo", toposort_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3094,6 +3096,23 @@ def main():
             '<div class="grid">'
             + svg_card(out("astar.svg"), "A* and Dijkstra side by side on the same maze: identical path, but A* explores far fewer cells")
             + f'<div class="card">{pre(astar_txt)}</div>'
+            + '</div>'),
+        section(
+            "Topological sort: ordering tasks so prerequisites come first",
+            "A directed acyclic graph encodes dependencies -- an edge u -> v means u must come "
+            "before v -- and a topological order is a linear arrangement in which every edge "
+            "points forward: the order you can build the modules, install the packages, or "
+            "recompute the spreadsheet cells. It exists exactly when the graph has no cycle. "
+            "Kahn's algorithm repeatedly emits a node with no remaining incoming edges (BFS on "
+            "in-degrees); the DFS method reverses finish-times and spots a cycle as a back-edge "
+            "to a node still on the stack. Both run in O(V+E). With a duration on each task, the "
+            "longest path through the DAG is the critical path -- the minimum time to finish "
+            "everything. This module implements both sorts, cycle detection, and the critical "
+            "path, and verifies every order it returns respects all edges across hundreds of "
+            "random DAGs.",
+            '<div class="grid">'
+            + svg_card(out("toposort.svg"), "a dependency DAG laid out in topological layers with the critical (longest-duration) path highlighted")
+            + f'<div class="card">{pre(toposort_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

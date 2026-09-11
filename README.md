@@ -233,6 +233,7 @@ ruins a long non-symplectic integration.
 | `src/kdtree.py` | k-d tree: nearest / k-nearest / radius search, brute-force verified in 2D & 3D |
 | `src/boyer_moore.py` | Boyer-Moore string search: bad-character + good-suffix skips, sublinear |
 | `src/astar.py` | A* pathfinding: f=g+h heuristic search, grid heuristics, Dijkstra-verified optimal |
+| `src/toposort.py` | Topological sort: Kahn + DFS, cycle detection, critical-path scheduling |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -457,6 +458,7 @@ ruins a long non-symplectic integration.
 | `examples/kdtree_demo.py` | Nearest/k-NN/radius vs brute force + the point-cloud query figure |
 | `examples/boyer_moore_demo.py` | Match + bad-char table + the comparison-count vs pattern-length figure |
 | `examples/astar_demo.py` | A* vs Dijkstra cost/expansions + the side-by-side explored-cells figure |
+| `examples/toposort_demo.py` | Kahn/DFS order + critical path + the layered DAG figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5480,6 +5482,28 @@ admissible for 4-directional movement, octile for 8-directional. This module run
 weighted grid with obstacles, returns the path and expanded-node set, and the tests verify --
 across 39 random grids -- that A* finds the same optimal cost as Dijkstra while expanding no
 more nodes. It is the standard for game and robot navigation.
+
+## Topological sort: ordering tasks so prerequisites come first
+
+The order to build, install, or schedule. `toposort.py`:
+
+```
+$ python examples/toposort_demo.py examples/output
+
+  Kahn:  fetch -> compile -> link -> test -> assets -> package -> deploy
+  critical path: design -> backend -> integrate -> qa -> release  =  22 days
+```
+
+A directed acyclic graph encodes dependencies -- an edge `u -> v` means u must precede v -- and
+a topological order arranges the nodes so every edge points forward. It exists exactly when the
+graph has no cycle. Kahn's algorithm repeatedly emits a node with no remaining incoming edges
+(BFS on in-degrees); the DFS method reverses finish-times and detects a cycle as a back-edge to
+a node still on the recursion stack. With a duration on each task, the longest path through the
+DAG is the critical path -- the minimum time to finish everything (PERT scheduling). This module
+implements both sorts, cycle detection, and the critical path, and the tests verify -- over
+hundreds of random DAGs -- that every order respects all edges, that cycles are caught, and that
+the critical path is correct. It runs package managers, build systems, and spreadsheet
+recompute.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
