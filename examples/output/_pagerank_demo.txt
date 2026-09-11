@@ -1,0 +1,35 @@
+PageRank: ranking a small web by the random surfer's stationary distribution
+
+  8 pages, 13 links, damping 0.85
+
+  Rank (share of surfer's time), highest first:
+       home: 0.3313  in-links 5  ########################################
+       blog: 0.2137  in-links 3  ##########################
+       shop: 0.1463  in-links 2  ##################
+      about: 0.1126  in-links 1  ##############
+      post1: 0.0793  in-links 1  ##########
+      post2: 0.0793  in-links 1  ##########
+         ad: 0.0188  in-links 0  ##
+     orphan: 0.0188  in-links 0  ##
+
+  Scores sum to 1.000000 (a probability distribution).
+  Note 'home' wins not just on in-link COUNT but because important pages link to it --
+  that recursive definition is the whole point; raw in-degree would tie several pages.
+
+  Personalized PageRank (teleport home = 'shop') re-weights the graph:
+       shop: uniform 0.1463 -> shop-personalized 0.2736
+       home: uniform 0.3313 -> shop-personalized 0.3672
+       blog: uniform 0.2137 -> shop-personalized 0.1629
+
+  Power iteration converges geometrically (rate ~ damping = 0.85):
+    step  0: L1 change 8.85e-01
+    step  1: L1 change 4.62e-01
+    step  2: L1 change 3.07e-01
+    step  4: L1 change 2.22e-01
+    step  8: L1 change 1.16e-01
+    step 16: L1 change 3.16e-02
+
+  The teleport term makes the Google matrix strictly positive, so Perron-Frobenius
+  guarantees a unique stationary vector and power iteration converges at rate d.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\pagerank.svg

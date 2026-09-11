@@ -266,6 +266,7 @@ ruins a long non-symplectic integration.
 | `src/gmm.py` | Gaussian mixture by EM: soft clustering, log-sum-exp, AIC/BIC model selection |
 | `src/hmm.py` | Hidden Markov model: forward, Viterbi decode, forward-backward, Baum-Welch EM |
 | `src/kalman.py` | Kalman filter + RTS smoother: predict/update, Kalman gain, self-contained matrix ops |
+| `src/pagerank.py` | PageRank: sparse power iteration, damping, dangling nodes, personalized teleport |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -523,6 +524,7 @@ ruins a long non-symplectic integration.
 | `examples/gmm_demo.py` | EM on 3 unequal-spread clusters: recovered params, BIC curve + soft-responsibility figure |
 | `examples/hmm_demo.py` | Dishonest casino: Viterbi decode, posterior P(loaded) ribbon, Baum-Welch relearn + figure |
 | `examples/kalman_demo.py` | Noisy tracking: filter/smoother beat raw measurements, variance-collapse + track figure |
+| `examples/pagerank_demo.py` | Small web graph: ranks, personalization, geometric convergence + node-sized graph figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6301,6 +6303,32 @@ module implements the multivariate filter and smoother with self-contained matri
 on constant-velocity tracking: error and variance fall below the raw measurements', a steady-state
 gain is reached, a perfect sensor is trusted exactly and a useless one ignored, and the smoother
 improves on the filter.
+
+## PageRank: ranking a graph by its random walk
+
+The algorithm that launched Google. `pagerank.py`:
+
+```
+$ python examples/pagerank_demo.py examples/output
+
+  8 pages, 13 links, damping 0.85
+     home 0.3313 (in-links 5)   blog 0.2137   shop 0.1463   about 0.1126 ...
+  scores sum to 1.000000 (a probability distribution)
+  personalized (teleport = shop): shop 0.1463 -> 0.2736, blog 0.2137 -> 0.1629
+  power iteration converges geometrically at rate ~ damping
+```
+
+PageRank scores every node of a directed graph by one recursive idea -- a node is important if
+important nodes link to it -- formalized as a random surfer who with probability `d` follows a
+random out-link and with probability `1-d` teleports to a uniformly random page. The score is the
+fraction of time spent on each page: the stationary distribution of that Markov chain, equivalently
+the dominant eigenvector of the Google matrix `G = d M + (1-d)/N 11'`. The teleport makes `G`
+strictly positive, so Perron-Frobenius guarantees a unique positive stationary vector and power
+iteration converges geometrically at rate `d`. Dangling nodes would leak probability, so their mass
+is redistributed by teleport, and it is all done sparsely without forming the dense NxN matrix. This
+module computes PageRank by sparse power iteration with damping and correct dangling handling, plus
+the personalized variant, verified against the analytic stationary distribution of small chains,
+ring symmetry, and the fixed-point property.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

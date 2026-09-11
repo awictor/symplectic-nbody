@@ -308,6 +308,7 @@ def main():
     import gmm_demo
     import hmm_demo
     import kalman_demo
+    import pagerank_demo
 
     import plot_orbits
 
@@ -585,6 +586,7 @@ def main():
     gmm_txt = run("gmm_demo", gmm_demo.main, True)
     hmm_txt = run("hmm_demo", hmm_demo.main, True)
     kalman_txt = run("kalman_demo", kalman_demo.main, True)
+    pagerank_txt = run("pagerank_demo", pagerank_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3719,6 +3721,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("kalman.svg"), "the true track, noisy measurements, filtered and smoothed estimates, and the estimate variance collapsing to a steady state")
             + f'<div class="card">{pre(kalman_txt)}</div>'
+            + '</div>'),
+        section(
+            "PageRank: ranking a graph by its random walk",
+            "The algorithm that launched Google, and a clean application of Markov chains and the "
+            "dominant eigenvector. PageRank scores every node of a directed graph by one recursive "
+            "idea -- a node is important if important nodes link to it -- formalized as a random "
+            "surfer who with probability d follows a random out-link and with probability 1-d "
+            "teleports to a uniformly random page. The score is the fraction of time the surfer "
+            "spends on each page: the STATIONARY DISTRIBUTION of that chain, equivalently the "
+            "dominant eigenvector of the Google matrix G = d M + (1-d)/N 11'. The teleport makes G "
+            "strictly positive, so Perron-Frobenius guarantees a unique positive stationary vector "
+            "and POWER ITERATION converges to it geometrically at rate d. Dangling nodes (no "
+            "out-links) would leak probability, so their mass is redistributed by teleport, and it "
+            "is all done sparsely without forming the dense NxN matrix. This module computes "
+            "PageRank by sparse power iteration with damping and correct dangling handling, plus "
+            "the personalized variant, verified against the analytic stationary distribution of "
+            "small chains, ring symmetry, and the fixed-point property.",
+            '<div class="grid">'
+            + svg_card(out("pagerank.svg"), "a small web graph with each node sized by its PageRank, and the power-iteration convergence curve on a log scale")
+            + f'<div class="card">{pre(pagerank_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
