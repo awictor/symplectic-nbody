@@ -1,0 +1,26 @@
+Fenwick tree (binary indexed tree): update AND prefix-sum in O(log n)
+
+  values : [3, 1, 4, 1, 5, 9, 2, 6]
+  prefix sums : [3, 4, 8, 9, 14, 23, 25, 31]
+  total = 31,  range_sum[2,6) = 19 (= 19)
+
+  after adding 10 at index 3: value there = 11, new total = 41
+
+  cumulative search over weights [2, 0, 3, 1, 4, 0, 5] (prefix sums [2, 2, 5, 6, 10, 10, 15]):
+    smallest index whose prefix sum >=  1: 0
+    smallest index whose prefix sum >=  3: 2
+    smallest index whose prefix sum >=  6: 3
+    smallest index whose prefix sum >= 12: 6
+  -- the O(log n) 'select' used for weighted sampling and rank queries.
+
+           n  Fenwick log2 n  naive prefix-array n
+          16               4                    16
+       1,024              10                 1,024
+   1,000,000              20             1,000,000
+  1,000,000,000              30         1,000,000,000
+
+  Each update or query touches one node per set bit of the index -- log n nodes --
+  in a single array of n integers. It powers range queries, order statistics, and
+  streaming quantiles.
+
+  wrote examples/output\fenwick.svg

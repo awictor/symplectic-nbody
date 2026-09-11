@@ -227,6 +227,7 @@ ruins a long non-symplectic integration.
 | `src/lz77.py` | LZ77: sliding-window dictionary coding, lossless round-trip, compression ratio |
 | `src/bloom.py` | Bloom filter: probabilistic membership, no false negatives, optimal m/k |
 | `src/hyperloglog.py` | HyperLogLog: distinct-count in fixed memory, error ~1.04/sqrt(m), mergeable |
+| `src/fenwick.py` | Fenwick tree: O(log n) prefix sums & point updates, cumulative select |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -445,6 +446,7 @@ ruins a long non-symplectic integration.
 | `examples/lz77_demo.py` | Token stream + ratio-vs-repetition table + the stream & compression-ratio figure |
 | `examples/bloom_demo.py` | No-false-negative check + FP-rate table + the fill & optimal-k figure |
 | `examples/hyperloglog_demo.py` | Estimate-vs-true table + merge demo + the accuracy & error-band figure |
+| `examples/fenwick_demo.py` | Prefix/range/select walkthrough + the coverage-range & cost figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5327,6 +5329,30 @@ trivially distributed. This module uses a splitmix64-finalized hash (plain FNV-1
 registers unused), the small/large-range corrections, and the merge; the tests confirm the
 estimate lands within a few standard errors across four orders of magnitude, duplicates do not
 inflate the count, and a merge recovers the union. Redis, Presto, and BigQuery all ship it.
+
+## Fenwick trees: running sums that update in log time
+
+Prefix sums and point updates, both O(log n). `fenwick.py`:
+
+```
+$ python examples/fenwick_demo.py examples/output
+
+  values : [3, 1, 4, 1, 5, 9, 2, 6]
+  prefix sums : [3, 4, 8, 9, 14, 23, 25, 31]
+  total = 31,  range_sum[2,6) = 19
+```
+
+A plain array gives instant updates but O(n) prefix sums; a prefix-sum array the reverse.
+Fenwick's binary indexed tree does both in `O(log n)` using the binary structure of the indices:
+node i stores the partial sum of the range ending at i whose length is its lowest set bit
+`i & -i`. A prefix sum strips the low bit each step (`i -= i & -i`), an update adds it
+(`i += i & -i`), so each walk touches only one node per set bit -- in a single array of n
+integers, no pointers. Range sums come by subtraction, and because cumulative sums are monotone
+you can binary-search the tree for the smallest index whose prefix reaches a target, an
+`O(log n)` "select" for weighted sampling and rank queries. This module implements build, update,
+prefix/range sums, set, and the cumulative search; every operation is cross-checked against a
+brute-force array over thousands of mixed updates and queries. It powers competitive-programming
+range queries, database index statistics, and streaming quantiles.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

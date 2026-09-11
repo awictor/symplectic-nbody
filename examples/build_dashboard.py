@@ -269,6 +269,7 @@ def main():
     import lz77_demo
     import bloom_demo
     import hyperloglog_demo
+    import fenwick_demo
 
     import plot_orbits
 
@@ -507,6 +508,7 @@ def main():
     lz77_txt = run("lz77_demo", lz77_demo.main, True)
     bloom_txt = run("bloom_demo", bloom_demo.main, True)
     hyperloglog_txt = run("hyperloglog_demo", hyperloglog_demo.main, True)
+    fenwick_txt = run("fenwick_demo", fenwick_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2984,6 +2986,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("hyperloglog.svg"), "the estimate hugging the exact diagonal over four orders of magnitude, and the relative error staying within the standard-error band")
             + f'<div class="card">{pre(hyperloglog_txt)}</div>'
+            + '</div>'),
+        section(
+            "Fenwick trees: running sums that update in log time",
+            "Keeping an array while asking for prefix sums, a plain array gives instant updates "
+            "but O(n) sums, and a prefix-sum array the reverse. Fenwick's binary indexed tree "
+            "does both in O(log n) using the binary structure of the indices: node i stores the "
+            "partial sum of the range ending at i whose length is its lowest set bit i & -i. A "
+            "prefix sum strips the low bit each step (i -= i & -i); an update adds it "
+            "(i += i & -i) -- each walk touches only one node per set bit. Range sums come by "
+            "subtraction, and because cumulative sums are monotone you can binary-search the "
+            "tree for the smallest index whose prefix reaches a target, an O(log n) 'select' "
+            "for weighted sampling and rank queries. Every operation is cross-checked here "
+            "against a brute-force array over thousands of mixed updates and queries.",
+            '<div class="grid">'
+            + svg_card(out("fenwick.svg"), "each node's low-bit-sized coverage range over the array, and the log n vs naive n cost per query")
+            + f'<div class="card">{pre(fenwick_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

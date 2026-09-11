@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.17       11.90      0.8x
-   400          35.14       37.40      0.9x
-   800         140.03      127.17      1.1x
-  1600         698.99      382.99      1.8x
-  3200        2653.09     1332.64      2.0x
+   200           9.28       12.29      0.8x
+   400          38.15       37.45      1.0x
+   800         146.91      119.73      1.2x
+  1600         613.49      367.29      1.7x
+  3200        2579.57     1004.00      2.6x
 
-empirical scaling exponent  direct ~ N^2.07   barnes-hut ~ N^1.70
+empirical scaling exponent  direct ~ N^2.02   barnes-hut ~ N^1.60
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -199014,6 +199014,89 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
          |A union B|~98472 (true 100000) -- counted without a shared list.
 
   wrote examples/output\hyperloglog.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Fenwick trees: running sums that update in log time</h2>
+    <p class="blurb">Keeping an array while asking for prefix sums, a plain array gives instant updates but O(n) sums, and a prefix-sum array the reverse. Fenwick's binary indexed tree does both in O(log n) using the binary structure of the indices: node i stores the partial sum of the range ending at i whose length is its lowest set bit i & -i. A prefix sum strips the low bit each step (i -= i & -i); an update adds it (i += i & -i) -- each walk touches only one node per set bit. Range sums come by subtraction, and because cumulative sums are monotone you can binary-search the tree for the smallest index whose prefix reaches a target, an O(log n) 'select' for weighted sampling and rank queries. Every operation is cross-checked here against a brute-force array over thousands of mixed updates and queries.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="400" viewBox="0 0 760 400" font-family="monospace">
+<rect width="760" height="400" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">Fenwick tree: each node covers a low-bit-sized range</text>
+<text x="20" y="44" fill="#8b949e" font-size="12">node i sums the range of length (i &amp; -i) ending at i (top); update/query cost log n vs naive n (right)</text>
+<rect x="40" y="300" width="58" height="34" fill="#161b22" stroke="#4dabf7" stroke-width="1.2"/>
+<text x="69.0" y="322.0" fill="#4dabf7" font-size="12" text-anchor="middle">3</text>
+<text x="69.0" y="348.0" fill="#8b949e" font-size="9" text-anchor="middle">idx 0</text>
+<rect x="102" y="300" width="58" height="34" fill="#161b22" stroke="#4dabf7" stroke-width="1.2"/>
+<text x="131.0" y="322.0" fill="#4dabf7" font-size="12" text-anchor="middle">1</text>
+<text x="131.0" y="348.0" fill="#8b949e" font-size="9" text-anchor="middle">idx 1</text>
+<rect x="164" y="300" width="58" height="34" fill="#161b22" stroke="#4dabf7" stroke-width="1.2"/>
+<text x="193.0" y="322.0" fill="#4dabf7" font-size="12" text-anchor="middle">4</text>
+<text x="193.0" y="348.0" fill="#8b949e" font-size="9" text-anchor="middle">idx 2</text>
+<rect x="226" y="300" width="58" height="34" fill="#161b22" stroke="#4dabf7" stroke-width="1.2"/>
+<text x="255.0" y="322.0" fill="#4dabf7" font-size="12" text-anchor="middle">1</text>
+<text x="255.0" y="348.0" fill="#8b949e" font-size="9" text-anchor="middle">idx 3</text>
+<rect x="288" y="300" width="58" height="34" fill="#161b22" stroke="#4dabf7" stroke-width="1.2"/>
+<text x="317.0" y="322.0" fill="#4dabf7" font-size="12" text-anchor="middle">5</text>
+<text x="317.0" y="348.0" fill="#8b949e" font-size="9" text-anchor="middle">idx 4</text>
+<rect x="350" y="300" width="58" height="34" fill="#161b22" stroke="#4dabf7" stroke-width="1.2"/>
+<text x="379.0" y="322.0" fill="#4dabf7" font-size="12" text-anchor="middle">9</text>
+<text x="379.0" y="348.0" fill="#8b949e" font-size="9" text-anchor="middle">idx 5</text>
+<rect x="412" y="300" width="58" height="34" fill="#161b22" stroke="#4dabf7" stroke-width="1.2"/>
+<text x="441.0" y="322.0" fill="#4dabf7" font-size="12" text-anchor="middle">2</text>
+<text x="441.0" y="348.0" fill="#8b949e" font-size="9" text-anchor="middle">idx 6</text>
+<rect x="474" y="300" width="58" height="34" fill="#161b22" stroke="#4dabf7" stroke-width="1.2"/>
+<text x="503.0" y="322.0" fill="#4dabf7" font-size="12" text-anchor="middle">6</text>
+<text x="503.0" y="348.0" fill="#8b949e" font-size="9" text-anchor="middle">idx 7</text>
+<rect x="40" y="266" width="58.0" height="26" rx="4" fill="#8338ec" opacity="0.75"/>
+<text x="69.0" y="283.0" fill="#0d1117" font-size="10" text-anchor="middle">node 1 (len 1)</text>
+<rect x="40" y="232" width="120.0" height="26" rx="4" fill="#b197fc" opacity="0.75"/>
+<text x="100.0" y="249.0" fill="#0d1117" font-size="10" text-anchor="middle">node 2 (len 2)</text>
+<rect x="164" y="266" width="58.0" height="26" rx="4" fill="#8338ec" opacity="0.75"/>
+<text x="193.0" y="283.0" fill="#0d1117" font-size="10" text-anchor="middle">node 3 (len 1)</text>
+<rect x="40" y="198" width="244.0" height="26" rx="4" fill="#ff922b" opacity="0.75"/>
+<text x="162.0" y="215.0" fill="#0d1117" font-size="10" text-anchor="middle">node 4 (len 4)</text>
+<rect x="288" y="266" width="58.0" height="26" rx="4" fill="#8338ec" opacity="0.75"/>
+<text x="317.0" y="283.0" fill="#0d1117" font-size="10" text-anchor="middle">node 5 (len 1)</text>
+<rect x="288" y="232" width="120.0" height="26" rx="4" fill="#b197fc" opacity="0.75"/>
+<text x="348.0" y="249.0" fill="#0d1117" font-size="10" text-anchor="middle">node 6 (len 2)</text>
+<rect x="412" y="266" width="58.0" height="26" rx="4" fill="#8338ec" opacity="0.75"/>
+<text x="441.0" y="283.0" fill="#0d1117" font-size="10" text-anchor="middle">node 7 (len 1)</text>
+<rect x="40" y="164" width="492.0" height="26" rx="4" fill="#06d6a0" opacity="0.75"/>
+<text x="286.0" y="181.0" fill="#0d1117" font-size="10" text-anchor="middle">node 8 (len 8)</text>
+<text x="40" y="372.0" fill="#8b949e" font-size="10">A prefix sum to k adds the nodes covering [0,k): strip the low bit each step, log n adds.</text>
+<line x1="470" y1="150" x2="730" y2="150" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="470" y1="150" x2="470" y2="70" stroke="#8b949e" stroke-width="1.2"/>
+<polyline points="470.0,134.0 535.0,118.0 600.0,102.0 665.0,86.0 730.0,70.0" fill="none" stroke="#ff6b6b" stroke-width="2"/>
+<polyline points="470.0,142.0 535.0,138.0 600.0,135.7 665.0,134.0 730.0,132.7" fill="none" stroke="#06d6a0" stroke-width="2.5"/>
+<text x="730.0" y="66.0" fill="#ff6b6b" font-size="9" text-anchor="end">naive O(n)</text>
+<text x="730.0" y="144.7" fill="#06d6a0" font-size="9" text-anchor="end">Fenwick O(log n)</text>
+<text x="600.0" y="166.0" fill="#8b949e" font-size="9" text-anchor="middle">n (log) -> ops per query (log)</text>
+</svg><figcaption>each node&#x27;s low-bit-sized coverage range over the array, and the log n vs naive n cost per query</figcaption></figure><div class="card"><pre>Fenwick tree (binary indexed tree): update AND prefix-sum in O(log n)
+
+  values : [3, 1, 4, 1, 5, 9, 2, 6]
+  prefix sums : [3, 4, 8, 9, 14, 23, 25, 31]
+  total = 31,  range_sum[2,6) = 19 (= 19)
+
+  after adding 10 at index 3: value there = 11, new total = 41
+
+  cumulative search over weights [2, 0, 3, 1, 4, 0, 5] (prefix sums [2, 2, 5, 6, 10, 10, 15]):
+    smallest index whose prefix sum &gt;=  1: 0
+    smallest index whose prefix sum &gt;=  3: 2
+    smallest index whose prefix sum &gt;=  6: 3
+    smallest index whose prefix sum &gt;= 12: 6
+  -- the O(log n) &#x27;select&#x27; used for weighted sampling and rank queries.
+
+           n  Fenwick log2 n  naive prefix-array n
+          16               4                    16
+       1,024              10                 1,024
+   1,000,000              20             1,000,000
+  1,000,000,000              30         1,000,000,000
+
+  Each update or query touches one node per set bit of the index -- log n nodes --
+  in a single array of n integers. It powers range queries, order statistics, and
+  streaming quantiles.
+
+  wrote examples/output\fenwick.svg</pre></div></div>
   </section>
 
   <section>
