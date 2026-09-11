@@ -269,6 +269,7 @@ ruins a long non-symplectic integration.
 | `src/pagerank.py` | PageRank: sparse power iteration, damping, dangling nodes, personalized teleport |
 | `src/lu.py` | LU (partial pivot) & Cholesky: solve, determinant, inverse, positive-definite test |
 | `src/gaussian_process.py` | Gaussian process regression: RBF kernel, posterior mean/variance, marginal likelihood |
+| `src/bayes_opt.py` | Bayesian optimization: GP surrogate, Expected Improvement, beats random search |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -529,6 +530,7 @@ ruins a long non-symplectic integration.
 | `examples/pagerank_demo.py` | Small web graph: ranks, personalization, geometric convergence + node-sized graph figure |
 | `examples/lu_demo.py` | P A = L U and A = L L' factorizations, multi-RHS solves, SPD test + shaded factor grids |
 | `examples/gaussian_process_demo.py` | GP fit to sparse noisy data: length-scale tuning, 2-sigma confidence band figure |
+| `examples/bayes_opt_demo.py` | BO of a multimodal function: surrogate + EI figure, convergence vs random search |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6384,6 +6386,29 @@ far from data the variance rises back to the prior. This module builds GP regres
 kernel, posterior mean and variance, and marginal-likelihood length-scale selection, verified to
 interpolate noise-free data exactly, grow uncertainty away from data, recover a known smooth
 function, and peak the marginal likelihood near the true length scale. Built on the Cholesky solver.
+
+## Bayesian optimization: minimizing an expensive black box
+
+Spend each costly evaluation where the expected payoff is highest. `bayes_opt.py`:
+
+```
+$ python examples/bayes_opt_demo.py examples/output
+
+  1-D multimodal target, 20 evaluations: found x=5.136 f=-1.8990 (true x=5.146 f=-1.8996)
+  gap to optimum 0.0006
+  2-D Branin (global min 0.398): BO mean 0.446, random search mean 3.339
+```
+
+Grid or random search wastes budget on uninteresting regions. Bayesian optimization builds a cheap
+GP surrogate of the objective and spends each expensive evaluation where an acquisition function
+says the expected payoff is highest, balancing exploitation (sample where the surrogate predicts a
+low value) against exploration (sample where it is uncertain). The classic acquisition is **Expected
+Improvement**: with current best `f_best` and posterior `(mu, sigma)`,
+`EI = (f_best - mu) Phi(z) + sigma phi(z)`, `z = (f_best - mu)/sigma` -- zero at observed points,
+large where the surrogate is both promising and unsure, so maximizing it trades the two off
+automatically. This module implements EI and the full loop over a bounded domain, verified to locate
+the minima of a 1-D multimodal function (within 0.001 of optimum in 20 evaluations) and the 2-D
+Branin function, and to beat random search at equal budget. Built on the Gaussian-process regressor.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

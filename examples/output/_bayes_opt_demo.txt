@@ -1,0 +1,26 @@
+Bayesian optimization: minimize an expensive black box in few evaluations
+
+  1-D multimodal target on [2.7, 7.5], 20 total evaluations
+
+  found minimum at x = 5.136, f = -1.8990
+  true minimum   at x = 5.146, f = -1.8996
+  gap to optimum: 0.0006
+
+  Best-so-far value as evaluations accrue:
+    after  1 evals: -0.4240
+    after  4 evals: -1.8958
+    after  6 evals: -1.8958
+    after  9 evals: -1.8970
+    after 13 evals: -1.8983
+    after 20 evals: -1.8990
+
+  On 2-D Branin (global min 0.398), BO vs random search at equal budget:
+    Bayesian opt : mean 0.446, best 0.407 (all runs within 0.5 of optimum)
+    random search: mean 3.339, best 0.826 (erratic)
+
+  The GP surrogate turns a few expensive samples into a full belief over the objective;
+  Expected Improvement then spends each new evaluation where the payoff is highest,
+  balancing exploiting the current best against exploring the uncertain regions. This is
+  how modern hyperparameter tuners and experiment optimizers work.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\bayes_opt.svg

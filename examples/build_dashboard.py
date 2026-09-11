@@ -311,6 +311,7 @@ def main():
     import pagerank_demo
     import lu_demo
     import gaussian_process_demo
+    import bayes_opt_demo
 
     import plot_orbits
 
@@ -591,6 +592,7 @@ def main():
     pagerank_txt = run("pagerank_demo", pagerank_demo.main, True)
     lu_txt = run("lu_demo", lu_demo.main, True)
     gp_txt = run("gaussian_process_demo", gaussian_process_demo.main, True)
+    bayes_opt_txt = run("bayes_opt_demo", bayes_opt_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3784,6 +3786,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("gaussian_process.svg"), "the posterior mean tracking the true function with a 2-sigma band that pinches shut at observations and flares wide in the gap and beyond")
             + f'<div class="card">{pre(gp_txt)}</div>'
+            + '</div>'),
+        section(
+            "Bayesian optimization: minimizing an expensive black box",
+            "Some objectives are costly to evaluate -- a hyperparameter sweep that trains a model "
+            "each time, a physical experiment, a slow simulation -- and grid or random search "
+            "wastes most of the budget on uninteresting regions. Bayesian optimization builds a "
+            "cheap probabilistic surrogate (a Gaussian process) of the objective and spends each "
+            "expensive evaluation where an ACQUISITION FUNCTION says the expected payoff is "
+            "highest, balancing EXPLOITATION (sample where the surrogate predicts a low value) "
+            "against EXPLORATION (sample where it is uncertain). The classic acquisition is "
+            "EXPECTED IMPROVEMENT: with current best f_best and posterior (mu, sigma), "
+            "EI = (f_best - mu) Phi(z) + sigma phi(z) where z = (f_best - mu)/sigma -- zero at "
+            "observed points, large where the surrogate is both promising and unsure, so "
+            "maximizing it trades the two off automatically. This module implements EI and the full "
+            "loop over a bounded domain, verified to locate the minima of a 1-D multimodal function "
+            "(to within 0.001 of optimum in 20 evaluations) and the 2-D Branin function, and to "
+            "beat random search at equal budget.",
+            '<div class="grid">'
+            + svg_card(out("bayes_opt.svg"), "the GP surrogate and 2-sigma band over the true function with sampled points and the EI curve, beside the best-so-far convergence outpacing random search")
+            + f'<div class="card">{pre(bayes_opt_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
