@@ -346,6 +346,7 @@ def main():
     import flood_fill_demo
     import bezier_demo
     import bwt_demo
+    import arithmetic_coding_demo
 
     import plot_orbits
 
@@ -661,6 +662,7 @@ def main():
     flood_fill_txt = run("flood_fill_demo", flood_fill_demo.main, True)
     bezier_txt = run("bezier_demo", bezier_demo.main, True)
     bwt_txt = run("bwt_demo", bwt_demo.main, True)
+    arithmetic_coding_txt = run("arithmetic_coding_demo", arithmetic_coding_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4560,6 +4562,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("bwt.svg"), "the mean run length of several inputs before and after the transform, structured text gaining the most, random text barely")
             + f'<div class="card">{pre(bwt_txt)}</div>'
+            + '</div>'),
+        section(
+            "Arithmetic coding: entropy compression past the Huffman limit",
+            "Huffman coding assigns each symbol a whole number of bits, so it wastes up to nearly a "
+            "bit per symbol -- disastrous when one symbol has probability 0.9 and 'deserves' 0.15 "
+            "bits. ARITHMETIC CODING escapes that: it encodes the ENTIRE message as a single number "
+            "in [0, 1), progressively narrowing an interval by each symbol's probability, so a "
+            "symbol costing 0.15 bits really adds only 0.15 bits. It gets within a fraction of a bit "
+            "of the Shannon entropy regardless of the distribution -- which is why it sits inside "
+            "JPEG and H.264. Naively it needs unbounded-precision reals; the practical trick is "
+            "integer RANGE CODING with RENORMALIZATION, emitting settled top bits and shifting, with "
+            "an underflow counter for the straddle-the-middle case. This module implements an "
+            "integer arithmetic coder and decoder driven by a frequency model, verified that "
+            "encode/decode round-trips arbitrary messages (60 random ones included), that the code "
+            "length approaches the entropy (within a couple of bits over the whole message), that it "
+            "beats Huffman's one-bit-per-symbol floor on skewed data (~49% smaller at 90% skew), and "
+            "that it handles single-symbol and uniform alphabets.",
+            '<div class="grid">'
+            + svg_card(out("arithmetic_coding.svg"), "bits per symbol for several distributions: arithmetic coding hugging the entropy floor while Huffman rounds up, the gap widest on skewed data")
+            + f'<div class="card">{pre(arithmetic_coding_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

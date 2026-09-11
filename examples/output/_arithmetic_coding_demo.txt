@@ -1,0 +1,23 @@
+Arithmetic coding vs Huffman vs entropy
+
+  Arithmetic coding encodes the whole message as one number, so it is not limited to
+  whole-bit codewords -- it hugs the entropy where Huffman must round up.
+
+      distribution  entropy  arithmetic  Huffman  AC saves
+       very skewed    0.557       0.560    1.100     49.1%
+            skewed    1.353       1.370    1.400      2.1%
+         mild skew    1.559       1.570    1.600      1.9%
+      near uniform    1.585       1.600    1.660      3.6%
+         uniform-4    2.000       2.017    2.000     -0.8%
+       English-ish    4.339       4.348    4.409      1.4%
+
+  The bigger the skew, the more Huffman's whole-bit codewords waste and the more
+  arithmetic coding wins: at 90% one symbol, entropy is ~0.56 bits but Huffman is
+  forced to spend at least 1 bit on the rarer symbols. All encodings round-trip exactly.
+
+  How it works: start with the interval [0,1); each symbol narrows it to its
+  probability-weighted sub-interval; after the whole message, any number in the final
+  tiny interval names the message. Integer range coding with renormalization keeps it
+  exact without unbounded-precision reals -- the entropy coder inside JPEG and H.264.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\arithmetic_coding.svg

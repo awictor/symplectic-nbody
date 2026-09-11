@@ -304,6 +304,7 @@ ruins a long non-symplectic integration.
 | `src/flood_fill.py` | Flood fill: queue/stack/scanline, 4/8-connectivity, connected-component labeling |
 | `src/bezier.py` | Bezier curves: de Casteljau, derivative, subdivision, degree elevation, arc length |
 | `src/bwt.py` | Burrows-Wheeler transform + inverse, move-to-front, RLE, the bzip2-style pipeline |
+| `src/arithmetic_coding.py` | Arithmetic coding: integer range coder, renormalization, beats Huffman on skew |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -599,6 +600,7 @@ ruins a long non-symplectic integration.
 | `examples/flood_fill_demo.py` | Paint-bucket inside a wall, three strategies agree, connected components + connectivity |
 | `examples/bezier_demo.py` | Quadratic/cubic curves with control polygons, subdivision, elevation, arc length |
 | `examples/bwt_demo.py` | BWT runniness gain, full pipeline compression, worked banana example |
+| `examples/arithmetic_coding_demo.py` | Bits/symbol vs Huffman vs entropy across distributions, ~49% saving on skew |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7233,6 +7235,28 @@ any input works), move-to-front, run-length coding, and the full pipeline, verif
 round-trips any string, that it increases the mean run length on structured text, that MTF and RLE
 round-trip, that the pipeline is lossless across 50 random strings, and that it yields far fewer
 tokens than the input on repetitive data.
+
+## Arithmetic coding: entropy compression past the Huffman limit
+
+Encode the whole message as one number; beat whole-bit codewords. `arithmetic_coding.py`:
+
+```
+$ python examples/arithmetic_coding_demo.py examples/output
+
+  very skewed (90/7/3): entropy 0.557, arithmetic 0.560, Huffman 1.100 -> AC 49% smaller
+  arithmetic coding hugs the entropy across all distributions; all round-trip losslessly
+  extreme skew (995/5): under 0.1 bits/symbol
+```
+
+Huffman assigns each symbol a whole number of bits, wasting up to nearly a bit; arithmetic coding
+encodes the entire message as a single number in `[0,1)`, narrowing an interval by each symbol's
+probability, so a symbol costing 0.15 bits adds only 0.15 bits. It gets within a fraction of a bit
+of the Shannon entropy for any distribution -- the entropy coder inside JPEG and H.264. This module
+uses integer range coding with renormalization (emit settled top bits, with an underflow counter
+for the straddle-the-middle case), verified that encode/decode round-trips arbitrary messages (60
+random included), that the code length approaches the entropy, that it beats Huffman's
+one-bit-per-symbol floor on skewed data (~49% smaller at 90% skew), and that it handles
+single-symbol and uniform alphabets.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
