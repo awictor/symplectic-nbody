@@ -330,6 +330,7 @@ def main():
     import newton_nd_demo
     import differential_evolution_demo
     import nelder_mead_demo
+    import hits_demo
 
     import plot_orbits
 
@@ -629,6 +630,7 @@ def main():
     newton_nd_txt = run("newton_nd_demo", newton_nd_demo.main, True)
     differential_evolution_txt = run("differential_evolution_demo", differential_evolution_demo.main, True)
     nelder_mead_txt = run("nelder_mead_demo", nelder_mead_demo.main, True)
+    hits_txt = run("hits_demo", hits_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4201,6 +4203,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("nelder_mead.svg"), "the best-vertex value plunging as the simplex crawls the Rosenbrock valley, on a log scale, using function values alone")
             + f'<div class="card">{pre(nelder_mead_txt)}</div>'
+            + '</div>'),
+        section(
+            "HITS: hubs and authorities",
+            "PageRank's contemporary rival, and it splits importance into TWO complementary scores. "
+            "An AUTHORITY is a page many good hubs point to (a definitive source); a HUB is a page "
+            "that points to many good authorities (a good list of links). The definitions are "
+            "mutually recursive -- a good authority is linked by good hubs, a good hub links to "
+            "good authorities -- resolved by iterating to a fixed point: authority(p) = sum of hub "
+            "scores linking to p, hub(p) = sum of authority scores p links to, normalized each "
+            "round. Written with the adjacency matrix A the update is a = A'h, h = Aa, so "
+            "authorities are the dominant eigenvector of A'A and hubs of AA' -- HITS is power "
+            "iteration on those matrices. Unlike PageRank's single query-independent score, HITS "
+            "yields the two roles separately, so a curated link list and the source everyone cites "
+            "rank differently. This module computes HITS by power iteration with normalization "
+            "plus the eigenvector check, verified that on a hub-and-spoke graph the hub score "
+            "flags the linker and the authority score the linked-to targets, that scores converge "
+            "and are unit-normalized, that a pure authority has zero hub score and vice versa, and "
+            "that the results match the dominant eigenvectors of A'A and AA'.",
+            '<div class="grid">'
+            + svg_card(out("hits.svg"), "the same web graph drawn twice, node size by hub score (link lists) then by authority score (cited sources), showing the two roles fall on different nodes")
+            + f'<div class="card">{pre(hits_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

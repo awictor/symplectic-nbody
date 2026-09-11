@@ -288,6 +288,7 @@ ruins a long non-symplectic integration.
 | `src/newton_nd.py` | Newton's method in n-D: Jacobian (analytic/finite-diff), damping, Broyden, LU step |
 | `src/differential_evolution.py` | Differential evolution DE/rand/1/bin: difference-vector mutation, bound reflection |
 | `src/nelder_mead.py` | Nelder-Mead simplex: derivative-free reflect/expand/contract/shrink, restarts |
+| `src/hits.py` | HITS hubs & authorities: mutual-reinforcement power iteration, eigenvector of A'A / AA' |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -567,6 +568,7 @@ ruins a long non-symplectic integration.
 | `examples/newton_nd_demo.py` | Quadratic convergence curve, damping rescue, Broyden, 3-variable system |
 | `examples/differential_evolution_demo.py` | Benchmark convergence curves, vs random, F sweep, scaling to 20-D |
 | `examples/nelder_mead_demo.py` | Rosenbrock simplex crawl + convergence curve, restart refinement, eval scaling |
+| `examples/hits_demo.py` | Hub vs authority rankings on a small web + PageRank comparison, dual graph figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6855,6 +6857,28 @@ This module implements the standard algorithm with the classic coefficients, val
 convergence, and restarts, verified that it finds the minimum of the Sphere, Rosenbrock, and Beale
 benchmarks from several starts with no gradient, that the best vertex improves monotonically, that
 it even minimizes a non-smooth objective, and that restarting refines the result.
+
+## HITS: hubs and authorities
+
+Two scores per node -- the source everyone cites vs the best list of links. `hits.py`:
+
+```
+$ python examples/hits_demo.py examples/output
+
+  top hub: portal (a link directory);  top authority: wiki (what everyone cites)
+  hubs and authorities fall on different nodes; PageRank collapses them into one score
+  authority vector = dominant eigenvector of A'A, hub vector of AA'
+```
+
+HITS splits importance into two mutually-recursive scores: an authority is pointed to by good hubs,
+a hub points to good authorities. Iterating `authority(p) = sum of hub scores linking to p` and
+`hub(p) = sum of authority scores p links to` (normalized) converges to a fixed point -- equivalently
+the dominant eigenvectors of `A'A` (authorities) and `AA'` (hubs). Unlike PageRank's single score,
+HITS keeps the two roles distinct, so a curated link list and the cited source rank differently.
+This module computes HITS by power iteration with the eigenvector check, verified that a
+hub-and-spoke graph scores the linker as the hub and the targets as authorities, that scores
+converge and are unit-normalized, that a pure authority has zero hub score and vice versa, and that
+the results match the dominant eigenvectors of `A'A` and `AA'`.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

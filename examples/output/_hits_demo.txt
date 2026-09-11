@@ -1,0 +1,36 @@
+HITS: hubs and authorities (two scores per node)
+
+  8 pages, 14 links
+
+  Top HUBS (good lists of links -- point to many authorities):
+      portal: 0.630
+      reader: 0.536
+     student: 0.367
+         fan: 0.263
+
+  Top AUTHORITIES (definitive sources -- linked by many good hubs):
+        wiki: 0.631
+        news: 0.519
+     journal: 0.498
+        blog: 0.290
+
+  Hubs and authorities are DIFFERENT roles -- compare the two rankings and PageRank:
+        page     hub  authority  pagerank
+        wiki   0.000      0.631     0.369
+        news   0.205      0.519     0.192
+     journal   0.205      0.498     0.111
+        blog   0.169      0.290     0.095
+         fan   0.263      0.000     0.058
+      portal   0.630      0.000     0.058
+      reader   0.536      0.000     0.058
+     student   0.367      0.000     0.058
+
+  Best hub is 'portal' (a link directory); best authority is 'wiki' (what everyone cites).
+  PageRank collapses this into one score; HITS keeps the two roles distinct.
+
+  A good authority is pointed to by good hubs; a good hub points to good authorities.
+  That mutual recursion is resolved by power iteration -- authorities are the dominant
+  eigenvector of A'A, hubs of AA'. Kleinberg's HITS ran per query; PageRank runs once
+  globally. Both turn the link graph into a ranking by linear algebra.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\hits.svg
