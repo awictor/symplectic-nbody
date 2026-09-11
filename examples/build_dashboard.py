@@ -328,6 +328,7 @@ def main():
     import trie_demo
     import sorting_demo
     import newton_nd_demo
+    import differential_evolution_demo
 
     import plot_orbits
 
@@ -625,6 +626,7 @@ def main():
     trie_txt = run("trie_demo", trie_demo.main, True)
     sorting_txt = run("sorting_demo", sorting_demo.main, True)
     newton_nd_txt = run("newton_nd_demo", newton_nd_demo.main, True)
+    differential_evolution_txt = run("differential_evolution_demo", differential_evolution_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4157,6 +4159,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("newton_nd.svg"), "the residual norm plunging near-vertically for Newton (quadratic convergence) and a few steps slower for Broyden, on a log scale")
             + f'<div class="card">{pre(newton_nd_txt)}</div>'
+            + '</div>'),
+        section(
+            "Differential evolution: optimization by vector differences",
+            "A population optimizer for continuous spaces that, unlike genetic algorithms (mutating "
+            "bits) or particle swarms (tracking velocities), mutates by ADDING SCALED DIFFERENCES "
+            "between population members. That self-referential step is its signature: the spread of "
+            "the population itself sets the mutation scale, so the search takes large steps while "
+            "dispersed (early, exploring) and small ones as it converges (late, refining) -- no "
+            "cooling schedule or velocity tuning. The classic DE/rand/1/bin per target: pick three "
+            "other members and form a donor v = a + F*(b - c); build a trial by taking each "
+            "coordinate from the donor with probability CR (else from the target); keep whichever "
+            "of trial and target has the lower cost (greedy selection, so the best never worsens). "
+            "This module implements DE/rand/1/bin over a bounded box with bound reflection and a "
+            "random-search baseline, verified that it finds the global minimum of the Sphere, "
+            "Rastrigin, and Rosenbrock benchmarks, that the best cost is monotone, that it beats "
+            "random search at equal budget, that the solution stays in bounds, and that it scales "
+            "to 10-20 dimensions. One of the most robust black-box optimizers for continuous "
+            "problems.",
+            '<div class="grid">'
+            + svg_card(out("differential_evolution.svg"), "the best cost of all three benchmarks falling monotonically to their global minima on a log scale")
+            + f'<div class="card">{pre(differential_evolution_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

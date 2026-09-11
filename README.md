@@ -286,6 +286,7 @@ ruins a long non-symplectic integration.
 | `src/trie.py` | Trie: O(len) insert/search/prefix, autocomplete, delete-with-pruning, suffix index |
 | `src/sorting.py` | Comparison sorts: insertion/merge/quick/heap + binary heap, stability, comparison counts |
 | `src/newton_nd.py` | Newton's method in n-D: Jacobian (analytic/finite-diff), damping, Broyden, LU step |
+| `src/differential_evolution.py` | Differential evolution DE/rand/1/bin: difference-vector mutation, bound reflection |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -563,6 +564,7 @@ ruins a long non-symplectic integration.
 | `examples/trie_demo.py` | Autocomplete (alpha + frequency-ranked), longest-prefix, substring index + tree figure |
 | `examples/sorting_demo.py` | Comparison-count scaling (log-log), stability contrast, heap priority queue |
 | `examples/newton_nd_demo.py` | Quadratic convergence curve, damping rescue, Broyden, 3-variable system |
+| `examples/differential_evolution_demo.py` | Benchmark convergence curves, vs random, F sweep, scaling to 20-D |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6807,6 +6809,28 @@ recomputing it. This module implements all three, each solving the linear step v
 pivoting, verified on a circle-line intersection and the Rosenbrock stationary point, that
 convergence is quadratic, that the finite-difference Jacobian matches an analytic one, that damping
 rescues a start where plain Newton diverges, and that Broyden converges too. Built on the LU solver.
+
+## Differential evolution: optimization by vector differences
+
+Mutate by scaled differences between population members. `differential_evolution.py`:
+
+```
+$ python examples/differential_evolution_demo.py examples/output
+
+  Sphere / Rastrigin / Rosenbrock: all driven to cost ~0 (Rosenbrock at (1,1))
+  DE vs random (8000 evals): Rastrigin DE 0.000000 vs random 0.938405
+  scales to 20-D; best cost is monotone (greedy selection)
+```
+
+Where genetic algorithms mutate bits and particle swarms track velocities, DE mutates by adding a
+scaled difference between members: donor `v = a + F*(b - c)`. The population's own spread sets the
+step size -- large while dispersed, small as it converges, with no schedule to tune. A binomial
+crossover builds a trial from the donor (probability CR) and the target, and greedy selection keeps
+whichever is better, so the best never worsens. This module implements DE/rand/1/bin over a bounded
+box with bound reflection and a random-search baseline, verified that it finds the global minimum of
+the Sphere, Rastrigin, and Rosenbrock benchmarks, that the best cost is monotone, that it beats
+random search at equal budget, that the solution stays in bounds, and that it scales to 10-20
+dimensions.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

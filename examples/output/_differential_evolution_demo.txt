@@ -1,0 +1,29 @@
+Differential evolution: DE/rand/1/bin -- donor = a + F*(b - c)
+
+      Sphere (min at origin): cost 0.000000 at (-0.000, 0.000)
+   Rastrigin (min at origin): cost 0.000000 at (-0.000, -0.000)
+  Rosenbrock (min at (1,1)): cost 0.000000 at (1.000, 1.000)
+
+  DE vs random search at equal budget (40x200 = 8000 evaluations):
+        Sphere: DE 0.000000   random 0.004577
+     Rastrigin: DE 0.000000   random 0.938405
+    Rosenbrock: DE 0.000000   random 0.005118
+
+  Differential weight F trades exploration for refinement (Rastrigin, 60 iters):
+    F = 0.3: best cost after 60 iters = 0.0000
+    F = 0.5: best cost after 60 iters = 0.0000
+    F = 0.7: best cost after 60 iters = 0.0015
+    F = 0.9: best cost after 60 iters = 0.0001
+
+  Scales to higher dimensions (Sphere):
+     2-D: cost 0.000000
+     5-D: cost 0.000000
+    10-D: cost 0.000000
+    20-D: cost 0.930333
+
+  DE mutates by adding a SCALED DIFFERENCE between population members, so the
+  population's own spread sets the step size -- large while dispersed (exploring), small
+  as it converges (refining), with no schedule to tune. Greedy selection keeps the best
+  monotone. It is one of the most robust black-box optimizers for continuous problems.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\differential_evolution.svg
