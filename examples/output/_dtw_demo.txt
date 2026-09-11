@@ -1,0 +1,19 @@
+Dynamic time warping: aligning series that vary in speed
+
+  two 30-point signals of the same shape at different speeds:
+    DTW distance:       2.731
+    Euclidean distance: 17.900   (naive point-by-point)
+    -> DTW is 6.6x smaller: it warps the time axis to match the shapes
+    warping path length: 37 matched index pairs
+
+  Stretch invariance: DTW(base, 3x-stretched-base) = 0.0 (exactly zero)
+
+  Sakoe-Chiba band (limits the warp window):
+    unconstrained DTW: 2.731
+    band=5 DTW:        3.517   (band restricts the path, so distance >= unconstrained)
+
+  DTW fills a cost grid where cell (i,j) is the local distance plus the cheapest of its
+  three predecessors (match / insert / delete). The bottom-right cell is the DTW distance,
+  and backtracking the minimizing moves recovers the monotone warping path.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\dtw.svg

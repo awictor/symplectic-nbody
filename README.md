@@ -329,6 +329,7 @@ ruins a long non-symplectic integration.
 | `src/perlin.py` | Perlin gradient noise (1-D/2-D) + fractal Brownian motion for procedural fields |
 | `src/wave_function_collapse.py` | Tiled WFC: constraint-propagation procedural generation with contradiction restart |
 | `src/hungarian.py` | Hungarian algorithm: optimal O(n^3) assignment (Kuhn-Munkres), min or max |
+| `src/dtw.py` | Dynamic time warping: distance + warping path, Sakoe-Chiba band, multi-dimensional |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -649,6 +650,7 @@ ruins a long non-symplectic integration.
 | `examples/perlin_demo.py` | 2-D fBm terrain heightfield + a 1-D fBm cross-section |
 | `examples/wave_function_collapse_demo.py` | A coastline map where land never touches sea + a forced checkerboard |
 | `examples/hungarian_demo.py` | Worker-job assignment beating the greedy heuristic, with the cost matrix drawn |
+| `examples/dtw_demo.py` | Two speed-varying signals aligned, DTW 6.6x smaller than Euclidean, warp path drawn |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7821,6 +7823,26 @@ smallest uncovered value to create new zeros -- until the optimum appears, in O(
 implements the potential/augmenting-path form for rectangular matrices (min or max), verified against
 brute-force permutation search over 60 random matrices and up to n=8, the row/column reduction
 invariant, and rectangular padding.
+
+## Dynamic time warping: aligning time series that vary in speed
+
+Match signals that trace the same shape at different, varying speeds. `dtw.py`:
+
+```
+$ python examples/dtw_demo.py examples/output
+
+  two speed-varying signals: DTW distance 2.73 vs Euclidean 17.90 (6.6x smaller)
+  stretch invariance: DTW(base, 3x-stretched-base) = 0.0 exactly
+  Sakoe-Chiba band=5 restricts the warp: 3.52 >= unconstrained 2.73
+```
+
+DTW is dynamic programming over a cost grid where cell (i,j) is the local distance plus the cheapest
+of three predecessors (match/insert/delete); the corner is the DTW distance and backtracking recovers
+the monotone warping path. A Sakoe-Chiba band confines the path near the diagonal. This module
+implements distance, path recovery, an optional band, and a multi-dimensional variant, verified
+against an independent DP and known properties: identical series score zero, DTW is symmetric and
+non-negative, invariant to time stretching, crushes the Euclidean distance on shifted signals, and
+the recovered path is monotone with unit steps whose summed cost equals the distance.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

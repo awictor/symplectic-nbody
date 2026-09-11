@@ -371,6 +371,7 @@ def main():
     import perlin_demo
     import wave_function_collapse_demo
     import hungarian_demo
+    import dtw_demo
 
     import plot_orbits
 
@@ -711,6 +712,7 @@ def main():
     perlin_txt = run("perlin_demo", perlin_demo.main, True)
     wfc_txt = run("wave_function_collapse_demo", wave_function_collapse_demo.main, True)
     hungarian_txt = run("hungarian_demo", hungarian_demo.main, True)
+    dtw_txt = run("dtw_demo", dtw_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5183,6 +5185,31 @@ def main():
             '<div class="grid">'
             + svg_card(out("hungarian.svg"), "a worker-job cost matrix shaded by value with the optimal minimum-cost assignment outlined in green -- one cell per row and column, the total no greedy pick can beat")
             + f'<div class="card">{pre(hungarian_txt)}</div>'
+            + '</div>'),
+        section(
+            "Dynamic time warping: aligning time series that vary in speed",
+            "Two recordings of the same spoken word, two gait cycles, two heartbeats trace the same "
+            "shape at different, non-uniformly varying speeds -- so a point-by-point Euclidean "
+            "comparison badly mismatches them. DYNAMIC TIME WARPING finds the optimal NON-LINEAR "
+            "alignment: it stretches and compresses the time axis of one series to match the other, "
+            "returning both the minimal alignment cost and the WARPING PATH. DTW was the backbone of "
+            "speech recognition before deep learning and remains central to gesture and signature "
+            "recognition and time-series clustering. It is dynamic programming over an n x m cost "
+            "grid: cell (i, j) is the cheapest cost to align the first i and first j points, equal to "
+            "the local distance between points i and j plus the minimum of three neighbours "
+            "(the match, insert, and delete moves). The corner cell is the DTW distance, and "
+            "backtracking the minimizing choices recovers the monotone warping path pairing each "
+            "point of one series with one or more of the other. A SAKOE-CHIBA BAND confines the path "
+            "near the diagonal, speeding it to O(n*w) and forbidding pathological warps. This module "
+            "implements DTW distance, warping-path recovery, an optional band, and a "
+            "multi-dimensional variant, verified against an independent DP and known properties: "
+            "identical series have zero distance, DTW is symmetric and non-negative, it is invariant "
+            "to time stretching (duplicating points changes nothing), it crushes the Euclidean "
+            "distance on shifted signals, and the recovered path is monotone with unit steps and its "
+            "summed cost equals the distance.",
+            '<div class="grid">'
+            + svg_card(out("dtw.svg"), "two signals of the same shape at different speeds (blue above, green below) with the gray warping path connecting each matched pair of points -- the time axis stretched to align the peaks")
+            + f'<div class="card">{pre(dtw_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
