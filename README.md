@@ -225,6 +225,7 @@ ruins a long non-symplectic integration.
 | `src/diffie_hellman.py` | Diffie-Hellman: safe primes, generators, key exchange, BSGS discrete log |
 | `src/crc.py` | CRC-8/16/32: GF(2) polynomial division, frame check, matches zlib.crc32 |
 | `src/lz77.py` | LZ77: sliding-window dictionary coding, lossless round-trip, compression ratio |
+| `src/bloom.py` | Bloom filter: probabilistic membership, no false negatives, optimal m/k |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -441,6 +442,7 @@ ruins a long non-symplectic integration.
 | `examples/diffie_hellman_demo.py` | Exchange walkthrough + the flow diagram & attacker-vs-honest cost figure |
 | `examples/crc_demo.py` | Check values + frame verify/corrupt + the frame layout & miss-probability figure |
 | `examples/lz77_demo.py` | Token stream + ratio-vs-repetition table + the stream & compression-ratio figure |
+| `examples/bloom_demo.py` | No-false-negative check + FP-rate table + the fill & optimal-k figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5276,6 +5278,29 @@ This module implements the sliding-window encoder and the replay decoder, measur
 compression ratio and token counts, and guarantees a lossless round-trip (verified on empty,
 single-byte, text, binary, and long-run inputs). LZ77 plus Huffman together are DEFLATE, the
 heart of gzip.
+
+## Bloom filters: membership in a fraction of the space
+
+Ask "have I seen this?" without storing what you have seen. `bloom.py`:
+
+```
+$ python examples/bloom_demo.py examples/output
+
+  1000 items at 1% target: 9586 bits (9.6 bits/item), 7 hash functions
+  after inserting 1000: false negatives = 0 (guaranteed 0)
+  observed false-positive rate = 0.0103,  theory = 0.0100
+```
+
+A Bloom filter answers membership with a bit array and a few hash functions, in a tiny fraction
+of the memory the items would take. The trade is one-sided: it may say "possibly present" for
+something never added (a false positive) but NEVER says "absent" for something you did add -- no
+false negatives. Add an item by setting its k bits; test by checking all k are set. After n
+items in m bits the false-positive rate is `(1 - e^{-kn/m})^k`, minimized at `k = (m/n) ln 2`,
+needing only `~1.44 log2(1/p)` bits per item regardless of item size. This module uses double
+hashing (two FNV-1a hashes combined to simulate k) and computes the optimal parameters; the
+tests confirm zero false negatives, an observed false-positive rate matching theory, that the
+optimal k is a genuine minimum, and membership for ints, bytes, and tuples. Web caches, spell
+checkers, and databases use one as a fast pre-filter.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -267,6 +267,7 @@ def main():
     import diffie_hellman_demo
     import crc_demo
     import lz77_demo
+    import bloom_demo
 
     import plot_orbits
 
@@ -503,6 +504,7 @@ def main():
     diffie_hellman_txt = run("diffie_hellman_demo", diffie_hellman_demo.main, True)
     crc_txt = run("crc_demo", crc_demo.main, True)
     lz77_txt = run("lz77_demo", lz77_demo.main, True)
+    bloom_txt = run("bloom_demo", bloom_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2948,6 +2950,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("lz77.svg"), "the token stream of literals and back-references, and the compression ratio climbing with repetition")
             + f'<div class="card">{pre(lz77_txt)}</div>'
+            + '</div>'),
+        section(
+            "Bloom filters: membership in a fraction of the space",
+            "A Bloom filter answers 'have I seen this?' with a bit array and a few hash "
+            "functions, in a tiny fraction of the memory the items would take. The trade is "
+            "one-sided: it may say 'possibly present' for something never added (a false "
+            "positive) but NEVER says 'absent' for something you did add -- no false negatives. "
+            "Add an item by setting its k bits; test by checking all k are set. After n items "
+            "in m bits the false-positive rate is (1 - e^{-kn/m})^k, minimized at k = (m/n) ln "
+            "2, needing only ~1.44 log2(1/p) bits per item regardless of item size -- a million "
+            "URLs at 1% error in about 1.2 MB. Web caches, spell checkers, and databases use "
+            "one as a fast pre-filter. Verified here: zero false negatives and an observed "
+            "false-positive rate matching theory.",
+            '<div class="grid">'
+            + svg_card(out("bloom.svg"), "the false-positive rate rising as the filter fills (observed tracking theory) and the optimal number of hash functions")
+            + f'<div class="card">{pre(bloom_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

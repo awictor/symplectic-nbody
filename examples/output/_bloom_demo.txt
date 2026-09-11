@@ -1,0 +1,21 @@
+Bloom filter: 'possibly present' or 'definitely absent', never a false negative
+
+  1000 items at 1% target: 9586 bits (9.6 bits/item), 7 hash functions
+  vs storing the items themselves: a fraction of the memory, item-size-independent
+
+  after inserting 1000: false negatives = 0 (guaranteed 0)
+  observed false-positive rate = 0.0103,  theory = 0.0100
+  fill ratio = 0.513 (optimal load sets ~half the bits)
+
+  False-positive rate as the filter fills (fixed m, k):
+     items    theory  observed
+       250    0.0000    0.0000
+       500    0.0003    0.0011
+      1000    0.0100    0.0076
+      2000    0.1574    0.1104
+      4000    0.6786    0.5940
+
+  Web caches, spell checkers, and databases use one as a fast pre-filter: skip the
+  expensive lookup for anything the filter says is definitely not there.
+
+  wrote examples/output\bloom.svg
