@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="400" viewBox="0 0 760 400" font-family="monospace">
+<rect width="760" height="400" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">AVL tree: height-balanced, every subtree within 1 level</text>
+<text x="20" y="44" fill="#8b949e" font-size="12">in-order left-to-right, depth top-to-bottom; the tree stays log-deep no matter the insert order</text>
+<line x1="490.2" y1="80.0" x2="284.8" y2="170.0" stroke="#30363d" stroke-width="1.3"/>
+<line x1="284.8" y1="170.0" x2="147.8" y2="260.0" stroke="#30363d" stroke-width="1.3"/>
+<line x1="147.8" y1="260.0" x2="79.2" y2="350.0" stroke="#30363d" stroke-width="1.3"/>
+<line x1="147.8" y1="260.0" x2="216.2" y2="350.0" stroke="#30363d" stroke-width="1.3"/>
+<line x1="284.8" y1="170.0" x2="421.8" y2="260.0" stroke="#30363d" stroke-width="1.3"/>
+<line x1="421.8" y1="260.0" x2="353.2" y2="350.0" stroke="#30363d" stroke-width="1.3"/>
+<line x1="490.2" y1="80.0" x2="627.2" y2="170.0" stroke="#30363d" stroke-width="1.3"/>
+<line x1="627.2" y1="170.0" x2="558.8" y2="260.0" stroke="#30363d" stroke-width="1.3"/>
+<line x1="627.2" y1="170.0" x2="695.8" y2="260.0" stroke="#30363d" stroke-width="1.3"/>
+<circle cx="79.2" cy="350.0" r="14" fill="#4dabf7" stroke="#0d1117" stroke-width="1.5"/>
+<text x="79.2" y="354.0" fill="#0d1117" font-size="11" text-anchor="middle" font-weight="bold">10</text>
+<circle cx="147.8" cy="260.0" r="14" fill="#4dabf7" stroke="#0d1117" stroke-width="1.5"/>
+<text x="147.8" y="264.0" fill="#0d1117" font-size="11" text-anchor="middle" font-weight="bold">20</text>
+<circle cx="216.2" cy="350.0" r="14" fill="#4dabf7" stroke="#0d1117" stroke-width="1.5"/>
+<text x="216.2" y="354.0" fill="#0d1117" font-size="11" text-anchor="middle" font-weight="bold">25</text>
+<circle cx="284.8" cy="170.0" r="14" fill="#4dabf7" stroke="#0d1117" stroke-width="1.5"/>
+<text x="284.8" y="174.0" fill="#0d1117" font-size="11" text-anchor="middle" font-weight="bold">30</text>
+<circle cx="353.2" cy="350.0" r="14" fill="#4dabf7" stroke="#0d1117" stroke-width="1.5"/>
+<text x="353.2" y="354.0" fill="#0d1117" font-size="11" text-anchor="middle" font-weight="bold">35</text>
+<circle cx="421.8" cy="260.0" r="14" fill="#4dabf7" stroke="#0d1117" stroke-width="1.5"/>
+<text x="421.8" y="264.0" fill="#0d1117" font-size="11" text-anchor="middle" font-weight="bold">40</text>
+<circle cx="490.2" cy="80.0" r="14" fill="#4dabf7" stroke="#0d1117" stroke-width="1.5"/>
+<text x="490.2" y="84.0" fill="#0d1117" font-size="11" text-anchor="middle" font-weight="bold">50</text>
+<circle cx="558.8" cy="260.0" r="14" fill="#4dabf7" stroke="#0d1117" stroke-width="1.5"/>
+<text x="558.8" y="264.0" fill="#0d1117" font-size="11" text-anchor="middle" font-weight="bold">60</text>
+<circle cx="627.2" cy="170.0" r="14" fill="#4dabf7" stroke="#0d1117" stroke-width="1.5"/>
+<text x="627.2" y="174.0" fill="#0d1117" font-size="11" text-anchor="middle" font-weight="bold">70</text>
+<circle cx="695.8" cy="260.0" r="14" fill="#4dabf7" stroke="#0d1117" stroke-width="1.5"/>
+<text x="695.8" y="264.0" fill="#0d1117" font-size="11" text-anchor="middle" font-weight="bold">80</text>
+</svg>

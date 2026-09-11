@@ -334,6 +334,7 @@ def main():
     import mds_demo
     import skiplist_demo
     import ant_colony_demo
+    import avl_tree_demo
 
     import plot_orbits
 
@@ -637,6 +638,7 @@ def main():
     mds_txt = run("mds_demo", mds_demo.main, True)
     skiplist_txt = run("skiplist_demo", skiplist_demo.main, True)
     ant_colony_txt = run("ant_colony_demo", ant_colony_demo.main, True)
+    avl_tree_txt = run("avl_tree_demo", avl_tree_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4293,6 +4295,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("ant_colony.svg"), "the converged tour drawn bold over the pheromone field (strong edges glowing yellow), beside the best-tour-length convergence curve")
             + f'<div class="card">{pre(ant_colony_txt)}</div>'
+            + '</div>'),
+        section(
+            "AVL trees: a self-balancing binary search tree",
+            "A plain binary search tree degrades to a linked list -- O(n) operations -- if keys "
+            "arrive sorted. An AVL tree (the first self-balancing BST) prevents that by keeping "
+            "every node HEIGHT-BALANCED: its two subtrees' heights differ by at most 1. After each "
+            "insert or delete it checks the balance factor up the path to the root and, wherever it "
+            "exceeds the bound, restores it with a local ROTATION -- a constant-time pointer "
+            "rewiring that shortens the tall side. Four cases cover every imbalance: left-left and "
+            "right-right take a single rotation, left-right and right-left a double. The strict "
+            "invariant makes AVL the most rigidly balanced classic BST (shorter than a red-black "
+            "tree), so lookups are fast at the cost of a little more rotation on updates -- where a "
+            "skip list stays balanced probabilistically, an AVL tree does so deterministically. "
+            "This module implements an AVL ordered map with insert, delete, search, ordered "
+            "traversal, range queries, and min/max, verified against a brute-force sorted "
+            "dictionary over 5000 random operations, that the height-balance invariant holds "
+            "throughout, that the height stays O(log n) even for sorted insertions (where a naive "
+            "BST would be linear), and that all four rotation cases trigger.",
+            '<div class="grid">'
+            + svg_card(out("avl_tree.svg"), "a balanced AVL tree drawn in-order left-to-right and by depth top-to-bottom, staying log-deep regardless of insertion order")
+            + f'<div class="card">{pre(avl_tree_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

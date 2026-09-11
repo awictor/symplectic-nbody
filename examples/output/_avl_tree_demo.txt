@@ -1,0 +1,26 @@
+AVL tree: a binary search tree that rotates itself back into balance
+
+  Inserting SORTED keys (the naive-BST worst case that degrades to a linked list):
+         n  AVL height   naive BST   log2(n)
+        15           4          15       3.9
+        63           6          63       6.0
+       255           8         255       8.0
+      1023          10        1023      10.0
+      4095          12        4095      12.0
+    -> AVL height tracks log2(n); a naive BST would be n (a linear chain).
+
+  The four rotation cases, each fixing one imbalance shape:
+    insert [3, 2, 1] (LL, left-left  -> right rotation): root rebalances to 2, balanced=True
+    insert [1, 2, 3] (RR, right-right-> left rotation): root rebalances to 2, balanced=True
+    insert [3, 1, 2] (LR, left-right -> left then right): root rebalances to 2, balanced=True
+    insert [1, 3, 2] (RL, right-left -> right then left): root rebalances to 2, balanced=True
+
+  Example tree of 10 keys: height 4, balanced=True, sorted keys [10, 20, 25, 30, 35, 40, 50, 60, 70, 80]
+  range [25, 60]: [25, 30, 35, 40, 50, 60]
+
+  After every insert or delete, the tree checks the balance factor up the path and,
+  where |left height - right height| > 1, rotates -- a constant-time pointer rewiring --
+  to restore balance. Deterministic O(log n) worst case, where a skip list gets there
+  probabilistically with coin flips instead of rotations.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\avl_tree.svg

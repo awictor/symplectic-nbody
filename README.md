@@ -292,6 +292,7 @@ ruins a long non-symplectic integration.
 | `src/mds.py` | Classical MDS: double-centering, eigen-embedding from distances, Procrustes align |
 | `src/skiplist.py` | Skip list: probabilistic O(log n) ordered map, express lanes, range queries |
 | `src/ant_colony.py` | Ant colony optimization: pheromone-trail TSP solver, evaporation, elitist deposit |
+| `src/avl_tree.py` | AVL self-balancing BST: rotations, O(log n) ordered map, range queries |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -575,6 +576,7 @@ ruins a long non-symplectic integration.
 | `examples/mds_demo.py` | Rebuild a city map from a distance table, Procrustes-aligned, + eigenvalue scree |
 | `examples/skiplist_demo.py` | Express-lane tower figure, search-path trace, geometric level histogram |
 | `examples/ant_colony_demo.py` | TSP tour over a pheromone field, convergence curve, alpha/beta balance |
+| `examples/avl_tree_demo.py` | AVL vs naive-BST height on sorted input, four rotation cases, tree figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6953,6 +6955,28 @@ transition rule, evaporation, length-weighted deposit, and elitist reinforcement
 recovers the optimal perimeter of a square and a circle's polygon, beats the nearest-neighbour
 greedy tour on random cities, drives the best length down monotonically, and concentrates pheromone
 on short edges.
+
+## AVL trees: a self-balancing binary search tree
+
+Deterministic O(log n) via rotations. `avl_tree.py`:
+
+```
+$ python examples/avl_tree_demo.py examples/output
+
+  sorted inserts: n=4095 -> AVL height 12 (log2=12); a naive BST would be 4095 (a chain)
+  four rotation cases (LL/RR/LR/RL) all rebalance to root 2
+  5000 random ops: balance invariant held throughout, matches a reference dict
+```
+
+An AVL tree keeps every node height-balanced (subtree heights differ by at most 1); after each
+insert or delete it rotates wherever the balance factor exceeds the bound -- a constant-time pointer
+rewiring. Four cases cover every imbalance (LL/RR single, LR/RL double). The strict invariant makes
+it the most rigidly balanced classic BST, so lookups are fast; where a skip list balances
+probabilistically, AVL does so deterministically. This module implements an AVL ordered map with
+insert, delete, search, ordered traversal, range queries, and min/max, verified against a
+brute-force sorted dictionary over 5000 random operations, that the balance invariant holds
+throughout, that the height stays O(log n) even for sorted insertions (where a naive BST would be
+linear), and that all four rotation cases trigger.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
