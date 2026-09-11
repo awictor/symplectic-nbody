@@ -300,6 +300,7 @@ ruins a long non-symplectic integration.
 | `src/point_in_polygon.py` | Point-in-polygon: ray casting + winding number, signed area, centroid, boundary |
 | `src/polygon_clip.py` | Sutherland-Hodgman polygon clipping against a convex window, area |
 | `src/marching_squares.py` | Marching squares: iso-contour extraction from a scalar grid, 16-case + interpolation |
+| `src/bresenham.py` | Bresenham rasterization: integer-only line, midpoint circle, filled disk |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -591,6 +592,7 @@ ruins a long non-symplectic integration.
 | `examples/point_in_polygon_demo.py` | Grid membership on a concave arrow + pentagram ray-vs-winding divergence |
 | `examples/polygon_clip_demo.py` | Concave polygon clipped to rectangle/triangle/diamond windows + overlay figure |
 | `examples/marching_squares_demo.py` | Circular contours of a radial field + Gaussian-terrain iso-lines figure |
+| `examples/bresenham_demo.py` | ASCII line-fan and circle rasterization, sub-pixel accuracy, circumference scaling |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7138,6 +7140,27 @@ The two ambiguous saddle cases are resolved by the cell-center average. This mod
 length, verified that a radial field contours to circles of the right radius and circumference, a
 linear ramp gives straight contours, a level outside the field range yields nothing, a diagonal
 saddle gives two segments, and a closed blob's contour forms closed loops with no loose ends.
+
+## Bresenham rasterization: lines and circles from integer math
+
+Draw pixels with integer arithmetic only. `bresenham.py`:
+
+```
+$ python examples/bresenham_demo.py examples/output
+
+  lines in every octant: connected, endpoints exact, max error < 0.5 (sub-pixel)
+  midpoint circle r=8: 44 pixels, max radius deviation 0.38, 8-fold symmetric
+  circle pixel count tracks 2*pi*r
+```
+
+Bresenham draws a line tracking an integer error term -- how far the true line has drifted from the
+current pixel -- stepping the minor axis and correcting whenever it crosses a threshold; no floating
+point, no division, no rounding. All eight octants are handled uniformly with absolute deltas and
+step signs; the companion midpoint circle draws one octant and mirrors it eight ways. This module
+implements line drawing, the midpoint circle, and a filled disk, verified that a line hits both
+endpoints, is 8-connected, stays within half a pixel of the true line, is symmetric under reversal,
+and handles every octant, and that a circle's pixels lie within half a pixel of the true radius with
+8-fold symmetry and a count tracking the circumference.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

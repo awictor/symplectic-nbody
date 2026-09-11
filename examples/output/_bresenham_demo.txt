@@ -1,0 +1,59 @@
+Bresenham rasterization: lines and circles from integer arithmetic only
+
+  Lines fanning from the bottom-left corner (integer pixels):
+    |#     #        #       #|
+    |#     #       #      ## |
+    |#    #       #     ##   |
+    |#    #     ##    ##     |
+    |#   #     #     #       |
+    |#   #    #    ##        |
+    |#  #    #   ##          |
+    |#  #   #  ##          ##|
+    |# #   # ##        ####  |
+    |# #  # #      ####      |
+    |## ####   ####          |
+    |##### ####              |
+    |######                  |
+    |########################|
+
+  Every rasterized line is connected and within half a pixel of the true line:
+    (0, 0)->(10, 3): 11 pixels, connected=True, max error 0.479
+    (0, 0)->(3, 10): 11 pixels, connected=True, max error 0.479
+    (0, 0)->(10, 10): 11 pixels, connected=True, max error 0.000
+    (0, 0)->(-8, 5):  9 pixels, connected=True, max error 0.424
+
+  Midpoint circle, radius 8:
+    |                   |
+    |       ooooo       |
+    |     oo     oo     |
+    |    o         o    |
+    |   o           o   |
+    |  o             o  |
+    |  o             o  |
+    | o               o |
+    | o               o |
+    | o               o |
+    | o               o |
+    | o               o |
+    |  o             o  |
+    |  o             o  |
+    |   o           o   |
+    |    o         o    |
+    |     oo     oo     |
+    |       ooooo       |
+    |                   |
+
+    44 pixels, max deviation from the true radius: 0.384 (< 0.5, sub-pixel)
+
+  Circle pixel count tracks the circumference 2*pi*r (integer steps ~ r):
+    r =  5:   28 pixels  (2*pi*r = 31)
+    r = 10:   56 pixels  (2*pi*r = 63)
+    r = 20:  112 pixels  (2*pi*r = 126)
+    r = 40:  228 pixels  (2*pi*r = 251)
+
+  Bresenham tracks an integer error term: the signed distance the true line has
+  drifted from the current pixel. When it crosses a threshold, step the minor axis and
+  correct the error -- no floating point, no division, no rounding. The midpoint circle
+  does the same with a decision variable and draws one octant, mirroring it eight ways.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\bresenham.svg

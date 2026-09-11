@@ -342,6 +342,7 @@ def main():
     import point_in_polygon_demo
     import polygon_clip_demo
     import marching_squares_demo
+    import bresenham_demo
 
     import plot_orbits
 
@@ -653,6 +654,7 @@ def main():
     point_in_polygon_txt = run("point_in_polygon_demo", point_in_polygon_demo.main, True)
     polygon_clip_txt = run("polygon_clip_demo", polygon_clip_demo.main, True)
     marching_squares_txt = run("marching_squares_demo", marching_squares_demo.main, True)
+    bresenham_txt = run("bresenham_demo", bresenham_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4472,6 +4474,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("marching_squares.svg"), "concentric circular contours of a radial field beside the nested iso-lines of a Gaussian terrain")
             + f'<div class="card">{pre(marching_squares_txt)}</div>'
+            + '</div>'),
+        section(
+            "Bresenham rasterization: lines and circles from integer math",
+            "Turning a mathematical line into pixels sounds trivial -- step x, round y -- but that "
+            "needs slow floating point per pixel and mis-steps on steep lines. Bresenham's algorithm "
+            "draws a line using ONLY INTEGER additions and comparisons: it tracks an error term "
+            "measuring how far the true line has drifted from the chosen pixel, and whenever that "
+            "error crosses a threshold it steps the minor axis and corrects. No division, no "
+            "floating point, no rounding -- which is why it ran on the first plotters and still "
+            "underlies GPU line rasterizers and grid games. All eight octants are handled uniformly "
+            "with absolute deltas and step signs; the companion MIDPOINT CIRCLE draws one octant "
+            "and mirrors it into the other seven by symmetry. This module implements line drawing, "
+            "the midpoint circle, and a filled disk, verified that a line hits both endpoints, is "
+            "8-connected, stays within half a pixel of the true line, is symmetric under reversal, "
+            "and handles every octant; and that a circle's pixels all lie within half a pixel of "
+            "the true radius with 8-fold symmetry and a count tracking the circumference.",
+            '<div class="grid">'
+            + svg_card(out("bresenham.svg"), "a fan of integer-pixel lines beside a midpoint-circle rasterization, each cell one pixel")
+            + f'<div class="card">{pre(bresenham_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
