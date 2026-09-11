@@ -1,0 +1,20 @@
+Welford: one-pass, online mean and variance, numerically stable
+
+  5000 values ~ N(50, 8^2):
+    mean     49.9322  (two-pass 49.9322)
+    variance 65.2773  (two-pass 65.2773)
+    std      8.0794,  skewness +0.0116,  kurtosis 2.8991
+
+  The naive variance E[x^2]-E[x]^2 collapses when the data has a large offset:
+        offset  true var     Welford           naive
+         0e+00       2.0      2.0000          2.0000
+         1e+03       2.0      2.0000          2.0000
+         1e+06       2.0      2.0000          2.0000
+         1e+09       2.0      2.0000          0.0000
+         1e+12       2.0      2.0000 -134217728.0000
+
+  Welford never forms the giant sum-of-squares, so it stays exact; the naive formula
+  subtracts two nearly-equal huge numbers and loses everything to rounding -- even
+  returning negative variances. Accumulators also merge, so shards combine in parallel.
+
+  wrote examples/output\welford.svg

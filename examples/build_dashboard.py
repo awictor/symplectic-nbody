@@ -289,6 +289,7 @@ def main():
     import fisher_yates_demo
     import box_muller_demo
     import rejection_sampling_demo
+    import welford_demo
 
     import plot_orbits
 
@@ -547,6 +548,7 @@ def main():
     fisher_yates_txt = run("fisher_yates_demo", fisher_yates_demo.main, True)
     box_muller_txt = run("box_muller_demo", box_muller_demo.main, True)
     rejection_sampling_txt = run("rejection_sampling_demo", rejection_sampling_demo.main, True)
+    welford_txt = run("welford_demo", welford_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3354,6 +3356,23 @@ def main():
             '<div class="grid">'
             + svg_card(out("rejection_sampling.svg"), "accepted (green) and rejected (red) darts under a bimodal density, and the kept-sample histogram matching it")
             + f'<div class="card">{pre(rejection_sampling_txt)}</div>'
+            + '</div>'),
+        section(
+            "Welford's algorithm: mean and variance in one stable pass",
+            "The textbook variance E[x^2] - E[x]^2 is a numerical disaster: it subtracts two "
+            "large, nearly-equal numbers, so on offset data (temperatures near 1e6, timestamps, "
+            "prices) catastrophic cancellation can even return a NEGATIVE variance. Welford's "
+            "algorithm updates a running mean and the sum of squared deviations as each datum "
+            "arrives -- delta = x - mean; mean += delta/n; M2 += delta*(x - new_mean) -- never "
+            "forming those giant intermediates, so it is both online (no need to store the data) "
+            "and numerically stable. Terriberry's extension carries M3 and M4 for skewness and "
+            "kurtosis, and two accumulators merge by combining counts, means, and M2 with a "
+            "correction -- so statistics over shards combine in parallel, exactly. This module "
+            "provides the accumulator and merge, verified against a two-pass computation and "
+            "shown staying exact where the naive formula collapses.",
+            '<div class="grid">'
+            + svg_card(out("welford.svg"), "the running mean and standard deviation converging onto their true values as the stream flows")
+            + f'<div class="card">{pre(welford_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

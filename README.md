@@ -247,6 +247,7 @@ ruins a long non-symplectic integration.
 | `src/fisher_yates.py` | Fisher-Yates shuffle: unbiased permutation, k-sample, Sattolo cyclic variant |
 | `src/box_muller.py` | Box-Muller: uniform->Gaussian transform, Marsaglia polar, moment-verified |
 | `src/rejection_sampling.py` | Rejection sampling: sample any evaluable density, box + general proposal |
+| `src/welford.py` | Welford online mean/variance: one stable pass, higher moments, mergeable |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -485,6 +486,7 @@ ruins a long non-symplectic integration.
 | `examples/fisher_yates_demo.py` | Uniform-vs-biased permutation counts + the frequency-histogram figure |
 | `examples/box_muller_demo.py` | Moments + 68-95-99.7 + the histogram-vs-Gaussian-density figure |
 | `examples/rejection_sampling_demo.py` | Acceptance rate + the accepted/rejected darts & histogram figure |
+| `examples/welford_demo.py` | Running stats + naive-vs-Welford offset table + the convergence figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5826,6 +5828,29 @@ acceptance rate is the area ratio `1/M`, so a loose envelope or a high dimension
 This module does box rejection sampling on an interval and general rejection sampling with an
 arbitrary proposal, and the tests verify the sampled moments, the acceptance-rate theory, and a
 histogram chi-square against the target (Gaussian, triangular, unnormalized, and beta shapes).
+
+## Welford's algorithm: mean and variance in one stable pass
+
+Running statistics that never lose precision. `welford.py`:
+
+```
+$ python examples/welford_demo.py examples/output
+
+        offset  true var     Welford           naive
+         1e+09       2.0      2.0000          0.0000
+         1e+12       2.0      2.0000 -134217728.0000
+```
+
+The textbook variance `E[x^2] - E[x]^2` is a numerical disaster: it subtracts two large,
+nearly-equal numbers, so on offset data (temperatures near 1e6, timestamps, prices) catastrophic
+cancellation can even return a NEGATIVE variance. Welford's algorithm updates a running mean and
+the sum of squared deviations as each datum arrives -- `delta = x - mean; mean += delta/n; M2 +=
+delta*(x - new_mean)` -- never forming those giant intermediates, so it is both online (no need
+to store the data) and numerically stable. Terriberry's extension carries M3 and M4 for skewness
+and kurtosis, and two accumulators merge by combining counts, means, and M2 with a correction --
+so statistics over shards combine in parallel, exactly. This module provides the accumulator and
+merge, verified against a two-pass computation over 200 random datasets and shown staying exact
+(variance 2.0) at a 1e12 offset where the naive formula returns -134 million.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
