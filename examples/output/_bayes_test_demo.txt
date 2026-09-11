@@ -1,0 +1,14 @@
+Bayes & the base-rate fallacy: a 99%-accurate test, a 1-in-1000 disease
+
+  prevalence           = 0.100%
+  sensitivity          = 99%   specificity = 99%
+  P(sick | positive)   = 9.0%   <- not 99%!   (Monte-Carlo: 9.1%)
+  P(sick | 2 positives)= 90.7%
+  break-even prevalence= 1.00%  (a positive is 50-50 here)
+
+  In 100,000 people: 100 are sick and 99 test positive, but 99,900 are healthy and
+  1% of them -- 999 -- test positive too. So 99 of 1098 positives are real: 9%. The
+  rare disease lets false positives swamp true ones however good the test sounds --
+  the base-rate fallacy behind medical screening, spam filters, and profiling.
+
+  wrote examples/output\bayes_test.svg

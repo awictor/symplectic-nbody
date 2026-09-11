@@ -259,6 +259,7 @@ def main():
     import parrondo_demo
     import galton_demo
     import monty_hall_demo
+    import bayes_test_demo
 
     import plot_orbits
 
@@ -487,6 +488,7 @@ def main():
     parrondo_txt = run("parrondo_demo", parrondo_demo.main, True)
     galton_txt = run("galton_demo", galton_demo.main, True)
     monty_hall_txt = run("monty_hall_demo", monty_hall_demo.main, True)
+    bayes_test_txt = run("bayes_test_demo", bayes_test_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2806,6 +2808,21 @@ def main():
             '<div class="grid">'
             + svg_card(out("monty_hall.svg"), "the classic 2/3-vs-1/3 win rates (and the 1/2 blind-host variant), and switching approaching certainty as doors grow")
             + f'<div class="card">{pre(monty_hall_txt)}</div>'
+            + '</div>'),
+        section(
+            "Bayes and the base-rate fallacy: a positive test can still mean healthy",
+            "A disease affects 1 in 1000; a test is 99% sensitive and 99% specific; you test "
+            "positive. The chance you are actually sick is not 99% but about 9%. Bayes' theorem "
+            "combines the prior with the test's likelihoods, and the rare base rate makes false "
+            "positives swamp the true ones: among 100,000 people, 99 true positives are buried "
+            "under 999 false ones. A positive becomes more-likely-than-not only once the "
+            "prevalence passes (1-spec)/(sens+1-spec) = 1%, and two independent positives push "
+            "the posterior above 90%. This is the base-rate fallacy behind medical screening, "
+            "spam filters, and security profiling -- here the posterior, likelihood ratios, and "
+            "retest odds are checked against a seeded Monte-Carlo cohort.",
+            '<div class="grid">'
+            + svg_card(out("bayes_test.svg"), "the positive predictive value rising with prevalence (50-50 only at 1%), and a cohort where 91% of positives are false")
+            + f'<div class="card">{pre(bayes_test_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

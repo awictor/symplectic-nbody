@@ -217,6 +217,7 @@ ruins a long non-symplectic integration.
 | `src/parrondo.py` | Parrondo's paradox: two losing games win when mixed, Markov-chain drift |
 | `src/galton.py` | Galton board: binomial slot law, CLT Gaussian limit, 1/sqrt(n) convergence |
 | `src/monty_hall.py` | Monty Hall: stay 1/N vs switch (N-1)/N, informed-vs-random host, Monte-Carlo |
+| `src/bayes_test.py` | Bayes & base-rate fallacy: PPV/NPV, likelihood ratios, retest odds, Monte-Carlo |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -425,6 +426,7 @@ ruins a long non-symplectic integration.
 | `examples/parrondo_demo.py` | Per-game drift vs simulation + capital trajectories & drift-vs-mix curve |
 | `examples/galton_demo.py` | Slot histogram vs binomial + the Gaussian overlay & 1/sqrt(n) convergence |
 | `examples/monty_hall_demo.py` | Stay/switch win rates vs simulation + the bars & (N-1)/N scaling curve |
+| `examples/bayes_test_demo.py` | Rare-disease posterior vs simulation + the PPV-vs-prevalence curve & cohort |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5061,6 +5063,30 @@ knowledge: if he opened a door blindly and it happened to show a goat, switching
 99% at 100 doors. This module gives the exact stay and switch probabilities for the classic and
 generalized game and the informed-vs-random-host comparison, all checked against a seeded
 Monte-Carlo play.
+
+## Bayes and the base-rate fallacy: a positive test can still mean healthy
+
+Ninety-nine percent accurate, and still probably wrong. `bayes_test.py`:
+
+```
+$ python examples/bayes_test_demo.py examples/output
+
+  prevalence           = 0.100%
+  sensitivity          = 99%   specificity = 99%
+  P(sick | positive)   = 9.0%   <- not 99%!   (Monte-Carlo: 9.1%)
+  P(sick | 2 positives)= 90.7%
+  break-even prevalence= 1.00%  (a positive is 50-50 here)
+```
+
+A disease affects 1 in 1000; a 99%-sensitive, 99%-specific test comes back positive. The chance
+you are actually sick is about 9%, not 99%, because the rare base rate makes false positives
+swamp the true ones: among 100,000 people, 99 true positives are buried under 999 false ones. A
+positive becomes more-likely-than-not only once the prevalence passes `(1-spec)/(sens+1-spec) =
+1%`, and two independent positives push the posterior above 90%. This module computes the
+positive and negative predictive values via Bayes' theorem, the likelihood ratios, the odds-form
+posterior for chaining retests, and the even-odds prevalence, all checked against exact
+hand-counts (99/1098) and a seeded Monte-Carlo cohort. This base-rate fallacy underlies medical
+screening, spam filters, and security profiling.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
