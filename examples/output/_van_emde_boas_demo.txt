@@ -1,0 +1,28 @@
+Van Emde Boas tree: integer sets with O(log log u) successor/predecessor
+
+  universe u=64, inserted keys, sorted: [5, 9, 17, 21, 33, 42, 58]
+  min 5, max 58
+  successor(21) = 33, successor(42) = 58
+  predecessor(33) = 21, predecessor(5) = None
+  member(17)? True   member(18)? False
+
+  Recursion depth per operation grows like log2(log2(u)) -- barely at all:
+  (a balanced BST would pay log2(n); vEB pays log2 log2 u regardless of n)
+    u = 2^ 4: vEB recursion depth 2   (log2 log2 u = 2.00), BST would be up to 4 levels deep
+    u = 2^ 8: vEB recursion depth 3   (log2 log2 u = 3.00), BST would be up to 8 levels deep
+    u = 2^16: vEB recursion depth 4   (log2 log2 u = 4.00), BST would be up to 16 levels deep
+    u = 2^24: vEB recursion depth 4   (log2 log2 u = 4.58), BST would be up to 24 levels deep
+    u = 2^32: vEB recursion depth 5   (log2 log2 u = 5.00), BST would be up to 32 levels deep
+    u = 2^48: vEB recursion depth 5   (log2 log2 u = 5.58), BST would be up to 48 levels deep
+    u = 2^64: vEB recursion depth 6   (log2 log2 u = 6.00), BST would be up to 64 levels deep
+
+  In a universe of 2^24 = 16777216 values with 5 keys:
+    successor(123456) = 5000000
+    predecessor(9999999) = 5000000
+    sorted keys: [10, 123456, 5000000, 9999999, 16000000]
+
+  Each key splits into a high half (which cluster) and low half (position in it); the
+  tree recurses on the SQUARE ROOT of the universe, and storing min/max directly caps the
+  recursion at one call per level -- so T(u) = T(sqrt u) + O(1) = O(log log u).
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\van_emde_boas.svg

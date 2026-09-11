@@ -323,6 +323,7 @@ ruins a long non-symplectic integration.
 | `src/fibonacci_heap.py` | Fibonacci heap (O(1) amortized decrease-key) + Dijkstra built on it |
 | `src/treap.py` | Treap: randomized balanced BST with split/merge and order statistics (select/rank) |
 | `src/splay_tree.py` | Splay tree: self-adjusting BST with the working-set property (hot keys near root) |
+| `src/van_emde_boas.py` | Van Emde Boas tree: integer set with O(log log u) successor/predecessor |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -637,6 +638,7 @@ ruins a long non-symplectic integration.
 | `examples/fibonacci_heap_demo.py` | Decrease-key/merge/Dijkstra + max root degree staying within the log_phi(n) bound |
 | `examples/treap_demo.py` | Order statistics + split/merge + height near 2log2(n) even under sorted insertion |
 | `examples/splay_tree_demo.py` | Working-set property: average access depth sinking below log2(n) as access skews |
+| `examples/van_emde_boas_demo.py` | O(log log u) recursion depth staying flat as the universe explodes vs a BST's log u |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7687,6 +7689,25 @@ insert/delete/membership/find-min/max/predecessor/successor with splaying on eve
 against a sorted set over a 3000-operation stream (BST and parent invariants hold, pred/succ match a
 sorted array, the accessed key is always at the root, and a hot access set drives the average depth
 well below log2(n)).
+
+## Van Emde Boas trees: integer sets with O(log log u) successor
+
+For integer keys from a bounded universe, exponentially faster than a BST. `van_emde_boas.py`:
+
+```
+$ python examples/van_emde_boas_demo.py examples/output
+
+  successor(21) = 33, predecessor(33) = 21   (universe u=64)
+  recursion depth: u=2^32 -> 5 steps, u=2^64 -> 6 steps (a BST would be 32, 64 deep)
+  in a 2^24 universe with 5 keys: successor(123456) = 5000000
+```
+
+A van Emde Boas tree splits each key into a high half (cluster) and low half (position), recursing on
+the square root of the universe, with a summary structure marking non-empty clusters. Storing each
+node's min/max directly and not recursing on the min caps the work at one recursive call per level:
+T(u) = T(sqrt u) + O(1) = O(log log u). This module implements insert/delete/membership/min/max/
+successor/predecessor, verified against a reference sorted set over a 4000-operation stream with
+successor and predecessor matching a linear scan at every point in the universe.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

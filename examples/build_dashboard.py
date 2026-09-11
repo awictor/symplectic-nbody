@@ -365,6 +365,7 @@ def main():
     import fibonacci_heap_demo
     import treap_demo
     import splay_tree_demo
+    import van_emde_boas_demo
 
     import plot_orbits
 
@@ -699,6 +700,7 @@ def main():
     fibonacci_heap_txt = run("fibonacci_heap_demo", fibonacci_heap_demo.main, True)
     treap_txt = run("treap_demo", treap_demo.main, True)
     splay_tree_txt = run("splay_tree_demo", splay_tree_demo.main, True)
+    van_emde_boas_txt = run("van_emde_boas_demo", van_emde_boas_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5032,6 +5034,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("splay_tree.svg"), "average access depth (blue) sinking below a balanced tree's fixed log2(n) (yellow dashed) as the access pattern grows more skewed -- recently touched keys stay near the root")
             + f'<div class="card">{pre(splay_tree_txt)}</div>'
+            + '</div>'),
+        section(
+            "Van Emde Boas trees: integer sets with O(log log u) successor",
+            "A balanced search tree does membership, insert, and SUCCESSOR/PREDECESSOR in O(log n). "
+            "But when the keys are integers from a bounded universe {0, ..., u-1}, the VAN EMDE BOAS "
+            "TREE does all of them in O(log log u) -- exponentially better in the universe size. For "
+            "u = 2^32 that is about five steps per operation regardless of how many keys are stored, "
+            "which makes it the theoretical champion for the predecessor problem and the basis of "
+            "fast integer priority queues, IP routing tables, and integer sorting. The structure "
+            "recursively divides the universe by its SQUARE ROOT: each key splits into a HIGH half "
+            "(which of sqrt(u) clusters) and a LOW half (position within it); a node holds sqrt(u) "
+            "child vEB trees plus a SUMMARY vEB tree over sqrt(u) recording which clusters are "
+            "non-empty. The genius is storing each node's MIN and MAX directly and NOT recursing on "
+            "the min -- that caps the work at one recursive call per level, so T(u) = T(sqrt u) + "
+            "O(1) = O(log log u). Successor checks the current cluster, and if the answer is not "
+            "there consults the summary to jump to the next non-empty cluster in a single step. This "
+            "module implements insert, delete, membership, min, max, successor, and predecessor over "
+            "a universe rounded to a power of two, verified against a reference sorted set: membership "
+            "after a 4000-operation random stream, correct min and max, successor and predecessor "
+            "matching a linear scan at every point in the universe, and the successor-walk from the "
+            "minimum reproducing the sorted key list.",
+            '<div class="grid">'
+            + svg_card(out("van_emde_boas.svg"), "the vEB per-operation recursion depth (blue, ~log log u) staying almost flat as the universe grows, against a BST's depth (red, ~log u) climbing linearly in the exponent")
+            + f'<div class="card">{pre(van_emde_boas_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
