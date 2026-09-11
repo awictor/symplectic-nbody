@@ -235,6 +235,7 @@ ruins a long non-symplectic integration.
 | `src/astar.py` | A* pathfinding: f=g+h heuristic search, grid heuristics, Dijkstra-verified optimal |
 | `src/toposort.py` | Topological sort: Kahn + DFS, cycle detection, critical-path scheduling |
 | `src/levenshtein.py` | Edit distance: DP table, alignment backtrace, similarity, Damerau variant |
+| `src/knapsack.py` | 0/1 knapsack DP: optimal value + item reconstruction, subset-sum, unbounded |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -461,6 +462,7 @@ ruins a long non-symplectic integration.
 | `examples/astar_demo.py` | A* vs Dijkstra cost/expansions + the side-by-side explored-cells figure |
 | `examples/toposort_demo.py` | Kahn/DFS order + critical path + the layered DAG figure |
 | `examples/levenshtein_demo.py` | Alignment + spell-check ranking + the DP-table heatmap figure |
+| `examples/knapsack_demo.py` | Chosen items vs brute force + the DP-table heatmap & value-vs-capacity figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5529,6 +5531,31 @@ triangle-inequality-respecting. This module computes the distance, a memory-lean
 adjacent-character transposition as one edit -- the commonest typo. The tests check known
 distances, the metric axioms over 500 random triples, and the alignment on 300 random pairs. It
 powers spell-checkers, fuzzy search, diff tools, and DNA sequence alignment.
+
+## The 0/1 knapsack: packing the most value under a weight limit
+
+Maximize value under a hard cap. `knapsack.py`:
+
+```
+$ python examples/knapsack_demo.py examples/output
+
+        item  weight  value
+      camera       2      6  <- take
+    gold bar       5     12  <- take
+       phone       1      5  <- take
+  optimal value 23 using 8 kg  (brute force agrees: True)
+```
+
+Items each have a weight and a value; which subset maximizes value without exceeding a capacity
+W, taking each item whole? Brute force checks 2^n subsets, but dynamic programming solves it in
+pseudo-polynomial `O(nW)`: `best[i][w]` is the most value from the first i items within capacity
+w, each cell the better of skipping item i or taking it (freeing `w - weight_i`). Backtracing
+recovers which items to take; a rolling array (iterating capacity downward) cuts memory to
+`O(W)`. The related subset-sum (hit an exact target) and unbounded knapsack (unlimited copies,
+iterate capacity upward) are the same table. This module solves all four, reconstructs the chosen
+items, and is verified *exhaustively* against a brute-force subset search over 1000 random
+knapsacks and 500 subset-sums. It models budget allocation, cargo loading, and portfolio
+selection under a hard cap.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

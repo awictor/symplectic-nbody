@@ -1,0 +1,29 @@
+0/1 knapsack: pick items to maximize value within 8 kg
+
+        item  weight  value
+      camera       2      6  <- take
+      laptop       3      8
+      whisky       4      7
+        book       1      2
+    gold bar       5     12  <- take
+       phone       1      5  <- take
+
+  optimal value 23 using 8 kg  (brute force agrees: True)
+
+  Optimal value as the bag grows:
+    capacity  best value
+           0           0
+           2           7
+           4          13
+           6          19
+           8          23
+          10          27
+          12          33
+          14          34
+          16          40
+
+  Each cell of the DP table is 'skip item i' vs 'take it and free up its weight' --
+  O(nW) instead of the 2^n subsets brute force checks. It models budget allocation,
+  cargo loading, and portfolio selection under a hard cap.
+
+  wrote examples/output\knapsack.svg

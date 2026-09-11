@@ -277,6 +277,7 @@ def main():
     import astar_demo
     import toposort_demo
     import levenshtein_demo
+    import knapsack_demo
 
     import plot_orbits
 
@@ -523,6 +524,7 @@ def main():
     astar_txt = run("astar_demo", astar_demo.main, True)
     toposort_txt = run("toposort_demo", toposort_demo.main, True)
     levenshtein_txt = run("levenshtein_demo", levenshtein_demo.main, True)
+    knapsack_txt = run("knapsack_demo", knapsack_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3131,6 +3133,23 @@ def main():
             '<div class="grid">'
             + svg_card(out("levenshtein.svg"), "the dynamic-programming cost table with the backtrace path that spells out the minimal edits")
             + f'<div class="card">{pre(levenshtein_txt)}</div>'
+            + '</div>'),
+        section(
+            "The 0/1 knapsack: packing the most value under a weight limit",
+            "Items each have a weight and a value; which subset maximizes value without exceeding "
+            "a capacity W, taking each item whole or not at all? Brute force checks 2^n subsets, "
+            "but dynamic programming solves it in pseudo-polynomial O(nW): best[i][w] is the most "
+            "value from the first i items within capacity w, each cell the better of skipping "
+            "item i or taking it (freeing w - weight_i of room). Backtracing recovers which items "
+            "to take; a rolling array (iterating capacity downward so each item is used once) "
+            "cuts memory to O(W). The related subset-sum question and the unbounded knapsack "
+            "(unlimited copies, iterate capacity upward) are the same table. This module solves "
+            "all four, reconstructs the chosen items, and is verified exhaustively against a "
+            "brute-force subset search -- the model for budget allocation, cargo loading, and "
+            "portfolio selection under a hard cap.",
+            '<div class="grid">'
+            + svg_card(out("knapsack.svg"), "the DP value table filling row by row to the optimum, and the optimal value climbing with capacity")
+            + f'<div class="card">{pre(knapsack_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
