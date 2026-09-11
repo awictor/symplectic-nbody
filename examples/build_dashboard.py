@@ -254,6 +254,7 @@ def main():
     import benford_demo
     import coupon_collector_demo
     import secretary_demo
+    import birthday_demo
 
     import plot_orbits
 
@@ -477,6 +478,7 @@ def main():
     benford_txt = run("benford_demo", benford_demo.main, True)
     coupon_txt = run("coupon_collector_demo", coupon_collector_demo.main, True)
     secretary_txt = run("secretary_demo", secretary_demo.main, True)
+    birthday_txt = run("birthday_demo", birthday_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2721,6 +2723,21 @@ def main():
             '<div class="grid">'
             + svg_card(out("secretary.svg"), "the win probability peaking near the 1/e look-fraction, and the optimum converging to 1/e as n grows")
             + f'<div class="card">{pre(secretary_txt)}</div>'
+            + '</div>'),
+        section(
+            "The birthday problem: coincidences are more common than they feel",
+            "How many people before two share a birthday with better-than-even odds? Only 23, "
+            "not hundreds, because k people make k(k-1)/2 pairs and it is the pair count, "
+            "growing like k^2, that drives collisions. The probability all k are distinct is "
+            "prod (365-i)/365, so a collision passes 1/2 at 23 and 99.9% by 70. In general a "
+            "collision becomes likely once k ~ 1.177 sqrt(d), a square-root law that sizes hash "
+            "tables and UUID spaces and sets the birthday attack: a b-bit hash collides after "
+            "~2^(b/2) tries, not 2^b, which is why collision resistance needs twice the bits of "
+            "preimage resistance. Exact and Poisson-approximate probabilities are checked "
+            "against a seeded Monte-Carlo run.",
+            '<div class="grid">'
+            + svg_card(out("birthday.svg"), "the collision-probability curve crossing 50% at 23 people, and the crossover growing like sqrt(days)")
+            + f'<div class="card">{pre(birthday_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

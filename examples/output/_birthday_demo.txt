@@ -1,0 +1,16 @@
+Birthday problem: with 365 days, just 23 people make a shared birthday likelier than not
+
+   people k     exact   Poisson      sim
+         10    0.1169    0.1160   0.1222
+         23    0.5073    0.5000   0.5147
+         40    0.8912    0.8820   0.8960
+         57    0.9901    0.9874   0.9880
+         70    0.9992    0.9987   0.9992
+
+  50% at k = 23,  99% at k = 57,  99.9% at k = 70.
+  The crossover grows only like ~1.177 sqrt(days) (~22.5); the first
+  collision arrives after ~24 draws. It is the number of
+  PAIRS, ~k^2/2, that drives collisions -- the same square-root law makes a b-bit hash
+  collide after ~2^(b/2) tries (the birthday attack), not 2^b.
+
+  wrote examples/output\birthday.svg

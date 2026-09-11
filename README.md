@@ -212,6 +212,7 @@ ruins a long non-symplectic integration.
 | `src/benford.py` | Benford's law: log10(1+1/d) leading digits, chi-square goodness-of-fit |
 | `src/coupon_collector.py` | Coupon collector: E[T]=n H_n, variance, completion CDF, Monte-Carlo |
 | `src/secretary.py` | Secretary problem: 1/e optimal-stopping rule, win probability, Monte-Carlo |
+| `src/birthday.py` | Birthday problem: collision probability, sqrt(d) law, birthday-attack cost |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -415,6 +416,7 @@ ruins a long non-symplectic integration.
 | `examples/benford_demo.py` | Digit-frequency table + the Benford curve with Fibonacci vs uniform bars |
 | `examples/coupon_collector_demo.py` | E[T] vs simulation table + the progress curve & completion CDF |
 | `examples/secretary_demo.py` | Optimal cutoff vs simulation table + the P(win) curve & 1/e convergence |
+| `examples/birthday_demo.py` | Collision-probability table + the P vs k curve & sqrt(days) crossover |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4927,6 +4929,31 @@ how large n is. This module gives the exact win probability for any cutoff, the 
 the 1/e asymptotics, and the expected number of candidates seen, all checked against exact
 small cases (n=3 gives r=2 and P=1/2) and a seeded Monte-Carlo run. The same optimal-stopping
 law governs flat-hunting, parking, and online auctions.
+
+## The birthday problem: coincidences are more common than they feel
+
+Twenty-three people, better-than-even odds. `birthday.py`:
+
+```
+$ python examples/birthday_demo.py examples/output
+
+   people k     exact   Poisson      sim
+         10    0.1169    0.1160   0.1222
+         23    0.5073    0.5000   0.5147
+         57    0.9901    0.9874   0.9880
+         70    0.9992    0.9987   0.9992
+```
+
+How many people before two share a birthday with better-than-even odds? Only 23, because k
+people make `k(k-1)/2` pairs and it is the pair count, growing like `k^2`, that drives
+collisions. The probability all k are distinct is `prod (365-i)/365`, so a collision passes 1/2
+at 23 and 99.9% by 70. In general a collision becomes likely once `k ~ 1.177 sqrt(d)` -- a
+square-root law that sizes hash tables and UUID spaces and sets the birthday attack: a b-bit
+hash collides after `~2^(b/2)` tries, not `2^b`, which is why collision resistance needs twice
+the bits of preimage resistance. This module gives the exact collision and distinct
+probabilities, the smallest group for a target probability, the median and expected
+first-collision counts, the Poisson approximation, and the hash-attack cost, all checked
+against exact values (23, 57, 70; the pigeonhole certainty at 366) and a seeded Monte-Carlo run.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
