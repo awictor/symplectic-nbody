@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="18">Conway&#39;s Game of Life</text>
+<text x="20" y="46" fill="#8b949e" font-size="12">the glider&#39;s four phases (top), a mixed board of a still life, oscillator, and spaceship (bottom)</text>
+<rect x="82.0" y="78.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="98.0" y="94.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="66.0" y="110.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="82.0" y="110.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="98.0" y="110.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="50.0" y="62.0" width="96.0" height="96.0" fill="none" stroke="#21262d" stroke-width="1"/>
+<text x="98.0" y="172.0" fill="#8b949e" font-size="10" text-anchor="middle">t=0</text>
+<rect x="188.0" y="94.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="220.0" y="94.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="204.0" y="110.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="220.0" y="110.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="204.0" y="126.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="172.0" y="62.0" width="96.0" height="96.0" fill="none" stroke="#21262d" stroke-width="1"/>
+<text x="220.0" y="172.0" fill="#8b949e" font-size="10" text-anchor="middle">t=1</text>
+<rect x="342.0" y="94.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="310.0" y="110.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="342.0" y="110.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="326.0" y="126.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="342.0" y="126.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="294.0" y="62.0" width="96.0" height="96.0" fill="none" stroke="#21262d" stroke-width="1"/>
+<text x="342.0" y="172.0" fill="#8b949e" font-size="10" text-anchor="middle">t=2</text>
+<rect x="448.0" y="94.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="464.0" y="110.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="480.0" y="110.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="448.0" y="126.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="464.0" y="126.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="416.0" y="62.0" width="96.0" height="96.0" fill="none" stroke="#21262d" stroke-width="1"/>
+<text x="464.0" y="172.0" fill="#8b949e" font-size="10" text-anchor="middle">t=3</text>
+<rect x="586.0" y="94.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="602.0" y="110.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="570.0" y="126.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="586.0" y="126.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="602.0" y="126.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="538.0" y="62.0" width="96.0" height="96.0" fill="none" stroke="#21262d" stroke-width="1"/>
+<text x="586.0" y="172.0" fill="#8b949e" font-size="10" text-anchor="middle">t=4</text>
+<text x="50.0" y="190.0" fill="#8b949e" font-size="11">glider: same shape, shifted one cell down-right, every 4 generations</text>
+<rect x="91.3" y="341.3" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="112.0" y="341.3" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="91.3" y="362.0" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="112.0" y="362.0" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="318.7" y="362.0" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="339.3" y="382.7" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="298.0" y="403.3" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="318.7" y="403.3" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="339.3" y="403.3" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="112.0" y="465.3" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="132.7" y="465.3" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="153.3" y="465.3" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="463.3" y="506.7" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="484.0" y="506.7" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="463.3" y="527.3" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="504.7" y="527.3" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="484.0" y="548.0" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="50.0" y="300.0" width="620.0" height="372.0" fill="none" stroke="#21262d" stroke-width="1"/>
+<text x="50.0" y="690.0" fill="#8b949e" font-size="10">a mixed population: block (still), blinker (oscillator), glider (spaceship)</text>
+</svg>

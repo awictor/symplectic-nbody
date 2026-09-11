@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.20       11.94      0.8x
-   400          37.18       36.87      1.0x
-   800         146.40      112.71      1.3x
-  1600         663.22      361.24      1.8x
-  3200        2643.05      983.86      2.7x
+   200           9.03       12.14      0.7x
+   400          36.89       37.33      1.0x
+   800         147.48      118.87      1.2x
+  1600         642.70      368.33      1.7x
+  3200        2633.26     1063.19      2.5x
 
-empirical scaling exponent  direct ~ N^2.05   barnes-hut ~ N^1.60
+empirical scaling exponent  direct ~ N^2.05   barnes-hut ~ N^1.62
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -187665,6 +187665,134 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   RNG), and universal computation (110). Complexity needs almost no ingredients.
 
   wrote examples/output\cellular_automaton.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Conway&#x27;s Game of Life: a universe from four rules</h2>
+    <p class="blurb">On a 2D grid, a live cell survives with 2-3 live neighbours and a dead cell is born with exactly 3 (B3/S23) -- and that is the whole rule. From it come still lifes (the block, unchanging), oscillators (the blinker, period 2), and spaceships (the glider, translating one cell diagonally every four generations). Because gliders can be fired from guns and collided to build logic gates, Life is Turing-complete: a computer can be built inside it. The canonical proof that simple local rules generate open-ended complexity.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" font-family="monospace">
+<rect width="720" height="720" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="18">Conway&#39;s Game of Life</text>
+<text x="20" y="46" fill="#8b949e" font-size="12">the glider&#39;s four phases (top), a mixed board of a still life, oscillator, and spaceship (bottom)</text>
+<rect x="82.0" y="78.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="98.0" y="94.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="66.0" y="110.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="82.0" y="110.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="98.0" y="110.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="50.0" y="62.0" width="96.0" height="96.0" fill="none" stroke="#21262d" stroke-width="1"/>
+<text x="98.0" y="172.0" fill="#8b949e" font-size="10" text-anchor="middle">t=0</text>
+<rect x="188.0" y="94.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="220.0" y="94.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="204.0" y="110.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="220.0" y="110.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="204.0" y="126.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="172.0" y="62.0" width="96.0" height="96.0" fill="none" stroke="#21262d" stroke-width="1"/>
+<text x="220.0" y="172.0" fill="#8b949e" font-size="10" text-anchor="middle">t=1</text>
+<rect x="342.0" y="94.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="310.0" y="110.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="342.0" y="110.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="326.0" y="126.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="342.0" y="126.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="294.0" y="62.0" width="96.0" height="96.0" fill="none" stroke="#21262d" stroke-width="1"/>
+<text x="342.0" y="172.0" fill="#8b949e" font-size="10" text-anchor="middle">t=2</text>
+<rect x="448.0" y="94.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="464.0" y="110.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="480.0" y="110.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="448.0" y="126.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="464.0" y="126.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="416.0" y="62.0" width="96.0" height="96.0" fill="none" stroke="#21262d" stroke-width="1"/>
+<text x="464.0" y="172.0" fill="#8b949e" font-size="10" text-anchor="middle">t=3</text>
+<rect x="586.0" y="94.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="602.0" y="110.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="570.0" y="126.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="586.0" y="126.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="602.0" y="126.0" width="15.4" height="15.4" fill="#06d6a0"/>
+<rect x="538.0" y="62.0" width="96.0" height="96.0" fill="none" stroke="#21262d" stroke-width="1"/>
+<text x="586.0" y="172.0" fill="#8b949e" font-size="10" text-anchor="middle">t=4</text>
+<text x="50.0" y="190.0" fill="#8b949e" font-size="11">glider: same shape, shifted one cell down-right, every 4 generations</text>
+<rect x="91.3" y="341.3" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="112.0" y="341.3" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="91.3" y="362.0" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="112.0" y="362.0" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="318.7" y="362.0" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="339.3" y="382.7" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="298.0" y="403.3" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="318.7" y="403.3" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="339.3" y="403.3" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="112.0" y="465.3" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="132.7" y="465.3" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="153.3" y="465.3" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="463.3" y="506.7" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="484.0" y="506.7" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="463.3" y="527.3" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="504.7" y="527.3" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="484.0" y="548.0" width="20.1" height="20.1" fill="#4dabf7"/>
+<rect x="50.0" y="300.0" width="620.0" height="372.0" fill="none" stroke="#21262d" stroke-width="1"/>
+<text x="50.0" y="690.0" fill="#8b949e" font-size="10">a mixed population: block (still), blinker (oscillator), glider (spaceship)</text>
+</svg><figcaption>the glider&#x27;s four phases and a mixed board of still life, oscillator, and spaceship</figcaption></figure><div class="card"><pre>Conway&#x27;s Game of Life (B3/S23): live cell survives on 2-3, dead born on 3
+
+  Classic patterns:
+    block   : still life (population 4, unchanged: True)
+    blinker : period-2 oscillator (returns in 2: True)
+    glider  : spaceship, moves (1,1) every 4 gens
+
+  A glider crossing an 11x11 grid:
+    generation 0:
+      .#.........
+      ..#........
+      ###........
+      ...........
+      ...........
+      ...........
+      ...........
+      ...........
+      ...........
+      ...........
+      ...........
+
+    generation 4:
+      ...........
+      ..#........
+      ...#.......
+      .###.......
+      ...........
+      ...........
+      ...........
+      ...........
+      ...........
+      ...........
+      ...........
+
+    generation 8:
+      ...........
+      ...........
+      ...#.......
+      ....#......
+      ..###......
+      ...........
+      ...........
+      ...........
+      ...........
+      ...........
+      ...........
+
+    generation 12:
+      ...........
+      ...........
+      ...........
+      ....#......
+      .....#.....
+      ...###.....
+      ...........
+      ...........
+      ...........
+      ...........
+      ...........
+
+  From B3/S23 come still lifes, blinking oscillators, gliders that fly, and -- via
+  glider guns and collisions building logic gates -- a Turing-complete computer.
+  Simple local rules, open-ended complexity.
+  wrote examples/output\game_of_life.svg</pre></div></div>
   </section>
 
   <section>

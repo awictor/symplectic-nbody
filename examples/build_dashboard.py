@@ -247,6 +247,7 @@ def main():
     import kuramoto_demo
     import sandpile_demo
     import cellular_automaton_demo
+    import game_of_life_demo
 
     import plot_orbits
 
@@ -463,6 +464,7 @@ def main():
     kuramoto_txt = run("kuramoto_demo", kuramoto_demo.main, True)
     sandpile_txt = run("sandpile_demo", sandpile_demo.main, True)
     cellular_automaton_txt = run("cellular_automaton_demo", cellular_automaton_demo.main, True)
+    game_of_life_txt = run("game_of_life_demo", game_of_life_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2610,6 +2612,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("cellular_automaton.svg"), "space-time diagrams of rules 90 (fractal), 30 (chaos), and 110 (complex)")
             + f'<div class="card">{pre(cellular_automaton_txt)}</div>'
+            + '</div>'),
+        section(
+            "Conway's Game of Life: a universe from four rules",
+            "On a 2D grid, a live cell survives with 2-3 live neighbours and a dead cell is born "
+            "with exactly 3 (B3/S23) -- and that is the whole rule. From it come still lifes "
+            "(the block, unchanging), oscillators (the blinker, period 2), and spaceships (the "
+            "glider, translating one cell diagonally every four generations). Because gliders "
+            "can be fired from guns and collided to build logic gates, Life is Turing-complete: "
+            "a computer can be built inside it. The canonical proof that simple local rules "
+            "generate open-ended complexity.",
+            '<div class="grid">'
+            + svg_card(out("game_of_life.svg"), "the glider's four phases and a mixed board of still life, oscillator, and spaceship")
+            + f'<div class="card">{pre(game_of_life_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
