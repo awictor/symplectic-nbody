@@ -1,0 +1,23 @@
+SVD: A = U S V^T -- orthonormal axes and the stretches between them
+
+  singular values: [6.491, 3.4449]
+  reconstruction A = U S V^T holds: True
+  rank 2, spectral norm 6.4910, condition number 1.8842
+
+  Low-rank approximation (Eckart-Young) of a 6x6 nearly-rank-1 matrix:
+    rank k   approximation error
+         1                0.0841
+         2                0.0617
+         3                0.0449
+         6                0.0000
+  -- rank 1 already captures almost everything: the basis of image/data compression.
+
+  PCA of a tilted 2D cloud (120 points):
+    component 1 [0.881, 0.474], explains 96.1% of variance
+    component 2 [-0.474, 0.881], explains 3.9%
+
+  SVD gives the rank, the 2-norm, the condition number, the best low-rank fit, and
+  the pseudo-inverse -- and PCA (SVD of centred data) finds the directions of greatest
+  variance. It underlies image compression, recommender systems, and latent semantics.
+
+  wrote examples/output\svd.svg

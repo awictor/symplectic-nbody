@@ -258,6 +258,7 @@ ruins a long non-symplectic integration.
 | `src/qr.py` | QR decomposition: modified Gram-Schmidt, least squares, orthonormal Q |
 | `src/eigen.py` | Power iteration eigenvalues: Rayleigh quotient, inverse iteration, deflation |
 | `src/conjugate_gradient.py` | Conjugate gradient: iterative SPD solver, Jacobi preconditioning |
+| `src/svd.py` | SVD & PCA: A=USV^T via eigen(A^TA), low-rank approx, principal components |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -507,6 +508,7 @@ ruins a long non-symplectic integration.
 | `examples/qr_demo.py` | QR + line/quadratic least-squares fits + the best-fit-line & residual figure |
 | `examples/eigen_demo.py` | Dominant + inverse + full spectrum + the convergence & spectrum figure |
 | `examples/conjugate_gradient_demo.py` | CG vs steepest descent + the residual-decay figure |
+| `examples/svd_demo.py` | SVD + low-rank + PCA + the data-cloud axes & singular-value figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6096,6 +6098,28 @@ progress -- converging in at most n steps exactly, far fewer in practice at a ra
 `sqrt(kappa)`, which is why preconditioning (here the Jacobi diagonal) is the whole game. This
 module implements CG and preconditioned CG, verified against a dense LU solve, the `<= n` step
 guarantee, and the monotone residual decay, and shown beating steepest descent's zig-zag.
+
+## SVD and PCA: the axes a matrix acts along
+
+Every matrix's most informative factorization. `svd.py`:
+
+```
+$ python examples/svd_demo.py examples/output
+
+  rank 2, spectral norm 6.49, condition number 1.88
+  low-rank error: rank 1 -> 0.084, rank 2 -> 0.062, rank 6 -> 0.000
+  PCA: component 1 [0.881, 0.474] explains 96.1% of variance
+```
+
+Every matrix A factors as `A = U S V^T`: orthonormal input directions V, orthonormal outputs U,
+and non-negative singular values S saying how much A stretches each -- geometrically A sends the
+unit sphere to an ellipsoid whose semi-axes are the singular values. It is the most informative
+factorization: the rank, 2-norm, condition number, best low-rank approximation (Eckart-Young,
+the basis of image compression), and pseudo-inverse all read off it. Here it is built via the
+symmetric eigendecomposition of `A^T A` (reusing the power-iteration eigensolver). Principal
+component analysis is SVD of mean-centred data: the top singular vectors are the directions of
+greatest variance. This module computes the thin SVD, low-rank reconstruction, and PCA with
+explained variance, verified by `A = U S V^T`, orthonormality, and the variance ordering.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -300,6 +300,7 @@ def main():
     import qr_demo
     import eigen_demo
     import conjugate_gradient_demo
+    import svd_demo
 
     import plot_orbits
 
@@ -569,6 +570,7 @@ def main():
     qr_txt = run("qr_demo", qr_demo.main, True)
     eigen_txt = run("eigen_demo", eigen_demo.main, True)
     conjugate_gradient_txt = run("conjugate_gradient_demo", conjugate_gradient_demo.main, True)
+    svd_txt = run("svd_demo", svd_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3558,6 +3560,23 @@ def main():
             '<div class="grid">'
             + svg_card(out("conjugate_gradient.svg"), "the residual plunging to machine precision under CG while steepest descent crawls (log scale)")
             + f'<div class="card">{pre(conjugate_gradient_txt)}</div>'
+            + '</div>'),
+        section(
+            "SVD and PCA: the axes a matrix acts along",
+            "Every matrix A factors as A = U S V^T: orthonormal input directions V, orthonormal "
+            "outputs U, and non-negative singular values S saying how much A stretches each -- "
+            "geometrically, A sends the unit sphere to an ellipsoid whose semi-axes are the "
+            "singular values. It is the most informative factorization: the rank, the 2-norm and "
+            "condition number, the best low-rank approximation (Eckart-Young, the basis of image "
+            "compression), and the pseudo-inverse all read off it. Here it is built via the "
+            "symmetric eigendecomposition of A^T A (reusing the power-iteration eigensolver). "
+            "Principal component analysis is SVD of mean-centred data: the top singular vectors "
+            "are the directions of greatest variance. This module computes the thin SVD, "
+            "low-rank reconstruction, and PCA with explained variance, verified by A = U S V^T, "
+            "orthonormality, and the variance ordering.",
+            '<div class="grid">'
+            + svg_card(out("svd.svg"), "a tilted data cloud with its PCA principal axes, and the singular-value spectrum")
+            + f'<div class="card">{pre(svd_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
