@@ -245,6 +245,7 @@ ruins a long non-symplectic integration.
 | `src/count_min.py` | Count-Min sketch: frequency estimates in sublinear memory, never underestimates |
 | `src/alias_method.py` | Alias method: O(1) weighted sampling after O(n) setup, Vose construction |
 | `src/fisher_yates.py` | Fisher-Yates shuffle: unbiased permutation, k-sample, Sattolo cyclic variant |
+| `src/box_muller.py` | Box-Muller: uniform->Gaussian transform, Marsaglia polar, moment-verified |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -481,6 +482,7 @@ ruins a long non-symplectic integration.
 | `examples/count_min_demo.py` | Estimate vs true + error-vs-width + the scatter & error-decay figure |
 | `examples/alias_method_demo.py` | Target vs sampled + the alias table + the frequency & column figure |
 | `examples/fisher_yates_demo.py` | Uniform-vs-biased permutation counts + the frequency-histogram figure |
+| `examples/box_muller_demo.py` | Moments + 68-95-99.7 + the histogram-vs-Gaussian-density figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5780,6 +5782,27 @@ without replacement), and restricting swaps to strictly earlier positions (Satto
 uniform random single cycle. This module implements all of these and demonstrates the bias by
 enumerating every permutation over tens of thousands of trials: Fisher-Yates is flat (chi-square
 ~5), the naive shuffle measurably lumpy (chi-square ~1800).
+
+## Box-Muller: turning uniform randomness into a bell curve
+
+Uniforms in, Gaussians out. `box_muller.py`:
+
+```
+$ python examples/box_muller_demo.py examples/output
+
+  mean +0.0028, variance 1.0033, skewness +0.0028, kurtosis 2.9973
+  within 1 sigma 0.6821, 2 sigma 0.9546, 3 sigma 0.9971
+```
+
+Random generators give uniform values, but almost every simulation -- Brownian motion,
+Monte-Carlo finance, noise models -- needs Gaussians. The Box-Muller transform converts a pair
+of uniforms into two independent standard normals: `z0 = sqrt(-2 ln u1) cos(2 pi u2)`, `z1 =
+sqrt(-2 ln u1) sin(2 pi u2)`. It is exact -- the polar change of variables onto the 2D Gaussian,
+whose radius has `r^2` exponentially distributed and whose angle is uniform. Marsaglia's polar
+method rejects to the unit disc and reuses its coordinates, skipping the trig; scaling by sigma
+and shifting by mu gives any `N(mu, sigma^2)`. This module implements both, and the tests verify
+the output's mean, variance, skewness (~0), kurtosis (~3), and the 68-95-99.7 rule over large
+samples. Every simulation that needs noise starts here.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,21 @@
+Box-Muller: two uniforms -> two independent standard normals
+
+  sample of 200000 standard normals:
+    mean     = +0.0028  (target 0)
+    variance = 1.0033  (target 1)
+    skewness = +0.0028  (target 0)
+    kurtosis = 2.9973  (target 3)
+
+  68-95-99.7 rule:
+    within 1 sigma: 0.6821  (normal: 0.6827)
+    within 2 sigma: 0.9546  (normal: 0.9545)
+    within 3 sigma: 0.9971  (normal: 0.9973)
+
+  Marsaglia polar method (no trig): mean -0.0044, var 1.0016, kurtosis 3.034 -- same distribution, faster.
+  scaled to N(100, 15^2) (e.g. IQ scores): mean 100.0, sd 15.0
+
+  The transform is exact: r = sqrt(-2 ln u1) makes r^2 exponential (the Gaussian
+  radius), theta = 2 pi u2 is the uniform angle, and (r cos, r sin) is a 2D normal.
+  Every simulation that needs noise -- Brownian motion, Monte-Carlo finance -- starts here.
+
+  wrote examples/output\box_muller.svg

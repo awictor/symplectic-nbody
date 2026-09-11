@@ -287,6 +287,7 @@ def main():
     import count_min_demo
     import alias_method_demo
     import fisher_yates_demo
+    import box_muller_demo
 
     import plot_orbits
 
@@ -543,6 +544,7 @@ def main():
     count_min_txt = run("count_min_demo", count_min_demo.main, True)
     alias_method_txt = run("alias_method_demo", alias_method_demo.main, True)
     fisher_yates_txt = run("fisher_yates_demo", fisher_yates_demo.main, True)
+    box_muller_txt = run("box_muller_demo", box_muller_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3317,6 +3319,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("fisher_yates.svg"), "permutation frequencies: Fisher-Yates hugs the uniform line while the naive shuffle is visibly biased")
             + f'<div class="card">{pre(fisher_yates_txt)}</div>'
+            + '</div>'),
+        section(
+            "Box-Muller: turning uniform randomness into a bell curve",
+            "Random generators give uniform values, but almost every simulation -- Brownian "
+            "motion, Monte-Carlo finance, noise models -- needs Gaussians. The Box-Muller "
+            "transform converts a pair of uniforms into a pair of independent standard normals: "
+            "z0 = sqrt(-2 ln u1) cos(2 pi u2), z1 = sqrt(-2 ln u1) sin(2 pi u2). It is exact -- "
+            "the polar change of variables onto the 2D Gaussian, whose radius has r^2 "
+            "exponentially distributed and whose angle is uniform. Marsaglia's polar method "
+            "rejects to the unit disc and reuses its coordinates, skipping the trig. Scaling by "
+            "sigma and shifting by mu gives any N(mu, sigma^2). This module implements both, and "
+            "the tests verify the output's mean, variance, skewness (~0), kurtosis (~3), and the "
+            "68-95-99.7 rule over large samples.",
+            '<div class="grid">'
+            + svg_card(out("box_muller.svg"), "the transformed-uniform histogram landing exactly on the analytic Gaussian density with its 1/2/3-sigma bands")
+            + f'<div class="card">{pre(box_muller_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
