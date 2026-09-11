@@ -199,6 +199,7 @@ ruins a long non-symplectic integration.
 | `src/henon.py` | Henon map: strange attractor, area contraction, fixed points, Lyapunov |
 | `src/lorenz.py` | Lorenz attractor: RK4 flow, volume contraction, fixed points, Lyapunov |
 | `src/double_pendulum.py` | Double pendulum: RK4 equations of motion, energy, chaotic divergence |
+| `src/mandelbrot.py` | Mandelbrot set: escape time, membership, cardioid/bulb tests |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -389,6 +390,7 @@ ruins a long non-symplectic integration.
 | `examples/henon_demo.py` | Fixed-point/Lyapunov table + the attractor & fractal-zoom figure |
 | `examples/lorenz_demo.py` | Fixed-point/Lyapunov table + the butterfly & trajectory-divergence figure |
 | `examples/double_pendulum_demo.py` | Energy/divergence table + the bob-trace & two-pendulum figure |
+| `examples/mandelbrot_demo.py` | Escape-time table + ASCII view & the escape-time-coloured set |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4593,6 +4595,27 @@ a well-resolved RK4 run holds it to a part in a million; the slow long-time drif
 expected non-symplectic numerical effect), and a hair's difference in the start grows far
 beyond its initial size. The tests verify the straight-down equilibrium, energy conservation
 at a fine step, the bob positions, and the chaotic divergence outpacing a near-linear start.
+
+## The Mandelbrot set: infinite detail from z -> z^2 + c
+
+One quadratic rule generates an infinitely detailed fractal. `mandelbrot.py`:
+
+```
+$ python examples/mandelbrot_demo.py examples/output
+
+  c = 0.00  -> IN SET      c = 0.35 -> escapes at 8
+  c = 0.25  -> IN SET      c = 1.00 -> escapes at 3
+  the set fills ~24% of its bounding box
+```
+
+Iterating `z -> z^2 + c` from `z=0`, the Mandelbrot set is the `c` whose orbit stays bounded.
+Because `|z|>2` guarantees escape, the escape time colours the classic images and paints the
+filaments just outside the set. The main cardioid (the body) and the period-2 bulb at `c=-1`
+have exact tests that skip iteration; the boundary carries tiny copies of the whole set at
+every scale, and the real slice `[-2, 1/4]` maps onto the logistic map's period-doubling route
+to chaos. The tests reproduce the `z^2+c` step, the in-set interior points (0, -1, -0.5) and
+fast-escaping exterior ones, escape time growing toward the boundary, the exact cardioid and
+period-2-bulb membership, and the partial escaped-fraction of the bounding box.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

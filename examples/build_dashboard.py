@@ -241,6 +241,7 @@ def main():
     import henon_demo
     import lorenz_demo
     import double_pendulum_demo
+    import mandelbrot_demo
 
     import plot_orbits
 
@@ -451,6 +452,7 @@ def main():
     henon_txt = run("henon_demo", henon_demo.main, True)
     lorenz_txt = run("lorenz_demo", lorenz_demo.main, True)
     double_pendulum_txt = run("double_pendulum_demo", double_pendulum_demo.main, True)
+    mandelbrot_txt = run("mandelbrot_demo", mandelbrot_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2519,6 +2521,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("double_pendulum.svg"), "the lower bob's never-repeating trace, and two near-identical pendulums drifting apart")
             + f'<div class="card">{pre(double_pendulum_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Mandelbrot set: infinite detail from z -> z^2 + c",
+            "Iterate z -> z^2 + c from z=0: the Mandelbrot set is the c for which the orbit "
+            "stays bounded. Since |z|>2 guarantees escape, the escape time -- how many steps to "
+            "cross that radius -- colours the famous images, painting the filaments just outside "
+            "the set. One quadratic rule generates a boundary of endless detail: the cardioid "
+            "body, the period-2 bulb at c=-1, ever-smaller bulbs around the edge, and tiny "
+            "copies of the whole set at every magnification. Its real slice is the logistic "
+            "map's period-doubling route in complex dress.",
+            '<div class="grid">'
+            + svg_card(out("mandelbrot.svg"), "the set coloured by escape time: black interior, bright fast-escape filaments")
+            + f'<div class="card">{pre(mandelbrot_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

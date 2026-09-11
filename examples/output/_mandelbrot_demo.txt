@@ -1,0 +1,44 @@
+Mandelbrot set: c stays bounded under z -> z^2 + c (escape when |z| > 2)
+
+  Escape time along the real axis (in-set = 100):
+    c = -2.50  ->  escapes at 1
+    c = -2.00  ->  IN SET
+    c = -1.00  ->  IN SET
+    c = -0.50  ->  IN SET
+    c =  0.00  ->  IN SET
+    c =  0.25  ->  IN SET
+    c =  0.35  ->  escapes at 8
+    c =  0.50  ->  escapes at 5
+    c =  1.00  ->  escapes at 3
+
+  The set fills 24% of its [-2,0.5]x[-1.25,1.25] bounding box.
+
+  ASCII view (# = in set):
+                                                            
+                                                            
+                                                            
+                                           ####             
+                                           ####             
+                                    ###############         
+                                    #################       
+                                  #################### #    
+                        ## #     ######################     
+                      ######### #######################     
+                    ##################################      
+                    ##################################      
+                      ######### #######################     
+                        ## #     ######################     
+                                  #################### #    
+                                    #################       
+                                    ###############         
+                                           ####             
+                                           ####             
+                                                            
+                                                            
+                                                            
+
+  One quadratic rule, iterated, produces a fractal of endless detail -- the
+  cardioid body, the period-2 bulb at c=-1, ever-smaller bulbs around the edge, and
+  a boundary that carries tiny copies of the whole set at every magnification.
+
+  wrote examples/output\mandelbrot.svg
