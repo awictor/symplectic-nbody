@@ -273,6 +273,7 @@ ruins a long non-symplectic integration.
 | `src/dbscan.py` | DBSCAN density clustering: core/border/noise, arbitrary shapes, auto k, k-distance |
 | `src/hierarchical.py` | Agglomerative clustering: single/complete/average/Ward linkage, dendrogram, tree cut |
 | `src/naive_bayes.py` | Naive Bayes: Gaussian & multinomial, log-space, Laplace smoothing, class posteriors |
+| `src/knn.py` | k-nearest-neighbours: classify & regress, uniform/distance weights, standardize, LOO CV |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -537,6 +538,7 @@ ruins a long non-symplectic integration.
 | `examples/dbscan_demo.py` | Two moons + outliers: cluster recovery, noise flagging, k-distance elbow figure |
 | `examples/hierarchical_demo.py` | Blobs + dendrogram figure, gap-based k selection, single-vs-complete chaining contrast |
 | `examples/naive_bayes_demo.py` | Gaussian decision regions + multinomial spam filter with per-word log-odds figure |
+| `examples/knn_demo.py` | Decision boundary jagged at k=1 vs smooth LOO-selected k, regression on a noisy sine |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6482,6 +6484,30 @@ Laplace add-alpha smoothing so an unseen word never zeroes the product (the clas
 This module implements both entirely in log space, verified that the Gaussian model separates blobs
 and matches a hand-computed posterior exactly, that the multinomial model classifies documents and
 its smoothing prevents zero probabilities, and that predicted class-probabilities are normalized.
+
+## k-nearest-neighbours: lazy, instance-based learning
+
+No model, just the data and a vote. `knn.py`:
+
+```
+$ python examples/knn_demo.py examples/output
+
+  120 points, 2 classes, 15% label noise
+  train accuracy: k=1 100% (memorizes), k>=3 ~88%
+  leave-one-out CV picks k=15 (k=1 overfits noise, huge k oversmooths)
+  regression on noisy sine, k=5: R^2 uniform 0.95, distance-weighted 1.00
+```
+
+k-NN builds no model: to predict a point it finds the `k` nearest training points and lets them
+vote (classification) or averages their values (regression), all at query time. The number of
+neighbours `k` trades variance for bias -- k=1 fits every point exactly (jagged, noise-fitting),
+large k smooths -- and the vote can be uniform or distance-weighted (`weight = 1/distance`). It
+compares raw coordinates, so standardization is included; a brute-force search is `O(n)` per query
+while a k-d tree cuts it to `O(log n)` in low dimensions. This module implements k-NN classification
+and regression with both weightings and leave-one-out cross-validation, verified that 1-NN memorizes
+the training labels, recovers separable classes and a smooth regression target, that
+distance-weighting follows the closest neighbour, that LOO selects k>1 under label noise, and that
+its neighbours agree with the k-d tree.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -315,6 +315,7 @@ def main():
     import dbscan_demo
     import hierarchical_demo
     import naive_bayes_demo
+    import knn_demo
 
     import plot_orbits
 
@@ -599,6 +600,7 @@ def main():
     dbscan_txt = run("dbscan_demo", dbscan_demo.main, True)
     hierarchical_txt = run("hierarchical_demo", hierarchical_demo.main, True)
     naive_bayes_txt = run("naive_bayes_demo", naive_bayes_demo.main, True)
+    knn_txt = run("knn_demo", knn_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3870,6 +3872,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("naive_bayes.svg"), "the Gaussian decision regions with per-class means, and the multinomial spam filter's per-word log-odds as a diverging bar chart")
             + f'<div class="card">{pre(naive_bayes_txt)}</div>'
+            + '</div>'),
+        section(
+            "k-nearest-neighbours: lazy, instance-based learning",
+            "k-NN is the ultimate lazy learner: it builds no model. To predict a point it finds the "
+            "k nearest training points and lets them VOTE (classification) or AVERAGES their values "
+            "(regression) -- all the work at query time, a non-parametric decision boundary that "
+            "traces the data. The number of neighbours k trades variance for bias: k=1 fits every "
+            "point exactly (a jagged, noise-fitting boundary) while large k averages over a wide "
+            "region (smooth but blurred), and the vote can be uniform or DISTANCE-WEIGHTED "
+            "(weight = 1/distance, so closer neighbours count more). Because it compares raw "
+            "coordinates it is sensitive to feature scaling, so standardization is included. A "
+            "brute-force search is O(n) per query; a k-d tree cuts that to O(log n) in low "
+            "dimensions. This module implements k-NN classification and regression with both "
+            "weightings and leave-one-out cross-validation, verified that 1-NN memorizes the "
+            "training labels, that it recovers separable classes and a smooth regression target, "
+            "that distance-weighting follows the closest neighbour, that LOO selects k>1 under "
+            "label noise, and that its neighbours agree with the k-d tree.",
+            '<div class="grid">'
+            + svg_card(out("knn.svg"), "the jagged k=1 decision boundary beside the smoother cross-validation-selected k on the same noisy two-class data")
+            + f'<div class="card">{pre(knn_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

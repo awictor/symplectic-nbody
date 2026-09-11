@@ -1,0 +1,31 @@
+k-nearest-neighbours: lazy, non-parametric classification
+
+  120 points, 2 classes split by a diagonal with 15% label noise
+
+  Training accuracy vs k (k=1 memorizes, larger k smooths):
+    k =  1: train accuracy 100.0%
+    k =  3: train accuracy 89.2%
+    k =  7: train accuracy 88.3%
+    k = 15: train accuracy 88.3%
+    k = 31: train accuracy 88.3%
+
+  Leave-one-out cross-validation (honest accuracy) picks k:
+    k =  1: LOO 0.750 ##############################
+    k =  3: LOO 0.825 #################################
+    k =  5: LOO 0.825 #################################
+    k =  7: LOO 0.850 ##################################
+    k =  9: LOO 0.867 ###################################
+    k = 11: LOO 0.850 ##################################
+    k = 15: LOO 0.875 ###################################  <- best
+    k = 21: LOO 0.875 ###################################
+    k = 31: LOO 0.858 ##################################
+
+  Best k by LOO = 15: k=1 overfits the noise, very large k oversmooths.
+
+  k-NN regression on a noisy sine (k=5): R^2 uniform 0.952, distance-weighted 1.000
+
+  k-NN builds no model at all -- it just stores the data and votes among the nearest
+  neighbours at query time. Small k means low bias but high variance (jagged, noise-
+  fitting); large k means the opposite. Cross-validation finds the balance.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\knn.svg
