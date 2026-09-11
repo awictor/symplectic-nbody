@@ -360,6 +360,7 @@ def main():
     import minhash_demo
     import cma_es_demo
     import lbfgs_demo
+    import tsne_demo
 
     import plot_orbits
 
@@ -689,6 +690,7 @@ def main():
     minhash_txt = run("minhash_demo", minhash_demo.main, True)
     cma_es_txt = run("cma_es_demo", cma_es_demo.main, True)
     lbfgs_txt = run("lbfgs_demo", lbfgs_demo.main, True)
+    tsne_txt = run("tsne_demo", tsne_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4902,6 +4904,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("lbfgs.svg"), "L-BFGS (blue) plunging to machine precision in a few dozen iterations while gradient descent (red) barely dents an ill-conditioned quadratic in the same span")
             + f'<div class="card">{pre(lbfgs_txt)}</div>'
+            + '</div>'),
+        section(
+            "t-SNE: nonlinear dimensionality reduction that preserves neighborhoods",
+            "High-dimensional data usually lives on a low-dimensional manifold, and we want to SEE it: "
+            "a 2-D map where points near in the original space stay near. Raw projection preserves "
+            "large distances but smears local structure; t-SNE, van der Maaten and Hinton's method, "
+            "preserves NEIGHBORHOODS instead, which is why its maps reveal clusters so vividly, and "
+            "it is the default visualization for high-dimensional data across machine learning and "
+            "computational biology. It is a probabilistic matching: in high-D, the similarity of "
+            "point j to i is the probability i picks j as a neighbor under a Gaussian whose width is "
+            "tuned per point so the effective neighbor count equals a target PERPLEXITY (a soft k "
+            "adapting to local density); these are symmetrized into a joint distribution P. In the "
+            "2-D map, similarities use a heavy-tailed STUDENT-t kernel (1/(1+d^2)) -- the crucial "
+            "trick that lets moderate-distance points spread out and cures the 'crowding problem'. "
+            "t-SNE then moves the map points by gradient descent to minimize KL(P||Q). This module "
+            "implements perplexity calibration by binary search on each point's bandwidth, the "
+            "symmetric joint P, the Student-t affinities, and KL-gradient descent with momentum and "
+            "early exaggeration, verified that P is a valid symmetric distribution, that the "
+            "perplexity search hits its target, that the KL divergence falls over training, that "
+            "well-separated clusters map to well-separated 2-D groups, and that a "
+            "neighbourhood-preservation (trustworthiness) score is high.",
+            '<div class="grid">'
+            + svg_card(out("tsne.svg"), "left: the 2-D t-SNE map of 8-D clusters, each true cluster its own tight island of colour; right: the KL divergence falling as the embedding organizes itself")
+            + f'<div class="card">{pre(tsne_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

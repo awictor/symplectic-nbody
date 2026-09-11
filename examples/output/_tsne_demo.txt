@@ -1,0 +1,12 @@
+t-SNE: nonlinear dimensionality reduction that preserves neighborhoods
+
+  80 points in 8 dimensions, 4 true clusters
+  KL divergence: 1.639 (start) -> 0.095 (end)
+  trustworthiness (k=8): 0.989  (1.0 = perfect neighbor preservation)
+  2-D separation: inter-cluster distance is 28.0x the intra-cluster distance
+
+  t-SNE matches per-point Gaussian neighbor probabilities in high-D to a heavy-tailed
+  Student-t kernel in 2-D, minimizing KL(P||Q) by gradient descent. The heavy tail cures
+  the crowding problem, letting clusters breathe apart -- which is why the map is so clear.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\tsne.svg

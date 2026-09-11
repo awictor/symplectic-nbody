@@ -318,6 +318,7 @@ ruins a long non-symplectic integration.
 | `src/minhash.py` | MinHash Jaccard estimation + banded LSH near-duplicate detection (universal hashing) |
 | `src/cma_es.py` | CMA-ES derivative-free optimizer with full covariance adaptation (Jacobi eigensolver) |
 | `src/lbfgs.py` | L-BFGS limited-memory quasi-Newton optimizer (two-loop recursion, Wolfe line search) |
+| `src/tsne.py` | t-SNE nonlinear dimensionality reduction (perplexity calibration, KL-gradient descent) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -627,6 +628,7 @@ ruins a long non-symplectic integration.
 | `examples/minhash_demo.py` | Document near-duplicate detection + the estimate error tracking the 1/sqrt(k) curve |
 | `examples/cma_es_demo.py` | CMA-ES convergence on sphere/Rosenbrock/Rastrigin/ellipsoid vs random search |
 | `examples/lbfgs_demo.py` | L-BFGS vs gradient descent on an ill-conditioned quadratic + a logistic-regression fit |
+| `examples/tsne_demo.py` | 8-D clusters embedded into a clear 2-D map, with the KL divergence falling over training |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7574,6 +7576,27 @@ automatic finite-difference gradient fallback, verified on the quadratic bowl, R
 shifted optimum, an ill-conditioned quadratic where it beats gradient descent by eighteen orders of
 magnitude, and a logistic-regression fit that recovers the generating weights, with finite-difference
 gradients matching the analytic ones.
+
+## t-SNE: nonlinear dimensionality reduction that preserves neighborhoods
+
+A 2-D map of high-dimensional data where clusters leap out. `tsne.py`:
+
+```
+$ python examples/tsne_demo.py examples/output
+
+  80 points in 8 dimensions, 4 true clusters
+  KL divergence: 1.639 -> 0.095 over training
+  trustworthiness (k=8): 0.989   (1.0 = perfect neighbor preservation)
+  2-D separation: inter-cluster distance 28x the intra-cluster distance
+```
+
+t-SNE matches per-point Gaussian neighbor probabilities in high-D (with each point's bandwidth tuned
+by binary search to a target perplexity) to a heavy-tailed Student-t kernel in 2-D, minimizing
+KL(P||Q) by gradient descent with momentum and early exaggeration. The heavy tail cures the crowding
+problem, letting clusters breathe apart. This module implements perplexity calibration, the symmetric
+joint P, the Student-t affinities, and the KL-gradient descent, verified that P is a valid symmetric
+distribution, that the perplexity search hits its target, that KL falls over training, that separated
+clusters map to separated 2-D groups, and that trustworthiness is high.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
