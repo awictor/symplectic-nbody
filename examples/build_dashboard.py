@@ -319,6 +319,7 @@ def main():
     import gradient_boosting_demo
     import spectral_clustering_demo
     import particle_filter_demo
+    import simulated_annealing_demo
 
     import plot_orbits
 
@@ -607,6 +608,7 @@ def main():
     gradient_boosting_txt = run("gradient_boosting_demo", gradient_boosting_demo.main, True)
     spectral_txt = run("spectral_clustering_demo", spectral_clustering_demo.main, True)
     particle_filter_txt = run("particle_filter_demo", particle_filter_demo.main, True)
+    simulated_annealing_txt = run("simulated_annealing_demo", simulated_annealing_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3960,6 +3962,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("particle_filter.svg"), "the particle-filter estimate tracking the nonlinear truth below the noisy sensor, beside the effective sample size staying healthy with resampling and collapsing without it")
             + f'<div class="card">{pre(particle_filter_txt)}</div>'
+            + '</div>'),
+        section(
+            "Simulated annealing: escaping local minima by cooling",
+            "Greedy search only moves downhill and gets trapped in the first local minimum. "
+            "Simulated annealing escapes by sometimes moving UPHILL, with a probability that shrinks "
+            "over time -- the metallurgical analogy: heat a metal and cool it slowly so its atoms "
+            "settle into a low-energy crystal, not a brittle freeze. At each step it proposes a "
+            "random neighbour and applies the METROPOLIS criterion: a move lowering the cost is "
+            "always taken; one raising it by delta is taken with probability exp(-delta/T). High T "
+            "(early) accepts almost anything and roams freely out of local basins; as T cools only "
+            "improving moves survive. The COOLING SCHEDULE is the key knob -- cool too fast and you "
+            "quench into a poor minimum; cool slowly (geometric T <- alpha T) and you approach the "
+            "global optimum. This module implements generic annealing over any state plus a "
+            "travelling-salesman solver with 2-opt segment-reversal moves, verified to find the "
+            "global minimum of a multimodal function that greedy descent misses, converge a square "
+            "TSP tour to its exact optimal perimeter, beat nearest-neighbour greedy on random "
+            "tours, and shrink its acceptance rate as it cools.",
+            '<div class="grid">'
+            + svg_card(out("simulated_annealing.svg"), "the greedy nearest-neighbour tour beside the shorter annealed tour, and the tour length falling as the temperature cools with early uphill excursions")
+            + f'<div class="card">{pre(simulated_annealing_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

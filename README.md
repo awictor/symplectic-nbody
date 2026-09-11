@@ -277,6 +277,7 @@ ruins a long non-symplectic integration.
 | `src/gradient_boosting.py` | Gradient boosting: sequential regression trees, squared-error & log-loss, shrinkage |
 | `src/spectral_clustering.py` | Spectral clustering: affinity graph, Laplacian eigenvectors, non-convex shapes |
 | `src/particle_filter.py` | Particle filter: bootstrap SIR, systematic resampling, adaptive ESS, nonlinear tracking |
+| `src/simulated_annealing.py` | Simulated annealing: Metropolis criterion, cooling schedules, TSP 2-opt solver |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -545,6 +546,7 @@ ruins a long non-symplectic integration.
 | `examples/gradient_boosting_demo.py` | Fit sharpening from 1 to 120 trees + loss curve, learning-rate/n-trees trade |
 | `examples/spectral_clustering_demo.py` | Concentric rings split correctly + the eigenvector embedding that untangles them |
 | `examples/particle_filter_demo.py` | Nonlinear tracking beats raw sensor + ESS collapse-vs-healthy resampling figure |
+| `examples/simulated_annealing_demo.py` | TSP greedy-vs-annealed tour + cost-cooling curve, multimodal global min |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6588,6 +6590,27 @@ resampling. This module implements a generic bootstrap filter with adaptive resa
 a nonlinear tracking problem: its estimate beats the raw sensor by ~60%, resampling keeps the
 effective sample size high where a weight-only filter collapses to a single particle, and more
 particles reduce the error.
+
+## Simulated annealing: escaping local minima by cooling
+
+Sometimes move uphill, less often as you cool. `simulated_annealing.py`:
+
+```
+$ python examples/simulated_annealing_demo.py examples/output
+
+  multimodal 1-D: SA found x=-0.761 (true global -0.760), greedy trapped elsewhere
+  TSP, 25 cities: nearest-neighbour 53.49 -> annealed 45.61 (15% shorter)
+  tour length cools 148 -> 45.6; acceptance rate high early, ~0 once cold
+```
+
+Greedy search only moves downhill and gets trapped; simulated annealing escapes by taking uphill
+moves with probability `exp(-delta/T)`. High `T` (early) accepts almost anything and roams out of
+local basins; as `T` cools only improving moves survive. The cooling schedule is the key knob --
+too fast quenches into a poor minimum, slowly (geometric `T <- alpha T`) approaches the global
+optimum. This module implements generic annealing over any state plus a travelling-salesman solver
+with 2-opt segment-reversal moves, verified to find the global minimum of a multimodal function
+greedy descent misses, converge a square TSP tour to its exact optimal perimeter, beat
+nearest-neighbour greedy on random tours, and shrink its acceptance rate as it cools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

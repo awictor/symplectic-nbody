@@ -1,0 +1,25 @@
+Simulated annealing: global optimization by cooling a fictitious temperature
+
+  Multimodal 1-D function (many local minima):
+    SA found x = -0.761, cost -4.650
+    true global x = -0.760, cost -4.650
+    acceptance rate over the run: 24.6% (high early, near zero once cold)
+
+  Travelling salesman, 25 random cities:
+    nearest-neighbour greedy tour: length 53.49
+    simulated-annealing tour:      length 45.61  (15% shorter)
+
+  Tour length as the system cools (early rises = escaping local minima):
+      0% through: length 148.13
+      5% through: length 105.82
+     15% through: length 56.30
+     40% through: length 45.61
+     70% through: length 45.61
+    100% through: length 45.61
+
+  Annealing accepts uphill moves with probability exp(-delta/T): at high T it roams
+  freely and hops out of local basins; as T cools only improving moves survive and it
+  settles. Cool slowly enough and it approaches the global optimum -- here a far shorter
+  tour than greedy, and the true minimum of a function that traps hill-climbing.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\simulated_annealing.svg
