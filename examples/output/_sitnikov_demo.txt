@@ -1,9 +1,9 @@
 Sitnikov problem: stroboscopic Poincare maps (sample once per binary period)
 
   e=0.0: 10 orbits survived, 2500 section points, mean z-spread 1.83
-  wrote examples/output\sitnikov_circ.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\sitnikov_circ.svg
   e=0.3: 10 orbits survived, 2500 section points, mean z-spread 198.81
-  wrote examples/output\sitnikov_ecc.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\sitnikov_ecc.svg
 
 e=0 draws smooth nested curves (each orbit lies on an invariant torus).
 e=0.3 tears the inner curves into a chaotic sea -- the Sitnikov route to chaos.

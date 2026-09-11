@@ -19,4 +19,4 @@ Semi-empirical mass formula: B/A peaks at iron (~8.8 MeV/nucleon)
   stellar fusion and the end of the line for energy release, which is why a
   massive star's iron core cannot burn and collapses into a supernova.
 
-  wrote examples/output\mass_formula.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\mass_formula.svg

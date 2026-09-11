@@ -17,4 +17,4 @@ Stefan problem: freezing front X(t) = 2 lambda sqrt(alpha t)
   conduct out through the ice already formed, and that layer thickens, so the
   first few cm come in hours but the next foot takes weeks. Same law crusts lava.
 
-  wrote examples/output\stefan.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\stefan.svg

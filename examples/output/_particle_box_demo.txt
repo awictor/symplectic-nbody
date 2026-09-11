@@ -20,4 +20,4 @@ Particle in a box: E_n = n^2 h^2 / (8 m L^2)  (electron, L = 1 nm)
   widens the gaps and shifts its glow toward the blue -- size-tunable colour,
   used in displays and biological markers.
 
-  wrote examples/output\particle_box.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\particle_box.svg

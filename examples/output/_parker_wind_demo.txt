@@ -13,4 +13,4 @@ Parker wind: the transonic solution through the sonic critical point
   at both ends passes smoothly through Mach 1 -- a static corona is
   impossible, and the supersonic solar wind confirmed by Mariner 2 follows.
 
-  wrote examples/output\parker_wind.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\parker_wind.svg

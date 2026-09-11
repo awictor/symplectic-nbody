@@ -17,4 +17,4 @@ Double pendulum: deterministic yet chaotic (two rods, gravity)
   different things -- the same sensitive dependence that makes weather chaotic, in a
   system you can hang from a nail. Energy is conserved; the motion is still unpredictable.
 
-  wrote examples/output\double_pendulum.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\double_pendulum.svg

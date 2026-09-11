@@ -23,4 +23,4 @@ Quantum Hall effect: R_xy = R_K / nu, R_K = h/e^2 = 25812.807 ohm
   one per filled Landau level -- so R_xy depends on nothing but h/e^2. Reproducible
   to parts per billion in any device, it is how the ohm is now defined.
 
-  wrote examples/output\quantum_hall.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\quantum_hall.svg

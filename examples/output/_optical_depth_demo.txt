@@ -16,4 +16,4 @@ Optical depth: how far light sees into matter
   where the inward optical depth reaches ~2/3, the depth from which
   photons finally escape and set the effective temperature.
 
-  wrote examples/output\optical_depth.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\optical_depth.svg

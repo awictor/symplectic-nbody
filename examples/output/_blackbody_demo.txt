@@ -12,4 +12,4 @@ Blackbody radiation: Wien's peak and Stefan-Boltzmann
   Boltzmann T^4): a 20000 K B-star outshines the Sun per unit area by
   144x. The 2.725 K CMB peaks in the microwave.
 
-  wrote examples/output\blackbody.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\blackbody.svg

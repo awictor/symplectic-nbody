@@ -19,4 +19,4 @@ Nuclear Q = (m_reactants - m_products) c^2  (1 amu = 931.494 MeV)
   ~2 million times TNT, fusion ~4x fission. Total annihilation converts 100%
   of the mass, the ultimate energy density c^2 ~ 9x10^16 J/kg.
 
-  wrote examples/output\q_value.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\q_value.svg

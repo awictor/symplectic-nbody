@@ -26,4 +26,4 @@
   O(nW) instead of the 2^n subsets brute force checks. It models budget allocation,
   cargo loading, and portfolio selection under a hard cap.
 
-  wrote examples/output\knapsack.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\knapsack.svg

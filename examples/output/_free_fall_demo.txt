@@ -16,4 +16,4 @@ Free-fall time t_ff = sqrt(3 pi / 32 G rho): the clock of gravity
   stars in a few hundred kyr, and why a neutron star's dynamical time is
   well under a millisecond -- denser means faster, universally.
 
-  wrote examples/output\free_fall.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\free_fall.svg

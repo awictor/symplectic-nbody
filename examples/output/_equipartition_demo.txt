@@ -23,4 +23,4 @@ Equipartition: (1/2) k_B T per quadratic degree of freedom
   up to 5R/2 once it thaws (~100 K), and only near ~1000s K does vibration lift it
   toward 7R/2 -- the staircase Maxwell could see but not explain before quanta.
 
-  wrote examples/output\equipartition.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\equipartition.svg

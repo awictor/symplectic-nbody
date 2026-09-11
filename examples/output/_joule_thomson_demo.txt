@@ -14,4 +14,4 @@ Joule-Thomson: throttling cools below T_inv, warms above
   helium have low inversion temperatures, so they must be pre-cooled first
   -- otherwise throttling heats them, an early liquefaction hazard.
 
-  wrote examples/output\joule_thomson.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\joule_thomson.svg

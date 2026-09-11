@@ -12,4 +12,4 @@ Bondi accretion (10 M_sun object, n ~ 1 /cm^3)
   stronger in cold gas: a black hole in a 100 K molecular cloud accretes
   millions of times faster than one in hot 10^7 K coronal gas.
 
-  wrote examples/output\bondi.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\bondi.svg

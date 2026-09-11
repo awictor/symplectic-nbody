@@ -18,4 +18,4 @@ Bloom filter: 'possibly present' or 'definitely absent', never a false negative
   Web caches, spell checkers, and databases use one as a fast pre-filter: skip the
   expensive lookup for anything the filter says is definitely not there.
 
-  wrote examples/output\bloom.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\bloom.svg

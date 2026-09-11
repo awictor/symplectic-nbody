@@ -15,4 +15,4 @@ T^2/a^3 is constant across all planets -- that constant is 1 in these
 units, which IS Kepler's third law. It falls straight out of Newtonian
 gravity + a symplectic integrator, no fitting.
 
-wrote examples/output\inner_planets.svg
+wrote C:\Users\acwic\symplectic-nbody\examples\output\inner_planets.svg

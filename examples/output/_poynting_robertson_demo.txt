@@ -18,4 +18,4 @@ Poynting-Robertson drag: dust's own re-radiated light is a headwind
   resupplied by comet trails and asteroid collisions. Grains below the
   blow-out size never orbit at all -- they leave as beta meteoroids.
 
-  wrote examples/output\poynting_robertson.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\poynting_robertson.svg

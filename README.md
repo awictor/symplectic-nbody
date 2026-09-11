@@ -261,6 +261,7 @@ ruins a long non-symplectic integration.
 | `src/svd.py` | SVD & PCA: A=USV^T via eigen(A^TA), low-rank approx, principal components |
 | `src/kmeans.py` | k-means clustering: Lloyd's algorithm, k-means++ init, silhouette |
 | `src/regression.py` | Linear & logistic regression: QR + gradient descent, R^2, accuracy, L2 |
+| `src/decision_tree.py` | CART decision-tree classifier: Gini/entropy splits, rules, feature importance |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -513,6 +514,7 @@ ruins a long non-symplectic integration.
 | `examples/svd_demo.py` | SVD + low-rank + PCA + the data-cloud axes & singular-value figure |
 | `examples/kmeans_demo.py` | Cluster recovery + elbow/silhouette + the coloured-clusters & elbow figure |
 | `examples/regression_demo.py` | Linear + logistic fits + log-loss decay + the line & sigmoid figure |
+| `examples/decision_tree_demo.py` | CART on 3 blobs: learned rules, importances, depth-cap sweep + region figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6168,6 +6170,32 @@ a probability, and an L2 penalty shrinks the weights for generalization. This mo
 regression by both QR and gradient descent, logistic by gradient descent with optional L2, and
 reports R^2 for regression and accuracy / log-loss for classification, verified against exact
 fits and separable data.
+
+## Decision trees: classification by the best yes/no questions
+
+The most interpretable model and the base learner of forests. `decision_tree.py`:
+
+```
+$ python examples/decision_tree_demo.py examples/output
+
+  90 points, 3 classes, training accuracy 100%, depth 2, 3 leaves
+    if x[0] <= 5.11:
+      if x[1] <= 4.95: predict 0  else: predict 2
+    else: predict 1
+  feature importances: x = 0.50, y = 0.50
+  max_depth=1: 66.7%   max_depth=2: 100%   (a cap trades fit for simplicity)
+```
+
+CART grows a tree greedily: at each node it tries every feature and every threshold and keeps the
+split that most reduces the impurity of the children, where Gini impurity is `1 - sum p^2` (the
+chance two random draws differ) and entropy is `-sum p log2 p` (bits of surprise), both zero for a
+pure node. Recursing carves the feature space into axis-aligned rectangles, each a leaf that votes
+the majority class; a max-depth or minimum-node-size cap fights the overfitting a fully grown tree
+invites, and the root-to-leaf path reads as a plain if/else rule with no feature scaling needed.
+This module builds the classifier with Gini or entropy, exposes the learned rules and feature
+importances, and is verified on separable blobs, a train/test split that generalizes, and a known
+single split. Trees are the building block of random forests and gradient boosting, the workhorses
+of tabular machine learning.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

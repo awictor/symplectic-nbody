@@ -18,4 +18,4 @@ Root-finding: four bracketing methods on x^2 - 2 = 0 (root = sqrt 2)
   fail; Brent takes the fast interpolation step when it is safe and bisects when it
   is not -- guaranteed convergence at near-secant speed, the default in most libraries.
 
-  wrote examples/output\rootfind.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\rootfind.svg

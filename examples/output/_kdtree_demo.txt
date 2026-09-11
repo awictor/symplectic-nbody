@@ -11,4 +11,4 @@ k-d tree: nearest-neighbour search by recursive median splitting
   when the far side could hold something closer, so most branches are pruned.
   It powers k-NN classification, particle neighbour lists, and map/geographic search.
 
-  wrote examples/output\kdtree.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\kdtree.svg

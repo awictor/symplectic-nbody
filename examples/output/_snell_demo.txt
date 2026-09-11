@@ -17,4 +17,4 @@ Snell's law n1 sin(t1) = n2 sin(t2): refraction, TIR, and Brewster
   Optical fibre (core 1.48, clad 1.46): NA = 0.242, acceptance cone half-angle 14.0 deg.
   Light inside that cone is trapped by total internal reflection and guided for km.
 
-  wrote examples/output\snell.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\snell.svg

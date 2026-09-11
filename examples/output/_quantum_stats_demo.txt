@@ -16,4 +16,4 @@ Quantum statistics: occupation <n> vs (E-mu)/kT
   into the ground state below a critical temperature (BEC, superfluid He).
   Far above mu both fade into the classical Maxwell-Boltzmann exponential.
 
-  wrote examples/output\quantum_stats.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\quantum_stats.svg

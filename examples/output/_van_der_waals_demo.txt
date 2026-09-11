@@ -12,4 +12,4 @@ Van der Waals: (P + a n^2/V^2)(V - nb) = nRT -- a gas that can condense
   unstable, so the gas condenses across it. At the critical point that wiggle
   is an inflection, and Pc Vc / R Tc = 3/8 for EVERY van der Waals gas.
 
-  wrote examples/output\van_der_waals.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\van_der_waals.svg

@@ -12,4 +12,4 @@ Casimir effect: vacuum pushes two plates together, P = pi^2 hbar c / (240 d^4)
   the fuller outside vacuum presses them together. The d^-4 law makes it invisible
   at human scales but dominant in MEMS, where it sticks micro-parts together (stiction).
 
-  wrote examples/output\casimir.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\casimir.svg

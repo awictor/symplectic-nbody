@@ -13,4 +13,4 @@ The Faber-Jackson relation: L ~ sigma^4 for ellipticals
   against its apparent brightness, its distance. It is the elliptical-
   galaxy twin of the Tully-Fisher relation for spirals.
 
-  wrote examples/output\faber_jackson.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\faber_jackson.svg

@@ -9,6 +9,6 @@ Orbits around a Schwarzschild black hole (units of M)
 
   plunging orbit: falls from r=12 M through the horizon to r=0.01 M
 
-  wrote examples/output\schwarzschild.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\schwarzschild.svg
   The bound orbit is a precessing rosette; the plunger spirals through
   the horizon. Both are exact Schwarzschild geodesics.

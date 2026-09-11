@@ -9,4 +9,4 @@ Galaxy rotation curves: the case for dark matter
   The visible curve falls off; the observed curve is flat. The gap is
   the dark-matter halo, whose enclosed mass keeps growing as ~ r.
 
-  wrote examples/output\rotation_curve.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\rotation_curve.svg

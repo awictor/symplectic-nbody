@@ -13,4 +13,4 @@ PSR B1913+16 (Hulse-Taylor): gravitational waves before LIGO
   radiates gravitational waves. Tracking that decay for decades -- the
   parabola below -- won the 1993 Nobel Prize, 22 years before LIGO.
 
-  wrote examples/output\pulsar.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\pulsar.svg

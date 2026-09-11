@@ -15,4 +15,4 @@ Sersic profile I(R) = I_e exp{-b_n[(R/R_e)^(1/n) - 1]}
     n=2 bulge                  L = 16.31
     n=4 de Vaucouleurs         L = 22.67
 
-  wrote examples/output\sersic.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\sersic.svg

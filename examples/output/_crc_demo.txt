@@ -21,4 +21,4 @@ CRC: divide the message polynomial by a generator, send the remainder
   miss rate of 1 in 4 billion, with nothing but shifts and XORs. The checksum on
   Ethernet frames, ZIP files, and PNG chunks.
 
-  wrote examples/output\crc.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\crc.svg

@@ -14,4 +14,4 @@ Tully-Fisher: L ~ v_flat^4 -- spirals that spin faster shine brighter
   to measure (the 21-cm line), Tully-Fisher gives redshift-independent
   distances far beyond where individual Cepheids can be resolved.
 
-  wrote examples/output\tully_fisher.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\tully_fisher.svg

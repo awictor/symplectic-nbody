@@ -15,4 +15,4 @@ Kelvin-Helmholtz (gravity) vs nuclear timescales
   contraction, powers stars. The KH time is instead how long a
   protostar contracts before fusion ignites.
 
-  wrote examples/output\kelvin_helmholtz.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\kelvin_helmholtz.svg

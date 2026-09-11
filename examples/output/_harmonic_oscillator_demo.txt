@@ -13,4 +13,4 @@ Quantum harmonic oscillator: E_n = (n + 1/2) hbar omega
   energy (1/2) hbar omega is forced by the uncertainty principle, and it is
   real: it keeps helium liquid at absolute zero and shifts bond energies.
 
-  wrote examples/output\harmonic_oscillator.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\harmonic_oscillator.svg

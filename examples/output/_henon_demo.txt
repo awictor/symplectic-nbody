@@ -13,4 +13,4 @@ Henon map: x'=1-a x^2+y, y'=b x  (a=1.4, b=0.3)
   of nested arcs. Zoom in and each arc is really a Cantor set of finer strands --
   the hallmark of a strange attractor, chaos with structure at every scale.
 
-  wrote examples/output\henon.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\henon.svg

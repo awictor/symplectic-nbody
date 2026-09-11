@@ -15,4 +15,4 @@ Cubic spline: a separate cubic per interval, stitched C^2 smooth
   while the spline hugs the true curve. The spline minimizes total curvature -- the
   shape a flexible ruler takes. It's the interpolation behind fonts, animation, and CAD.
 
-  wrote examples/output\spline.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\spline.svg

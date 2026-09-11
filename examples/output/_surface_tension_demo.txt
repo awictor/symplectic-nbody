@@ -19,4 +19,4 @@ Surface tension: gamma = 0.0728 N/m for water at 20 C
   water tens of metres. Smaller drops hold higher pressure, so when a small
   bubble meets a big one through a tube, the small one empties into the big.
 
-  wrote examples/output\surface_tension.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\surface_tension.svg

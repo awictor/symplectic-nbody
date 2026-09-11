@@ -61,4 +61,4 @@ Conway's Game of Life (B3/S23): live cell survives on 2-3, dead born on 3
   From B3/S23 come still lifes, blinking oscillators, gliders that fly, and -- via
   glider guns and collisions building logic gates -- a Turing-complete computer.
   Simple local rules, open-ended complexity.
-  wrote examples/output\game_of_life.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\game_of_life.svg

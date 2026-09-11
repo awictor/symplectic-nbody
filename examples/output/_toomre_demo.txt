@@ -23,4 +23,4 @@ Toomre Q: rotation + pressure vs self-gravity in a disk
   spiral arms, and the resulting star formation heats it back up, so
   disks self-regulate to hover near the stability line.
 
-  wrote examples/output\toomre.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\toomre.svg

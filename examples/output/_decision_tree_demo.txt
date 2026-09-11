@@ -1,0 +1,30 @@
+Decision tree (CART): recursive best-split classification
+
+  90 points, 3 classes, 2 features (x, y)
+  training accuracy 100.0%, depth 2, 3 leaves
+
+  Learned rules (Gini impurity):
+    if x[0] <= 5.11:
+      if x[1] <= 4.95:
+        predict 0  {0: 30}
+      else:
+        predict 2  {2: 30}
+    else:
+      predict 1  {1: 30}
+
+  Feature importances:  x = 0.50,  y = 0.50
+
+  Depth cap trades fit for simplicity:
+     max_depth=1:  2 leaves, accuracy 66.7%
+     max_depth=2:  3 leaves, accuracy 100.0%
+     max_depth=3:  3 leaves, accuracy 100.0%
+       unlimited:  3 leaves, accuracy 100.0%
+
+  Entropy criterion: accuracy 100.0%, 3 leaves
+  (a pure node has gini 0 and entropy 0; a 50/50 node has gini 0.50, entropy 1.00)
+
+  A tree asks the single threshold question that most purifies its samples,
+  then recurses. The result is a set of axis-aligned rectangles tiling the plane,
+  each labelled by majority vote -- readable rules, the base learner of forests.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\decision_tree.svg

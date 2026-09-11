@@ -19,4 +19,4 @@ Kahan summation: carry the low-order bits lost on each addition
   it stays bounded, as if the sum were done in double the precision. It matters for
   long dot products, running averages, and any accumulation over millions of terms.
 
-  wrote examples/output\kahan.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\kahan.svg

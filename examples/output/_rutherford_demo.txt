@@ -18,4 +18,4 @@ Rutherford scattering: dsigma/dOmega ~ 1/sin^4(theta/2)
   positive charge sits in a tiny dense nucleus. The head-on approach distance
   put an upper bound of tens of femtometres on the nuclear size.
 
-  wrote examples/output\rutherford.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\rutherford.svg

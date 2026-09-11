@@ -15,4 +15,4 @@ Clausius-Clapeyron: P(T) = P0 exp(-(L/R)(1/T - 1/T0))
   Everest, too cold to cook an egg), while a pressure cooker raises the
   boiling point to ~121 C. The same curve sets humidity and cloud formation.
 
-  wrote examples/output\clausius_clapeyron.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\clausius_clapeyron.svg

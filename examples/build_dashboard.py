@@ -303,6 +303,7 @@ def main():
     import svd_demo
     import kmeans_demo
     import regression_demo
+    import decision_tree_demo
 
     import plot_orbits
 
@@ -575,6 +576,7 @@ def main():
     svd_txt = run("svd_demo", svd_demo.main, True)
     kmeans_txt = run("kmeans_demo", kmeans_demo.main, True)
     regression_txt = run("regression_demo", regression_demo.main, True)
+    decision_tree_txt = run("decision_tree_demo", decision_tree_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3615,6 +3617,23 @@ def main():
             '<div class="grid">'
             + svg_card(out("regression.svg"), "the least-squares line through noisy points, and the logistic sigmoid crossing 0.5 at the decision boundary")
             + f'<div class="card">{pre(regression_txt)}</div>'
+            + '</div>'),
+        section(
+            "Decision trees: classification by the best yes/no questions",
+            "The most interpretable model, and the base learner of random forests and gradient "
+            "boosting -- the workhorses of tabular ML. CART grows a tree greedily: at each node it "
+            "tries every feature and every threshold and keeps the split that most reduces the "
+            "IMPURITY of the children, where Gini impurity is 1 - sum p^2 (the chance two random "
+            "draws differ) and entropy is -sum p log2 p (bits of surprise), both zero for a pure "
+            "node. Recursing carves the plane into axis-aligned rectangles, each a leaf that votes "
+            "the majority class; a max-depth or minimum-node-size cap fights the overfitting a "
+            "fully grown tree invites. The path from root to leaf reads as a plain if/else rule, "
+            "and no feature scaling is needed. This module builds the classifier with Gini or "
+            "entropy, exposes the learned rules and feature importances, and is checked on "
+            "separable blobs, a train/test split, and a known single split.",
+            '<div class="grid">'
+            + svg_card(out("decision_tree.svg"), "the axis-aligned decision regions the tree carves out, with training points and the learned rules")
+            + f'<div class="card">{pre(decision_tree_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

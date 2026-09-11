@@ -15,4 +15,4 @@ Cosmic distances: the Hubble diagram and cosmic acceleration
   (past it, more distant objects look angularly LARGER -- why the CMB
   acoustic spots subtend about a degree).
 
-  wrote examples/output\distances.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\distances.svg

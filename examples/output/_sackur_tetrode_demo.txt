@@ -16,4 +16,4 @@ Sackur-Tetrode: absolute entropy from counting quantum microstates
   indistinguishable atoms is what makes entropy extensive and resolves the
   Gibbs paradox. Entropy really is the logarithm of countable microstates.
 
-  wrote examples/output\sackur_tetrode.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\sackur_tetrode.svg

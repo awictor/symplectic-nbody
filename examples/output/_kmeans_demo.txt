@@ -26,4 +26,4 @@ k-means: partition points so each is nearest its cluster's centroid
   powers customer segmentation, color quantization, and vector quantization -- and
   k-means++ seeding spreads the initial centres to avoid Lloyd's bad local minima.
 
-  wrote examples/output\kmeans.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\kmeans.svg

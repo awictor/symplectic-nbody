@@ -15,4 +15,4 @@ Conjugate gradient: minimize (1/2)x^T A x - b^T x with mat-vecs only
   cousins) solve the million-unknown SPD systems of finite elements, image
   reconstruction, and graph Laplacians that a dense LU could never store.
 
-  wrote examples/output\conjugate_gradient.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\conjugate_gradient.svg

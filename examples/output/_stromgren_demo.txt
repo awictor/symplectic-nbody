@@ -20,4 +20,4 @@ Stromgren sphere: R_s = (3 Q / 4 pi n^2 alpha_B)^(1/3)
   that flag where massive stars formed in the last few million years.
   Switch the star off and the bubble recombines in ~1219 yr.
 
-  wrote examples/output\stromgren.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\stromgren.svg

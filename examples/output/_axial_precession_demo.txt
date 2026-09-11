@@ -15,4 +15,4 @@ Precession of the equinoxes (luni-solar torque on Earth's bulge)
   again ~14000 AD. The same drift slips the equinox one zodiac sign
   every ~2150 years (the astrological 'ages').
 
-  wrote examples/output\axial_precession.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\axial_precession.svg

@@ -13,4 +13,4 @@ Escape and cosmic velocities
   leaving the Solar System from Earth's orbit: 42.1 km/s
   set v_escape = c and you get the Schwarzschild radius: 2954 m for the Sun.
 
-  wrote examples/output/cosmic_velocities.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output/cosmic_velocities.svg

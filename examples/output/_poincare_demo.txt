@@ -2,4 +2,4 @@ Poincare section of the CR3BP (mu=0.1, Jacobi C=3.9, surface y=0)
 
 integrated 19 orbits; 2 trace tight closed curves (KAM tori), the rest fill chaotic regions.
 
-wrote examples/output\poincare_section.svg
+wrote C:\Users\acwic\symplectic-nbody\examples\output\poincare_section.svg

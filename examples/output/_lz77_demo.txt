@@ -18,4 +18,4 @@ LZ77: replace repeats with (distance, length) back-references
 
   LZ77 + Huffman together are DEFLATE -- the algorithm inside gzip, ZIP, and PNG.
 
-  wrote examples/output\lz77.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\lz77.svg

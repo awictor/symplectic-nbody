@@ -19,4 +19,4 @@ BCS superconductivity: 2 Delta(0) / (k_B T_c) = 3.53 (universal)
   Cooper pair, so nothing scatters the condensate and resistance vanishes. The gap
   closes as sqrt(1 - T/Tc) toward T_c, where superconductivity ends.
 
-  wrote examples/output\bcs.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\bcs.svg

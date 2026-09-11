@@ -13,4 +13,4 @@ Topological sort: a build order where every dependency comes first
   The same ordering runs package managers, build systems, spreadsheet recompute,
   and course prerequisites -- and a cycle is a dependency that can never be resolved.
 
-  wrote examples/output\toposort.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\toposort.svg

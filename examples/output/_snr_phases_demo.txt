@@ -22,4 +22,4 @@ Supernova remnant: free expansion -> Sedov -> snowplow -> merge
   momentum (snowplow), finally merging into the ISM near 100 pc after a
   million years -- seeding the galaxy with the elements it forged.
 
-  wrote examples/output\snr_phases.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\snr_phases.svg

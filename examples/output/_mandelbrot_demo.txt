@@ -41,4 +41,4 @@ Mandelbrot set: c stays bounded under z -> z^2 + c (escape when |z| > 2)
   cardioid body, the period-2 bulb at c=-1, ever-smaller bulbs around the edge, and
   a boundary that carries tiny copies of the whole set at every magnification.
 
-  wrote examples/output\mandelbrot.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\mandelbrot.svg

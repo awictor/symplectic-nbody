@@ -16,4 +16,4 @@ Jeans escape: lambda = v_esc^2 / v_th^2 = G M m / (R k_B T)
   giant Jupiter keeps everything, including hydrogen. This 'cosmic
   shoreline' -- escape speed vs temperature -- sorts which worlds have air.
 
-  wrote examples/output\jeans_escape.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\jeans_escape.svg

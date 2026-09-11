@@ -14,4 +14,4 @@ Knudsen number Kn = lambda / L: continuum fluid vs free-flying molecules
   we touch. Shrink to a chip's cooling pores, or thin the air at orbital altitude,
   and Kn climbs past 1: the gas slips at walls and finally flies molecule-to-molecule.
 
-  wrote examples/output\knudsen.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\knudsen.svg

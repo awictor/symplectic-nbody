@@ -9,4 +9,4 @@ Gravitational time effects (classic GR tests)
   correction is relativity you rely on daily; the Shapiro delay is the
   tightest Solar-System test of general relativity.
 
-  wrote examples/output\gr_time.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\gr_time.svg

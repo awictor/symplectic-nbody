@@ -11,4 +11,4 @@ Atmospheric escape: which worlds keep which gases (lambda >= 36 = keep)
   light gases; Jupiter keeps everything. Retention needs the escape
   speed to beat ~6x the molecules' thermal speed.
 
-  wrote examples/output\atmosphere.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\atmosphere.svg

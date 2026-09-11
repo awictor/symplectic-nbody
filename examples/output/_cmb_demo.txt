@@ -10,4 +10,4 @@ The CMB acoustic scale (flat LCDM)
   subtends about a degree; the harmonics of that standing wave are the
   acoustic peaks, and their position pins the geometry to flat.
 
-  wrote examples/output\cmb.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\cmb.svg

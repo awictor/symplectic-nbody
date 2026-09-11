@@ -14,4 +14,4 @@ The Larmor formula: accelerating charges radiate (P ~ a^2)
   That catastrophe is what quantum mechanics had to fix. The same formula,
   boosted by gamma^4, is the engine of synchrotron radiation.
 
-  wrote examples/output\larmor.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\larmor.svg

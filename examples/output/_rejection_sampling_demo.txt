@@ -15,4 +15,4 @@ Rejection sampling: keep darts thrown under the envelope that land below f(x)
   it underlies Bayesian computation. The cost is the wasted darts: a loose envelope
   or a high dimension makes acceptance tiny, which is what MCMC methods work around.
 
-  wrote examples/output\rejection_sampling.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\rejection_sampling.svg

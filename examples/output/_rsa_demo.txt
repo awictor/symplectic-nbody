@@ -18,4 +18,4 @@ RSA from scratch: two primes -> a public key anyone can encrypt to
   whole of RSA's security. Modular exponentiation costs ~log2(e) multiplications by
   square-and-multiply, so even a 2048-bit exponent is fast.
 
-  wrote examples/output\rsa.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\rsa.svg

@@ -15,4 +15,4 @@ Photoelectric effect: K_max = h f - phi (Einstein 1905)
   every metal; only the intercept (the work function) differs. Millikan
   measured exactly this line and pinned down Planck's constant.
 
-  wrote examples/output\photoelectric.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\photoelectric.svg

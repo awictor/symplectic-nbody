@@ -10,4 +10,4 @@ Gravitational lensing
   fades -- the achromatic, time-symmetric microlensing signature used
   to find exoplanets and dark compact objects.
 
-  wrote examples/output\lensing.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\lensing.svg

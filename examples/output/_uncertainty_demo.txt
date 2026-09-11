@@ -16,4 +16,4 @@ Heisenberg: dx dp >= hbar/2 -> irreducible confinement energy
   fall into the nucleus, why atoms are ~0.1 nm (eV energies), and why
   nucleons confined to femtometres carry MeV -- the energy scale of nuclei.
 
-  wrote examples/output\uncertainty.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\uncertainty.svg

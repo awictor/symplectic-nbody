@@ -18,4 +18,4 @@ Neutron-star structure: the TOV maximum mass
   General relativity imposes a maximum neutron-star mass. Above it the
   star cannot support itself and collapses to a black hole.
 
-  wrote examples/output\tov.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\tov.svg

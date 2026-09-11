@@ -17,4 +17,4 @@ Langevin paramagnetism: m/mu = L(x) = coth(x) - 1/x, x = mu B / kT
   Curie's law, the fingerprint of a paramagnet. Strong field or low temperature:
   every moment aligns and L saturates at 1, the magnetization can grow no further.
 
-  wrote examples/output\langevin_para.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\langevin_para.svg

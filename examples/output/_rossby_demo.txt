@@ -18,4 +18,4 @@ Rossby number Ro = U / (f L): does planetary rotation matter?
   slow ones (Ro << 1) are ruled by it, which is why weather systems and
   ocean gyres are big rotating vortices rather than simple radial flows.
 
-  wrote examples/output\rossby.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\rossby.svg

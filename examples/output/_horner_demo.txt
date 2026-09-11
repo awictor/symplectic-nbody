@@ -19,4 +19,4 @@ Horner: p(x) = ((2x - 6)x + 2)x - 1, evaluated in 3 mults instead of 6
   Horner is the standard polynomial evaluator: fewest operations, and summing
   left-to-right in one accumulator gives better rounding than adding separate powers.
 
-  wrote examples/output\horner.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\horner.svg

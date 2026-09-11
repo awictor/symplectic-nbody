@@ -25,4 +25,4 @@ Levenshtein edit distance: fewest insert/delete/substitute edits
   adjacent-swap typo (distance 1), the commonest kind of mistake. The same DP powers
   fuzzy search, diff tools, and DNA sequence alignment.
 
-  wrote examples/output\levenshtein.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\levenshtein.svg

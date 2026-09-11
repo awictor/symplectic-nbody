@@ -23,4 +23,4 @@ Fenwick tree (binary indexed tree): update AND prefix-sum in O(log n)
   in a single array of n integers. It powers range queries, order statistics, and
   streaming quantiles.
 
-  wrote examples/output\fenwick.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\fenwick.svg

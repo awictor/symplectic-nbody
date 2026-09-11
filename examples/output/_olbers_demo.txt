@@ -19,4 +19,4 @@ Olbers' paradox: in an infinite static universe the sky would blaze
   ~10^16 light-years, a million times farther than light has travelled since
   the Big Bang. The finite age of the universe, not infinite space, saves us.
 
-  wrote examples/output\olbers.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\olbers.svg

@@ -21,4 +21,4 @@ Bohr model of hydrogen: E_n = -13.6/n^2 eV, r_n = n^2 a_0
   the Lyman series lands in the UV, Paschen in the infrared. The model nails
   the energies exactly, and v/c at n=1 is the fine-structure constant.
 
-  wrote examples/output\bohr.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\bohr.svg

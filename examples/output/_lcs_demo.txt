@@ -18,4 +18,4 @@ Longest common subsequence: the longest in-order shared thread
   of edits. A bigger LCS means a smaller diff. This runs git, patch, and
   bioinformatics sequence comparison.
 
-  wrote examples/output\lcs.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\lcs.svg

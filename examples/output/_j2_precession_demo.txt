@@ -14,4 +14,4 @@ J2 orbital precession (Earth, 700 km circular orbit)
   the equator at the same local time daily. At 63.4 deg the apsides freeze
   (Molniya), parking apogee over the far north for long dwell times.
 
-  wrote examples/output\j2_precession.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\j2_precession.svg

@@ -16,4 +16,4 @@ MOND: modified gravity instead of dark matter
   MOND flattens the curve with no dark matter. Its sharpest prediction is
   the baryonic Tully-Fisher law v^4 = G M a0, tight across real galaxies.
 
-  wrote examples/output\mond.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\mond.svg

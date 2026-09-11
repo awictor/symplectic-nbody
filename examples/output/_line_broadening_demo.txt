@@ -16,4 +16,4 @@ Line broadening of H-alpha (656.3 nm): Doppler / natural / pressure
   Lorentzian-winged lines while a thin HII region is purely Doppler. The
   observed shape is the Voigt convolution of the Gaussian and Lorentzian.
 
-  wrote examples/output\line_broadening.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\line_broadening.svg

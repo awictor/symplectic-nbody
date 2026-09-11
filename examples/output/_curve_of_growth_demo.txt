@@ -19,4 +19,4 @@ Curve of growth: equivalent width vs central optical depth
   and W ~ sqrt(N) again. Matching a measured W to this curve is how stellar
   abundances are read off absorption spectra.
 
-  wrote examples/output\curve_of_growth.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\curve_of_growth.svg

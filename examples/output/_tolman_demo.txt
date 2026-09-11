@@ -16,4 +16,4 @@ Tolman test: surface brightness ~ (1+z)^-4 if the universe expands
   tired-light universe would dim only as (1+z); observations back the (1+z)^4,
   direct evidence the redshift is genuine expansion, not photons tiring out.
 
-  wrote examples/output\tolman.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\tolman.svg

@@ -18,4 +18,4 @@ Box-Muller: two uniforms -> two independent standard normals
   radius), theta = 2 pi u2 is the uniform angle, and (r cos, r sin) is a 2D normal.
   Every simulation that needs noise -- Brownian motion, Monte-Carlo finance -- starts here.
 
-  wrote examples/output\box_muller.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\box_muller.svg

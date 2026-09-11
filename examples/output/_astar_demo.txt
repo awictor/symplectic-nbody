@@ -12,4 +12,4 @@ A*: guide the search with a heuristic h(n) = estimated distance to the goal
   heuristic (never overestimating) the path it returns is still guaranteed optimal --
   which is why A* is the standard for game and robot navigation.
 
-  wrote examples/output\astar.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\astar.svg

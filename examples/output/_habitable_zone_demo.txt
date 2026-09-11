@@ -14,4 +14,4 @@ The habitable zone: liquid-water orbits around a star
   tidal locking), while luminous stars push it far out. This is the target
   band for finding worlds that could have surface oceans.
 
-  wrote examples/output\habitable_zone.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\habitable_zone.svg

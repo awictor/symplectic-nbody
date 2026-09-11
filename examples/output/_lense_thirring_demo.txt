@@ -10,4 +10,4 @@ Gravity Probe B: two relativistic gyroscope precessions
   spacetime. The latter is ~180x smaller -- it took a dedicated
   experiment with near-perfect gyroscopes to measure it.
 
-  wrote examples/output\lense_thirring.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\lense_thirring.svg

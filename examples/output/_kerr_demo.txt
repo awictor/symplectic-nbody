@@ -13,4 +13,4 @@ Kerr black hole: spin sets the horizon and the ISCO (units of M)
   (1M at extremal spin), so its accretion disk reaches deeper and radiates
   more efficiently. Measuring the disk's inner edge is how spins are found.
 
-  wrote examples/output\kerr.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\kerr.svg

@@ -17,4 +17,4 @@ Marangoni effect: flow from a surface-tension gradient (Ma_c ~ 80)
     thick pool, Earth    Bo_d =  1.37e+00  ->  buoyancy-driven
     thick pool, orbit    Bo_d =  1.40e-05  ->  Marangoni-driven
 
-  wrote examples/output\marangoni.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\marangoni.svg

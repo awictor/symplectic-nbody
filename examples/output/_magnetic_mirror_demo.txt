@@ -14,4 +14,4 @@ Magnetic mirror: trapped if sin^2(pitch) > B_min/B_max = 1/R_m
   tightens, unless their pitch angle drops them into the loss cone and down
   into the atmosphere -- which is what lights up the aurora.
 
-  wrote examples/output\magnetic_mirror.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\magnetic_mirror.svg

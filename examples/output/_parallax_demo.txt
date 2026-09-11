@@ -14,4 +14,4 @@ Parallax: d (pc) = 1 / p (arcsec);  v_t (km/s) = 4.74 mu d
   the fastest, crosses a Moon's width of sky every ~180 years and moves at
   142 km/s through space once its radial and tangential motions combine.
 
-  wrote examples/output\parallax.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\parallax.svg

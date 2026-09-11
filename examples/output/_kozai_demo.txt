@@ -12,4 +12,4 @@ Kozai-Lidov cycles in a hierarchical triple
   Theta = sqrt(1-e^2) cos i. This drives hot-Jupiter migration
   and compact-binary mergers.
 
-  wrote examples/output\kozai.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\kozai.svg

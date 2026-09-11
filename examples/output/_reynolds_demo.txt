@@ -16,4 +16,4 @@ Reynolds number Re = rho v L / mu: inertia vs viscosity
   For pipe flow the crossover sits near Re ~ 2300, which is why a slow tap
   runs in smooth laminar sheets but a fast one roars and sputters.
 
-  wrote examples/output\reynolds.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\reynolds.svg

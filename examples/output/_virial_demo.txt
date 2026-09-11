@@ -6,6 +6,6 @@ Virial theorem: a bound gravitational system settles at 2T/U = -1
   cold-cluster instantaneous 2T/U (collapse & relaxation):
   #*:...::.:.::::::---::::::::.:::::::.:::::::::::::::::::::::::::::::::::::::::::.::-:::::::::::::.::
 
-  wrote examples/output\virial.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\virial.svg
   Both running averages converge on -1: the cold cluster forgets its
   cold start through violent relaxation and lands in virial balance.

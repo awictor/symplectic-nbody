@@ -18,4 +18,4 @@ Logistic regression: probability of class 1 vs x (boundary where p = 0.5)
   logistic squashes w.x+b through the sigmoid to a probability and minimizes log-loss,
   a convex objective with one global minimum. Both are the base of modern ML pipelines.
 
-  wrote examples/output\regression.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\regression.svg

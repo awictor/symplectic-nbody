@@ -13,4 +13,4 @@ The Eddington luminosity: the brightness limit of accretion
   pressure blows the accreting gas away, so it caps how fast a black
   hole can grow -- the exponential Salpeter track below.
 
-  wrote examples/output\eddington.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\eddington.svg

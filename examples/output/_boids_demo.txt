@@ -10,4 +10,4 @@ Boids: separation + alignment + cohesion -> emergent flocking, no leader
   (polarization toward 1) while separation keeps the birds from colliding -- the
   murmuration of starlings, the bait ball of sardines, all bottom-up from local rules.
 
-  wrote examples/output\boids.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\boids.svg

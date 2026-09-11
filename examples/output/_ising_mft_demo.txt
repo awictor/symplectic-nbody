@@ -18,4 +18,4 @@ Mean-field Ising: m = tanh((z J m + B)/T), T_c = z J = 6
   field -- spontaneous symmetry breaking. The magnetization vanishes as (1-T/Tc)^1/2
   (mean-field beta=1/2) and the susceptibility diverges at T_c: a phase transition.
 
-  wrote examples/output\ising_mft.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\ising_mft.svg

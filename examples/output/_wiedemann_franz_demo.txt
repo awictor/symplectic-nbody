@@ -13,4 +13,4 @@ Wiedemann-Franz: kappa / (sigma T) = L = 2.443e-08 W ohm / K^2 (T = 300 K)
   lets you read a metal's heat conductivity off an easy resistance measurement -- and
   a measured L well below 2.44e-8 flags heat and charge decoupling (strange metals).
 
-  wrote examples/output\wiedemann_franz.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\wiedemann_franz.svg

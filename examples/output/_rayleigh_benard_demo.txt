@@ -14,4 +14,4 @@ Rayleigh-Benard: Ra = g alpha dT d^3 / (nu kappa); onset at Ra_c ~ 1708
   at Ra of 10^20 or more, so they are violently, turbulently convective:
   the granulation on the Sun and the plates under our feet both follow.
 
-  wrote examples/output\rayleigh_benard.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\rayleigh_benard.svg

@@ -18,4 +18,4 @@ Polya's random walk: does an infinite lattice walk return to the origin?
   often); in 3D+ it can escape to infinity. The knife-edge is exactly two dimensions,
   because P(at origin) decays as n^(-d/2) -- summable (transient) only for d >= 3.
 
-  wrote examples/output\polya.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\polya.svg

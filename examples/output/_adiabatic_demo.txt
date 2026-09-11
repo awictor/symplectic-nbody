@@ -18,4 +18,4 @@ Adiabatic: P V^gamma = const, T V^(gamma-1) = const (no heat flow)
   released CO2). Sound waves compress air adiabatically too, so the speed of
   sound carries Laplace's sqrt(gamma) factor -- the fix to Newton's estimate.
 
-  wrote examples/output\adiabatic.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\adiabatic.svg

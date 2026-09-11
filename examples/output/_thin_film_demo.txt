@@ -16,4 +16,4 @@ Thin-film interference: a film nm-thick paints itself in colour
   A soap film thins to near-zero before it bursts: 2 n t -> 0 is destructive at
   every colour, so the film looks BLACK -- the classic sign it is about to pop.
 
-  wrote examples/output\thin_film.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\thin_film.svg

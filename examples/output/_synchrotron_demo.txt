@@ -17,4 +17,4 @@ Synchrotron radiation (B = 1 nT)
   spectral slope reveals the electron energy distribution -- how we read
   jets, radio galaxies, and supernova remnants.
 
-  wrote examples/output\synchrotron.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\synchrotron.svg

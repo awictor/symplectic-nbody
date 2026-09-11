@@ -14,4 +14,4 @@ Hohmann transfer: the cheapest way between two circular orbits
   and the phase angle sets the launch window -- why Mars missions leave
   Earth only every ~26 months.
 
-  wrote examples/output\hohmann.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\hohmann.svg

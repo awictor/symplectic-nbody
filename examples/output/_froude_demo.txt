@@ -18,4 +18,4 @@ Froude number Fr = U / sqrt(g h): flow speed vs its own wave speed
   A hydraulic jump: supercritical Fr1=3 water 0.2 m deep leaps to 0.75 m and goes
   subcritical, dumping its excess energy into turbulence -- the step below a weir.
 
-  wrote examples/output\froude.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\froude.svg

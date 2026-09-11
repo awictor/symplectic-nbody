@@ -18,4 +18,4 @@ Hohmann vs bi-elliptic transfer (r_b = 100 r1 detour)
   are tiny. The catch: the detour can take years, so bi-elliptic is used
   only for the most extreme orbit raises. The 11.94 crossover is exact.
 
-  wrote examples/output\bi_elliptic.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\bi_elliptic.svg

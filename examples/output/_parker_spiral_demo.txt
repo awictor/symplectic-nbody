@@ -17,4 +17,4 @@ The Parker spiral: the Sun's field wound up by its rotation
   field is mostly the wound-up azimuthal component. This is why western-
   limb solar flares connect best to Earth along the spiral field line.
 
-  wrote examples/output\parker_spiral.svg
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\parker_spiral.svg
