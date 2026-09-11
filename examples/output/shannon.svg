@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="380" viewBox="0 0 760 380" font-family="monospace">
+<rect width="760" height="380" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">Shannon entropy &amp; Huffman coding</text>
+<text x="20" y="44" fill="#8b949e" font-size="12">binary-source entropy, maximal at a fair coin (left); Huffman codeword lengths vs the entropy limit (right)</text>
+<line x1="55" y1="325" x2="360" y2="325" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="55" y1="325" x2="55" y2="62" stroke="#8b949e" stroke-width="1.2"/>
+<polyline points="56.5,313.1 58.0,303.8 59.6,295.4 61.1,287.8 62.6,280.6 64.2,273.9 65.7,267.4 67.2,261.3 68.7,255.4 70.2,249.7 71.8,244.2 73.3,238.9 74.8,233.7 76.3,228.8 77.9,223.9 79.4,219.2 80.9,214.7 82.5,210.2 84.0,205.9 85.5,201.7 87.0,197.5 88.5,193.5 90.1,189.6 91.6,185.8 93.1,182.0 94.7,178.4 96.2,174.8 97.7,171.3 99.2,167.9 100.8,164.6 102.3,161.4 103.8,158.2 105.3,155.1 106.8,152.0 108.4,149.0 109.9,146.1 111.4,143.3 113.0,140.5 114.5,137.8 116.0,135.1 117.5,132.5 119.0,130.0 120.6,127.5 122.1,125.1 123.6,122.7 125.2,120.4 126.7,118.1 128.2,115.9 129.7,113.7 131.2,111.6 132.8,109.6 134.3,107.6 135.8,105.6 137.4,103.7 138.9,101.8 140.4,100.0 141.9,98.2 143.4,96.5 145.0,94.9 146.5,93.2 148.0,91.6 149.6,90.1 151.1,88.6 152.6,87.1 154.1,85.7 155.7,84.4 157.2,83.1 158.7,81.8 160.2,80.5 161.8,79.3 163.3,78.2 164.8,77.1 166.3,76.0 167.8,75.0 169.4,74.0 170.9,73.0 172.4,72.1 173.9,71.3 175.5,70.4 177.0,69.6 178.5,68.9 180.1,68.2 181.6,67.5 183.1,66.9 184.6,66.3 186.2,65.7 187.7,65.2 189.2,64.7 190.7,64.3 192.2,63.9 193.8,63.5 195.3,63.2 196.8,62.9 198.3,62.7 199.9,62.5 201.4,62.3 202.9,62.2 204.4,62.1 206.0,62.0 207.5,62.0 209.0,62.0 210.6,62.1 212.1,62.2 213.6,62.3 215.1,62.5 216.7,62.7 218.2,62.9 219.7,63.2 221.2,63.5 222.8,63.9 224.3,64.3 225.8,64.7 227.3,65.2 228.8,65.7 230.4,66.3 231.9,66.9 233.4,67.5 234.9,68.2 236.5,68.9 238.0,69.6 239.5,70.4 241.0,71.3 242.6,72.1 244.1,73.0 245.6,74.0 247.2,75.0 248.7,76.0 250.2,77.1 251.7,78.2 253.2,79.3 254.8,80.5 256.3,81.8 257.8,83.1 259.4,84.4 260.9,85.7 262.4,87.1 263.9,88.6 265.4,90.1 267.0,91.6 268.5,93.2 270.0,94.9 271.5,96.5 273.1,98.2 274.6,100.0 276.1,101.8 277.6,103.7 279.2,105.6 280.7,107.6 282.2,109.6 283.8,111.6 285.3,113.7 286.8,115.9 288.3,118.1 289.9,120.4 291.4,122.7 292.9,125.1 294.4,127.5 296.0,130.0 297.5,132.5 299.0,135.1 300.5,137.8 302.1,140.5 303.6,143.3 305.1,146.1 306.6,149.0 308.1,152.0 309.7,155.1 311.2,158.2 312.7,161.4 314.2,164.6 315.8,167.9 317.3,171.3 318.8,174.8 320.4,178.4 321.9,182.0 323.4,185.8 324.9,189.6 326.4,193.5 328.0,197.5 329.5,201.7 331.0,205.9 332.6,210.2 334.1,214.7 335.6,219.2 337.1,223.9 338.7,228.8 340.2,233.7 341.7,238.9 343.2,244.2 344.8,249.7 346.3,255.4 347.8,261.3 349.3,267.4 350.8,273.9 352.4,280.6 353.9,287.8 355.4,295.4 356.9,303.8 358.5,313.1" fill="none" stroke="#4dabf7" stroke-width="2.5"/>
+<circle cx="207.5" cy="62.0" r="3.5" fill="#ffd43b"/>
+<text x="207.5" y="54.0" fill="#ffd43b" font-size="9" text-anchor="middle">fair coin: 1 bit</text>
+<text x="49.0" y="328.0" fill="#8b949e" font-size="9" text-anchor="end">0.0</text>
+<text x="49.0" y="196.5" fill="#8b949e" font-size="9" text-anchor="end">0.5</text>
+<text x="49.0" y="65.0" fill="#8b949e" font-size="9" text-anchor="end">1.0</text>
+<text x="55.0" y="340.0" fill="#8b949e" font-size="9" text-anchor="middle">0.0</text>
+<text x="207.5" y="340.0" fill="#8b949e" font-size="9" text-anchor="middle">0.5</text>
+<text x="360.0" y="340.0" fill="#8b949e" font-size="9" text-anchor="middle">1.0</text>
+<text x="207.5" y="355.0" fill="#8b949e" font-size="10" text-anchor="middle">P(symbol = 1)</text>
+<text x="59.0" y="60.0" fill="#8b949e" font-size="9">H (bits)</text>
+<line x1="425" y1="325" x2="735" y2="325" stroke="#8b949e" stroke-width="1.2"/>
+<line x1="425" y1="325" x2="425" y2="62" stroke="#8b949e" stroke-width="1.2"/>
+<rect x="433.9" y="193.5" width="26.6" height="131.5" fill="#8338ec"/>
+<text x="447.1" y="339.0" fill="#8b949e" font-size="10" text-anchor="middle">e</text>
+<text x="447.1" y="189.5" fill="#b197fc" font-size="9" text-anchor="middle">10</text>
+<rect x="478.1" y="193.5" width="26.6" height="131.5" fill="#8338ec"/>
+<text x="491.4" y="339.0" fill="#8b949e" font-size="10" text-anchor="middle">t</text>
+<text x="491.4" y="189.5" fill="#b197fc" font-size="9" text-anchor="middle">00</text>
+<rect x="522.4" y="127.8" width="26.6" height="197.2" fill="#8338ec"/>
+<text x="535.7" y="339.0" fill="#8b949e" font-size="10" text-anchor="middle">a</text>
+<text x="535.7" y="123.8" fill="#b197fc" font-size="9" text-anchor="middle">111</text>
+<rect x="566.7" y="127.8" width="26.6" height="197.2" fill="#8338ec"/>
+<text x="580.0" y="339.0" fill="#8b949e" font-size="10" text-anchor="middle">o</text>
+<text x="580.0" y="123.8" fill="#b197fc" font-size="9" text-anchor="middle">110</text>
+<rect x="611.0" y="127.8" width="26.6" height="197.2" fill="#8338ec"/>
+<text x="624.3" y="339.0" fill="#8b949e" font-size="10" text-anchor="middle">n</text>
+<text x="624.3" y="123.8" fill="#b197fc" font-size="9" text-anchor="middle">010</text>
+<rect x="655.3" y="62.0" width="26.6" height="263.0" fill="#8338ec"/>
+<text x="668.6" y="339.0" fill="#8b949e" font-size="10" text-anchor="middle">s</text>
+<text x="668.6" y="58.0" fill="#b197fc" font-size="9" text-anchor="middle">0111</text>
+<rect x="699.6" y="62.0" width="26.6" height="263.0" fill="#8338ec"/>
+<text x="712.9" y="339.0" fill="#8b949e" font-size="10" text-anchor="middle">z</text>
+<text x="712.9" y="58.0" fill="#b197fc" font-size="9" text-anchor="middle">0110</text>
+<line x1="425" y1="152.0" x2="735" y2="152.0" stroke="#06d6a0" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="733.0" y="148.0" fill="#06d6a0" font-size="9" text-anchor="end">H = 2.63</text>
+<line x1="425" y1="150.8" x2="735" y2="150.8" stroke="#ffd43b" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="733.0" y="161.8" fill="#ffd43b" font-size="9" text-anchor="end">L = 2.65</text>
+<text x="580.0" y="355.0" fill="#8b949e" font-size="10" text-anchor="middle">symbol (by frequency) -> codeword length</text>
+</svg>

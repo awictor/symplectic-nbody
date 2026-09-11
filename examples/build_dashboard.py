@@ -260,6 +260,7 @@ def main():
     import galton_demo
     import monty_hall_demo
     import bayes_test_demo
+    import shannon_demo
 
     import plot_orbits
 
@@ -489,6 +490,7 @@ def main():
     galton_txt = run("galton_demo", galton_demo.main, True)
     monty_hall_txt = run("monty_hall_demo", monty_hall_demo.main, True)
     bayes_test_txt = run("bayes_test_demo", bayes_test_demo.main, True)
+    shannon_txt = run("shannon_demo", shannon_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2823,6 +2825,21 @@ def main():
             '<div class="grid">'
             + svg_card(out("bayes_test.svg"), "the positive predictive value rising with prevalence (50-50 only at 1%), and a cohort where 91% of positives are false")
             + f'<div class="card">{pre(bayes_test_txt)}</div>'
+            + '</div>'),
+        section(
+            "Shannon entropy and Huffman coding: the limit of lossless compression",
+            "How few bits, on average, to record one symbol from a source? Shannon's entropy "
+            "H = -sum p log2 p is the answer, and no lossless code can beat it: the average "
+            "codeword length L obeys L >= H, with a code always existing at L < H+1. Entropy is "
+            "maximal (log2 n) for a uniform source and zero when one symbol is certain -- it "
+            "measures surprise. Huffman's algorithm merges the two least-likely symbols "
+            "repeatedly to build the optimal prefix code, provably landing in the [H, H+1) band "
+            "and obeying the Kraft inequality sum 2^-len <= 1. This module computes entropy, "
+            "builds the Huffman code, verifies the Shannon bound and a lossless encode/decode "
+            "round-trip -- the Huffman stage inside ZIP, JPEG, and MP3.",
+            '<div class="grid">'
+            + svg_card(out("shannon.svg"), "the binary-entropy curve peaking at a fair coin, and Huffman codeword lengths hugging the entropy limit")
+            + f'<div class="card">{pre(shannon_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

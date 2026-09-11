@@ -218,6 +218,7 @@ ruins a long non-symplectic integration.
 | `src/galton.py` | Galton board: binomial slot law, CLT Gaussian limit, 1/sqrt(n) convergence |
 | `src/monty_hall.py` | Monty Hall: stay 1/N vs switch (N-1)/N, informed-vs-random host, Monte-Carlo |
 | `src/bayes_test.py` | Bayes & base-rate fallacy: PPV/NPV, likelihood ratios, retest odds, Monte-Carlo |
+| `src/shannon.py` | Shannon entropy & Huffman coding: H = -sum p log p, optimal prefix code, H<=L<H+1 |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -427,6 +428,7 @@ ruins a long non-symplectic integration.
 | `examples/galton_demo.py` | Slot histogram vs binomial + the Gaussian overlay & 1/sqrt(n) convergence |
 | `examples/monty_hall_demo.py` | Stay/switch win rates vs simulation + the bars & (N-1)/N scaling curve |
 | `examples/bayes_test_demo.py` | Rare-disease posterior vs simulation + the PPV-vs-prevalence curve & cohort |
+| `examples/shannon_demo.py` | Huffman code table + the binary-entropy curve & codeword-length figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5087,6 +5089,34 @@ positive and negative predictive values via Bayes' theorem, the likelihood ratio
 posterior for chaining retests, and the even-odds prevalence, all checked against exact
 hand-counts (99/1098) and a seeded Monte-Carlo cohort. This base-rate fallacy underlies medical
 screening, spam filters, and security profiling.
+
+## Shannon entropy and Huffman coding: the limit of lossless compression
+
+The fewest bits per symbol, and the code that reaches them. `shannon.py`:
+
+```
+$ python examples/shannon_demo.py examples/output
+
+   symbol    prob    codeword  bits
+        e    0.27          10     2
+        t    0.20          00     2
+        z    0.05        0110     4
+
+  entropy  H = 2.6318 bits/symbol
+  Huffman  L = 2.6500 bits/symbol   (fixed-length would need 3)
+  bound: H <= L < H+1   OK    efficiency H/L = 99.3%
+```
+
+Shannon's entropy `H = -sum p log2 p` is the fewest bits, on average, to record one symbol, and
+his source-coding theorem says no lossless code can beat it: the average codeword length obeys
+`L >= H`, with a code always existing at `L < H+1`. Entropy is maximal (`log2 n`) for a uniform
+source and zero when one symbol is certain. Huffman's algorithm repeatedly merges the two
+least-likely symbols to build the optimal prefix code, landing in the `[H, H+1)` band and
+obeying the Kraft inequality `sum 2^-len <= 1`. This module computes entropy, builds the Huffman
+code, measures its efficiency, and round-trips encode/decode losslessly. The tests verify the
+entropy of known sources, the Shannon bound, that a dyadic source is coded at 100% efficiency,
+and the prefix-free/Kraft/round-trip properties -- the Huffman stage that sits inside ZIP, JPEG,
+and MP3.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

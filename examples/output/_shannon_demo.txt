@@ -1,0 +1,21 @@
+Shannon entropy & Huffman coding: compressing a skewed source
+
+   symbol    prob    codeword  bits
+        e    0.27          10     2
+        t    0.20          00     2
+        a    0.16         111     3
+        o    0.13         110     3
+        n    0.12         010     3
+        s    0.07        0111     4
+        z    0.05        0110     4
+
+  entropy  H = 2.6318 bits/symbol
+  Huffman  L = 2.6500 bits/symbol   (fixed-length would need 3)
+  bound: H <= L < H+1  ->  2.6318 <= 2.6500 < 3.6318   OK
+  efficiency H/L = 99.3%,  Kraft sum = 1.000
+
+  'tenants' -> 0010010111010000111  (19 bits vs 56 raw), decodes back: ok
+  No lossless code can beat the entropy; Huffman lands within one bit of it and is
+  optimal among prefix codes -- the reason ZIP, JPEG, and MP3 all carry a Huffman stage.
+
+  wrote examples/output\shannon.svg
