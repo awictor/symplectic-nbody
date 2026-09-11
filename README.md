@@ -320,6 +320,7 @@ ruins a long non-symplectic integration.
 | `src/lbfgs.py` | L-BFGS limited-memory quasi-Newton optimizer (two-loop recursion, Wolfe line search) |
 | `src/tsne.py` | t-SNE nonlinear dimensionality reduction (perplexity calibration, KL-gradient descent) |
 | `src/wavelet_tree.py` | Wavelet tree: rank/select/quantile/range-count over a sequence in O(log sigma) |
+| `src/fibonacci_heap.py` | Fibonacci heap (O(1) amortized decrease-key) + Dijkstra built on it |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -631,6 +632,7 @@ ruins a long non-symplectic integration.
 | `examples/lbfgs_demo.py` | L-BFGS vs gradient descent on an ill-conditioned quadratic + a logistic-regression fit |
 | `examples/tsne_demo.py` | 8-D clusters embedded into a clear 2-D map, with the KL divergence falling over training |
 | `examples/wavelet_tree_demo.py` | Rank/select/quantile/range-count queries + the recursive alphabet-partition tree |
+| `examples/fibonacci_heap_demo.py` | Decrease-key/merge/Dijkstra + max root degree staying within the log_phi(n) bound |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7620,6 +7622,27 @@ select, quantile (k-th smallest in a range -- a range median generalization), an
 essentially the space of the sequence. This module implements all five, verified exhaustively against
 brute force (access, rank, select, quantile, and range-count) across hundreds of random sequences and
 queries.
+
+## Fibonacci heaps: O(1) amortized decrease-key
+
+The priority queue that improves Dijkstra to O(m + n log n). `fibonacci_heap.py`:
+
+```
+$ python examples/fibonacci_heap_demo.py examples/output
+
+  extract-min order is sorted; decrease-key 90 -> 5 makes 5 the new min
+  merge two heaps in O(1) (root-list concatenation)
+  max root degree vs n: n=1000 -> degree 9 (bound 14.4); n=5000 -> 12 (bound 17.7)
+  Dijkstra from node 0: [0, 7, 9, 20, 20, 11]
+```
+
+A Fibonacci heap stays lazy: insert and merge just splice into a circular root list (O(1)), and
+decrease-key cuts a node to the roots, cascading upward via mark bits. Only extract-min consolidates
+equal-degree trees, which keeps the tree count logarithmic and decrease-key O(1) amortized. This
+module implements the full heap with node handles plus a Dijkstra built on it, verified against a
+binary heap over a 2000-operation random stream, that a drained heap yields sorted order, that merge
+preserves elements, that the max root degree stays within the log_phi(n) bound, and that Dijkstra
+matches a binary-heap Dijkstra across 40 random graphs.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

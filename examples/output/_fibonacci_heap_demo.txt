@@ -1,0 +1,25 @@
+Fibonacci heap: O(1) amortized insert, merge, and decrease-key
+
+  inserted [27, 25, 60, 33, 36, 64, 1, 33, 87, 26, 71, 53]
+  extract-min order: [1, 25, 26, 27, 33, 33, 36, 53, 60, 64, 71, 87]  (sorted: True)
+
+  decrease-key: min starts at 30; after decreasing d(90)->5, min is 5
+  merge two heaps -> size 6, min 1 (O(1) list concatenation)
+
+  Maximum root degree vs heap size (should stay below the Fibonacci bound log_phi(n)):
+    n=   10: max degree  3  (bound 4.6)
+    n=   50: max degree  5  (bound 8.1)
+    n=  100: max degree  6  (bound 9.5)
+    n=  500: max degree  8  (bound 12.9)
+    n= 1000: max degree  9  (bound 14.4)
+    n= 5000: max degree 12  (bound 17.7)
+
+  Dijkstra shortest paths from node 0 (classic 6-node graph): [0, 7, 9, 20, 20, 11]
+    (0->2->5->4 gives 9+2+9 = 20 to node 4)
+
+  A Fibonacci heap stays lazy: insert and merge just splice into a circular root list,
+  and decrease-key cuts a node to the roots (cascading up via mark bits). Only extract-min
+  consolidates equal-degree trees -- which is what keeps decrease-key O(1) amortized and
+  improves Dijkstra to O(m + n log n).
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\fibonacci_heap.svg

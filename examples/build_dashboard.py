@@ -362,6 +362,7 @@ def main():
     import lbfgs_demo
     import tsne_demo
     import wavelet_tree_demo
+    import fibonacci_heap_demo
 
     import plot_orbits
 
@@ -693,6 +694,7 @@ def main():
     lbfgs_txt = run("lbfgs_demo", lbfgs_demo.main, True)
     tsne_txt = run("tsne_demo", tsne_demo.main, True)
     wavelet_tree_txt = run("wavelet_tree_demo", wavelet_tree_demo.main, True)
+    fibonacci_heap_txt = run("fibonacci_heap_demo", fibonacci_heap_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4954,6 +4956,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("wavelet_tree.svg"), "the wavelet tree's recursive alphabet partition: each node shows its value range and per-element bit vector, narrowing to single-value leaves at the bottom")
             + f'<div class="card">{pre(wavelet_tree_txt)}</div>'
+            + '</div>'),
+        section(
+            "Fibonacci heaps: O(1) amortized decrease-key",
+            "A priority queue with fast DECREASE-KEY is the engine behind Dijkstra's shortest paths "
+            "and Prim's minimum spanning tree, which do O(m) decrease-keys and O(n) extract-mins. A "
+            "binary heap does every operation in O(log n); the FIBONACCI HEAP of Fredman and Tarjan "
+            "improves the bound to O(m + n log n) by making INSERT, MERGE, FIND-MIN, and DECREASE-KEY "
+            "run in O(1) AMORTIZED time, paying the logarithmic cost only at EXTRACT-MIN. The trick "
+            "is LAZINESS: the heap is a forest of heap-ordered trees in a circular root list, so "
+            "insert just drops in a node and merge just concatenates two lists. Cleanup happens only "
+            "at extract-min, which promotes the minimum's children to roots and CONSOLIDATES trees of "
+            "equal degree (like binary addition) until all root degrees are distinct. DECREASE-KEY "
+            "lowers a key and, if heap order breaks, CUTS the node to the root list; a MARK bit "
+            "triggers a CASCADING CUT the second time a node loses a child, which keeps trees bushy "
+            "enough that degrees obey Fibonacci-number bounds -- hence the name. This module "
+            "implements the full heap (insert, find-min, extract-min, decrease-key, delete, merge) "
+            "with node handles, plus a Dijkstra built on it, verified against a binary heap over a "
+            "2000-operation random stream, that a drained heap yields sorted order, that merge "
+            "preserves all elements, that the maximum root degree stays within the O(log n) "
+            "Fibonacci bound, and that Dijkstra on the Fibonacci heap matches a binary-heap Dijkstra "
+            "across 40 random graphs.",
+            '<div class="grid">'
+            + svg_card(out("fibonacci_heap.svg"), "the maximum root degree (blue) growing far slower than the heap size and staying under the log_phi(n) Fibonacci bound (yellow dashed) -- what keeps the tree count logarithmic")
+            + f'<div class="card">{pre(fibonacci_heap_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

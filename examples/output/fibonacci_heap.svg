@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" font-family="monospace">
+<rect width="760" height="430" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="18">Fibonacci heap: max root degree stays within the log_phi(n) bound</text>
+<text x="20" y="47" fill="#8b949e" font-size="12">blue = measured max root degree after consolidation, yellow dashed = the Fibonacci bound</text>
+<line x1="70" y1="375" x2="720" y2="375" stroke="#484f58" stroke-width="1.5"/>
+<line x1="70" y1="80" x2="70" y2="375" stroke="#484f58" stroke-width="1.5"/>
+<text x="70" y="393" fill="#8b949e" font-size="11" text-anchor="middle">10</text>
+<text x="238" y="393" fill="#8b949e" font-size="11" text-anchor="middle">50</text>
+<text x="311" y="393" fill="#8b949e" font-size="11" text-anchor="middle">100</text>
+<text x="479" y="393" fill="#8b949e" font-size="11" text-anchor="middle">500</text>
+<text x="552" y="393" fill="#8b949e" font-size="11" text-anchor="middle">1000</text>
+<text x="720" y="393" fill="#8b949e" font-size="11" text-anchor="middle">5000</text>
+<text x="395" y="418" fill="#8b949e" font-size="12" text-anchor="middle">heap size n (log scale)</text>
+<polyline points="70.0,308.8 238.3,257.8 310.8,236.6 479.2,187.9 551.7,167.0 720.0,118.5" fill="none" stroke="#ffd43b" stroke-width="1.8" stroke-dasharray="6,4"/>
+<polyline points="70.0,331.5 238.3,302.5 310.8,288.0 479.2,259.1 551.7,244.6 720.0,201.1" fill="none" stroke="#4dabf7" stroke-width="2.2"/>
+<circle cx="70.0" cy="331.5" r="4" fill="#4dabf7"/>
+<circle cx="238.3" cy="302.5" r="4" fill="#4dabf7"/>
+<circle cx="310.8" cy="288.0" r="4" fill="#4dabf7"/>
+<circle cx="479.2" cy="259.1" r="4" fill="#4dabf7"/>
+<circle cx="551.7" cy="244.6" r="4" fill="#4dabf7"/>
+<circle cx="720.0" cy="201.1" r="4" fill="#4dabf7"/>
+</svg>
