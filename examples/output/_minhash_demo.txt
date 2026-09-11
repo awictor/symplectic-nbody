@@ -1,0 +1,39 @@
+MinHash + LSH: estimating set similarity at scale
+
+  Documents (as character 3-shingle sets):
+    A: "the quick brown fox jumps over the lazy dog"
+    B: "the quick brown fox jumped over a lazy dog"
+    C: "the quick brown fox jumps over the lazy dog!"
+    D: "a completely different sentence about cats"
+    E: "cats are completely different from that sentence"
+
+  Pairwise similarity (MinHash estimate vs true Jaccard, k=200):
+    A-B: estimate 0.740  true 0.717  (err 0.023)
+    A-C: estimate 0.980  true 0.975  (err 0.005)
+    A-D: estimate 0.005  true 0.013  (err 0.008)
+    A-E: estimate 0.020  true 0.024  (err 0.004)
+    B-C: estimate 0.730  true 0.702  (err 0.028)
+    B-D: estimate 0.000  true 0.013  (err 0.013)
+    B-E: estimate 0.000  true 0.012  (err 0.012)
+    C-D: estimate 0.005  true 0.013  (err 0.008)
+    C-E: estimate 0.020  true 0.024  (err 0.004)
+    D-E: estimate 0.530  true 0.527  (err 0.003)
+
+  Estimate error shrinks like 1/sqrt(k):
+    k=   8  mean error 0.1301
+    k=  16  mean error 0.1023
+    k=  32  mean error 0.0701
+    k=  64  mean error 0.0477
+    k= 128  mean error 0.0341
+    k= 256  mean error 0.0245
+    k= 512  mean error 0.0179
+
+  LSH near-duplicate search (bands=50, rows=4, k=200):
+    candidate near-duplicate pairs: [('A', 'B'), ('A', 'C'), ('B', 'C'), ('D', 'E')]
+    S-curve 50% threshold at Jaccard ~ 0.376
+
+  Two signatures agree in a position with probability equal to the Jaccard similarity,
+  so matching-position fraction is an unbiased estimate. LSH bands make similar items
+  collide in a hash table, turning all-pairs search into a few lookups.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\minhash.svg

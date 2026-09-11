@@ -357,6 +357,7 @@ def main():
     import ternary_search_tree_demo
     import delaunay_demo
     import simplex_demo
+    import minhash_demo
 
     import plot_orbits
 
@@ -683,6 +684,7 @@ def main():
     ternary_search_tree_txt = run("ternary_search_tree_demo", ternary_search_tree_demo.main, True)
     delaunay_txt = run("delaunay_demo", delaunay_demo.main, True)
     simplex_txt = run("simplex_demo", simplex_demo.main, True)
+    minhash_txt = run("minhash_demo", minhash_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4824,6 +4826,31 @@ def main():
             '<div class="grid">'
             + svg_card(out("simplex.svg"), "a 2-D production LP: the green feasible polytope bounded by dashed constraint lines, the yellow objective gradient, and the red optimal vertex the simplex walk terminates at")
             + f'<div class="card">{pre(simplex_txt)}</div>'
+            + '</div>'),
+        section(
+            "MinHash and LSH: estimating set similarity at scale",
+            "How similar are two sets? The JACCARD SIMILARITY -- intersection over union -- is the "
+            "natural measure, but comparing every pair among millions of sets is hopeless if each "
+            "comparison touches the full sets. MINHASH, Broder's trick for AltaVista's near-duplicate "
+            "web-page detection, compresses each set into a short SIGNATURE of k numbers such that the "
+            "probability two signatures agree in any position equals exactly the Jaccard similarity of "
+            "the sets -- so the fraction of matching positions is an unbiased estimate computed from k "
+            "small integers instead of the whole sets. The mechanism is pure probability: under a "
+            "random permutation of the universe, a set's minimum element is equally likely to be any "
+            "of its members, so two sets share that minimum precisely when the overall minimum lies in "
+            "their intersection, an event of probability |A n B| / |A u B|. Using k hash functions as "
+            "permutations gives a signature whose error shrinks like 1/sqrt(k). To actually FIND "
+            "similar pairs without comparing all pairs, LOCALITY-SENSITIVE HASHING splits each "
+            "signature into bands and hashes each band; items that collide in any band become "
+            "candidates, and tuning the bands shapes an S-curve that makes near-duplicates collide "
+            "while keeping dissimilar pairs apart. This module implements MinHash signatures with "
+            "universal hashing, the Jaccard estimator, and banded LSH, verified that the estimate "
+            "converges to the true Jaccard as k grows (error tracking 1/sqrt(k)), that identical sets "
+            "estimate 1 and disjoint ~0, and that LSH recalls every high-Jaccard pair while filtering "
+            "dissimilar ones.",
+            '<div class="grid">'
+            + svg_card(out("minhash.svg"), "the mean Jaccard-estimation error falling as the number of hashes k grows, the measured curve (blue) hugging the 1/sqrt(k) theory curve (yellow dashed)")
+            + f'<div class="card">{pre(minhash_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -315,6 +315,7 @@ ruins a long non-symplectic integration.
 | `src/ternary_search_tree.py` | Ternary search tree: autocomplete, longest-prefix, and '.'-wildcard string search |
 | `src/delaunay.py` | Delaunay triangulation (Bowyer-Watson, exact in-circle) and the dual Voronoi diagram |
 | `src/simplex.py` | Two-phase simplex method for linear programs (Bland's rule, mixed constraints, duality) |
+| `src/minhash.py` | MinHash Jaccard estimation + banded LSH near-duplicate detection (universal hashing) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -621,6 +622,7 @@ ruins a long non-symplectic integration.
 | `examples/ternary_search_tree_demo.py` | Autocomplete, longest-prefix, and wildcard search on a dictionary + the TST structure |
 | `examples/delaunay_demo.py` | Delaunay triangulation overlaid with its dual Voronoi diagram, empty-circumcircle checked live |
 | `examples/simplex_demo.py` | Production LP with the feasible polytope, objective gradient, and optimal vertex drawn |
+| `examples/minhash_demo.py` | Document near-duplicate detection + the estimate error tracking the 1/sqrt(k) curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7503,6 +7505,28 @@ cycling, and a two-phase method with artificial variables to start from >= and =
 module solves LPs in general form and reports optimal/unbounded/infeasible, verified against
 hand-solved textbook LPs, a brute-force vertex enumerator over 60 random LPs, the LP-duality theorem,
 and degenerate/unbounded/infeasible instances.
+
+## MinHash and LSH: estimating set similarity at scale
+
+Compress sets into short signatures whose agreement equals their Jaccard similarity. `minhash.py`:
+
+```
+$ python examples/minhash_demo.py examples/output
+
+  A-C: estimate 0.980  true 0.975   (near-duplicate sentences)
+  A-D: estimate 0.005  true 0.013   (unrelated)
+  error shrinks like 1/sqrt(k): k=8 -> 0.130, k=512 -> 0.018
+  LSH candidate pairs: (A,B) (A,C) (B,C) (D,E)  -- exactly the two clusters
+```
+
+MinHash (Broder's near-duplicate web-page trick) makes the probability that two signatures agree in
+any position equal to the Jaccard similarity of the underlying sets, so the fraction of matching
+positions is an unbiased estimate from k small integers, with error like 1/sqrt(k). Locality-sensitive
+hashing splits signatures into bands and hashes each band, so similar items collide in a hash table
+and near-duplicate search becomes a few lookups instead of all-pairs comparison. This module
+implements MinHash signatures with universal hashing, the Jaccard estimator, and banded LSH, verified
+that the estimate converges to the true Jaccard as k grows, that identical sets estimate 1 and
+disjoint ~0, and that LSH recalls every high-Jaccard pair while filtering dissimilar ones.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
