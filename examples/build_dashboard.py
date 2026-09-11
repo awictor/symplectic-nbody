@@ -280,6 +280,7 @@ def main():
     import knapsack_demo
     import lcs_demo
     import quickselect_demo
+    import aho_corasick_demo
 
     import plot_orbits
 
@@ -529,6 +530,7 @@ def main():
     knapsack_txt = run("knapsack_demo", knapsack_demo.main, True)
     lcs_txt = run("lcs_demo", lcs_demo.main, True)
     quickselect_txt = run("quickselect_demo", quickselect_demo.main, True)
+    aho_corasick_txt = run("aho_corasick_demo", aho_corasick_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3186,6 +3188,23 @@ def main():
             '<div class="grid">'
             + svg_card(out("quickselect.svg"), "comparisons to find the median: quickselect grows linearly while a full sort grows as n log n")
             + f'<div class="card">{pre(quickselect_txt)}</div>'
+            + '</div>'),
+        section(
+            "Aho-Corasick: finding many patterns in one pass",
+            "A spam filter or virus scanner must match hundreds of patterns at once; running a "
+            "single-pattern search per pattern costs O(n * patterns). The Aho-Corasick automaton "
+            "finds every occurrence of every pattern in a single left-to-right scan, in "
+            "O(n + total pattern length + matches) -- independent of the pattern count. It builds "
+            "a trie of the patterns, then adds failure links (fall back to the longest proper "
+            "suffix that is also a pattern prefix, so no character is re-examined -- KMP "
+            "generalized to many patterns) and output links (report every pattern ending at the "
+            "current state, catching overlapping and nested matches like 'he', 'she', 'hers' in "
+            "'ushers'). Built once by breadth-first traversal, then one text pass reports all "
+            "matches. This module builds the automaton and finds all matches, verified "
+            "exhaustively against a brute-force per-pattern search.",
+            '<div class="grid">'
+            + svg_card(out("aho_corasick.svg"), "the pattern trie with its failure links (dashed) and the nodes where a pattern ends")
+            + f'<div class="card">{pre(aho_corasick_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -1,0 +1,22 @@
+Aho-Corasick: match a whole dictionary of patterns in one left-to-right scan
+
+  patterns ['he', 'she', 'his', 'hers'] in 'ushers':
+    'he' at [2]
+    'she' at [1]
+    'hers' at [2]
+  overlapping/nested matches all caught; brute force agrees: True
+
+  scanning a log line for 6 patterns in one pass:
+    'error' at [28]
+    'fail' at [60]
+    'warn' at [15]
+    'timeout' at [35]
+    'critical' at [50]
+    'denied' at [73]
+  total hits: 6, contains a blocked word: True
+
+  The single scan finds every occurrence of every pattern in O(n + matches) time --
+  independent of the pattern count, unlike running one search per pattern. It powers
+  virus scanners, spam filters, and DNA motif search.
+
+  wrote examples/output\aho_corasick.svg

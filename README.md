@@ -238,6 +238,7 @@ ruins a long non-symplectic integration.
 | `src/knapsack.py` | 0/1 knapsack DP: optimal value + item reconstruction, subset-sum, unbounded |
 | `src/lcs.py` | Longest common subsequence: DP + backtrace, diff edit-script, indel distance |
 | `src/quickselect.py` | Quickselect + median-of-medians: O(n) k-th smallest, median, percentile |
+| `src/aho_corasick.py` | Aho-Corasick: trie + failure links, all patterns in one pass |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -467,6 +468,7 @@ ruins a long non-symplectic integration.
 | `examples/knapsack_demo.py` | Chosen items vs brute force + the DP-table heatmap & value-vs-capacity figure |
 | `examples/lcs_demo.py` | LCS + a real line-diff + the DP-table heatmap with the match diagonal |
 | `examples/quickselect_demo.py` | Order statistics + the comparison-count vs sort figure |
+| `examples/aho_corasick_demo.py` | Overlapping matches + log scan + the trie-with-failure-links figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5605,6 +5607,30 @@ worst-case linear time -- the classic proof that selection beats sorting. This m
 quickselect with a randomized pivot and with median-of-medians, plus median, k-th
 smallest/largest, and percentile wrappers, each verified against a full sort over 1000 random
 arrays (with varied pivots and duplicates).
+
+## Aho-Corasick: finding many patterns in one pass
+
+Match a whole dictionary in one scan. `aho_corasick.py`:
+
+```
+$ python examples/aho_corasick_demo.py examples/output
+
+  patterns ['he', 'she', 'his', 'hers'] in 'ushers':
+    'he' at [2]
+    'she' at [1]
+    'hers' at [2]
+```
+
+A spam filter or virus scanner must match hundreds of patterns at once; a single-pattern search
+per pattern costs `O(n * patterns)`. Aho-Corasick finds every occurrence of every pattern in a
+single left-to-right scan, in `O(n + total pattern length + matches)` -- independent of the
+pattern count. It builds a trie of the patterns, then adds failure links (fall back to the
+longest proper suffix that is also a pattern prefix, so no character is re-examined -- KMP
+generalized to many patterns) and output links (report every pattern ending at the current
+state, catching overlapping and nested matches). Built once by breadth-first traversal, then one
+text pass reports all matches. This module builds the automaton and finds all matches (with
+positions), verified *exhaustively* against a brute-force per-pattern search over 1000 random
+multi-pattern cases. It powers virus scanners, spam filters, and DNA motif search.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

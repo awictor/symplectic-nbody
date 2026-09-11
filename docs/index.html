@@ -132,13 +132,13 @@ adaptive reaches the same accuracy with 9.4x fewer force evaluations.</pre>
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200           9.06       11.90      0.8x
-   400          36.72       37.54      1.0x
-   800         141.23      116.72      1.2x
-  1600         601.36      360.39      1.7x
-  3200        2530.95      938.84      2.7x
+   200           9.27       11.80      0.8x
+   400          34.95       37.62      0.9x
+   800         139.93      114.09      1.2x
+  1600         604.44      347.68      1.7x
+  3200        2432.30      952.30      2.6x
 
-empirical scaling exponent  direct ~ N^2.03   barnes-hut ~ N^1.59
+empirical scaling exponent  direct ~ N^2.02   barnes-hut ~ N^1.59
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.</pre>
@@ -201244,6 +201244,78 @@ and Shoemaker-Levy 9&#x27;s fragment chain came to be.</pre></div></div>
   the theoretical proof that selection beats sorting when you need just one rank.
 
   wrote examples/output\quickselect.svg</pre></div></div>
+  </section>
+
+  <section>
+    <h2>Aho-Corasick: finding many patterns in one pass</h2>
+    <p class="blurb">A spam filter or virus scanner must match hundreds of patterns at once; running a single-pattern search per pattern costs O(n * patterns). The Aho-Corasick automaton finds every occurrence of every pattern in a single left-to-right scan, in O(n + total pattern length + matches) -- independent of the pattern count. It builds a trie of the patterns, then adds failure links (fall back to the longest proper suffix that is also a pattern prefix, so no character is re-examined -- KMP generalized to many patterns) and output links (report every pattern ending at the current state, catching overlapping and nested matches like 'he', 'she', 'hers' in 'ushers'). Built once by breadth-first traversal, then one text pass reports all matches. This module builds the automaton and finds all matches, verified exhaustively against a brute-force per-pattern search.</p>
+    <div class="grid"><figure class="card"><svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" font-family="monospace">
+<rect width="760" height="430" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="18">Aho-Corasick: a trie of patterns with failure links</text>
+<text x="20" y="44" fill="#8b949e" font-size="12">solid = trie edges (a character); dashed red = failure links (fallback on a mismatch)</text>
+<line x1="380.0" y1="94.0" x2="60.0" y2="144.0" stroke="#4dabf7" stroke-width="1.6"/>
+<text x="226.0" y="119.0" fill="#8b949e" font-size="11">h</text>
+<line x1="380.0" y1="94.0" x2="700.0" y2="144.0" stroke="#4dabf7" stroke-width="1.6"/>
+<text x="546.0" y="119.0" fill="#8b949e" font-size="11">s</text>
+<line x1="60.0" y1="172.0" x2="60.0" y2="222.0" stroke="#4dabf7" stroke-width="1.6"/>
+<text x="66.0" y="197.0" fill="#8b949e" font-size="11">e</text>
+<line x1="60.0" y1="172.0" x2="380.0" y2="222.0" stroke="#4dabf7" stroke-width="1.6"/>
+<text x="226.0" y="197.0" fill="#8b949e" font-size="11">i</text>
+<line x1="700.0" y1="172.0" x2="700.0" y2="222.0" stroke="#4dabf7" stroke-width="1.6"/>
+<text x="706.0" y="197.0" fill="#8b949e" font-size="11">h</text>
+<line x1="60.0" y1="250.0" x2="60.0" y2="300.0" stroke="#4dabf7" stroke-width="1.6"/>
+<text x="66.0" y="275.0" fill="#8b949e" font-size="11">r</text>
+<line x1="380.0" y1="250.0" x2="380.0" y2="300.0" stroke="#4dabf7" stroke-width="1.6"/>
+<text x="386.0" y="275.0" fill="#8b949e" font-size="11">s</text>
+<line x1="700.0" y1="250.0" x2="700.0" y2="300.0" stroke="#4dabf7" stroke-width="1.6"/>
+<text x="706.0" y="275.0" fill="#8b949e" font-size="11">e</text>
+<line x1="60.0" y1="328.0" x2="380.0" y2="378.0" stroke="#4dabf7" stroke-width="1.6"/>
+<text x="226.0" y="353.0" fill="#8b949e" font-size="11">s</text>
+<line x1="60.0" y1="236.0" x2="380.0" y2="80.0" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="4 3" opacity="0.8"/>
+<line x1="380.0" y1="236.0" x2="380.0" y2="80.0" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="4 3" opacity="0.8"/>
+<line x1="700.0" y1="236.0" x2="60.0" y2="158.0" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="4 3" opacity="0.8"/>
+<line x1="60.0" y1="314.0" x2="380.0" y2="80.0" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="4 3" opacity="0.8"/>
+<line x1="380.0" y1="314.0" x2="700.0" y2="158.0" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="4 3" opacity="0.8"/>
+<line x1="700.0" y1="314.0" x2="60.0" y2="236.0" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="4 3" opacity="0.8"/>
+<line x1="380.0" y1="392.0" x2="700.0" y2="158.0" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="4 3" opacity="0.8"/>
+<circle cx="380.0" cy="80.0" r="13" fill="#161b22" stroke="#4dabf7" stroke-width="1.6"/>
+<circle cx="60.0" cy="158.0" r="13" fill="#161b22" stroke="#4dabf7" stroke-width="1.6"/>
+<circle cx="700.0" cy="158.0" r="13" fill="#161b22" stroke="#4dabf7" stroke-width="1.6"/>
+<circle cx="60.0" cy="236.0" r="13" fill="#06d6a0" stroke="#06d6a0" stroke-width="1.6"/>
+<text x="60.0" y="263.0" fill="#06d6a0" font-size="9" text-anchor="middle">he</text>
+<circle cx="380.0" cy="236.0" r="13" fill="#161b22" stroke="#4dabf7" stroke-width="1.6"/>
+<circle cx="700.0" cy="236.0" r="13" fill="#161b22" stroke="#4dabf7" stroke-width="1.6"/>
+<circle cx="60.0" cy="314.0" r="13" fill="#161b22" stroke="#4dabf7" stroke-width="1.6"/>
+<circle cx="380.0" cy="314.0" r="13" fill="#06d6a0" stroke="#06d6a0" stroke-width="1.6"/>
+<text x="380.0" y="341.0" fill="#06d6a0" font-size="9" text-anchor="middle">his</text>
+<circle cx="700.0" cy="314.0" r="13" fill="#06d6a0" stroke="#06d6a0" stroke-width="1.6"/>
+<text x="700.0" y="341.0" fill="#06d6a0" font-size="9" text-anchor="middle">she,he</text>
+<circle cx="380.0" cy="392.0" r="13" fill="#06d6a0" stroke="#06d6a0" stroke-width="1.6"/>
+<text x="380.0" y="419.0" fill="#06d6a0" font-size="9" text-anchor="middle">hers</text>
+<text x="380.0" y="84.0" fill="#8b949e" font-size="9" text-anchor="middle">root</text>
+<text x="60" y="410" fill="#06d6a0" font-size="10">green node = a pattern ends here (an output)</text>
+</svg><figcaption>the pattern trie with its failure links (dashed) and the nodes where a pattern ends</figcaption></figure><div class="card"><pre>Aho-Corasick: match a whole dictionary of patterns in one left-to-right scan
+
+  patterns [&#x27;he&#x27;, &#x27;she&#x27;, &#x27;his&#x27;, &#x27;hers&#x27;] in &#x27;ushers&#x27;:
+    &#x27;he&#x27; at [2]
+    &#x27;she&#x27; at [1]
+    &#x27;hers&#x27; at [2]
+  overlapping/nested matches all caught; brute force agrees: True
+
+  scanning a log line for 6 patterns in one pass:
+    &#x27;error&#x27; at [28]
+    &#x27;fail&#x27; at [60]
+    &#x27;warn&#x27; at [15]
+    &#x27;timeout&#x27; at [35]
+    &#x27;critical&#x27; at [50]
+    &#x27;denied&#x27; at [73]
+  total hits: 6, contains a blocked word: True
+
+  The single scan finds every occurrence of every pattern in O(n + matches) time --
+  independent of the pattern count, unlike running one search per pattern. It powers
+  virus scanners, spam filters, and DNA motif search.
+
+  wrote examples/output\aho_corasick.svg</pre></div></div>
   </section>
 
   <section>
