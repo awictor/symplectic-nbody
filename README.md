@@ -287,6 +287,7 @@ ruins a long non-symplectic integration.
 | `src/sorting.py` | Comparison sorts: insertion/merge/quick/heap + binary heap, stability, comparison counts |
 | `src/newton_nd.py` | Newton's method in n-D: Jacobian (analytic/finite-diff), damping, Broyden, LU step |
 | `src/differential_evolution.py` | Differential evolution DE/rand/1/bin: difference-vector mutation, bound reflection |
+| `src/nelder_mead.py` | Nelder-Mead simplex: derivative-free reflect/expand/contract/shrink, restarts |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -565,6 +566,7 @@ ruins a long non-symplectic integration.
 | `examples/sorting_demo.py` | Comparison-count scaling (log-log), stability contrast, heap priority queue |
 | `examples/newton_nd_demo.py` | Quadratic convergence curve, damping rescue, Broyden, 3-variable system |
 | `examples/differential_evolution_demo.py` | Benchmark convergence curves, vs random, F sweep, scaling to 20-D |
+| `examples/nelder_mead_demo.py` | Rosenbrock simplex crawl + convergence curve, restart refinement, eval scaling |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6831,6 +6833,28 @@ box with bound reflection and a random-search baseline, verified that it finds t
 the Sphere, Rastrigin, and Rosenbrock benchmarks, that the best cost is monotone, that it beats
 random search at equal budget, that the solution stays in bounds, and that it scales to 10-20
 dimensions.
+
+## Nelder-Mead: derivative-free optimization by a crawling simplex
+
+Minimize using only function values. `nelder_mead.py`:
+
+```
+$ python examples/nelder_mead_demo.py examples/output
+
+  Sphere / Rosenbrock / Beale: all to ~1e-21 with NO gradient (261 evals for Rosenbrock)
+  Rosenbrock value: 5.2 -> 1.9 -> 0.18 -> 1e-12 as the simplex crawls the valley
+  evals grow with dimension: 2-D 144, 8-D 1143, 16-D 2848
+```
+
+Nelder-Mead needs no Jacobian or gradient -- it maintains a simplex of `n+1` points that tumbles
+downhill using function values alone. Each step reflects the worst vertex through the centroid of
+the rest, then expands into a promising direction, contracts back when it overshoots, or shrinks
+the whole simplex toward the best vertex. It crawls like an amoeba, stretching down valleys and
+through the curved Rosenbrock banana -- the default when all you can do is evaluate the function.
+This module implements the standard algorithm with the classic coefficients, value- and size-based
+convergence, and restarts, verified that it finds the minimum of the Sphere, Rosenbrock, and Beale
+benchmarks from several starts with no gradient, that the best vertex improves monotonically, that
+it even minimizes a non-smooth objective, and that restarting refines the result.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

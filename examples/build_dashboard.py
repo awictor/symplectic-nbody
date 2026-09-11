@@ -329,6 +329,7 @@ def main():
     import sorting_demo
     import newton_nd_demo
     import differential_evolution_demo
+    import nelder_mead_demo
 
     import plot_orbits
 
@@ -627,6 +628,7 @@ def main():
     sorting_txt = run("sorting_demo", sorting_demo.main, True)
     newton_nd_txt = run("newton_nd_demo", newton_nd_demo.main, True)
     differential_evolution_txt = run("differential_evolution_demo", differential_evolution_demo.main, True)
+    nelder_mead_txt = run("nelder_mead_demo", nelder_mead_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4180,6 +4182,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("differential_evolution.svg"), "the best cost of all three benchmarks falling monotonically to their global minima on a log scale")
             + f'<div class="card">{pre(differential_evolution_txt)}</div>'
+            + '</div>'),
+        section(
+            "Nelder-Mead: derivative-free optimization by a crawling simplex",
+            "Newton needs a Jacobian and gradient descent a gradient; Nelder-Mead needs NEITHER. It "
+            "minimizes using only function VALUES, maintaining a simplex of n+1 points (a triangle "
+            "in 2-D, a tetrahedron in 3-D) that tumbles and shrinks downhill -- the workhorse behind "
+            "'just minimize this black box' (SciPy's gradient-free default, MATLAB's fminsearch). "
+            "Each iteration reflects the worst vertex through the centroid of the others and, by how "
+            "good that reflection is, EXPANDS further in a promising direction, CONTRACTS back "
+            "toward the centroid, or SHRINKS the whole simplex toward the best vertex. The simplex "
+            "crawls like an amoeba, stretching down valleys and squeezing through the curved "
+            "Rosenbrock banana. This module implements the standard algorithm with the classic "
+            "coefficients, value- and size-based convergence, and restarts, verified that it finds "
+            "the minimum of the Sphere, Rosenbrock, and Beale benchmarks from several starts with "
+            "no gradient, that the best vertex improves monotonically, that it even minimizes a "
+            "non-smooth objective, and that restarting refines the result.",
+            '<div class="grid">'
+            + svg_card(out("nelder_mead.svg"), "the best-vertex value plunging as the simplex crawls the Rosenbrock valley, on a log scale, using function values alone")
+            + f'<div class="card">{pre(nelder_mead_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

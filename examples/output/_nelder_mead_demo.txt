@@ -1,0 +1,31 @@
+Nelder-Mead: derivative-free minimization by a crawling simplex
+
+  Uses ONLY function values -- no gradient, no Jacobian. A simplex of n+1 points
+  reflects, expands, contracts, and shrinks its way downhill.
+
+      Sphere from [3.0, -2.0]: min 1.35e-21 at (0.0000, 0.0000) [true min at (0,0)]  80 iters, 156 evals
+  Rosenbrock from [-1.2, 1.0]: min 7.65e-22 at (1.0000, 1.0000) [true min at (1,1)]  135 iters, 261 evals
+       Beale from [1.0, 1.0]: min 1.44e-22 at (3.0000, 0.5000) [true min at (3,0.5)]  89 iters, 170 evals
+
+  Rosenbrock best-vertex value as the simplex crawls the banana valley:
+    iter   0: 5.200e+00
+    iter   5: 4.604e+00
+    iter  20: 1.947e+00
+    iter  50: 1.850e-01
+    iter 100: 1.666e-12
+    iter 134: 7.647e-22
+
+  Restarting the simplex refines the result: single run 7.89e-22 -> 3 restarts 7.89e-22
+
+  Cost of no derivatives -- function evaluations grow with dimension (Sphere):
+     2-D:   144 evaluations to converge
+     4-D:   361 evaluations to converge
+     8-D:  1143 evaluations to converge
+    16-D:  2848 evaluations to converge
+
+  The simplex tumbles and stretches like an amoeba: reflecting the worst vertex
+  through the others, expanding into promising directions, contracting when it
+  overshoots, shrinking when stuck. Robust and gradient-free -- the default when all
+  you can do is evaluate the function.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\nelder_mead.svg
