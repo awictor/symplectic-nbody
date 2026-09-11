@@ -1,0 +1,21 @@
+Hidden Markov model: the occasionally-dishonest casino
+
+  260 die rolls; hidden state is fair (0) or loaded (1)
+
+  forward log-likelihood of the rolls: -442.96
+  Viterbi decode accuracy vs the true hidden path: 76.9%
+  fraction of time loaded -- true 0.31, Viterbi 0.13
+
+  forward-backward posterior: 24 rolls flagged loaded with >90% confidence
+
+  Baum-Welch relearns the model from the rolls alone (no hidden states given):
+    learned P(roll a six | loaded state) = 0.67  (true 0.60)
+    learned P(roll a six | fair state)   = 0.20  (true 0.17)
+    learned P(stay loaded)               = 0.76  (true 0.88)
+    trained log-likelihood -434.83  vs true-model -442.96
+
+  Three exact dynamic-programming algorithms over the trellis: forward sums all paths
+  (evaluate), Viterbi maxes over them (decode), Baum-Welch uses forward-backward soft
+  counts to relearn the matrices (EM). All in log space so long sequences never underflow.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\hmm.svg
