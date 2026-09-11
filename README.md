@@ -297,6 +297,7 @@ ruins a long non-symplectic integration.
 | `src/convex_hull.py` | Convex hull (Andrew's monotone chain): area, perimeter, point-in-hull, diameter |
 | `src/closest_pair.py` | Closest pair of points: O(n log n) divide-and-conquer with the strip merge |
 | `src/segment_intersection.py` | Segment intersection: orientation predicate, crossing point, simple-polygon test |
+| `src/point_in_polygon.py` | Point-in-polygon: ray casting + winding number, signed area, centroid, boundary |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -585,6 +586,7 @@ ruins a long non-symplectic integration.
 | `examples/convex_hull_demo.py` | Hull of a scatter with area/perimeter/diameter + outlined-boundary figure |
 | `examples/closest_pair_demo.py` | Closest pair highlighted, D&C-vs-brute scaling, agreement across sizes |
 | `examples/segment_intersection_demo.py` | Crossing/touch/parallel classification + simple-vs-self-crossing polygons |
+| `examples/point_in_polygon_demo.py` | Grid membership on a concave arrow + pentagram ray-vs-winding divergence |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7069,6 +7071,27 @@ point comes from the 2x2 parametric system. From this atom the module builds the
 intersection counting, verified on crossing, touching, collinear-overlap, parallel, and disjoint
 segments, that the intersection point is correct and lies on both segments, that a convex polygon is
 simple while a figure-eight is not, and that a 5x5 grid has exactly 25 crossings.
+
+## Point-in-polygon: ray casting vs winding number
+
+Is a point inside an arbitrary polygon? `point_in_polygon.py`:
+
+```
+$ python examples/point_in_polygon_demo.py examples/output
+
+  concave arrow, 7x7 grid: ray casting and winding number agree on all 49 points
+  pentagram centre (doubly wound): ray/even-odd = OUTSIDE, winding/nonzero = INSIDE (count 2)
+```
+
+Ray casting counts edge crossings of a ray to infinity (odd = inside, even-odd rule); the winding
+number sums the signed turns the polygon makes around the point (nonzero = inside). They agree on
+any simple polygon -- including concave and star shapes a convex side-test can't handle -- but on a
+self-overlapping polygon they split: even-odd cancels a doubly-wrapped region to "outside" while
+winding keeps it "inside". This module implements both with a half-open edge convention (so a ray
+grazing a vertex counts once) and an explicit boundary test, plus signed area (orientation) and
+centroid, verified that the methods agree on convex/concave/star polygons and across a grid, that
+boundary points are detected, and -- the textbook case -- that a pentagram's doubly-wound centre is
+classified differently by the two rules.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

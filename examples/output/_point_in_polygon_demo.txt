@@ -1,0 +1,20 @@
+Point-in-polygon: ray casting vs winding number
+
+  Concave arrow polygon, area 12.0, centroid (2.67, 3.00), orientation CCW
+
+  Over a 7x7 grid: 12/49 points inside; ray casting and winding
+  number agree on all of them (0 disagreements) -- as they must for a
+  simple polygon.
+
+  Self-intersecting PENTAGRAM (a 5-point star drawn in one stroke):
+  its centre pentagon is enclosed by TWO loops, so the two rules disagree --
+    ray casting (even-odd):   centre is OUTSIDE
+    winding number (nonzero): centre is INSIDE
+    winding count at centre:  2 (wrapped twice)
+
+  Ray casting counts edge crossings (odd = in); winding sums the signed turns of the
+  polygon around the point (nonzero = in). They agree on any simple polygon; on a
+  self-overlapping one, even-odd cancels a doubly-wrapped region to 'out' while winding
+  keeps it 'in'. Both handle concavity that a convex side-test cannot.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\point_in_polygon.svg

@@ -339,6 +339,7 @@ def main():
     import convex_hull_demo
     import closest_pair_demo
     import segment_intersection_demo
+    import point_in_polygon_demo
 
     import plot_orbits
 
@@ -647,6 +648,7 @@ def main():
     convex_hull_txt = run("convex_hull_demo", convex_hull_demo.main, True)
     closest_pair_txt = run("closest_pair_demo", closest_pair_demo.main, True)
     segment_intersection_txt = run("segment_intersection_demo", segment_intersection_demo.main, True)
+    point_in_polygon_txt = run("point_in_polygon_demo", point_in_polygon_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4404,6 +4406,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("segment_intersection.svg"), "four polygons, the simple ones outlined green and the self-intersecting figure-eight red")
             + f'<div class="card">{pre(segment_intersection_txt)}</div>'
+            + '</div>'),
+        section(
+            "Point-in-polygon: ray casting vs winding number",
+            "Testing whether a point lies inside a polygon is the workhorse of hit-testing, GIS, and "
+            "rendering. For a convex polygon a side-of-each-edge test suffices, but general "
+            "(concave, star-shaped) polygons need one of two classic methods. RAY CASTING shoots a "
+            "ray to infinity and counts edge crossings -- odd is inside; simple and fast, but blind "
+            "to winding, so it uses the even-odd rule. WINDING NUMBER sums the signed turns the "
+            "polygon makes around the point; nonzero is inside, and it correctly handles "
+            "self-intersecting polygons where parity would disagree. The delicate part is boundary "
+            "and vertex-graze cases: this module uses a half-open edge convention so a ray grazing "
+            "a vertex counts exactly once, plus an explicit on-boundary test, and also gives the "
+            "signed area (orientation) and centroid. Verified that both methods agree on convex, "
+            "concave, and star polygons and across a grid, that boundary points are detected, that "
+            "the signed area's sign tracks vertex orientation, and -- the textbook case -- that on a "
+            "PENTAGRAM's doubly-wound centre the two rules DISAGREE: even-odd says outside, "
+            "nonzero-winding says inside (winding count 2).",
+            '<div class="grid">'
+            + svg_card(out("point_in_polygon.svg"), "a concave arrow with grid points coloured by membership (both rules agree), and a pentagram whose centre the two rules classify differently")
+            + f'<div class="card">{pre(point_in_polygon_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
