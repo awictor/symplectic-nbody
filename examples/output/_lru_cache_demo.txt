@@ -1,0 +1,22 @@
+LRU / LFU caching: which item to evict when memory is full
+
+  LRU trace (capacity 3), MRU-to-LRU order after each op:
+    put A        -> [A]
+    put B        -> [B, A]
+    put C        -> [C, B, A]
+    get A (hit)  -> [A, C, B]
+    put D        -> [D, A, C]
+    get C (hit)  -> [C, D, A]
+    put E        -> [E, C, D]
+    (D's insertion evicted B, the least-recently-used; E evicted A)
+
+  Hit rate by workload (cache holds 10 of 200 keys):
+    uniform random    : LRU  4.5%   LFU  5.0%
+    skewed (hot keys) : LRU 22.7%   LFU 31.5%
+    looping sweep     : LRU  0.0%   LFU  0.0%
+
+  No policy wins everywhere: LFU shines when a few keys are truly hot (it remembers
+  popularity), LRU adapts faster to shifting working sets. Both do get/put in O(1) --
+  LRU via a hash map plus a recency-ordered doubly-linked list, LFU via frequency buckets.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\lru_cache.svg

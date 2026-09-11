@@ -282,6 +282,7 @@ ruins a long non-symplectic integration.
 | `src/particle_swarm.py` | Particle swarm optimization: inertia/cognitive/social velocity, benchmark functions |
 | `src/reed_solomon.py` | Reed-Solomon codes: GF(256), encode, syndrome/Berlekamp-Massey/Chien/Forney decode |
 | `src/mutual_information.py` | Mutual information: joint/conditional entropy, KL divergence, normalized MI, info gain |
+| `src/lru_cache.py` | LRU & LFU caches: O(1) get/put via hash map + linked list / frequency buckets |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -555,6 +556,7 @@ ruins a long non-symplectic integration.
 | `examples/particle_swarm_demo.py` | Sphere/Rastrigin/Rosenbrock solves, swarm scatter + inertia-decay convergence |
 | `examples/reed_solomon_demo.py` | Corrupt bytes in a message and recover it; byte-grid error/repair figure |
 | `examples/mutual_information_demo.py` | MI vs channel noise (matches 1-H(f)), nonlinear catch, feature ranking, KL |
+| `examples/lru_cache_demo.py` | LRU eviction trace + LRU-vs-LFU hit rates across uniform/skewed/looping workloads |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -6707,6 +6709,28 @@ criterion) is exactly `I(feature; label)`. This module estimates entropies and m
 from samples or a joint distribution with KL divergence and normalized MI, verified that
 independent variables have zero MI, a copy has maximal `I = H`, the entropy identities hold, KL is
 nonnegative and zero only for equal distributions, and against hand-computed values.
+
+## LRU & LFU caches: O(1) eviction policies
+
+Which item to evict when the cache is full. `lru_cache.py`:
+
+```
+$ python examples/lru_cache_demo.py examples/output
+
+  LRU trace (cap 3): put A,B,C; get A; put D (evicts B); put E (evicts A)
+  hit rate by workload:  uniform LRU 4.5% LFU 5.0%
+                         skewed  LRU 22.7% LFU 31.5%  (LFU wins on hot keys)
+                         looping LRU 0.0% LFU 0.0%   (classic LRU pathology)
+```
+
+LRU evicts the item untouched longest (temporal locality); LFU the least-accessed (popularity). The
+craft is O(1): LRU uses a hash map for lookup plus a recency-ordered doubly-linked list so
+touch-and-promote and tail-eviction are constant time; LFU groups keys into frequency buckets so
+increments and min-frequency eviction are O(1) amortized. This module implements both with
+hit/miss statistics, verified that LRU evicts in true least-recently-used order (checked against a
+brute-force reference over 60 random workloads), that touching an item spares it, that LFU evicts
+the least-frequent breaking ties by recency, that capacity is never exceeded, and that a skewed
+hot-key workload gives LFU a higher hit rate.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

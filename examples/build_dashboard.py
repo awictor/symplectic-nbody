@@ -324,6 +324,7 @@ def main():
     import particle_swarm_demo
     import reed_solomon_demo
     import mutual_information_demo
+    import lru_cache_demo
 
     import plot_orbits
 
@@ -617,6 +618,7 @@ def main():
     particle_swarm_txt = run("particle_swarm_demo", particle_swarm_demo.main, True)
     reed_solomon_txt = run("reed_solomon_demo", reed_solomon_demo.main, True)
     mutual_information_txt = run("mutual_information_demo", mutual_information_demo.main, True)
+    lru_cache_txt = run("lru_cache_demo", lru_cache_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4069,6 +4071,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("mutual_information.svg"), "mutual information falling from 1 bit to 0 as a binary channel's flip probability rises, matching the theoretical 1 - H(f) curve")
             + f'<div class="card">{pre(mutual_information_txt)}</div>'
+            + '</div>'),
+        section(
+            "LRU & LFU caches: O(1) eviction policies",
+            "A cache holds a fixed number of items and must EVICT one when full; which one decides "
+            "the hit rate. LRU (Least Recently Used) evicts the item untouched longest, betting on "
+            "temporal locality -- the default in CPU caches, page tables, and web caches. LFU "
+            "(Least Frequently Used) evicts the least-accessed, betting popularity persists. The "
+            "craft is doing it in O(1): a naive LRU scans for the oldest item on every eviction, "
+            "but a HASH MAP (key -> node) for lookup plus a DOUBLY-LINKED LIST ordered by recency "
+            "makes touch-and-promote and tail-eviction O(1); LFU groups keys into frequency buckets "
+            "so increments and min-frequency eviction are O(1) amortized. This module implements "
+            "both with hit/miss statistics, verified that LRU evicts in true least-recently-used "
+            "order (checked against a brute-force reference over 60 random workloads), that "
+            "touching an item spares it, that LFU evicts the least-frequent breaking ties by "
+            "recency, that capacity is never exceeded, and that a skewed hot-key workload gives LFU "
+            "a higher hit rate than LRU.",
+            '<div class="grid">'
+            + svg_card(out("lru_cache.svg"), "LRU and LFU hit rates side by side across uniform, skewed, and looping workloads, showing no single policy wins everywhere")
+            + f'<div class="card">{pre(lru_cache_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
