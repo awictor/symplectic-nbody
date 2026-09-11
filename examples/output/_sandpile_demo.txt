@@ -1,0 +1,17 @@
+Abelian sandpile: pile topples at 4 grains, sending one to each neighbour
+
+  Relaxing a central stack (no parameter tuning -> self-organized pattern):
+      100 grains  ->     225 topples, 100 left on grid
+      500 grains  ->    4702 topples, 500 left on grid
+     1000 grains  ->   18182 topples, 872 left on grid
+
+  Avalanche statistics from 8000 random drops (20x20):
+    avalanches with topples: 1613 of 4000
+    mean size 16.8, max size 528
+    (mostly small, with rare system-spanning cascades -- a power-law tail)
+
+  With no tuning, the pile drives itself to a critical state where one grain can
+  trigger an avalanche of any size, scale-free like earthquakes, forest fires, and
+  neuronal cascades. The founding model of self-organized criticality.
+
+  wrote examples/output\sandpile.svg

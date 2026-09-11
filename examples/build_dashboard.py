@@ -245,6 +245,7 @@ def main():
     import van_der_pol_demo
     import duffing_demo
     import kuramoto_demo
+    import sandpile_demo
 
     import plot_orbits
 
@@ -459,6 +460,7 @@ def main():
     van_der_pol_txt = run("van_der_pol_demo", van_der_pol_demo.main, True)
     duffing_txt = run("duffing_demo", duffing_demo.main, True)
     kuramoto_txt = run("kuramoto_demo", kuramoto_demo.main, True)
+    sandpile_txt = run("sandpile_demo", sandpile_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -2580,6 +2582,19 @@ def main():
             '<div class="grid">'
             + svg_card(out("kuramoto.svg"), "the synchronization transition r(K), and phase circles scattered vs clustered")
             + f'<div class="card">{pre(kuramoto_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Abelian sandpile: self-organized criticality",
+            "Drop grains one at a time; wherever a pile reaches 4 it topples, one grain to each "
+            "neighbour, and a single grain can set off an avalanche of any size. With no "
+            "parameter tuning the pile drives itself to a critical state where avalanche sizes "
+            "follow a power law -- mostly tiny, rarely system-spanning. The toppling is Abelian "
+            "(the final state is independent of relaxation order). It is the founding model of "
+            "self-organized criticality, a candidate for the scale-free statistics of "
+            "earthquakes, forest fires, and neuronal avalanches.",
+            '<div class="grid">'
+            + svg_card(out("sandpile.svg"), "a relaxed self-similar sandpile pattern, and the heavy-tailed avalanche-size distribution")
+            + f'<div class="card">{pre(sandpile_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

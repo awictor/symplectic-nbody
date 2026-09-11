@@ -203,6 +203,7 @@ ruins a long non-symplectic integration.
 | `src/van_der_pol.py` | Van der Pol oscillator: limit cycle, amplitude, relaxation period |
 | `src/duffing.py` | Duffing oscillator: double-well potential, regimes, resonance backbone |
 | `src/kuramoto.py` | Kuramoto model: order parameter, critical coupling, sync transition |
+| `src/sandpile.py` | Abelian sandpile: toppling dynamics, avalanches, self-organized criticality |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -397,6 +398,7 @@ ruins a long non-symplectic integration.
 | `examples/van_der_pol_demo.py` | Amplitude/period table + the phase-portrait & waveform figure |
 | `examples/duffing_demo.py` | Regime/backbone table + the double-well & resonance-backbone figure |
 | `examples/kuramoto_demo.py` | Synchrony-vs-coupling table + the r(K) transition & phase-circle figure |
+| `examples/sandpile_demo.py` | Topple/avalanche table + the relaxed-pattern & size-distribution figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -4692,6 +4694,28 @@ pacemaker cells, applause locking into rhythm, power-grid generators. The tests 
 for aligned and `r=0` for evenly spread / antiphase, the natural-frequency drift at zero
 coupling, the Lorentzian and Gaussian `K_c`, and a simulation going from incoherent (weak `K`)
 to synchronized (strong `K`).
+
+## The Abelian sandpile: self-organized criticality
+
+A pile of sand tunes itself to the edge of chaos. `sandpile.py`:
+
+```
+$ python examples/sandpile_demo.py examples/output
+
+  central stack: 1000 grains -> 18182 topples
+  8000 random drops: mean avalanche 16.8, max 528 (heavy-tailed)
+```
+
+Grains drop one at a time; a site with 4 grains topples, sending one to each of its 4
+neighbours, and grains falling off the edge are lost. A single grain can trigger a chain
+reaction from nothing to a system-spanning cascade. With no parameter tuning the pile drives
+itself to a critical state where avalanche sizes follow a power law -- the founding model of
+**self-organized criticality** (Bak-Tang-Wiesenfeld, 1987), a candidate for the scale-free
+statistics of earthquakes, forest fires, and neuronal avalanches. The toppling is Abelian: the
+final stable configuration and total topple count are independent of the order in which
+unstable sites relax. The tests verify the single-topple rule, grain conservation (minus edge
+loss), the Abelian order-independence, a symmetric relaxed central stack, and heavy-tailed
+avalanche sizes (max far above the mean).
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
