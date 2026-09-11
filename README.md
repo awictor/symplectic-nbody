@@ -324,6 +324,7 @@ ruins a long non-symplectic integration.
 | `src/treap.py` | Treap: randomized balanced BST with split/merge and order statistics (select/rank) |
 | `src/splay_tree.py` | Splay tree: self-adjusting BST with the working-set property (hot keys near root) |
 | `src/van_emde_boas.py` | Van Emde Boas tree: integer set with O(log log u) successor/predecessor |
+| `src/sparse_table.py` | Sparse table (O(1) range min/max/gcd) + binary-lifting LCA with tree distance |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -639,6 +640,7 @@ ruins a long non-symplectic integration.
 | `examples/treap_demo.py` | Order statistics + split/merge + height near 2log2(n) even under sorted insertion |
 | `examples/splay_tree_demo.py` | Working-set property: average access depth sinking below log2(n) as access skews |
 | `examples/van_emde_boas_demo.py` | O(log log u) recursion depth staying flat as the universe explodes vs a BST's log u |
+| `examples/sparse_table_demo.py` | Range-minimum query on an array + lowest-common-ancestor on a tree |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7708,6 +7710,26 @@ node's min/max directly and not recursing on the min caps the work at one recurs
 T(u) = T(sqrt u) + O(1) = O(log log u). This module implements insert/delete/membership/min/max/
 successor/predecessor, verified against a reference sorted set over a 4000-operation stream with
 successor and predecessor matching a linear scan at every point in the universe.
+
+## Sparse tables and binary lifting: O(1) range minimum, O(log n) LCA
+
+Constant-time range minimum on a static array, plus lowest common ancestor on a tree. `sparse_table.py`:
+
+```
+$ python examples/sparse_table_demo.py examples/output
+
+  min[3,9) = 1, max[3,9) = 9   (each query is two table lookups)
+  LCA(7, 8) = 0, distance = 6   (binary lifting on a 9-node tree)
+  LCA(3, 4) = 1, distance = 2
+```
+
+A sparse table works because min is idempotent: any range is covered by two overlapping power-of-two
+blocks, so a query is min(table[l][k], table[r-2^k][k]) in O(1) after O(n log n) preprocessing. The
+same doubling gives binary-lifting LCA: store each node's 2^k-th ancestor, lift the deeper node to
+the other's depth, then jump both up by shrinking powers until their parents meet -- O(log n), with
+tree distance for free. This module implements a generic sparse table (min/max/gcd), RMQ, and LCA,
+verified against brute force: the table matches a scan over every subrange, and LCA/distance match a
+naive ancestor walk and BFS over many random trees.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

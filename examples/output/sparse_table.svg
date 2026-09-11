@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="470" viewBox="0 0 760 470" font-family="monospace">
+<rect width="760" height="470" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="18">Sparse table RMQ (top) and binary-lifting LCA (bottom)</text>
+<text x="20" y="55" fill="#8b949e" font-size="12">array with min[3,9) = 1 highlighted (green range, yellow minimum)</text>
+<rect x="40.0" y="140.0" width="53.7" height="60.0" fill="#30363d"/>
+<text x="68.3" y="214.0" fill="#8b949e" font-size="10" text-anchor="middle">5</text>
+<rect x="96.7" y="170.0" width="53.7" height="30.0" fill="#30363d"/>
+<text x="125.0" y="214.0" fill="#8b949e" font-size="10" text-anchor="middle">2</text>
+<rect x="153.3" y="110.0" width="53.7" height="90.0" fill="#30363d"/>
+<text x="181.7" y="214.0" fill="#8b949e" font-size="10" text-anchor="middle">8</text>
+<rect x="210.0" y="180.0" width="53.7" height="20.0" fill="#ffd43b"/>
+<text x="238.3" y="214.0" fill="#8b949e" font-size="10" text-anchor="middle">1</text>
+<rect x="266.7" y="100.0" width="53.7" height="100.0" fill="#06d6a0"/>
+<text x="295.0" y="214.0" fill="#8b949e" font-size="10" text-anchor="middle">9</text>
+<rect x="323.3" y="160.0" width="53.7" height="40.0" fill="#06d6a0"/>
+<text x="351.7" y="214.0" fill="#8b949e" font-size="10" text-anchor="middle">3</text>
+<rect x="380.0" y="120.0" width="53.7" height="80.0" fill="#06d6a0"/>
+<text x="408.3" y="214.0" fill="#8b949e" font-size="10" text-anchor="middle">7</text>
+<rect x="436.7" y="150.0" width="53.7" height="50.0" fill="#06d6a0"/>
+<text x="465.0" y="214.0" fill="#8b949e" font-size="10" text-anchor="middle">4</text>
+<rect x="493.3" y="130.0" width="53.7" height="70.0" fill="#06d6a0"/>
+<text x="521.7" y="214.0" fill="#8b949e" font-size="10" text-anchor="middle">6</text>
+<rect x="550.0" y="190.0" width="53.7" height="10.0" fill="#30363d"/>
+<text x="578.3" y="214.0" fill="#8b949e" font-size="10" text-anchor="middle">0</text>
+<rect x="606.7" y="80.0" width="53.7" height="120.0" fill="#30363d"/>
+<text x="635.0" y="214.0" fill="#8b949e" font-size="10" text-anchor="middle">11</text>
+<rect x="663.3" y="170.0" width="53.7" height="30.0" fill="#30363d"/>
+<text x="691.7" y="214.0" fill="#8b949e" font-size="10" text-anchor="middle">2</text>
+<text x="20" y="265" fill="#8b949e" font-size="12">tree: LCA(7,8) = 0 (red), query nodes in blue</text>
+<line x1="380.0" y1="280.0" x2="190.0" y2="320.0" stroke="#484f58" stroke-width="1.5"/>
+<line x1="380.0" y1="280.0" x2="570.0" y2="320.0" stroke="#484f58" stroke-width="1.5"/>
+<line x1="190.0" y1="320.0" x2="95.0" y2="360.0" stroke="#484f58" stroke-width="1.5"/>
+<line x1="190.0" y1="320.0" x2="285.0" y2="360.0" stroke="#484f58" stroke-width="1.5"/>
+<line x1="570.0" y1="320.0" x2="475.0" y2="360.0" stroke="#484f58" stroke-width="1.5"/>
+<line x1="570.0" y1="320.0" x2="665.0" y2="360.0" stroke="#484f58" stroke-width="1.5"/>
+<line x1="95.0" y1="360.0" x2="190.0" y2="400.0" stroke="#484f58" stroke-width="1.5"/>
+<line x1="475.0" y1="360.0" x2="570.0" y2="400.0" stroke="#484f58" stroke-width="1.5"/>
+<circle cx="380.0" cy="280.0" r="15" fill="#ff6b6b" stroke="#0d1117" stroke-width="2"/>
+<text x="380.0" y="285.0" fill="#e6edf3" font-size="13" text-anchor="middle" font-weight="bold">0</text>
+<circle cx="190.0" cy="320.0" r="15" fill="#30363d" stroke="#0d1117" stroke-width="2"/>
+<text x="190.0" y="325.0" fill="#e6edf3" font-size="13" text-anchor="middle" font-weight="bold">1</text>
+<circle cx="570.0" cy="320.0" r="15" fill="#30363d" stroke="#0d1117" stroke-width="2"/>
+<text x="570.0" y="325.0" fill="#e6edf3" font-size="13" text-anchor="middle" font-weight="bold">2</text>
+<circle cx="95.0" cy="360.0" r="15" fill="#30363d" stroke="#0d1117" stroke-width="2"/>
+<text x="95.0" y="365.0" fill="#e6edf3" font-size="13" text-anchor="middle" font-weight="bold">3</text>
+<circle cx="285.0" cy="360.0" r="15" fill="#30363d" stroke="#0d1117" stroke-width="2"/>
+<text x="285.0" y="365.0" fill="#e6edf3" font-size="13" text-anchor="middle" font-weight="bold">4</text>
+<circle cx="475.0" cy="360.0" r="15" fill="#30363d" stroke="#0d1117" stroke-width="2"/>
+<text x="475.0" y="365.0" fill="#e6edf3" font-size="13" text-anchor="middle" font-weight="bold">5</text>
+<circle cx="665.0" cy="360.0" r="15" fill="#30363d" stroke="#0d1117" stroke-width="2"/>
+<text x="665.0" y="365.0" fill="#e6edf3" font-size="13" text-anchor="middle" font-weight="bold">6</text>
+<circle cx="190.0" cy="400.0" r="15" fill="#4dabf7" stroke="#0d1117" stroke-width="2"/>
+<text x="190.0" y="405.0" fill="#e6edf3" font-size="13" text-anchor="middle" font-weight="bold">7</text>
+<circle cx="570.0" cy="400.0" r="15" fill="#4dabf7" stroke="#0d1117" stroke-width="2"/>
+<text x="570.0" y="405.0" fill="#e6edf3" font-size="13" text-anchor="middle" font-weight="bold">8</text>
+</svg>

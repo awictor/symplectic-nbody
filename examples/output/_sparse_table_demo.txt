@@ -1,0 +1,23 @@
+Sparse table: O(1) range minimum, and binary-lifting LCA
+
+  array: [5, 2, 8, 1, 9, 3, 7, 4, 6, 0, 11, 2]
+  Range minimum queries (each answered by exactly two table lookups):
+    min[1,5) = 1   (brute 1)
+    min[3,9) = 1   (brute 1)
+    min[0,12) = 0   (brute 0)
+    min[6,8) = 4   (brute 4)
+
+  Same table idea for max: max[3,9) = 9   (brute 9)
+
+  Lowest common ancestor (binary lifting), on a 9-node tree:
+    LCA(7, 4) = 1, distance = 3
+    LCA(7, 8) = 0, distance = 6
+    LCA(3, 4) = 1, distance = 2
+    LCA(8, 6) = 2, distance = 3
+
+  RMQ works because min is idempotent: any range is covered by two overlapping
+  power-of-two blocks, so a query is min(table[l][k], table[r-2^k][k]) -- always O(1).
+  LCA lifts the deeper node to the other's depth, then both jump up by shrinking
+  powers of two until their parents meet -- O(log n) using the 2^k-ancestor table.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\sparse_table.svg

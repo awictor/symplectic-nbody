@@ -366,6 +366,7 @@ def main():
     import treap_demo
     import splay_tree_demo
     import van_emde_boas_demo
+    import sparse_table_demo
 
     import plot_orbits
 
@@ -701,6 +702,7 @@ def main():
     treap_txt = run("treap_demo", treap_demo.main, True)
     splay_tree_txt = run("splay_tree_demo", splay_tree_demo.main, True)
     van_emde_boas_txt = run("van_emde_boas_demo", van_emde_boas_demo.main, True)
+    sparse_table_txt = run("sparse_table_demo", sparse_table_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5058,6 +5060,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("van_emde_boas.svg"), "the vEB per-operation recursion depth (blue, ~log log u) staying almost flat as the universe grows, against a BST's depth (red, ~log u) climbing linearly in the exponent")
             + f'<div class="card">{pre(van_emde_boas_txt)}</div>'
+            + '</div>'),
+        section(
+            "Sparse tables and binary lifting: O(1) range minimum, O(log n) LCA",
+            "Some queries deserve constant time. The RANGE MINIMUM QUERY -- the minimum of any "
+            "subrange of a fixed array -- is answered by a SPARSE TABLE in O(1) after O(n log n) "
+            "preprocessing, exploiting that min is IDEMPOTENT: overlapping ranges combine without "
+            "double-counting, so any interval is covered by just TWO precomputed power-of-two blocks. "
+            "The table stores the minimum of every block [i, i+2^k); a query takes the length, finds "
+            "the largest fitting power 2^k, and returns min(table[l][k], table[r-2^k][k]) -- two "
+            "lookups, always. The same doubling idea on trees gives BINARY LIFTING for the LOWEST "
+            "COMMON ANCESTOR: store each node's 2^k-th ancestor, then to find LCA(u,v) lift the "
+            "deeper node to the other's depth and lift both by the largest jumps that keep them "
+            "apart until their parents coincide -- O(log n) per query, which also yields the tree "
+            "distance for free. These are the standard tools for static range and tree-ancestor "
+            "queries in competitive programming, compilers, and phylogenetics. This module implements "
+            "a generic sparse table for any idempotent operation (min, max, gcd), a specialized RMQ, "
+            "and a binary-lifting LCA with depth and distance, verified against brute force: the "
+            "sparse table matches a direct scan over every subrange, the LCA matches a naive "
+            "ancestor-walk for every pair of nodes on many random trees, and the tree distance "
+            "matches a BFS shortest path.",
+            '<div class="grid">'
+            + svg_card(out("sparse_table.svg"), "top: an array with a range-minimum query, the range in green and its minimum in yellow; bottom: a tree with two query nodes in blue and their lowest common ancestor in red")
+            + f'<div class="card">{pre(sparse_table_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
