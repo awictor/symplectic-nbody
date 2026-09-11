@@ -230,6 +230,7 @@ ruins a long non-symplectic integration.
 | `src/fenwick.py` | Fenwick tree: O(log n) prefix sums & point updates, cumulative select |
 | `src/union_find.py` | Union-Find: path compression + union by rank, components, Kruskal MST |
 | `src/dijkstra.py` | Dijkstra shortest paths: from-scratch min-heap, path reconstruction, Bellman-Ford check |
+| `src/kdtree.py` | k-d tree: nearest / k-nearest / radius search, brute-force verified in 2D & 3D |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -451,6 +452,7 @@ ruins a long non-symplectic integration.
 | `examples/fenwick_demo.py` | Prefix/range/select walkthrough + the coverage-range & cost figure |
 | `examples/union_find_demo.py` | Component-merge trace + Kruskal MST + the MST-edge & merge figure |
 | `examples/dijkstra_demo.py` | Distances vs Bellman-Ford + a grid maze + the distance-flood & route figure |
+| `examples/kdtree_demo.py` | Nearest/k-NN/radius vs brute force + the point-cloud query figure |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -5406,6 +5408,29 @@ reconstruction), reconstructs the actual path, and includes a from-scratch binar
 heap sorts, the classic shortest path, unreachable nodes, directed one-way edges, and agreement
 with Bellman-Ford across random graphs. Add a goal heuristic and it becomes A*, the workhorse of
 map and game routing -- shown here solving a grid maze.
+
+## k-d trees: fast nearest-neighbour search in space
+
+Which point is closest? in O(log n), not O(n). `kdtree.py`:
+
+```
+$ python examples/kdtree_demo.py examples/output
+
+  400 points in 2D, tree height 9 (~log2 n = 8.6)
+  nearest to (50.0, 50.0): 49.2,47.8  (brute force agrees: True)
+  5 nearest agree with brute force: True
+  within radius 15: 32 points  (brute force agrees: True)
+```
+
+A k-d tree organizes points by recursive median splitting -- the root splits on x, the next
+level on y, then z, cycling axes -- so a nearest-neighbour query descends to its leaf and then
+unwinds, crossing a splitting plane into the far subtree only when that hyper-rectangle could
+hold something nearer. Whole branches are pruned, giving `O(log n)` typical queries; the same
+descent-and-prune serves k-nearest-neighbours and radius search. This module builds a balanced
+tree by recursive median splitting and does exact nearest, k-nearest, and radius queries, each
+cross-checked against a brute-force scan in 2D and 3D (including duplicate points and
+query-on-a-point edge cases). It powers k-NN classification, particle neighbour lists, and
+map/geographic search.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

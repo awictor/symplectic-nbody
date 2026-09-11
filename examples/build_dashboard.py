@@ -272,6 +272,7 @@ def main():
     import fenwick_demo
     import union_find_demo
     import dijkstra_demo
+    import kdtree_demo
 
     import plot_orbits
 
@@ -513,6 +514,7 @@ def main():
     fenwick_txt = run("fenwick_demo", fenwick_demo.main, True)
     union_find_txt = run("union_find_demo", union_find_demo.main, True)
     dijkstra_txt = run("dijkstra_demo", dijkstra_demo.main, True)
+    kdtree_txt = run("kdtree_demo", kdtree_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -3038,6 +3040,22 @@ def main():
             '<div class="grid">'
             + svg_card(out("dijkstra.svg"), "the distance flood from the source colouring the grid, with the shortest S-to-G route picked out")
             + f'<div class="card">{pre(dijkstra_txt)}</div>'
+            + '</div>'),
+        section(
+            "k-d trees: fast nearest-neighbour search in space",
+            "\"Which point is closest to this query?\" is asked constantly in graphics, "
+            "robotics, machine learning, and geographic search, and scanning every point is O(n). "
+            "A k-d tree organizes the points by recursive median splitting -- the root splits on "
+            "x, the next level on y, then z, cycling axes -- so a query descends to its leaf and "
+            "then unwinds, only crossing a splitting plane into the far subtree when that "
+            "hyper-rectangle could hold something nearer. Whole branches are pruned, giving "
+            "O(log n) typical queries. The same descent-and-prune serves k-nearest-neighbours "
+            "and radius queries. This module builds a balanced tree and does exact nearest, "
+            "k-nearest, and radius search, each cross-checked against a brute-force scan in 2D "
+            "and 3D. It powers k-NN classification, particle neighbour lists, and map search.",
+            '<div class="grid">'
+            + svg_card(out("kdtree.svg"), "a point cloud with the query, its nearest neighbour, its five nearest, and a radius query circle")
+            + f'<div class="card">{pre(kdtree_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
