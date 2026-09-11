@@ -353,6 +353,7 @@ def main():
     import quadtree_demo
     import max_flow_demo
     import de_bruijn_demo
+    import rotating_calipers_demo
 
     import plot_orbits
 
@@ -675,6 +676,7 @@ def main():
     quadtree_txt = run("quadtree_demo", quadtree_demo.main, True)
     max_flow_txt = run("max_flow_demo", max_flow_demo.main, True)
     de_bruijn_txt = run("de_bruijn_demo", de_bruijn_demo.main, True)
+    rotating_calipers_txt = run("rotating_calipers_demo", rotating_calipers_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -4723,6 +4725,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("de_bruijn.svg"), "the De Bruijn graph for B(2,3): four two-bit vertices, edges labelled by three-bit strings; an Eulerian circuit that uses every edge once reads off the sequence")
             + f'<div class="card">{pre(de_bruijn_txt)}</div>'
+            + '</div>'),
+        section(
+            "Rotating calipers: diameter, width, and the minimum-area bounding box",
+            "Once a point set's CONVEX HULL is known, a whole family of extremal measurements can be "
+            "read off in a single sweep instead of the naive all-pairs comparison. The ROTATING "
+            "CALIPERS technique imagines parallel lines pinching the polygon and rotating in lockstep "
+            "around it; the vertices they touch enumerate exactly the ANTIPODAL PAIRS -- pairs with "
+            "parallel supporting lines -- and since the farthest pair (the DIAMETER) is always "
+            "antipodal, one rotation finds it in O(h). The same structure yields the WIDTH (the "
+            "thinnest slab of parallel lines that still contains everything) and, by the "
+            "Freeman-Shapira theorem, the MINIMUM-AREA enclosing RECTANGLE, which must have one side "
+            "flush with a hull edge -- so trying each edge orientation and measuring the extent "
+            "parallel and perpendicular to it gives the optimum. These power collision bounding "
+            "volumes, shape metrology, and part orientation for packing and machining. This module "
+            "computes the hull (monotone chain), the diameter, the width, and the minimum-area (and "
+            "-perimeter) rectangle with its corners, verified against brute force: the calipers "
+            "diameter equals the O(n^2) farthest pair, the width equals the brute minimum over hull "
+            "directions, and the minimum rectangle contains every point and never beats the "
+            "axis-aligned box -- across many random and structured sets, with exact values on "
+            "squares and triangles.",
+            '<div class="grid">'
+            + svg_card(out("rotating_calipers.svg"), "a point cloud with its convex hull (green), the diameter as a dashed red farthest-pair line, and the minimum-area bounding rectangle (purple) rotated to hug the cloud")
+            + f'<div class="card">{pre(rotating_calipers_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

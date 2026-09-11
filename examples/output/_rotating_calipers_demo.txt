@@ -1,0 +1,15 @@
+Rotating calipers: diameter, width, and minimum-area bounding box
+
+  40 points, hull has 8 vertices
+  diameter (farthest pair): 277.31
+    between (46.4, 58.3) and (276.9, 212.4)
+  width (thinnest slab): 66.70
+  minimum-area bounding box:
+    area 18454.9, 276.7 x 66.7, perimeter 686.7
+    axis-aligned box area 37895.0 -> the rotated box saves 51.3%
+
+  A single rotation of the calipers enumerates every antipodal pair (the diameter is
+  always among them), the thinnest slab gives the width, and the minimum-area rectangle
+  must have a side flush with a hull edge -- so all three fall out of one hull sweep.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\rotating_calipers.svg

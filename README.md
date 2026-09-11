@@ -311,6 +311,7 @@ ruins a long non-symplectic integration.
 | `src/quadtree.py` | Point-region quadtree: rectangle/circle range queries, nearest neighbour |
 | `src/max_flow.py` | Maximum flow (Edmonds-Karp), min-cut theorem, bipartite matching by reduction |
 | `src/de_bruijn.py` | De Bruijn sequences B(k,n) via Eulerian circuits (Hierholzer); general Eulerian path finder |
+| `src/rotating_calipers.py` | Rotating calipers: diameter, width, minimum-area bounding rectangle from the hull |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -613,6 +614,7 @@ ruins a long non-symplectic integration.
 | `examples/quadtree_demo.py` | Point cloud with adaptive cell boundaries + rectangle/circle/nearest queries |
 | `examples/max_flow_demo.py` | Six-node flow network with capacities, min-cut edges highlighted, bipartite matching |
 | `examples/de_bruijn_demo.py` | B(2,3)/B(2,4)/PIN-pad B(10,4) sequences + the B(2,3) De Bruijn graph with Eulerian circuit |
+| `examples/rotating_calipers_demo.py` | Point cloud with hull, diameter, and minimum-area rectangle (rotated box beats the AABB) |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7405,6 +7407,29 @@ any parameters, offers the greedy 'Ford' construction, and a general Eulerian pa
 directed multigraphs, verified that every window appears exactly once, that lengths are exactly k**n,
 that B(2,3) matches the classic example, that the greedy sequence is valid, and that the Eulerian
 finder recovers a circuit using each edge once and rejects graphs where none exists.
+
+## Rotating calipers: diameter, width, and the minimum-area bounding box
+
+Pinch the convex hull between rotating parallel lines; extremal measurements fall out. `rotating_calipers.py`:
+
+```
+$ python examples/rotating_calipers_demo.py examples/output
+
+  40 points, hull has 8 vertices
+  diameter (farthest pair): 277.31
+  width (thinnest slab): 66.70
+  minimum-area bounding box: area 18455, rotated box saves 51.3% vs axis-aligned
+```
+
+As a pair of parallel supporting lines rotates around the hull, the vertices they touch enumerate
+every antipodal pair; the diameter is always among them, so one O(h) sweep finds the farthest pair.
+The thinnest slab of parallel lines gives the width, and by the Freeman-Shapira theorem the
+minimum-area enclosing rectangle has a side flush with a hull edge, so trying each edge orientation
+yields it. This module computes the hull, diameter, width, and minimum-area/perimeter rectangle,
+verified against brute force: the calipers diameter equals the O(n^2) farthest pair, the width equals
+the brute minimum over hull directions, and the minimum rectangle contains every point and never
+loses to the axis-aligned box, across many random and structured sets plus exact values on squares
+and triangles.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
