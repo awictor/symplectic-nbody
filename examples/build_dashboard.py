@@ -399,6 +399,7 @@ def main():
     import lis_demo
     import continued_fraction_demo
     import crt_demo
+    import tonelli_shanks_demo
 
     import plot_orbits
 
@@ -767,6 +768,7 @@ def main():
     lis_txt = run("lis_demo", lis_demo.main, True)
     continued_fraction_txt = run("continued_fraction_demo", continued_fraction_demo.main, True)
     crt_txt = run("crt_demo", crt_demo.main, True)
+    tonelli_shanks_txt = run("tonelli_shanks_demo", tonelli_shanks_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5877,6 +5879,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("crt.svg"), "the Sunzi puzzle visualized: each coloured row shades the numbers satisfying one congruence, and the red line marks x=23, the single value where all three stripes overlap")
             + f'<div class="card">{pre(crt_txt)}</div>'
+            + '</div>'),
+        section(
+            "Tonelli-Shanks: square roots modulo a prime",
+            "Solving x^2 = n (mod p) -- a MODULAR SQUARE ROOT -- is basic to number theory and "
+            "cryptography: it decompresses elliptic-curve points (recovering y from x), appears in "
+            "quadratic-sieve factoring and primality proving, and underlies the Rabin cryptosystem. "
+            "There is no general formula, but the TONELLI-SHANKS algorithm finds a root in expected "
+            "polynomial time whenever one exists. First, EULER'S CRITERION decides existence: n is a "
+            "QUADRATIC RESIDUE mod p iff n^((p-1)/2) = 1, the LEGENDRE SYMBOL. If it is, and p = 3 "
+            "mod 4, the root is simply n^((p+1)/4); otherwise Tonelli-Shanks writes p-1 = q*2^s, "
+            "finds a quadratic non-residue, and iteratively squares and corrects a running candidate "
+            "-- each step halving the order of the error -- until it squares to n. The two roots are "
+            "r and p-r. This module implements the Legendre symbol, a residue test, and the modular "
+            "square root, verified against brute force: the returned root squares back to n, a root "
+            "is returned iff n is a genuine square (checked against the actual set of squares for "
+            "every residue of 40 primes), both roots are r and p-r, the Legendre symbol matches a "
+            "residue count with exactly (p-1)/2 residues per prime, and both the p = 3 mod 4 fast "
+            "path and the general 1 mod 4 path give correct roots, up to million-scale primes.",
+            '<div class="grid">'
+            + svg_card(out("tonelli_shanks.svg"), "top: which values mod 37 are quadratic residues (green) versus non-residues (gray); below: the square map x -> x^2 mod 37, where each residue is hit by exactly two x -- the two roots Tonelli-Shanks recovers")
+            + f'<div class="card">{pre(tonelli_shanks_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

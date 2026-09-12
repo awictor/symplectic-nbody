@@ -357,6 +357,7 @@ ruins a long non-symplectic integration.
 | `src/lis.py` | Longest increasing subsequence via patience sorting (O(n log n), with witness) |
 | `src/continued_fraction.py` | Continued-fraction expansion, convergents, and best rational approximation |
 | `src/crt.py` | Chinese Remainder Theorem (coprime + general) with extended Euclid and mod inverse |
+| `src/tonelli_shanks.py` | Modular square root (Tonelli-Shanks) + Legendre symbol / residue test |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -705,6 +706,7 @@ ruins a long non-symplectic integration.
 | `examples/lis_demo.py` | The LIS highlighted on a bar chart + the patience-sorting piles |
 | `examples/continued_fraction_demo.py` | pi/e/phi/sqrt2 expansions + convergent error vs denominator |
 | `examples/crt_demo.py` | Sunzi's puzzle + reconstructing a secret from residues + non-coprime handling |
+| `examples/tonelli_shanks_demo.py` | Modular square roots + the residue split + EC point decompression |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8413,6 +8415,25 @@ congruences and detects contradictions. This module implements extended Euclid, 
 both CRTs, verified against brute force that the solution satisfies every congruence and is the
 smallest non-negative one, the Bezout identity is correct over 300 random pairs, and non-coprime
 systems are solved when consistent and rejected when not.
+
+## Tonelli-Shanks: square roots modulo a prime
+
+Solve x^2 = n (mod p) -- the operation that decompresses elliptic-curve points. `tonelli_shanks.py`:
+
+```
+$ python examples/tonelli_shanks_demo.py examples/output
+
+  sqrt(10) mod 13 = (6, 7); sqrt(2) mod 7 = (3, 4); sqrt(5) mod 7 = none (non-residue)
+  sqrt(123456) mod 1000033 = (450092, 549941)
+  mod 13: 6 residues, 6 non-residues (Legendre symbol splits them)
+```
+
+Euler's criterion (the Legendre symbol n^((p-1)/2)) decides existence; for p = 3 mod 4 the root is
+n^((p+1)/4), otherwise Tonelli-Shanks iteratively corrects a candidate using a quadratic non-residue.
+This module implements the Legendre symbol, residue test, and modular square root, verified against
+brute force that the root squares back to n, a root exists iff n is a genuine square (checked over
+every residue of 40 primes), both roots are r and p-r, and the Legendre symbol matches a residue
+count, up to million-scale primes.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

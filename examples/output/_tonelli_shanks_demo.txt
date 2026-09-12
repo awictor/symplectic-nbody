@@ -1,0 +1,19 @@
+Tonelli-Shanks: square roots modulo a prime
+
+  Modular square roots (x^2 = n mod p):
+    sqrt(10) mod 13: (6, 7)  (check: 6^2 = 10 mod 13)
+    sqrt(2) mod 7: (3, 4)  (check: 3^2 = 2 mod 7)
+    sqrt(5) mod 7: none (5 is a non-residue)
+    sqrt(123456) mod 1000033: (450092, 549941)  (check: 450092^2 = 123456 mod 1000033)
+
+  Modulo 13: 6 residues [1, 3, 4, 9, 10, 12], 6 non-residues [2, 5, 6, 7, 8, 11]
+    (exactly (p-1)/2 = 6 of each, per the Legendre symbol)
+
+  Elliptic-curve point decompression on y^2 = x^3 + 2x + 3 (mod 1000003):
+    x = 5: no point (rhs 138 is a non-residue) -- would try another x
+
+  Euler's criterion (n^((p-1)/2) mod p) tells us if a root exists; if so, Tonelli-Shanks
+  finds it: for p = 3 mod 4 it's just n^((p+1)/4), otherwise it iteratively corrects a
+  candidate using a quadratic non-residue until the error's order drops to zero.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\tonelli_shanks.svg
