@@ -396,6 +396,7 @@ ruins a long non-symplectic integration.
 | `src/meet_in_middle.py` | Meet-in-the-middle subset sum / closest sum / count for huge values |
 | `src/fenwick_2d.py` | 2D Fenwick tree: point update + rectangle sum in O(log R log C) |
 | `src/linear_sieve.py` | Linear sieve: primes + SPF + Euler totient + Mobius in O(N) |
+| `src/weighted_dsu.py` | Weighted union-find: difference constraints + parity/bipartite |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -783,6 +784,7 @@ ruins a long non-symplectic integration.
 | `examples/meet_in_middle_demo.py` | Two half-sum lists combining to hit a target on a number line |
 | `examples/fenwick_2d_demo.py` | A grid heatmap with a query rectangle and its dynamic sum |
 | `examples/linear_sieve_demo.py` | The totient curve and Mobius bars from one linear-sieve pass |
+| `examples/weighted_dsu_demo.py` | Difference constraints accepted/rejected + an odd-cycle contradiction |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9244,6 +9246,25 @@ that prime divides i), making the sieve O(N) and yielding the SPF table, Euler t
 mu in the same pass. Verified against independent brute force -- trial-division primality/factorization,
 coprime-counting phi, squarefree/prime-count mu -- across the whole range to 3000, plus the identities
 sum of phi(d) over divisors of n = n and sum of mu(d) = [n==1], and phi's multiplicativity.
+
+## Weighted union-find: relative offsets and contradictions
+
+Solve 'x - y = d' difference constraints incrementally, catching contradictions. `weighted_dsu.py`:
+
+```
+$ python examples/weighted_dsu_demo.py examples/output
+
+  A-B=3, B-C=-5, A-C=-2 accepted; A-D=10 REJECTED (true offset is 2)
+  parity variant catches an odd cycle: 0!=1, 1!=2, 0!=2 -> contradiction
+```
+
+Each element carries a potential relative to its set's root; find() accumulates edge weights while
+compressing, union() links two roots with the weight satisfying the relation or, if already connected,
+checks consistency and rejects contradictions. A mod-2 variant gives the same-or-different / bipartite
+structure. Verified against a brute reference that re-derives all pairwise offsets by BFS over the
+accepted-constraint graph: accept/reject decisions and reported differences match, offsets are
+symmetric and transitive, ground-truth-derived constraints are always accepted, and the parity variant
+matches a mod-2 reference -- on hundreds of random constraint sequences.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

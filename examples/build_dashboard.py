@@ -438,6 +438,7 @@ def main():
     import meet_in_middle_demo
     import fenwick_2d_demo
     import linear_sieve_demo
+    import weighted_dsu_demo
 
     import plot_orbits
 
@@ -845,6 +846,7 @@ def main():
     meet_in_middle_txt = run("meet_in_middle_demo", meet_in_middle_demo.main, True)
     fenwick_2d_txt = run("fenwick_2d_demo", fenwick_2d_demo.main, True)
     linear_sieve_txt = run("linear_sieve_demo", linear_sieve_demo.main, True)
+    weighted_dsu_txt = run("weighted_dsu_demo", weighted_dsu_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6794,6 +6796,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("linear_sieve.svg"), "the Euler totient phi(n) as a blue curve (hugging n-1 at primes, dipping for smooth numbers) and the Mobius function mu(n) as green/red bars (+1/-1, absent where a square factor makes it 0) -- both computed in the single linear-sieve pass")
             + f'<div class="card">{pre(linear_sieve_txt)}</div>'
+            + '</div>'),
+        section(
+            "Weighted union-find: relative offsets and contradictions",
+            "A plain union-find answers 'are x and y in the same group?'; the WEIGHTED (potential) "
+            "union-find also answers 'and what is the known DIFFERENCE between them?'. Each element "
+            "carries a potential relative to its set's root, kept so that potential(x) - potential(y) "
+            "is exactly the accumulated relation. This makes it an incremental solver for DIFFERENCE "
+            "CONSTRAINTS 'x - y = d': each constraint is a weighted union, each query a potential "
+            "difference, and any constraint contradicting current knowledge is caught immediately -- "
+            "used for offset calibration, relative-measurement consistency, and same-or-different "
+            "(bipartiteness) puzzles. FIND accumulates edge weights to the root while compressing and "
+            "rewriting each node's weight relative to the root; UNION links two roots with the weight "
+            "that satisfies the relation, or, if they already coincide, CHECKS consistency and "
+            "rejects contradictions. A mod-2 variant gives the classic parity/bipartite structure. "
+            "Verified against a brute-force reference that re-derives all pairwise offsets by BFS over "
+            "the accepted-constraint graph -- the accept/reject decisions and every reported "
+            "difference match, offsets are symmetric and transitive, ground-truth-derived constraints "
+            "are always accepted, and the parity variant matches a mod-2 reference -- on hundreds of "
+            "random constraint sequences.",
+            '<div class="grid">'
+            + svg_card(out("weighted_dsu.svg"), "the accepted difference constraints as a graph with each edge labelled X-Y: the weighted DSU keeps them mutually consistent and rejects any new constraint whose offset contradicts the derived values")
+            + f'<div class="card">{pre(weighted_dsu_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

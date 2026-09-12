@@ -1,0 +1,34 @@
+Weighted union-find: solving 'X - Y = d' difference constraints incrementally
+
+  A - B =   3  ->  accepted
+  B - C =  -5  ->  accepted
+  A - C =  -2  ->  accepted
+  C - D =   4  ->  accepted
+  A - D =  10  ->  REJECTED (contradicts prior offsets)
+  D - E =   1  ->  accepted
+
+  derived pairwise offsets (potential difference), once connected:
+    A - B = 3
+    A - C = -2
+    A - D = 2
+    A - E = 3
+    B - C = -5
+    B - D = -1
+    B - E = 0
+    C - D = 4
+    C - E = 5
+    D - E = 1
+
+  decisions match brute-force BFS reference: True
+
+  Parity variant (same / different group), detecting an odd cycle:
+    0 and 1 are different  ->  ok
+    1 and 2 are different  ->  ok
+    0 and 2 are different  ->  CONTRADICTION (odd cycle)
+
+  Each element carries a potential relative to its set's root; find() accumulates edge
+  weights to the root and compresses. A union sets the new edge weight to satisfy the
+  relation; if the two are already connected it instead CHECKS consistency -- so a stream
+  of relative measurements is validated in near-constant amortised time per constraint.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\weighted_dsu.svg
