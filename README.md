@@ -350,6 +350,7 @@ ruins a long non-symplectic integration.
 | `src/poisson.py` | 2-D Poisson/Laplace by relaxation (Jacobi, Gauss-Seidel, SOR) with Dirichlet BCs |
 | `src/manacher.py` | Manacher's O(n) longest palindromic substring + palindrome counting |
 | `src/stoer_wagner.py` | Stoer-Wagner global minimum cut of a weighted undirected graph (O(V^3)) |
+| `src/chebyshev.py` | Chebyshev polynomial approximation (Clenshaw eval, cures the Runge phenomenon) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -691,6 +692,7 @@ ruins a long non-symplectic integration.
 | `examples/poisson_demo.py` | Steady-state heat on a plate + Jacobi/Gauss-Seidel/SOR convergence comparison |
 | `examples/manacher_demo.py` | Longest palindrome + the self-similar radius profile of abacabadabacaba |
 | `examples/stoer_wagner_demo.py` | Global min cut of a graph + two clusters severed at their weak links |
+| `examples/chebyshev_demo.py` | Geometric convergence + Chebyshev taming Runge's function where equispaced blows up |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8268,6 +8270,26 @@ After V-1 phases the smallest cut-of-the-phase is the global minimum, in O(V^3) 
 paths. This module returns the cut weight and partition, verified against brute force over all vertex
 bipartitions of small graphs, on known graphs (bridge, cycle, K_n), that parallel edges are summed,
 and that a disconnected graph gives a zero cut.
+
+## Chebyshev approximation: near-optimal fits that dodge the Runge phenomenon
+
+Polynomial approximation that converges where naive interpolation explodes. `chebyshev.py`:
+
+```
+$ python examples/chebyshev_demo.py examples/output
+
+  exp(x) on [-1,1]: degree 16 -> max error 2e-15 (machine precision)
+  Runge's function 1/(1+25x^2), degree 24:
+    Chebyshev error 0.007  vs  equispaced error 257 (the Runge blowup)
+```
+
+Sampling at Chebyshev points (clustered at the interval ends) instead of equally-spaced ones makes
+polynomial interpolation converge for every continuous function, near-optimally. The function is
+expanded in Chebyshev polynomials with coefficients from the node samples and evaluated by Clenshaw
+recurrence; the equal-ripple extrema spread the error evenly (equioscillation). This module builds
+Chebyshev interpolants on any interval, verified that smooth functions reach near machine precision,
+error shrinks geometrically with degree, Runge's function stays bounded where equispaced blows up, and
+a low-degree polynomial is recovered exactly.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,25 @@
+Chebyshev approximation: near-optimal polynomial fits
+
+  Approximating exp(x) on [-1,1] -- error falls geometrically with degree:
+    degree  2: max error 5.65e-02
+    degree  4: max error 6.40e-04
+    degree  6: max error 3.62e-06
+    degree  8: max error 1.22e-08
+    degree 12: max error 4.26e-14
+    degree 16: max error 1.78e-15
+
+  Runge's function 1/(1+25x^2) -- Chebyshev vs equally-spaced nodes:
+     degree     Chebyshev    equispaced
+          8        0.1708          1.05
+         12        0.0692          3.66
+         16        0.0326         14.39
+         20        0.0153         59.77
+         24        0.0069        257.21
+    equispaced interpolation EXPLODES near the ends; Chebyshev nodes (clustered there)
+    tame it -- error spreads evenly across the interval (equioscillation).
+
+  Chebyshev nodes are the projections of equally spaced points on a circle onto the
+  interval, clustered at the ends. Expanding in Chebyshev polynomials T_n and evaluating
+  by Clenshaw recurrence gives a fit within a small factor of the best possible polynomial.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\chebyshev.svg

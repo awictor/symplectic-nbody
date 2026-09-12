@@ -392,6 +392,7 @@ def main():
     import poisson_demo
     import manacher_demo
     import stoer_wagner_demo
+    import chebyshev_demo
 
     import plot_orbits
 
@@ -753,6 +754,7 @@ def main():
     poisson_txt = run("poisson_demo", poisson_demo.main, True)
     manacher_txt = run("manacher_demo", manacher_demo.main, True)
     stoer_wagner_txt = run("stoer_wagner_demo", stoer_wagner_demo.main, True)
+    chebyshev_txt = run("chebyshev_demo", chebyshev_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5707,6 +5709,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("stoer_wagner.svg"), "a weighted graph with its global minimum cut: the two sides in blue and green, the red edges (the weakest partition) crossing between them -- the cheapest way to sever the network")
             + f'<div class="card">{pre(stoer_wagner_txt)}</div>'
+            + '</div>'),
+        section(
+            "Chebyshev approximation: near-optimal fits that dodge the Runge phenomenon",
+            "Approximating a function by a polynomial sounds simple -- sample and interpolate -- but "
+            "sampling at EQUALLY SPACED points is a trap: for many smooth functions the interpolation "
+            "error EXPLODES near the interval ends as the degree rises (the RUNGE PHENOMENON). The "
+            "fix is to sample at CHEBYSHEV POINTS, the projections of equally spaced points on a "
+            "circle onto the interval, clustered toward the ends. Chebyshev interpolation converges "
+            "for every continuous function and is NEAR-OPTIMAL -- its maximum error is within a small "
+            "factor of the best possible polynomial of that degree, converging geometrically for "
+            "analytic functions. A function is expanded as a sum of Chebyshev polynomials T_n = "
+            "cos(n arccos x) with coefficients from samples at the Chebyshev nodes, evaluated stably "
+            "by CLENSHAW'S RECURRENCE. Because T_n has equal-ripple extrema, the truncated series "
+            "spreads its error evenly (equioscillation, the hallmark of minimax approximation) -- the "
+            "foundation of function-approximation libraries and spectral methods. This module builds "
+            "Chebyshev interpolants on any interval, verified that smooth functions (exp, sin, "
+            "rationals) are matched to near machine precision, that error shrinks geometrically with "
+            "degree, that on Runge's function Chebyshev stays bounded (error 0.007 at degree 24) "
+            "where equispaced interpolation blows up (error 257), that a low-degree polynomial is "
+            "recovered exactly, and that the nodes cluster at the ends.",
+            '<div class="grid">'
+            + svg_card(out("chebyshev.svg"), "Runge's function fit at degree 16: the equispaced interpolant (red) oscillating wildly near the ends while the Chebyshev interpolant (green) hugs the true curve -- the nodes marked below cluster at the edges")
+            + f'<div class="card">{pre(chebyshev_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
