@@ -1,0 +1,19 @@
+WalkSAT: solving SAT by flipping variables to repair conflicts
+
+  small formula (x1 v x2 v ~x3) ^ (~x1 v x3) ^ ...:
+    solved: True, model: x1=T, x2=T, x3=T, verified: True
+
+  random 3-SAT: 40 variables, 160 clauses (ratio 4.0)
+    DPLL says satisfiable: True
+    WalkSAT found a model: True (verified)
+
+  conflict trajectory: started with 20 unsatisfied clauses, reached 0 at best
+    each flip picks a random unsatisfied clause and flips one of its variables -- greedily
+    (fewest clauses broken) most of the time, randomly sometimes to escape local minima.
+
+  WalkSAT is INCOMPLETE: it can't prove unsatisfiability, only find models. But on large
+  satisfiable instances -- where DPLL's backtracking tree explodes -- it often lands a
+  solution almost instantly, which is why stochastic local search underpins the fastest
+  incomplete SAT solvers.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\walksat.svg

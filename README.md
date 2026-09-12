@@ -403,6 +403,7 @@ ruins a long non-symplectic integration.
 | `src/karatsuba.py` | Karatsuba & Toom-3 fast multiplication + Karatsuba polynomial multiply |
 | `src/strassen.py` | Strassen sub-cubic matrix multiplication (7 block products, padded) |
 | `src/dancing_links.py` | Dancing Links (DLX): Algorithm X exact cover + N-queens |
+| `src/walksat.py` | WalkSAT: randomized local-search SAT solver (incomplete) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -797,6 +798,7 @@ ruins a long non-symplectic integration.
 | `examples/karatsuba_demo.py` | Big-int products + the complexity-exponent curves of each method |
 | `examples/strassen_demo.py` | The seven block products + n^3 vs n^2.807 cost curves |
 | `examples/dancing_links_demo.py` | Knuth's exact-cover example + a 6-queens board on a chessboard |
+| `examples/walksat_demo.py` | A 3-SAT solve with the falling conflict-count trajectory |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9381,6 +9383,24 @@ x.L.R = x.R; x.R.L = x.L and uncovering restores it with the exact inverse -- no
 search. Algorithm X covers the column with the fewest options, tries each, recurses, and uncovers on
 backtrack. Verified against an independent brute-force subset search (identical solution sets on
 hundreds of random instances), the known N-queens counts, and domino-tiling counts.
+
+## WalkSAT: satisfiability by randomized local search
+
+Solve satisfiable SAT instances fast by flipping variables to repair conflicts. `walksat.py`:
+
+```
+$ python examples/walksat_demo.py examples/output
+
+  40-var 160-clause 3-SAT (ratio 4.0): DPLL says SAT, WalkSAT finds a verified model
+  conflict count falls 20 -> 0 as flips repair unsatisfied clauses
+```
+
+Start from a random assignment; while a clause is unsatisfied, pick a random unsatisfied clause and
+flip one of its variables -- greedily (fewest clauses broken) most of the time, randomly sometimes to
+escape local minima -- with bounded flips and restarts. Incomplete (can't prove UNSAT) but fast on
+large satisfiable instances where DPLL's tree explodes. Verified against the complete DPLL solver: on
+hundreds of random satisfiable formulas WalkSAT returns a genuine model, and it never falsely claims to
+solve an unsatisfiable one.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

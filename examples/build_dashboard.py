@@ -445,6 +445,7 @@ def main():
     import karatsuba_demo
     import strassen_demo
     import dancing_links_demo
+    import walksat_demo
 
     import plot_orbits
 
@@ -859,6 +860,7 @@ def main():
     karatsuba_txt = run("karatsuba_demo", karatsuba_demo.main, True)
     strassen_txt = run("strassen_demo", strassen_demo.main, True)
     dancing_links_txt = run("dancing_links_demo", dancing_links_demo.main, True)
+    walksat_txt = run("walksat_demo", walksat_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6955,6 +6957,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("dancing_links.svg"), "a 6-queens solution found by reducing the problem to exact cover and solving it with dancing links: no two queens share a row, column, or diagonal -- one of the four distinct 6-queens placements DLX enumerates")
             + f'<div class="card">{pre(dancing_links_txt)}</div>'
+            + '</div>'),
+        section(
+            "WalkSAT: satisfiability by randomized local search",
+            "DPLL decides satisfiability COMPLETELY by systematic backtracking; WALKSAT takes the "
+            "incomplete but often far faster opposite route -- start from a random truth assignment "
+            "and REPAIR it by local flips. It cannot prove unsatisfiability (it just gives up after a "
+            "budget), but on large SATISFIABLE instances, where DPLL's search tree explodes, it "
+            "frequently finds a model in a flash. The loop: while some clause is unsatisfied, pick a "
+            "random unsatisfied clause and flip one of its variables -- with probability p a random "
+            "one (a 'random walk' to escape local minima), otherwise the variable whose flip breaks "
+            "the FEWEST currently-satisfied clauses (the greedy conflict-reducing move). Bounded "
+            "flips, then restart from a fresh random assignment. The random-walk probability is what "
+            "lets it climb out of the local minima that trap pure greedy hill-climbing (GSAT), and "
+            "single-variable flips with incremental conflict bookkeeping make each step cheap enough "
+            "to scale to millions of clauses. This module implements the random-walk/greedy mix with "
+            "restarts. Verified against the complete DPLL solver: on hundreds of random satisfiable "
+            "formulas WalkSAT returns a genuine model (every clause true), and it never falsely "
+            "claims to solve an unsatisfiable one; a fixed seed makes runs reproducible.",
+            '<div class="grid">'
+            + svg_card(out("walksat.svg"), "the conflict trajectory of a WalkSAT run: the number of unsatisfied clauses jitters downward as variable flips repair conflicts, reaching zero (green) the moment a satisfying assignment is found")
+            + f'<div class="card">{pre(walksat_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
