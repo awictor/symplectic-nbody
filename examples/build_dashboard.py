@@ -428,6 +428,7 @@ def main():
     import bron_kerbosch_demo
     import dinic_demo
     import graph_coloring_demo
+    import k_core_demo
 
     import plot_orbits
 
@@ -825,6 +826,7 @@ def main():
     bron_kerbosch_txt = run("bron_kerbosch_demo", bron_kerbosch_demo.main, True)
     dinic_txt = run("dinic_demo", dinic_demo.main, True)
     graph_coloring_txt = run("graph_coloring_demo", graph_coloring_demo.main, True)
+    k_core_txt = run("k_core_demo", k_core_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6564,6 +6566,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("graph_coloring.svg"), "seven exams scheduled into four time slots by graph coloring: each course is tinted by its slot and edges join conflicting courses -- the chromatic number 4 is the provably minimum number of slots that avoids every clash")
             + f'<div class="card">{pre(graph_coloring_txt)}</div>'
+            + '</div>'),
+        section(
+            "k-core decomposition: a network's dense heart",
+            "The k-CORE of a graph is the largest subgraph where every vertex has at least k "
+            "neighbours inside it, found by repeatedly peeling away vertices of degree below k. Each "
+            "vertex's CORENESS is the largest k for which it survives, and the maximum coreness is "
+            "the graph's DEGENERACY -- a robust density measure (trees have degeneracy 1, k-regular "
+            "graphs k). This is a workhorse of network science: it locates the influential core of a "
+            "social network, ranks nodes by embedding depth, finds cohesive communities, and its "
+            "degeneracy ordering bounds clique- and coloring-algorithm runtimes. All corenesses come "
+            "in O(V+E) by SMALLEST-LAST PEELING: repeatedly remove a minimum-degree vertex; the "
+            "degree it has when removed IS its coreness, because at that moment every survivor has at "
+            "least that degree. The k-SHELL (vertices of coreness exactly k) gives the network's "
+            "onion layers, from loose periphery inward to dense core. This module computes coreness, "
+            "degeneracy, a degeneracy ordering, k-cores, and k-shells. Verified against the "
+            "brute-force definition -- literally iterating 'remove all degree-<k vertices until "
+            "stable' -- on hundreds of random graphs: coreness matches, k-cores are nested and each "
+            "vertex in a k-core has >= k neighbours inside, the degeneracy ordering has <= degeneracy "
+            "later-neighbours per vertex, and shells partition the graph.",
+            '<div class="grid">'
+            + svg_card(out("k_core.svg"), "a network peeled into onion layers: nodes are placed in concentric rings and sized by coreness, with the dense 3-core hub at the centre and the loosely-attached leaves (coreness 1) on the outer ring")
+            + f'<div class="card">{pre(k_core_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

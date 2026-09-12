@@ -386,6 +386,7 @@ ruins a long non-symplectic integration.
 | `src/bron_kerbosch.py` | Bron-Kerbosch maximal-clique enumeration (pivoting + degeneracy) |
 | `src/dinic.py` | Dinic's max-flow (blocking flows on the level graph) + min cut + matching |
 | `src/graph_coloring.py` | Graph coloring: greedy, DSATUR, exact chromatic number |
+| `src/k_core.py` | k-core decomposition: coreness, degeneracy, k-shells |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -763,6 +764,7 @@ ruins a long non-symplectic integration.
 | `examples/bron_kerbosch_demo.py` | A friendship network's maximal cliques, the largest highlighted |
 | `examples/dinic_demo.py` | A pipe network at max flow with the min-cut pipes highlighted |
 | `examples/graph_coloring_demo.py` | An exam-conflict graph coloured into the minimum time slots |
+| `examples/k_core_demo.py` | A network peeled into onion rings sized by coreness |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9041,6 +9043,25 @@ Exact chromatic number runs branch-and-bound over increasing k with clique lower
 bounds. Verified against brute force -- the exact number matches an exhaustive search over all
 k-colorings, every coloring is proper, greedy/DSATUR never beat the true minimum, and known values hold
 (even cycles 2, odd 3, K_n needs n) -- on hundreds of random graphs.
+
+## k-core decomposition: a network's dense heart
+
+Peel a graph into its densely-connected core and onion layers. `k_core.py`:
+
+```
+$ python examples/k_core_demo.py examples/output
+
+  10-node network -> coreness [3,3,3,3,2,2,1,1,1,1], degeneracy 3
+  shells: 1-shell {leaves}, 2-shell {middle}, 3-shell {dense K4 core}
+```
+
+The k-core is the largest subgraph where every vertex has >= k neighbours inside it; a vertex's
+coreness is the largest such k, and the max coreness is the degeneracy. Smallest-last peeling (remove a
+minimum-degree vertex; its degree when removed is its coreness) computes all corenesses in O(V+E). The
+k-shell (coreness exactly k) gives the network's onion layers. Verified against the brute-force
+definition (iterate "remove all degree-<k vertices until stable") on hundreds of random graphs:
+coreness matches, k-cores are nested and each vertex has >= k neighbours inside, the degeneracy
+ordering has <= degeneracy later-neighbours per vertex, and shells partition the graph.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

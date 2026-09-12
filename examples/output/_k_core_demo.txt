@@ -1,0 +1,21 @@
+k-core decomposition: peeling a network to its dense heart
+
+  10 nodes, 14 edges
+
+  coreness of each node: [3, 3, 3, 3, 2, 2, 1, 1, 1, 1]
+  matches brute-force peeling: True
+  degeneracy (max coreness): 3
+
+  onion shells (nodes by coreness, periphery -> core):
+    1-shell: [6, 7, 8, 9]
+    2-shell: [4, 5]
+    3-shell: [0, 1, 2, 3]
+
+  the 3-core (densest layer): [0, 1, 2, 3]
+
+  Smallest-last peeling removes a minimum-degree vertex at a time; the degree it has when
+  removed is its coreness. The maximum coreness is the degeneracy, and the resulting order
+  bounds clique- and coloring-algorithm runtimes. High-coreness nodes are the robust,
+  deeply-embedded core of the network -- the influential centre in social-network analysis.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\k_core.svg
