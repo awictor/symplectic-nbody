@@ -1,0 +1,31 @@
+Li Chao tree: minimum of a set of lines at any x, in O(log range)
+
+  6 lines inserted (in arbitrary order):
+    y = -2x + 40
+    y = -1x + 20
+    y = +0x + 8
+    y = +1x + 2
+    y = +2x + 6
+    y = +3x + 30
+
+  lower-envelope minimum across x:
+        x    min y  which line
+      -12    -18.0  y=+2x+6
+       -9    -12.0  y=+2x+6
+       -6     -6.0  y=+2x+6
+       -3     -1.0  y=+1x+2
+        0      2.0  y=+1x+2
+        3      5.0  y=+1x+2
+        6      8.0  y=+0x+8
+        9      8.0  y=+0x+8
+       12      8.0  y=-1x+20
+
+  matches brute-force min over all lines at every integer x: True
+
+  Each line is inserted by comparing it to the node's line at the interval midpoint,
+  keeping the lower one and pushing the other into the half where it might still win --
+  O(log range) per insert and per query, and unlike the monotonic-stack convex hull trick,
+  it handles lines arriving in ANY order with queries interleaved. This is the standard
+  speed-up that turns an O(n^2) DP with linear transition costs into O(n log n).
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\li_chao.svg

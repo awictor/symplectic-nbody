@@ -417,6 +417,7 @@ def main():
     import suffix_automaton_demo
     import lyndon_demo
     import eertree_demo
+    import li_chao_demo
 
     import plot_orbits
 
@@ -803,6 +804,7 @@ def main():
     suffix_automaton_txt = run("suffix_automaton_demo", suffix_automaton_demo.main, True)
     lyndon_txt = run("lyndon_demo", lyndon_demo.main, True)
     eertree_txt = run("eertree_demo", eertree_demo.main, True)
+    li_chao_txt = run("li_chao_demo", li_chao_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6309,6 +6311,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("eertree.svg"), "the distinct palindromes of 'abacabadabacaba' grouped by length: this word is palindromically RICH, hitting the maximum of 15 distinct palindromes for its 15 characters, with brighter tiles marking the palindromes that occur most often")
             + f'<div class="card">{pre(eertree_txt)}</div>'
+            + '</div>'),
+        section(
+            "Li Chao tree: the lower envelope of a bundle of lines",
+            "Many optimisation problems reduce to one primitive: keep a growing set of lines "
+            "y = m*x + b and repeatedly ask for the minimum (or maximum) value at a given x. As x "
+            "sweeps, the answer traces the LOWER ENVELOPE -- a piecewise-linear convex curve. This is "
+            "the query behind the CONVEX HULL TRICK, which collapses a large family of "
+            "O(n^2) dynamic programs (dp[i] = min over j of dp[j] + cost(j,i) with cost linear in i) "
+            "to O(n log n): each transition is a line, each state a query. The LI CHAO TREE supports "
+            "it cleanly when lines arrive in ARBITRARY order with queries interleaved -- the case the "
+            "classic monotonic-stack hull trick cannot handle. It is a segment tree over the "
+            "x-domain; each node owns the line minimal at its midpoint. Inserting compares the new "
+            "line to the node's at the midpoint, keeps the lower, and recurses into the half where "
+            "the loser might still win -- since two lines cross at most once, that is O(log range). A "
+            "query takes the minimum of every line on its root-to-leaf path, also O(log range). "
+            "Verified against brute force: every min and max query matches the true optimum over all "
+            "inserted lines, on hundreds of random line sets and points, including interleaved "
+            "insert/query order and a convex-hull-trick DP matching its O(n^2) reference.",
+            '<div class="grid">'
+            + svg_card(out("li_chao.svg"), "six lines inserted in arbitrary order (thin blue) and the lower envelope the tree returns (thick green) -- the minimum value at every x, computed in O(log range) per query without ever scanning all the lines")
+            + f'<div class="card">{pre(li_chao_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

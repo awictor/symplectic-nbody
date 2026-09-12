@@ -375,6 +375,7 @@ ruins a long non-symplectic integration.
 | `src/suffix_automaton.py` | Suffix automaton: distinct substrings, occurrences, LRS, LCS in O(n) |
 | `src/lyndon.py` | Lyndon words: Duval factorisation, least rotation, FKM generation |
 | `src/eertree.py` | Eertree (palindromic tree): all distinct palindromic substrings in O(n) |
+| `src/li_chao.py` | Li Chao tree: lower/upper envelope of lines, convex-hull-trick DP |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -741,6 +742,7 @@ ruins a long non-symplectic integration.
 | `examples/suffix_automaton_demo.py` | The 'abracadabra' automaton drawn as states by substring length |
 | `examples/lyndon_demo.py` | Duval factorisations as coloured Lyndon-word segments |
 | `examples/eertree_demo.py` | Palindromes of a rich word tiled by length, brightness by frequency |
+| `examples/li_chao_demo.py` | A bundle of lines with their lower envelope highlighted |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8808,6 +8810,27 @@ links to the longest extendable palindromic suffix, amortised O(n). Verified aga
 distinct count and per-length set match all O(n^2) substrings filtered for the palindrome property,
 occurrence counts match direct scanning, the classical <= n bound holds, and the online build equals
 batch construction.
+
+## Li Chao tree: the lower envelope of a bundle of lines
+
+Query the min (or max) of a growing set of lines at any x in O(log range). `li_chao.py`:
+
+```
+$ python examples/li_chao_demo.py examples/output
+
+  6 lines inserted in arbitrary order -> lower envelope across x:
+  x=-12 min -18 (y=2x+6); x=0 min 2 (y=x+2); x=12 min 8 (y=0x+8)
+  matches brute-force min over all lines at every integer x
+```
+
+Keep a set of lines y = m*x + b and ask for the minimum at a given x; the answer as x sweeps is the
+lower envelope (a convex piecewise-linear curve) -- the query behind the convex hull trick that turns
+an O(n^2) DP with linear transition costs into O(n log n). The Li Chao tree is a segment tree over the
+x-domain where each node owns the line minimal at its midpoint; insertion keeps the lower line and
+pushes the other into the half where it might still win (O(log range)), and handles lines in arbitrary
+order with interleaved queries -- unlike the monotonic-stack hull trick. Verified against brute force:
+min and max queries match the true optimum over all lines on hundreds of random sets and points,
+including interleaved insert/query and a convex-hull-trick DP matching its O(n^2) reference.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
