@@ -441,6 +441,7 @@ ruins a long non-symplectic integration.
 | `src/dgim.py` | DGIM sliding-window 1-counter over a bit stream in O(log^2 N) memory |
 | `src/rans.py` | rANS entropy coder (Asymmetric Numeral Systems) with a static frequency model |
 | `src/bk_tree.py` | BK-tree fuzzy string search: edit-distance metric tree with pruning |
+| `src/lanczos.py` | Lanczos Krylov eigensolver: extreme eigenvalues, matrix-free, reorthogonalised |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -873,6 +874,7 @@ ruins a long non-symplectic integration.
 | `examples/dgim_demo.py` | Estimate tracking the exact window count; a 1M-bit window in 27 buckets |
 | `examples/rans_demo.py` | Compression vs Shannon entropy and Huffman on three sources |
 | `examples/bk_tree_demo.py` | Typo correction and how much of the dictionary pruning skips |
+| `examples/lanczos_demo.py` | Largest eigenvalue converging in m<<n steps; a matrix-free Laplacian |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10168,6 +10170,25 @@ Built over Levenshtein distance (or any metric), with insertion, tolerance query
 Validated by exact agreement with brute force over 30 dictionaries and 1500 queries (no misses or
 extras), nearest-match equal to the true minimum, pruning that visits a fraction of the nodes, and
 order-independence.
+
+## The Lanczos algorithm: extreme eigenvalues of a matrix you never store
+
+Find the few largest/smallest eigenvalues of a huge sparse matrix via matrix-vector products.
+`lanczos.py`:
+
+```
+$ python examples/lanczos_demo.py examples/output
+
+  largest eigenvalue error 3.2 -> 1e-13 as iterations m go 4 -> 40 (n=40)
+  matrix-free 500-node ring Laplacian: largest 3.9997 (max 4), smallest ~0 (null vector)
+```
+
+Lanczos (1950) builds a Krylov basis by a three-term recurrence, assembling a small tridiagonal matrix
+whose eigenvalues (Ritz values) approximate the extreme eigenvalues of the full matrix -- using only
+matrix-vector products, so it runs on sparse or implicit operators. Uses full reorthogonalisation and a
+QL tridiagonal eigensolver. Validated: the full-iteration spectrum matches the dense Jacobi solver, the
+largest eigenvalue converges in m<<n steps, Ritz vectors satisfy Av=λv, and matrix-free on a graph
+Laplacian it recovers the known zero eigenvalue and correct band.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

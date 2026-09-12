@@ -483,6 +483,7 @@ def main():
     import dgim_demo
     import rans_demo
     import bk_tree_demo
+    import lanczos_demo
 
     import plot_orbits
 
@@ -935,6 +936,7 @@ def main():
     dgim_txt = run("dgim_demo", dgim_demo.main, True)
     rans_txt = run("rans_demo", rans_demo.main, True)
     bk_tree_txt = run("bk_tree_demo", bk_tree_demo.main, True)
+    lanczos_txt = run("lanczos_demo", lanczos_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7928,6 +7930,33 @@ def main():
             '<div class="grid">'
             + svg_card(out("bk_tree.svg"), "a BK-tree over a word list: each edge is labelled by the edit distance between parent and child, and a fuzzy query descends only the edges within its tolerance band -- pruning whole subtrees the triangle inequality proves are too far")
             + f'<div class="card">{pre(bk_tree_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Lanczos algorithm: extreme eigenvalues of a matrix you never store",
+            "The Jacobi and QR eigensolvers need the full matrix in memory and cost O(n^3) -- fine for a "
+            "hundred rows, impossible for the million-by-million matrices of quantum chemistry, "
+            "structural vibration, and network centrality (PageRank is an eigenvector). But you rarely "
+            "want ALL n eigenvalues; you want the few largest or smallest, and the matrix is often "
+            "SPARSE or implicit -- you can multiply it by a vector but never want to form it. The "
+            "LANCZOS algorithm (1950) finds the extreme eigenvalues of a symmetric matrix using nothing "
+            "but matrix-VECTOR products, converging in far fewer than n steps. Its engine is the KRYLOV "
+            "subspace: the vectors v, Av, A^2 v, ... quickly capture the dominant eigen-directions, and "
+            "a three-term recurrence (all that symmetry requires) orthogonalises them into a small "
+            "TRIDIAGONAL matrix whose eigenvalues -- the RITZ VALUES -- approximate the extremes of the "
+            "whole matrix. So an intractable n-dimensional eigenproblem collapses to a tiny "
+            "m-dimensional one. This module implements Lanczos tridiagonalisation from a matrix-vector "
+            "callable (dense, sparse, or any linear operator) with FULL REORTHOGONALISATION against "
+            "finite-precision drift, solves the tridiagonal eigenproblem by QL iteration, and maps the "
+            "Ritz vectors back to the full space. Validated: the full-iteration spectrum matches the "
+            "repository's dense Jacobi solver to 1e-8 across matrix sizes; the largest eigenvalue "
+            "converges to full accuracy in far fewer than n steps (error 3.2 -> 1e-13 as m goes 4 -> "
+            "40); the Ritz vectors satisfy A v = lambda v to a tiny residual and are unit-norm; the "
+            "basis is orthonormal and T genuinely tridiagonal; and matrix-free on a graph Laplacian it "
+            "recovers the known zero eigenvalue of the constant null vector and the correct spectral "
+            "band.",
+            '<div class="grid">'
+            + svg_card(out("lanczos.svg"), "top: the error in the largest Ritz value plunging on a log scale as Lanczos iterations accumulate -- full accuracy in a fraction of n steps; bottom: the ring-graph Laplacian's cosine-band spectrum recovered matrix-free")
+            + f'<div class="card">{pre(lanczos_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

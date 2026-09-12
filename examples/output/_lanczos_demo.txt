@@ -1,0 +1,23 @@
+Lanczos: extreme eigenvalues via matrix-vector products, no full matrix needed
+
+  random symmetric 40x40 matrix:
+    true largest eigenvalue  (dense): 20.065145
+    true smallest eigenvalue (dense): -19.089877
+    Lanczos largest, by iteration count m:
+      m= 4: 16.882681  (error 3.18e+00)
+      m= 8: 19.622519  (error 4.43e-01)
+      m=12: 20.059788  (error 5.36e-03)
+      m=20: 20.065145  (error 3.81e-07)
+      m=40: 20.065145  (error 8.88e-14)
+    -> converged to full accuracy in far fewer than 40 steps
+
+  matrix-free: Laplacian of a 500-node ring graph (never stored as a matrix):
+    largest eigenvalue:  3.99973  (analytic max 4 -- outermost, converges fast)
+    smallest eigenvalue: 1.62e-04  (analytic 0, the constant null vector)
+    (the tightly clustered small eigenvalues need more iterations than the extremes)
+
+  The Krylov vectors v, Av, A^2 v, ... quickly span the dominant eigen-directions; a
+  three-term recurrence orthogonalises them into a tiny tridiagonal matrix whose eigenvalues
+  (Ritz values) approximate the extremes. An n-million eigenproblem becomes an m-by-m one.
+
+  wrote examples/output\lanczos.svg
