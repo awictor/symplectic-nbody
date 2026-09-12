@@ -1,0 +1,23 @@
+LLL lattice reduction: from a skewed basis to a short, near-orthogonal one
+
+  2D lattice (same points, different basis):
+    original basis  [[201, 37], [98, 18]]
+      vector norms^2: [41770, 9928]
+    reduced basis   [[-2, -2], [1, -3]]
+      vector norms^2: [8, 10]
+    reduced? True   shortest vector: [-2, -2]
+
+  3D lattice:
+    original [[1, 1, 1], [-1, 0, 2], [3, 5, 6]], total norm^2 78
+    reduced  [[0, 1, 0], [1, 0, 1], [-1, 0, 2]], total norm^2 8
+    reduced? True
+
+  Integer relation detection (find small a_i with sum a_i x_i = 0):
+    reals [6.0, 3.0, 4.0]
+    found relation [1, -2, 0]:  1*6 + -2*3 + 0*4 = 0.0
+
+  A lattice has many bases -- any two related by an integer matrix of determinant +/-1
+  span the same points. LLL swaps and size-reduces until the basis is short and nearly
+  orthogonal, in polynomial time, all arithmetic exact over the rationals.
+
+  wrote examples/output\lll.svg

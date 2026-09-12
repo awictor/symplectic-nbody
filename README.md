@@ -415,6 +415,7 @@ ruins a long non-symplectic integration.
 | `src/ks_test.py` | Kolmogorov-Smirnov one- and two-sample tests + reference CDFs |
 | `src/bootstrap.py` | Bootstrap CIs (percentile + BCa) + jackknife + standard error |
 | `src/permutation_test.py` | Permutation tests: exact enumeration + Monte-Carlo + paired sign-flip |
+| `src/lll.py` | LLL lattice reduction (exact rational Gram-Schmidt) + integer relations |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -821,6 +822,7 @@ ruins a long non-symplectic integration.
 | `examples/ks_test_demo.py` | Two empirical CDFs with the maximal-gap KS statistic marked |
 | `examples/bootstrap_demo.py` | The bootstrap distribution of the mean with its 95% CI band |
 | `examples/permutation_test_demo.py` | The permutation null distribution with the rejection region shaded |
+| `examples/lll_demo.py` | A skewed lattice basis vs its short, near-orthogonal LLL reduction |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9620,6 +9622,27 @@ permutations are enumerated, Monte-Carlo with the (b+1)/(B+1) correction when th
 statistic is pluggable (mean, median, Welch t) and a paired sign-flip variant covers before/after
 designs. Validated three ways -- the Monte-Carlo p matches complete enumeration, tracks the analytic
 t-test p on normal data, and rejects at the nominal rate under a true null over many seeded trials.
+
+## LLL: reducing a lattice to a short, near-orthogonal basis
+
+Turn a skewed integer basis into short, nearly-perpendicular vectors spanning the same lattice.
+`lll.py`:
+
+```
+$ python examples/lll_demo.py examples/output
+
+  original basis [[201,37],[98,18]]  norms^2 [41770, 9928]
+  reduced  basis [[-2,-2],[1,-3]]    norms^2 [8, 10]
+  integer relation among [6,3,4]: [1,-2,0]  ->  1*6 - 2*3 = 0
+```
+
+A lattice is every integer combination of its basis; infinitely many bases (related by
+determinant-±1 integer matrices) span the same points. LLL alternates size reduction (Gram-Schmidt
+coefficients ≤ 1/2) and Lovász swaps to produce a short, near-orthogonal basis in polynomial time.
+All Gram-Schmidt arithmetic is exact over the rationals, so it never mis-swaps on a rounding error.
+Validated: the reduction is unimodular (Gram determinant, hence the lattice, is preserved), the
+output provably satisfies both LLL conditions, the reduced shortest vector matches a brute-force
+search over integer combinations, and known integer relations are recovered exactly.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

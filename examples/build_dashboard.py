@@ -457,6 +457,7 @@ def main():
     import ks_test_demo
     import bootstrap_demo
     import permutation_test_demo
+    import lll_demo
 
     import plot_orbits
 
@@ -883,6 +884,7 @@ def main():
     ks_test_txt = run("ks_test_demo", ks_test_demo.main, True)
     bootstrap_txt = run("bootstrap_demo", bootstrap_demo.main, True)
     permutation_test_txt = run("permutation_test_demo", permutation_test_demo.main, True)
+    lll_txt = run("lll_demo", lll_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7232,6 +7234,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("permutation_test.svg"), "the permutation null distribution of the difference in means from 6000 label shuffles: red bars are relabellings at least as extreme as the observed yellow value -- their mass is the two-sided p-value")
             + f'<div class="card">{pre(permutation_test_txt)}</div>'
+            + '</div>'),
+        section(
+            "LLL: reducing a lattice to a short, near-orthogonal basis",
+            "A lattice is every integer combination of a set of basis vectors. The same lattice has "
+            "infinitely many bases -- any two related by an integer matrix of determinant +/-1 span "
+            "exactly the same points -- and most are terrible: long, skewed vectors pointing nearly the "
+            "same way. The Lenstra-Lenstra-Lovasz algorithm (1982) finds a SHORT, nearly-orthogonal one "
+            "in polynomial time, the key that unlocks integer-relation finding, breaking knapsack "
+            "cryptosystems, factoring polynomials over the rationals, and Diophantine approximation. It "
+            "works from the Gram-Schmidt orthogonalisation, alternating two moves: SIZE REDUCTION "
+            "(subtract integer multiples of earlier vectors so every Gram-Schmidt coefficient is <= 1/2 "
+            "in size) and the LOVASZ SWAP (exchange consecutive vectors when the later Gram-Schmidt norm "
+            "shrinks too fast, which is what actually shortens the basis). Finding the truly shortest "
+            "vector is NP-hard; LLL guarantees one within a factor 2**((n-1)/2) and in practice does far "
+            "better. This implementation is EXACT -- all Gram-Schmidt arithmetic is done over the "
+            "rationals (fractions.Fraction), so it never mis-swaps on a floating-point rounding error. "
+            "On the lattice shown, a basis of vectors with squared lengths 41770 and 9928 reduces to one "
+            "with squared lengths 8 and 10. Validated: the reduction is unimodular so the Gram "
+            "determinant (hence the lattice) is preserved; the output provably satisfies both LLL "
+            "conditions; and the reduced shortest vector matches a brute-force search over all integer "
+            "combinations for small lattices, with integer relations recovered exactly.",
+            '<div class="grid">'
+            + svg_card(out("lll.svg"), "the same 2D lattice under two bases: the red original vectors are long and skewed, the green reduced vectors are short and nearly perpendicular yet reach the identical grid of points")
+            + f'<div class="card">{pre(lll_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
