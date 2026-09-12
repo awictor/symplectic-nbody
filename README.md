@@ -337,6 +337,7 @@ ruins a long non-symplectic integration.
 | `src/cordic.py` | CORDIC: cos/sin/atan2/hypot/exp/ln/sqrt with only shifts and additions |
 | `src/savitzky_golay.py` | Savitzky-Golay filter: peak-preserving smoothing and noisy-data differentiation |
 | `src/lzw.py` | LZW adaptive dictionary compression/decompression (GIF-style, capped code width) |
+| `src/convolutional_code.py` | Convolutional encoder + Viterbi maximum-likelihood decoder for noisy channels |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -665,6 +666,7 @@ ruins a long non-symplectic integration.
 | `examples/cordic_demo.py` | The rotation spiralling to a target angle; cos/sin/exp/ln/sqrt vs the math library |
 | `examples/savitzky_golay_demo.py` | Noisy two-peak signal: SG keeps the peaks where a moving average flattens them |
 | `examples/lzw_demo.py` | Compression ratio improving with repetition + repetitive vs random comparison |
+| `examples/convolutional_code_demo.py` | Error correction over a noisy channel + coding-gain curve vs uncoded |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7996,6 +7998,25 @@ the KwKwK self-reference (a code for the entry about to be built) by the previou
 -first-char rule. This module implements byte-oriented compression/decompression with an optional
 GIF-style capped code width, verified by exhaustive round-tripping over 300 random strings, repetitive
 data, all-same/all-distinct/empty inputs, the KwKwK case, and the capped-width dictionary reset.
+
+## Convolutional codes and the Viterbi decoder: error correction for noisy channels
+
+Protect a bit stream so channel errors can be undone -- the code that carried Voyager. `convolutional_code.py`:
+
+```
+$ python examples/convolutional_code_demo.py examples/output
+
+  message 1011001011 -> encoded (24 bits); 2 bit errors injected -> decoded exactly
+  decode success at 5% channel error: coded 0.95 vs uncoded 0.41 (coding gain)
+```
+
+A convolutional code feeds the message through a shift register, emitting XOR combinations that
+spread each bit across several outputs. The Viterbi algorithm decodes by dynamic programming on the
+trellis -- keeping one survivor path per register state (least accumulated Hamming distance) and
+tracing back the maximum-likelihood sequence in linear time. This module implements a rate-1/n encoder
+for arbitrary generator polynomials and a Viterbi decoder with zero-tail termination, verified that a
+clean channel decodes exactly, every single-bit error is corrected, Viterbi matches a brute-force
+minimum-distance search over 60 noisy trials, and the classic (7,5) code shows a clear coding gain.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

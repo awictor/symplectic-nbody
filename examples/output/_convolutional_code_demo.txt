@@ -1,0 +1,26 @@
+Convolutional coding + Viterbi decoding over a noisy channel
+
+  rate-1/2 code, constraint length 3, 4 trellis states
+
+  message (10 bits): 1011001011
+  encoded (24 bits): 111000010111111000010111
+  received (2 bit errors at [3, 11]):
+           111100010110111000010111
+  decoded  (10 bits): 1011001011
+  recovered the original exactly: True
+
+  Decode success vs channel bit-error rate (200 messages of 16 bits each):
+    error rate    coded   uncoded
+          0.00     1.00      1.00
+          0.02     0.99      0.73
+          0.05     0.95      0.41
+          0.10     0.74      0.16
+          0.15     0.51      0.07
+          0.20     0.22      0.04
+          0.30     0.02      0.01
+
+  The encoder runs the message through a shift register, emitting XOR combinations that
+  spread each bit across several outputs. Viterbi finds the maximum-likelihood path
+  through the trellis -- the transmitted sequence closest to what arrived -- in linear time.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\convolutional_code.svg

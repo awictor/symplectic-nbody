@@ -379,6 +379,7 @@ def main():
     import cordic_demo
     import savitzky_golay_demo
     import lzw_demo
+    import convolutional_code_demo
 
     import plot_orbits
 
@@ -727,6 +728,7 @@ def main():
     cordic_txt = run("cordic_demo", cordic_demo.main, True)
     savitzky_golay_txt = run("savitzky_golay_demo", savitzky_golay_demo.main, True)
     lzw_txt = run("lzw_demo", lzw_demo.main, True)
+    convolutional_code_txt = run("convolutional_code_demo", convolutional_code_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5388,6 +5390,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("lzw.svg"), "the LZW compression ratio (codes per byte) plunging below the no-compression line as a phrase repeats more -- the dictionary learns longer substrings and encodes each in one code")
             + f'<div class="card">{pre(lzw_txt)}</div>'
+            + '</div>'),
+        section(
+            "Convolutional codes and the Viterbi decoder: error correction for noisy channels",
+            "A CONVOLUTIONAL CODE protects a bit stream by feeding it through a shift register and "
+            "emitting, each step, several output bits that are XORs of the current and recent inputs. "
+            "Unlike a block code it has MEMORY -- each output depends on a sliding window -- spreading "
+            "each bit's information across many transmitted bits, so a burst of channel errors can be "
+            "undone. Convolutional codes carried the Voyager images home and run in every satellite "
+            "and GSM modem. Decoding a noisy stream means finding the input whose encoded output is "
+            "CLOSEST (minimum Hamming distance) to what arrived; brute force over 2^n inputs is "
+            "hopeless, but the VITERBI ALGORITHM does it in linear time by dynamic programming on the "
+            "TRELLIS -- at each step keeping, for every register state, the single survivor path with "
+            "least accumulated error, then tracing back the survivors to recover the "
+            "maximum-likelihood sequence. This module implements a rate-1/n encoder for arbitrary "
+            "generator polynomials and a Viterbi decoder with zero-tail termination, verified that a "
+            "clean channel decodes exactly, that it corrects every single-bit error and most "
+            "well-separated double errors, that Viterbi achieves the same minimum distance as a "
+            "brute-force search over 60 noisy trials, and that the classic (7,5) code shows a clear "
+            "coding gain -- 95% decode success at a 5% channel error rate where uncoded transmission "
+            "manages only 41%.",
+            '<div class="grid">'
+            + svg_card(out("convolutional_code.svg"), "the coding gain: decode success staying high for the coded+Viterbi channel (green) as the bit-error rate rises, while uncoded transmission (red) collapses -- error correction buying reliability")
+            + f'<div class="card">{pre(convolutional_code_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
