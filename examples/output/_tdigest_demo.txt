@@ -1,0 +1,21 @@
+t-digest: p50/p90/p99/p999 from one pass, no storing the stream
+
+  streamed 500,000 latency samples through a digest of 64 centroids
+    memory: 64 centroids vs 500,000 raw values (~7,812x smaller)
+
+  quantile      t-digest      exact      rank error
+    p50.00        18.919      18.879    0.00094
+    p90.00        51.198      51.144    0.00024
+    p99.00        97.711      97.051    0.00032
+    p99.90       150.087     143.090    0.00028
+    p99.99       236.836     195.029    0.00008
+
+  distributed roll-up: 8 per-shard digests merged into one
+    merged p99 = 97.944  vs single-digest p99 = 97.711
+    vs exact p99 = 97.051
+
+  The scale function k(q) = (delta/2pi) arcsin(2q-1) is compressed at the tails, so
+  centroids there hold almost no weight (fine resolution) while a single centroid near the
+  median absorbs a big slice (coarse, but who cares). Merges are associative -> distributed.
+
+  wrote examples/output\tdigest.svg

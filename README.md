@@ -422,6 +422,7 @@ ruins a long non-symplectic integration.
 | `src/thompson_nfa.py` | Linear-time regex engine (Thompson NFA, no catastrophic backtracking) |
 | `src/bluestein.py` | Bluestein chirp-z DFT: O(n log n) transform at any length, even primes |
 | `src/vp_tree.py` | Vantage-point tree: metric-space nearest neighbours (points, strings, vectors) |
+| `src/tdigest.py` | t-digest: streaming quantiles over the whole distribution, sharp tails, mergeable |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -835,6 +836,7 @@ ruins a long non-symplectic integration.
 | `examples/thompson_nfa_demo.py` | Linear match-time curve of the catastrophic-backtracking pattern |
 | `examples/bluestein_demo.py` | Bluestein vs direct DFT timing at prime lengths (6x-36x speedup) |
 | `examples/vp_tree_demo.py` | A k-NN query touching under 10% of points, plus edit-distance lookup |
+| `examples/tdigest_demo.py` | Streaming p50-p9999 from 500k samples in 64 centroids, plus a merge |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9776,6 +9778,26 @@ brute-force scan on hundreds of seeded queries across all those metrics, range q
 filter exactly, and only ~9% of points are touched on a 1000-point query (the pruning fires). Note that
 1 - cosine similarity is not a metric (it breaks the triangle inequality), so the angular distance
 `arccos(cos)/pi` is used instead.
+
+## The t-digest: streaming quantiles with sharp tails
+
+Get p50/p90/p99/p999 from one pass over a stream too big to store. `tdigest.py`:
+
+```
+$ python examples/tdigest_demo.py examples/output
+
+  500,000 latency samples -> 64 centroids (~7800x smaller)
+  p99.99: t-digest 236.8 vs exact 195.0, rank error 0.00008
+  8 per-shard digests merge into one: p99 matches the single digest
+```
+
+The t-digest (Dunning 2013) summarises a stream as centroids sized by a scale function
+`k(q) = (delta/2pi) arcsin(2q-1)` that is compressed at the tails, so the tails get many tiny
+high-resolution centroids while the median gets a few coarse ones -- accurate where it matters. The
+centroid count stays bounded (64 for 500k values), any quantile or CDF can be queried, and merges are
+associative so per-shard digests roll up exactly. Validated against exact sorted quantiles on uniform,
+normal, exponential, and skewed streams: estimates within a few percent, deep-tail (p999) rank error
+under 0.01, bounded size, and split-then-merge matching a single digest.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

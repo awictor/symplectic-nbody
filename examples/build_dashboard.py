@@ -464,6 +464,7 @@ def main():
     import thompson_nfa_demo
     import bluestein_demo
     import vp_tree_demo
+    import tdigest_demo
 
     import plot_orbits
 
@@ -897,6 +898,7 @@ def main():
     thompson_nfa_txt = run("thompson_nfa_demo", thompson_nfa_demo.main, True)
     bluestein_txt = run("bluestein_demo", bluestein_demo.main, True)
     vp_tree_txt = run("vp_tree_demo", vp_tree_demo.main, True)
+    tdigest_txt = run("tdigest_demo", tdigest_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7411,6 +7413,31 @@ def main():
             '<div class="grid">'
             + svg_card(out("vp_tree.svg"), "an 8-nearest-neighbour query in a VP-tree: the yellow query, its green nearest neighbours inside the blue k-th-distance ring, all found by touching under 10% of the grey points thanks to triangle-inequality pruning")
             + f'<div class="card">{pre(vp_tree_txt)}</div>'
+            + '</div>'),
+        section(
+            "The t-digest: streaming quantiles with sharp tails",
+            "Monitoring a service you rarely want just the median: you want p50, p90, p99, p999, and the "
+            "max, all from one pass over a billion latencies you cannot store -- and you want the TAILS "
+            "accurate, because that is where the pain lives. The t-digest (Dunning, 2013) is built for "
+            "exactly this: a small bounded summary that answers ANY quantile, is far more accurate in "
+            "the tails than the middle BY DESIGN, and MERGES so per-shard digests roll up into a global "
+            "one without touching raw data. It stores CENTROIDS (mean, weight) governed by a SCALE "
+            "FUNCTION k(q) = (delta/2pi) arcsin(2q-1): nearly linear in q near the median but compressed "
+            "toward q=0 and q=1, so a fixed step in k spans a wide band of q in the middle (one centroid "
+            "swallows lots of data, coarse resolution -- fine) and a razor-thin band at the tails (many "
+            "tiny centroids, high resolution -- exactly where you need it). The centroid count stays "
+            "bounded around delta however many values stream through, and because the merge is "
+            "associative a fleet of machines each keep a local digest and combine them exactly. This "
+            "module implements the merging t-digest with quantile and CDF queries, digest merging, and a "
+            "buffered add path. Validated against exact quantiles from the fully-sorted data on uniform, "
+            "normal, exponential, and skewed streams of tens of thousands of values -- estimates within "
+            "a few percent, with the deep-tail (p999) RANK error under 0.01, smaller than near the "
+            "median as the design promises; the centroid count stays bounded (64 centroids summarise "
+            "500,000 values, ~7800x smaller); splitting a stream across shards and merging matches a "
+            "single digest and the exact answer; and the CDF is monotone with quantile/CDF inverse.",
+            '<div class="grid">'
+            + svg_card(out("tdigest.svg"), "the t-digest's estimated quantile function (dashed) laid over the exact one (solid) for a heavy-tailed latency stream: they track closely everywhere and tightest along the steep upper tail, the region the scale function resolves most finely")
+            + f'<div class="card">{pre(tdigest_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
