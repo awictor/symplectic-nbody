@@ -474,6 +474,7 @@ def main():
     import rrt_demo
     import kabsch_demo
     import lqr_demo
+    import wavelet_transform_demo
 
     import plot_orbits
 
@@ -917,6 +918,7 @@ def main():
     rrt_txt = run("rrt_demo", rrt_demo.main, True)
     kabsch_txt = run("kabsch_demo", kabsch_demo.main, True)
     lqr_txt = run("lqr_demo", lqr_demo.main, True)
+    wavelet_transform_txt = run("wavelet_transform_demo", wavelet_transform_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7679,6 +7681,32 @@ def main():
             '<div class="grid">'
             + svg_card(out("lqr.svg"), "the cart's position settling to zero under LQR for four control-effort penalties: cheap control (small R, green) settles fast and aggressively, expensive control (large R, orange) more gently -- each optimal for its cost")
             + f'<div class="card">{pre(lqr_txt)}</div>'
+            + '</div>'),
+        section(
+            "The discrete wavelet transform: multiresolution analysis",
+            "The Fourier transform tells you WHICH frequencies a signal contains but not WHEN they occur; "
+            "a lone spike and a steady hum can look alike in the spectrum. WAVELETS solve the "
+            "localisation problem by analysing a signal at multiple scales at once, with basis functions "
+            "compact in both time and frequency, so you learn both what happened and where. That "
+            "MULTIRESOLUTION view sits behind JPEG 2000, denoising, edge detection, and the FBI's "
+            "fingerprint compression. The mechanism is a filter bank applied recursively: at each level a "
+            "pair of quadrature-mirror filters splits the signal into a low-pass APPROXIMATION and a "
+            "high-pass DETAIL, each downsampled by two; recurse on the approximation and you get a "
+            "pyramid -- one small approximation plus detail at every scale, the same total size as the "
+            "input. The HAAR wavelet averages and differences adjacent pairs; DAUBECHIES-4 uses a "
+            "four-tap filter with TWO VANISHING MOMENTS, so it represents smooth signals far more "
+            "sparsely -- a linear ramp compresses to almost nothing. Both are orthogonal, so the "
+            "transform preserves energy and inverts exactly. This module implements single- and "
+            "multi-level forward/inverse DWT (Haar and db4), the separable 2D transform, and a "
+            "threshold-based denoiser. Validated: perfect reconstruction to machine precision across "
+            "wavelets, lengths, and levels; energy preservation (Parseval); the vanishing moments (Haar "
+            "kills a constant's detail, db4 kills a constant AND a linear ramp); a smooth signal's energy "
+            "compacts into a few coefficients (top 16 of 128 hold 98.9%); denoising lowers error toward "
+            "the clean signal; and the 2D transform inverts exactly with a constant image mapping to a "
+            "single approximation coefficient.",
+            '<div class="grid">'
+            + svg_card(out("wavelet_transform.svg"), "top: a signal with a transient burst and its wavelet detail coefficients, the finest level spiking exactly where the burst is (localisation a Fourier spectrum cannot give); bottom: a noisy signal denoised by thresholding small detail coefficients back toward the clean truth")
+            + f'<div class="card">{pre(wavelet_transform_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

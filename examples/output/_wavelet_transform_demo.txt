@@ -1,0 +1,19 @@
+Discrete wavelet transform: seeing a signal at every scale at once
+
+  128-point signal (smooth wave + transient burst near index 80), db4 wavelet:
+    7 detail levels, sizes [64, 32, 16, 8, 4, 2, 1], approx size 1
+    finest-detail peak at coefficient 41 -> signal index ~82 (the burst is localised in time, unlike a Fourier spectrum)
+
+    top  8 of 128 coefficients hold 88.4% of the energy
+    top 16 of 128 coefficients hold 98.9% of the energy
+    top 32 of 128 coefficients hold 100.0% of the energy
+
+  denoising by soft-thresholding detail coefficients:
+    RMS error vs clean -- noisy 0.1010, denoised 0.0731 (1.4x cleaner)
+
+  A filter bank splits the signal into a coarse approximation and fine detail, then recurses
+  on the approximation -- a pyramid that captures both what frequencies are present and WHERE.
+  db4's two vanishing moments make smooth stretches nearly vanish, so energy piles into a few
+  coefficients: the basis of wavelet compression and denoising.
+
+  wrote examples/output\wavelet_transform.svg

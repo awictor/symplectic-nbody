@@ -432,6 +432,7 @@ ruins a long non-symplectic integration.
 | `src/rrt.py` | RRT and RRT* sampling-based motion planning with obstacle avoidance |
 | `src/kabsch.py` | Kabsch/Umeyama optimal point-cloud superposition (rotation + scale via SVD) |
 | `src/lqr.py` | Linear-quadratic regulator: optimal feedback via the discrete Riccati equation |
+| `src/wavelet_transform.py` | Discrete wavelet transform (Haar/db4, 1D + 2D) + denoising |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -855,6 +856,7 @@ ruins a long non-symplectic integration.
 | `examples/rrt_demo.py` | RRT vs RRT* through an obstacle field (RRT* 24% shorter) |
 | `examples/kabsch_demo.py` | Recovering a known rotation/scale and aligning a noisy point cloud |
 | `examples/lqr_demo.py` | A cart settling to zero under LQR for four control-effort penalties |
+| `examples/wavelet_transform_demo.py` | Localising a transient in detail coefficients, plus denoising |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9982,6 +9984,25 @@ feedback `u = -K x` minimising total cost, where K comes from the discrete algeb
 simulation. Validated: P satisfies the Riccati equation, the closed loop is stable and decays to the
 origin, a scalar system matches the closed-form solution, the cost beats every perturbed stabilising
 gain (true minimiser), heavier R gives gentler gains, and a naturally unstable system is stabilized.
+
+## The discrete wavelet transform: multiresolution analysis
+
+Analyse a signal at every scale at once -- what happened and where. `wavelet_transform.py`:
+
+```
+$ python examples/wavelet_transform_demo.py examples/output
+
+  transient burst localised in the finest detail level (index ~82)
+  top 16 of 128 coeffs hold 98.9% energy; denoising 1.4x cleaner
+```
+
+A filter bank splits the signal into a coarse approximation and fine detail, then recurses -- a pyramid
+capturing both frequency content and location. Haar averages/differences adjacent pairs; Daubechies-4
+has two vanishing moments so smooth stretches nearly vanish (sparse representation). Both orthogonal:
+perfect reconstruction, energy preserved. Implements single/multi-level 1D and 2D forward/inverse DWT
+plus threshold denoising. Validated: reconstruction to machine precision across wavelets/lengths/levels,
+Parseval energy, vanishing moments (db4 kills constant + ramp), energy compaction, denoising, and exact
+2D inversion.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
