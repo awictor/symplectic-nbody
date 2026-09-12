@@ -462,6 +462,7 @@ def main():
     import poisson_disk_demo
     import low_discrepancy_demo
     import thompson_nfa_demo
+    import bluestein_demo
 
     import plot_orbits
 
@@ -893,6 +894,7 @@ def main():
     poisson_disk_txt = run("poisson_disk_demo", poisson_disk_demo.main, True)
     low_discrepancy_txt = run("low_discrepancy_demo", low_discrepancy_demo.main, True)
     thompson_nfa_txt = run("thompson_nfa_demo", thompson_nfa_demo.main, True)
+    bluestein_txt = run("bluestein_demo", bluestein_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7358,6 +7360,31 @@ def main():
             '<div class="grid">'
             + svg_card(out("thompson_nfa.svg"), "match time of the catastrophic-backtracking pattern (a*)*b against strings of increasing length: the NFA engine scales linearly (each doubling of the input roughly doubles the time) where a backtracking engine would explode exponentially")
             + f'<div class="card">{pre(thompson_nfa_txt)}</div>'
+            + '</div>'),
+        section(
+            "Bluestein's algorithm: the FFT for any length, even a prime",
+            "The Cooley-Tukey FFT is fast only when the length factors nicely -- ideally a power of two. "
+            "Hand it a prime length like 1021 and it degrades to the O(n^2) naive sum, or forces you to "
+            "zero-pad and thereby change the transform you meant to compute. Bluestein's algorithm "
+            "(1968), the chirp z-transform, removes the restriction: it computes the EXACT discrete "
+            "Fourier transform of ANY length n in O(n log n), prime or not, by turning the DFT into a "
+            "CONVOLUTION a power-of-two FFT can do. The move is algebraic -- the DFT exponent n*k is "
+            "rewritten via n*k = (n^2 + k^2 - (k-n)^2)/2, which splits the transform into a chirp "
+            "premultiply, a convolution against a second chirp, and a chirp postmultiply. The "
+            "convolution of length n is embedded in a circular convolution of the next power of two, so "
+            "the fast radix-2 engine underneath only ever sees a friendly length while the chirps carry "
+            "all the length-n structure. (The sequence exp(i pi m^2 / N) is a sampled linear frequency "
+            "sweep -- a chirp, as in radar.) This module implements the arbitrary-length DFT, its "
+            "inverse, and a linear convolution, on a self-contained iterative radix-2 FFT. Validated "
+            "against a direct O(n^2) DFT from the definition at powers of two, odd composites, and "
+            "PRIMES (7, 13, 101, 251) -- matching to machine precision, exactly the lengths the radix-2 "
+            "FFT cannot handle -- plus round-trip inversion, linearity, the known transforms of a "
+            "constant and a pure exponential, and convolution against a naive reference. On a 251-point "
+            "prime signal the Bluestein output matches the direct DFT to about 1e-12, and the speedup "
+            "over the direct sum grows from 6x at n=127 to 36x at n=1021.",
+            '<div class="grid">'
+            + svg_card(out("bluestein.svg"), "DFT time against signal length at prime lengths: the direct O(n^2) sum curves steeply upward while Bluestein's O(n log n) transform stays nearly flat, the speedup widening as the length grows")
+            + f'<div class="card">{pre(bluestein_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

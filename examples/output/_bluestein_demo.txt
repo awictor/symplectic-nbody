@@ -1,0 +1,17 @@
+Bluestein: the FFT for any length, even a prime
+
+  length 251 (prime) signal with tones at [8, 23, 60]:
+    Bluestein vs direct DFT max error: 4.63e-12  (identical to machine precision)
+    round-trip idft(dft(x)) error: 3.77e-14
+
+  timing Bluestein O(n log n) vs direct O(n^2):
+    n=  127: Bluestein    0.79 ms   direct     4.94 ms   speedup   6.3x
+    n=  251: Bluestein    1.80 ms   direct    18.94 ms   speedup  10.5x
+    n=  509: Bluestein    3.96 ms   direct    78.70 ms   speedup  19.9x
+    n= 1021: Bluestein    8.47 ms   direct   325.38 ms   speedup  38.4x
+
+  Bluestein rewrites the DFT exponent n*k = (n^2 + k^2 - (k-n)^2)/2, turning the transform
+  into a convolution that a power-of-two FFT computes in O(n log n) -- so ANY length becomes
+  fast, no zero-padding that would change the transform, no O(n^2) fallback for primes.
+
+  wrote examples/output\bluestein.svg

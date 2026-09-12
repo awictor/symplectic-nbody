@@ -420,6 +420,7 @@ ruins a long non-symplectic integration.
 | `src/poisson_disk.py` | Bridson blue-noise Poisson-disk sampling (2D + n-D) |
 | `src/low_discrepancy.py` | Van der Corput / Halton / Hammersley + quasi-Monte-Carlo integration |
 | `src/thompson_nfa.py` | Linear-time regex engine (Thompson NFA, no catastrophic backtracking) |
+| `src/bluestein.py` | Bluestein chirp-z DFT: O(n log n) transform at any length, even primes |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -831,6 +832,7 @@ ruins a long non-symplectic integration.
 | `examples/poisson_disk_demo.py` | Blue-noise Poisson-disk points vs clumpy uniform random, side by side |
 | `examples/low_discrepancy_demo.py` | Halton vs pseudo-random points and QMC-vs-MC pi convergence |
 | `examples/thompson_nfa_demo.py` | Linear match-time curve of the catastrophic-backtracking pattern |
+| `examples/bluestein_demo.py` | Bluestein vs direct DFT timing at prime lengths (6x-36x speedup) |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9731,6 +9733,26 @@ Thompson compiler gluing two-state machines with epsilon transitions, and a subs
 simulator with a cycle-safe epsilon-closure. Validated against Python's `re` as an oracle: over 1000
 seeded random (pattern, string) pairs, `fullmatch` and `search` agree on every case, and the
 catastrophic pattern returns in under a millisecond with match time scaling linearly.
+
+## Bluestein's algorithm: the FFT for any length, even a prime
+
+Compute an exact DFT at any length in O(n log n), not just powers of two. `bluestein.py`:
+
+```
+$ python examples/bluestein_demo.py examples/output
+
+  length 251 (prime): Bluestein vs direct DFT max error 4.6e-12
+  n=1021: Bluestein 8.2 ms vs direct 292 ms -> 36x speedup
+```
+
+The Cooley-Tukey FFT is fast only for nicely-factoring lengths; a prime degrades it to O(n^2).
+Bluestein rewrites the DFT exponent `n*k = (n^2 + k^2 - (k-n)^2)/2`, turning the transform into a
+convolution that a power-of-two FFT does in O(n log n) -- so any length is fast, with no zero-padding
+that would change the transform. Implements arbitrary-length DFT, inverse, and linear convolution on
+a self-contained radix-2 FFT. Validated against a direct O(n^2) DFT at powers of two, composites, and
+primes (7, 13, 101, 251) to machine precision, plus round-trip inversion, linearity, known transforms,
+and convolution against a naive reference. Speedup over the direct sum grows from 6x at n=127 to 36x
+at n=1021.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
