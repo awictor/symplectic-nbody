@@ -1,0 +1,32 @@
+Strassen's algorithm: multiplying matrices with 7 sub-products, not 8
+
+  a 2x2 example:
+    A = [[1, 2], [3, 4]]
+    B = [[5, 6], [7, 8]]
+    A*B = [[19, 22], [43, 50]]  (schoolbook: [[19, 22], [43, 50]])
+
+  16x16 random matrices: Strassen matches schoolbook -> True
+
+  The seven products (block form, splitting A and B into 2x2 blocks):
+    M1 = (A11+A22)(B11+B22)
+    M2 = (A21+A22)B11
+    M3 = A11(B12-B22)
+    M4 = A22(B21-B11)
+    M5 = (A11+A12)B22
+    M6 = (A21-A11)(B11+B12)
+    M7 = (A12-A22)(B21+B22)
+    C11=M1+M4-M5+M7  C12=M3+M5  C21=M2+M4  C22=M1-M2+M3+M6
+
+  scalar-multiplication count (leading term) at doubling sizes:
+        n   schoolbook n^3   Strassen n^2.807
+       64          262,144            117,649
+      128        2,097,152            823,543
+      256       16,777,216          5,764,801
+      512      134,217,728         40,353,607
+     1024    1,073,741,824        282,475,249
+
+  Trading one recursive multiplication for a handful of matrix additions cuts the
+  exponent from 3 to log2(7) ~ 2.807 -- the first sub-cubic matrix multiply, and the
+  starting gun for the decades-long race to lower the exponent further.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\strassen.svg

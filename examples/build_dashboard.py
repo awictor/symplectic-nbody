@@ -443,6 +443,7 @@ def main():
     import tanh_sinh_demo
     import ntt_demo
     import karatsuba_demo
+    import strassen_demo
 
     import plot_orbits
 
@@ -855,6 +856,7 @@ def main():
     tanh_sinh_txt = run("tanh_sinh_demo", tanh_sinh_demo.main, True)
     ntt_txt = run("ntt_demo", ntt_demo.main, True)
     karatsuba_txt = run("karatsuba_demo", karatsuba_demo.main, True)
+    strassen_txt = run("strassen_demo", strassen_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6910,6 +6912,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("karatsuba.svg"), "the runtime O(n^e) of schoolbook (e=2), Karatsuba (e=1.585), and Toom-3 (e=1.465): each algebraic trick that trades a multiplication for a few additions drops the exponent, and for thousand-digit numbers that gap is enormous")
             + f'<div class="card">{pre(karatsuba_txt)}</div>'
+            + '</div>'),
+        section(
+            "Strassen: sub-cubic matrix multiplication",
+            "Multiplying two n x n matrices the ordinary way costs n^3 scalar multiplications. In 1969 "
+            "Strassen shattered the belief that this was optimal: split each matrix into four "
+            "n/2 x n/2 blocks, and the four output blocks can be assembled from only SEVEN block "
+            "products instead of the naive eight -- M1..M7 formed from block sums and differences, "
+            "recombined by pure additions (C11=M1+M4-M5+M7, C12=M3+M5, C21=M2+M4, C22=M1-M2+M3+M6). "
+            "Applied recursively the exponent drops from 3 to log2(7) ~ 2.807, the first sub-cubic "
+            "matrix multiply and the opening move in the decades-long race to lower it further. It "
+            "matters because matrix multiplication is the core of linear algebra, graph algorithms, "
+            "and machine learning, so shaving the exponent compounds across everything above it. "
+            "Below a size cutoff the recursion falls back to plain multiplication, and "
+            "non-power-of-two or rectangular matrices are zero-padded to the next power of two. This "
+            "module implements Strassen with padding for arbitrary conformable shapes over exact "
+            "integers or floats. Verified against the schoolbook O(n^3) product -- identical on "
+            "hundreds of random matrices of assorted shapes and sizes, including deep recursion, "
+            "floats, and large-integer matrices -- plus identity, associativity, and known products.",
+            '<div class="grid">'
+            + svg_card(out("strassen.svg"), "the scalar-multiplication count vs matrix size for schoolbook (n^3) and Strassen (n^2.807) on a log-log scale: the gap widens steadily with n, so trading one of eight block products for extra additions pays off ever more at scale")
+            + f'<div class="card">{pre(strassen_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

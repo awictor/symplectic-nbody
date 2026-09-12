@@ -401,6 +401,7 @@ ruins a long non-symplectic integration.
 | `src/tanh_sinh.py` | Tanh-sinh (double-exponential) quadrature for endpoint singularities |
 | `src/ntt.py` | Number-theoretic transform: exact integer convolution + big-int multiply |
 | `src/karatsuba.py` | Karatsuba & Toom-3 fast multiplication + Karatsuba polynomial multiply |
+| `src/strassen.py` | Strassen sub-cubic matrix multiplication (7 block products, padded) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -793,6 +794,7 @@ ruins a long non-symplectic integration.
 | `examples/tanh_sinh_demo.py` | Singular integrals nailed vs Simpson + the clustering abscissae |
 | `examples/ntt_demo.py` | Exact polynomial product + big-integer multiply by digit convolution |
 | `examples/karatsuba_demo.py` | Big-int products + the complexity-exponent curves of each method |
+| `examples/strassen_demo.py` | The seven block products + n^3 vs n^2.807 cost curves |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9343,6 +9345,24 @@ minus the two already known -- 3 sub-multiplications instead of 4. Toom-3 splits
 part-polynomials at 5 points, and interpolates -- 5 instead of 9. Verified against Python's exact bignum
 multiply and an independent schoolbook limb reference on hundreds of random inputs (including
 1000-digit numbers, negatives, edge cases), with the polynomial version matched to direct convolution.
+
+## Strassen: sub-cubic matrix multiplication
+
+Multiply matrices with seven block products instead of eight. `strassen.py`:
+
+```
+$ python examples/strassen_demo.py examples/output
+
+  16x16 random matrices: Strassen matches schoolbook; exponent log2(7) ~ 2.807
+  n=1024: schoolbook 1.07B mults vs Strassen 282M
+```
+
+Split each matrix into four n/2 blocks; the four output blocks assemble from seven block products
+(M1..M7 of block sums/differences) recombined by additions, so recursively the exponent drops from 3 to
+log2(7). Below a cutoff it falls back to plain multiplication; non-power-of-two and rectangular shapes
+are zero-padded. Verified against the schoolbook O(n^3) product -- identical on hundreds of random
+matrices of assorted shapes and sizes including deep recursion, floats, and large-integer matrices --
+plus identity, associativity, and known products.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
