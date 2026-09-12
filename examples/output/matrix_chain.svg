@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" font-family="monospace">
+<rect width="760" height="430" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="18">Matrix-chain DP cost table m[i][j]</text>
+<text x="20" y="47" fill="#8b949e" font-size="12">m[i][j] = min cost to multiply matrices i..j; brighter = costlier; the corner m[1][n] is the answer</text>
+<rect x="80.0" y="80.0" width="49.7" height="49.7" fill="rgb(30,60,90)"/>
+<text x="104.8" y="108.8" fill="#e6edf3" font-size="9" text-anchor="middle">0</text>
+<rect x="131.7" y="80.0" width="49.7" height="49.7" fill="rgb(110,180,240)"/>
+<text x="156.5" y="108.8" fill="#e6edf3" font-size="9" text-anchor="middle">15750</text>
+<rect x="183.3" y="80.0" width="49.7" height="49.7" fill="rgb(70,120,165)"/>
+<text x="208.2" y="108.8" fill="#e6edf3" font-size="9" text-anchor="middle">7875</text>
+<rect x="235.0" y="80.0" width="49.7" height="49.7" fill="rgb(77,131,179)"/>
+<text x="259.8" y="108.8" fill="#e6edf3" font-size="9" text-anchor="middle">9375</text>
+<rect x="286.7" y="80.0" width="49.7" height="49.7" fill="rgb(90,150,203)"/>
+<text x="311.5" y="108.8" fill="#e6edf3" font-size="9" text-anchor="middle">11875</text>
+<rect x="338.3" y="80.0" width="49.7" height="49.7" fill="rgb(106,175,234)"/>
+<text x="363.2" y="108.8" fill="#e6edf3" font-size="9" text-anchor="middle">15125</text>
+<rect x="131.7" y="131.7" width="49.7" height="49.7" fill="rgb(30,60,90)"/>
+<text x="156.5" y="160.5" fill="#e6edf3" font-size="9" text-anchor="middle">0</text>
+<rect x="183.3" y="131.7" width="49.7" height="49.7" fill="rgb(43,80,115)"/>
+<text x="208.2" y="160.5" fill="#e6edf3" font-size="9" text-anchor="middle">2625</text>
+<rect x="235.0" y="131.7" width="49.7" height="49.7" fill="rgb(52,93,131)"/>
+<text x="259.8" y="160.5" fill="#e6edf3" font-size="9" text-anchor="middle">4375</text>
+<rect x="286.7" y="131.7" width="49.7" height="49.7" fill="rgb(66,114,157)"/>
+<text x="311.5" y="160.5" fill="#e6edf3" font-size="9" text-anchor="middle">7125</text>
+<rect x="338.3" y="131.7" width="49.7" height="49.7" fill="rgb(83,140,190)"/>
+<text x="363.2" y="160.5" fill="#e6edf3" font-size="9" text-anchor="middle">10500</text>
+<rect x="183.3" y="183.3" width="49.7" height="49.7" fill="rgb(30,60,90)"/>
+<text x="208.2" y="212.2" fill="#e6edf3" font-size="9" text-anchor="middle">0</text>
+<rect x="235.0" y="183.3" width="49.7" height="49.7" fill="rgb(33,65,97)"/>
+<text x="259.8" y="212.2" fill="#e6edf3" font-size="9" text-anchor="middle">750</text>
+<rect x="286.7" y="183.3" width="49.7" height="49.7" fill="rgb(42,79,113)"/>
+<text x="311.5" y="212.2" fill="#e6edf3" font-size="9" text-anchor="middle">2500</text>
+<rect x="338.3" y="183.3" width="49.7" height="49.7" fill="rgb(57,100,141)"/>
+<text x="363.2" y="212.2" fill="#e6edf3" font-size="9" text-anchor="middle">5375</text>
+<rect x="235.0" y="235.0" width="49.7" height="49.7" fill="rgb(30,60,90)"/>
+<text x="259.8" y="263.8" fill="#e6edf3" font-size="9" text-anchor="middle">0</text>
+<rect x="286.7" y="235.0" width="49.7" height="49.7" fill="rgb(35,67,99)"/>
+<text x="311.5" y="263.8" fill="#e6edf3" font-size="9" text-anchor="middle">1000</text>
+<rect x="338.3" y="235.0" width="49.7" height="49.7" fill="rgb(47,86,123)"/>
+<text x="363.2" y="263.8" fill="#e6edf3" font-size="9" text-anchor="middle">3500</text>
+<rect x="286.7" y="286.7" width="49.7" height="49.7" fill="rgb(30,60,90)"/>
+<text x="311.5" y="315.5" fill="#e6edf3" font-size="9" text-anchor="middle">0</text>
+<rect x="338.3" y="286.7" width="49.7" height="49.7" fill="rgb(55,98,137)"/>
+<text x="363.2" y="315.5" fill="#e6edf3" font-size="9" text-anchor="middle">5000</text>
+<rect x="338.3" y="338.3" width="49.7" height="49.7" fill="rgb(30,60,90)"/>
+<text x="363.2" y="367.2" fill="#e6edf3" font-size="9" text-anchor="middle">0</text>
+<rect x="80.0" y="80.0" width="49.7" height="49.7" fill="none" stroke="#ffd43b" stroke-width="3"/>
+<text x="400" y="106" fill="#ffd43b" font-size="12">answer = m[1][6] = 15,125</text>
+<text x="106" y="72" fill="#8b949e" font-size="11" text-anchor="middle">1</text>
+<text x="70" y="110" fill="#8b949e" font-size="11" text-anchor="end">1</text>
+<text x="158" y="72" fill="#8b949e" font-size="11" text-anchor="middle">2</text>
+<text x="70" y="162" fill="#8b949e" font-size="11" text-anchor="end">2</text>
+<text x="209" y="72" fill="#8b949e" font-size="11" text-anchor="middle">3</text>
+<text x="70" y="213" fill="#8b949e" font-size="11" text-anchor="end">3</text>
+<text x="261" y="72" fill="#8b949e" font-size="11" text-anchor="middle">4</text>
+<text x="70" y="265" fill="#8b949e" font-size="11" text-anchor="end">4</text>
+<text x="312" y="72" fill="#8b949e" font-size="11" text-anchor="middle">5</text>
+<text x="70" y="316" fill="#8b949e" font-size="11" text-anchor="end">5</text>
+<text x="364" y="72" fill="#8b949e" font-size="11" text-anchor="middle">6</text>
+<text x="70" y="368" fill="#8b949e" font-size="11" text-anchor="end">6</text>
+</svg>

@@ -395,6 +395,7 @@ def main():
     import chebyshev_demo
     import gibbs_demo
     import louvain_demo
+    import matrix_chain_demo
 
     import plot_orbits
 
@@ -759,6 +760,7 @@ def main():
     chebyshev_txt = run("chebyshev_demo", chebyshev_demo.main, True)
     gibbs_txt = run("gibbs_demo", gibbs_demo.main, True)
     louvain_txt = run("louvain_demo", louvain_demo.main, True)
+    matrix_chain_txt = run("matrix_chain_demo", matrix_chain_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5782,6 +5784,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("louvain.svg"), "a network of four dense groups joined by thin bridges, each community coloured by Louvain -- the red bridging edges are the sparse links between clusters, the gray edges the dense within-community ties")
             + f'<div class="card">{pre(louvain_txt)}</div>'
+            + '</div>'),
+        section(
+            "Matrix-chain multiplication: the optimal order by dynamic programming",
+            "Matrix multiplication is associative -- (AB)C = A(BC) -- but the WORK is not: multiplying "
+            "a p x q matrix by q x r costs p*q*r operations, so the order of products can change the "
+            "total cost by orders of magnitude. Given the dimensions, which PARENTHESIZATION "
+            "minimizes the scalar multiplications? The number of orderings is a Catalan number "
+            "(exponential), but DYNAMIC PROGRAMMING solves it in O(n^3) -- the textbook example of "
+            "optimal substructure. The insight: the best way to multiply matrices i..j splits at some "
+            "k into (i..k)(k+1..j) with both halves themselves optimal, so m[i][j] = min over k of "
+            "m[i][k] + m[k+1][j] + p_{i-1} p_k p_j, filled by increasing chain length, with the base "
+            "case m[i][i] = 0. Recording the minimizing split reconstructs the parenthesization. This "
+            "is the canonical interval DP, shared with optimal binary search trees and polygon "
+            "triangulation. This module computes the minimum cost and optimal parenthesization, "
+            "verified against brute-force search over all Catalan-many orderings for short chains "
+            "that the DP finds the true minimum, that the reconstructed order achieves that cost, "
+            "that it beats the naive left-to-right order on skewed dimensions (94% saved on one "
+            "example), and on the classic CLRS instance (15125).",
+            '<div class="grid">'
+            + svg_card(out("matrix_chain.svg"), "the DP cost table m[i][j] filled diagonal by diagonal (min cost to multiply matrices i through j), the gold-boxed top-right corner holding the answer for the whole chain")
+            + f'<div class="card">{pre(matrix_chain_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -353,6 +353,7 @@ ruins a long non-symplectic integration.
 | `src/chebyshev.py` | Chebyshev polynomial approximation (Clenshaw eval, cures the Runge phenomenon) |
 | `src/gibbs.py` | Gibbs sampling for multivariate Gaussians and generic conditionals |
 | `src/louvain.py` | Louvain community detection by modularity optimization (weighted graphs) |
+| `src/matrix_chain.py` | Matrix-chain optimal parenthesization by interval DP (O(n^3)) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -697,6 +698,7 @@ ruins a long non-symplectic integration.
 | `examples/chebyshev_demo.py` | Geometric convergence + Chebyshev taming Runge's function where equispaced blows up |
 | `examples/gibbs_demo.py` | A correlated Gaussian sampled coordinate-wise, cloud filling the covariance ellipse |
 | `examples/louvain_demo.py` | Four planted communities recovered, coloured, with the bridging edges highlighted |
+| `examples/matrix_chain_demo.py` | Optimal vs left-to-right cost + the DP cost table as a heatmap |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8331,6 +8333,24 @@ modularity. This module implements it on weighted undirected graphs, verified th
 modularity matches a direct computation, planted communities (cliques joined by sparse bridges) are
 recovered exactly, a complete graph gives low modularity, the partition beats both trivial ones, and
 weighted edges are respected.
+
+## Matrix-chain multiplication: the optimal order by dynamic programming
+
+The cheapest parenthesization of a matrix product, in O(n^3) not exponential. `matrix_chain.py`:
+
+```
+$ python examples/matrix_chain_demo.py examples/output
+
+  CLRS chain: ((A1(A2A3))((A4A5)A6)) -> 15,125 ops vs 40,500 left-to-right (63% saved)
+  skewed chain [50,5,100,5,100,5]: 6,375 vs 100,000 (94% saved)
+```
+
+The best way to multiply matrices i..j splits at some k with both halves optimal, so
+m[i][j] = min_k m[i][k] + m[k+1][j] + p_{i-1} p_k p_j, filled by increasing chain length; recording
+each split reconstructs the parenthesization. This module computes the minimum cost and optimal order,
+verified against brute-force search over all Catalan-many orderings for short chains, that the
+reconstructed order achieves the cost, that it beats left-to-right on skewed dimensions, and on the
+CLRS instance (15125).
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

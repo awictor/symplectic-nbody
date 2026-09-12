@@ -1,0 +1,24 @@
+Matrix-chain multiplication: the cheapest order to multiply a chain
+
+  6 matrices with dimensions:
+    A1: 30 x 35
+    A2: 35 x 15
+    A3: 15 x 5
+    A4: 5 x 10
+    A5: 10 x 20
+    A6: 20 x 25
+
+  optimal parenthesization: ((A1(A2A3))((A4A5)A6))
+    optimal cost:        15,125 scalar multiplications
+    left-to-right cost:  40,500
+    savings: 62.7%
+
+  A skewed chain where order matters even more:
+    dims [50, 5, 100, 5, 100, 5]: optimal 6,375 vs left-to-right 100,000 (94% saved)
+    optimal order: (A1((A2A3)(A4A5)))
+
+  The number of parenthesizations grows as a Catalan number (exponential), but the
+  DP fills an n x n cost table in O(n^3): m[i][j] = min over split k of the cost of the
+  two halves plus multiplying them. Recording each split reconstructs the optimal order.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\matrix_chain.svg
