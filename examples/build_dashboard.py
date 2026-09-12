@@ -404,6 +404,7 @@ def main():
     import welzl_demo
     import cuckoo_filter_demo
     import dsu_rollback_demo
+    import interval_scheduling_demo
 
     import plot_orbits
 
@@ -777,6 +778,7 @@ def main():
     welzl_txt = run("welzl_demo", welzl_demo.main, True)
     cuckoo_filter_txt = run("cuckoo_filter_demo", cuckoo_filter_demo.main, True)
     dsu_rollback_txt = run("dsu_rollback_demo", dsu_rollback_demo.main, True)
+    interval_scheduling_txt = run("interval_scheduling_demo", interval_scheduling_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5994,6 +5996,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("dsu_rollback.svg"), "the component count dropping as edges merge groups, then jumping back up at the red rollback points -- the undo that path-compressed union-find cannot provide")
             + f'<div class="card">{pre(dsu_rollback_txt)}</div>'
+            + '</div>'),
+        section(
+            "Weighted interval scheduling: the most valuable non-overlapping jobs",
+            "Given jobs with a start, finish, and WEIGHT, pick a subset of mutually non-overlapping "
+            "jobs maximizing total weight -- booking a resource for the most valuable non-conflicting "
+            "requests. With equal weights this is the classic activity-selection, solved by an "
+            "earliest-finish greedy, but arbitrary weights defeat greed and need DYNAMIC PROGRAMMING. "
+            "Sort jobs by finish time; for job i let p(i) be the latest job finishing at or before i "
+            "starts (binary search); then opt(i) = max(opt(i-1), weight_i + opt(p(i))) -- skip job i "
+            "or take it plus the best schedule among jobs finishing before it begins. Filling opt is "
+            "O(n log n) and tracing back the max choices recovers the chosen set. This module "
+            "implements the weighted DP (with the selected jobs) and the greedy count-maximizing "
+            "version, verified against brute force over all 2^n subsets that the DP finds the true "
+            "maximum weight, the returned jobs are genuinely non-overlapping and sum to that weight, "
+            "the greedy count matches the maximum independent set of intervals, equal weights make "
+            "the DP agree with the greedy count, and a high-value long job correctly beats several "
+            "small ones. In the demo the DP's optimum of 60 beats both a count-maximizing greedy (50) "
+            "and a highest-value-first greedy (40).",
+            '<div class="grid">'
+            + svg_card(out("interval_scheduling.svg"), "a Gantt chart of job requests on the time axis, bar height showing value, with the optimal non-overlapping set highlighted green -- the maximum-value schedule no greedy heuristic finds")
+            + f'<div class="card">{pre(interval_scheduling_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

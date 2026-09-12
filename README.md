@@ -362,6 +362,7 @@ ruins a long non-symplectic integration.
 | `src/welzl.py` | Welzl's smallest enclosing circle (expected O(n), iterative move-to-front) |
 | `src/cuckoo_filter.py` | Cuckoo filter: approximate membership with deletion (cuckoo hashing) |
 | `src/dsu_rollback.py` | Rollback disjoint-set union (snapshot/undo) for offline dynamic connectivity |
+| `src/interval_scheduling.py` | Weighted interval scheduling DP + greedy activity selection |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -715,6 +716,7 @@ ruins a long non-symplectic integration.
 | `examples/welzl_demo.py` | A point cloud's smallest enclosing circle with its support points |
 | `examples/cuckoo_filter_demo.py` | Deletion + false-positive rate shrinking with fingerprint bits |
 | `examples/dsu_rollback_demo.py` | Component count over edge additions and rollbacks on a timeline |
+| `examples/interval_scheduling_demo.py` | A Gantt chart with the optimal-value jobs vs greedy heuristics |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8515,6 +8517,24 @@ This module implements union/find/component-count/snapshot/rollback, verified ag
 recompute that connectivity always matches a fresh union-find over the live edges (50 graphs), rolling
 back restores connectivity and count exactly, nested snapshots and full rollback work, and redundant
 unions roll back cleanly.
+
+## Weighted interval scheduling: the most valuable non-overlapping jobs
+
+Pick the highest-value non-conflicting jobs -- where greedy fails and DP wins. `interval_scheduling.py`:
+
+```
+$ python examples/interval_scheduling_demo.py examples/output
+
+  8 booking requests -> optimal value 60 (jobs A, C, E)
+  count-maximizing greedy: 4 jobs, value 50; highest-value-first greedy: 40
+  only the DP guarantees the optimum
+```
+
+Sort by finish time; opt(i) = max(skip job i, weight_i + opt(p(i))) where p(i) is the latest job
+finishing before i starts (binary search), O(n log n). This module implements the weighted DP with
+the chosen jobs and the greedy count-maximizer, verified against brute force over all 2^n subsets that
+the DP finds the true maximum, the returned jobs are non-overlapping and sum to it, the greedy count
+matches the maximum independent set, and equal weights reduce the DP to the greedy count.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

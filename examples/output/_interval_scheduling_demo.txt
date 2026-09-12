@@ -1,0 +1,23 @@
+Weighted interval scheduling: the most valuable non-conflicting jobs
+
+  Requests (start, finish, value):
+    A: [0, 3) value 20
+    B: [1, 4) value 5
+    C: [3, 5) value 10
+    D: [4, 7) value 25
+    E: [5, 9) value 30
+    F: [6, 8) value 8
+    G: [8, 10) value 12
+    H: [2, 9) value 40
+
+  Optimal schedule (weighted DP): value 60.0, jobs ['A', 'C', 'E']
+  Count-maximizing greedy: 4 jobs ['A', 'C', 'F', 'G'], value 50
+  Greedy highest-value-first: value 40 (greedy is not optimal in general)
+
+  -> the DP's 60.0 beats both greedies; only dynamic programming guarantees the optimum.
+
+  Sort by finish time; for each job find p(i), the latest job finishing before it starts
+  (binary search). Then opt(i) = max(skip job i, value_i + opt(p(i))). O(n log n), and
+  tracing back the max choices recovers the chosen set. Equal weights reduce to the greedy.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\interval_scheduling.svg
