@@ -339,6 +339,7 @@ ruins a long non-symplectic integration.
 | `src/lzw.py` | LZW adaptive dictionary compression/decompression (GIF-style, capped code width) |
 | `src/convolutional_code.py` | Convolutional encoder + Viterbi maximum-likelihood decoder for noisy channels |
 | `src/ear_clipping.py` | Ear-clipping polygon triangulation (concave polygons, n-2 triangles) |
+| `src/mlp.py` | Multi-layer perceptron + backpropagation (sigmoid/tanh/ReLU, momentum SGD) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -669,6 +670,7 @@ ruins a long non-symplectic integration.
 | `examples/lzw_demo.py` | Compression ratio improving with repetition + repetitive vs random comparison |
 | `examples/convolutional_code_demo.py` | Error correction over a noisy channel + coding-gain curve vs uncoded |
 | `examples/ear_clipping_demo.py` | A star, L-shape, and arrow triangulated with exact area conservation |
+| `examples/mlp_demo.py` | XOR solved + a learned circular decision boundary a linear model can't draw |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8037,6 +8039,25 @@ no other vertex; ear clipping snips it and repeats, yielding n-2 triangles in O(
 triangulates convex or concave polygons in either winding order, verified against exact references:
 the triangle count is always n-2, the areas sum exactly to the polygon's (shoelace), every triangle
 centroid lies inside, and stars, L-shapes, arrows, and a deeply non-convex comb triangulate correctly.
+
+## Multi-layer perceptron and backpropagation
+
+A neural net learning what no linear model can. `mlp.py`:
+
+```
+$ python examples/mlp_demo.py examples/output
+
+  XOR: [0,0]->0.004 [0,1]->0.991 [1,0]->0.991 [1,1]->0.011 (loss 0.13 -> 4e-5)
+  a linear model gets only 3/4 right
+  circular decision boundary: accuracy 0.993
+```
+
+The MLP stacks nonlinear layers (a universal approximator with one hidden layer) and learns by
+backpropagation -- the chain rule run backward, so the whole gradient costs one backward pass. This
+module implements a feedforward net with sigmoid/tanh/ReLU activations, full backprop, and momentum
+mini-batch SGD, verified that its analytic gradients match finite differences to 8e-11 (the
+definitive backprop test), that it learns XOR (which a linear model can't), fits a nonlinear
+regression, and separates a circular decision boundary to 99%.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

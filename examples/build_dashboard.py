@@ -381,6 +381,7 @@ def main():
     import lzw_demo
     import convolutional_code_demo
     import ear_clipping_demo
+    import mlp_demo
 
     import plot_orbits
 
@@ -731,6 +732,7 @@ def main():
     lzw_txt = run("lzw_demo", lzw_demo.main, True)
     convolutional_code_txt = run("convolutional_code_demo", convolutional_code_demo.main, True)
     ear_clipping_txt = run("ear_clipping_demo", ear_clipping_demo.main, True)
+    mlp_txt = run("mlp_demo", mlp_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5437,6 +5439,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("ear_clipping.svg"), "a star, an L-shape, and an arrow each split into n-2 triangles by ear clipping (alternating fills), the white outline showing they tile the interior exactly")
             + f'<div class="card">{pre(ear_clipping_txt)}</div>'
+            + '</div>'),
+        section(
+            "Multi-layer perceptron and backpropagation",
+            "A single linear classifier cannot learn XOR -- no straight line separates its classes. "
+            "The MULTI-LAYER PERCEPTRON stacks layers of neurons with NONLINEAR activations, and with "
+            "even one hidden layer becomes a UNIVERSAL APPROXIMATOR that can represent any continuous "
+            "function -- the foundation of deep learning. It learns by BACKPROPAGATION, the chain "
+            "rule applied systematically: a forward pass gives the prediction and loss, then the "
+            "loss's gradient flows BACKWARD layer by layer, each layer computing its weights' "
+            "contribution to the error from the gradient handed down from above. Because each layer "
+            "reuses the downstream gradient, the whole gradient is computed in one backward pass "
+            "costing the same as the forward pass -- the efficiency that makes training deep "
+            "networks feasible. Gradient descent then nudges every weight down its gradient. This "
+            "module implements a feedforward MLP with configurable layers and activations (sigmoid, "
+            "tanh, ReLU), full backprop, and mini-batch gradient descent with momentum, verified "
+            "that its analytic gradients match finite-difference gradients to 8e-11 (the definitive "
+            "backprop-correctness test), that it learns the XOR a linear model cannot (loss to 4e-5, "
+            "all four points correct), that it fits a nonlinear regression, that it separates blobs "
+            "to 100% and a circular decision boundary to 99%, and that training is reproducible from "
+            "a seed.",
+            '<div class="grid">'
+            + svg_card(out("mlp.svg"), "left: the XOR training loss plunging on a log scale; right: the network's learned output over the plane forming a circular decision boundary (yellow = the true circle) that no linear model could draw")
+            + f'<div class="card">{pre(mlp_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

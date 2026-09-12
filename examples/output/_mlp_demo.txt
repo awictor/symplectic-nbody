@@ -1,0 +1,18 @@
+Multi-layer perceptron + backpropagation
+
+  XOR (not linearly separable):
+    [0, 0] -> 0.004  (target 0)
+    [0, 1] -> 0.991  (target 1)
+    [1, 0] -> 0.991  (target 1)
+    [1, 1] -> 0.011  (target 0)
+    loss 0.1269 -> 0.000038 over 3000 epochs
+    a linear model gets only 3/4 right (XOR needs a hidden layer)
+
+  Circular decision boundary (inside a disk): accuracy 0.993
+    a linear boundary could never separate a disk from its surroundings
+
+  Backpropagation is the chain rule run backward: a forward pass computes the loss, then
+  the gradient flows back layer by layer, each reusing the gradient handed down from
+  above, so the whole gradient costs one backward pass. Gradient descent does the rest.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\mlp.svg
