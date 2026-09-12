@@ -1,0 +1,24 @@
+Dormand-Prince RK45: adaptive-step ODE solving
+
+  y' = -y, y(0)=1:  y(5) = 0.00673795  (exact e^-5 = 0.00673795)
+    error 1.98e-10 in 54 adaptive steps
+
+  Harmonic oscillator over 10 periods:
+    energy drift 2.54e-09 (should be ~0), 1469 steps
+
+  Tolerance controls accuracy AND effort:
+    tol=1e-04:   8 steps, error 1.60e-05
+    tol=1e-06:  16 steps, error 1.63e-07
+    tol=1e-08:  35 steps, error 1.79e-09
+    tol=1e-10:  83 steps, error 1.97e-11
+
+  Van der Pol oscillator (mu=5.0, nonlinear relaxation oscillation):
+    450 adaptive steps; step size ranges 0.0124 to 0.1089
+    -> the solver takes 9x bigger steps in the smooth stretches
+       than through the sharp switch-backs -- exactly where a fixed step would waste work.
+
+  Each step computes a 5th- and a 4th-order estimate from shared stage evaluations; their
+  difference estimates the local error, which accepts/rejects the step and rescales it by
+  (tol/error)^(1/5). Big steps in calm regions, tiny steps through rapid change.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\rk45.svg

@@ -333,6 +333,7 @@ ruins a long non-symplectic integration.
 | `src/p2_quantile.py` | P-square streaming quantile estimation (p50/p95/p99) in O(1) memory |
 | `src/tarjan_scc.py` | Tarjan's strongly connected components, condensation DAG, topological sort |
 | `src/two_sat.py` | 2-SAT solver via the implication graph + SCCs (linear time, with assignment) |
+| `src/rk45.py` | Dormand-Prince RK45 adaptive-step ODE solver (embedded error control, FSAL) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -657,6 +658,7 @@ ruins a long non-symplectic integration.
 | `examples/p2_quantile_demo.py` | Latency p50/p90/p95/p99 from a 200k stream in 20 floats, estimate converging |
 | `examples/tarjan_scc_demo.py` | A directed graph's SCCs colored + the condensation DAG beside it |
 | `examples/two_sat_demo.py` | A satisfiable feature-constraint instance + the canonical unsatisfiable formula |
+| `examples/rk45_demo.py` | Van der Pol oscillator with step ticks clustering at the sharp transitions |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7910,6 +7912,26 @@ assignment reads off the SCC order since the condensation is a DAG. This module 
 SCC above) adds clauses/implications, tests satisfiability, and extracts an assignment, verified
 against brute force over all 2^n assignments across 300 random formulas plus the canonical
 unsatisfiable cases.
+
+## Dormand-Prince RK45: adaptive-step ODE integration
+
+Solve ODEs to a requested accuracy, big steps in calm regions, tiny in fast ones. `rk45.py`:
+
+```
+$ python examples/rk45_demo.py examples/output
+
+  y' = -y: y(5) error 1.8e-9 in 35 adaptive steps
+  harmonic oscillator: energy drift 2.5e-9 over 10 periods
+  tol 1e-4 -> 8 steps / err 1.6e-5;  tol 1e-10 -> 83 steps / err 2e-11
+  Van der Pol: 9x bigger steps in smooth stretches than at the switch-backs
+```
+
+Dormand-Prince pairs a 5th- and a 4th-order Runge-Kutta formula sharing their stage evaluations, so
+their difference estimates the local error, accepting/rejecting each step and rescaling it by
+(tol/error)^(1/5) (FSAL reuse makes it seven stages, one recycled). This module solves scalar and
+vector ODEs forward or backward with optional sampling at requested times, verified against
+closed-form solutions (decay/growth, harmonic energy conservation, logistic, 2-frequency oscillator),
+with tighter tolerances shrinking the error and faster dynamics demanding more steps.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

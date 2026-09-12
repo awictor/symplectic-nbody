@@ -375,6 +375,7 @@ def main():
     import p2_quantile_demo
     import tarjan_scc_demo
     import two_sat_demo
+    import rk45_demo
 
     import plot_orbits
 
@@ -719,6 +720,7 @@ def main():
     p2_quantile_txt = run("p2_quantile_demo", p2_quantile_demo.main, True)
     tarjan_scc_txt = run("tarjan_scc_demo", tarjan_scc_demo.main, True)
     two_sat_txt = run("two_sat_demo", two_sat_demo.main, True)
+    rk45_txt = run("rk45_demo", rk45_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5288,6 +5290,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("two_sat.svg"), "the implication graph of a 2-SAT instance: literals on top, negations below, clause implications as edges, each strongly connected component in its own colour -- no variable shares a component with its negation, so the formula is satisfiable")
             + f'<div class="card">{pre(two_sat_txt)}</div>'
+            + '</div>'),
+        section(
+            "Dormand-Prince RK45: adaptive-step ODE integration",
+            "Solving an ODE y' = f(t, y) numerically hinges on STEP SIZE: too large loses accuracy or "
+            "stability, too small wastes work where the solution is smooth. ADAPTIVE methods choose "
+            "the step at every point to keep the local error near a target tolerance -- big steps "
+            "through calm regions, tiny steps through rapid change. The DORMAND-PRINCE method (RK45, "
+            "the engine of MATLAB's ode45 and SciPy's solve_ivp) pairs a 5th- and a 4th-order "
+            "Runge-Kutta formula that SHARE their stage evaluations, so their difference is a cheap "
+            "estimate of the local truncation error -- used to accept or reject each step and rescale "
+            "it by (tol/error)^(1/5). Seven stages per step (six new plus one reused via the FSAL "
+            "property) make it efficient. This module implements adaptive Dormand-Prince RK45 for "
+            "scalar and vector ODEs, forward or backward in time, with optional sampling at requested "
+            "times, verified against closed-form solutions: exponential decay and growth to the "
+            "requested tolerance, a harmonic oscillator conserving energy to 2e-9 over ten periods "
+            "and returning exactly to its start, a logistic curve, and a 2-frequency oscillator "
+            "matching cos(2t) -- with tightening the tolerance shrinking the error (1.6e-5 at "
+            "tol=1e-4 down to 2e-11 at tol=1e-10) and faster dynamics correctly demanding more "
+            "steps.",
+            '<div class="grid">'
+            + svg_card(out("rk45.svg"), "the Van der Pol relaxation oscillator solved by RK45; the orange step ticks below cluster tightly at the sharp switch-backs and spread out across the smooth stretches -- adaptive control at work")
+            + f'<div class="card">{pre(rk45_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
