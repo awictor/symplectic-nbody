@@ -371,6 +371,7 @@ ruins a long non-symplectic integration.
 | `src/sprague_grundy.py` | Sprague-Grundy nimbers (mex + XOR) for Nim, subtraction games, Kayles |
 | `src/walsh_hadamard.py` | Fast Walsh-Hadamard transform + XOR/OR/AND convolutions (integer-exact) |
 | `src/dpll.py` | DPLL SAT solver: unit propagation + pure-literal elimination + backtracking |
+| `src/berlekamp_massey.py` | Shortest linear recurrence of a sequence over Q and GF(2) (LFSR) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -733,6 +734,7 @@ ruins a long non-symplectic integration.
 | `examples/sprague_grundy_demo.py` | Grundy-number colour strips revealing subtraction/Kayles periodicity |
 | `examples/walsh_hadamard_demo.py` | Two 3-bit distributions combined by XOR/OR/AND as bar panels |
 | `examples/dpll_demo.py` | A SAT model plus the pigeonhole principle proven UNSAT as bars |
+| `examples/berlekamp_massey_demo.py` | Famous sequence recurrences + a length-5 LFSR keystream cracked |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8717,6 +8719,26 @@ true then false. Verified against a brute-force truth-table oracle on 600 random
 when some assignment works, every model genuinely satisfies all clauses) and on the pigeonhole
 principle -- n+1 pigeons into n holes is proven UNSAT without enumerating the 2^n space. Distinct from
 `two_sat.py`, which handles only the polynomial 2-literal case; this decides general (NP-complete) SAT.
+
+## Berlekamp-Massey: the recurrence hidden in a sequence
+
+Recover the shortest linear recurrence behind a sequence. `berlekamp_massey.py`:
+
+```
+$ python examples/berlekamp_massey_demo.py examples/output
+
+  Fibonacci -> s[n]=s[n-1]+s[n-2]; Pell -> 2s[n-1]+s[n-2]; powers of 2 -> 2s[n-1]
+  LFSR keystream (length 5): complexity climbs 3->4->5, cracked at 2L=10 bits
+```
+
+Given the first terms, Berlekamp-Massey finds the minimal recurrence s[n] = c1*s[n-1]+...+cL*s[n-L] in
+O(n^2), scanning left to right and correcting the current recurrence by a scaled shift of the best
+previous failed one whenever the predicted term is wrong. The length L is the LINEAR COMPLEXITY. Works
+over the exact rationals (Fibonacci, Tribonacci, Pell -- no rounding) and over GF(2) for LFSRs.
+Verified by round-trip (the recovered recurrence regenerates the input and is never longer than the
+true generator, 300 random recurrences), against a brute-force minimality search, and on GF(2)
+m-sequences whose complexity is recovered from just 2L bits -- the classic reason a raw LFSR keystream
+is cryptographically broken.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

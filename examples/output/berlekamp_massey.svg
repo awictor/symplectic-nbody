@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="380" viewBox="0 0 760 380" font-family="monospace">
+<rect width="760" height="380" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="17">Linear complexity recovered vs bits observed (length-5 LFSR)</text>
+<text x="20" y="47" fill="#8b949e" font-size="12">complexity climbs then locks at 5 -- after 2L bits the whole register is known</text>
+<line x1="70" y1="300" x2="710" y2="300" stroke="#30363d"/>
+<line x1="70" y1="300" x2="70" y2="60" stroke="#30363d"/>
+<line x1="70" y1="60.0" x2="710" y2="60.0" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="706" y="54" fill="#ff6b6b" font-size="11" text-anchor="end">complexity = 5 (cracked)</text>
+<line x1="217.7" y1="300" x2="217.7" y2="60" stroke="#ffd43b" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="218" y="58" fill="#ffd43b" font-size="10" text-anchor="middle">2L=10 bits</text>
+<polyline points="70.0,252.0 86.4,252.0 102.8,252.0 119.2,156.0 135.6,156.0 152.1,156.0 168.5,108.0 184.9,108.0 201.3,60.0 217.7,60.0 234.1,60.0 250.5,60.0 266.9,60.0 283.3,60.0 299.7,60.0 316.2,60.0 332.6,60.0 349.0,60.0 365.4,60.0 381.8,60.0 398.2,60.0 414.6,60.0 431.0,60.0 447.4,60.0 463.8,60.0 480.3,60.0 496.7,60.0 513.1,60.0 529.5,60.0 545.9,60.0 562.3,60.0 578.7,60.0 595.1,60.0 611.5,60.0 627.9,60.0 644.4,60.0 660.8,60.0 677.2,60.0 693.6,60.0 710.0,60.0" fill="none" stroke="#4dabf7" stroke-width="2"/>
+<text x="390" y="330" fill="#8b949e" font-size="11" text-anchor="middle">bits observed</text>
+</svg>

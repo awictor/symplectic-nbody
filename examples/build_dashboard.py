@@ -413,6 +413,7 @@ def main():
     import sprague_grundy_demo
     import walsh_hadamard_demo
     import dpll_demo
+    import berlekamp_massey_demo
 
     import plot_orbits
 
@@ -795,6 +796,7 @@ def main():
     sprague_grundy_txt = run("sprague_grundy_demo", sprague_grundy_demo.main, True)
     walsh_hadamard_txt = run("walsh_hadamard_demo", walsh_hadamard_demo.main, True)
     dpll_txt = run("dpll_demo", dpll_demo.main, True)
+    berlekamp_massey_txt = run("berlekamp_massey_demo", berlekamp_massey_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6211,6 +6213,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("dpll.svg"), "the pigeonhole family n+1 pigeons into n holes: yellow is the clause count and red the log2 of the 2^n brute-force assignment space -- all instances are proven UNSAT by DPLL's pruned search, never touching the full exponential space")
             + f'<div class="card">{pre(dpll_txt)}</div>'
+            + '</div>'),
+        section(
+            "Berlekamp-Massey: the recurrence hidden in a sequence",
+            "Many sequences obey a LINEAR RECURRENCE -- each term a fixed combination of the previous "
+            "few, s[n] = c1*s[n-1] + ... + cL*s[n-L]. Fibonacci does (s[n]=s[n-1]+s[n-2]); a "
+            "linear-feedback shift register (LFSR), the workhorse of stream ciphers and CRCs, is "
+            "exactly such a recurrence over GF(2). Berlekamp-Massey solves the inverse problem: given "
+            "only the first terms, find the SHORTEST recurrence that produces them. Its length L (the "
+            "LINEAR COMPLEXITY) measures predictability -- a short recurrence pins down the whole "
+            "infinite sequence from a handful of coefficients. The algorithm scans left to right "
+            "keeping a recurrence that predicts every term so far; at each step it computes the "
+            "DISCREPANCY with the actual next term and, if nonzero, corrects the recurrence by adding "
+            "a scaled shift of the best previous failed one -- a construction that provably stays "
+            "minimal, in O(n^2). This module works over the exact rationals (Fibonacci, Tribonacci, "
+            "Pell all handled with no rounding) and over GF(2) for the binary LFSR case. Verified by "
+            "round-trip (the recovered recurrence regenerates the input and is never longer than the "
+            "true generator, on 300 random recurrences), against a brute-force minimality search, "
+            "and on GF(2) m-sequences whose complexity is recovered from just 2L bits -- the classic "
+            "reason a raw LFSR keystream is cryptographically broken.",
+            '<div class="grid">'
+            + svg_card(out("berlekamp_massey.svg"), "cracking a length-5 LFSR keystream: the recovered linear complexity climbs as more bits are seen and locks at 5 exactly once 2L=10 bits are observed -- at which point the whole register is known and every future bit is predictable")
+            + f'<div class="card">{pre(berlekamp_massey_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

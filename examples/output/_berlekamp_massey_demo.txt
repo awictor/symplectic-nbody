@@ -1,0 +1,24 @@
+Berlekamp-Massey: find the shortest linear recurrence behind a sequence
+
+  Fibonacci    complexity 2:  s[n] = 1*s[n-1] + 1*s[n-2]
+               next 3 terms: [55, 89, 144]
+  Tribonacci   complexity 3:  s[n] = 1*s[n-1] + 1*s[n-2] + 1*s[n-3]
+               next 3 terms: [81, 149, 274]
+  Pell         complexity 2:  s[n] = 2*s[n-1] + 1*s[n-2]
+               next 3 terms: [408, 985, 2378]
+  powers of 2  complexity 1:  s[n] = 2*s[n-1]
+               next 3 terms: [128, 256, 512]
+  Jacobsthal   complexity 2:  s[n] = 1*s[n-1] + 2*s[n-2]
+               next 3 terms: [85, 171, 341]
+
+  Linear-complexity attack on a stream cipher (LFSR keystream):
+    true LFSR: length 5, taps [0, 0, 1, 0, 1]
+    observed keystream: 10011111000110111010...
+    from  6 bits: recovered complexity 3, predicts full stream: False
+    from  8 bits: recovered complexity 4, predicts full stream: False
+    from 10 bits: recovered complexity 5, predicts full stream: True
+    from 12 bits: recovered complexity 5, predicts full stream: True
+    Once you see 2L bits, Berlekamp-Massey recovers the whole register and predicts
+    every future bit -- why a raw LFSR is cryptographically useless despite a long period.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\berlekamp_massey.svg
