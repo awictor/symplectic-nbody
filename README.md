@@ -379,6 +379,7 @@ ruins a long non-symplectic integration.
 | `src/mo_algorithm.py` | Mo's algorithm: offline range distinct-count & power-sum in O((n+q)vn) |
 | `src/arborescence.py` | Chu-Liu/Edmonds minimum spanning arborescence (directed MST) |
 | `src/steiner_tree.py` | Steiner tree (Dreyfus-Wagner): cheapest tree connecting terminals |
+| `src/tree_isomorphism.py` | AHU tree isomorphism: linear-time canonical form + center rooting |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -749,6 +750,7 @@ ruins a long non-symplectic integration.
 | `examples/mo_algorithm_demo.py` | Query windows drawn in Mo's block-snake processing order |
 | `examples/arborescence_demo.py` | A directed broadcast tree with the chosen min-cost edges in green |
 | `examples/steiner_tree_demo.py` | Four terminals linked through a cheap hub, saving over the perimeter |
+| `examples/tree_isomorphism_demo.py` | Two relabelled trees vs a different-shape one, centers marked |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8895,6 +8897,26 @@ paths (a Dijkstra sweep per subset), answer min over v of dp[full][v], in O(3^k 
 against brute force (enumerate every subset of Steiner points, take the induced MST) on 400 random
 graphs, against the MST when all vertices are terminals, and on cases where a Steiner point strictly
 helps.
+
+## AHU tree isomorphism: same shape, in linear time
+
+Decide whether two trees are the same shape via a canonical form. `tree_isomorphism.py`:
+
+```
+$ python examples/tree_isomorphism_demo.py examples/output
+
+  rooted canonical form of a 6-node tree: ((()())(()))
+  A vs B (A relabelled): isomorphic; A vs C (a path): not isomorphic
+  centers found by peeling leaves; unrooted trees rooted there for canonicity
+```
+
+Each leaf is '()', each internal node sorts its children's strings and wraps them -- so the encoding
+ignores child order and is equal iff rooted trees match. Unrooted trees are rooted at their center (the
+1 or 2 vertices at the middle of the longest path, found by peeling leaves), which is
+isomorphism-invariant. General graph isomorphism has no known polynomial algorithm; trees fall in
+linear time. Verified against brute force (some vertex permutation maps one edge set onto the other) on
+hundreds of random trees -- relabelled copies always isomorphic, same-size different-shape never -- with
+canonical-form equality coinciding exactly with isomorphism.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

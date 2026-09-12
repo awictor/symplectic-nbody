@@ -1,0 +1,24 @@
+AHU tree isomorphism: a canonical string that is equal iff trees match
+
+  tree A edges: [(0, 1), (0, 2), (1, 3), (1, 4), (2, 5)]
+  rooted canonical form (root 0): ((()())(()))
+  -> each leaf is '()', each node sorts and wraps its children's forms
+
+  tree B = tree A with vertices shuffled: [(5, 2), (5, 4), (2, 0), (2, 1), (4, 3)]
+  isomorphic(A, B)?  True  (brute: True)
+
+  tree C = a 6-vertex path: [(0, 1), (1, 2), (2, 3), (3, 4), (4, 5)]
+  isomorphic(A, C)?  False  (brute: False)
+
+  unrooted canonical forms (rooted at the center for canonicity):
+    A: ((()())(()))
+    B: ((()())(()))   (equal to A -> isomorphic)
+    C: (((()))(()))|(((()))(()))   (differs -> not isomorphic)
+
+  centers -- A: [0], C (path): [2, 3]
+
+  Rooting at the center makes the form canonical: every tree has 1 or 2 centers (the
+  middle of its longest path), found by peeling leaves. General GRAPH isomorphism has no
+  known polynomial algorithm, but trees fall in linear time to this bottom-up hashing.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\tree_isomorphism.svg

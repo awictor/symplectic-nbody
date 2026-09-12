@@ -421,6 +421,7 @@ def main():
     import mo_algorithm_demo
     import arborescence_demo
     import steiner_tree_demo
+    import tree_isomorphism_demo
 
     import plot_orbits
 
@@ -811,6 +812,7 @@ def main():
     mo_algorithm_txt = run("mo_algorithm_demo", mo_algorithm_demo.main, True)
     arborescence_txt = run("arborescence_demo", arborescence_demo.main, True)
     steiner_tree_txt = run("steiner_tree_demo", steiner_tree_demo.main, True)
+    tree_isomorphism_txt = run("tree_isomorphism_demo", tree_isomorphism_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6402,6 +6404,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("steiner_tree.svg"), "connecting four corner terminals: the terminal-only spanning tree would pay 30 around the perimeter, but routing through the cheap central hub (a Steiner point) links all four for just 12")
             + f'<div class="card">{pre(steiner_tree_txt)}</div>'
+            + '</div>'),
+        section(
+            "AHU tree isomorphism: same shape, in linear time",
+            "Two trees are ISOMORPHIC if one can be relabelled into the other -- same shape, different "
+            "names. Deciding this for general GRAPHS is a famous open problem with no known "
+            "polynomial algorithm, but for TREES the Aho-Hopcroft-Ullman algorithm does it in linear "
+            "time via a CANONICAL FORM: a string identical for isomorphic trees and different "
+            "otherwise. For a ROOTED tree it is built bottom-up -- each leaf is '()', each internal "
+            "node SORTS its children's strings, concatenates, and wraps them in parentheses, so the "
+            "encoding ignores the order children happen to be listed. For an UNROOTED tree there is "
+            "no distinguished root, so AHU roots at the tree's CENTER -- the one or two vertices at "
+            "the middle of its longest path, found by repeatedly peeling leaves -- which is "
+            "isomorphism-invariant, giving a canonical form for the whole tree (comparing both forms "
+            "when there are two centers). This powers deduplicating parse and syntax trees, matching "
+            "acyclic molecules, and comparing phylogenies. Verified against brute force -- two trees "
+            "are isomorphic iff some vertex permutation maps one edge set onto the other -- on "
+            "hundreds of random trees, including relabelled copies (always isomorphic) and "
+            "same-size different-shape trees (never), with canonical-form equality shown to coincide "
+            "exactly with isomorphism.",
+            '<div class="grid">'
+            + svg_card(out("tree_isomorphism.svg"), "trees A and B are the same tree with vertices shuffled, so their canonical forms match and they test isomorphic; tree C is a path of the same size but a different shape, so its form differs -- yellow nodes mark the centers AHU roots at")
+            + f'<div class="card">{pre(tree_isomorphism_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
