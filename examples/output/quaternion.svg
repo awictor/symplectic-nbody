@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" font-family="monospace">
+<rect width="760" height="430" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="17">SLERP vs LERP: interpolating a rotating vector over 170 degrees</text>
+<text x="20" y="47" fill="#8b949e" font-size="12">green (slerp) points are evenly spaced on the arc; orange (lerp) bunch at the ends</text>
+<circle cx="380" cy="235" r="150" fill="none" stroke="#21262d" stroke-width="1"/>
+<circle cx="530.0" cy="235.0" r="4" fill="#06d6a0"/>
+<circle cx="530.0" cy="235.0" r="2.6" fill="#ff922b" opacity="0.9"/>
+<circle cx="528.4" cy="212.8" r="4" fill="#06d6a0"/>
+<circle cx="529.2" cy="219.4" r="2.6" fill="#ff922b" opacity="0.9"/>
+<circle cx="523.4" cy="191.1" r="4" fill="#06d6a0"/>
+<circle cx="526.4" cy="202.5" r="2.6" fill="#ff922b" opacity="0.9"/>
+<circle cx="515.4" cy="170.4" r="4" fill="#06d6a0"/>
+<circle cx="521.3" cy="184.6" r="2.6" fill="#ff922b" opacity="0.9"/>
+<circle cx="504.4" cy="151.1" r="4" fill="#06d6a0"/>
+<circle cx="513.2" cy="166.0" r="2.6" fill="#ff922b" opacity="0.9"/>
+<circle cx="490.6" cy="133.7" r="4" fill="#06d6a0"/>
+<circle cx="501.7" cy="147.3" r="2.6" fill="#ff922b" opacity="0.9"/>
+<circle cx="474.4" cy="118.4" r="4" fill="#06d6a0"/>
+<circle cx="486.5" cy="129.4" r="2.6" fill="#ff922b" opacity="0.9"/>
+<circle cx="456.1" cy="105.8" r="4" fill="#06d6a0"/>
+<circle cx="467.6" cy="113.3" r="2.6" fill="#ff922b" opacity="0.9"/>
+<circle cx="436.2" cy="95.9" r="4" fill="#06d6a0"/>
+<circle cx="445.2" cy="99.9" r="2.6" fill="#ff922b" opacity="0.9"/>
+<circle cx="415.0" cy="89.1" r="4" fill="#06d6a0"/>
+<circle cx="420.0" cy="90.4" r="2.6" fill="#ff922b" opacity="0.9"/>
+<circle cx="393.1" cy="85.6" r="4" fill="#06d6a0"/>
+<circle cx="393.1" cy="85.6" r="2.6" fill="#ff922b" opacity="0.9"/>
+<circle cx="370.8" cy="85.3" r="4" fill="#06d6a0"/>
+<circle cx="365.7" cy="85.7" r="2.6" fill="#ff922b" opacity="0.9"/>
+<circle cx="348.8" cy="88.3" r="4" fill="#06d6a0"/>
+<circle cx="339.2" cy="90.6" r="2.6" fill="#ff922b" opacity="0.9"/>
+<circle cx="327.5" cy="94.5" r="4" fill="#06d6a0"/>
+<circle cx="314.9" cy="99.9" r="2.6" fill="#ff922b" opacity="0.9"/>
+<circle cx="307.3" cy="103.8" r="4" fill="#06d6a0"/>
+<circle cx="293.4" cy="112.5" r="2.6" fill="#ff922b" opacity="0.9"/>
+<circle cx="288.7" cy="116.0" r="4" fill="#06d6a0"/>
+<circle cx="275.4" cy="127.5" r="2.6" fill="#ff922b" opacity="0.9"/>
+<circle cx="272.1" cy="130.8" r="4" fill="#06d6a0"/>
+<circle cx="260.8" cy="143.9" r="2.6" fill="#ff922b" opacity="0.9"/>
+<circle cx="257.9" cy="147.9" r="4" fill="#06d6a0"/>
+<circle cx="249.6" cy="160.8" r="2.6" fill="#ff922b" opacity="0.9"/>
+<circle cx="246.3" cy="166.9" r="4" fill="#06d6a0"/>
+<circle cx="241.4" cy="177.6" r="2.6" fill="#ff922b" opacity="0.9"/>
+<circle cx="237.8" cy="187.4" r="4" fill="#06d6a0"/>
+<circle cx="235.8" cy="193.7" r="2.6" fill="#ff922b" opacity="0.9"/>
+<circle cx="232.3" cy="209.0" r="4" fill="#06d6a0"/>
+<circle cx="232.3" cy="209.0" r="2.6" fill="#ff922b" opacity="0.9"/>
+<circle cx="380" cy="235" r="3" fill="#8b949e"/>
+<line x1="380" y1="235" x2="530.0" y2="235.0" stroke="#4dabf7" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="530" y="227" fill="#4dabf7" font-size="11" text-anchor="middle">start</text>
+<line x1="380" y1="235" x2="232.3" y2="209.0" stroke="#4dabf7" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="232" y="201" fill="#4dabf7" font-size="11" text-anchor="middle">end</text>
+<text x="290" y="414" fill="#06d6a0" font-size="12">slerp: even</text>
+<text x="400" y="414" fill="#ff922b" font-size="12">lerp: bunched</text>
+</svg>

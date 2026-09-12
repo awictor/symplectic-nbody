@@ -1,0 +1,25 @@
+Quaternions: gimbal-lock-free rotation and smooth interpolation
+
+  composing rotations (apply yaw 90 then pitch 90 to the x-axis):
+    after yaw 90:        (+0.000, +1.000, +0.000)
+    after pitch 90 too:  (+0.000, +1.000, +0.000)
+
+  representation round trip (Euler 30/45/60 deg):
+    -> quaternion (+0.822, +0.022, +0.440, +0.360)
+    -> back to Euler 30.0/45.0/60.0 deg
+
+  slerp vs component-lerp over a 170-degree turn (angle from start at each step):
+    t      slerp    lerp
+    0.0      0.0      0.0
+    0.2     34.0     27.4
+    0.4     68.0     64.2
+    0.6    102.0    105.8
+    0.8    136.0    142.6
+    1.0    170.0    170.0
+    (slerp increments evenly; lerp lags then rushes -- uneven angular velocity)
+
+  A unit quaternion (cos(theta/2), sin(theta/2)*axis) encodes a rotation; composing them is
+  one multiply, and slerp walks the great-circle arc at constant speed. Four numbers, one
+  unit-length constraint, no gimbal lock -- why aerospace and graphics run on quaternions.
+
+  wrote examples/output\quaternion.svg

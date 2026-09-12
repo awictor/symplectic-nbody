@@ -428,6 +428,7 @@ ruins a long non-symplectic integration.
 | `src/butterworth.py` | Butterworth IIR filter design (low/high-pass) + filtfilt + frequency response |
 | `src/unscented_kalman.py` | Unscented Kalman filter: nonlinear state estimation via sigma points |
 | `src/dct.py` | Discrete cosine transform (DCT-II/III, 1D + 2D) with energy compaction |
+| `src/quaternion.py` | Quaternion rotation: Hamilton product, slerp, axis-angle/matrix/Euler conversions |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -847,6 +848,7 @@ ruins a long non-symplectic integration.
 | `examples/butterworth_demo.py` | Filter magnitude responses and a 7x denoising of a buried sine |
 | `examples/unscented_kalman_demo.py` | A projectile tracked 4x better than raw range/bearing readings |
 | `examples/dct_demo.py` | Energy compaction and lossy reconstruction of a signal from few coefficients |
+| `examples/quaternion_demo.py` | SLERP vs component-LERP: even arc spacing vs bunching |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9900,6 +9902,25 @@ DCT-II/III, a fast O(N log N) route via a radix-2 FFT (Makhoul), and the separab
 is orthonormal (inverse recovers input, energy preserved by Parseval), the basis is orthonormal, a
 smooth signal compacts into a few coefficients while noise does not, and the 2D block transform
 inverts exactly.
+
+## Quaternions: gimbal-lock-free 3D rotation
+
+The rotation algebra behind aerospace and graphics. `quaternion.py`:
+
+```
+$ python examples/quaternion_demo.py examples/output
+
+  slerp over 170 deg: 34/68/102/136 at t=0.2..0.8 (even)
+  lerp: 27/64/106/143 (lags then rushes -- uneven angular velocity)
+```
+
+A unit quaternion `(cos(theta/2), sin(theta/2)*axis)` encodes a rotation; composing two is one Hamilton
+multiply, rotating a vector is the sandwich `q v q^-1`, and slerp walks the great-circle arc at constant
+speed. Four numbers, one unit constraint, no gimbal lock. Provides arithmetic, vector rotation, slerp,
+and conversions to/from axis-angle, rotation matrices, and Euler angles. Validated: rotating a vector
+equals multiplying by the equivalent rotation matrix, every conversion round-trips (up to q/-q sign),
+composition is a homomorphism with an orthonormal det-+1 matrix, and slerp traverses at constant angular
+velocity.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

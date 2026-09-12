@@ -470,6 +470,7 @@ def main():
     import butterworth_demo
     import unscented_kalman_demo
     import dct_demo
+    import quaternion_demo
 
     import plot_orbits
 
@@ -909,6 +910,7 @@ def main():
     butterworth_txt = run("butterworth_demo", butterworth_demo.main, True)
     unscented_kalman_txt = run("unscented_kalman_demo", unscented_kalman_demo.main, True)
     dct_txt = run("dct_demo", dct_demo.main, True)
+    quaternion_txt = run("quaternion_demo", quaternion_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7571,6 +7573,34 @@ def main():
             '<div class="grid">'
             + svg_card(out("dct.svg"), "top: a smooth signal (blue) and its reconstruction from just 4 DCT coefficients (green), nearly indistinguishable; bottom: the coefficient magnitudes, with almost all the energy in the first few low-frequency terms (kept ones in yellow)")
             + f'<div class="card">{pre(dct_txt)}</div>'
+            + '</div>'),
+        section(
+            "Quaternions: gimbal-lock-free 3D rotation",
+            "How do you represent the orientation of a spacecraft, a phone, or a game camera? Euler "
+            "angles suffer GIMBAL LOCK -- at certain orientations two axes align and a degree of freedom "
+            "vanishes -- and interpolating between them wobbles. Rotation matrices carry nine numbers "
+            "with six redundant constraints and drift from orthogonality as you compose thousands. "
+            "QUATERNIONS, Hamilton's 1843 extension of the complex numbers with three imaginary units "
+            "(i^2 = j^2 = k^2 = ijk = -1), are what aerospace and graphics settled on: four numbers, one "
+            "unit-length constraint, no gimbal lock, cheap to compose, and uniquely able to interpolate "
+            "along the shortest arc at constant angular velocity. A unit quaternion "
+            "(cos(theta/2), sin(theta/2)*axis) encodes a rotation; rotating a vector is the sandwich "
+            "product q v q^-1, and COMPOSING two rotations is just one multiply. The half-angle means "
+            "each rotation maps to two quaternions (q and -q) -- the double cover of SO(3) -- which is "
+            "exactly why quaternions dodge the Euler singularities. The headline operation is SLERP, "
+            "spherical linear interpolation: the great-circle walk between orientations at constant "
+            "speed that every animation system and attitude controller uses. This module gives the "
+            "Hamilton product, conjugate/inverse/norm, vector rotation, slerp, and conversions to and "
+            "from axis-angle, rotation matrices, and Euler angles. Validated: rotating a vector equals "
+            "multiplying by the equivalent rotation matrix over hundreds of random cases; every "
+            "conversion round-trips (axis-angle, matrix, Euler) up to the q/-q sign; composition is a "
+            "homomorphism (q1 then q2 equals the product q2*q1) and the matrix is orthonormal with "
+            "determinant +1; and slerp hits its endpoints, bisects at the midpoint, and traverses at "
+            "constant angular velocity -- equal steps give equal rotation angles, where naive component "
+            "interpolation lags then rushes.",
+            '<div class="grid">'
+            + svg_card(out("quaternion.svg"), "interpolating a vector 170 degrees around: the green slerp samples are evenly spaced along the arc (constant angular velocity) while the orange component-lerp samples bunch near the ends and rush through the middle")
+            + f'<div class="card">{pre(quaternion_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
