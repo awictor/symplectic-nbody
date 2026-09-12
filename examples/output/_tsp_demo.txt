@@ -1,0 +1,17 @@
+Traveling salesman: exact Held-Karp DP and the 2-opt heuristic
+
+  11 cities (Held-Karp exact, examining subsets not the 3.6M tours):
+    nearest-neighbour tour: 370.9
+    Held-Karp optimum:      349.0
+    2-opt from NN:          350.1
+
+  60 cities ((n-1)!/2 = astronomically many tours; 2-opt local search):
+    nearest-neighbour: 778.1
+    after 2-opt:       683.6  (12.1% shorter)
+    2-opt removes the self-crossings a good tour never has
+
+  Held-Karp builds shortest paths over every (subset, last-city) pair, reusing
+  subproblems for O(n^2 2^n) instead of O(n!). 2-opt repeatedly reverses a segment
+  between two edges whenever that shortens the tour -- fast, and within a few percent.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\tsp.svg

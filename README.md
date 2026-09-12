@@ -346,6 +346,7 @@ ruins a long non-symplectic integration.
 | `src/autodiff.py` | Reverse-mode automatic differentiation (a Value graph with backward, like autograd) |
 | `src/shamir.py` | Shamir's (k,n) secret sharing over a prime field (split + Lagrange reconstruct) |
 | `src/merkle.py` | Merkle hash tree with O(log n) inclusion proofs (SHA-256, domain-separated) |
+| `src/tsp.py` | Traveling salesman: exact Held-Karp DP + nearest-neighbour and 2-opt heuristics |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -683,6 +684,7 @@ ruins a long non-symplectic integration.
 | `examples/autodiff_demo.py` | Exact gradients vs finite diff + a model trained with no hand-derived gradients |
 | `examples/shamir_demo.py` | Splitting a secret + the polynomial geometry with the secret at f(0) |
 | `examples/merkle_demo.py` | An inclusion proof + tamper detection + the tree with its authentication path |
+| `examples/tsp_demo.py` | Held-Karp exact solve + 2-opt untangling a 60-city nearest-neighbour tour |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8185,6 +8187,24 @@ who trusts only the root recomputes the path and checks it lands there. This mod
 (SHA-256 with domain-separated leaf/node prefixes), generates and verifies proofs, checked that valid
 proofs verify, tampering with the block/proof/root all fail, the proof length is logarithmic, and
 changing or reordering any block changes the root.
+
+## The traveling salesman problem: exact Held-Karp and 2-opt
+
+The shortest tour of every city -- solved exactly for small n, near-optimally for large. `tsp.py`:
+
+```
+$ python examples/tsp_demo.py examples/output
+
+  11 cities: nearest-neighbour 371 -> Held-Karp optimum 349 (exact)
+  60 cities: nearest-neighbour 778 -> 2-opt 684 (12% shorter, crossings removed)
+```
+
+Held-Karp is the exact dynamic program: shortest paths over every (subset, last-city) pair, O(n^2 2^n)
+instead of O(n!). 2-opt is local search: reverse the segment between two edges whenever it shortens
+the tour, removing the self-crossings a good tour never has. This module implements both over an
+arbitrary distance matrix, verified that Held-Karp matches brute-force permutation search, 2-opt never
+worsens a tour and averages within ~1% of the Held-Karp optimum, every tour is a valid permutation,
+and the Euclidean helper satisfies the triangle inequality.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

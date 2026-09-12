@@ -388,6 +388,7 @@ def main():
     import autodiff_demo
     import shamir_demo
     import merkle_demo
+    import tsp_demo
 
     import plot_orbits
 
@@ -745,6 +746,7 @@ def main():
     autodiff_txt = run("autodiff_demo", autodiff_demo.main, True)
     shamir_txt = run("shamir_demo", shamir_demo.main, True)
     merkle_txt = run("merkle_demo", merkle_demo.main, True)
+    tsp_txt = run("tsp_demo", tsp_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5609,6 +5611,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("merkle.svg"), "the Merkle tree with one leaf's authentication path highlighted: green is the proven leaf up to the root, gold the sibling hashes the proof supplies -- log(n) hashes to prove membership")
             + f'<div class="card">{pre(merkle_txt)}</div>'
+            + '</div>'),
+        section(
+            "The traveling salesman problem: exact Held-Karp and 2-opt",
+            "The TRAVELING SALESMAN PROBLEM asks for the shortest tour visiting every city once and "
+            "returning to the start -- the archetypal NP-hard optimization problem (the tour count "
+            "grows as (n-1)!/2), yet the model for vehicle routing, circuit drilling, and logistics "
+            "everywhere. Two complementary approaches: an EXACT dynamic program for small instances "
+            "and fast HEURISTICS for large ones. HELD-KARP builds, for every SUBSET of cities and "
+            "every possible last city, the shortest path from the start through that subset ending "
+            "there -- reusing subproblems for O(n^2 2^n) instead of O(n!), making ~20 cities exactly "
+            "solvable. The 2-OPT heuristic starts from any tour and repeatedly removes two edges and "
+            "reconnects them the other way (reversing the segment between) whenever that shortens the "
+            "tour, a local search that removes the self-crossings a good tour never has and lands "
+            "within a few percent of optimal. This module implements Held-Karp, nearest-neighbour "
+            "construction, and 2-opt over an arbitrary distance matrix, verified against brute-force "
+            "permutation search that Held-Karp returns the true optimum on small instances, that "
+            "2-opt never worsens a tour and averages within ~1% of the Held-Karp optimum, that every "
+            "tour is a valid permutation whose reported length matches its edges, that the Euclidean "
+            "helper satisfies the triangle inequality, and on hand-checked squares and collinear "
+            "points.",
+            '<div class="grid">'
+            + svg_card(out("tsp.svg"), "the same 60 cities toured two ways: the nearest-neighbour tour (left, red) riddled with crossings, and the 2-opt tour (right, green) with the crossings untangled and 12% shorter")
+            + f'<div class="card">{pre(tsp_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
