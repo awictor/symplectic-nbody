@@ -1,0 +1,21 @@
+Hirschberg's algorithm: optimal alignment in linear space
+
+  sequence A: AGGTCACGTA  (len 10)
+  sequence B: AGCTACGCA  (len 9)
+
+  optimal global alignment (match +1, mismatch -1, gap -1):
+    AGGTCACGTA
+    || | ||| |
+    AGCT-ACGCA
+
+  score 4 (full Needleman-Wunsch agrees: True)
+  longest common subsequence: AGCACGA
+
+  divide-and-conquer: split A at its midpoint (position 5); the optimal alignment
+  crosses B at column 4, so it recurses on A[:5]xB[:4] and A[5:]xB[4:].
+
+  memory: full matrix needs 110 cells; Hirschberg keeps only two rows = 20.
+  For genome-scale inputs this is the difference between gigabytes and kilobytes, at the
+  cost of only a constant factor more time -- the same optimal alignment, linear space.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\hirschberg.svg

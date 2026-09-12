@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="340" viewBox="0 0 780 340" font-family="monospace">
+<rect width="780" height="340" fill="#0d1117"/>
+<text x="20" y="30" fill="#e6edf3" font-size="18">Optimal alignment: green columns match, red are mismatches, grey are gaps</text>
+<text x="20" y="50" fill="#8b949e" font-size="12">computed in linear space by Hirschberg's divide-and-conquer, identical to full NW</text>
+<rect x="60.0" y="110" width="38.0" height="38.0" fill="#06d6a0"/>
+<text x="79.0" y="133.0" fill="#0d1117" font-size="14" text-anchor="middle" font-weight="bold">A</text>
+<rect x="60.0" y="156.0" width="38.0" height="38.0" fill="#06d6a0"/>
+<text x="79.0" y="179.0" fill="#0d1117" font-size="14" text-anchor="middle" font-weight="bold">A</text>
+<rect x="100.0" y="110" width="38.0" height="38.0" fill="#06d6a0"/>
+<text x="119.0" y="133.0" fill="#0d1117" font-size="14" text-anchor="middle" font-weight="bold">G</text>
+<rect x="100.0" y="156.0" width="38.0" height="38.0" fill="#06d6a0"/>
+<text x="119.0" y="179.0" fill="#0d1117" font-size="14" text-anchor="middle" font-weight="bold">G</text>
+<rect x="140.0" y="110" width="38.0" height="38.0" fill="#ff6b6b"/>
+<text x="159.0" y="133.0" fill="#0d1117" font-size="14" text-anchor="middle" font-weight="bold">G</text>
+<rect x="140.0" y="156.0" width="38.0" height="38.0" fill="#ff6b6b"/>
+<text x="159.0" y="179.0" fill="#0d1117" font-size="14" text-anchor="middle" font-weight="bold">C</text>
+<rect x="180.0" y="110" width="38.0" height="38.0" fill="#06d6a0"/>
+<text x="199.0" y="133.0" fill="#0d1117" font-size="14" text-anchor="middle" font-weight="bold">T</text>
+<rect x="180.0" y="156.0" width="38.0" height="38.0" fill="#06d6a0"/>
+<text x="199.0" y="179.0" fill="#0d1117" font-size="14" text-anchor="middle" font-weight="bold">T</text>
+<rect x="220.0" y="110" width="38.0" height="38.0" fill="#8b949e"/>
+<text x="239.0" y="133.0" fill="#0d1117" font-size="14" text-anchor="middle" font-weight="bold">C</text>
+<rect x="220.0" y="156.0" width="38.0" height="38.0" fill="#8b949e"/>
+<text x="239.0" y="179.0" fill="#0d1117" font-size="14" text-anchor="middle" font-weight="bold">-</text>
+<rect x="260.0" y="110" width="38.0" height="38.0" fill="#06d6a0"/>
+<text x="279.0" y="133.0" fill="#0d1117" font-size="14" text-anchor="middle" font-weight="bold">A</text>
+<rect x="260.0" y="156.0" width="38.0" height="38.0" fill="#06d6a0"/>
+<text x="279.0" y="179.0" fill="#0d1117" font-size="14" text-anchor="middle" font-weight="bold">A</text>
+<rect x="300.0" y="110" width="38.0" height="38.0" fill="#06d6a0"/>
+<text x="319.0" y="133.0" fill="#0d1117" font-size="14" text-anchor="middle" font-weight="bold">C</text>
+<rect x="300.0" y="156.0" width="38.0" height="38.0" fill="#06d6a0"/>
+<text x="319.0" y="179.0" fill="#0d1117" font-size="14" text-anchor="middle" font-weight="bold">C</text>
+<rect x="340.0" y="110" width="38.0" height="38.0" fill="#06d6a0"/>
+<text x="359.0" y="133.0" fill="#0d1117" font-size="14" text-anchor="middle" font-weight="bold">G</text>
+<rect x="340.0" y="156.0" width="38.0" height="38.0" fill="#06d6a0"/>
+<text x="359.0" y="179.0" fill="#0d1117" font-size="14" text-anchor="middle" font-weight="bold">G</text>
+<rect x="380.0" y="110" width="38.0" height="38.0" fill="#ff6b6b"/>
+<text x="399.0" y="133.0" fill="#0d1117" font-size="14" text-anchor="middle" font-weight="bold">T</text>
+<rect x="380.0" y="156.0" width="38.0" height="38.0" fill="#ff6b6b"/>
+<text x="399.0" y="179.0" fill="#0d1117" font-size="14" text-anchor="middle" font-weight="bold">C</text>
+<rect x="420.0" y="110" width="38.0" height="38.0" fill="#06d6a0"/>
+<text x="439.0" y="133.0" fill="#0d1117" font-size="14" text-anchor="middle" font-weight="bold">A</text>
+<rect x="420.0" y="156.0" width="38.0" height="38.0" fill="#06d6a0"/>
+<text x="439.0" y="179.0" fill="#0d1117" font-size="14" text-anchor="middle" font-weight="bold">A</text>
+<text x="48" y="133" fill="#8b949e" font-size="12" text-anchor="end">A</text>
+<text x="48" y="179" fill="#8b949e" font-size="12" text-anchor="end">B</text>
+<text x="60" y="230" fill="#8b949e" font-size="12">linear space: only two matrix rows are ever held in memory</text>
+</svg>

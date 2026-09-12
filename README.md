@@ -391,6 +391,7 @@ ruins a long non-symplectic integration.
 | `src/gale_shapley.py` | Gale-Shapley stable matching (deferred acceptance) + stability check |
 | `src/degree_sequence.py` | Graphic degree sequences: Havel-Hakimi + Erdos-Gallai + realize |
 | `src/matrix_tree.py` | Matrix-Tree theorem: count spanning trees via the Laplacian cofactor |
+| `src/hirschberg.py` | Hirschberg linear-space optimal alignment + LCS |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -773,6 +774,7 @@ ruins a long non-symplectic integration.
 | `examples/gale_shapley_demo.py` | Applicants stably matched to schools with each side's rank shown |
 | `examples/degree_sequence_demo.py` | Realizability tests + a Havel-Hakimi witness graph |
 | `examples/matrix_tree_demo.py` | A graph beside its Laplacian and its spanning-tree count |
+| `examples/hirschberg_demo.py` | An optimal alignment as a match/gap track + the memory saving |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9143,6 +9145,25 @@ graphs, gives the sum over spanning trees of edge-weight products. Computed with
 arithmetic (no float rounding). Verified against brute force (enumerate every size-(n-1) edge subset) on
 hundreds of random graphs, against Cayley for complete graphs, and on known values (cycle C_n -> n, tree
 -> 1, disconnected -> 0), with the cofactor identical whichever row/column is deleted.
+
+## Hirschberg: optimal alignment in linear space
+
+Compute an optimal sequence alignment in O(min(m,n)) memory. `hirschberg.py`:
+
+```
+$ python examples/hirschberg_demo.py examples/output
+
+  AGGTCACGTA vs AGCTACGCA -> score 4 (matches full NW), LCS AGCACGA
+  full matrix 110 cells vs Hirschberg's 2 rows = 20; split A at mid, recurse
+```
+
+Needleman-Wunsch's O(m*n) memory breaks before its time does; Hirschberg gets the same optimal
+alignment in linear space by divide-and-conquer -- split the first sequence at its midpoint, find where
+the optimal alignment crosses the second (via a forward and a backward score profile, each two rows),
+and recurse on the halves. Verified against a full-matrix Needleman-Wunsch reference on hundreds of
+random pairs: the score matches, the alignment degaps to the originals and achieves the optimum under
+several scoring schemes, and the LCS matches a standard DP -- including a 3000x3000 pair that is
+memory-prohibitive for the full matrix.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

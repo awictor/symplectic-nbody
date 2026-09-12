@@ -433,6 +433,7 @@ def main():
     import gale_shapley_demo
     import degree_sequence_demo
     import matrix_tree_demo
+    import hirschberg_demo
 
     import plot_orbits
 
@@ -835,6 +836,7 @@ def main():
     gale_shapley_txt = run("gale_shapley_demo", gale_shapley_demo.main, True)
     degree_sequence_txt = run("degree_sequence_demo", degree_sequence_demo.main, True)
     matrix_tree_txt = run("matrix_tree_demo", matrix_tree_demo.main, True)
+    hirschberg_txt = run("hirschberg_demo", hirschberg_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6681,6 +6683,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("matrix_tree.svg"), "a diamond graph beside its Laplacian matrix (yellow diagonal degrees, red -1 off-diagonal edges): deleting any row and column and taking the determinant yields its 8 spanning trees -- Kirchhoff's theorem in one step")
             + f'<div class="card">{pre(matrix_tree_txt)}</div>'
+            + '</div>'),
+        section(
+            "Hirschberg: optimal alignment in linear space",
+            "Needleman-Wunsch aligns two sequences optimally, but its O(m*n) MEMORY breaks first -- "
+            "aligning two 100,000-character strands would need a ten-billion-cell table. HIRSCHBERG'S "
+            "ALGORITHM (1975) computes the SAME optimal alignment in only O(min(m,n)) space by "
+            "divide-and-conquer, for just a constant factor more time; it is why genome-scale global "
+            "alignment is feasible. The score of aligning one sequence with every prefix of the other "
+            "needs only two matrix rows in memory. To recover the alignment, split the first sequence "
+            "at its midpoint and find where an optimal alignment crosses the second: compute the "
+            "forward score profile of the top half and the backward profile of the bottom half, and "
+            "the column maximising their sum is the crossing point. Recursing on the two halves "
+            "reconstructs the whole alignment in linear space, O(log m) deep, total work still "
+            "O(m*n). This module returns the optimal score and a full alignment in linear space, plus "
+            "the LCS as a special case. Verified against a full-matrix Needleman-Wunsch reference -- "
+            "the score matches, the alignment degaps to the originals and achieves the optimum under "
+            "several scoring schemes, and the LCS matches a standard DP -- on hundreds of random "
+            "pairs, including a 3000x3000 pair that is memory-prohibitive for the full matrix.",
+            '<div class="grid">'
+            + svg_card(out("hirschberg.svg"), "the optimal alignment of two sequences shown as a two-row track: green columns are matches, red mismatches, grey gaps -- computed in linear space yet identical to the full quadratic-memory Needleman-Wunsch result")
+            + f'<div class="card">{pre(hirschberg_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
