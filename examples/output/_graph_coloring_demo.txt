@@ -1,0 +1,22 @@
+Graph coloring: scheduling exams so no student has two at once
+
+  7 courses, 9 conflicts (shared students)
+
+  greedy coloring:  4 time slots  (proper: True)
+  DSATUR coloring:  4 time slots  (proper: True)
+  exact chromatic number: 4 time slots (the provably minimum)
+
+  verified against brute force: True
+
+  optimal exam schedule:
+    slot 1: Chem, Econ, Art
+    slot 2: Bio, CS
+    slot 3: Math
+    slot 4: Phys
+
+  DSATUR colors the most-constrained course next (the one adjacent to the most distinct
+  slots already used), which finds the optimum here where a naive greedy order might not.
+  Deciding k-colorability is NP-complete for k>=3, so the exact number uses branch-and-
+  bound with a clique lower bound and a DSATUR upper bound to prune.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\graph_coloring.svg

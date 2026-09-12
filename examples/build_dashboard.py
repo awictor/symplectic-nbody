@@ -427,6 +427,7 @@ def main():
     import karger_demo
     import bron_kerbosch_demo
     import dinic_demo
+    import graph_coloring_demo
 
     import plot_orbits
 
@@ -823,6 +824,7 @@ def main():
     karger_txt = run("karger_demo", karger_demo.main, True)
     bron_kerbosch_txt = run("bron_kerbosch_demo", bron_kerbosch_demo.main, True)
     dinic_txt = run("dinic_demo", dinic_demo.main, True)
+    graph_coloring_txt = run("graph_coloring_demo", graph_coloring_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6542,6 +6544,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("dinic.svg"), "a pipe network carrying its maximum flow of 19 units: pipe thickness is the flow used and red pipes cross the minimum cut, whose capacity (19) equals the max flow exactly as the max-flow min-cut theorem requires")
             + f'<div class="card">{pre(dinic_txt)}</div>'
+            + '</div>'),
+        section(
+            "Graph coloring: conflict-free scheduling",
+            "A PROPER COLORING gives each vertex a color so adjacent vertices differ; the CHROMATIC "
+            "NUMBER is the fewest colors needed. It is the mathematics of conflict-free scheduling -- "
+            "exam timetables (courses sharing a student can't overlap), register allocation, "
+            "frequency assignment, map coloring. Deciding k-colorability is NP-complete for k >= 3, "
+            "so exact chromatic number is exponential, but heuristics color well. GREEDY colors "
+            "vertices in a given order, each taking the smallest color no neighbour uses -- fast but "
+            "order-dependent. DSATUR colors the most-saturated vertex next (adjacent to the most "
+            "distinct colors so far, ties by degree), provably optimal on many graph classes and "
+            "excellent in general. EXACT chromatic number runs branch-and-bound over increasing k "
+            "with a clique lower bound and a DSATUR upper bound to prune. Verified against brute "
+            "force -- the exact number matches an exhaustive search over all k-colorings, every "
+            "coloring is proper, greedy and DSATUR never beat the true minimum (they are upper "
+            "bounds), and known values hold (even cycles need 2, odd cycles 3, K_n needs n) -- on "
+            "hundreds of random graphs.",
+            '<div class="grid">'
+            + svg_card(out("graph_coloring.svg"), "seven exams scheduled into four time slots by graph coloring: each course is tinted by its slot and edges join conflicting courses -- the chromatic number 4 is the provably minimum number of slots that avoids every clash")
+            + f'<div class="card">{pre(graph_coloring_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -385,6 +385,7 @@ ruins a long non-symplectic integration.
 | `src/karger.py` | Karger & Karger-Stein randomized global minimum cut |
 | `src/bron_kerbosch.py` | Bron-Kerbosch maximal-clique enumeration (pivoting + degeneracy) |
 | `src/dinic.py` | Dinic's max-flow (blocking flows on the level graph) + min cut + matching |
+| `src/graph_coloring.py` | Graph coloring: greedy, DSATUR, exact chromatic number |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -761,6 +762,7 @@ ruins a long non-symplectic integration.
 | `examples/karger_demo.py` | Random contraction converging to a two-cluster graph's min cut |
 | `examples/bron_kerbosch_demo.py` | A friendship network's maximal cliques, the largest highlighted |
 | `examples/dinic_demo.py` | A pipe network at max flow with the min-cut pipes highlighted |
+| `examples/graph_coloring_demo.py` | An exam-conflict graph coloured into the minimum time slots |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9021,6 +9023,24 @@ iteration pointer skips dead-end edges so a phase costs O(V*E), and only O(V) ph
 source's residual-reachable set gives the min cut. Verified against an independent Edmonds-Karp
 reference and the max-flow/min-cut theorem on hundreds of random networks (plus the CLRS graph and a
 200-node instance), with a bipartite-matching reduction matching an augmenting-path reference.
+
+## Graph coloring: conflict-free scheduling
+
+Color a graph so neighbours differ, with as few colors as possible. `graph_coloring.py`:
+
+```
+$ python examples/graph_coloring_demo.py examples/output
+
+  7 exams, 9 conflicts -> greedy 4, DSATUR 4, exact chromatic number 4
+  optimal schedule: slot1 Chem/Econ/Art, slot2 Bio/CS, slot3 Math, slot4 Phys
+```
+
+Greedy colors vertices in order (smallest unused color) -- fast but order-dependent. DSATUR colors the
+most-saturated vertex next (adjacent to the most distinct colors so far), near-optimal in practice.
+Exact chromatic number runs branch-and-bound over increasing k with clique lower and DSATUR upper
+bounds. Verified against brute force -- the exact number matches an exhaustive search over all
+k-colorings, every coloring is proper, greedy/DSATUR never beat the true minimum, and known values hold
+(even cycles 2, odd 3, K_n needs n) -- on hundreds of random graphs.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
