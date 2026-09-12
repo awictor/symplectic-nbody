@@ -390,6 +390,7 @@ def main():
     import merkle_demo
     import tsp_demo
     import poisson_demo
+    import manacher_demo
 
     import plot_orbits
 
@@ -749,6 +750,7 @@ def main():
     merkle_txt = run("merkle_demo", merkle_demo.main, True)
     tsp_txt = run("tsp_demo", tsp_demo.main, True)
     poisson_txt = run("poisson_demo", poisson_demo.main, True)
+    manacher_txt = run("manacher_demo", manacher_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5659,6 +5661,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("poisson.svg"), "the steady-state temperature on a plate held hot on the left and cold on the right, solved by relaxation -- a smooth harmonic field whose isotherms curve gently, every interior cell the average of its neighbours")
             + f'<div class="card">{pre(poisson_txt)}</div>'
+            + '</div>'),
+        section(
+            "Manacher's algorithm: every palindrome in linear time",
+            "Finding the LONGEST PALINDROMIC SUBSTRING naively takes O(n^2) or worse. MANACHER'S "
+            "ALGORITHM does it in O(n) by computing, for every position, the RADIUS of the longest "
+            "palindrome centered there, reusing the symmetry of already-found palindromes so no "
+            "character is examined more than a constant number of times -- the definitive "
+            "linear-time palindrome algorithm, used in bioinformatics and text processing. It handles "
+            "even- and odd-length palindromes uniformly by inserting separators so every palindrome "
+            "becomes odd-length with one center; a running scan keeps the RIGHTMOST palindrome found "
+            "(center C, right edge R), and a new center i inside R inherits its MIRROR position's "
+            "radius for free, expanding beyond it only when possible -- and each expansion advances R, "
+            "so total work is linear. This module returns the per-center radii, the longest "
+            "palindromic substring, the count of all palindromic substrings, and the odd/even radius "
+            "profiles, verified against brute force: the longest palindrome matches an O(n^2) "
+            "center-expansion reference and the total count matches a full substring enumeration over "
+            "500 random strings, the returned substring is always a genuine palindrome, and edge "
+            "cases (empty, single char, all-same, all-distinct, a 2000-char worst case) all work.",
+            '<div class="grid">'
+            + svg_card(out("manacher.svg"), "the palindrome radius at each character center of 'abacabadabacaba' -- the self-similar 1,2,1,4,1,2,1,8 profile peaking at the center where the whole string reads as one palindrome")
+            + f'<div class="card">{pre(manacher_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

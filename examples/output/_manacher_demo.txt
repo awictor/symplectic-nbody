@@ -1,0 +1,20 @@
+Manacher's algorithm: all palindromes in O(n)
+
+  'babad'         : longest 'bab'        (3 chars), 7 palindromic substrings
+  'racecar'       : longest 'racecar'    (7 chars), 10 palindromic substrings
+  'abacaba'       : longest 'abacaba'    (7 chars), 12 palindromic substrings
+  'mississippi'   : longest 'ississi'    (7 chars), 20 palindromic substrings
+  'aabaaacaaab'   : longest 'baaacaaab'  (9 chars), 24 palindromic substrings
+
+  Verify 'aabaaacaaab': Manacher 24 == brute 24
+
+  Odd-length palindrome radius at each center of 'abacabadabacaba':
+    a b a c a b a d a b a c a b a
+    1 2 1 4 1 2 1 8 1 2 1 4 1 2 1
+    peak radius 8 at center 'd' (index 7) -> the whole string is a palindrome
+
+  The string is padded with separators so every palindrome is odd-length with one
+  center. A running scan keeps the rightmost palindrome found; a new center inherits its
+  mirror's radius for free and only expands beyond it -- so total work is linear.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\manacher.svg

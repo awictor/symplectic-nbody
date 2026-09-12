@@ -348,6 +348,7 @@ ruins a long non-symplectic integration.
 | `src/merkle.py` | Merkle hash tree with O(log n) inclusion proofs (SHA-256, domain-separated) |
 | `src/tsp.py` | Traveling salesman: exact Held-Karp DP + nearest-neighbour and 2-opt heuristics |
 | `src/poisson.py` | 2-D Poisson/Laplace by relaxation (Jacobi, Gauss-Seidel, SOR) with Dirichlet BCs |
+| `src/manacher.py` | Manacher's O(n) longest palindromic substring + palindrome counting |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -687,6 +688,7 @@ ruins a long non-symplectic integration.
 | `examples/merkle_demo.py` | An inclusion proof + tamper detection + the tree with its authentication path |
 | `examples/tsp_demo.py` | Held-Karp exact solve + 2-opt untangling a 60-city nearest-neighbour tour |
 | `examples/poisson_demo.py` | Steady-state heat on a plate + Jacobi/Gauss-Seidel/SOR convergence comparison |
+| `examples/manacher_demo.py` | Longest palindrome + the self-similar radius profile of abacabadabacaba |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8227,6 +8229,25 @@ converge an order of magnitude faster. This module solves 2-D Poisson/Laplace wi
 boundaries by all three, verified that linear boundary data reproduces the exact harmonic solution,
 the mean-value property and maximum principle hold, a separable analytic solution is matched to grid
 accuracy, and SOR beats Jacobi by ~30x.
+
+## Manacher's algorithm: every palindrome in linear time
+
+The longest palindromic substring in O(n), not O(n^2). `manacher.py`:
+
+```
+$ python examples/manacher_demo.py examples/output
+
+  'racecar'     -> longest 'racecar', 10 palindromic substrings
+  'mississippi' -> longest 'ississi'
+  radius profile of 'abacabadabacaba': 1 2 1 4 1 2 1 8 1 2 1 4 1 2 1
+```
+
+Manacher computes the palindrome radius at every center, reusing the mirror symmetry of already-found
+palindromes so each character is touched a constant number of times. Separators make every palindrome
+odd-length with one center. This module returns the radii, the longest palindromic substring, and the
+count of all palindromic substrings, verified against brute force over 500 random strings that the
+longest and the count both match, with edge cases (empty, single, all-same, a 2000-char worst case)
+handled.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
