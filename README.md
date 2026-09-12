@@ -439,6 +439,7 @@ ruins a long non-symplectic integration.
 | `src/btree.py` | B-tree ordered map: minimum-degree insert/delete/search + range queries |
 | `src/cuckoo_hash.py` | Cuckoo hash table: worst-case two-probe lookups, eviction + rehash |
 | `src/dgim.py` | DGIM sliding-window 1-counter over a bit stream in O(log^2 N) memory |
+| `src/rans.py` | rANS entropy coder (Asymmetric Numeral Systems) with a static frequency model |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -869,6 +870,7 @@ ruins a long non-symplectic integration.
 | `examples/btree_demo.py` | Height vs key count (1B keys -> 6 seeks), range query, and the tree drawn |
 | `examples/cuckoo_hash_demo.py` | The two-probe guarantee and the two candidate cells per key |
 | `examples/dgim_demo.py` | Estimate tracking the exact window count; a 1M-bit window in 27 buckets |
+| `examples/rans_demo.py` | Compression vs Shannon entropy and Huffman on three sources |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10128,6 +10130,24 @@ halves the oldest (which straddles the boundary), bounding the error to 50% (~1/
 Validated against an exact deque window: the estimate stays within its guaranteed band over long random
 and bursty streams, more buckets tighten it, sub-window queries obey the bound, and the memory is
 logarithmic.
+
+## rANS: entropy coding at the Shannon limit
+
+The entropy coder inside Zstandard, LZMA, and JPEG XL. `rans.py`:
+
+```
+$ python examples/rans_demo.py examples/output
+
+  80%-skewed source: rANS 1.23 bits/sym vs Shannon 1.23 vs Huffman 1.52 (6.5x smaller)
+  10000 repeated bytes -> under 20 bytes; decode(encode(x)) == x always
+```
+
+rANS (Duda 2009) folds the whole message into one big integer, adding each symbol by the reversible map
+`x -> (x // f_s) * M + (x % f_s) + c_s`, which costs exactly -log2(p_s) bits -- the Shannon optimum --
+at table-lookup speed, unlike whole-bit Huffman. Byte-wise renormalisation keeps the state bounded.
+Validated: exact round-trip on the empty string, single symbols, skewed and uniform distributions, and
+hundreds of random strings; compression within a few percent of the Shannon entropy and below Huffman;
+a single repeated symbol compresses to almost nothing; and the frequency model sums exactly to M.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

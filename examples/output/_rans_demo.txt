@@ -1,0 +1,18 @@
+rANS: entropy coding at the Shannon limit -- the coder inside Zstandard and JPEG XL
+
+  english-ish text:
+    1350 bytes -> 745 bytes  (1.81x smaller), round-trip OK: True
+    Shannon entropy 4.397 bits/sym   rANS 4.415   Huffman 4.467
+  80%-skewed source:
+    6000 bytes -> 924 bytes  (6.49x smaller), round-trip OK: True
+    Shannon entropy 1.228 bits/sym   rANS 1.232   Huffman 1.524
+  uniform 16 symbols:
+    6000 bytes -> 3003 bytes  (2.00x smaller), round-trip OK: True
+    Shannon entropy 4.000 bits/sym   rANS 4.004   Huffman 4.000
+
+  rANS folds the whole message into one big integer, adding each symbol s by
+    x -> (x // f_s) * M + (x % f_s) + c_s,
+  a reversible step costing exactly -log2(p_s) bits. It reaches arithmetic coding's
+  compression (unlike whole-bit Huffman) at table-lookup speed -- why modern codecs adopted it.
+
+  wrote examples/output\rans.svg

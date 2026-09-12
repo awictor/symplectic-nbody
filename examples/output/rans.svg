@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="380" viewBox="0 0 760 380" font-family="monospace">
+<rect width="760" height="380" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="17">Bits per symbol: rANS hugs the Shannon entropy, below Huffman</text>
+<text x="20" y="47" fill="#8b949e" font-size="12">green = Shannon entropy (floor); yellow = rANS; orange = Huffman (whole-bit)</text>
+<line x1="60" y1="320" x2="710" y2="320" stroke="#30363d" stroke-width="1"/>
+<line x1="60" y1="320" x2="60" y2="80" stroke="#30363d" stroke-width="1"/>
+<line x1="60" y1="80.0" x2="710" y2="80.0" stroke="#30363d" stroke-width="0.7" stroke-dasharray="2 4"/>
+<text x="52" y="84" fill="#8b949e" font-size="9" text-anchor="end">8 (raw)</text>
+<rect x="81.7" y="188.1" width="51.2" height="131.9" fill="#06d6a0"/>
+<text x="107.2" y="184.1" fill="#06d6a0" font-size="9" text-anchor="middle">4.40</text>
+<rect x="135.8" y="187.6" width="51.2" height="132.4" fill="#ffd43b"/>
+<text x="161.4" y="183.6" fill="#ffd43b" font-size="9" text-anchor="middle">4.41</text>
+<rect x="190.0" y="186.0" width="51.2" height="134.0" fill="#ff922b"/>
+<text x="215.6" y="182.0" fill="#ff922b" font-size="9" text-anchor="middle">4.47</text>
+<text x="162.9" y="336" fill="#8b949e" font-size="10" text-anchor="middle">english-ish text</text>
+<rect x="298.3" y="283.2" width="51.2" height="36.8" fill="#06d6a0"/>
+<text x="323.9" y="279.2" fill="#06d6a0" font-size="9" text-anchor="middle">1.23</text>
+<rect x="352.5" y="283.0" width="51.2" height="37.0" fill="#ffd43b"/>
+<text x="378.1" y="279.0" fill="#ffd43b" font-size="9" text-anchor="middle">1.23</text>
+<rect x="406.7" y="274.3" width="51.2" height="45.7" fill="#ff922b"/>
+<text x="432.2" y="270.3" fill="#ff922b" font-size="9" text-anchor="middle">1.52</text>
+<text x="379.6" y="336" fill="#8b949e" font-size="10" text-anchor="middle">80%-skewed source</text>
+<rect x="515.0" y="200.0" width="51.2" height="120.0" fill="#06d6a0"/>
+<text x="540.6" y="196.0" fill="#06d6a0" font-size="9" text-anchor="middle">4.00</text>
+<rect x="569.2" y="199.9" width="51.2" height="120.1" fill="#ffd43b"/>
+<text x="594.8" y="195.9" fill="#ffd43b" font-size="9" text-anchor="middle">4.00</text>
+<rect x="623.3" y="200.0" width="51.2" height="120.0" fill="#ff922b"/>
+<text x="648.9" y="196.0" fill="#ff922b" font-size="9" text-anchor="middle">4.00</text>
+<text x="596.2" y="336" fill="#8b949e" font-size="10" text-anchor="middle">uniform 16 symbols</text>
+</svg>
