@@ -1,0 +1,22 @@
+Steiner tree: cheapest network connecting terminals via optional junctions
+
+  terminals: ['NW', 'NE', 'SE', 'SW']
+  a hub vertex 'hub' is available as a Steiner point (not required)
+
+  terminal-only MST (perimeter, no hub): 30
+  Steiner tree (allowed to use the hub):  12
+  saving from routing through the hub:    18
+
+  verified against brute force: True
+
+  Steiner cost for various terminal sets:
+    ['NW', 'SE']: 6
+    ['NW', 'NE', 'SE']: 9
+    ['NW', 'NE', 'SE', 'SW']: 12
+
+  The Dreyfus-Wagner DP fills dp[S][v] = cheapest tree connecting terminal set S and
+  reaching vertex v, by MERGING disjoint terminal subsets at a shared root and GROWING
+  along shortest paths. Exponential only in the number of terminals -- so many terminals
+  in a large graph stay tractable, unlike brute-forcing every subset of Steiner points.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\steiner_tree.svg

@@ -420,6 +420,7 @@ def main():
     import li_chao_demo
     import mo_algorithm_demo
     import arborescence_demo
+    import steiner_tree_demo
 
     import plot_orbits
 
@@ -809,6 +810,7 @@ def main():
     li_chao_txt = run("li_chao_demo", li_chao_demo.main, True)
     mo_algorithm_txt = run("mo_algorithm_demo", mo_algorithm_demo.main, True)
     arborescence_txt = run("arborescence_demo", arborescence_demo.main, True)
+    steiner_tree_txt = run("steiner_tree_demo", steiner_tree_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6379,6 +6381,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("arborescence.svg"), "the minimum broadcast tree from root 0 (green edges): the greedy cheapest-incoming choice would trap nodes 1,2,3 in a cycle, but Chu-Liu/Edmonds contracts and reweights it to reach every node at minimum total cost 26")
             + f'<div class="card">{pre(arborescence_txt)}</div>'
+            + '</div>'),
+        section(
+            "Steiner tree: cheapest network through junctions",
+            "The minimum spanning tree connects ALL vertices; the STEINER TREE connects only a chosen "
+            "subset -- the TERMINALS -- at least cost, free to route through other vertices (STEINER "
+            "POINTS) when cheaper. It is the true shape of network design: the cheapest fibre "
+            "backbone linking some cities (routing through junction towns allowed), a chip net "
+            "touching a set of pins, a phylogenetic tree through inferred ancestors. It is NP-hard in "
+            "general, but for a small number of terminals k the DREYFUS-WAGNER bitmask DP solves it "
+            "exactly. It fills dp[S][v] = the minimum weight of a tree connecting terminal subset S "
+            "and reaching vertex v, by two rules: MERGE two disjoint sub-trees for S1 and S2 rooted "
+            "at the same v (dp[S][v] = min over splits of dp[S1][v]+dp[S2][v]), and GROW a tree "
+            "toward a neighbour along a shortest path (a Dijkstra sweep per subset layer). The answer "
+            "is min over v of dp[full][v], in O(3^k n + 2^k n^2) -- exponential only in the terminal "
+            "count, not the graph size. Verified against brute force -- enumerating every subset of "
+            "Steiner points and taking the induced MST -- on 400 random graphs, against the MST when "
+            "every vertex is a terminal, and on cases where a Steiner point strictly beats the "
+            "terminal-only tree.",
+            '<div class="grid">'
+            + svg_card(out("steiner_tree.svg"), "connecting four corner terminals: the terminal-only spanning tree would pay 30 around the perimeter, but routing through the cheap central hub (a Steiner point) links all four for just 12")
+            + f'<div class="card">{pre(steiner_tree_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

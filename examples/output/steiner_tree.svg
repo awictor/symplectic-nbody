@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420" font-family="monospace">
+<rect width="720" height="420" fill="#0d1117"/>
+<text x="20" y="30" fill="#e6edf3" font-size="18">Steiner tree: connect the 4 corner terminals through the cheap hub</text>
+<text x="20" y="50" fill="#8b949e" font-size="12">green = chosen Steiner tree (cost 12); grey = unused edges; perimeter-only MST would cost 30</text>
+<line x1="170" y1="110" x2="540" y2="110" stroke="#484f58" stroke-width="1.2"/>
+<text x="355" y="107" fill="#484f58" font-size="11" text-anchor="middle">10</text>
+<line x1="540" y1="110" x2="540" y2="340" stroke="#484f58" stroke-width="1.2"/>
+<text x="540" y="222" fill="#484f58" font-size="11" text-anchor="middle">10</text>
+<line x1="540" y1="340" x2="170" y2="340" stroke="#484f58" stroke-width="1.2"/>
+<text x="355" y="337" fill="#484f58" font-size="11" text-anchor="middle">10</text>
+<line x1="170" y1="340" x2="170" y2="110" stroke="#484f58" stroke-width="1.2"/>
+<text x="170" y="222" fill="#484f58" font-size="11" text-anchor="middle">10</text>
+<line x1="170" y1="110" x2="355" y2="225" stroke="#06d6a0" stroke-width="3.5"/>
+<text x="262" y="164" fill="#06d6a0" font-size="11" text-anchor="middle">3</text>
+<line x1="540" y1="110" x2="355" y2="225" stroke="#06d6a0" stroke-width="3.5"/>
+<text x="448" y="164" fill="#06d6a0" font-size="11" text-anchor="middle">3</text>
+<line x1="540" y1="340" x2="355" y2="225" stroke="#06d6a0" stroke-width="3.5"/>
+<text x="448" y="280" fill="#06d6a0" font-size="11" text-anchor="middle">3</text>
+<line x1="170" y1="340" x2="355" y2="225" stroke="#06d6a0" stroke-width="3.5"/>
+<text x="262" y="280" fill="#06d6a0" font-size="11" text-anchor="middle">3</text>
+<circle cx="170" cy="110" r="22" fill="#4dabf7"/>
+<text x="170" y="115" fill="#0d1117" font-size="13" text-anchor="middle" font-weight="bold">NW</text>
+<circle cx="540" cy="110" r="22" fill="#4dabf7"/>
+<text x="540" y="115" fill="#0d1117" font-size="13" text-anchor="middle" font-weight="bold">NE</text>
+<circle cx="540" cy="340" r="22" fill="#4dabf7"/>
+<text x="540" y="345" fill="#0d1117" font-size="13" text-anchor="middle" font-weight="bold">SE</text>
+<circle cx="170" cy="340" r="22" fill="#4dabf7"/>
+<text x="170" y="345" fill="#0d1117" font-size="13" text-anchor="middle" font-weight="bold">SW</text>
+<circle cx="355" cy="225" r="22" fill="#ffd43b"/>
+<text x="355" y="230" fill="#0d1117" font-size="13" text-anchor="middle" font-weight="bold">hub</text>
+<text x="355" y="265" fill="#ffd43b" font-size="11" text-anchor="middle">Steiner point</text>
+</svg>

@@ -378,6 +378,7 @@ ruins a long non-symplectic integration.
 | `src/li_chao.py` | Li Chao tree: lower/upper envelope of lines, convex-hull-trick DP |
 | `src/mo_algorithm.py` | Mo's algorithm: offline range distinct-count & power-sum in O((n+q)vn) |
 | `src/arborescence.py` | Chu-Liu/Edmonds minimum spanning arborescence (directed MST) |
+| `src/steiner_tree.py` | Steiner tree (Dreyfus-Wagner): cheapest tree connecting terminals |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -747,6 +748,7 @@ ruins a long non-symplectic integration.
 | `examples/li_chao_demo.py` | A bundle of lines with their lower envelope highlighted |
 | `examples/mo_algorithm_demo.py` | Query windows drawn in Mo's block-snake processing order |
 | `examples/arborescence_demo.py` | A directed broadcast tree with the chosen min-cost edges in green |
+| `examples/steiner_tree_demo.py` | Four terminals linked through a cheap hub, saving over the perimeter |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8874,6 +8876,25 @@ then expands -- breaking each cycle at the vertex entered from outside. Verified
 (enumerate one incoming edge per vertex, keep valid arborescences, confirm the minimum) on 500 random
 graphs, plus trees, unreachable vertices, multi-edges, and nested cycles; returned edges always form a
 genuine spanning arborescence.
+
+## Steiner tree: cheapest network through junctions
+
+Connect a chosen set of terminals at least cost, routing through optional junctions. `steiner_tree.py`:
+
+```
+$ python examples/steiner_tree_demo.py examples/output
+
+  4 corner terminals: perimeter-only tree costs 30, routing through the hub costs 12
+  Dreyfus-Wagner dp[S][v] = cheapest tree connecting subset S and reaching v
+```
+
+Unlike the MST (which spans all vertices), the Steiner tree connects only the terminals, free to route
+through Steiner points when cheaper. NP-hard in general, but exact for small terminal counts via the
+Dreyfus-Wagner bitmask DP: MERGE two disjoint terminal sub-trees at a shared root, GROW along shortest
+paths (a Dijkstra sweep per subset), answer min over v of dp[full][v], in O(3^k n + 2^k n^2). Verified
+against brute force (enumerate every subset of Steiner points, take the induced MST) on 400 random
+graphs, against the MST when all vertices are terminals, and on cases where a Steiner point strictly
+helps.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
