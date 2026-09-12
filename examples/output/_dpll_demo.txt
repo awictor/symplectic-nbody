@@ -1,0 +1,21 @@
+DPLL: Boolean satisfiability by backtracking with propagation
+
+  Formula (CNF, AND of ORs):
+    (x1 v x2 v ~x3) ^ (~x1 v x3) ^ (~x2 v x3) ^ (x1 v ~x2) ^ (x2 v x3)
+
+  DPLL: SATISFIABLE
+    model: x1=T, x2=T, x3=T
+    verified: True
+
+  Pigeonhole principle -- can n+1 pigeons occupy n holes, no two sharing?
+    2 pigeons, 1 holes: 2 vars, 3 clauses -> UNSAT (proven impossible)
+    3 pigeons, 2 holes: 6 vars, 9 clauses -> UNSAT (proven impossible)
+    4 pigeons, 3 holes: 12 vars, 22 clauses -> UNSAT (proven impossible)
+    5 pigeons, 4 holes: 20 vars, 45 clauses -> UNSAT (proven impossible)
+    Every case UNSAT -- DPLL proves the combinatorial impossibility by exhausting the
+    (heavily pruned) search tree, never enumerating all 2^n assignments.
+
+  Unit propagation on a forcing chain x1 -> x2 -> ... -> x5:
+    x1=T x2=T x3=T x4=T x5=T  -- one forced unit cascades through the whole chain.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\dpll.svg

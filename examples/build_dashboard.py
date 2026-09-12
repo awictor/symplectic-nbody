@@ -412,6 +412,7 @@ def main():
     import min_cost_flow_demo
     import sprague_grundy_demo
     import walsh_hadamard_demo
+    import dpll_demo
 
     import plot_orbits
 
@@ -793,6 +794,7 @@ def main():
     min_cost_flow_txt = run("min_cost_flow_demo", min_cost_flow_demo.main, True)
     sprague_grundy_txt = run("sprague_grundy_demo", sprague_grundy_demo.main, True)
     walsh_hadamard_txt = run("walsh_hadamard_demo", walsh_hadamard_demo.main, True)
+    dpll_txt = run("dpll_demo", dpll_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6187,6 +6189,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("walsh_hadamard.svg"), "combining two 3-bit distributions A and B under each bitwise operation: XOR spreads the mass evenly, OR pushes it toward all-ones, AND pulls it toward zero -- and every result conserves the total mass (12x12=144)")
             + f'<div class="card">{pre(walsh_hadamard_txt)}</div>'
+            + '</div>'),
+        section(
+            "DPLL: deciding Boolean satisfiability",
+            "SATISFIABILITY (SAT) asks whether a formula in conjunctive normal form -- an AND of "
+            "clauses, each an OR of literals -- can be made true. It is the archetypal NP-complete "
+            "problem: circuit verification, planning, dependency resolution, and countless puzzles "
+            "compile down to it. Brute force tries all 2^n assignments; DPLL (Davis-Putnam-Logemann-"
+            "Loveland, 1962) is the backtracking search at the heart of every modern SAT solver and "
+            "in practice explores a tiny fraction of that space. It is depth-first assignment with "
+            "two pruning rules. UNIT PROPAGATION: a clause with all but one literal false forces that "
+            "literal true, cascading through the formula; a clause with every literal false is a "
+            "conflict, killing the branch. PURE LITERAL: a variable appearing with only one polarity "
+            "is fixed that way for free. After propagation DPLL picks a variable, tries true, "
+            "recurses, and on failure tries false. This module parses a CNF (clauses of signed "
+            "integers), decides satisfiability with unit propagation and pure-literal elimination, "
+            "and returns a satisfying model. Verified against a brute-force truth-table oracle on 600 "
+            "random formulas (SAT exactly when some assignment works, every returned model genuinely "
+            "satisfies all clauses) and on the pigeonhole principle -- n+1 pigeons into n holes is "
+            "proven UNSAT without enumerating the 2^n space.",
+            '<div class="grid">'
+            + svg_card(out("dpll.svg"), "the pigeonhole family n+1 pigeons into n holes: yellow is the clause count and red the log2 of the 2^n brute-force assignment space -- all instances are proven UNSAT by DPLL's pruned search, never touching the full exponential space")
+            + f'<div class="card">{pre(dpll_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

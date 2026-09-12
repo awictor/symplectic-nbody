@@ -370,6 +370,7 @@ ruins a long non-symplectic integration.
 | `src/min_cost_flow.py` | Minimum-cost maximum flow (SPFA successive shortest paths) + assignment |
 | `src/sprague_grundy.py` | Sprague-Grundy nimbers (mex + XOR) for Nim, subtraction games, Kayles |
 | `src/walsh_hadamard.py` | Fast Walsh-Hadamard transform + XOR/OR/AND convolutions (integer-exact) |
+| `src/dpll.py` | DPLL SAT solver: unit propagation + pure-literal elimination + backtracking |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -731,6 +732,7 @@ ruins a long non-symplectic integration.
 | `examples/min_cost_flow_demo.py` | A factory-to-store shipping network with per-pipe flow labels |
 | `examples/sprague_grundy_demo.py` | Grundy-number colour strips revealing subtraction/Kayles periodicity |
 | `examples/walsh_hadamard_demo.py` | Two 3-bit distributions combined by XOR/OR/AND as bar panels |
+| `examples/dpll_demo.py` | A SAT model plus the pigeonhole principle proven UNSAT as bars |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8695,6 +8697,26 @@ convolution theorem applies. OR and AND convolutions use the sum-over-subsets (z
 transforms with their Mobius inverses. Everything is integer-exact. Verified against the brute-force
 O(n^2) definition of all three convolutions on hundreds of random arrays, plus round-trip, linearity,
 commutativity, the delta identity, and a 2^16-point transform.
+
+## DPLL: deciding Boolean satisfiability
+
+Decide whether a CNF formula can be made true, the engine of every SAT solver. `dpll.py`:
+
+```
+$ python examples/dpll_demo.py examples/output
+
+  (x1 v x2 v ~x3) ^ (~x1 v x3) ^ ... -> SATISFIABLE, model x1=T x2=T x3=T
+  pigeonhole: 3 pigeons/2 holes, 4/3, 5/4 ... all UNSAT (proven impossible)
+  unit propagation: one forced literal cascades x1->x2->...->x5
+```
+
+DPLL is depth-first assignment with two pruning rules: UNIT PROPAGATION (a clause with one unassigned
+literal forces it, cascading; an all-false clause is a conflict) and PURE LITERAL elimination (a
+variable of single polarity is fixed for free). After propagation it branches on a variable, trying
+true then false. Verified against a brute-force truth-table oracle on 600 random formulas (SAT exactly
+when some assignment works, every model genuinely satisfies all clauses) and on the pigeonhole
+principle -- n+1 pigeons into n holes is proven UNSAT without enumerating the 2^n space. Distinct from
+`two_sat.py`, which handles only the polynomial 2-literal case; this decides general (NP-complete) SAT.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
