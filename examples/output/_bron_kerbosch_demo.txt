@@ -1,0 +1,20 @@
+Bron-Kerbosch: every maximal clique (fully-connected group) in a friend network
+
+  7 people, 9 friendships
+
+  4 maximal cliques (groups where everyone knows everyone, not extendable):
+    {Ana, Bo, Cy}
+    {Bo, Cy, Di}
+    {Di, Ed, Fi}
+    {Fi, Gu}
+
+  largest group (maximum clique): {Ana, Bo, Cy} -- 3 people
+
+  matches brute-force subset check: True
+
+  Bron-Kerbosch recurses over R (clique so far), P (extenders), X (already-tried); a PIVOT
+  in P union X lets it skip candidates that are the pivot's neighbours, since every maximal
+  clique already contains the pivot or one of its non-neighbours -- pruning huge swaths of
+  the search. The number of maximal cliques can reach 3^(n/3), so this pruning is essential.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\bron_kerbosch.svg

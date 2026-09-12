@@ -383,6 +383,7 @@ ruins a long non-symplectic integration.
 | `src/eulerian.py` | Eulerian paths & circuits (Hierholzer), undirected + directed, existence tests |
 | `src/yen_ksp.py` | Yen's K shortest loopless paths in a directed weighted graph |
 | `src/karger.py` | Karger & Karger-Stein randomized global minimum cut |
+| `src/bron_kerbosch.py` | Bron-Kerbosch maximal-clique enumeration (pivoting + degeneracy) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -757,6 +758,7 @@ ruins a long non-symplectic integration.
 | `examples/eulerian_demo.py` | Konigsberg and friends classified; a bowtie circuit numbered in walk order |
 | `examples/yen_ksp_demo.py` | The four cheapest A-to-F routes, each road coloured by its best route |
 | `examples/karger_demo.py` | Random contraction converging to a two-cluster graph's min cut |
+| `examples/bron_kerbosch_demo.py` | A friendship network's maximal cliques, the largest highlighted |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8981,6 +8983,24 @@ O(n^2 log^3 n). Weighted graphs pick edges proportional to weight. Being Monte C
 statistically: a contraction cut is always valid (never below the true minimum) and, given enough
 trials, equals the exact Stoer-Wagner value -- confirmed on hundreds of random weighted graphs, with a
 fixed seed for reproducibility.
+
+## Bron-Kerbosch: every fully-connected group
+
+Enumerate all maximal cliques of a graph. `bron_kerbosch.py`:
+
+```
+$ python examples/bron_kerbosch_demo.py examples/output
+
+  7-person friend network -> 4 maximal cliques: {Ana,Bo,Cy},{Bo,Cy,Di},{Di,Ed,Fi},{Fi,Gu}
+  largest fully-connected group: {Ana,Bo,Cy}; matches brute-force subset check
+```
+
+Recursive backtracking over R (clique so far), P (candidates), X (already-used); when P and X are empty
+R is maximal. PIVOTING branches only on non-neighbours of a pivot in P union X (pruning redundant
+branches), and a degeneracy ordering of the outer loop bounds the work to O(d*n*3^(d/3)). Verified
+against brute force (a set is a maximal clique iff it is a clique no outside vertex is adjacent to all
+of) on hundreds of random graphs, with pivoting and degeneracy variants agreeing, the Moon-Moser graph
+yielding its 3^k cliques, and a 60-vertex sparse instance validated.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

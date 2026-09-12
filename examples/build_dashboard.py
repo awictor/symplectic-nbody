@@ -425,6 +425,7 @@ def main():
     import eulerian_demo
     import yen_ksp_demo
     import karger_demo
+    import bron_kerbosch_demo
 
     import plot_orbits
 
@@ -819,6 +820,7 @@ def main():
     eulerian_txt = run("eulerian_demo", eulerian_demo.main, True)
     yen_ksp_txt = run("yen_ksp_demo", yen_ksp_demo.main, True)
     karger_txt = run("karger_demo", karger_demo.main, True)
+    bron_kerbosch_txt = run("bron_kerbosch_demo", bron_kerbosch_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6496,6 +6498,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("karger.svg"), "two heavy triangles joined by two light bridges: random contraction repeatedly rediscovers the minimum cut that severs the bridges (red), splitting the graph into its two natural clusters")
             + f'<div class="card">{pre(karger_txt)}</div>'
+            + '</div>'),
+        section(
+            "Bron-Kerbosch: every fully-connected group",
+            "A CLIQUE is a set of vertices all mutually connected; a MAXIMAL clique is one that cannot "
+            "be extended. Listing them all is the core of community detection (fully connected friend "
+            "groups), protein-interaction motifs, and constraint analysis. The count can reach "
+            "3^(n/3) (the Moon-Moser bound), so nothing is polynomial in n, but BRON-KERBOSCH "
+            "enumerates them efficiently by recursive backtracking over three sets: R (the clique so "
+            "far), P (candidates that can extend it), and X (vertices already used that would make a "
+            "duplicate). When P and X are both empty, R is maximal. Two refinements make it fast: "
+            "PIVOTING picks a vertex u in P union X and branches only on non-neighbours of u -- since "
+            "any maximal clique contains u or a non-neighbour, this prunes redundant branches -- and "
+            "a DEGENERACY (k-core) ORDERING of the outer loop bounds the work to O(d*n*3^(d/3)) for "
+            "graphs of degeneracy d, near-optimal on the sparse graphs common in practice. This "
+            "module enumerates all maximal cliques (pivoting, with an optional degeneracy ordering) "
+            "and reports the maximum clique. Verified against brute force -- a set is a maximal clique "
+            "iff it is a clique no outside vertex is adjacent to all of -- on hundreds of random "
+            "graphs, with the pivoting and degeneracy variants agreeing, the Moon-Moser graph "
+            "yielding its 3^k cliques, and a 60-vertex sparse instance validated.",
+            '<div class="grid">'
+            + svg_card(out("bron_kerbosch.svg"), "a seven-person friendship network with all its maximal cliques found; the largest fully-connected group (a mutual-friend triangle) is highlighted in green")
+            + f'<div class="card">{pre(bron_kerbosch_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
