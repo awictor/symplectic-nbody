@@ -397,6 +397,7 @@ ruins a long non-symplectic integration.
 | `src/fenwick_2d.py` | 2D Fenwick tree: point update + rectangle sum in O(log R log C) |
 | `src/linear_sieve.py` | Linear sieve: primes + SPF + Euler totient + Mobius in O(N) |
 | `src/weighted_dsu.py` | Weighted union-find: difference constraints + parity/bipartite |
+| `src/durand_kerner.py` | Durand-Kerner: all complex roots of a polynomial simultaneously |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -785,6 +786,7 @@ ruins a long non-symplectic integration.
 | `examples/fenwick_2d_demo.py` | A grid heatmap with a query rectangle and its dynamic sum |
 | `examples/linear_sieve_demo.py` | The totient curve and Mobius bars from one linear-sieve pass |
 | `examples/weighted_dsu_demo.py` | Difference constraints accepted/rejected + an odd-cycle contradiction |
+| `examples/durand_kerner_demo.py` | Polynomial roots found at once + the 8th roots of unity plotted |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9265,6 +9267,23 @@ structure. Verified against a brute reference that re-derives all pairwise offse
 accepted-constraint graph: accept/reject decisions and reported differences match, offsets are
 symmetric and transitive, ground-truth-derived constraints are always accepted, and the parity variant
 matches a mod-2 reference -- on hundreds of random constraint sequences.
+
+## Durand-Kerner: all polynomial roots at once
+
+Find every root of a polynomial simultaneously, real and complex. `durand_kerner.py`:
+
+```
+$ python examples/durand_kerner_demo.py examples/output
+
+  x^3-6x^2+11x-6 -> 1,2,3; x^2+1 -> +-i; x^3+1 -> -1, 0.5+-0.866i
+  built from {2+3i, 2-3i, -1, 0.5} -> recovered exactly; residuals ~1e-16
+```
+
+The Weierstrass iteration r_i <- r_i - p(r_i) / prod_{j!=i}(r_i - r_j) refines all n guesses together
+from spread complex seeds -- no bracketing, no derivative, no deflation -- converging quadratically to
+every root, including complex ones the real bracketing methods can't see. Verified by construction
+(build a polynomial from known roots and recover them), residual (p at each root ~0), and Vieta's
+formulas (the roots' symmetric functions reproduce the coefficients) on hundreds of random polynomials.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

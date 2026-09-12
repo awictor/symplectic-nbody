@@ -439,6 +439,7 @@ def main():
     import fenwick_2d_demo
     import linear_sieve_demo
     import weighted_dsu_demo
+    import durand_kerner_demo
 
     import plot_orbits
 
@@ -847,6 +848,7 @@ def main():
     fenwick_2d_txt = run("fenwick_2d_demo", fenwick_2d_demo.main, True)
     linear_sieve_txt = run("linear_sieve_demo", linear_sieve_demo.main, True)
     weighted_dsu_txt = run("weighted_dsu_demo", weighted_dsu_demo.main, True)
+    durand_kerner_txt = run("durand_kerner_demo", durand_kerner_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6818,6 +6820,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("weighted_dsu.svg"), "the accepted difference constraints as a graph with each edge labelled X-Y: the weighted DSU keeps them mutually consistent and rejects any new constraint whose offset contradicts the derived values")
             + f'<div class="card">{pre(weighted_dsu_txt)}</div>'
+            + '</div>'),
+        section(
+            "Durand-Kerner: all polynomial roots at once",
+            "Bracketing and Newton methods find ONE real root at a time and need a good start; the "
+            "DURAND-KERNER (Weierstrass) method finds ALL n roots of a degree-n polynomial "
+            "simultaneously -- real and complex -- from a single set of spread complex seeds, with no "
+            "bracketing, no derivative, and no deflation. The fundamental theorem of algebra "
+            "guarantees exactly n roots in the complex plane, and this is the classic way to get them "
+            "all: it powers polynomial factoring in computer algebra and finding transfer-function "
+            "poles and zeros in filter and control design. If p(x) = c*(x-r1)...(x-rn) then each root "
+            "satisfies r_i = r_i - p(r_i) / (c * prod_{j!=i}(r_i - r_j)) -- the Weierstrass correction "
+            "that divides out the other roots' influence. Applying it to every guess each iteration "
+            "(O(n^2)) marches them all to the true roots, quadratically once close. This module "
+            "normalises a polynomial, runs the iteration from complex seeds, and returns all roots. "
+            "Verified by construction (build a polynomial from known real/complex/repeated roots and "
+            "recover them), by residual (p evaluated at each root is ~0), and by Vieta's formulas "
+            "(the roots' symmetric functions reproduce the coefficients) -- on hundreds of random "
+            "polynomials.",
+            '<div class="grid">'
+            + svg_card(out("durand_kerner.svg"), "the eight roots of x^8-1 plotted in the complex plane: Durand-Kerner finds all of them at once, evenly spaced on the unit circle -- the complex roots the real bracketing methods can't see")
+            + f'<div class="card">{pre(durand_kerner_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

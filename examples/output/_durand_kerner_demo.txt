@@ -1,0 +1,23 @@
+Durand-Kerner: all n roots of a degree-n polynomial simultaneously
+
+  x^2 - 3x + 2           roots: 1.0000, 2.0000
+                         max |p(root)| = 0.0e+00
+  x^3 - 6x^2 + 11x - 6   roots: 1.0000, 2.0000, 3.0000
+                         max |p(root)| = 7.1e-38
+  x^2 + 1                roots: 0.0000 - 1.0000i, 0.0000 + 1.0000i
+                         max |p(root)| = 0.0e+00
+  x^4 - 1                roots: -1.0000, 0.0000 - 1.0000i, 0.0000 + 1.0000i, 1.0000
+                         max |p(root)| = 0.0e+00
+  x^3 + 1                roots: -1.0000, 0.5000 - 0.8660i, 0.5000 + 0.8660i
+                         max |p(root)| = 2.5e-16
+
+  built from roots ['2.0000 + 3.0000i', '2.0000 - 3.0000i', '-1.0000', '0.5000']:
+    recovered: ['-1.0000', '2.0000 + 3.0000i', '2.0000 - 3.0000i', '0.5000']
+    match: True
+
+  Each guess updates by r_i <- r_i - p(r_i) / prod_{j!=i}(r_i - r_j), the Weierstrass
+  correction: it divides out the influence of the other roots. From spread complex seeds
+  all n roots converge together, quadratically -- no bracketing, no derivative, no
+  deflation, and it finds complex roots the real bracketing methods simply cannot see.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\durand_kerner.svg (the 8th roots of unity)
