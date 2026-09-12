@@ -1,0 +1,17 @@
+Reverse-mode automatic differentiation: exact gradients through any expression
+
+  f(x,y,z) = sin(xy) + e^(z^2)*x - y/z  at [0.8, 1.2, 0.5]
+    value: -0.553588
+    autodiff gradient:      [+1.97225, -1.54118, +5.82722]
+    finite-diff gradient:   [+1.97225, -1.54118, +5.82722]
+    max difference: 1.75e-10 (autodiff is exact)
+
+  One backward pass computes the WHOLE gradient vector, regardless of the number of
+  inputs -- the property that makes it the engine of deep learning.
+
+  Training a 3-parameter model y = a*sin(b*x) + c by autodiff gradient descent:
+    true params:    a=2.0, b=1.5, c=0.5
+    learned params: a=2.000, b=1.500, c=0.500
+    loss 3.0001 -> 0.000000
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\autodiff.svg

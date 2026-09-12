@@ -385,6 +385,7 @@ def main():
     import mdp_demo
     import bandit_demo
     import q_learning_demo
+    import autodiff_demo
 
     import plot_orbits
 
@@ -739,6 +740,7 @@ def main():
     mdp_txt = run("mdp_demo", mdp_demo.main, True)
     bandit_txt = run("bandit_demo", bandit_demo.main, True)
     q_learning_txt = run("q_learning_demo", q_learning_demo.main, True)
+    autodiff_txt = run("autodiff_demo", autodiff_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5535,6 +5537,31 @@ def main():
             '<div class="grid">'
             + svg_card(out("q_learning.svg"), "left: the episode return rising as Q-learning (blue) and SARSA (green) learn from experience; right: the learned value function (color) and greedy policy (arrows) routing to the gold goal")
             + f'<div class="card">{pre(q_learning_txt)}</div>'
+            + '</div>'),
+        section(
+            "Reverse-mode automatic differentiation",
+            "How does a deep-learning framework compute the gradient of a loss with respect to "
+            "millions of parameters? Not by hand-derived formulas and not by finite differences (slow "
+            "and inexact), but by REVERSE-MODE AUTOMATIC DIFFERENTIATION -- the engine behind "
+            "PyTorch's autograd and JAX's grad -- which computes exact derivatives of any function "
+            "built from elementary operations at the cost of about one extra evaluation, regardless "
+            "of the number of inputs. It records operations as they run: each numeric VALUE remembers "
+            "the operation that produced it and its parents, so an expression becomes a computation "
+            "graph; the forward pass computes the result, and the BACKWARD pass walks the graph in "
+            "reverse topological order, applying each node's LOCAL DERIVATIVE to accumulate the "
+            "gradient flowing back from its children -- backpropagation generalized from neural-net "
+            "layers to any composition. Because it sweeps from the single scalar output back to all "
+            "inputs, one pass yields the entire gradient vector, which is why it dominates machine "
+            "learning. This module implements a Value type with +, -, *, /, **, and "
+            "exp/log/sin/cos/tanh/relu/sqrt, each recording its local derivative, plus a topological "
+            "backward pass, verified that gradients match finite differences across a nonlinear "
+            "function suite and hand-derived symbolic derivatives, that they accumulate correctly "
+            "when a value is reused (graph diamonds), that a gradient-descent loop using autodiff "
+            "reaches the analytic optimum, and that a 3-parameter a*sin(bx)+c model is trained to "
+            "recover its true parameters exactly.",
+            '<div class="grid">'
+            + svg_card(out("autodiff.svg"), "a model trained purely by autodiff gradients: the loss plunging on a log scale (left) and the learned a*sin(bx)+c curve landing exactly on the data (right) -- no derivative formulas written by hand")
+            + f'<div class="card">{pre(autodiff_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

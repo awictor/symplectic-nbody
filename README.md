@@ -343,6 +343,7 @@ ruins a long non-symplectic integration.
 | `src/mdp.py` | Markov decision process: value iteration, policy iteration, gridworld builder |
 | `src/bandit.py` | Multi-armed bandit: epsilon-greedy, UCB1, Thompson sampling with regret tracking |
 | `src/q_learning.py` | Model-free RL: tabular Q-learning and SARSA over a gridworld environment |
+| `src/autodiff.py` | Reverse-mode automatic differentiation (a Value graph with backward, like autograd) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -677,6 +678,7 @@ ruins a long non-symplectic integration.
 | `examples/mdp_demo.py` | A gridworld solved to optimality: value heatmap + optimal-action arrows |
 | `examples/bandit_demo.py` | Regret curves for epsilon-greedy/UCB1/Thompson vs random selection |
 | `examples/q_learning_demo.py` | Learning curve + a learned gridworld policy matching value iteration |
+| `examples/autodiff_demo.py` | Exact gradients vs finite diff + a model trained with no hand-derived gradients |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8122,6 +8124,24 @@ on-policy cousin. This module implements both over a step-based gridworld, verif
 iteration: the learned greedy policy matches the optimal one and reaches the goal in the optimal
 number of steps (4x3 and 6x6 worlds), the learned Q-values approach the MDP optimum, and a learned
 agent beats a random walker by an order of magnitude.
+
+## Reverse-mode automatic differentiation
+
+Exact gradients through any expression, the engine behind autograd. `autodiff.py`:
+
+```
+$ python examples/autodiff_demo.py examples/output
+
+  f = sin(xy) + e^(z^2)*x - y/z: autodiff gradient == finite diff to 2e-10 (exact)
+  trained a*sin(bx)+c: learned a=2.000 b=1.500 c=0.500 (true 2.0/1.5/0.5), loss -> 0
+```
+
+A Value records the operation and parents that produced it, so an expression becomes a computation
+graph; the backward pass walks it in reverse topological order applying each node's local derivative,
+yielding the whole gradient in one sweep. This module implements +, -, *, /, **, and
+exp/log/sin/cos/tanh/relu/sqrt with backward rules, verified that gradients match finite differences
+and symbolic derivatives, accumulate correctly through graph diamonds, drive gradient descent to the
+analytic optimum, and train a model to recover its true parameters exactly.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
