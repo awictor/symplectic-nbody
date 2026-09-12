@@ -412,6 +412,7 @@ ruins a long non-symplectic integration.
 | `src/half_plane_intersection.py` | Half-plane intersection: feasible convex region of linear constraints |
 | `src/bentley_ottmann.py` | Sweep-line segment intersection: all crossings via x-ordered sweep |
 | `src/gjk.py` | GJK convex collision detection + Minkowski difference |
+| `src/ks_test.py` | Kolmogorov-Smirnov one- and two-sample tests + reference CDFs |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -815,6 +816,7 @@ ruins a long non-symplectic integration.
 | `examples/half_plane_intersection_demo.py` | A 5-constraint feasible region with its LP optimum vertex |
 | `examples/bentley_ottmann_demo.py` | Six segments with all their crossings marked |
 | `examples/gjk_demo.py` | Two shapes + their Minkowski difference with the origin inside |
+| `examples/ks_test_demo.py` | Two empirical CDFs with the maximal-gap KS statistic marked |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9558,6 +9560,24 @@ toward the origin -- deciding overlap in a few iterations regardless of vertex c
 of physics engines. Verified against two independent references, the Separating Axis Theorem and a
 convex-hull Minkowski-origin test, with identical verdicts on hundreds of random polygon pairs, plus
 translation-invariance and self-collision.
+
+## Kolmogorov-Smirnov: comparing distributions by their largest gap
+
+Test goodness-of-fit or whether two samples match, distribution-free. `ks_test.py`:
+
+```
+$ python examples/ks_test_demo.py examples/output
+
+  300 uniform draws vs Uniform CDF -> D 0.044, p 0.62 (fit accepted)
+  uniform vs shifted-uniform -> D 0.415, p 0.0000 (DIFFERENT)
+```
+
+The statistic D is the largest vertical gap between the compared CDFs -- for one sample the sample's
+empirical CDF vs a reference, for two samples the two empirical CDFs. Under the null D's distribution
+is universal (the Kolmogorov distribution), so one critical-value table works for any continuous law.
+Verified against the brute ECDF gap on a fine grid (one- and two-sample), the D=0/D=1 extremes and
+symmetry, and statistically -- same-distribution samples rarely reject at 5% while clearly different
+ones reject with high power over many seeded trials.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

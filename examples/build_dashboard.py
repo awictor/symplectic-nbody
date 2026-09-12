@@ -454,6 +454,7 @@ def main():
     import half_plane_intersection_demo
     import bentley_ottmann_demo
     import gjk_demo
+    import ks_test_demo
 
     import plot_orbits
 
@@ -877,6 +878,7 @@ def main():
     half_plane_intersection_txt = run("half_plane_intersection_demo", half_plane_intersection_demo.main, True)
     bentley_ottmann_txt = run("bentley_ottmann_demo", bentley_ottmann_demo.main, True)
     gjk_txt = run("gjk_demo", gjk_demo.main, True)
+    ks_test_txt = run("ks_test_demo", ks_test_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7163,6 +7165,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("gjk.svg"), "left: two overlapping rectangles A and B; right: their Minkowski difference A(-)B (yellow hull over grey difference points) with the origin (red) inside it -- the exact algebraic condition for the two shapes to collide")
             + f'<div class="card">{pre(gjk_txt)}</div>'
+            + '</div>'),
+        section(
+            "Kolmogorov-Smirnov: comparing distributions by their largest gap",
+            "The KOLMOGOROV-SMIRNOV test asks whether a sample fits a given distribution (one-sample) "
+            "or whether two samples share one (two-sample) -- WITHOUT assuming any shape, so it is "
+            "nonparametric. Its statistic is the largest vertical distance D between the cumulative "
+            "distribution functions being compared: for one sample, the biggest gap between the "
+            "sample's empirical CDF (a staircase rising 1/n per point) and the reference CDF; for two "
+            "samples, the biggest gap between the two empirical CDFs. Under the null this D is small "
+            "and its distribution is UNIVERSAL -- independent of the underlying law -- so one table of "
+            "critical values serves any continuous distribution, which is the whole appeal. It powers "
+            "goodness-of-fit checking, A/B distribution comparison, and random-generator testing. The "
+            "asymptotic p-value comes from the Kolmogorov distribution P(D>d) = 2 sum (-1)^(k-1) "
+            "exp(-2 k^2 (sqrt(n) d)^2). This module computes the empirical CDF, one- and two-sample "
+            "statistics, and their p-values, with standard normal/uniform/exponential reference CDFs. "
+            "Verified against the brute ECDF gap on a fine grid, statistic symmetry and the D=0 / D=1 "
+            "extremes, and statistically -- same-distribution samples rarely reject at 5% while "
+            "clearly different ones reject with high power over many seeded trials.",
+            '<div class="grid">'
+            + svg_card(out("ks_test.svg"), "two empirical CDFs (blue and green staircases) with the maximal vertical gap D marked in red -- the KS statistic, here large because the two samples come from shifted distributions")
+            + f'<div class="card">{pre(ks_test_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

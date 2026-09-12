@@ -1,0 +1,19 @@
+Kolmogorov-Smirnov test: is the fit good? are two samples the same?
+
+  one-sample: 300 uniform draws vs the Uniform(0,1) CDF
+    D = 0.0436, p = 0.619  -> fit accepted at 5%
+
+  one-sample: those uniform draws vs a Normal(0.5, 0.29) CDF
+    D = 0.0923, p = 0.0121  -> fit REJECTED at 5%
+
+  two-sample: two uniform samples
+    D = 0.0550, p = 0.923  -> same distribution
+
+  two-sample: uniform vs shifted-uniform (+0.4)
+    D = 0.4150, p = 0.0000  -> DIFFERENT
+
+  The statistic D is just the biggest vertical gap between the two cumulative curves --
+  no assumption about their shape. Under the null its distribution is universal (the
+  Kolmogorov distribution), so one critical-value table works for any continuous law.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\ks_test.svg
