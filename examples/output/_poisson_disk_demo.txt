@@ -1,0 +1,14 @@
+Poisson-disk sampling: random-looking points that never crowd (blue noise)
+
+  Bridson Poisson-disk: 301 points, min distance 14.02 (radius 14.0)
+    insertable gap fraction 0.0000 (near-maximal packing)
+
+  Uniform random (301 points): min distance 0.54
+    -> pairs land far closer than 14.0; the pattern clumps and leaves holes
+
+  Bridson keeps a background grid of cells r/sqrt(2) across, so each holds at most one
+  sample and a candidate is tested against only its constant-size neighbourhood -- O(n)
+  overall. Every accepted point sits in the annulus [r, 2r) of an active sample, packing
+  tightly while never violating the minimum distance.
+
+  wrote examples/output\poisson_disk.svg

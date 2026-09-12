@@ -459,6 +459,7 @@ def main():
     import permutation_test_demo
     import lll_demo
     import levinson_durbin_demo
+    import poisson_disk_demo
 
     import plot_orbits
 
@@ -887,6 +888,7 @@ def main():
     permutation_test_txt = run("permutation_test_demo", permutation_test_demo.main, True)
     lll_txt = run("lll_demo", lll_demo.main, True)
     levinson_durbin_txt = run("levinson_durbin_demo", levinson_durbin_demo.main, True)
+    poisson_disk_txt = run("poisson_disk_demo", poisson_disk_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7284,6 +7286,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("levinson_durbin.svg"), "an AR(2) model fitted to a synthesised signal by the Levinson-Durbin recursion: the yellow one-step-ahead prediction, computed from just the two previous samples, tracks the blue actual signal closely")
             + f'<div class="card">{pre(levinson_durbin_txt)}</div>'
+            + '</div>'),
+        section(
+            "Poisson-disk sampling: blue noise by Bridson's algorithm",
+            "Uniform random points CLUMP: independence means some pairs land almost on top of each "
+            "other while gaps yawn open elsewhere. For stippling, dithering, scattering vegetation in a "
+            "game, anti-aliasing sample patterns, and quasi-random integration you want the opposite -- "
+            "points that still look unstructured but keep a guaranteed minimum spacing and leave no "
+            "large holes. That is BLUE NOISE, and a Poisson-disk distribution (a maximal set of points "
+            "no two closer than a radius r) is the canonical way to get it. Naive dart-throwing rejects "
+            "any candidate within r of an existing point and grinds to a halt as the domain fills; "
+            "Bridson's algorithm (2007) makes it O(n) with a background grid of cells r/sqrt(2) across, "
+            "so each cell holds at most one sample and a candidate need only be tested against its "
+            "constant-size neighbourhood. An active list tracks samples that might still have room; each "
+            "throws k candidates into the annulus [r, 2r) around itself -- close enough to pack tightly, "
+            "far enough to respect the spacing -- and is retired when full. This module samples in 2D "
+            "and arbitrary dimension from a seeded generator. Validated: the closest pair is never "
+            "nearer than r (an O(n^2) all-pairs scan, the defining property), the packing is "
+            "near-maximal (a dense candidate sweep finds essentially no insertable gap, and a higher k "
+            "drives it strictly to zero), the point count sits within the disk-packing density bounds, "
+            "the 3D and 1D samplers hold the same invariant, and runs are reproducible.",
+            '<div class="grid">'
+            + svg_card(out("poisson_disk.svg"), "the same number of points placed two ways: Bridson Poisson-disk sampling (left) spreads them evenly with a guaranteed minimum gap, while uniform random (right) clumps some pairs almost together and leaves visible holes")
+            + f'<div class="card">{pre(poisson_disk_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

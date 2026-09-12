@@ -417,6 +417,7 @@ ruins a long non-symplectic integration.
 | `src/permutation_test.py` | Permutation tests: exact enumeration + Monte-Carlo + paired sign-flip |
 | `src/lll.py` | LLL lattice reduction (exact rational Gram-Schmidt) + integer relations |
 | `src/levinson_durbin.py` | O(n^2) Toeplitz solver + autoregressive (Yule-Walker) fit + predictor |
+| `src/poisson_disk.py` | Bridson blue-noise Poisson-disk sampling (2D + n-D) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -825,6 +826,7 @@ ruins a long non-symplectic integration.
 | `examples/permutation_test_demo.py` | The permutation null distribution with the rejection region shaded |
 | `examples/lll_demo.py` | A skewed lattice basis vs its short, near-orthogonal LLL reduction |
 | `examples/levinson_durbin_demo.py` | An AR(2) one-step-ahead prediction tracking a synthesised signal |
+| `examples/poisson_disk_demo.py` | Blue-noise Poisson-disk points vs clumpy uniform random, side by side |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9666,6 +9668,26 @@ spectral estimation, and one-step forecasting use. Validated: the solver matches
 Gaussian-elimination solve to machine precision on random positive-definite Toeplitz systems, and on
 data from a known AR(2) process the recovered coefficients match the generating [0.75, -0.5] and the
 reported error variance equals the measured residual variance.
+
+## Poisson-disk sampling: blue noise by Bridson's algorithm
+
+Scatter points that look random but never crowd. `poisson_disk.py`:
+
+```
+$ python examples/poisson_disk_demo.py examples/output
+
+  Poisson-disk: 301 points, min distance 14.02 (radius 14.0), gap fraction 0.0000
+  uniform random (301 points): min distance 0.54  <- clumps badly
+```
+
+Uniform random points clump; blue noise keeps a guaranteed minimum spacing while still looking
+unstructured, which is what stippling, dithering, vegetation scatter, and anti-aliasing want.
+Bridson's algorithm (2007) achieves it in O(n) with a background grid of cells r/sqrt(2) across (at
+most one sample per cell) so each candidate is tested only against a constant-size neighbourhood, and
+every accepted point lands in the annulus [r, 2r) of an active sample. Validated: the closest pair is
+never nearer than r (all-pairs scan), the packing is near-maximal (higher candidate count k drives the
+insertable gap to zero), the count sits within disk-packing density bounds, and the n-D sampler holds
+the same invariant.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
