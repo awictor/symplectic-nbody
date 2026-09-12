@@ -1,0 +1,21 @@
+Discrete cosine transform: energy compaction behind JPEG and MP3
+
+  64-point smooth signal, energy compaction (fraction of energy in top-k coeffs):
+    top  1 of 64 coefficients: 75.49%
+    top  2 of 64 coefficients: 90.91%
+    top  4 of 64 coefficients: 97.62%
+    top  8 of 64 coefficients: 99.76%
+    top 16 of 64 coefficients: 99.99%
+
+  lossy compression by keeping the K largest coefficients:
+    keep  4/64 coeffs (6% of data): RMS error 0.3495 (15.44% of signal RMS)
+    keep  8/64 coeffs (12% of data): RMS error 0.1110 (4.90% of signal RMS)
+    keep 16/64 coeffs (25% of data): RMS error 0.0232 (1.03% of signal RMS)
+
+  8x8 image block: 11 of 64 DCT coefficients exceed 1% of DC -> most can be discarded
+
+  Reflecting the signal evenly at its ends yields a real, boundary-smooth spectrum whose
+  energy piles into the lowest frequencies. Keep the big low-frequency coefficients, drop
+  the tiny high-frequency ones: lossy compression the eye and ear barely notice.
+
+  wrote examples/output\dct.svg

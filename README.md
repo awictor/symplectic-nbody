@@ -427,6 +427,7 @@ ruins a long non-symplectic integration.
 | `src/push_relabel.py` | Push-relabel (Goldberg-Tarjan) max flow + min cut + bipartite matching |
 | `src/butterworth.py` | Butterworth IIR filter design (low/high-pass) + filtfilt + frequency response |
 | `src/unscented_kalman.py` | Unscented Kalman filter: nonlinear state estimation via sigma points |
+| `src/dct.py` | Discrete cosine transform (DCT-II/III, 1D + 2D) with energy compaction |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -845,6 +846,7 @@ ruins a long non-symplectic integration.
 | `examples/push_relabel_demo.py` | A max-flow network with per-edge utilisation and the min cut drawn |
 | `examples/butterworth_demo.py` | Filter magnitude responses and a 7x denoising of a buried sine |
 | `examples/unscented_kalman_demo.py` | A projectile tracked 4x better than raw range/bearing readings |
+| `examples/dct_demo.py` | Energy compaction and lossy reconstruction of a signal from few coefficients |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9879,6 +9881,25 @@ covariance -- accurate to second order, no derivatives. Validated the decisive w
 it reproduces the repo's own linear Kalman filter step for step (the transform is exact for affine
 maps), the covariance stays symmetric positive-definite, and on nonlinear tracking (projectile in
 range/bearing, pendulum by angle) the RMS error falls well below the measurement noise.
+
+## The discrete cosine transform: energy compaction behind JPEG
+
+The real-valued transform that powers JPEG and MP3. `dct.py`:
+
+```
+$ python examples/dct_demo.py examples/output
+
+  smooth 64-pt signal: top 8 of 64 coeffs hold 99.76% of energy
+  keep 12% of coeffs -> reconstruct at 4.9% RMS error
+```
+
+The DCT reflects a signal evenly at its ends, giving a real spectrum whose energy piles into the
+lowest frequencies -- the compaction that makes lossy compression work. Implements orthonormal
+DCT-II/III, a fast O(N log N) route via a radix-2 FFT (Makhoul), and the separable 2D DCT JPEG runs on
+8x8 blocks. Validated: fast matches the direct O(N^2) definition to machine precision, the transform
+is orthonormal (inverse recovers input, energy preserved by Parseval), the basis is orthonormal, a
+smooth signal compacts into a few coefficients while noise does not, and the 2D block transform
+inverts exactly.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

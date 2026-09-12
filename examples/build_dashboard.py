@@ -469,6 +469,7 @@ def main():
     import push_relabel_demo
     import butterworth_demo
     import unscented_kalman_demo
+    import dct_demo
 
     import plot_orbits
 
@@ -907,6 +908,7 @@ def main():
     push_relabel_txt = run("push_relabel_demo", push_relabel_demo.main, True)
     butterworth_txt = run("butterworth_demo", butterworth_demo.main, True)
     unscented_kalman_txt = run("unscented_kalman_demo", unscented_kalman_demo.main, True)
+    dct_txt = run("dct_demo", dct_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7545,6 +7547,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("unscented_kalman.svg"), "a projectile tracked from noisy range/bearing readings: the orange scatter is where each raw measurement says the target is, the blue curve the true path, and the green the UKF estimate cutting cleanly through the noise via the nonlinear sensor model")
             + f'<div class="card">{pre(unscented_kalman_txt)}</div>'
+            + '</div>'),
+        section(
+            "The discrete cosine transform: energy compaction behind JPEG",
+            "For a real signal -- image pixels, an audio waveform -- the Fourier transform's complex "
+            "machinery is overkill, and its implicit assumption that the signal wraps around "
+            "periodically creates a jarring boundary discontinuity that smears energy across many "
+            "frequencies. The DISCRETE COSINE TRANSFORM fixes both by reflecting the signal EVENLY at "
+            "its ends before transforming: the spectrum is purely REAL, and almost all the energy packs "
+            "into a handful of low-frequency cosine coefficients. That ENERGY COMPACTION is why the DCT, "
+            "not the DFT, sits at the heart of JPEG, MP3, and AAC -- keep the big low-frequency "
+            "coefficients, discard the tiny high-frequency ones, and you have lossy compression the eye "
+            "and ear barely notice. This module implements the orthonormal DCT-II and its inverse "
+            "(DCT-III), a fast O(N log N) route riding a radix-2 FFT (Makhoul's method) for power-of-two "
+            "lengths, and the separable 2D DCT applied to image blocks -- exactly the 8x8 transform "
+            "JPEG runs on each tile. Validated: the fast transform matches the direct O(N^2) definition "
+            "to machine precision; the transform is orthonormal, so the inverse recovers the input and "
+            "energy is preserved (sum x^2 == sum X^2, Parseval's theorem); the basis vectors are "
+            "mutually orthonormal; a smooth 64-point signal packs 99.76% of its energy into 8 "
+            "coefficients (and reconstructs from 12% of the data at under 5% RMS error), while random "
+            "noise refuses to compact; and the 2D block transform inverts exactly with a constant block "
+            "mapping to a single DC coefficient.",
+            '<div class="grid">'
+            + svg_card(out("dct.svg"), "top: a smooth signal (blue) and its reconstruction from just 4 DCT coefficients (green), nearly indistinguishable; bottom: the coefficient magnitudes, with almost all the energy in the first few low-frequency terms (kept ones in yellow)")
+            + f'<div class="card">{pre(dct_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
