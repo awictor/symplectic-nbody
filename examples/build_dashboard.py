@@ -460,6 +460,7 @@ def main():
     import lll_demo
     import levinson_durbin_demo
     import poisson_disk_demo
+    import low_discrepancy_demo
 
     import plot_orbits
 
@@ -889,6 +890,7 @@ def main():
     lll_txt = run("lll_demo", lll_demo.main, True)
     levinson_durbin_txt = run("levinson_durbin_demo", levinson_durbin_demo.main, True)
     poisson_disk_txt = run("poisson_disk_demo", poisson_disk_demo.main, True)
+    low_discrepancy_txt = run("low_discrepancy_demo", low_discrepancy_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7309,6 +7311,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("poisson_disk.svg"), "the same number of points placed two ways: Bridson Poisson-disk sampling (left) spreads them evenly with a guaranteed minimum gap, while uniform random (right) clumps some pairs almost together and leaves visible holes")
             + f'<div class="card">{pre(poisson_disk_txt)}</div>'
+            + '</div>'),
+        section(
+            "Low-discrepancy sequences: quasi-Monte-Carlo integration",
+            "Plain Monte-Carlo integration averages the integrand over independent random points, and "
+            "its error shrinks only like 1/sqrt(N) because random points clump and leave gaps. "
+            "QUASI-Monte-Carlo swaps in a deterministic LOW-DISCREPANCY SEQUENCE -- points built so that "
+            "every box-shaped region holds close to its fair share, however few have been drawn -- and "
+            "the error falls like (log N)^d / N, almost 1/N and dramatically faster for smooth "
+            "integrands. The building block is the VAN DER CORPUT sequence: write the index n in base b "
+            "and reflect its digits about the radix point, so the fastest-changing low digits become the "
+            "high fractional digits and each new point lands in the largest remaining gap. The HALTON "
+            "sequence uses a different prime base per coordinate (coprimality stops the axes marching in "
+            "lockstep); HAMMERSLEY replaces the first coordinate with the exact fraction n/N for even "
+            "lower discrepancy when N is fixed. This module provides the radical inverse, van der Corput, "
+            "Halton, Hammersley, a star-discrepancy estimate, and a QMC integrator. Validated: the "
+            "radical inverse matches hand-computed values (phi_2(1)=1/2, phi_2(3)=3/4, phi_3(1)=1/3); "
+            "the van der Corput sequence exactly stratifies its first b^m points; the Halton star "
+            "discrepancy is several times smaller than a same-size pseudo-random set and shrinks with N; "
+            "and QMC integration of a smooth function beats the average plain-MC error at the same N.",
+            '<div class="grid">'
+            + svg_card(out("low_discrepancy.svg"), "the same number of points from the Halton sequence (left) and a pseudo-random generator (right): Halton covers every sub-square evenly while the random set clumps and leaves gaps, which is exactly why it integrates faster")
+            + f'<div class="card">{pre(low_discrepancy_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

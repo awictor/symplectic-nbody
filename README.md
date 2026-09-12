@@ -418,6 +418,7 @@ ruins a long non-symplectic integration.
 | `src/lll.py` | LLL lattice reduction (exact rational Gram-Schmidt) + integer relations |
 | `src/levinson_durbin.py` | O(n^2) Toeplitz solver + autoregressive (Yule-Walker) fit + predictor |
 | `src/poisson_disk.py` | Bridson blue-noise Poisson-disk sampling (2D + n-D) |
+| `src/low_discrepancy.py` | Van der Corput / Halton / Hammersley + quasi-Monte-Carlo integration |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -827,6 +828,7 @@ ruins a long non-symplectic integration.
 | `examples/lll_demo.py` | A skewed lattice basis vs its short, near-orthogonal LLL reduction |
 | `examples/levinson_durbin_demo.py` | An AR(2) one-step-ahead prediction tracking a synthesised signal |
 | `examples/poisson_disk_demo.py` | Blue-noise Poisson-disk points vs clumpy uniform random, side by side |
+| `examples/low_discrepancy_demo.py` | Halton vs pseudo-random points and QMC-vs-MC pi convergence |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9688,6 +9690,25 @@ every accepted point lands in the annulus [r, 2r) of an active sample. Validated
 never nearer than r (all-pairs scan), the packing is near-maximal (higher candidate count k drives the
 insertable gap to zero), the count sits within disk-packing density bounds, and the n-D sampler holds
 the same invariant.
+
+## Low-discrepancy sequences: quasi-Monte-Carlo integration
+
+Integrate faster than random sampling with deterministic space-filling points. `low_discrepancy.py`:
+
+```
+$ python examples/low_discrepancy_demo.py examples/output
+
+  star discrepancy of 256 points: Halton 0.0149 vs pseudo-random 0.0474 (3.2x worse)
+  pi via quarter disk, N=1000: QMC err 0.0064 vs MC err 0.0944
+```
+
+Monte-Carlo error shrinks like 1/sqrt(N) because random points clump; quasi-Monte-Carlo uses a
+low-discrepancy sequence whose points fill space evenly, giving error near (log N)^d / N. The van der
+Corput sequence reflects an index's base-b digits about the radix point so each point lands in the
+largest gap; Halton uses a coprime prime base per axis, Hammersley pins the first coordinate to n/N.
+Validated: the radical inverse matches hand-computed values, van der Corput exactly stratifies its
+first b^m points, Halton's star discrepancy is several times smaller than pseudo-random and shrinks
+with N, and QMC integration of a smooth function beats the average plain-MC error at the same N.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,16 @@
+Low-discrepancy sequences: quasi-Monte-Carlo fills space evenly
+
+  star discrepancy of 256 points (lower = more even):
+    Halton        0.0149
+    pseudo-random 0.0474   (3.2x worse)
+
+  estimating pi by the area of a quarter unit disk (integral = pi/4):
+    N=   100:  QMC pi=3.24000 (err 0.09841)   MC pi=3.12000 (err 0.02159)
+    N=  1000:  QMC pi=3.14800 (err 0.00641)   MC pi=3.23600 (err 0.09441)
+    N= 10000:  QMC pi=3.14480 (err 0.00321)   MC pi=3.11760 (err 0.02399)
+
+  The radical inverse reflects an index's base-b digits about the radix point, so each new
+  point lands in the largest remaining gap. Halton uses a coprime prime base per axis. QMC
+  error decays like (log N)^d / N -- close to 1/N, far faster than Monte-Carlo's 1/sqrt(N).
+
+  wrote examples/output\low_discrepancy.svg
