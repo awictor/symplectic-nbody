@@ -1,0 +1,19 @@
+Yen's algorithm: the K shortest loopless routes from A to F
+
+  network: 10 one-way roads among 6 junctions
+
+  4 shortest routes (increasing cost):
+    1. cost 13:  A -> C -> B -> D -> E -> F
+    2. cost 14:  A -> B -> D -> E -> F
+    3. cost 14:  A -> C -> B -> D -> F
+    4. cost 15:  A -> B -> D -> F
+
+  matches brute-force enumeration of all simple paths: True
+
+  Each next route is found by taking a prefix of the previous one, banning the edges
+  already used out of the spur node (to force a different continuation) and the earlier
+  nodes (to stay loopless), then running Dijkstra from the spur to the target. The cheapest
+  such candidate becomes the next route -- alternatives that are genuinely distinct, not
+  the best path padded with detours.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\yen_ksp.svg

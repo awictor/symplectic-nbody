@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" font-family="monospace">
+<rect width="760" height="430" fill="#0d1117"/>
+<defs><marker id="g" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#8b949e"/></marker></defs>
+<text x="20" y="30" fill="#e6edf3" font-size="18">Yen's K shortest routes A -> F (route 1 green, then yellow, orange, purple)</text>
+<text x="20" y="50" fill="#8b949e" font-size="12">grey roads are unused by the top routes; a road is coloured by the best route that takes it</text>
+<line x1="98.9" y1="208.7" x2="261.1" y2="111.3" stroke="#ffd43b" stroke-width="3.0"/>
+<text x="180" y="156" fill="#8b949e" font-size="10" text-anchor="middle">4</text>
+<line x1="98.9" y1="231.3" x2="261.1" y2="328.7" stroke="#06d6a0" stroke-width="3.5"/>
+<text x="180" y="276" fill="#8b949e" font-size="10" text-anchor="middle">2</text>
+<line x1="280.0" y1="122.0" x2="280.0" y2="318.0" stroke="#484f58" stroke-width="1" marker-end="url(#g)"/>
+<text x="280" y="216" fill="#8b949e" font-size="10" text-anchor="middle">1</text>
+<line x1="302.0" y1="100.0" x2="478.0" y2="100.0" stroke="#06d6a0" stroke-width="3.5"/>
+<text x="390" y="96" fill="#8b949e" font-size="10" text-anchor="middle">5</text>
+<line x1="280.0" y1="318.0" x2="280.0" y2="122.0" stroke="#06d6a0" stroke-width="3.5"/>
+<text x="280" y="216" fill="#8b949e" font-size="10" text-anchor="middle">1</text>
+<line x1="294.9" y1="323.8" x2="485.1" y2="116.2" stroke="#484f58" stroke-width="1" marker-end="url(#g)"/>
+<text x="390" y="216" fill="#8b949e" font-size="10" text-anchor="middle">8</text>
+<line x1="302.0" y1="340.0" x2="478.0" y2="340.0" stroke="#484f58" stroke-width="1" marker-end="url(#g)"/>
+<text x="390" y="336" fill="#8b949e" font-size="10" text-anchor="middle">10</text>
+<line x1="500.0" y1="122.0" x2="500.0" y2="318.0" stroke="#06d6a0" stroke-width="3.5"/>
+<text x="500" y="216" fill="#8b949e" font-size="10" text-anchor="middle">2</text>
+<line x1="518.6" y1="111.7" x2="671.4" y2="208.3" stroke="#ff922b" stroke-width="2.5"/>
+<text x="595" y="156" fill="#8b949e" font-size="10" text-anchor="middle">6</text>
+<line x1="518.6" y1="328.3" x2="671.4" y2="231.7" stroke="#06d6a0" stroke-width="3.5"/>
+<text x="595" y="276" fill="#8b949e" font-size="10" text-anchor="middle">3</text>
+<circle cx="80" cy="220" r="22" fill="#ff6b6b"/>
+<text x="80" y="225" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">A</text>
+<circle cx="280" cy="100" r="22" fill="#4dabf7"/>
+<text x="280" y="105" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">B</text>
+<circle cx="280" cy="340" r="22" fill="#4dabf7"/>
+<text x="280" y="345" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">C</text>
+<circle cx="500" cy="100" r="22" fill="#4dabf7"/>
+<text x="500" y="105" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">D</text>
+<circle cx="500" cy="340" r="22" fill="#4dabf7"/>
+<text x="500" y="345" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">E</text>
+<circle cx="690" cy="220" r="22" fill="#ff6b6b"/>
+<text x="690" y="225" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">F</text>
+</svg>

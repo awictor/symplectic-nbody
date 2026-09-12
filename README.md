@@ -381,6 +381,7 @@ ruins a long non-symplectic integration.
 | `src/steiner_tree.py` | Steiner tree (Dreyfus-Wagner): cheapest tree connecting terminals |
 | `src/tree_isomorphism.py` | AHU tree isomorphism: linear-time canonical form + center rooting |
 | `src/eulerian.py` | Eulerian paths & circuits (Hierholzer), undirected + directed, existence tests |
+| `src/yen_ksp.py` | Yen's K shortest loopless paths in a directed weighted graph |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -753,6 +754,7 @@ ruins a long non-symplectic integration.
 | `examples/steiner_tree_demo.py` | Four terminals linked through a cheap hub, saving over the perimeter |
 | `examples/tree_isomorphism_demo.py` | Two relabelled trees vs a different-shape one, centers marked |
 | `examples/eulerian_demo.py` | Konigsberg and friends classified; a bowtie circuit numbered in walk order |
+| `examples/yen_ksp_demo.py` | The four cheapest A-to-F routes, each road coloured by its best route |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8939,6 +8941,25 @@ stuck, then splice detours from vertices with unused edges. Handles undirected a
 multigraphs. Verified: the existence predicate matches the degree/connectivity definition and the trail
 uses every edge exactly once with real adjacent steps, on hundreds of random graphs -- including
 Konigsberg (correctly impossible) and multigraphs.
+
+## Yen's algorithm: the K best alternative routes
+
+Find the K shortest loopless paths, not just the single best. `yen_ksp.py`:
+
+```
+$ python examples/yen_ksp_demo.py examples/output
+
+  4 cheapest A->F routes: 13 (A-C-B-D-E-F), 14, 14, 15
+  matches brute-force enumeration of all simple paths
+```
+
+Yen's algorithm finds the K shortest simple (no repeated vertex) source-to-target paths in cost order.
+The first is plain Dijkstra; each next is found by taking a prefix of the previous path, banning the
+edges already used out of the spur node (forcing a different continuation) and the earlier nodes (to
+stay loopless), then Dijkstra-ing from the spur to the target -- the cheapest such candidate becomes the
+next path. Verified against brute force (enumerate every simple path, sort by cost, take the first K)
+on hundreds of random graphs: paths are loopless, valid, distinct, non-decreasing in cost, and exactly
+the K cheapest.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

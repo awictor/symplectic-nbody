@@ -423,6 +423,7 @@ def main():
     import steiner_tree_demo
     import tree_isomorphism_demo
     import eulerian_demo
+    import yen_ksp_demo
 
     import plot_orbits
 
@@ -815,6 +816,7 @@ def main():
     steiner_tree_txt = run("steiner_tree_demo", steiner_tree_demo.main, True)
     tree_isomorphism_txt = run("tree_isomorphism_demo", tree_isomorphism_demo.main, True)
     eulerian_txt = run("eulerian_demo", eulerian_demo.main, True)
+    yen_ksp_txt = run("yen_ksp_demo", yen_ksp_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6451,6 +6453,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("eulerian.svg"), "an Eulerian circuit on a bowtie of two triangles: each edge is numbered in the order Hierholzer's walk crosses it, a closed tour using all six edges exactly once and returning to the shared central vertex")
             + f'<div class="card">{pre(eulerian_txt)}</div>'
+            + '</div>'),
+        section(
+            "Yen's algorithm: the K best alternative routes",
+            "Shortest-path algorithms find THE cheapest route; navigation apps, resilient networks, "
+            "and itinerary planners need the K cheapest ALTERNATIVES. YEN'S ALGORITHM (1971) finds "
+            "the K shortest LOOPLESS (simple, no repeated vertex) paths from source to target in a "
+            "weighted directed graph, in increasing cost order -- the looplessness is what keeps the "
+            "alternatives meaningful rather than the best path padded with pointless detours. It "
+            "elaborates repeated shortest-path search: the first path is plain Dijkstra, and each "
+            "next path is found by considering every SPUR NODE along the previous one, temporarily "
+            "removing the edges that already-found paths took out of that node (forcing a different "
+            "continuation) and the earlier root-path nodes (to stay loopless), then running Dijkstra "
+            "from the spur to the target. The prefix plus this spur is a CANDIDATE; a priority queue "
+            "keeps candidates in cost order and the cheapest unused one becomes the next path. "
+            "Verified against brute force -- enumerating every simple source-to-target path, sorting "
+            "by cost, and comparing the first K -- on hundreds of random graphs, confirming the paths "
+            "are loopless, valid, distinct, non-decreasing in cost, and exactly the K cheapest.",
+            '<div class="grid">'
+            + svg_card(out("yen_ksp.svg"), "the four cheapest routes from A to F, each road coloured by the best-ranked route that uses it (green shortest, then yellow, orange, purple) -- distinct alternatives a driver could actually take, in cost order")
+            + f'<div class="card">{pre(yen_ksp_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
