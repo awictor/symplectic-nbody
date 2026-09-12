@@ -1,0 +1,23 @@
+Multi-armed bandit: exploration vs exploitation
+
+  5 arms with payout probabilities [0.2, 0.5, 0.75, 0.4, 0.6]
+  best arm is #2 (p = 0.75), over 3000 rounds:
+
+              policy  total reward    regret  best-arm %
+              random          1449     758.5       20.9%
+      epsilon-greedy          2151      92.4       90.4%
+                UCB1          2092     150.9       78.1%
+            Thompson          2210      35.6       94.3%
+
+  Regret is reward lost versus always pulling the best arm. Random selection accrues
+  regret linearly; UCB1 and Thompson learn which arm is best and their regret flattens
+  (grows only logarithmically), driving the average regret per round toward zero.
+
+  UCB1 after 500 rounds (mean + confidence bonus per arm):
+    arm 0: pulled  26, mean 0.269, UCB 0.961  (true 0.2)
+    arm 1: pulled  59, mean 0.508, UCB 0.967  (true 0.5)
+    arm 2: pulled 269, mean 0.762, UCB 0.977  (true 0.75)
+    arm 3: pulled  38, mean 0.395, UCB 0.967  (true 0.4)
+    arm 4: pulled 108, mean 0.630, UCB 0.969  (true 0.6)
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\bandit.svg

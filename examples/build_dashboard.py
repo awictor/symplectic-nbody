@@ -383,6 +383,7 @@ def main():
     import ear_clipping_demo
     import mlp_demo
     import mdp_demo
+    import bandit_demo
 
     import plot_orbits
 
@@ -735,6 +736,7 @@ def main():
     ear_clipping_txt = run("ear_clipping_demo", ear_clipping_demo.main, True)
     mlp_txt = run("mlp_demo", mlp_demo.main, True)
     mdp_txt = run("mdp_demo", mdp_demo.main, True)
+    bandit_txt = run("bandit_demo", bandit_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5486,6 +5488,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("mdp.svg"), "a gridworld solved to optimality: cell brightness is the state value (rising toward the gold goal), the arrows are the optimal action in each state, routing around the dark obstacles")
             + f'<div class="card">{pre(mdp_txt)}</div>'
+            + '</div>'),
+        section(
+            "Multi-armed bandits: the exploration-exploitation tradeoff",
+            "A MULTI-ARMED BANDIT is the purest model of decision under uncertainty: a row of slot "
+            "machines paying from unknown distributions, and a gambler choosing which to pull each "
+            "round to maximize reward. The tension is EXPLORATION versus EXPLOITATION -- pull the "
+            "arm that looks best, or try an under-sampled one that might be better? Bandits model A/B "
+            "testing, ad selection, and clinical trials. Performance is REGRET: reward lost by not "
+            "always pulling the truly best arm; a good policy drives average regret toward zero. This "
+            "module implements three classics: EPSILON-GREEDY (exploit the best-so-far, explore "
+            "randomly with probability epsilon), UCB1 (optimism under uncertainty -- pull the arm "
+            "maximizing its mean plus a confidence bonus sqrt(2 ln t / n) that shrinks with sampling, "
+            "giving provably logarithmic regret with no tuning), and THOMPSON SAMPLING (keep a Beta "
+            "posterior per arm, sample one value from each, pull the argmax -- Bayesian "
+            "probability-matching). Verified against exact references: every learning policy vastly "
+            "outperforms random selection, UCB1 and Thompson achieve sublinear regret (average "
+            "regret falls toward zero as rounds grow), all policies identify the best arm as the "
+            "most-pulled, UCB1's regret grows logarithmically (far slower than linearly), decaying "
+            "epsilon beats fixed, and a dominant arm is found fast.",
+            '<div class="grid">'
+            + svg_card(out("bandit.svg"), "cumulative regret by policy: random selection climbs linearly (red) while UCB1 (blue) and Thompson (green) bend flat as they learn the best arm -- the payoff of principled exploration")
+            + f'<div class="card">{pre(bandit_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

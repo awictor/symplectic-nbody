@@ -341,6 +341,7 @@ ruins a long non-symplectic integration.
 | `src/ear_clipping.py` | Ear-clipping polygon triangulation (concave polygons, n-2 triangles) |
 | `src/mlp.py` | Multi-layer perceptron + backpropagation (sigmoid/tanh/ReLU, momentum SGD) |
 | `src/mdp.py` | Markov decision process: value iteration, policy iteration, gridworld builder |
+| `src/bandit.py` | Multi-armed bandit: epsilon-greedy, UCB1, Thompson sampling with regret tracking |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -673,6 +674,7 @@ ruins a long non-symplectic integration.
 | `examples/ear_clipping_demo.py` | A star, L-shape, and arrow triangulated with exact area conservation |
 | `examples/mlp_demo.py` | XOR solved + a learned circular decision boundary a linear model can't draw |
 | `examples/mdp_demo.py` | A gridworld solved to optimality: value heatmap + optimal-action arrows |
+| `examples/bandit_demo.py` | Regret curves for epsilon-greedy/UCB1/Thompson vs random selection |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8079,6 +8081,26 @@ improvement, converging in a few rounds. This module implements both for a finit
 stochastic gridworld builder, verified that the two agree on the optimal policy and values, that the
 result satisfies Bellman optimality (zero residual), that stochastic slip is handled, and that the
 error contracts by exactly the discount factor each sweep.
+
+## Multi-armed bandits: the exploration-exploitation tradeoff
+
+Learn which of several unknown options is best while paying to find out. `bandit.py`:
+
+```
+$ python examples/bandit_demo.py examples/output
+
+  5 arms, best p=0.75, over 3000 rounds:
+    random         regret 758  best-arm 21%
+    epsilon-greedy regret  92  best-arm 90%
+    UCB1           regret 151  best-arm 78%
+    Thompson       regret  36  best-arm 94%
+```
+
+Regret is the reward lost by not always pulling the best arm. This module implements epsilon-greedy,
+UCB1 (optimism: mean + sqrt(2 ln t / n), logarithmic regret with no tuning), and Thompson sampling
+(Beta-posterior probability-matching), verified that every learning policy beats random, UCB1 and
+Thompson achieve sublinear regret, all identify the best arm as the most-pulled, and UCB1's regret
+grows logarithmically rather than linearly.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
