@@ -443,6 +443,7 @@ ruins a long non-symplectic integration.
 | `src/bk_tree.py` | BK-tree fuzzy string search: edit-distance metric tree with pruning |
 | `src/lanczos.py` | Lanczos Krylov eigensolver: extreme eigenvalues, matrix-free, reorthogonalised |
 | `src/gmres.py` | GMRES Krylov solver for nonsymmetric systems (Arnoldi + Givens, restart, precond) |
+| `src/golay.py` | Extended binary Golay [24,12,8] code: corrects 3 errors, syndrome decoding |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -877,6 +878,7 @@ ruins a long non-symplectic integration.
 | `examples/bk_tree_demo.py` | Typo correction and how much of the dictionary pruning skips |
 | `examples/lanczos_demo.py` | Largest eigenvalue converging in m<<n steps; a matrix-free Laplacian |
 | `examples/gmres_demo.py` | Residual convergence and a 5x preconditioner speedup on an ill-scaled system |
+| `examples/golay_demo.py` | Correcting 3 flipped bits and the code's perfect weight distribution |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10209,6 +10211,24 @@ residual only falls. Needs only matrix-vector products (sparse/implicit operator
 and preconditioning. Validated: solution matches a dense LU solve on nonsymmetric/symmetric/diagonally-
 dominant systems, the residual is monotone, full GMRES converges within n steps, restarted GMRES(m)
 matches it, a Jacobi preconditioner cuts iterations 5x, and it works matrix-free.
+
+## The Golay code: correcting 3 errors, the code that imaged the outer planets
+
+The near-perfect error-correcting code Voyager used at Jupiter and Saturn. `golay.py`:
+
+```
+$ python examples/golay_demo.py examples/output
+
+  0,1,2,3 bit errors: all recovered exactly; 4 errors: detected as uncorrectable
+  weight enumerator {0:1, 8:759, 12:2576, 16:759, 24:1} -- the Golay signature
+```
+
+The extended binary Golay [24,12,8] code corrects any 3 bit errors in 24 and detects 4. Encode by
+G = [I | B] over GF(2); decode by a syndrome table that (since the distance is 8) maps every
+weight-<=3 error to a unique coset leader. Validated exhaustively: all 4096 messages round-trip, the
+decoder corrects EVERY weight-0..3 error pattern across all bit positions, the minimum distance is 8,
+the weight enumerator matches the famous (1,759,2576,759,1), weight-4 errors never silently miscorrect,
+and the code is linear.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

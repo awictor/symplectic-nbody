@@ -1,0 +1,22 @@
+Golay [24,12,8]: correct any 3 bit errors -- the code that imaged Jupiter and Saturn
+
+  message  (12 bits): 101011001101
+  codeword (24 bits): 100100001110101011001101
+
+  transmit through a noisy channel and decode:
+    0 bit errors: recovered exactly, fixed 0 error(s)
+    1 bit errors: recovered exactly, fixed 1 error(s)
+    2 bit errors: recovered exactly, fixed 2 error(s)
+    3 bit errors: recovered exactly, fixed 3 error(s)
+    4 bit errors: UNCORRECTABLE (4 errors detected)
+
+  minimum distance: 8 (corrects floor((8-1)/2) = 3 errors)
+  weight enumerator: {0: 1, 8: 759, 12: 2576, 16: 759, 24: 1}
+    the counts 1, 759, 2576, 759, 1 are the signature of the Golay code -- its 4096
+    codewords sit at weights 0, 8, 12, 16, 24 in a perfectly symmetric distribution
+
+  Encode by G = [I | B] over GF(2); decode by the syndrome, which for a distance-8 code
+  maps every <=3-error pattern to a unique coset leader. Voyager 1 and 2 used it to send
+  colour pictures of the outer planets across billions of kilometres of noisy space.
+
+  wrote examples/output\golay.svg

@@ -485,6 +485,7 @@ def main():
     import bk_tree_demo
     import lanczos_demo
     import gmres_demo
+    import golay_demo
 
     import plot_orbits
 
@@ -939,6 +940,7 @@ def main():
     bk_tree_txt = run("bk_tree_demo", bk_tree_demo.main, True)
     lanczos_txt = run("lanczos_demo", lanczos_demo.main, True)
     gmres_txt = run("gmres_demo", gmres_demo.main, True)
+    golay_txt = run("golay_demo", golay_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7985,6 +7987,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("gmres.svg"), "GMRES residual falling on a log scale: the blue convection-diffusion solve, and an ill-scaled system converging slowly without a preconditioner (orange) but fast with a Jacobi one (green) -- the residual can only decrease, the defining minimal-residual property")
             + f'<div class="card">{pre(gmres_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Golay code: correcting 3 errors, the code that imaged the outer planets",
+            "Some error-correcting codes are so elegant they feel discovered rather than invented. The "
+            "BINARY GOLAY CODE is the crown jewel: the [23,12,7] code is PERFECT -- the Hamming spheres "
+            "of radius 3 around its 4096 codewords tile the entire 23-dimensional binary space with no "
+            "gaps or overlaps, one of only a handful of nontrivial perfect codes that exist. Its "
+            "extended [24,12,8] cousin adds a parity bit for minimum distance 8, correcting any 3 bit "
+            "errors and detecting 4, and is SELF-DUAL. Voyager 1 and 2 used it to send colour images of "
+            "Jupiter and Saturn across the solar system. This module implements the [24,12,8] code: "
+            "encoding is a matrix-vector product over GF(2), a 12-bit message becoming a 24-bit codeword "
+            "via the generator [I | B], where B comes from a quadratic-residue circulant bordered by an "
+            "all-ones row and column; decoding builds a syndrome table that, because the distance is 8, "
+            "maps every error pattern of weight <= 3 to a unique coset leader, correcting it exactly. "
+            "Validated exhaustively: every one of the 4096 messages round-trips on a clean channel, and "
+            "over a sample of messages the decoder corrects EVERY error pattern of weight 0, 1, 2, and 3 "
+            "across all C(24,k) positions -- no exceptions, as a perfect 3-error-correcting code "
+            "demands; the minimum distance is verified to be 8; the weight enumerator matches the famous "
+            "Golay distribution (1, 759, 2576, 759, 1 at weights 0, 8, 12, 16, 24); a weight-4 error is "
+            "never silently decoded back to the original; the code is linear; and 5000 random noisy "
+            "transmissions with up to 3 errors all recover.",
+            '<div class="grid">'
+            + svg_card(out("golay.svg"), "a 24-bit Golay codeword sent, corrupted by 3 flipped bits (red), and decoded: the recovered row is bit-for-bit identical to the original, three errors erased by twelve parity bits")
+            + f'<div class="card">{pre(golay_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
