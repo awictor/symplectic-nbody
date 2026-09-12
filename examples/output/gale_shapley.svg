@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="430" viewBox="0 0 680 430" font-family="monospace">
+<rect width="680" height="430" fill="#0d1117"/>
+<text x="20" y="34" fill="#e6edf3" font-size="18">Stable matching: green links pair applicants to schools with no defector</text>
+<text x="20" y="54" fill="#8b949e" font-size="12">no applicant and school both prefer each other over their assigned partner</text>
+<text x="190" y="76" fill="#4dabf7" font-size="13" text-anchor="middle">APPLICANTS</text>
+<text x="470" y="76" fill="#ffd43b" font-size="13" text-anchor="middle">SCHOOLS</text>
+<line x1="190" y1="100" x2="470" y2="180" stroke="#06d6a0" stroke-width="3"/>
+<line x1="190" y1="180" x2="470" y2="260" stroke="#06d6a0" stroke-width="3"/>
+<line x1="190" y1="260" x2="470" y2="340" stroke="#06d6a0" stroke-width="3"/>
+<line x1="190" y1="340" x2="470" y2="100" stroke="#06d6a0" stroke-width="3"/>
+<circle cx="190" cy="100" r="16" fill="#4dabf7"/>
+<text x="164" y="105" fill="#e6edf3" font-size="13" text-anchor="end">Ada</text>
+<circle cx="470" cy="100" r="16" fill="#ffd43b"/>
+<text x="496" y="105" fill="#e6edf3" font-size="13" text-anchor="start">MIT</text>
+<circle cx="190" cy="180" r="16" fill="#4dabf7"/>
+<text x="164" y="185" fill="#e6edf3" font-size="13" text-anchor="end">Bo</text>
+<circle cx="470" cy="180" r="16" fill="#ffd43b"/>
+<text x="496" y="185" fill="#e6edf3" font-size="13" text-anchor="start">Yale</text>
+<circle cx="190" cy="260" r="16" fill="#4dabf7"/>
+<text x="164" y="265" fill="#e6edf3" font-size="13" text-anchor="end">Cy</text>
+<circle cx="470" cy="260" r="16" fill="#ffd43b"/>
+<text x="496" y="265" fill="#e6edf3" font-size="13" text-anchor="start">UCLA</text>
+<circle cx="190" cy="340" r="16" fill="#4dabf7"/>
+<text x="164" y="345" fill="#e6edf3" font-size="13" text-anchor="end">Di</text>
+<circle cx="470" cy="340" r="16" fill="#ffd43b"/>
+<text x="496" y="345" fill="#e6edf3" font-size="13" text-anchor="start">NYU</text>
+</svg>

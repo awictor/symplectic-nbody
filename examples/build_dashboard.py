@@ -430,6 +430,7 @@ def main():
     import graph_coloring_demo
     import k_core_demo
     import prufer_demo
+    import gale_shapley_demo
 
     import plot_orbits
 
@@ -829,6 +830,7 @@ def main():
     graph_coloring_txt = run("graph_coloring_demo", graph_coloring_demo.main, True)
     k_core_txt = run("k_core_demo", k_core_demo.main, True)
     prufer_txt = run("prufer_demo", prufer_demo.main, True)
+    gale_shapley_txt = run("gale_shapley_demo", gale_shapley_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6610,6 +6612,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("prufer.svg"), "a labeled tree beside its Prufer sequence: leaves (yellow) never appear in the code, and each internal vertex appears exactly degree-minus-one times, so the whole degree sequence can be read straight off the string")
             + f'<div class="card">{pre(prufer_txt)}</div>'
+            + '</div>'),
+        section(
+            "Gale-Shapley: stable matching by deferred acceptance",
+            "Two equal-sized groups each rank the other; a matching pairs them one-to-one. It is "
+            "UNSTABLE if some pair each prefer the other to their assigned partner (a blocking pair). "
+            "The Gale-Shapley theorem (1962) proves a STABLE matching always exists and finds one in "
+            "O(n^2) -- the deferred-acceptance mechanism that earned the 2012 Nobel and runs "
+            "medical-residency placement, school choice, and organ exchange. While a proposer is "
+            "free he proposes to his next-favourite reviewer; she tentatively accepts if free or if "
+            "she prefers him to her current match (dumping that one), else rejects. Because reviewers "
+            "only trade up and proposers work down their lists, it ends in <= n^2 proposals with "
+            "everyone matched. The result is PROPOSER-OPTIMAL (every proposer gets the best partner "
+            "he could in any stable matching) and simultaneously reviewer-pessimal; swapping roles "
+            "gives the reviewer-optimal matching, and the two coincide iff the stable matching is "
+            "unique. Verified against brute force -- the result has no blocking pair, it matches "
+            "everyone, no proposer beats his partner in any of the exhaustively-enumerated stable "
+            "matchings (proposer-optimal), the reviewer-optimal variant is likewise reviewer-optimal, "
+            "and unique-stable instances make the two agree -- on hundreds of random preference "
+            "profiles plus a 200x200 instance.",
+            '<div class="grid">'
+            + svg_card(out("gale_shapley.svg"), "four applicants stably matched to four schools: green links pair each side so that no applicant and school both prefer each other over their assigned partner -- here every school lands its top choice")
+            + f'<div class="card">{pre(gale_shapley_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
