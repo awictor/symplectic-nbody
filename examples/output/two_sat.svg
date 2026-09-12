@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" font-family="monospace">
+<rect width="760" height="430" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="18">2-SAT implication graph (nodes colored by SCC)</text>
+<text x="20" y="47" fill="#8b949e" font-size="12">top row = literals true, bottom = negations; edges are clause implications</text>
+<defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#484f58"/></marker></defs>
+<path d="M136.8,305.8 Q231.7,248.7 300.2,166.8" fill="none" stroke="#484f58" stroke-width="1.3" marker-end="url(#a)"/>
+<path d="M303.2,305.8 Q231.7,221.3 139.8,166.8" fill="none" stroke="#484f58" stroke-width="1.3" marker-end="url(#a)"/>
+<path d="M142.0,150.0 Q320.0,168.0 494.0,150.0" fill="none" stroke="#484f58" stroke-width="1.3" marker-end="url(#a)"/>
+<path d="M498.0,320.0 Q320.0,302.0 146.0,320.0" fill="none" stroke="#484f58" stroke-width="1.3" marker-end="url(#a)"/>
+<path d="M336.8,164.2 Q408.3,248.7 500.2,303.2" fill="none" stroke="#484f58" stroke-width="1.3" marker-end="url(#a)"/>
+<path d="M503.2,164.2 Q408.3,221.3 339.8,303.2" fill="none" stroke="#484f58" stroke-width="1.3" marker-end="url(#a)"/>
+<circle cx="120.0" cy="150.0" r="22" fill="#4dabf7" stroke="#0d1117" stroke-width="2"/>
+<text x="120.0" y="155.0" fill="#0d1117" font-size="13" text-anchor="middle" font-weight="bold">F1</text>
+<circle cx="120.0" cy="320.0" r="22" fill="#ffd43b" stroke="#0d1117" stroke-width="2"/>
+<text x="120.0" y="325.0" fill="#0d1117" font-size="13" text-anchor="middle" font-weight="bold">~F1</text>
+<circle cx="320.0" cy="150.0" r="22" fill="#ffd43b" stroke="#0d1117" stroke-width="2"/>
+<text x="320.0" y="155.0" fill="#0d1117" font-size="13" text-anchor="middle" font-weight="bold">F2</text>
+<circle cx="320.0" cy="320.0" r="22" fill="#4dabf7" stroke="#0d1117" stroke-width="2"/>
+<text x="320.0" y="325.0" fill="#0d1117" font-size="13" text-anchor="middle" font-weight="bold">~F2</text>
+<circle cx="520.0" cy="150.0" r="22" fill="#4dabf7" stroke="#0d1117" stroke-width="2"/>
+<text x="520.0" y="155.0" fill="#0d1117" font-size="13" text-anchor="middle" font-weight="bold">F3</text>
+<circle cx="520.0" cy="320.0" r="22" fill="#ffd43b" stroke="#0d1117" stroke-width="2"/>
+<text x="520.0" y="325.0" fill="#0d1117" font-size="13" text-anchor="middle" font-weight="bold">~F3</text>
+</svg>

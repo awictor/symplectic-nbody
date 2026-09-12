@@ -332,6 +332,7 @@ ruins a long non-symplectic integration.
 | `src/dtw.py` | Dynamic time warping: distance + warping path, Sakoe-Chiba band, multi-dimensional |
 | `src/p2_quantile.py` | P-square streaming quantile estimation (p50/p95/p99) in O(1) memory |
 | `src/tarjan_scc.py` | Tarjan's strongly connected components, condensation DAG, topological sort |
+| `src/two_sat.py` | 2-SAT solver via the implication graph + SCCs (linear time, with assignment) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -655,6 +656,7 @@ ruins a long non-symplectic integration.
 | `examples/dtw_demo.py` | Two speed-varying signals aligned, DTW 6.6x smaller than Euclidean, warp path drawn |
 | `examples/p2_quantile_demo.py` | Latency p50/p90/p95/p99 from a 200k stream in 20 floats, estimate converging |
 | `examples/tarjan_scc_demo.py` | A directed graph's SCCs colored + the condensation DAG beside it |
+| `examples/two_sat_demo.py` | A satisfiable feature-constraint instance + the canonical unsatisfiable formula |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7888,6 +7890,26 @@ always a DAG. This module implements it iteratively (no recursion-depth limit), 
 a Kahn topological sort, and a cycle test, verified against brute-force mutual reachability over 100
 random graphs, that the condensation is always acyclic, that SCCs come in reverse topological order,
 and on a 5000-cycle that the iterative DFS survives.
+
+## 2-SAT: satisfying two-literal clauses in linear time
+
+NP-complete SAT becomes linear when every clause has two literals. `two_sat.py`:
+
+```
+$ python examples/two_sat_demo.py examples/output
+
+  (F1 v F2)(~F1 v F3)(~F2 v ~F3) -> SATISFIABLE: F1=T, F2=F, F3=T
+  (a v b)(a v ~b)(~a v b)(~a v ~b) -> UNSATISFIABLE
+  verdict matches brute force over 300 random formulas
+```
+
+Each clause (a v b) becomes two implications (~a -> b), (~b -> a), forming an implication graph. The
+formula is satisfiable iff no variable shares a strongly connected component with its own negation
+(otherwise x -> ~x -> x is a contradiction), checkable by Tarjan's SCC in O(V+E); a satisfying
+assignment reads off the SCC order since the condensation is a DAG. This module (built on the Tarjan
+SCC above) adds clauses/implications, tests satisfiability, and extracts an assignment, verified
+against brute force over all 2^n assignments across 300 random formulas plus the canonical
+unsatisfiable cases.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

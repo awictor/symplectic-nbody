@@ -374,6 +374,7 @@ def main():
     import dtw_demo
     import p2_quantile_demo
     import tarjan_scc_demo
+    import two_sat_demo
 
     import plot_orbits
 
@@ -717,6 +718,7 @@ def main():
     dtw_txt = run("dtw_demo", dtw_demo.main, True)
     p2_quantile_txt = run("p2_quantile_demo", p2_quantile_demo.main, True)
     tarjan_scc_txt = run("tarjan_scc_demo", tarjan_scc_demo.main, True)
+    two_sat_txt = run("two_sat_demo", two_sat_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5263,6 +5265,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("tarjan_scc.svg"), "left: a directed graph with each strongly connected component in its own colour; right: the condensation, each cycle collapsed to one node, forming an acyclic dependency chain")
             + f'<div class="card">{pre(tarjan_scc_txt)}</div>'
+            + '</div>'),
+        section(
+            "2-SAT: satisfying two-literal clauses in linear time",
+            "Boolean SATISFIABILITY is NP-complete in general, but the restricted case where every "
+            "clause has at most TWO literals is solvable in LINEAR time -- a rare island of "
+            "tractability inside an intractable problem, and a beautiful application of strongly "
+            "connected components. The trick is the IMPLICATION GRAPH: a clause (a OR b) is equivalent "
+            "to two implications, (not a implies b) and (not b implies a), so build a directed graph "
+            "with two vertices per variable (the literal and its negation) and an edge for each "
+            "implication. A truth assignment is consistent exactly when no variable x has x and NOT x "
+            "forced together -- which happens iff x and NOT x lie in the SAME strongly connected "
+            "component (each would then imply the other). So the formula is SATISFIABLE iff no "
+            "variable shares an SCC with its negation, checkable by Tarjan's SCC in O(V + E); and "
+            "when satisfiable, an assignment reads straight off the SCC order because the "
+            "condensation is a DAG. This module (built on this project's Tarjan SCC) adds clauses and "
+            "implications, tests satisfiability, and extracts a satisfying assignment, verified "
+            "against brute force over all 2^n assignments: the verdict always matches whether any "
+            "assignment satisfies the formula, every returned assignment actually satisfies every "
+            "clause (over 300 random formulas), and the canonical contradiction (x) AND (not x) and "
+            "the four-clause unsatisfiable formula are classified correctly.",
+            '<div class="grid">'
+            + svg_card(out("two_sat.svg"), "the implication graph of a 2-SAT instance: literals on top, negations below, clause implications as edges, each strongly connected component in its own colour -- no variable shares a component with its negation, so the formula is satisfiable")
+            + f'<div class="card">{pre(two_sat_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
