@@ -354,6 +354,7 @@ ruins a long non-symplectic integration.
 | `src/gibbs.py` | Gibbs sampling for multivariate Gaussians and generic conditionals |
 | `src/louvain.py` | Louvain community detection by modularity optimization (weighted graphs) |
 | `src/matrix_chain.py` | Matrix-chain optimal parenthesization by interval DP (O(n^3)) |
+| `src/lis.py` | Longest increasing subsequence via patience sorting (O(n log n), with witness) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -699,6 +700,7 @@ ruins a long non-symplectic integration.
 | `examples/gibbs_demo.py` | A correlated Gaussian sampled coordinate-wise, cloud filling the covariance ellipse |
 | `examples/louvain_demo.py` | Four planted communities recovered, coloured, with the bridging edges highlighted |
 | `examples/matrix_chain_demo.py` | Optimal vs left-to-right cost + the DP cost table as a heatmap |
+| `examples/lis_demo.py` | The LIS highlighted on a bar chart + the patience-sorting piles |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8351,6 +8353,24 @@ each split reconstructs the parenthesization. This module computes the minimum c
 verified against brute-force search over all Catalan-many orderings for short chains, that the
 reconstructed order achieves the cost, that it beats left-to-right on skewed dimensions, and on the
 CLRS instance (15125).
+
+## Longest increasing subsequence: patience sorting in O(n log n)
+
+The longest strictly-increasing run in a sequence, found by dealing solitaire. `lis.py`:
+
+```
+$ python examples/lis_demo.py examples/output
+
+  [3,1,4,1,5,9,2,6,5,3,5,8,9,7,9] -> LIS length 6
+  patience piles: 6 piles = LIS length; strict 4 vs non-decreasing 6 on a tied sequence
+  longest decreasing subsequence: [9,6,5,3]
+```
+
+Patience sorting places each number on the leftmost pile whose top is >= it (binary search) or starts
+a new pile; the pile count equals the LIS length, and back-pointers reconstruct the actual
+subsequence. This module computes the length and a witness with strict/non-decreasing/decreasing
+variants, verified against brute-force O(2^n) search and the O(n^2) DP that the length is optimal and
+the returned subsequence is genuine.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

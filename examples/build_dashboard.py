@@ -396,6 +396,7 @@ def main():
     import gibbs_demo
     import louvain_demo
     import matrix_chain_demo
+    import lis_demo
 
     import plot_orbits
 
@@ -761,6 +762,7 @@ def main():
     gibbs_txt = run("gibbs_demo", gibbs_demo.main, True)
     louvain_txt = run("louvain_demo", louvain_demo.main, True)
     matrix_chain_txt = run("matrix_chain_demo", matrix_chain_demo.main, True)
+    lis_txt = run("lis_demo", lis_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5805,6 +5807,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("matrix_chain.svg"), "the DP cost table m[i][j] filled diagonal by diagonal (min cost to multiply matrices i through j), the gold-boxed top-right corner holding the answer for the whole chain")
             + f'<div class="card">{pre(matrix_chain_txt)}</div>'
+            + '</div>'),
+        section(
+            "Longest increasing subsequence: patience sorting in O(n log n)",
+            "The LONGEST INCREASING SUBSEQUENCE is the longest set of elements, in their original "
+            "order, that strictly increases -- not necessarily contiguous. It measures how sorted a "
+            "sequence is and appears in card games, computational biology (the longest consistently "
+            "ordered gene run between genomes), and the analysis of permutations. The naive DP is "
+            "O(n^2); PATIENCE SORTING does it in O(n log n) by dealing the sequence like solitaire: "
+            "each number is placed on the leftmost PILE whose top is greater-or-equal, or starts a "
+            "new pile. The number of piles at the end EQUALS the LIS length, and because the pile "
+            "tops stay sorted, the right pile is found by BINARY SEARCH -- the log factor. Back-"
+            "pointers to the top of the pile to the left at placement time reconstruct the actual "
+            "subsequence. This module computes the length and a witnessing subsequence, with strict, "
+            "non-decreasing, and longest-decreasing variants, verified against a brute-force O(2^n) "
+            "search that the length is optimal and the returned subsequence is genuinely increasing "
+            "and a real subsequence, against the O(n^2) DP over hundreds of random sequences, and on "
+            "known cases (sorted gives n, reversed gives 1, all-equal gives 1 strict but n "
+            "non-decreasing).",
+            '<div class="grid">'
+            + svg_card(out("lis.svg"), "a sequence as bars with its longest increasing subsequence in green, connected in order by the gold line -- the longest run that climbs left to right, found by patience sorting")
+            + f'<div class="card">{pre(lis_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

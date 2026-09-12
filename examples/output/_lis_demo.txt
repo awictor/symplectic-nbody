@@ -1,0 +1,25 @@
+Longest increasing subsequence: patience sorting in O(n log n)
+
+  sequence: [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9]
+  longest increasing subsequence (length 6): [1, 2, 3, 5, 7, 9]
+
+  patience-sorting piles (leftmost pile whose top >= card):
+    pile 0: [3, 1, 1]
+    pile 1: [4, 2]
+    pile 2: [5, 5, 3]
+    pile 3: [9, 6, 5]
+    pile 4: [8, 7]
+    pile 5: [9, 9]
+    number of piles = 6 = LIS length 6
+
+  strict vs non-decreasing on [1,3,3,5,2,4,4,6]:
+    strict:         length 4
+    non-decreasing: length 6 (equal elements allowed)
+
+  longest DECREASING subsequence: length 4, [9, 6, 5, 3]
+
+  Each card is placed on the leftmost pile whose top is >= it (binary search), or starts
+  a new pile. The pile count equals the LIS length; back-pointers to the previous pile's
+  top at placement time reconstruct the actual subsequence. O(n log n).
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\lis.svg
