@@ -392,6 +392,7 @@ ruins a long non-symplectic integration.
 | `src/degree_sequence.py` | Graphic degree sequences: Havel-Hakimi + Erdos-Gallai + realize |
 | `src/matrix_tree.py` | Matrix-Tree theorem: count spanning trees via the Laplacian cofactor |
 | `src/hirschberg.py` | Hirschberg linear-space optimal alignment + LCS |
+| `src/centroid_decomposition.py` | Centroid tree + distance-pair counting on a tree |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -775,6 +776,7 @@ ruins a long non-symplectic integration.
 | `examples/degree_sequence_demo.py` | Realizability tests + a Havel-Hakimi witness graph |
 | `examples/matrix_tree_demo.py` | A graph beside its Laplacian and its spanning-tree count |
 | `examples/hirschberg_demo.py` | An optimal alignment as a match/gap track + the memory saving |
+| `examples/centroid_decomposition_demo.py` | A tree tinted by centroid-decomposition level + pair counts |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9164,6 +9166,25 @@ and recurse on the halves. Verified against a full-matrix Needleman-Wunsch refer
 random pairs: the score matches, the alignment degaps to the originals and achieves the optimum under
 several scoring schemes, and the LCS matches a standard DP -- including a 3000x3000 pair that is
 memory-prohibitive for the full matrix.
+
+## Centroid decomposition: log-deep divide-and-conquer on a tree
+
+Recursively split a tree at its most balanced vertex. `centroid_decomposition.py`:
+
+```
+$ python examples/centroid_decomposition_demo.py examples/output
+
+  10-vertex tree -> centroid tree depth 3 (~log2 10); root centroid = vertex 2
+  pairs within distance k: 1->9, 2->22, 3->34, 4->42, 5->45; all match brute
+```
+
+A centroid's removal leaves pieces of at most half the size, so the centroid tree is O(log n) deep and
+every path crosses the centroid of the smallest level containing both endpoints. Counting pairs at
+distance <= k: at each centroid gather distances to all vertices, two-pointer count pairs summing to
+<= k, subtract per-branch pairs that don't cross it -- O(n log^2 n) versus naive O(n^2). Verified against
+all-pairs-BFS brute force for every k on hundreds of random trees, with the centroid tree confirmed a
+valid single-rooted O(log n)-deep tree (a 63-vertex path decomposes to depth <= 6) plus a 400-vertex
+instance.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -434,6 +434,7 @@ def main():
     import degree_sequence_demo
     import matrix_tree_demo
     import hirschberg_demo
+    import centroid_decomposition_demo
 
     import plot_orbits
 
@@ -837,6 +838,7 @@ def main():
     degree_sequence_txt = run("degree_sequence_demo", degree_sequence_demo.main, True)
     matrix_tree_txt = run("matrix_tree_demo", matrix_tree_demo.main, True)
     hirschberg_txt = run("hirschberg_demo", hirschberg_demo.main, True)
+    centroid_decomposition_txt = run("centroid_decomposition_demo", centroid_decomposition_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6704,6 +6706,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("hirschberg.svg"), "the optimal alignment of two sequences shown as a two-row track: green columns are matches, red mismatches, grey gaps -- computed in linear space yet identical to the full quadratic-memory Needleman-Wunsch result")
             + f'<div class="card">{pre(hirschberg_txt)}</div>'
+            + '</div>'),
+        section(
+            "Centroid decomposition: log-deep divide-and-conquer on a tree",
+            "A CENTROID of a tree is a vertex whose removal leaves every piece with at most half the "
+            "vertices -- the most balanced split. CENTROID DECOMPOSITION recursively removes it and "
+            "decomposes each piece, building a CENTROID TREE of depth O(log n) whose every "
+            "root-to-node path corresponds to a level of the split. The key fact: every path in the "
+            "original tree passes through the centroid of the smallest level containing both "
+            "endpoints, so problems over all O(n^2) paths become log-depth divide-and-conquer. The "
+            "canonical use, solved here, is COUNTING PAIRS AT DISTANCE <= K: at each centroid, gather "
+            "the distance to every vertex, two-pointer count the pairs summing to <= k, then subtract "
+            "the pairs lying within a single branch (which don't cross the centroid). Summed over the "
+            "O(log n) levels this is O(n log^2 n) versus the naive O(n^2). This module builds the "
+            "centroid tree and counts distance-bounded pairs. Verified against brute force -- "
+            "all-pairs BFS distances -- confirming the count matches for every k, the centroid tree "
+            "is a valid single-rooted tree covering all vertices with O(log n) depth (a path on 63 "
+            "vertices decomposes to depth <= 6), on structured and hundreds of random trees plus a "
+            "400-vertex instance.",
+            '<div class="grid">'
+            + svg_card(out("centroid_decomposition.svg"), "a tree coloured by centroid-decomposition level: the red node is the overall centroid (root of the centroid tree), and each deeper colour is a centroid of a smaller, halved piece -- only about log2(n) levels deep")
+            + f'<div class="card">{pre(centroid_decomposition_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

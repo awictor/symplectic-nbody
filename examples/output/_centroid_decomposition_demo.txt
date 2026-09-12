@@ -1,0 +1,24 @@
+Centroid decomposition: log-deep divide-and-conquer on a tree
+
+  10-vertex tree, 9 edges
+
+  centroid tree root: 2
+  centroid tree depth: 3  (log2(10) is about 3.3)
+
+  centroid tree parent of each vertex:
+    [1, 2, -1, 2, 3, 1, 1, 3, 7, 2]
+
+  vertex pairs within distance k (via centroid decomposition):
+      k   pairs  matches brute
+      1       9  True
+      2      22  True
+      3      34  True
+      4      42  True
+      5      45  True
+
+  At each centroid, paths through it are counted by gathering distances to every node and
+  two-pointer counting the pairs summing to <= k, then subtracting per-branch pairs that
+  don't actually cross the centroid. Because each level halves the components, only
+  O(log n) levels exist -- turning an O(n^2) all-pairs question into O(n log^2 n).
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\centroid_decomposition.svg

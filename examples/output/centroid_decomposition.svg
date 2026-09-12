@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="440" viewBox="0 0 760 440" font-family="monospace">
+<rect width="760" height="440" fill="#0d1117"/>
+<text x="20" y="30" fill="#e6edf3" font-size="18">The tree, coloured by depth in its centroid decomposition</text>
+<text x="20" y="50" fill="#8b949e" font-size="12">red = the overall centroid (root of the centroid tree); deeper colours split smaller pieces</text>
+<line x1="380.0" y1="110.0" x2="380.0" y2="158.0" stroke="#484f58" stroke-width="1.5"/>
+<line x1="380.0" y1="158.0" x2="235.0" y2="206.0" stroke="#484f58" stroke-width="1.5"/>
+<line x1="235.0" y1="206.0" x2="283.3" y2="254.0" stroke="#484f58" stroke-width="1.5"/>
+<line x1="283.3" y1="254.0" x2="283.3" y2="302.0" stroke="#484f58" stroke-width="1.5"/>
+<line x1="380.0" y1="158.0" x2="380.0" y2="206.0" stroke="#484f58" stroke-width="1.5"/>
+<line x1="380.0" y1="158.0" x2="525.0" y2="206.0" stroke="#484f58" stroke-width="1.5"/>
+<line x1="283.3" y1="254.0" x2="476.7" y2="302.0" stroke="#484f58" stroke-width="1.5"/>
+<line x1="476.7" y1="302.0" x2="380.0" y2="350.0" stroke="#484f58" stroke-width="1.5"/>
+<line x1="235.0" y1="206.0" x2="476.7" y2="254.0" stroke="#484f58" stroke-width="1.5"/>
+<circle cx="380.0" cy="110.0" r="18" fill="#ffd43b"/>
+<text x="380.0" y="115.0" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">0</text>
+<circle cx="380.0" cy="158.0" r="18" fill="#ff922b"/>
+<text x="380.0" y="163.0" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">1</text>
+<circle cx="235.0" cy="206.0" r="18" fill="#ff6b6b"/>
+<text x="235.0" y="211.0" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">2</text>
+<circle cx="380.0" cy="206.0" r="18" fill="#ffd43b"/>
+<text x="380.0" y="211.0" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">5</text>
+<circle cx="525.0" cy="206.0" r="18" fill="#ffd43b"/>
+<text x="525.0" y="211.0" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">6</text>
+<circle cx="283.3" cy="254.0" r="18" fill="#ff922b"/>
+<text x="283.3" y="259.0" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">3</text>
+<circle cx="476.7" cy="254.0" r="18" fill="#ff922b"/>
+<text x="476.7" y="259.0" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">9</text>
+<circle cx="283.3" cy="302.0" r="18" fill="#ffd43b"/>
+<text x="283.3" y="307.0" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">4</text>
+<circle cx="476.7" cy="302.0" r="18" fill="#ffd43b"/>
+<text x="476.7" y="307.0" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">7</text>
+<circle cx="380.0" cy="350.0" r="18" fill="#06d6a0"/>
+<text x="380.0" y="355.0" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">8</text>
+<circle cx="30" cy="90" r="8" fill="#ff6b6b"/>
+<text x="45" y="94" fill="#8b949e" font-size="11">level 0</text>
+<circle cx="30" cy="112" r="8" fill="#ff922b"/>
+<text x="45" y="116" fill="#8b949e" font-size="11">level 1</text>
+<circle cx="30" cy="134" r="8" fill="#ffd43b"/>
+<text x="45" y="138" fill="#8b949e" font-size="11">level 2</text>
+<circle cx="30" cy="156" r="8" fill="#06d6a0"/>
+<text x="45" y="160" fill="#8b949e" font-size="11">level 3</text>
+</svg>
