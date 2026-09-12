@@ -378,6 +378,7 @@ def main():
     import rk45_demo
     import cordic_demo
     import savitzky_golay_demo
+    import lzw_demo
 
     import plot_orbits
 
@@ -725,6 +726,7 @@ def main():
     rk45_txt = run("rk45_demo", rk45_demo.main, True)
     cordic_txt = run("cordic_demo", cordic_demo.main, True)
     savitzky_golay_txt = run("savitzky_golay_demo", savitzky_golay_demo.main, True)
+    lzw_txt = run("lzw_demo", lzw_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5363,6 +5365,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("savitzky_golay.svg"), "a noisy two-peak signal (gray) smoothed by Savitzky-Golay (green, peaks intact) versus a moving average (red, peaks flattened) -- the polynomial fit follows the curvature")
             + f'<div class="card">{pre(savitzky_golay_txt)}</div>'
+            + '</div>'),
+        section(
+            "LZW: adaptive dictionary compression",
+            "LEMPEL-ZIV-WELCH is the dictionary compressor behind GIF, early TIFF, and Unix "
+            "`compress`. Its charm is that it needs NO explicit dictionary in the output and NO two "
+            "passes: encoder and decoder build the SAME dictionary independently as they go, so the "
+            "compressed stream is just a sequence of integer codes. It replaces repeated SUBSTRINGS "
+            "with single codes, and the longer and more repetitive the input, the longer the matched "
+            "substrings become -- so its ratio improves as it learns the data. The encoder starts "
+            "with every single byte (codes 0..255), reads the longest string w already in the "
+            "dictionary, and on the next character c either extends (if w+c is known) or outputs the "
+            "code for w, adds w+c as a new entry, and restarts at c. The decoder mirrors this one "
+            "step behind, with the classic KwKwK edge case (a code referring to the entry about to "
+            "be built) resolved by the rule that the entry is the previous string plus its own first "
+            "character. This module implements byte-oriented LZW compression and decompression with "
+            "an optional capped code width (GIF-style dictionary reset), verified by exhaustive "
+            "round-tripping: decompress(compress(x)) == x for 300 random byte strings, repetitive "
+            "data, text, all-same and all-distinct inputs, and the empty string; that repetitive "
+            "input yields far fewer codes than its length; that the KwKwK case decodes correctly; and "
+            "that the capped-width reset round-trips with codes staying in range.",
+            '<div class="grid">'
+            + svg_card(out("lzw.svg"), "the LZW compression ratio (codes per byte) plunging below the no-compression line as a phrase repeats more -- the dictionary learns longer substrings and encodes each in one code")
+            + f'<div class="card">{pre(lzw_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

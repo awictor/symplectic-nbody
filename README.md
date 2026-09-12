@@ -336,6 +336,7 @@ ruins a long non-symplectic integration.
 | `src/rk45.py` | Dormand-Prince RK45 adaptive-step ODE solver (embedded error control, FSAL) |
 | `src/cordic.py` | CORDIC: cos/sin/atan2/hypot/exp/ln/sqrt with only shifts and additions |
 | `src/savitzky_golay.py` | Savitzky-Golay filter: peak-preserving smoothing and noisy-data differentiation |
+| `src/lzw.py` | LZW adaptive dictionary compression/decompression (GIF-style, capped code width) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -663,6 +664,7 @@ ruins a long non-symplectic integration.
 | `examples/rk45_demo.py` | Van der Pol oscillator with step ticks clustering at the sharp transitions |
 | `examples/cordic_demo.py` | The rotation spiralling to a target angle; cos/sin/exp/ln/sqrt vs the math library |
 | `examples/savitzky_golay_demo.py` | Noisy two-peak signal: SG keeps the peaks where a moving average flattens them |
+| `examples/lzw_demo.py` | Compression ratio improving with repetition + repetitive vs random comparison |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7975,6 +7977,25 @@ coefficients for any odd window/degree/derivative and applies the filter with ed
 that a polynomial of degree <= the filter degree passes unchanged, the derivative mode recovers the
 analytic derivative, smoothing cuts the MSE to the clean signal, and it beats a moving average at
 preserving a Gaussian peak (0.996 vs 0.842).
+
+## LZW: adaptive dictionary compression
+
+Build the codebook on the fly, no dictionary transmitted -- the GIF/compress algorithm. `lzw.py`:
+
+```
+$ python examples/lzw_demo.py examples/output
+
+  "TOBEORNOTTOBEORTOBEORNOT" (24 bytes) -> 16 codes, round-trips exactly
+  ratio vs repetition: 1x -> 1.00, 10x -> 0.40, 100x -> 0.14
+  repetitive 2700 bytes: 0.047; random 2700 bytes: 0.983 (incompressible)
+```
+
+LZW starts with every byte as a code, then replaces repeated substrings with single codes, building
+its dictionary as it reads; the decoder rebuilds the identical dictionary one step behind, resolving
+the KwKwK self-reference (a code for the entry about to be built) by the previous-string-plus-its-own
+-first-char rule. This module implements byte-oriented compression/decompression with an optional
+GIF-style capped code width, verified by exhaustive round-tripping over 300 random strings, repetitive
+data, all-same/all-distinct/empty inputs, the KwKwK case, and the capped-width dictionary reset.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,27 @@
+LZW: adaptive dictionary compression (GIF / Unix compress)
+
+  input : TOBEORNOTTOBEORTOBEORNOT  (24 bytes)
+  codes : [84, 79, 66, 69, 79, 82, 78, 79, 84, 256, 258, 260, 265, 259, 261, 263]  (16 codes)
+  decompresses exactly: True
+  Codes > 255 are dictionary entries the encoder built from repeated substrings;
+  the decoder rebuilds the identical dictionary with no side channel.
+
+  Compression ratio (codes / bytes) vs repetition:
+      1 repetitions (   20 bytes): ratio 1.000
+      2 repetitions (   40 bytes): ratio 0.750
+      5 repetitions (  100 bytes): ratio 0.540
+     10 repetitions (  200 bytes): ratio 0.400
+     25 repetitions (  500 bytes): ratio 0.264
+     50 repetitions ( 1000 bytes): ratio 0.190
+    100 repetitions ( 2000 bytes): ratio 0.137
+
+  Repetitive 2700 bytes: ratio 0.047 (great)
+  Random     2700 bytes: ratio 0.983 (near 1 -- incompressible)
+
+  Dictionary entries learned from 'the quick brown fox' x50: 189
+
+  LZW replaces repeated substrings with single codes, and because both sides build the
+  same dictionary as they read, the compressed stream is just integer codes -- no
+  dictionary transmitted, one pass, and the ratio improves the longer the patterns run.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\lzw.svg
