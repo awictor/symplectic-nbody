@@ -408,6 +408,7 @@ def main():
     import coin_change_demo
     import combinatorial_rank_demo
     import bridges_demo
+    import bipartite_matching_demo
 
     import plot_orbits
 
@@ -785,6 +786,7 @@ def main():
     coin_change_txt = run("coin_change_demo", coin_change_demo.main, True)
     combinatorial_rank_txt = run("combinatorial_rank_demo", combinatorial_rank_demo.main, True)
     bridges_txt = run("bridges_demo", bridges_demo.main, True)
+    bipartite_matching_txt = run("bipartite_matching_demo", bipartite_matching_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6088,6 +6090,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("bridges.svg"), "a 10-node network of three clusters: red edges are bridges and red nodes are articulation points -- cut any one and the network splits; the dense cluster (with its extra chord) has no internal bridge, but every inter-cluster link does")
             + f'<div class="card">{pre(bridges_txt)}</div>'
+            + '</div>'),
+        section(
+            "Maximum bipartite matching: pairing two sides",
+            "A bipartite graph splits its vertices into two sides -- workers and jobs, students and "
+            "projects, riders and taxis -- with edges only between them. A MATCHING is a set of edges "
+            "sharing no vertex; the MAXIMUM matching pairs as many as possible. Unlike the Hungarian "
+            "algorithm (which minimises total COST on a weighted complete graph), this is the "
+            "unweighted question -- maximise the COUNT -- on an arbitrary graph where only some pairs "
+            "are allowed. The engine is the AUGMENTING PATH: an alternating unmatched/matched path "
+            "between two free vertices, which when flipped raises the matching by one; Berge's "
+            "theorem says a matching is maximum exactly when none remains. HOPCROFT-KARP runs a BFS "
+            "to find the shortest augmenting-path length, then a DFS to pack many vertex-disjoint "
+            "shortest paths and flip them together -- only O(sqrt(V)) phases, so O(E*sqrt(V)) overall "
+            "versus O(V*E) for one path at a time. The result ties to two classics: KONIG'S THEOREM "
+            "(max matching == minimum vertex cover in a bipartite graph, recovered from "
+            "alternating-reachability) and HALL'S THEOREM (a left-perfect matching exists iff every "
+            "subset S of the left has at least |S| neighbours). This module computes the maximum "
+            "matching, the minimum vertex cover, and the maximum independent set. Verified against "
+            "brute force on 500 random graphs (the size is truly maximum), against Konig (the cover "
+            "size equals the matching and touches every edge), and against Hall (perfect-left iff the "
+            "subset condition), plus a 2000x2000 sparse instance.",
+            '<div class="grid">'
+            + svg_card(out("bipartite_matching.svg"), "staffing five workers onto five jobs: grey edges are qualifications, green edges the maximum matching the solver picks -- here a perfect placement where every worker gets a job they can do")
+            + f'<div class="card">{pre(bipartite_matching_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

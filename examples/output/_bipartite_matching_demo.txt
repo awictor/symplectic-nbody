@@ -1,0 +1,24 @@
+Maximum bipartite matching: staffing 5 workers onto 5 jobs
+
+  Qualifications:
+    Ada  -> frontend, backend
+    Ben  -> backend, data
+    Cam  -> data, ops
+    Dee  -> frontend, design
+    Eli  -> design
+
+  Maximum placement: 5 of 5 workers assigned
+    Ada  -> backend
+    Ben  -> data
+    Cam  -> ops
+    Dee  -> frontend
+    Eli  -> design
+
+  Perfect placement possible? True
+
+  Konig minimum cover (5 = matching size): ['Ada', 'Ben', 'Cam', 'Dee', 'Eli']
+  Every qualification edge touches at least one of these -- the smallest such set, and by
+  Konig's theorem its size equals the maximum matching. Hopcroft-Karp finds the matching
+  in O(E*sqrt(V)) by augmenting many shortest paths per BFS phase, not one at a time.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\bipartite_matching.svg

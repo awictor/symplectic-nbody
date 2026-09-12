@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="440" viewBox="0 0 680 440" font-family="monospace">
+<rect width="680" height="440" fill="#0d1117"/>
+<text x="20" y="34" fill="#e6edf3" font-size="18">Maximum matching: green edges are the optimal worker-to-job assignment</text>
+<text x="20" y="54" fill="#8b949e" font-size="12">grey edges are qualifications; the solver picks a largest vertex-disjoint set of them</text>
+<text x="160" y="66" fill="#4dabf7" font-size="13" text-anchor="middle">WORKERS</text>
+<text x="530" y="66" fill="#ffd43b" font-size="13" text-anchor="middle">JOBS</text>
+<line x1="190" y1="90" x2="490" y2="90" stroke="#8b949e" stroke-width="1.2" opacity="0.5"/>
+<line x1="190" y1="90" x2="490" y2="160" stroke="#06d6a0" stroke-width="3.5"/>
+<line x1="190" y1="160" x2="490" y2="160" stroke="#8b949e" stroke-width="1.2" opacity="0.5"/>
+<line x1="190" y1="160" x2="490" y2="230" stroke="#06d6a0" stroke-width="3.5"/>
+<line x1="190" y1="230" x2="490" y2="230" stroke="#8b949e" stroke-width="1.2" opacity="0.5"/>
+<line x1="190" y1="230" x2="490" y2="300" stroke="#06d6a0" stroke-width="3.5"/>
+<line x1="190" y1="300" x2="490" y2="90" stroke="#06d6a0" stroke-width="3.5"/>
+<line x1="190" y1="300" x2="490" y2="370" stroke="#8b949e" stroke-width="1.2" opacity="0.5"/>
+<line x1="190" y1="370" x2="490" y2="370" stroke="#06d6a0" stroke-width="3.5"/>
+<circle cx="190" cy="90" r="14" fill="#4dabf7"/>
+<text x="166" y="95" fill="#e6edf3" font-size="13" text-anchor="end">Ada</text>
+<circle cx="190" cy="160" r="14" fill="#4dabf7"/>
+<text x="166" y="165" fill="#e6edf3" font-size="13" text-anchor="end">Ben</text>
+<circle cx="190" cy="230" r="14" fill="#4dabf7"/>
+<text x="166" y="235" fill="#e6edf3" font-size="13" text-anchor="end">Cam</text>
+<circle cx="190" cy="300" r="14" fill="#4dabf7"/>
+<text x="166" y="305" fill="#e6edf3" font-size="13" text-anchor="end">Dee</text>
+<circle cx="190" cy="370" r="14" fill="#4dabf7"/>
+<text x="166" y="375" fill="#e6edf3" font-size="13" text-anchor="end">Eli</text>
+<circle cx="490" cy="90" r="14" fill="#ffd43b"/>
+<text x="514" y="95" fill="#e6edf3" font-size="13" text-anchor="start">frontend</text>
+<circle cx="490" cy="160" r="14" fill="#ffd43b"/>
+<text x="514" y="165" fill="#e6edf3" font-size="13" text-anchor="start">backend</text>
+<circle cx="490" cy="230" r="14" fill="#ffd43b"/>
+<text x="514" y="235" fill="#e6edf3" font-size="13" text-anchor="start">data</text>
+<circle cx="490" cy="300" r="14" fill="#ffd43b"/>
+<text x="514" y="305" fill="#e6edf3" font-size="13" text-anchor="start">ops</text>
+<circle cx="490" cy="370" r="14" fill="#ffd43b"/>
+<text x="514" y="375" fill="#e6edf3" font-size="13" text-anchor="start">design</text>
+</svg>

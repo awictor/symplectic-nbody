@@ -366,6 +366,7 @@ ruins a long non-symplectic integration.
 | `src/coin_change.py` | Coin change: minimum coins + ways to make change (combinations/sequences) |
 | `src/combinatorial_rank.py` | Combinatorial ranking: permutation/combination rank-unrank + Gray code |
 | `src/bridges.py` | Bridges & articulation points (Tarjan) + 2-edge-connected components |
+| `src/bipartite_matching.py` | Maximum bipartite matching (Hopcroft-Karp) + Konig cover + Hall test |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -723,6 +724,7 @@ ruins a long non-symplectic integration.
 | `examples/coin_change_demo.py` | The greedy trap + min-coins-per-amount curve for three coin systems |
 | `examples/combinatorial_rank_demo.py` | Permutation/combination ranking tables + a 5-bit Gray-code bit-flip SVG |
 | `examples/bridges_demo.py` | A 3-cluster network with its failure edges/nodes highlighted in red |
+| `examples/bipartite_matching_demo.py` | Staffing 5 workers onto 5 jobs with the matched edges in green |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8604,6 +8606,27 @@ edges are skipped by edge-id so a doubled link is never falsely flagged; the DFS
 5000-deep path doesn't overflow the stack. Verified against the brute-force definition on 400 random
 graphs -- an edge is a bridge iff deleting it raises the component count, a vertex is a cut vertex iff
 deleting it does; trees have every edge a bridge, cycles and K5 have neither.
+
+## Maximum bipartite matching: pairing two sides
+
+Pair as many workers with jobs as possible, in O(E*sqrt(V)). `bipartite_matching.py`:
+
+```
+$ python examples/bipartite_matching_demo.py examples/output
+
+  5 workers, 5 jobs, some qualified for some -> maximum placement: 5 of 5
+  Ada->backend  Ben->data  Cam->ops  Dee->frontend  Eli->design
+  Konig minimum cover size = 5 = matching size; Hall: perfect placement True
+```
+
+A MATCHING is a set of edges sharing no vertex; the maximum one pairs the most. Hopcroft-Karp augments
+many vertex-disjoint shortest paths per BFS phase (O(sqrt(V)) phases, O(E*sqrt(V)) total). The result
+ties to Konig's theorem (max matching == minimum vertex cover, recovered from alternating-reachability)
+and Hall's theorem (a left-perfect matching exists iff every subset S of the left has at least |S|
+neighbours). Verified against brute force on 500 random graphs, against Konig (the cover equals the
+matching and touches every edge), and against Hall (perfect-left iff the subset condition), plus a
+2000x2000 sparse instance. Distinct from `hungarian.py`, which minimises weighted assignment cost;
+this maximises the unweighted count on an arbitrary bipartite graph.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
