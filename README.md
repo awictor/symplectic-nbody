@@ -431,6 +431,7 @@ ruins a long non-symplectic integration.
 | `src/quaternion.py` | Quaternion rotation: Hamilton product, slerp, axis-angle/matrix/Euler conversions |
 | `src/rrt.py` | RRT and RRT* sampling-based motion planning with obstacle avoidance |
 | `src/kabsch.py` | Kabsch/Umeyama optimal point-cloud superposition (rotation + scale via SVD) |
+| `src/lqr.py` | Linear-quadratic regulator: optimal feedback via the discrete Riccati equation |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -853,6 +854,7 @@ ruins a long non-symplectic integration.
 | `examples/quaternion_demo.py` | SLERP vs component-LERP: even arc spacing vs bunching |
 | `examples/rrt_demo.py` | RRT vs RRT* through an obstacle field (RRT* 24% shorter) |
 | `examples/kabsch_demo.py` | Recovering a known rotation/scale and aligning a noisy point cloud |
+| `examples/lqr_demo.py` | A cart settling to zero under LQR for four control-effort penalties |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9962,6 +9964,24 @@ stays a proper rotation, never a reflection. Umeyama (1991) adds the optimal uni
 recovers a known rotation+translation to zero RMSD over hundreds of 2D/3D cases, R is always a proper
 rotation (det +1) even on a mirror-imaged target, the RMSD beats every random rotation (true
 minimiser), and Umeyama recovers a known scale exactly.
+
+## The linear-quadratic regulator: optimal feedback control
+
+Compute the feedback gain that optimally steers a linear system. `lqr.py`:
+
+```
+$ python examples/lqr_demo.py examples/output
+
+  double integrator: R=0.01 -> aggressive gain, R=10 -> gentle (each cost-optimal)
+  unstable system: open-loop rho 1.5 -> closed-loop 0.44 (stabilized)
+```
+
+For linear dynamics `x+ = A x + B u` and quadratic cost `x^T Q x + u^T R u`, LQR gives the constant
+feedback `u = -K x` minimising total cost, where K comes from the discrete algebraic Riccati equation
+(solved here by fixed-point iteration). Provides the gain, finite-horizon recursion, and closed-loop
+simulation. Validated: P satisfies the Riccati equation, the closed loop is stable and decays to the
+origin, a scalar system matches the closed-form solution, the cost beats every perturbed stabilising
+gain (true minimiser), heavier R gives gentler gains, and a naturally unstable system is stabilized.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

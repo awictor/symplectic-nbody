@@ -4,8 +4,8 @@ RRT / RRT*: sampling-based motion planning through obstacles
   start (5, 5) -> goal (95, 95)
 
   plain RRT : tree of 116 nodes, path length 183.6, valid=True
-  RRT*      : tree of 5841 nodes, path length 140.2, valid=True
-  RRT* is 23.6% shorter (rewiring pays off)
+  RRT*      : tree of 2139 nodes, path length 141.0, valid=True
+  RRT* is 23.2% shorter (rewiring pays off)
 
   Each iteration samples a random point, steers the nearest tree node a step toward it, and
   keeps the move if collision-free. New samples fall mostly in unexplored space, so the tree

@@ -28,7 +28,7 @@ def main():
     path_rrt, nodes_rrt, parents_rrt = rrt(world, start, goal, max_step=6, goal_bias=0.1,
                                            max_iters=8000, goal_tol=2.5, seed=7)
     path_star, nodes_star, parents_star = rrt_star(world, start, goal, max_step=6, goal_bias=0.1,
-                                                   max_iters=8000, goal_tol=2.5, radius=12, seed=7)
+                                                   max_iters=3000, goal_tol=2.5, radius=12, seed=7)
 
     print(f"  world: {world.width}x{world.height} with {len(obstacles)} circular obstacles")
     print(f"  start {start} -> goal {goal}\n")

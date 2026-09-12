@@ -473,6 +473,7 @@ def main():
     import quaternion_demo
     import rrt_demo
     import kabsch_demo
+    import lqr_demo
 
     import plot_orbits
 
@@ -915,6 +916,7 @@ def main():
     quaternion_txt = run("quaternion_demo", quaternion_demo.main, True)
     rrt_txt = run("rrt_demo", rrt_demo.main, True)
     kabsch_txt = run("kabsch_demo", kabsch_demo.main, True)
+    lqr_txt = run("lqr_demo", lqr_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7654,6 +7656,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("kabsch.svg"), "a source cloud (blue) and a rotated, translated, noisy target (orange): Kabsch rotates the source onto the target (green landing on orange), the residual gaps being exactly the added noise")
             + f'<div class="card">{pre(kabsch_txt)}</div>'
+            + '</div>'),
+        section(
+            "The linear-quadratic regulator: optimal feedback control",
+            "You have a system to hold at a target -- a drone hovering, a cart balancing a pole, a "
+            "satellite pointing -- that drifts, and you can push on it. Push too gently and it wanders; "
+            "too hard and you waste effort and overshoot. The LINEAR-QUADRATIC REGULATOR answers exactly "
+            "how hard to push: for linear dynamics x_{t+1} = A x_t + B u_t and a quadratic cost (state "
+            "error x^T Q x plus control effort u^T R u), it computes the feedback law u = -K x that "
+            "minimises the total cost over all time. The remarkable fact is that the optimal gain K is "
+            "CONSTANT, and it comes from the solution P of the discrete algebraic RICCATI equation "
+            "P = Q + A^T P A - A^T P B (R + B^T P B)^-1 B^T P A, after which "
+            "K = (R + B^T P B)^-1 B^T P A. This module solves the Riccati equation by iterating that "
+            "fixed-point map, forms the gain, gives the finite-horizon backward recursion, and simulates "
+            "the closed loop. Validated: the computed P satisfies the Riccati equation to numerical "
+            "precision; the closed-loop matrix A - B K is stable (spectral radius < 1) and simulations "
+            "decay to the origin; on a scalar system P and K match the closed-form quadratic solution "
+            "exactly; the realised cost beats every randomly perturbed stabilising gain (it is the "
+            "minimiser); a heavier control penalty R yields a gentler gain and a heavier state penalty Q "
+            "a stronger one; the finite-horizon gain converges to the infinite-horizon one; and a "
+            "naturally UNSTABLE system (open-loop spectral radius 1.5) is driven to a stable 0.44.",
+            '<div class="grid">'
+            + svg_card(out("lqr.svg"), "the cart's position settling to zero under LQR for four control-effort penalties: cheap control (small R, green) settles fast and aggressively, expensive control (large R, orange) more gently -- each optimal for its cost")
+            + f'<div class="card">{pre(lqr_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

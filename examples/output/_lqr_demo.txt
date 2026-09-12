@@ -1,0 +1,18 @@
+LQR: the optimal feedback gain from the Riccati equation
+
+  double integrator (push a cart to bring position & velocity to zero):
+    R= 0.01: gain K=[ 5.894,  6.821]  closed-loop rho=0.904  cost=  289.32
+    R= 0.10: gain K=[ 2.586,  3.443]  closed-loop rho=0.899  cost=  332.93
+    R= 1.00: gain K=[ 0.917,  1.636]  closed-loop rho=0.917  cost=  445.87
+    R=10.00: gain K=[ 0.303,  0.835]  closed-loop rho=0.958  cost=  689.25
+    (small R = cheap control = aggressive gain, fast settle; large R = gentle)
+
+  naturally unstable system (both open-loop modes > 1):
+    open-loop spectral radius:  1.500  (unstable)
+    closed-loop spectral radius: 0.443  (stable under LQR)
+
+  The optimal control u = -K x uses a constant gain K built from the Riccati solution P.
+  It provably minimises the total quadratic cost -- state error plus control effort -- over
+  all time, which is why LQR is the inner loop of drones, rockets, and robots everywhere.
+
+  wrote examples/output\lqr.svg
