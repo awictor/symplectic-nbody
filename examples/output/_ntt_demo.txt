@@ -1,0 +1,24 @@
+Number-theoretic transform: FFT in modular arithmetic -> EXACT integer convolution
+
+  working modulo the NTT-friendly prime p = 998244353 = 119 * 2^23 + 1
+
+  polynomial multiply (1 + 2x + 3x^2 + 4x^3)(5 + 6x + 7x^2):
+    NTT      : [5, 16, 34, 52, 45, 28]
+    schoolbook: [5, 16, 34, 52, 45, 28]
+    exact match: True
+
+  big-integer multiplication by digit convolution + carry:
+    12345 * 6789 = 83810205
+      matches Python's exact bignum: True
+    18446744073709551616 * 12157665459056928801 = 224269343257001716702690972139746492416
+      matches Python's exact bignum: True
+
+  (10^100 - 1)^2 has 200 digits, computed exactly: True
+
+  Why exact? The FFT uses complex roots e^(2 pi i / n) and carries floating-point error;
+  the NTT replaces them with a primitive n-th root of unity modulo p, so every butterfly
+  is an exact integer operation. Transform, multiply pointwise, inverse-transform -- the
+  convolution theorem holds identically, but the answer is exact mod p (and the true
+  integer whenever the values stay below p). This powers arbitrary-precision multiplication.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\ntt.svg

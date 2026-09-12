@@ -441,6 +441,7 @@ def main():
     import weighted_dsu_demo
     import durand_kerner_demo
     import tanh_sinh_demo
+    import ntt_demo
 
     import plot_orbits
 
@@ -851,6 +852,7 @@ def main():
     weighted_dsu_txt = run("weighted_dsu_demo", weighted_dsu_demo.main, True)
     durand_kerner_txt = run("durand_kerner_demo", durand_kerner_demo.main, True)
     tanh_sinh_txt = run("tanh_sinh_demo", tanh_sinh_demo.main, True)
+    ntt_txt = run("ntt_demo", ntt_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6864,6 +6866,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("tanh_sinh.svg"), "the tanh-sinh abscissae on [-1,1]: equally-spaced points in t map to points that pile up exponentially toward the endpoints, exactly where singular integrands need the most resolution")
             + f'<div class="card">{pre(tanh_sinh_txt)}</div>'
+            + '</div>'),
+        section(
+            "Number-theoretic transform: exact integer convolution",
+            "The FFT multiplies polynomials and convolves in O(n log n), but over the COMPLEX numbers "
+            "-- so it carries floating-point rounding and large integer coefficients lose precision. "
+            "The NUMBER-THEORETIC TRANSFORM (NTT) is the FFT done in modular arithmetic: it replaces "
+            "the complex root of unity with a PRIMITIVE ROOT OF UNITY modulo a carefully chosen "
+            "prime, so every butterfly is an exact integer operation and the answer is EXACT. It is "
+            "the engine behind arbitrary-precision big-integer multiplication, exact polynomial "
+            "arithmetic in computer algebra, and modular convolutions. The modulus is 'NTT-friendly' "
+            "-- p = c * 2^k + 1, so the group has order divisible by a large power of two and holds a "
+            "primitive n-th root for any power-of-two length; this uses p = 998244353 = 119 * 2^23 + "
+            "1 with primitive root 3. The forward transform is the iterative Cooley-Tukey butterfly "
+            "with root powers replacing twiddles; the inverse divides by n via the modular inverse. "
+            "Convolution is transform, pointwise multiply, inverse -- exactly, mod p. This module does "
+            "the NTT, polynomial multiplication, and big-integer multiplication by digit convolution. "
+            "Verified against schoolbook O(n^2) convolution and Python's exact bignum multiplication "
+            "-- identical on hundreds of inputs, including 500-digit numbers -- plus round-trip and "
+            "agreement with the complex FFT convolution.",
+            '<div class="grid">'
+            + svg_card(out("ntt.svg"), "an exact polynomial product computed by the NTT: the coefficients of A times B are each an exact integer (convolution done in modular arithmetic), with none of the floating-point rounding a complex FFT would introduce")
+            + f'<div class="card">{pre(ntt_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

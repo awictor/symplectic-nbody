@@ -399,6 +399,7 @@ ruins a long non-symplectic integration.
 | `src/weighted_dsu.py` | Weighted union-find: difference constraints + parity/bipartite |
 | `src/durand_kerner.py` | Durand-Kerner: all complex roots of a polynomial simultaneously |
 | `src/tanh_sinh.py` | Tanh-sinh (double-exponential) quadrature for endpoint singularities |
+| `src/ntt.py` | Number-theoretic transform: exact integer convolution + big-int multiply |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -789,6 +790,7 @@ ruins a long non-symplectic integration.
 | `examples/weighted_dsu_demo.py` | Difference constraints accepted/rejected + an odd-cycle contradiction |
 | `examples/durand_kerner_demo.py` | Polynomial roots found at once + the 8th roots of unity plotted |
 | `examples/tanh_sinh_demo.py` | Singular integrals nailed vs Simpson + the clustering abscissae |
+| `examples/ntt_demo.py` | Exact polynomial product + big-integer multiply by digit convolution |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9304,6 +9306,24 @@ rule in t converges with the correct-digit count roughly doubling per step halvi
 endpoint singularities. Verified against closed forms: smooth integrands to machine precision, the
 singular integrals of 1/sqrt(x), ln(1/x), 1/sqrt(1-x^2), and both-ends 1/sqrt(x(1-x))=pi, plus a
 fine-Simpson reference on smooth cases.
+
+## Number-theoretic transform: exact integer convolution
+
+The FFT in modular arithmetic -- exact, no rounding. `ntt.py`:
+
+```
+$ python examples/ntt_demo.py examples/output
+
+  (1+2x+3x^2+4x^3)(5+6x+7x^2) = [5,16,34,52,45,28] exactly (matches schoolbook)
+  12345 * 6789 and (10^100-1)^2 computed exactly by digit convolution
+```
+
+Replaces the complex root of unity e^(2 pi i / n) with a primitive n-th root modulo the NTT-friendly
+prime p = 998244353 = 119*2^23+1 (root 3), so every butterfly is an exact integer operation.
+Convolution is transform, pointwise multiply, inverse -- exactly mod p. Powers big-integer
+multiplication (convolve digit arrays, then carry). Verified against schoolbook O(n^2) convolution and
+Python's exact bignum multiplication -- identical on hundreds of inputs including 500-digit numbers --
+plus round-trip and agreement with the complex FFT convolution.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
