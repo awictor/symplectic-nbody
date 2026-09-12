@@ -394,6 +394,7 @@ def main():
     import stoer_wagner_demo
     import chebyshev_demo
     import gibbs_demo
+    import louvain_demo
 
     import plot_orbits
 
@@ -757,6 +758,7 @@ def main():
     stoer_wagner_txt = run("stoer_wagner_demo", stoer_wagner_demo.main, True)
     chebyshev_txt = run("chebyshev_demo", chebyshev_demo.main, True)
     gibbs_txt = run("gibbs_demo", gibbs_demo.main, True)
+    louvain_txt = run("louvain_demo", louvain_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5757,6 +5759,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("gibbs.svg"), "the Gibbs sample cloud of a correlated bivariate Gaussian (blue) tilted along its correlation, with the target 2-sigma covariance ellipse (yellow) that the samples fill -- coordinate-wise sampling reproducing the full joint")
             + f'<div class="card">{pre(gibbs_txt)}</div>'
+            + '</div>'),
+        section(
+            "Louvain community detection: the natural clusters in a network",
+            "Real networks break into COMMUNITIES -- groups of nodes more densely connected inside "
+            "than between -- and finding them reveals structure without being told how many groups "
+            "to look for. The quality measure is MODULARITY: how much denser the within-community "
+            "edges are than a random graph with the same degrees. Maximizing it is NP-hard, but the "
+            "LOUVAIN METHOD is a fast greedy heuristic that is the de-facto standard for community "
+            "detection at scale. It alternates two phases until modularity stops improving: LOCAL "
+            "MOVING, where each node joins whichever neighbour's community gives the largest "
+            "modularity gain (computable in O(degree)), and AGGREGATION, where each community "
+            "collapses into a super-node and the process recurses on the smaller graph. Each phase "
+            "only raises modularity and the graph shrinks each round, so it converges quickly to a "
+            "hierarchical partition. This module implements Louvain on a weighted undirected graph, "
+            "returning the community assignment and achieved modularity, verified against exact "
+            "references: the reported modularity matches a direct computation, on graphs with planted "
+            "communities (dense cliques joined by sparse bridges) it recovers exactly those "
+            "communities (four groups, modularity 0.66), a single clique stays one community, a "
+            "complete graph gives low modularity, the found partition beats both trivial partitions, "
+            "weighted edges are respected, and a ring of triangles is split correctly.",
+            '<div class="grid">'
+            + svg_card(out("louvain.svg"), "a network of four dense groups joined by thin bridges, each community coloured by Louvain -- the red bridging edges are the sparse links between clusters, the gray edges the dense within-community ties")
+            + f'<div class="card">{pre(louvain_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

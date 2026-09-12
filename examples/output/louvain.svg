@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="440" viewBox="0 0 760 440" font-family="monospace">
+<rect width="760" height="440" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="18">Louvain communities: 4 clusters found by modularity</text>
+<text x="20" y="47" fill="#8b949e" font-size="12">each colour is a community; dense within-group edges, thin bridges between -- the natural clustering</text>
+<line x1="570.0" y1="240.0" x2="542.4" y2="278.0" stroke="#30363d" stroke-width="0.9"/>
+<line x1="570.0" y1="240.0" x2="497.6" y2="263.5" stroke="#30363d" stroke-width="0.9"/>
+<line x1="570.0" y1="240.0" x2="497.6" y2="216.5" stroke="#30363d" stroke-width="0.9"/>
+<line x1="570.0" y1="240.0" x2="542.4" y2="202.0" stroke="#30363d" stroke-width="0.9"/>
+<line x1="542.4" y1="278.0" x2="497.6" y2="263.5" stroke="#30363d" stroke-width="0.9"/>
+<line x1="542.4" y1="278.0" x2="497.6" y2="216.5" stroke="#30363d" stroke-width="0.9"/>
+<line x1="542.4" y1="278.0" x2="542.4" y2="202.0" stroke="#30363d" stroke-width="0.9"/>
+<line x1="497.6" y1="263.5" x2="497.6" y2="216.5" stroke="#30363d" stroke-width="0.9"/>
+<line x1="497.6" y1="263.5" x2="542.4" y2="202.0" stroke="#30363d" stroke-width="0.9"/>
+<line x1="497.6" y1="216.5" x2="542.4" y2="202.0" stroke="#30363d" stroke-width="0.9"/>
+<line x1="420.0" y1="390.0" x2="392.4" y2="428.0" stroke="#30363d" stroke-width="0.9"/>
+<line x1="420.0" y1="390.0" x2="347.6" y2="413.5" stroke="#30363d" stroke-width="0.9"/>
+<line x1="420.0" y1="390.0" x2="347.6" y2="366.5" stroke="#30363d" stroke-width="0.9"/>
+<line x1="420.0" y1="390.0" x2="392.4" y2="352.0" stroke="#30363d" stroke-width="0.9"/>
+<line x1="392.4" y1="428.0" x2="347.6" y2="413.5" stroke="#30363d" stroke-width="0.9"/>
+<line x1="392.4" y1="428.0" x2="347.6" y2="366.5" stroke="#30363d" stroke-width="0.9"/>
+<line x1="392.4" y1="428.0" x2="392.4" y2="352.0" stroke="#30363d" stroke-width="0.9"/>
+<line x1="347.6" y1="413.5" x2="347.6" y2="366.5" stroke="#30363d" stroke-width="0.9"/>
+<line x1="347.6" y1="413.5" x2="392.4" y2="352.0" stroke="#30363d" stroke-width="0.9"/>
+<line x1="347.6" y1="366.5" x2="392.4" y2="352.0" stroke="#30363d" stroke-width="0.9"/>
+<line x1="270.0" y1="240.0" x2="242.4" y2="278.0" stroke="#30363d" stroke-width="0.9"/>
+<line x1="270.0" y1="240.0" x2="197.6" y2="263.5" stroke="#30363d" stroke-width="0.9"/>
+<line x1="270.0" y1="240.0" x2="197.6" y2="216.5" stroke="#30363d" stroke-width="0.9"/>
+<line x1="270.0" y1="240.0" x2="242.4" y2="202.0" stroke="#30363d" stroke-width="0.9"/>
+<line x1="242.4" y1="278.0" x2="197.6" y2="263.5" stroke="#30363d" stroke-width="0.9"/>
+<line x1="242.4" y1="278.0" x2="197.6" y2="216.5" stroke="#30363d" stroke-width="0.9"/>
+<line x1="242.4" y1="278.0" x2="242.4" y2="202.0" stroke="#30363d" stroke-width="0.9"/>
+<line x1="197.6" y1="263.5" x2="197.6" y2="216.5" stroke="#30363d" stroke-width="0.9"/>
+<line x1="197.6" y1="263.5" x2="242.4" y2="202.0" stroke="#30363d" stroke-width="0.9"/>
+<line x1="197.6" y1="216.5" x2="242.4" y2="202.0" stroke="#30363d" stroke-width="0.9"/>
+<line x1="420.0" y1="90.0" x2="392.4" y2="128.0" stroke="#30363d" stroke-width="0.9"/>
+<line x1="420.0" y1="90.0" x2="347.6" y2="113.5" stroke="#30363d" stroke-width="0.9"/>
+<line x1="420.0" y1="90.0" x2="347.6" y2="66.5" stroke="#30363d" stroke-width="0.9"/>
+<line x1="420.0" y1="90.0" x2="392.4" y2="52.0" stroke="#30363d" stroke-width="0.9"/>
+<line x1="392.4" y1="128.0" x2="347.6" y2="113.5" stroke="#30363d" stroke-width="0.9"/>
+<line x1="392.4" y1="128.0" x2="347.6" y2="66.5" stroke="#30363d" stroke-width="0.9"/>
+<line x1="392.4" y1="128.0" x2="392.4" y2="52.0" stroke="#30363d" stroke-width="0.9"/>
+<line x1="347.6" y1="113.5" x2="347.6" y2="66.5" stroke="#30363d" stroke-width="0.9"/>
+<line x1="347.6" y1="113.5" x2="392.4" y2="52.0" stroke="#30363d" stroke-width="0.9"/>
+<line x1="347.6" y1="66.5" x2="392.4" y2="52.0" stroke="#30363d" stroke-width="0.9"/>
+<line x1="542.4" y1="202.0" x2="420.0" y2="390.0" stroke="#ff6b6b" stroke-width="1.6"/>
+<line x1="392.4" y1="352.0" x2="270.0" y2="240.0" stroke="#ff6b6b" stroke-width="1.6"/>
+<line x1="242.4" y1="202.0" x2="420.0" y2="90.0" stroke="#ff6b6b" stroke-width="1.6"/>
+<line x1="392.4" y1="52.0" x2="570.0" y2="240.0" stroke="#ff6b6b" stroke-width="1.6"/>
+<circle cx="570.0" cy="240.0" r="9" fill="#4dabf7" stroke="#0d1117" stroke-width="1.5"/>
+<circle cx="542.4" cy="278.0" r="9" fill="#4dabf7" stroke="#0d1117" stroke-width="1.5"/>
+<circle cx="497.6" cy="263.5" r="9" fill="#4dabf7" stroke="#0d1117" stroke-width="1.5"/>
+<circle cx="497.6" cy="216.5" r="9" fill="#4dabf7" stroke="#0d1117" stroke-width="1.5"/>
+<circle cx="542.4" cy="202.0" r="9" fill="#4dabf7" stroke="#0d1117" stroke-width="1.5"/>
+<circle cx="420.0" cy="390.0" r="9" fill="#ffd43b" stroke="#0d1117" stroke-width="1.5"/>
+<circle cx="392.4" cy="428.0" r="9" fill="#ffd43b" stroke="#0d1117" stroke-width="1.5"/>
+<circle cx="347.6" cy="413.5" r="9" fill="#ffd43b" stroke="#0d1117" stroke-width="1.5"/>
+<circle cx="347.6" cy="366.5" r="9" fill="#ffd43b" stroke="#0d1117" stroke-width="1.5"/>
+<circle cx="392.4" cy="352.0" r="9" fill="#ffd43b" stroke="#0d1117" stroke-width="1.5"/>
+<circle cx="270.0" cy="240.0" r="9" fill="#ff6b6b" stroke="#0d1117" stroke-width="1.5"/>
+<circle cx="242.4" cy="278.0" r="9" fill="#ff6b6b" stroke="#0d1117" stroke-width="1.5"/>
+<circle cx="197.6" cy="263.5" r="9" fill="#ff6b6b" stroke="#0d1117" stroke-width="1.5"/>
+<circle cx="197.6" cy="216.5" r="9" fill="#ff6b6b" stroke="#0d1117" stroke-width="1.5"/>
+<circle cx="242.4" cy="202.0" r="9" fill="#ff6b6b" stroke="#0d1117" stroke-width="1.5"/>
+<circle cx="420.0" cy="90.0" r="9" fill="#06d6a0" stroke="#0d1117" stroke-width="1.5"/>
+<circle cx="392.4" cy="128.0" r="9" fill="#06d6a0" stroke="#0d1117" stroke-width="1.5"/>
+<circle cx="347.6" cy="113.5" r="9" fill="#06d6a0" stroke="#0d1117" stroke-width="1.5"/>
+<circle cx="347.6" cy="66.5" r="9" fill="#06d6a0" stroke="#0d1117" stroke-width="1.5"/>
+<circle cx="392.4" cy="52.0" r="9" fill="#06d6a0" stroke="#0d1117" stroke-width="1.5"/>
+<text x="20" y="424" fill="#8b949e" font-size="12">red edges bridge communities; gray edges stay within one</text>
+</svg>

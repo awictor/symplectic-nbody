@@ -352,6 +352,7 @@ ruins a long non-symplectic integration.
 | `src/stoer_wagner.py` | Stoer-Wagner global minimum cut of a weighted undirected graph (O(V^3)) |
 | `src/chebyshev.py` | Chebyshev polynomial approximation (Clenshaw eval, cures the Runge phenomenon) |
 | `src/gibbs.py` | Gibbs sampling for multivariate Gaussians and generic conditionals |
+| `src/louvain.py` | Louvain community detection by modularity optimization (weighted graphs) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -695,6 +696,7 @@ ruins a long non-symplectic integration.
 | `examples/stoer_wagner_demo.py` | Global min cut of a graph + two clusters severed at their weak links |
 | `examples/chebyshev_demo.py` | Geometric convergence + Chebyshev taming Runge's function where equispaced blows up |
 | `examples/gibbs_demo.py` | A correlated Gaussian sampled coordinate-wise, cloud filling the covariance ellipse |
+| `examples/louvain_demo.py` | Four planted communities recovered, coloured, with the bridging edges highlighted |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8311,6 +8313,24 @@ from the precision matrix. This module implements it for bivariate/multivariate 
 user conditionals, verified that the sampled mean, covariance, and correlation converge to the
 target, a 3-D full covariance is recovered, and a discrete conditional sampler reproduces a known
 joint.
+
+## Louvain community detection: the natural clusters in a network
+
+Find a network's communities by maximizing modularity. `louvain.py`:
+
+```
+$ python examples/louvain_demo.py examples/output
+
+  20 nodes, 4 planted groups + bridges -> Louvain finds 4 communities, modularity 0.66
+  every planted group recovered exactly; beats all-in-one (0.0) and singletons (-0.05)
+```
+
+Louvain alternates local moving (each node joins the community that most raises modularity) with
+aggregation (collapse communities into super-nodes and recurse), each phase only increasing
+modularity. This module implements it on weighted undirected graphs, verified that the reported
+modularity matches a direct computation, planted communities (cliques joined by sparse bridges) are
+recovered exactly, a complete graph gives low modularity, the partition beats both trivial ones, and
+weighted edges are respected.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
