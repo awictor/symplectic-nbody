@@ -1,0 +1,26 @@
+Matrix-Tree theorem: spanning trees = any cofactor of the Laplacian
+
+  graph          spanning trees  matches brute
+  triangle K3                 3  True
+  square C4                   4  True
+  K4                         16  True
+  diamond                     8  True
+  path P5                     1  True
+
+  Cayley's formula falls out for complete graphs K_n = n^(n-2):
+     n   K_n trees     n^(n-2)
+     2           1           1
+     3           3           3
+     4          16          16
+     5         125         125
+     6        1296        1296
+     7       16807       16807
+
+  weighted triangle (edges 2,3,5): sum over spanning trees of edge-weight products
+    = 31  (= 2*3 + 3*5 + 5*2 = 31)
+
+  Build L = D - A (degrees on the diagonal, -1 for each edge off it), delete any one row
+  and its column, take the determinant -- that integer is the exact spanning-tree count. A
+  single linear-algebra step replaces an exponential search over all edge subsets.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\matrix_tree.svg

@@ -390,6 +390,7 @@ ruins a long non-symplectic integration.
 | `src/prufer.py` | Prufer sequences: labeled-tree <-> string bijection + Cayley's formula |
 | `src/gale_shapley.py` | Gale-Shapley stable matching (deferred acceptance) + stability check |
 | `src/degree_sequence.py` | Graphic degree sequences: Havel-Hakimi + Erdos-Gallai + realize |
+| `src/matrix_tree.py` | Matrix-Tree theorem: count spanning trees via the Laplacian cofactor |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -771,6 +772,7 @@ ruins a long non-symplectic integration.
 | `examples/prufer_demo.py` | A tree beside its Prufer code + Cayley's count enumerated |
 | `examples/gale_shapley_demo.py` | Applicants stably matched to schools with each side's rank shown |
 | `examples/degree_sequence_demo.py` | Realizability tests + a Havel-Hakimi witness graph |
+| `examples/matrix_tree_demo.py` | A graph beside its Laplacian and its spanning-tree count |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9123,6 +9125,24 @@ always agree. realize() builds a simple witness graph with exactly the requested
 against brute force (search all simple graphs for the exact degree sequence) on hundreds of random
 sequences: the criteria agree with each other and with true realizability, the witness is simple with
 the right degrees, and the handshake even-sum and d-regular (n*d even) rules hold.
+
+## Matrix-Tree theorem: counting spanning trees with a determinant
+
+Count a graph's spanning trees via one Laplacian cofactor. `matrix_tree.py`:
+
+```
+$ python examples/matrix_tree_demo.py examples/output
+
+  K3->3, C4->4, K4->16, diamond->8, P5->1; Cayley K_n = n^(n-2) through n=7
+  weighted triangle (2,3,5) -> ab+bc+ca = 31
+```
+
+Form the Laplacian L = D - A, delete any one row and its column, take the determinant -- that integer
+is the exact spanning-tree count (Kirchhoff, 1847). It generalises Cayley's n^(n-2) and, for weighted
+graphs, gives the sum over spanning trees of edge-weight products. Computed with exact Fraction
+arithmetic (no float rounding). Verified against brute force (enumerate every size-(n-1) edge subset) on
+hundreds of random graphs, against Cayley for complete graphs, and on known values (cycle C_n -> n, tree
+-> 1, disconnected -> 0), with the cofactor identical whichever row/column is deleted.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

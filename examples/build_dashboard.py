@@ -432,6 +432,7 @@ def main():
     import prufer_demo
     import gale_shapley_demo
     import degree_sequence_demo
+    import matrix_tree_demo
 
     import plot_orbits
 
@@ -833,6 +834,7 @@ def main():
     prufer_txt = run("prufer_demo", prufer_demo.main, True)
     gale_shapley_txt = run("gale_shapley_demo", gale_shapley_demo.main, True)
     degree_sequence_txt = run("degree_sequence_demo", degree_sequence_demo.main, True)
+    matrix_tree_txt = run("matrix_tree_demo", matrix_tree_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6658,6 +6660,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("degree_sequence.svg"), "a simple graph built by Havel-Hakimi to realise the sequence (3,2,2,2,1): each node is labelled by the degree it achieves, matching the requested wish-list exactly")
             + f'<div class="card">{pre(degree_sequence_txt)}</div>'
+            + '</div>'),
+        section(
+            "Matrix-Tree theorem: counting spanning trees with a determinant",
+            "A SPANNING TREE wires a connected graph into a minimal connected backbone; counting them "
+            "sounds combinatorial, but Kirchhoff's MATRIX-TREE THEOREM (1847) reduces it to one "
+            "determinant. Form the LAPLACIAN L = D - A (degrees on the diagonal, -1 for each edge), "
+            "delete ANY one row and its matching column, and the determinant of that cofactor is "
+            "exactly the number of spanning trees. One linear-algebra step replaces an exponential "
+            "search, and the same theorem drives electrical-network analysis (Kirchhoff derived it "
+            "for circuits) and reliability engineering. It generalises CAYLEY'S FORMULA -- the "
+            "complete graph K_n gives n^(n-2) straight from the determinant -- and for WEIGHTED "
+            "graphs the cofactor yields the sum over spanning trees of the product of edge weights. "
+            "This implementation computes the cofactor with exact Fraction arithmetic, so the integer "
+            "counts are never corrupted by floating-point rounding. Verified against brute force -- "
+            "enumerating every size-(n-1) edge subset and testing for a spanning tree -- on hundreds "
+            "of random graphs, against Cayley's n^(n-2) for complete graphs, and on known values (a "
+            "cycle C_n has n, a tree has 1, a disconnected graph has 0), with the cofactor confirmed "
+            "identical whichever row/column is deleted.",
+            '<div class="grid">'
+            + svg_card(out("matrix_tree.svg"), "a diamond graph beside its Laplacian matrix (yellow diagonal degrees, red -1 off-diagonal edges): deleting any row and column and taking the determinant yields its 8 spanning trees -- Kirchhoff's theorem in one step")
+            + f'<div class="card">{pre(matrix_tree_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
