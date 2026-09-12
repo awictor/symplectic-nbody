@@ -1,0 +1,24 @@
+SHA-256 from scratch: the hash behind TLS, git, and Bitcoin
+
+  sha256(b''                                             ) = e3b0c44298fc1c149afbf4c8996fb924...
+    matches hashlib: True
+  sha256(b'abc'                                          ) = ba7816bf8f01cfea414140de5dae2223...
+    matches hashlib: True
+  sha256(b'The quick brown fox jumps over the lazy dog'  ) = d7a8fbb307d7809469ca9abcb0082e4f...
+    matches hashlib: True
+
+  avalanche effect (change one character of the input):
+    sha256('avalanche') vs sha256('avalanchf')
+    136 of 256 output bits differ (53% -- a total scramble)
+
+  HMAC-SHA256 (keyed message authentication):
+    HMAC(key, 'message 1') = 7569d58639ed415bbea927fe723bd4ec...
+    HMAC(key, 'message 2') = 85109959d247e659522525ec8be9c213...
+    (unforgeable without the key; how APIs sign requests)
+
+  The message is padded to a multiple of 512 bits, split into blocks, and each block is
+  folded into a 256-bit state by 64 rounds of bitwise mixing (choice, majority, rotations,
+  and constants from the cube roots of primes). Every implementation must agree to the bit,
+  which is why the whole internet can share one hash function.
+
+  wrote examples/output\sha256.svg

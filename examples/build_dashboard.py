@@ -476,6 +476,7 @@ def main():
     import lqr_demo
     import wavelet_transform_demo
     import elliptic_curve_demo
+    import sha256_demo
 
     import plot_orbits
 
@@ -921,6 +922,7 @@ def main():
     lqr_txt = run("lqr_demo", lqr_demo.main, True)
     wavelet_transform_txt = run("wavelet_transform_demo", wavelet_transform_demo.main, True)
     elliptic_curve_txt = run("elliptic_curve_demo", elliptic_curve_demo.main, True)
+    sha256_txt = run("sha256_demo", sha256_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7735,6 +7737,32 @@ def main():
             '<div class="grid">'
             + svg_card(out("elliptic_curve.svg"), "the finite set of points on a small elliptic curve, symmetric across the horizontal axis (that reflection is point negation), with the successive multiples 1G, 2G, 3G... of the base point ringed -- the sequence whose index is the hard-to-invert discrete logarithm")
             + f'<div class="card">{pre(elliptic_curve_txt)}</div>'
+            + '</div>'),
+        section(
+            "SHA-256 from scratch: the hash behind TLS, git, and Bitcoin",
+            "A cryptographic hash maps a message of any length to a fixed 256-bit digest such that you "
+            "cannot find two messages with the same digest, cannot recover the message from it, and any "
+            "one-bit change scrambles the output completely. SHA-256 (NIST FIPS 180-4) is the workhorse: "
+            "it certifies every HTTPS connection, names every git object and Bitcoin block, and "
+            "underlies HMAC authentication. Building it from the specification -- not by calling a "
+            "library -- reveals how the AVALANCHE EFFECT is engineered from simple bitwise operations. "
+            "The construction is Merkle-Damgard: PAD the message (a 1 bit, zeros, then the 64-bit "
+            "length) to a multiple of 512 bits, split into blocks, and iterate a COMPRESSION FUNCTION "
+            "that folds each block into a running 256-bit state. Each block's sixteen words are "
+            "stretched to sixty-four by a recurrence, then sixty-four ROUNDS stir eight state words with "
+            "the choice and majority functions, rotations, and round constants (the fractional parts of "
+            "the cube roots of the first 64 primes), before the result is added back to the state -- the "
+            "feed-forward that makes it one-way. This module implements padding, the message schedule, "
+            "the compression function, a streaming update/digest API, and HMAC-SHA256 on top, in pure "
+            "integer arithmetic with no hashlib. Validated BIT-FOR-BIT against Python's hashlib on the "
+            "empty string, 'abc', multi-block inputs, EVERY length from 0 to 200 bytes (exercising all "
+            "the awkward padding boundaries), and hundreds of random strings; the published NIST vectors "
+            "match; the streaming API equals the one-shot digest for every chunking; a one-character "
+            "change flips 53% of the output bits; and HMAC-SHA256 matches the hmac standard library and "
+            "the RFC 4231 vectors.",
+            '<div class="grid">'
+            + svg_card(out("sha256.svg"), "the 32 bytes of two digests whose inputs differ by a single letter: the values are scrambled beyond recognition and roughly half the bytes (red-bordered) change -- the avalanche effect that makes the hash collision-resistant")
+            + f'<div class="card">{pre(sha256_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

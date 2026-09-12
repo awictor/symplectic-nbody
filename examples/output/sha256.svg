@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="360" viewBox="0 0 760 360" font-family="monospace">
+<rect width="760" height="360" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="17">The avalanche effect: two inputs differing by one character</text>
+<text x="20" y="47" fill="#8b949e" font-size="12">each cell is one digest byte (brightness = value); red marks bytes that changed</text>
+<text x="30" y="69" fill="#8b949e" font-size="12">sha256('avalanche')</text>
+<rect x="30" y="75" width="37" height="37" fill="rgb(176,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="48" y="98" fill="#e6edf3" font-size="9" text-anchor="middle">bb</text>
+<rect x="70" y="75" width="37" height="37" fill="rgb(145,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="88" y="98" fill="#e6edf3" font-size="9" text-anchor="middle">93</text>
+<rect x="110" y="75" width="37" height="37" fill="rgb(192,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="128" y="98" fill="#e6edf3" font-size="9" text-anchor="middle">cf</text>
+<rect x="150" y="75" width="37" height="37" fill="rgb(224,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="168" y="98" fill="#e6edf3" font-size="9" text-anchor="middle">f8</text>
+<rect x="190" y="75" width="37" height="37" fill="rgb(134,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="208" y="98" fill="#e6edf3" font-size="9" text-anchor="middle">85</text>
+<rect x="230" y="75" width="37" height="37" fill="rgb(52,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="248" y="98" fill="#e6edf3" font-size="9" text-anchor="middle">1d</text>
+<rect x="270" y="75" width="37" height="37" fill="rgb(87,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="288" y="98" fill="#e6edf3" font-size="9" text-anchor="middle">49</text>
+<rect x="310" y="75" width="37" height="37" fill="rgb(164,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="328" y="98" fill="#e6edf3" font-size="9" text-anchor="middle">ac</text>
+<rect x="350" y="75" width="37" height="37" fill="rgb(190,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="368" y="98" fill="#e6edf3" font-size="9" text-anchor="middle">cd</text>
+<rect x="390" y="75" width="37" height="37" fill="rgb(222,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="408" y="98" fill="#e6edf3" font-size="9" text-anchor="middle">f6</text>
+<rect x="430" y="75" width="37" height="37" fill="rgb(151,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="448" y="98" fill="#e6edf3" font-size="9" text-anchor="middle">9b</text>
+<rect x="470" y="75" width="37" height="37" fill="rgb(110,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="488" y="98" fill="#e6edf3" font-size="9" text-anchor="middle">66</text>
+<rect x="510" y="75" width="37" height="37" fill="rgb(101,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="528" y="98" fill="#e6edf3" font-size="9" text-anchor="middle">5b</text>
+<rect x="550" y="75" width="37" height="37" fill="rgb(32,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="568" y="98" fill="#e6edf3" font-size="9" text-anchor="middle">03</text>
+<rect x="590" y="75" width="37" height="37" fill="rgb(74,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="608" y="98" fill="#e6edf3" font-size="9" text-anchor="middle">39</text>
+<rect x="630" y="75" width="37" height="37" fill="rgb(206,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="648" y="98" fill="#e6edf3" font-size="9" text-anchor="middle">e1</text>
+<rect x="30" y="115" width="37" height="37" fill="rgb(192,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="48" y="138" fill="#e6edf3" font-size="9" text-anchor="middle">cf</text>
+<rect x="70" y="115" width="37" height="37" fill="rgb(46,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="88" y="138" fill="#e6edf3" font-size="9" text-anchor="middle">15</text>
+<rect x="110" y="115" width="37" height="37" fill="rgb(222,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="128" y="138" fill="#e6edf3" font-size="9" text-anchor="middle">f5</text>
+<rect x="150" y="115" width="37" height="37" fill="rgb(114,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="168" y="138" fill="#e6edf3" font-size="9" text-anchor="middle">6c</text>
+<rect x="190" y="115" width="37" height="37" fill="rgb(32,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="208" y="138" fill="#e6edf3" font-size="9" text-anchor="middle">03</text>
+<rect x="230" y="115" width="37" height="37" fill="rgb(116,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="248" y="138" fill="#e6edf3" font-size="9" text-anchor="middle">6e</text>
+<rect x="270" y="115" width="37" height="37" fill="rgb(176,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="288" y="138" fill="#e6edf3" font-size="9" text-anchor="middle">bb</text>
+<rect x="310" y="115" width="37" height="37" fill="rgb(213,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="328" y="138" fill="#e6edf3" font-size="9" text-anchor="middle">ea</text>
+<rect x="350" y="115" width="37" height="37" fill="rgb(102,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="368" y="138" fill="#e6edf3" font-size="9" text-anchor="middle">5c</text>
+<rect x="390" y="115" width="37" height="37" fill="rgb(153,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="408" y="138" fill="#e6edf3" font-size="9" text-anchor="middle">9d</text>
+<rect x="430" y="115" width="37" height="37" fill="rgb(81,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="448" y="138" fill="#e6edf3" font-size="9" text-anchor="middle">42</text>
+<rect x="470" y="115" width="37" height="37" fill="rgb(91,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="488" y="138" fill="#e6edf3" font-size="9" text-anchor="middle">4f</text>
+<rect x="510" y="115" width="37" height="37" fill="rgb(124,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="528" y="138" fill="#e6edf3" font-size="9" text-anchor="middle">79</text>
+<rect x="550" y="115" width="37" height="37" fill="rgb(141,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="568" y="138" fill="#e6edf3" font-size="9" text-anchor="middle">8e</text>
+<rect x="590" y="115" width="37" height="37" fill="rgb(58,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="608" y="138" fill="#e6edf3" font-size="9" text-anchor="middle">24</text>
+<rect x="630" y="115" width="37" height="37" fill="rgb(128,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="648" y="138" fill="#e6edf3" font-size="9" text-anchor="middle">7d</text>
+<text x="30" y="214" fill="#8b949e" font-size="12">sha256('avalanchf')  (one letter changed)</text>
+<rect x="30" y="220" width="37" height="37" fill="rgb(106,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="48" y="242" fill="#e6edf3" font-size="9" text-anchor="middle">61</text>
+<rect x="70" y="220" width="37" height="37" fill="rgb(100,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="88" y="242" fill="#e6edf3" font-size="9" text-anchor="middle">5a</text>
+<rect x="110" y="220" width="37" height="37" fill="rgb(143,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="128" y="242" fill="#e6edf3" font-size="9" text-anchor="middle">91</text>
+<rect x="150" y="220" width="37" height="37" fill="rgb(69,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="168" y="242" fill="#e6edf3" font-size="9" text-anchor="middle">32</text>
+<rect x="190" y="220" width="37" height="37" fill="rgb(58,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="208" y="242" fill="#e6edf3" font-size="9" text-anchor="middle">24</text>
+<rect x="230" y="220" width="37" height="37" fill="rgb(165,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="248" y="242" fill="#e6edf3" font-size="9" text-anchor="middle">ad</text>
+<rect x="270" y="220" width="37" height="37" fill="rgb(155,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="288" y="242" fill="#e6edf3" font-size="9" text-anchor="middle">a0</text>
+<rect x="310" y="220" width="37" height="37" fill="rgb(148,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="328" y="242" fill="#e6edf3" font-size="9" text-anchor="middle">97</text>
+<rect x="350" y="220" width="37" height="37" fill="rgb(55,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="368" y="242" fill="#e6edf3" font-size="9" text-anchor="middle">20</text>
+<rect x="390" y="220" width="37" height="37" fill="rgb(102,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="408" y="242" fill="#e6edf3" font-size="9" text-anchor="middle">5d</text>
+<rect x="430" y="220" width="37" height="37" fill="rgb(169,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="448" y="242" fill="#e6edf3" font-size="9" text-anchor="middle">b2</text>
+<rect x="470" y="220" width="37" height="37" fill="rgb(226,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="488" y="242" fill="#e6edf3" font-size="9" text-anchor="middle">fb</text>
+<rect x="510" y="220" width="37" height="37" fill="rgb(183,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="528" y="242" fill="#e6edf3" font-size="9" text-anchor="middle">c4</text>
+<rect x="550" y="220" width="37" height="37" fill="rgb(171,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="568" y="242" fill="#e6edf3" font-size="9" text-anchor="middle">b5</text>
+<rect x="590" y="220" width="37" height="37" fill="rgb(138,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="608" y="242" fill="#e6edf3" font-size="9" text-anchor="middle">8a</text>
+<rect x="630" y="220" width="37" height="37" fill="rgb(77,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="648" y="242" fill="#e6edf3" font-size="9" text-anchor="middle">3d</text>
+<rect x="30" y="260" width="37" height="37" fill="rgb(140,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="48" y="282" fill="#e6edf3" font-size="9" text-anchor="middle">8d</text>
+<rect x="70" y="260" width="37" height="37" fill="rgb(36,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="88" y="282" fill="#e6edf3" font-size="9" text-anchor="middle">08</text>
+<rect x="110" y="260" width="37" height="37" fill="rgb(35,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="128" y="282" fill="#e6edf3" font-size="9" text-anchor="middle">07</text>
+<rect x="150" y="260" width="37" height="37" fill="rgb(109,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="168" y="282" fill="#e6edf3" font-size="9" text-anchor="middle">65</text>
+<rect x="190" y="260" width="37" height="37" fill="rgb(120,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="208" y="282" fill="#e6edf3" font-size="9" text-anchor="middle">74</text>
+<rect x="230" y="260" width="37" height="37" fill="rgb(211,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="248" y="282" fill="#e6edf3" font-size="9" text-anchor="middle">e7</text>
+<rect x="270" y="260" width="37" height="37" fill="rgb(33,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="288" y="282" fill="#e6edf3" font-size="9" text-anchor="middle">04</text>
+<rect x="310" y="260" width="37" height="37" fill="rgb(80,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="328" y="282" fill="#e6edf3" font-size="9" text-anchor="middle">40</text>
+<rect x="350" y="260" width="37" height="37" fill="rgb(91,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="368" y="282" fill="#e6edf3" font-size="9" text-anchor="middle">4f</text>
+<rect x="390" y="260" width="37" height="37" fill="rgb(193,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="408" y="282" fill="#e6edf3" font-size="9" text-anchor="middle">d0</text>
+<rect x="430" y="260" width="37" height="37" fill="rgb(143,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="448" y="282" fill="#e6edf3" font-size="9" text-anchor="middle">91</text>
+<rect x="470" y="260" width="37" height="37" fill="rgb(113,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="488" y="282" fill="#e6edf3" font-size="9" text-anchor="middle">6a</text>
+<rect x="510" y="260" width="37" height="37" fill="rgb(64,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="528" y="282" fill="#e6edf3" font-size="9" text-anchor="middle">2c</text>
+<rect x="550" y="260" width="37" height="37" fill="rgb(185,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="568" y="282" fill="#e6edf3" font-size="9" text-anchor="middle">c6</text>
+<rect x="590" y="260" width="37" height="37" fill="rgb(123,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="608" y="282" fill="#e6edf3" font-size="9" text-anchor="middle">77</text>
+<rect x="630" y="260" width="37" height="37" fill="rgb(88,40,40)" stroke="#ff6b6b" stroke-width="2"/>
+<text x="648" y="282" fill="#e6edf3" font-size="9" text-anchor="middle">4b</text>
+</svg>

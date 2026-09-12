@@ -434,6 +434,7 @@ ruins a long non-symplectic integration.
 | `src/lqr.py` | Linear-quadratic regulator: optimal feedback via the discrete Riccati equation |
 | `src/wavelet_transform.py` | Discrete wavelet transform (Haar/db4, 1D + 2D) + denoising |
 | `src/elliptic_curve.py` | Elliptic-curve group law + ECDH key exchange + ECDSA sign/verify |
+| `src/sha256.py` | SHA-256 from scratch (FIPS 180-4) + streaming API + HMAC-SHA256 |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -859,6 +860,7 @@ ruins a long non-symplectic integration.
 | `examples/lqr_demo.py` | A cart settling to zero under LQR for four control-effort penalties |
 | `examples/wavelet_transform_demo.py` | Localising a transient in detail coefficients, plus denoising |
 | `examples/elliptic_curve_demo.py` | Point group law, an ECDH exchange, and ECDSA sign/verify |
+| `examples/sha256_demo.py` | Digests matching hashlib, the avalanche effect, and HMAC |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10024,6 +10026,25 @@ Implements field/point arithmetic, the group law, scalar multiplication, ECDH, a
 Validated: group axioms hold exhaustively on a small curve, base-point order is correct, ECDH parties
 agree on the secret, ECDSA verifies its own message and rejects tampering/wrong keys/mangled
 signatures, and a brute-force discrete log recovers the key on the small curve.
+
+## SHA-256 from scratch: the hash behind TLS, git, and Bitcoin
+
+Implement the workhorse cryptographic hash from the spec. `sha256.py`:
+
+```
+$ python examples/sha256_demo.py examples/output
+
+  sha256('abc') matches hashlib; one-letter change flips 53% of bits
+  HMAC-SHA256 matches the hmac stdlib and RFC 4231 vectors
+```
+
+SHA-256 (FIPS 180-4) pads the message to a multiple of 512 bits, splits into blocks, and folds each
+into a 256-bit state via 64 rounds of bitwise mixing (choice, majority, rotations, and round constants
+from the cube roots of primes). Implements padding, the message schedule, the compression function, a
+streaming update/digest API, and HMAC-SHA256, in pure integer arithmetic. Validated bit-for-bit against
+hashlib on the empty string, 'abc', multi-block inputs, every length 0-200 bytes (all padding
+boundaries), and hundreds of random strings; NIST vectors match; streaming equals one-shot for every
+chunking; the avalanche effect flips ~half the bits; and HMAC matches the hmac stdlib and RFC 4231.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
