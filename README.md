@@ -376,6 +376,7 @@ ruins a long non-symplectic integration.
 | `src/lyndon.py` | Lyndon words: Duval factorisation, least rotation, FKM generation |
 | `src/eertree.py` | Eertree (palindromic tree): all distinct palindromic substrings in O(n) |
 | `src/li_chao.py` | Li Chao tree: lower/upper envelope of lines, convex-hull-trick DP |
+| `src/mo_algorithm.py` | Mo's algorithm: offline range distinct-count & power-sum in O((n+q)vn) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -743,6 +744,7 @@ ruins a long non-symplectic integration.
 | `examples/lyndon_demo.py` | Duval factorisations as coloured Lyndon-word segments |
 | `examples/eertree_demo.py` | Palindromes of a rich word tiled by length, brightness by frequency |
 | `examples/li_chao_demo.py` | A bundle of lines with their lower envelope highlighted |
+| `examples/mo_algorithm_demo.py` | Query windows drawn in Mo's block-snake processing order |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8831,6 +8833,25 @@ pushes the other into the half where it might still win (O(log range)), and hand
 order with interleaved queries -- unlike the monotonic-stack hull trick. Verified against brute force:
 min and max queries match the true optimum over all lines on hundreds of random sets and points,
 including interleaved insert/query and a convex-hull-trick DP matching its O(n^2) reference.
+
+## Mo's algorithm: batch range queries by reordering
+
+Answer many offline range queries in O((n+q)vn) by ordering them cleverly. `mo_algorithm.py`:
+
+```
+$ python examples/mo_algorithm_demo.py examples/output
+
+  20-element array, 8 range queries -> distinct counts + power sums, all match brute
+  block size sqrt(20)=4; Mo's order cuts pointer travel from 99 to 56 steps
+```
+
+Maintain a current window [l,r] and a running answer, moving the endpoints one element at a time (each
+an O(1) add/remove) to morph one query into the next. Sorting queries into sqrt(n)-blocks by left
+endpoint, then by right endpoint snaking per block, bounds the total pointer travel at O((n+q)vn). The
+problem supplies only a cheap add/remove: a frequency table + nonzero-count for distinct values, an
+incremental sum(f^2) for the power sum. Inherently offline (queries permuted). Verified against brute
+force: every distinct-count and power-sum answer matches direct recomputation over the subrange, on
+hundreds of random arrays and query batches plus a 2000x2000 stress, answers returned in original order.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

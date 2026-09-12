@@ -418,6 +418,7 @@ def main():
     import lyndon_demo
     import eertree_demo
     import li_chao_demo
+    import mo_algorithm_demo
 
     import plot_orbits
 
@@ -805,6 +806,7 @@ def main():
     lyndon_txt = run("lyndon_demo", lyndon_demo.main, True)
     eertree_txt = run("eertree_demo", eertree_demo.main, True)
     li_chao_txt = run("li_chao_demo", li_chao_demo.main, True)
+    mo_algorithm_txt = run("mo_algorithm_demo", mo_algorithm_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6332,6 +6334,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("li_chao.svg"), "six lines inserted in arbitrary order (thin blue) and the lower envelope the tree returns (thick green) -- the minimum value at every x, computed in O(log range) per query without ever scanning all the lines")
             + f'<div class="card">{pre(li_chao_txt)}</div>'
+            + '</div>'),
+        section(
+            "Mo's algorithm: batch range queries by reordering",
+            "Given a fixed array and a batch of range queries -- 'how many DISTINCT values in "
+            "[l, r]?', 'what is the sum of squared frequencies?' -- the naive approach recomputes "
+            "each in O(n), for O(q*n) total. MO'S ALGORITHM answers all q queries OFFLINE in "
+            "O((n+q)*sqrt(n)) by maintaining a current window and a running answer, and MOVING the "
+            "endpoints one element at a time (each an O(1) add/remove) to morph one query's range "
+            "into the next. The cost is the total distance the two pointers travel, and the trick is "
+            "an ORDER that minimises it: sort queries into sqrt(n)-sized blocks by left endpoint, "
+            "then by right endpoint with the direction alternating per block (a snake order), so the "
+            "left pointer moves O(sqrt(n)) per query and the right O(n) per block. The problem need "
+            "only supply a cheap add and remove that update the running answer -- a frequency table "
+            "and a nonzero-count for distinct values, an incremental sum(f^2) for the power sum. "
+            "Because it permutes the queries it is inherently offline. Verified against brute force: "
+            "every distinct-count and power-sum answer matches a direct recomputation over the "
+            "subrange, on hundreds of random arrays and query batches plus a 2000x2000 stress test, "
+            "with answers returned in the original query order.",
+            '<div class="grid">'
+            + svg_card(out("mo_algorithm.svg"), "eight query ranges drawn top-to-bottom in the order Mo's algorithm processes them: grouped into sqrt(n)-blocks by left endpoint (colour) and snaking by right endpoint, so the window's two ends travel a short total distance (56 steps here versus 99 in the original order)")
+            + f'<div class="card">{pre(mo_algorithm_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -1,0 +1,32 @@
+Mo's algorithm: many range queries in O((n+q) sqrt n) by clever ordering
+
+  array (20 elements): [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9, 3, 2, 3, 8, 4]
+
+       range  distinct  power-sum
+  [ 0, 5]            5          8
+  [ 3, 9]            6          9
+  [10,15]            5          8
+  [ 0,19]            9         52
+  [ 5,12]            6         12
+  [14,19]            5          8
+  [ 2, 8]            6          9
+  [ 7,11]            4          7
+
+  distinct counts match brute force: True
+
+  block size = sqrt(20) = 4
+  query order chosen (by left-block, then snaking right endpoint):
+    query 0: [0,5]  (block 0)
+    query 6: [2,8]  (block 0)
+    query 1: [3,9]  (block 0)
+    query 3: [0,19]  (block 0)
+    query 4: [5,12]  (block 1)
+    query 7: [7,11]  (block 1)
+    query 2: [10,15]  (block 2)
+    query 5: [14,19]  (block 3)
+
+  total pointer travel -- Mo's order: 56, original order: 99
+  Reordering shrinks the distance the window's two ends must travel; each step adds or
+  removes one element in O(1), so total time is the total travel, O((n+q) sqrt n).
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\mo_algorithm.svg
