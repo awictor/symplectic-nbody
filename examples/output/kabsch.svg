@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420" font-family="monospace">
+<rect width="760" height="420" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="17">Kabsch alignment: source rotated onto the noisy target</text>
+<text x="20" y="47" fill="#8b949e" font-size="12">blue: source     orange: target (rotated + noisy)     green: source after Kabsch</text>
+<circle cx="125.8" cy="188.1" r="4" fill="#4dabf7"/>
+<circle cx="50.2" cy="239.9" r="4" fill="#4dabf7"/>
+<circle cx="161.5" cy="336.8" r="4" fill="#4dabf7"/>
+<circle cx="236.9" cy="222.8" r="4" fill="#4dabf7"/>
+<circle cx="102.8" cy="304.5" r="4" fill="#4dabf7"/>
+<circle cx="40.0" cy="294.2" r="4" fill="#4dabf7"/>
+<circle cx="228.0" cy="248.3" r="4" fill="#4dabf7"/>
+<circle cx="118.6" cy="253.2" r="4" fill="#4dabf7"/>
+<circle cx="55.6" cy="234.5" r="4" fill="#4dabf7"/>
+<circle cx="66.3" cy="380.0" r="4" fill="#4dabf7"/>
+<circle cx="95.6" cy="105.0" r="4" fill="#ff922b"/>
+<circle cx="90.4" cy="196.1" r="4" fill="#ff922b"/>
+<circle cx="237.6" cy="170.5" r="4" fill="#ff922b"/>
+<circle cx="194.8" cy="40.0" r="4" fill="#ff922b"/>
+<circle cx="174.8" cy="195.1" r="4" fill="#ff922b"/>
+<circle cx="128.2" cy="240.7" r="4" fill="#ff922b"/>
+<circle cx="204.7" cy="64.7" r="4" fill="#ff922b"/>
+<circle cx="142.0" cy="154.4" r="4" fill="#ff922b"/>
+<circle cx="87.2" cy="187.5" r="4" fill="#ff922b"/>
+<circle cx="208.2" cy="273.1" r="4" fill="#ff922b"/>
+<circle cx="96.7" cy="105.8" r="3" fill="#06d6a0"/>
+<circle cx="90.0" cy="197.2" r="3" fill="#06d6a0"/>
+<circle cx="235.2" cy="170.7" r="3" fill="#06d6a0"/>
+<circle cx="193.2" cy="40.7" r="3" fill="#06d6a0"/>
+<circle cx="173.3" cy="196.4" r="3" fill="#06d6a0"/>
+<circle cx="126.0" cy="239.0" r="3" fill="#06d6a0"/>
+<circle cx="207.5" cy="63.5" r="3" fill="#06d6a0"/>
+<circle cx="143.1" cy="152.1" r="3" fill="#06d6a0"/>
+<circle cx="89.1" cy="189.6" r="3" fill="#06d6a0"/>
+<circle cx="209.4" cy="272.1" r="3" fill="#06d6a0"/>
+<line x1="96.7" y1="105.8" x2="95.6" y2="105.0" stroke="#8b949e" stroke-width="0.6" opacity="0.6"/>
+<line x1="90.0" y1="197.2" x2="90.4" y2="196.1" stroke="#8b949e" stroke-width="0.6" opacity="0.6"/>
+<line x1="235.2" y1="170.7" x2="237.6" y2="170.5" stroke="#8b949e" stroke-width="0.6" opacity="0.6"/>
+<line x1="193.2" y1="40.7" x2="194.8" y2="40.0" stroke="#8b949e" stroke-width="0.6" opacity="0.6"/>
+<line x1="173.3" y1="196.4" x2="174.8" y2="195.1" stroke="#8b949e" stroke-width="0.6" opacity="0.6"/>
+<line x1="126.0" y1="239.0" x2="128.2" y2="240.7" stroke="#8b949e" stroke-width="0.6" opacity="0.6"/>
+<line x1="207.5" y1="63.5" x2="204.7" y2="64.7" stroke="#8b949e" stroke-width="0.6" opacity="0.6"/>
+<line x1="143.1" y1="152.1" x2="142.0" y2="154.4" stroke="#8b949e" stroke-width="0.6" opacity="0.6"/>
+<line x1="89.1" y1="189.6" x2="87.2" y2="187.5" stroke="#8b949e" stroke-width="0.6" opacity="0.6"/>
+<line x1="209.4" y1="272.1" x2="208.2" y2="273.1" stroke="#8b949e" stroke-width="0.6" opacity="0.6"/>
+<text x="40" y="406" fill="#8b949e" font-size="11">green lands on orange -- the residual gaps are just the added noise</text>
+</svg>

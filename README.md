@@ -430,6 +430,7 @@ ruins a long non-symplectic integration.
 | `src/dct.py` | Discrete cosine transform (DCT-II/III, 1D + 2D) with energy compaction |
 | `src/quaternion.py` | Quaternion rotation: Hamilton product, slerp, axis-angle/matrix/Euler conversions |
 | `src/rrt.py` | RRT and RRT* sampling-based motion planning with obstacle avoidance |
+| `src/kabsch.py` | Kabsch/Umeyama optimal point-cloud superposition (rotation + scale via SVD) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -851,6 +852,7 @@ ruins a long non-symplectic integration.
 | `examples/dct_demo.py` | Energy compaction and lossy reconstruction of a signal from few coefficients |
 | `examples/quaternion_demo.py` | SLERP vs component-LERP: even arc spacing vs bunching |
 | `examples/rrt_demo.py` | RRT vs RRT* through an obstacle field (RRT* 24% shorter) |
+| `examples/kabsch_demo.py` | Recovering a known rotation/scale and aligning a noisy point cloud |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9942,6 +9944,24 @@ lowest-cost neighbour and rerouting nearby nodes through it -- to become asympto
 with circular obstacles, straight-line steering. Validated: every path is collision-free with correct
 endpoints, no tree edge crosses an obstacle, open-space paths are near the straight-line optimum, RRT* is
 no longer than RRT from the same seed, and a walled-off goal reports failure.
+
+## The Kabsch algorithm: optimal point-cloud superposition
+
+Find the rigid motion that best overlays two point clouds. `kabsch.py`:
+
+```
+$ python examples/kabsch_demo.py examples/output
+
+  3D: RMSD 13.59 before -> 1.8e-05 after (recovered the exact transform)
+  Umeyama recovers scale 1.8000 (true 1.8)
+```
+
+Kabsch (1976) solves the orthogonal Procrustes problem in closed form via SVD: center both clouds,
+form the cross-covariance H = P^T Q, take H = U S V^T, and R = V U^T -- with a determinant check so it
+stays a proper rotation, never a reflection. Umeyama (1991) adds the optimal uniform scale. Validated:
+recovers a known rotation+translation to zero RMSD over hundreds of 2D/3D cases, R is always a proper
+rotation (det +1) even on a mirror-imaged target, the RMSD beats every random rotation (true
+minimiser), and Umeyama recovers a known scale exactly.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

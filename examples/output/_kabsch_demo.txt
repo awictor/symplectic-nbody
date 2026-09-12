@@ -1,0 +1,19 @@
+Kabsch: the optimal rotation that superimposes two point clouds
+
+  3D exact case (known rotation + translation applied, then recovered):
+    RMSD before alignment: 13.5857
+    RMSD after Kabsch:     1.77e-05  (recovered the exact transform)
+
+  3D with measurement noise added to the target:
+    RMSD after Kabsch:     0.0640  (best possible given the noise)
+
+  Umeyama (adds optimal scale) on a cloud scaled by 1.8x:
+    recovered scale: 1.8000  (true 1.8)
+    RMSD after alignment: 3.18e-05
+
+  Center both clouds, form the cross-covariance H = P^T Q, take its SVD H = U S V^T, and the
+  optimal rotation is R = V U^T -- with a determinant check so it stays a proper rotation,
+  never a reflection. Closed form, no iteration; the backbone of structural alignment and
+  point-cloud registration.
+
+  wrote examples/output\kabsch.svg

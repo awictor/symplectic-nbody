@@ -472,6 +472,7 @@ def main():
     import dct_demo
     import quaternion_demo
     import rrt_demo
+    import kabsch_demo
 
     import plot_orbits
 
@@ -913,6 +914,7 @@ def main():
     dct_txt = run("dct_demo", dct_demo.main, True)
     quaternion_txt = run("quaternion_demo", quaternion_demo.main, True)
     rrt_txt = run("rrt_demo", rrt_demo.main, True)
+    kabsch_txt = run("kabsch_demo", kabsch_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7628,6 +7630,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("rrt.svg"), "the RRT* tree (blue) exploring a field of circular obstacles from the yellow start to the purple goal, with the plain-RRT path (orange) and the shorter rewired RRT* path (green) threading between them")
             + f'<div class="card">{pre(rrt_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Kabsch algorithm: optimal point-cloud superposition",
+            "Two clouds of corresponding points -- the same molecule in two conformations, a 3D scan "
+            "against its CAD model, feature points in two camera frames -- and you want the single rigid "
+            "motion (rotation plus translation) that best overlays one on the other, minimising the "
+            "root-mean-square deviation. This is the ORTHOGONAL PROCRUSTES problem, and Kabsch's 1976 "
+            "solution falls straight out of the SVD in closed form, no iteration: center both clouds on "
+            "their centroids, form the 3x3 cross-covariance H = P^T Q, take H = U S V^T, and the optimal "
+            "rotation is R = V U^T. The one subtlety that trips up naive implementations is that the "
+            "bare V U^T can be a REFLECTION (determinant -1) rather than a proper rotation, flipping "
+            "chirality; Kabsch's fix checks the determinant and flips the last column of V when needed, "
+            "giving the best proper rotation. The UMEYAMA extension (1991) adds the optimal uniform "
+            "SCALE for the full similarity transform used in point-cloud registration. This module "
+            "provides both, resting on the repository's own SVD. Validated: apply a known random "
+            "rotation and translation to a cloud and Kabsch recovers the exact transform, driving the "
+            "RMSD to zero over hundreds of seeded 2D and 3D cases; the returned R is always a proper "
+            "rotation (orthonormal, determinant +1) even on a deliberately mirror-imaged target; the "
+            "RMSD it achieves beats every randomly perturbed rotation (it is the true minimiser); "
+            "Umeyama recovers a known scale factor exactly; and noise raises the residual gracefully "
+            "while the recovered rotation stays close to the truth.",
+            '<div class="grid">'
+            + svg_card(out("kabsch.svg"), "a source cloud (blue) and a rotated, translated, noisy target (orange): Kabsch rotates the source onto the target (green landing on orange), the residual gaps being exactly the added noise")
+            + f'<div class="card">{pre(kabsch_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
