@@ -475,6 +475,7 @@ def main():
     import kabsch_demo
     import lqr_demo
     import wavelet_transform_demo
+    import elliptic_curve_demo
 
     import plot_orbits
 
@@ -919,6 +920,7 @@ def main():
     kabsch_txt = run("kabsch_demo", kabsch_demo.main, True)
     lqr_txt = run("lqr_demo", lqr_demo.main, True)
     wavelet_transform_txt = run("wavelet_transform_demo", wavelet_transform_demo.main, True)
+    elliptic_curve_txt = run("elliptic_curve_demo", elliptic_curve_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7707,6 +7709,32 @@ def main():
             '<div class="grid">'
             + svg_card(out("wavelet_transform.svg"), "top: a signal with a transient burst and its wavelet detail coefficients, the finest level spiking exactly where the burst is (localisation a Fourier spectrum cannot give); bottom: a noisy signal denoised by thresholding small detail coefficients back toward the clean truth")
             + f'<div class="card">{pre(wavelet_transform_txt)}</div>'
+            + '</div>'),
+        section(
+            "Elliptic-curve cryptography: the group law that hides a secret",
+            "RSA's security rests on factoring; elliptic-curve cryptography rests on a harder problem and "
+            "gets equivalent security from far smaller keys -- a 256-bit EC key matches a 3072-bit RSA "
+            "key, which is why TLS, SSH, Bitcoin, and Signal all run on curves. The object is the set of "
+            "points (x, y) satisfying y^2 = x^3 + a x + b over a finite field, plus a point at infinity, "
+            "and the magic is that these points form an ABELIAN GROUP under a geometric addition rule: to "
+            "add P and Q, draw the line through them, find the third point it meets the cubic in, and "
+            "reflect it across the x-axis (the tangent line when P = Q). Iterating -- SCALAR "
+            "MULTIPLICATION k*G -- is fast by double-and-add, but RECOVERING k from k*G is the elliptic-"
+            "curve discrete logarithm problem, believed exponentially hard, and that asymmetry is the "
+            "whole game. Two protocols ride on it: ECDH key exchange (each party multiplies the other's "
+            "public point by their own secret and both reach the same a*b*G an eavesdropper cannot), and "
+            "ECDSA signatures (sign a hash with a nonce and the private key; anyone verifies with the "
+            "public key). This module implements the field and point arithmetic, the group law, scalar "
+            "multiplication, ECDH, and ECDSA from scratch. Validated: the group axioms hold exhaustively "
+            "on a small curve (every sum on the curve, commutative, associative, inverses, identity); the "
+            "base point's order is correct and scalar multiplication matches repeated addition; ECDH "
+            "parties derive the identical shared secret over many runs; ECDSA signatures verify against "
+            "their own message and FAIL for a tampered message, a wrong key, or a mangled signature; and "
+            "a brute-force discrete-log recovers the private key on the small curve, illustrating exactly "
+            "the hardness the big curves rely on.",
+            '<div class="grid">'
+            + svg_card(out("elliptic_curve.svg"), "the finite set of points on a small elliptic curve, symmetric across the horizontal axis (that reflection is point negation), with the successive multiples 1G, 2G, 3G... of the base point ringed -- the sequence whose index is the hard-to-invert discrete logarithm")
+            + f'<div class="card">{pre(elliptic_curve_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

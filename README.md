@@ -433,6 +433,7 @@ ruins a long non-symplectic integration.
 | `src/kabsch.py` | Kabsch/Umeyama optimal point-cloud superposition (rotation + scale via SVD) |
 | `src/lqr.py` | Linear-quadratic regulator: optimal feedback via the discrete Riccati equation |
 | `src/wavelet_transform.py` | Discrete wavelet transform (Haar/db4, 1D + 2D) + denoising |
+| `src/elliptic_curve.py` | Elliptic-curve group law + ECDH key exchange + ECDSA sign/verify |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -857,6 +858,7 @@ ruins a long non-symplectic integration.
 | `examples/kabsch_demo.py` | Recovering a known rotation/scale and aligning a noisy point cloud |
 | `examples/lqr_demo.py` | A cart settling to zero under LQR for four control-effort penalties |
 | `examples/wavelet_transform_demo.py` | Localising a transient in detail coefficients, plus denoising |
+| `examples/elliptic_curve_demo.py` | Point group law, an ECDH exchange, and ECDSA sign/verify |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10003,6 +10005,25 @@ perfect reconstruction, energy preserved. Implements single/multi-level 1D and 2
 plus threshold denoising. Validated: reconstruction to machine precision across wavelets/lengths/levels,
 Parseval energy, vanishing moments (db4 kills constant + ramp), energy compaction, denoising, and exact
 2D inversion.
+
+## Elliptic-curve cryptography: the group law that hides a secret
+
+Point arithmetic on a curve, plus the ECDH and ECDSA it powers. `elliptic_curve.py`:
+
+```
+$ python examples/elliptic_curve_demo.py examples/output
+
+  ECDH: Alice a*B == Bob b*A == (888, 839) (shared secret agrees)
+  ECDSA: verifies with correct key True; tampered/wrong-key False
+```
+
+Points on y^2 = x^3 + a x + b over a finite field form an abelian group under a chord-and-tangent
+addition. Scalar multiplication k*G is fast (double-and-add) but inverting it -- the elliptic-curve
+discrete log -- is believed exponentially hard, giving 256-bit curves the security of 3072-bit RSA.
+Implements field/point arithmetic, the group law, scalar multiplication, ECDH, and ECDSA from scratch.
+Validated: group axioms hold exhaustively on a small curve, base-point order is correct, ECDH parties
+agree on the secret, ECDSA verifies its own message and rejects tampering/wrong keys/mangled
+signatures, and a brute-force discrete log recovers the key on the small curve.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

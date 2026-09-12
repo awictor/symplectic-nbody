@@ -1,0 +1,25 @@
+Elliptic-curve cryptography: a group law that hides a one-way function
+
+  curve y^2 = x^3 + 2x + 2 over F_17, base G = (5, 1) (order 19)
+    G + G     = (6, 3)   (point doubling via the tangent line)
+    G + 2G    = (10, 6)
+    3G        = (10, 6)   (consistent)
+
+  ECDH key exchange on the toy curve (F_1009, prime order 1039):
+    Alice secret a=494, publishes A = a*G = (523, 699)
+    Bob   secret b=237, publishes B = b*G = (741, 192)
+    Alice computes a*B = (888, 839)
+    Bob   computes b*A = (888, 839)
+    shared secret agrees: True  (eavesdropper sees only A, B, G)
+
+  ECDSA signature on b'pay bob 10 coins':
+    signature (r, s) = (685, 227)
+    verifies with the correct key:  True
+    verifies on a tampered message: False
+    verifies with the wrong key:    False
+
+  Scalar multiplication k*G is fast by double-and-add, but recovering k from k*G and G is
+  the elliptic-curve discrete logarithm problem -- believed exponentially hard. That
+  asymmetry gives 256-bit curves the security of 3072-bit RSA: the backbone of modern TLS.
+
+  wrote examples/output\elliptic_curve.svg
