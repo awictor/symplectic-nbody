@@ -380,6 +380,7 @@ ruins a long non-symplectic integration.
 | `src/arborescence.py` | Chu-Liu/Edmonds minimum spanning arborescence (directed MST) |
 | `src/steiner_tree.py` | Steiner tree (Dreyfus-Wagner): cheapest tree connecting terminals |
 | `src/tree_isomorphism.py` | AHU tree isomorphism: linear-time canonical form + center rooting |
+| `src/eulerian.py` | Eulerian paths & circuits (Hierholzer), undirected + directed, existence tests |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -751,6 +752,7 @@ ruins a long non-symplectic integration.
 | `examples/arborescence_demo.py` | A directed broadcast tree with the chosen min-cost edges in green |
 | `examples/steiner_tree_demo.py` | Four terminals linked through a cheap hub, saving over the perimeter |
 | `examples/tree_isomorphism_demo.py` | Two relabelled trees vs a different-shape one, centers marked |
+| `examples/eulerian_demo.py` | Konigsberg and friends classified; a bowtie circuit numbered in walk order |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8917,6 +8919,26 @@ isomorphism-invariant. General graph isomorphism has no known polynomial algorit
 linear time. Verified against brute force (some vertex permutation maps one edge set onto the other) on
 hundreds of random trees -- relabelled copies always isomorphic, same-size different-shape never -- with
 canonical-form equality coinciding exactly with isomorphism.
+
+## Eulerian trails: every edge once, from Konigsberg to Hierholzer
+
+Walk every edge exactly once, when the degrees allow. `eulerian.py`:
+
+```
+$ python examples/eulerian_demo.py examples/output
+
+  triangle -> circuit 0->1->2->0; path 0-1-2-3 -> path
+  Seven Bridges of Konigsberg -> no Eulerian trail (all 4 land masses odd)
+  bowtie -> circuit 0->1->2->0->3->4->0
+```
+
+An Eulerian circuit exists iff (undirected) the graph is connected with all even degrees, or (directed)
+every vertex is balanced and weakly connected; a path allows exactly two odd vertices (undirected) or
+one +1/one -1 imbalance (directed). Hierholzer's algorithm builds the trail in linear time: walk until
+stuck, then splice detours from vertices with unused edges. Handles undirected and directed
+multigraphs. Verified: the existence predicate matches the degree/connectivity definition and the trail
+uses every edge exactly once with real adjacent steps, on hundreds of random graphs -- including
+Konigsberg (correctly impossible) and multigraphs.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

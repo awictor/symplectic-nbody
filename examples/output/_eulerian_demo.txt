@@ -1,0 +1,17 @@
+Eulerian paths and circuits: every edge exactly once
+
+  triangle                   Eulerian CIRCUIT (closed)  trail: 0->1->2->0
+  path 0-1-2-3               Eulerian PATH (open)  trail: 0->1->2->3
+  Konigsberg bridges         no Eulerian trail
+  K4 (complete, 4 nodes)     no Eulerian trail
+  bowtie (two triangles)     Eulerian CIRCUIT (closed)  trail: 0->1->2->0->3->4->0
+
+  The Seven Bridges of Konigsberg has all four land masses at odd degree, so no walk can
+  cross every bridge exactly once -- Euler's 1736 proof, the birth of graph theory.
+
+  Hierholzer builds a trail by walking until stuck (a closed sub-tour), then splicing in
+  detours from any vertex with unused edges, until every edge is consumed -- linear time.
+
+  bowtie trail valid + closed: True
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\eulerian.svg

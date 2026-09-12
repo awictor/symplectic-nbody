@@ -422,6 +422,7 @@ def main():
     import arborescence_demo
     import steiner_tree_demo
     import tree_isomorphism_demo
+    import eulerian_demo
 
     import plot_orbits
 
@@ -813,6 +814,7 @@ def main():
     arborescence_txt = run("arborescence_demo", arborescence_demo.main, True)
     steiner_tree_txt = run("steiner_tree_demo", steiner_tree_demo.main, True)
     tree_isomorphism_txt = run("tree_isomorphism_demo", tree_isomorphism_demo.main, True)
+    eulerian_txt = run("eulerian_demo", eulerian_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6426,6 +6428,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("tree_isomorphism.svg"), "trees A and B are the same tree with vertices shuffled, so their canonical forms match and they test isomorphic; tree C is a path of the same size but a different shape, so its form differs -- yellow nodes mark the centers AHU roots at")
             + f'<div class="card">{pre(tree_isomorphism_txt)}</div>'
+            + '</div>'),
+        section(
+            "Eulerian trails: every edge once, from Konigsberg to Hierholzer",
+            "An EULERIAN CIRCUIT walks every edge of a graph exactly once and returns to its start; an "
+            "EULERIAN PATH does so but may end elsewhere. The question is the founding problem of "
+            "graph theory -- Euler's 1736 proof that the Seven Bridges of Konigsberg cannot all be "
+            "crossed once -- and it drives genome assembly (an Eulerian path through a De Bruijn "
+            "graph of k-mers), route planning that covers every street, and figure-drawing without "
+            "lifting the pen. The existence conditions are complete: an UNDIRECTED connected graph "
+            "has a circuit iff every vertex has even degree, a path iff exactly two vertices are odd "
+            "(those being the endpoints); a DIRECTED graph has a circuit iff every vertex is balanced "
+            "(in-degree = out-degree) and weakly connected, a path iff exactly one vertex has one "
+            "extra out-edge (the start) and one an extra in-edge (the end). When a trail exists, "
+            "HIERHOLZER'S ALGORITHM finds it in linear time: walk until stuck, forming a closed "
+            "sub-tour, then splice in detours from any vertex with unused edges until every edge is "
+            "consumed. This module classifies undirected and directed multigraphs and builds the "
+            "trail iteratively. Verified: the existence predicate matches the degree/connectivity "
+            "definition and the returned trail uses every edge exactly once with real adjacent steps, "
+            "on hundreds of random graphs -- including Konigsberg (correctly impossible) and "
+            "multigraphs.",
+            '<div class="grid">'
+            + svg_card(out("eulerian.svg"), "an Eulerian circuit on a bowtie of two triangles: each edge is numbered in the order Hierholzer's walk crosses it, a closed tour using all six edges exactly once and returning to the shared central vertex")
+            + f'<div class="card">{pre(eulerian_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
