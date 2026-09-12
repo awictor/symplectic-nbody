@@ -1,0 +1,28 @@
+Linear sieve: primes + factorization + totient + Mobius, all in O(N)
+
+  primes up to 100 (25 of them):
+    [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+
+  360 = 2^3 * 3^2 * 5   (via the smallest-prime-factor table, O(log n))
+  84 = 2^2 * 3 * 7   (via the smallest-prime-factor table, O(log n))
+  97 = 97   (via the smallest-prime-factor table, O(log n))
+  1000 = 2^3 * 5^3   (via the smallest-prime-factor table, O(log n))
+
+  Euler totient phi(n) -- integers below n coprime to it:
+    n : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    phi: [1, 1, 2, 2, 4, 2, 6, 4, 6, 4, 10, 4]
+    verified vs brute coprime count: True
+
+  Mobius mu(n) -- 0 if square factor, else (-1)^(#distinct primes):
+    n : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    mu: [1, -1, -1, 0, -1, 1, -1, 0, 0, 1, -1, 0]
+    verified vs brute: True
+
+  identity: sum of phi(d) over divisors of n equals n -> True
+  identity: sum of mu(d) over divisors of n is [n==1]  -> True
+
+  Each composite is struck exactly once, by its smallest prime factor -- the inner loop
+  breaks the moment that prime divides i, avoiding the double-marking of Eratosthenes and
+  making the whole sieve, plus the multiplicative phi and mu arrays, truly O(N).
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\linear_sieve.svg

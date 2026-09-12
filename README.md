@@ -395,6 +395,7 @@ ruins a long non-symplectic integration.
 | `src/centroid_decomposition.py` | Centroid tree + distance-pair counting on a tree |
 | `src/meet_in_middle.py` | Meet-in-the-middle subset sum / closest sum / count for huge values |
 | `src/fenwick_2d.py` | 2D Fenwick tree: point update + rectangle sum in O(log R log C) |
+| `src/linear_sieve.py` | Linear sieve: primes + SPF + Euler totient + Mobius in O(N) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -781,6 +782,7 @@ ruins a long non-symplectic integration.
 | `examples/centroid_decomposition_demo.py` | A tree tinted by centroid-decomposition level + pair counts |
 | `examples/meet_in_middle_demo.py` | Two half-sum lists combining to hit a target on a number line |
 | `examples/fenwick_2d_demo.py` | A grid heatmap with a query rectangle and its dynamic sum |
+| `examples/linear_sieve_demo.py` | The totient curve and Mobius bars from one linear-sieve pass |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9225,6 +9227,23 @@ sums by inclusion-exclusion. Unlike a static prefix-sum table (O(R*C) to rebuild
 fast when cells and queries both change constantly. Verified against a brute 2D prefix-sum reference:
 every rectangle query matches after arbitrary interleaved updates on hundreds of random grids, plus a
 200x200 grid with 2000 updates.
+
+## Linear sieve: primes, totient, and Mobius in O(N)
+
+Sieve primes and multiplicative functions in true linear time. `linear_sieve.py`:
+
+```
+$ python examples/linear_sieve_demo.py examples/output
+
+  25 primes up to 100; 360 = 2^3 * 3^2 * 5 via the SPF table (O(log n))
+  phi and mu verified vs brute to 3000; both divisor identities hold
+```
+
+Every composite is struck exactly once, by its smallest prime factor (the inner loop breaks the moment
+that prime divides i), making the sieve O(N) and yielding the SPF table, Euler totient phi, and Mobius
+mu in the same pass. Verified against independent brute force -- trial-division primality/factorization,
+coprime-counting phi, squarefree/prime-count mu -- across the whole range to 3000, plus the identities
+sum of phi(d) over divisors of n = n and sum of mu(d) = [n==1], and phi's multiplicativity.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

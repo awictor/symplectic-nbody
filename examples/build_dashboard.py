@@ -437,6 +437,7 @@ def main():
     import centroid_decomposition_demo
     import meet_in_middle_demo
     import fenwick_2d_demo
+    import linear_sieve_demo
 
     import plot_orbits
 
@@ -843,6 +844,7 @@ def main():
     centroid_decomposition_txt = run("centroid_decomposition_demo", centroid_decomposition_demo.main, True)
     meet_in_middle_txt = run("meet_in_middle_demo", meet_in_middle_demo.main, True)
     fenwick_2d_txt = run("fenwick_2d_demo", fenwick_2d_demo.main, True)
+    linear_sieve_txt = run("linear_sieve_demo", linear_sieve_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6771,6 +6773,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("fenwick_2d.svg"), "a grid heatmap with a query rectangle outlined in yellow: its sum is computed by combining four prefix-rectangle sums, each in log-squared time, so the answer stays fast even as cells are updated")
             + f'<div class="card">{pre(fenwick_2d_txt)}</div>'
+            + '</div>'),
+        section(
+            "Linear sieve: primes, totient, and Mobius in O(N)",
+            "The Sieve of Eratosthenes finds primes in O(N log log N); the LINEAR SIEVE (Euler's) does "
+            "it in true O(N) while also computing, for free, the SMALLEST PRIME FACTOR of every "
+            "number and the multiplicative functions built from factorizations -- the EULER TOTIENT "
+            "phi(n) (integers below n coprime to it) and the MOBIUS function mu(n) (the "
+            "inclusion-exclusion sign behind number-theoretic inversion). These precomputed arrays "
+            "power fast multi-query factorization, divisor-sum and gcd-sum problems, coprime-pair "
+            "counting, and Mobius inversion. The linearity trick: every composite is struck exactly "
+            "ONCE, by its smallest prime factor -- iterate i, and for each known prime p in order mark "
+            "p as the SPF of p*i, breaking the moment p divides i (beyond which p*i would be struck "
+            "by a smaller factor). The same pass propagates phi and mu by their prime-power rules. "
+            "This module builds the primes, SPF table (giving O(log n) factorization), totient, and "
+            "Mobius arrays. Verified against independent brute force -- trial division for primality "
+            "and factorization, the coprime-counting phi, the squarefree/prime-count mu -- across the "
+            "entire range to 3000, plus the classic divisor identities (sum of phi over divisors of n "
+            "is n; sum of mu is [n==1]) and phi's multiplicativity.",
+            '<div class="grid">'
+            + svg_card(out("linear_sieve.svg"), "the Euler totient phi(n) as a blue curve (hugging n-1 at primes, dipping for smooth numbers) and the Mobius function mu(n) as green/red bars (+1/-1, absent where a square factor makes it 0) -- both computed in the single linear-sieve pass")
+            + f'<div class="card">{pre(linear_sieve_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
