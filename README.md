@@ -402,6 +402,7 @@ ruins a long non-symplectic integration.
 | `src/ntt.py` | Number-theoretic transform: exact integer convolution + big-int multiply |
 | `src/karatsuba.py` | Karatsuba & Toom-3 fast multiplication + Karatsuba polynomial multiply |
 | `src/strassen.py` | Strassen sub-cubic matrix multiplication (7 block products, padded) |
+| `src/dancing_links.py` | Dancing Links (DLX): Algorithm X exact cover + N-queens |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -795,6 +796,7 @@ ruins a long non-symplectic integration.
 | `examples/ntt_demo.py` | Exact polynomial product + big-integer multiply by digit convolution |
 | `examples/karatsuba_demo.py` | Big-int products + the complexity-exponent curves of each method |
 | `examples/strassen_demo.py` | The seven block products + n^3 vs n^2.807 cost curves |
+| `examples/dancing_links_demo.py` | Knuth's exact-cover example + a 6-queens board on a chessboard |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9363,6 +9365,22 @@ log2(7). Below a cutoff it falls back to plain multiplication; non-power-of-two 
 are zero-padded. Verified against the schoolbook O(n^3) product -- identical on hundreds of random
 matrices of assorted shapes and sizes including deep recursion, floats, and large-integer matrices --
 plus identity, associativity, and known products.
+
+## Dancing Links: Algorithm X for exact cover
+
+Solve exact-cover puzzles (Sudoku, N-queens, tilings) with Knuth's pointer dance. `dancing_links.py`:
+
+```
+$ python examples/dancing_links_demo.py examples/output
+
+  Knuth's example -> unique cover {B, D, F}; N-queens n=1..8: 1,0,0,2,10,4,40,92
+```
+
+The cover matrix is a toroidal doubly-linked list; covering a column splices it out with
+x.L.R = x.R; x.R.L = x.L and uncovering restores it with the exact inverse -- no allocation during the
+search. Algorithm X covers the column with the fewest options, tries each, recurses, and uncovers on
+backtrack. Verified against an independent brute-force subset search (identical solution sets on
+hundreds of random instances), the known N-queens counts, and domino-tiling counts.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

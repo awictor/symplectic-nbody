@@ -1,0 +1,36 @@
+Dancing Links (DLX): exact cover by Algorithm X
+
+  Knuth's example -- cover items 1..7 with disjoint options:
+    A: [1, 4, 7]
+    B: [1, 4]
+    C: [4, 5, 7]
+    D: [3, 5, 6]
+    E: [2, 3, 6, 7]
+    F: [2, 7]
+    exact cover: ['B', 'D', 'F']  (options ['B', 'D', 'F'] partition 1..7 exactly)
+
+  N-queens as exact cover (place n non-attacking queens):
+    1-queens: 1 solution(s)
+    2-queens: 0 solution(s)
+    3-queens: 0 solution(s)
+    4-queens: 2 solution(s)
+    5-queens: 10 solution(s)
+    6-queens: 4 solution(s)
+    7-queens: 40 solution(s)
+    8-queens: 92 solution(s)
+
+  one 6-queens solution (Q = queen):
+    . Q . . . .
+    . . . Q . .
+    . . . . . Q
+    Q . . . . .
+    . . Q . . .
+    . . . . Q .
+
+  DLX stores the cover matrix as a toroidal doubly-linked list; 'covering' a column
+  splices it and its conflicting options out with x.L.R=x.R; x.R.L=x.L, and 'uncovering'
+  on backtrack restores them with the exact inverse -- no allocation during the search,
+  and the pointers literally dance out and back. The column-with-fewest-options heuristic
+  keeps the branching minimal.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\dancing_links.svg

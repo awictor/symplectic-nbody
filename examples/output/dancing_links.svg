@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="368" height="388" viewBox="0 0 368 388" font-family="monospace">
+<rect width="368" height="388" fill="#0d1117"/>
+<text x="20" y="34" fill="#e6edf3" font-size="18">A 6-queens solution found by DLX exact cover</text>
+<text x="20" y="52" fill="#8b949e" font-size="12">no two queens share a row, column, or diagonal</text>
+<rect x="40" y="70" width="48" height="48" fill="#30363d"/>
+<rect x="88" y="70" width="48" height="48" fill="#161b22"/>
+<circle cx="112" cy="94" r="15" fill="#ffd43b"/>
+<rect x="136" y="70" width="48" height="48" fill="#30363d"/>
+<rect x="184" y="70" width="48" height="48" fill="#161b22"/>
+<rect x="232" y="70" width="48" height="48" fill="#30363d"/>
+<rect x="280" y="70" width="48" height="48" fill="#161b22"/>
+<rect x="40" y="118" width="48" height="48" fill="#161b22"/>
+<rect x="88" y="118" width="48" height="48" fill="#30363d"/>
+<rect x="136" y="118" width="48" height="48" fill="#161b22"/>
+<rect x="184" y="118" width="48" height="48" fill="#30363d"/>
+<circle cx="208" cy="142" r="15" fill="#ffd43b"/>
+<rect x="232" y="118" width="48" height="48" fill="#161b22"/>
+<rect x="280" y="118" width="48" height="48" fill="#30363d"/>
+<rect x="40" y="166" width="48" height="48" fill="#30363d"/>
+<rect x="88" y="166" width="48" height="48" fill="#161b22"/>
+<rect x="136" y="166" width="48" height="48" fill="#30363d"/>
+<rect x="184" y="166" width="48" height="48" fill="#161b22"/>
+<rect x="232" y="166" width="48" height="48" fill="#30363d"/>
+<rect x="280" y="166" width="48" height="48" fill="#161b22"/>
+<circle cx="304" cy="190" r="15" fill="#ffd43b"/>
+<rect x="40" y="214" width="48" height="48" fill="#161b22"/>
+<circle cx="64" cy="238" r="15" fill="#ffd43b"/>
+<rect x="88" y="214" width="48" height="48" fill="#30363d"/>
+<rect x="136" y="214" width="48" height="48" fill="#161b22"/>
+<rect x="184" y="214" width="48" height="48" fill="#30363d"/>
+<rect x="232" y="214" width="48" height="48" fill="#161b22"/>
+<rect x="280" y="214" width="48" height="48" fill="#30363d"/>
+<rect x="40" y="262" width="48" height="48" fill="#30363d"/>
+<rect x="88" y="262" width="48" height="48" fill="#161b22"/>
+<rect x="136" y="262" width="48" height="48" fill="#30363d"/>
+<circle cx="160" cy="286" r="15" fill="#ffd43b"/>
+<rect x="184" y="262" width="48" height="48" fill="#161b22"/>
+<rect x="232" y="262" width="48" height="48" fill="#30363d"/>
+<rect x="280" y="262" width="48" height="48" fill="#161b22"/>
+<rect x="40" y="310" width="48" height="48" fill="#161b22"/>
+<rect x="88" y="310" width="48" height="48" fill="#30363d"/>
+<rect x="136" y="310" width="48" height="48" fill="#161b22"/>
+<rect x="184" y="310" width="48" height="48" fill="#30363d"/>
+<rect x="232" y="310" width="48" height="48" fill="#161b22"/>
+<circle cx="256" cy="334" r="15" fill="#ffd43b"/>
+<rect x="280" y="310" width="48" height="48" fill="#30363d"/>
+</svg>

@@ -444,6 +444,7 @@ def main():
     import ntt_demo
     import karatsuba_demo
     import strassen_demo
+    import dancing_links_demo
 
     import plot_orbits
 
@@ -857,6 +858,7 @@ def main():
     ntt_txt = run("ntt_demo", ntt_demo.main, True)
     karatsuba_txt = run("karatsuba_demo", karatsuba_demo.main, True)
     strassen_txt = run("strassen_demo", strassen_demo.main, True)
+    dancing_links_txt = run("dancing_links_demo", dancing_links_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6933,6 +6935,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("strassen.svg"), "the scalar-multiplication count vs matrix size for schoolbook (n^3) and Strassen (n^2.807) on a log-log scale: the gap widens steadily with n, so trading one of eight block products for extra additions pays off ever more at scale")
             + f'<div class="card">{pre(strassen_txt)}</div>'
+            + '</div>'),
+        section(
+            "Dancing Links: Algorithm X for exact cover",
+            "The EXACT COVER problem -- choose options so every item is covered by exactly one -- is "
+            "NP-complete, yet an astonishing range of puzzles reduce to it: Sudoku, N-queens, "
+            "pentomino tilings, Latin squares. Knuth's ALGORITHM X solves it by backtracking, and "
+            "DANCING LINKS (DLX) is the data structure that makes it fly: the cover matrix is a "
+            "toroidal doubly-linked list, and 'covering' a column splices it and its conflicting "
+            "options out with the pointer dance x.L.R = x.R; x.R.L = x.L, while 'uncovering' on "
+            "backtrack restores them with the exact inverse -- so NO memory is allocated or freed "
+            "during the whole search, and each step touches only a handful of pointers. Algorithm X: "
+            "if the matrix is empty the selection is a solution; otherwise cover the column with the "
+            "FEWEST options (minimising branching), try each of its options, recurse, and uncover in "
+            "reverse. This module builds a DLX matrix from options, finds one or all covers, and "
+            "reduces N-queens to exact cover. Verified against an independent brute-force subset "
+            "search -- identical solution sets on hundreds of random instances -- the known N-queens "
+            "counts (1,0,0,2,10,4,40,92 for n=1..8), and domino-tiling counts.",
+            '<div class="grid">'
+            + svg_card(out("dancing_links.svg"), "a 6-queens solution found by reducing the problem to exact cover and solving it with dancing links: no two queens share a row, column, or diagonal -- one of the four distinct 6-queens placements DLX enumerates")
+            + f'<div class="card">{pre(dancing_links_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
