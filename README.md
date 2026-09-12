@@ -377,6 +377,7 @@ ruins a long non-symplectic integration.
 | `src/eertree.py` | Eertree (palindromic tree): all distinct palindromic substrings in O(n) |
 | `src/li_chao.py` | Li Chao tree: lower/upper envelope of lines, convex-hull-trick DP |
 | `src/mo_algorithm.py` | Mo's algorithm: offline range distinct-count & power-sum in O((n+q)vn) |
+| `src/arborescence.py` | Chu-Liu/Edmonds minimum spanning arborescence (directed MST) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -745,6 +746,7 @@ ruins a long non-symplectic integration.
 | `examples/eertree_demo.py` | Palindromes of a rich word tiled by length, brightness by frequency |
 | `examples/li_chao_demo.py` | A bundle of lines with their lower envelope highlighted |
 | `examples/mo_algorithm_demo.py` | Query windows drawn in Mo's block-snake processing order |
+| `examples/arborescence_demo.py` | A directed broadcast tree with the chosen min-cost edges in green |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8852,6 +8854,26 @@ problem supplies only a cheap add/remove: a frequency table + nonzero-count for 
 incremental sum(f^2) for the power sum. Inherently offline (queries permuted). Verified against brute
 force: every distinct-count and power-sum answer matches direct recomputation over the subrange, on
 hundreds of random arrays and query batches plus a 2000x2000 stress, answers returned in original order.
+
+## Chu-Liu/Edmonds: the directed minimum spanning tree
+
+The cheapest one-way broadcast tree from a root, where Kruskal and Prim don't apply. `arborescence.py`:
+
+```
+$ python examples/arborescence_demo.py examples/output
+
+  root 0 broadcasting to 5 nodes; greedy cheapest-incoming traps 1,2,3 in a cycle
+  Chu-Liu/Edmonds contracts + reweights it -> min arborescence cost 26
+  verified against brute force over all arborescences
+```
+
+A minimum spanning ARBORESCENCE gives every non-root vertex exactly one incoming edge, all reachable
+from the root, at least total cost. Greedy "cheapest incoming edge" can form a cycle; Chu-Liu/Edmonds
+contracts each such cycle into a super-vertex, reweights entering edges by what they'd save, recurses,
+then expands -- breaking each cycle at the vertex entered from outside. Verified against brute force
+(enumerate one incoming edge per vertex, keep valid arborescences, confirm the minimum) on 500 random
+graphs, plus trees, unreachable vertices, multi-edges, and nested cycles; returned edges always form a
+genuine spanning arborescence.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

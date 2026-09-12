@@ -419,6 +419,7 @@ def main():
     import eertree_demo
     import li_chao_demo
     import mo_algorithm_demo
+    import arborescence_demo
 
     import plot_orbits
 
@@ -807,6 +808,7 @@ def main():
     eertree_txt = run("eertree_demo", eertree_demo.main, True)
     li_chao_txt = run("li_chao_demo", li_chao_demo.main, True)
     mo_algorithm_txt = run("mo_algorithm_demo", mo_algorithm_demo.main, True)
+    arborescence_txt = run("arborescence_demo", arborescence_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6355,6 +6357,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("mo_algorithm.svg"), "eight query ranges drawn top-to-bottom in the order Mo's algorithm processes them: grouped into sqrt(n)-blocks by left endpoint (colour) and snaking by right endpoint, so the window's two ends travel a short total distance (56 steps here versus 99 in the original order)")
             + f'<div class="card">{pre(mo_algorithm_txt)}</div>'
+            + '</div>'),
+        section(
+            "Chu-Liu/Edmonds: the directed minimum spanning tree",
+            "The minimum spanning tree connects an undirected graph at least cost; its directed cousin "
+            "is the MINIMUM SPANNING ARBORESCENCE. Given a directed weighted graph and a ROOT, an "
+            "arborescence is a spanning tree where every non-root vertex has exactly one incoming "
+            "edge and is reachable from the root -- the cheapest one-way broadcast tree. Greedy MST "
+            "algorithms (Kruskal, Prim) fail because directions matter: picking each vertex's "
+            "cheapest incoming edge can form a cycle a tree can't contain. The CHU-LIU/EDMONDS "
+            "algorithm fixes exactly that. Pick the cheapest incoming edge everywhere; if the result "
+            "is acyclic it is optimal. If a cycle forms, CONTRACT it to a super-vertex, reweighting "
+            "each edge entering the cycle by subtracting the in-cycle edge it would replace, and "
+            "recurse; expanding the contractions -- breaking each cycle at the one vertex entered "
+            "from outside -- rebuilds the true minimum. The reweighting correctly credits that "
+            "entering a cycle lets one of its internal edges be dropped. Verified against brute force "
+            "-- enumerating every choice of one incoming edge per vertex, keeping the valid "
+            "arborescences, and confirming the minimum weight -- on 500 random graphs, plus trees, "
+            "unreachable vertices, multi-edges, and nested cycles; the returned edges always form a "
+            "genuine spanning arborescence.",
+            '<div class="grid">'
+            + svg_card(out("arborescence.svg"), "the minimum broadcast tree from root 0 (green edges): the greedy cheapest-incoming choice would trap nodes 1,2,3 in a cycle, but Chu-Liu/Edmonds contracts and reweights it to reach every node at minimum total cost 26")
+            + f'<div class="card">{pre(arborescence_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

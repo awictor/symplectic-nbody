@@ -1,0 +1,27 @@
+Minimum spanning arborescence: cheapest one-way broadcast tree
+
+  6 nodes, 9 directed edges, root = 0
+
+  greedy 'cheapest incoming edge per node' would pick:
+    node 1 <- node 3 (cost 4)
+    node 2 <- node 1 (cost 2)
+    node 3 <- node 2 (cost 3)
+    node 4 <- node 2 (cost 6)
+    node 5 <- node 3 (cost 5)
+    ...but 1<-3, 2<-1, 3<-2 form a CYCLE (1->2->3->1), not a tree -- greedy fails.
+
+  Chu-Liu/Edmonds minimum arborescence (total cost 26):
+    node 1 <- node 0 (cost 10)
+    node 2 <- node 1 (cost 2)
+    node 3 <- node 2 (cost 3)
+    node 4 <- node 2 (cost 6)
+    node 5 <- node 3 (cost 5)
+
+  verified against brute force over all arborescences: True
+
+  The algorithm contracts the cheap cycle into a super-node, reweights edges entering it
+  by what they'd save, and recurses -- then expands, breaking each cycle at the one node
+  reached from outside. This is the directed analogue of the minimum spanning tree, where
+  Kruskal and Prim don't apply because edge directions constrain the tree.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\arborescence.svg
