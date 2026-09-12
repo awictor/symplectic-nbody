@@ -1,0 +1,21 @@
+Savitzky-Golay: smoothing that keeps peak shapes, and stable differentiation
+
+  degree-2, window-5 smoothing coefficients: [-0.0857, 0.3429, 0.4857, 0.3429, -0.0857]
+    (sum = 1.0000, the classic -3 12 17 12 -3 / 35)
+
+  MSE to the clean signal:
+    noisy input:            0.0048
+    moving average:         0.0028
+    Savitzky-Golay:         0.0008
+  peak-2 height (true 1.450): SG 1.434, moving avg 1.264
+    -> the moving average flattens the sharp peak; SG keeps it
+
+  Smoothed 1st derivative finds peak locations (zero crossings): [61, 100, 131, 148, 163, 196]
+    (true peaks near 60 and 130 -- differentiating raw noisy data would be hopeless)
+
+  Savitzky-Golay fits a low-degree polynomial to a sliding window by least squares and
+  takes the centre value -- a fixed convolution. The polynomial follows a peak's
+  curvature, so unlike a moving average it smooths without blunting features, and its
+  derivative gives a stable estimate of the signal's slope.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\savitzky_golay.svg

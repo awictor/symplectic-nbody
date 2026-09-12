@@ -335,6 +335,7 @@ ruins a long non-symplectic integration.
 | `src/two_sat.py` | 2-SAT solver via the implication graph + SCCs (linear time, with assignment) |
 | `src/rk45.py` | Dormand-Prince RK45 adaptive-step ODE solver (embedded error control, FSAL) |
 | `src/cordic.py` | CORDIC: cos/sin/atan2/hypot/exp/ln/sqrt with only shifts and additions |
+| `src/savitzky_golay.py` | Savitzky-Golay filter: peak-preserving smoothing and noisy-data differentiation |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -661,6 +662,7 @@ ruins a long non-symplectic integration.
 | `examples/two_sat_demo.py` | A satisfiable feature-constraint instance + the canonical unsatisfiable formula |
 | `examples/rk45_demo.py` | Van der Pol oscillator with step ticks clustering at the sharp transitions |
 | `examples/cordic_demo.py` | The rotation spiralling to a target angle; cos/sin/exp/ln/sqrt vs the math library |
+| `examples/savitzky_golay_demo.py` | Noisy two-peak signal: SG keeps the peaks where a moving average flattens them |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7952,6 +7954,27 @@ bit shift, not a multiply. Circular mode gives cos/sin (and atan2/hypot by vecto
 gives exp/ln/sqrt. This module implements all of them with precomputed angle and gain tables using
 only shifts and additions, verified against the math library across their ranges: cos/sin to ~1e-9
 over [-2pi,2pi], atan2 in all quadrants, and exp/ln/sqrt to high precision with range reduction.
+
+## Savitzky-Golay: peak-preserving smoothing and noisy differentiation
+
+Smooth noisy data without flattening its peaks, and differentiate it stably. `savitzky_golay.py`:
+
+```
+$ python examples/savitzky_golay_demo.py examples/output
+
+  noisy MSE 0.0048 -> moving avg 0.0028 -> Savitzky-Golay 0.0008
+  peak height (true 1.45): SG 1.43, moving avg 1.26 (MA flattens it)
+  smoothed derivative finds the peaks near 60 and 130
+```
+
+Savitzky-Golay fits a low-degree polynomial to a sliding window by least squares and takes the centre
+value -- for evenly spaced points this reduces to fixed convolution coefficients, so it is one
+convolution. The polynomial follows a peak's curvature, so it smooths without blunting features, and
+the derivative of the fit gives a stable estimate of the signal's slope. This module computes
+coefficients for any odd window/degree/derivative and applies the filter with edge handling, verified
+that a polynomial of degree <= the filter degree passes unchanged, the derivative mode recovers the
+analytic derivative, smoothing cuts the MSE to the clean signal, and it beats a moving average at
+preserving a Gaussian peak (0.996 vs 0.842).
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

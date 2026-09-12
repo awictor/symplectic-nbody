@@ -377,6 +377,7 @@ def main():
     import two_sat_demo
     import rk45_demo
     import cordic_demo
+    import savitzky_golay_demo
 
     import plot_orbits
 
@@ -723,6 +724,7 @@ def main():
     two_sat_txt = run("two_sat_demo", two_sat_demo.main, True)
     rk45_txt = run("rk45_demo", rk45_demo.main, True)
     cordic_txt = run("cordic_demo", cordic_demo.main, True)
+    savitzky_golay_txt = run("savitzky_golay_demo", savitzky_golay_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5337,6 +5339,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("cordic.svg"), "the CORDIC rotation spiralling around the unit circle toward a target angle -- each step a shift-add rotation of decreasing size -- with the final point's coordinates being cos and sin")
             + f'<div class="card">{pre(cordic_txt)}</div>'
+            + '</div>'),
+        section(
+            "Savitzky-Golay: smoothing that preserves peaks, and noisy differentiation",
+            "Smoothing noisy data usually blunts its features -- a moving average flattens peaks and "
+            "shifts edges. The SAVITZKY-GOLAY filter, the standard in analytical chemistry, smooths "
+            "by fitting a low-degree POLYNOMIAL to a sliding window by least squares and taking the "
+            "fitted value at the centre. Because a polynomial follows a peak's curvature, it removes "
+            "noise while preserving peak height and width far better than a moving average -- the "
+            "default for spectroscopy and chromatography, where SHAPE matters. The elegant fact is "
+            "that for evenly-spaced points the least-squares fit reduces to fixed CONVOLUTION "
+            "COEFFICIENTS depending only on window size and degree, so the whole filter is one "
+            "convolution. Taking the DERIVATIVE of the fitted polynomial at the centre yields a "
+            "smoothed estimate of the signal's derivative -- differentiating noisy data, normally a "
+            "disaster, becomes stable, invaluable for finding inflection points and rates. This "
+            "module computes coefficients for any odd window, degree, and derivative order and "
+            "applies the filter with edge handling, verified against exact references: a polynomial "
+            "of degree <= the filter degree passes through unchanged (the defining property), the "
+            "derivative mode recovers the analytic derivative, smoothing a noisy sine cuts the MSE to "
+            "the clean signal, the coefficients have unit DC gain (sum 1) for smoothing and zero for "
+            "derivatives, and it beats a moving average at preserving a Gaussian peak's height "
+            "(0.996 vs 0.842).",
+            '<div class="grid">'
+            + svg_card(out("savitzky_golay.svg"), "a noisy two-peak signal (gray) smoothed by Savitzky-Golay (green, peaks intact) versus a moving average (red, peaks flattened) -- the polynomial fit follows the curvature")
+            + f'<div class="card">{pre(savitzky_golay_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
