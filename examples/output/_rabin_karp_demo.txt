@@ -1,0 +1,22 @@
+Rabin-Karp: substring search by rolling hash
+
+  text:    abracadabra_abracadabra
+  pattern: 'abra' found at [0, 7, 12, 19]  (brute: [0, 7, 12, 19])
+
+  multi-pattern search in one pass:
+    'abra': [0, 7, 12, 19]
+    'cad': [4, 16]
+    'dab': [6, 18]
+    'ra': [2, 9, 14, 21]
+
+  longest common substring of two sentences:
+    A: 'the quick brown fox jumps'
+    B: 'a quick brown dog sits'
+    LCS: ' quick brown ' (length 13)
+
+  The rolling hash slides the window in O(1): subtract the departing character's
+  contribution, multiply by the base, add the arriving character. Only windows whose hash
+  matches the pattern's are compared in full, so search is O(n+m) on average -- and because
+  every hash match is verified, the result is always exact, never fooled by a collision.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\rabin_karp.svg

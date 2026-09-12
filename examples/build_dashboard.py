@@ -450,6 +450,7 @@ def main():
     import jacobi_eigen_demo
     import kitamasa_demo
     import rational_rref_demo
+    import rabin_karp_demo
 
     import plot_orbits
 
@@ -869,6 +870,7 @@ def main():
     jacobi_eigen_txt = run("jacobi_eigen_demo", jacobi_eigen_demo.main, True)
     kitamasa_txt = run("kitamasa_demo", kitamasa_demo.main, True)
     rational_rref_txt = run("rational_rref_demo", rational_rref_demo.main, True)
+    rabin_karp_txt = run("rabin_karp_demo", rabin_karp_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7070,6 +7072,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("rational_rref.svg"), "the exact RREF of a rank-2 matrix: green pivot columns hold the leading ones, grey free columns each contribute a null-space vector -- computed over fractions so the rank is provably 2, never a floating-point guess")
             + f'<div class="card">{pre(rational_rref_txt)}</div>'
+            + '</div>'),
+        section(
+            "Rabin-Karp: substring search by rolling hash",
+            "Naive substring search compares a length-m pattern against every window of the text, "
+            "O(n*m). RABIN-KARP makes it O(n+m) on average by HASHING: treat each window as a base-B "
+            "number modulo a large prime, so windows with different hashes cannot be equal and only "
+            "hash MATCHES are checked in full. The ROLLING HASH slides the window in O(1) -- subtract "
+            "the departing character's contribution, multiply by the base, add the arriving one -- "
+            "instead of rehashing from scratch. It powers multi-pattern search (hash every pattern, "
+            "scan the text once), duplicate detection, and the binary-search-on-length trick for the "
+            "longest common substring. Since different strings can collide, every candidate is "
+            "verified by direct comparison, so the result is always CORRECT and only the speed is "
+            "probabilistic; a 61-bit Mersenne-prime modulus makes collisions astronomically rare. "
+            "This module implements the rolling hash, single- and multi-pattern search (all "
+            "positions), and the longest common substring (binary search on length with hashed "
+            "windows). Verified against brute-force search -- identical occurrence lists on hundreds "
+            "of random text/pattern pairs and a 20k-char text -- and the longest common substring "
+            "against an O(n*m) DP.",
+            '<div class="grid">'
+            + svg_card(out("rabin_karp.svg"), "rolling-hash search for 'abra' across a text: only the windows whose hash equals the pattern's are compared in full, and the verified matches (green) are found in a single left-to-right pass")
+            + f'<div class="card">{pre(rabin_karp_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

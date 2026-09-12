@@ -408,6 +408,7 @@ ruins a long non-symplectic integration.
 | `src/jacobi_eigen.py` | Jacobi symmetric eigendecomposition by Givens rotations |
 | `src/kitamasa.py` | Kitamasa: N-th linear-recurrence term in O(k^2 log n) |
 | `src/rational_rref.py` | Exact rational RREF: rank, null space, exact linear solve |
+| `src/rabin_karp.py` | Rabin-Karp rolling-hash search + multi-pattern + longest common substring |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -807,6 +808,7 @@ ruins a long non-symplectic integration.
 | `examples/jacobi_eigen_demo.py` | The off-diagonal norm plunging to zero over rotations |
 | `examples/kitamasa_demo.py` | Huge recurrence terms + the O(n) vs O(log n) cost gap |
 | `examples/rational_rref_demo.py` | An exact RREF grid with pivot/free columns + the three system kinds |
+| `examples/rabin_karp_demo.py` | Rolling-hash matches across a text + multi-pattern + sentence LCS |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9480,6 +9482,24 @@ and reduces, returning a unique solution, "none" for inconsistent systems, or a 
 plus a null-space basis for underdetermined ones. Verified against an independent elimination count
 (rank), the rank-nullity theorem, A x = 0 for null-space vectors, exact A x = b for solutions, and RREF
 idempotence -- on hundreds of random singular and rectangular matrices.
+
+## Rabin-Karp: substring search by rolling hash
+
+Find substrings in O(n+m) average time by hashing windows. `rabin_karp.py`:
+
+```
+$ python examples/rabin_karp_demo.py examples/output
+
+  'abra' in 'abracadabra_abracadabra' -> [0, 7, 12, 19]; multi-pattern in one pass
+  longest common substring of two sentences -> ' quick brown ' (length 13)
+```
+
+Each window is a base-B number mod a 61-bit prime; the rolling hash updates in O(1) (drop the leaving
+character, shift, add the arriving one), and only hash-equal windows are compared in full -- so search
+is fast and, because every match is verified, always exact. Multi-pattern search groups patterns by
+length and scans once; the longest common substring binary-searches the length with hashed windows.
+Verified against brute-force search on hundreds of random pairs (and a 20k-char text) and the LCS
+against an O(n*m) DP.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
