@@ -21,4 +21,4 @@ Splay tree: self-adjusting BST, hot keys rise to the root
   below log2(n): hot keys live near the root. A balanced tree pays log2(n) every time,
   regardless of how skewed the workload is. Splaying is O(log n) amortized either way.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\splay_tree.svg
+  wrote examples/output\splay_tree.svg

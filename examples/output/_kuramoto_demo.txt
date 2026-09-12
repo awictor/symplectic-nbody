@@ -15,4 +15,4 @@ Kuramoto: dtheta_i/dt = omega_i + (K/N) sum sin(theta_j - theta_i)
   transition to collective order. Same mechanism: fireflies flashing in unison,
   pacemaker cells, applause locking into rhythm, and generators on a power grid.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\kuramoto.svg
+  wrote examples/output\kuramoto.svg

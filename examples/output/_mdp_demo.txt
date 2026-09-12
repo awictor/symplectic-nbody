@@ -23,4 +23,4 @@ Markov decision process: value iteration and policy iteration
   policy evaluation with greedy improvement, converging in a handful of rounds. Both find
   the same optimal policy -- the action in each state that maximizes expected return.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\mdp.svg
+  wrote examples/output\mdp.svg

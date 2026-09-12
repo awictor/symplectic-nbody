@@ -18,4 +18,4 @@ Josephson junction: I = I_c sin(phi), f = 2eV/h = 483.6 GHz/mV
   the phase wind and the current oscillate (AC effect). The exact V<->f link, tied
   only to e and h, is how the volt is now defined and how quantum voltmeters work.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\josephson.svg
+  wrote examples/output\josephson.svg

@@ -16,4 +16,4 @@ Power iteration: multiply by A and normalize -> dominant eigenvector
   largest-|lambda| direction, so the vector aligns with it. It is how PageRank ranks
   the web, PCA finds data axes, and vibration modes of a structure are computed.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\eigen.svg
+  wrote examples/output\eigen.svg

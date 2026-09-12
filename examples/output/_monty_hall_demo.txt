@@ -16,4 +16,4 @@ Monty Hall: the knowing host's reveal shifts the odds -- switch and win 2/3
   remaining (N-1)/N onto the last closed door. With 100 doors, switching wins 99%.
   (If the host opened doors blindly, the effect vanishes -- it is his knowledge.)
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\monty_hall.svg
+  wrote examples/output\monty_hall.svg

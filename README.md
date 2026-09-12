@@ -414,6 +414,7 @@ ruins a long non-symplectic integration.
 | `src/gjk.py` | GJK convex collision detection + Minkowski difference |
 | `src/ks_test.py` | Kolmogorov-Smirnov one- and two-sample tests + reference CDFs |
 | `src/bootstrap.py` | Bootstrap CIs (percentile + BCa) + jackknife + standard error |
+| `src/permutation_test.py` | Permutation tests: exact enumeration + Monte-Carlo + paired sign-flip |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -819,6 +820,7 @@ ruins a long non-symplectic integration.
 | `examples/gjk_demo.py` | Two shapes + their Minkowski difference with the origin inside |
 | `examples/ks_test_demo.py` | Two empirical CDFs with the maximal-gap KS statistic marked |
 | `examples/bootstrap_demo.py` | The bootstrap distribution of the mean with its 95% CI band |
+| `examples/permutation_test_demo.py` | The permutation null distribution with the rejection region shaded |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9598,6 +9600,26 @@ interval corrects for median bias and skewness (acceleration from the jackknife)
 Verified against known quantities -- bootstrap SE of the mean matches analytic s/sqrt(n), the jackknife
 is exact for the mean, intervals bracket the estimate -- and a 90% interval covers the true mean about
 90% of the time over 200 seeded datasets.
+
+## Permutation test: significance by shuffling labels
+
+Test whether two groups differ without assuming any distribution. `permutation_test.py`:
+
+```
+$ python examples/permutation_test_demo.py examples/output
+
+  small trial: enumerated 126 permutations -> exact p = 0.0079
+  larger trial: 20000 Monte-Carlo shuffles, t-statistic -> p = 0.0227
+  paired before/after: 256 sign patterns -> p = 0.0078
+```
+
+Under the null that both groups come from the same distribution, the labels are exchangeable, so
+every relabelling of the pooled data is equally likely. Compute the statistic, recompute it for each
+relabelling, and the fraction at least as extreme is the p-value -- exact when all C(N, n_A)
+permutations are enumerated, Monte-Carlo with the (b+1)/(B+1) correction when there are too many. The
+statistic is pluggable (mean, median, Welch t) and a paired sign-flip variant covers before/after
+designs. Validated three ways -- the Monte-Carlo p matches complete enumeration, tracks the analytic
+t-test p on normal data, and rejects at the nominal rate under a true null over many seeded trials.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

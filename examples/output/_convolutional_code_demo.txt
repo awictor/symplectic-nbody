@@ -23,4 +23,4 @@ Convolutional coding + Viterbi decoding over a noisy channel
   spread each bit across several outputs. Viterbi finds the maximum-likelihood path
   through the trellis -- the transmitted sequence closest to what arrived -- in linear time.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\convolutional_code.svg
+  wrote examples/output\convolutional_code.svg

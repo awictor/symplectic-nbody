@@ -22,4 +22,4 @@ Fibonacci heap: O(1) amortized insert, merge, and decrease-key
   consolidates equal-degree trees -- which is what keeps decrease-key O(1) amortized and
   improves Dijkstra to O(m + n log n).
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\fibonacci_heap.svg
+  wrote examples/output\fibonacci_heap.svg

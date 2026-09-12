@@ -26,4 +26,4 @@ Combinatorial ranking: objects <-> integers
   store a permutation as one integer, pick a uniformly random one, or split an enumeration
   across machines by rank range -- all without materializing the (huge) full set.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\combinatorial_rank.svg
+  wrote examples/output\combinatorial_rank.svg

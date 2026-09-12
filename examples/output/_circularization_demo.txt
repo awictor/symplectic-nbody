@@ -8,6 +8,6 @@ Peters (1964): gravitational waves circularize binaries
   0.80      0.0099      0.0031        259.9x
   0.90      0.0099      0.0099         90.9x
 
-wrote C:\Users\acwic\symplectic-nbody\examples\output\circularization.svg
+wrote examples/output\circularization.svg
 Every track bends toward e=0: by merger, even a wildly eccentric
 binary is nearly circular. That's why LIGO templates start circular.

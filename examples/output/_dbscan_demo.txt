@@ -26,4 +26,4 @@ DBSCAN: density-based clustering of arbitrary shapes with noise
   recovers the crescents as single clusters (k-means would cut each in half), needs no k,
   and calls sparse points noise instead of forcing them into a cluster.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\dbscan.svg
+  wrote examples/output\dbscan.svg

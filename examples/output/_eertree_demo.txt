@@ -29,4 +29,4 @@ Eertree: all distinct palindromic substrings in one linear structure
   extendable palindromic suffix -- capturing all palindromes in O(n), the palindrome
   analogue of the suffix automaton.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\eertree.svg
+  wrote examples/output\eertree.svg

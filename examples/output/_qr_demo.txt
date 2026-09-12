@@ -14,4 +14,4 @@ QR decomposition: A = Q R, Q orthonormal, R upper-triangular
   A^T A x = A^T b (which squares the condition number). It also powers eigenvalue
   iteration and orthogonal regression. Modified Gram-Schmidt keeps Q orthogonal.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\qr.svg
+  wrote examples/output\qr.svg

@@ -21,4 +21,4 @@ Lorenz system (sigma=10, beta=8/3, rho=28): toy weather that never repeats
   butterfly -- why weather is unforecastable beyond ~two weeks. Deterministic, yet
   unpredictable: the discovery that founded chaos theory.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\lorenz.svg
+  wrote examples/output\lorenz.svg

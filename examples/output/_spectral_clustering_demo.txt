@@ -15,4 +15,4 @@ Spectral clustering: cutting a graph by its Laplacian eigenvectors
 
   Sanity check: 3 far-apart blobs -> 3 graph components (and 3 zero Laplacian eigenvalues).
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\spectral_clustering.svg
+  wrote examples/output\spectral_clustering.svg

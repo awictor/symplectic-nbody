@@ -15,4 +15,4 @@ Gamow peak: Boltzmann tail x quantum tunnelling = fusion window
   climbs steeply with nuclear charge, carbon burning needs ~500 million K
   while hydrogen ignites at 15 million -- the thermostat of stellar life.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\gamow.svg
+  wrote examples/output\gamow.svg

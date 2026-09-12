@@ -12,4 +12,4 @@ Kolmogorov cascade: big eddies -> small eddies -> heat, E(k) ~ k^(-5/3)
   weather-scale flow spans millions of eddy sizes -- why turbulence is so costly
   to simulate (~Re^(9/4) grid points in 3-D).
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\kolmogorov.svg
+  wrote examples/output\kolmogorov.svg

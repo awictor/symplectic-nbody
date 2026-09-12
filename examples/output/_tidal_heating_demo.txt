@@ -12,4 +12,4 @@ Tidal heating of the Galilean moons (k2/Q ~ 0.015)
   eccentricity is forced by the Laplace 4:2:1 resonance -- no resonance,
   no eccentricity, no volcanoes.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\tidal_heating.svg
+  wrote examples/output\tidal_heating.svg

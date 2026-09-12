@@ -19,4 +19,4 @@ Alias method: O(n) setup, then O(1) per weighted draw
   two operations, no search, however many outcomes there are. It is the standard for
   loot tables, particle spawning, and any hot loop sampling the same distribution.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\alias_method.svg
+  wrote examples/output\alias_method.svg

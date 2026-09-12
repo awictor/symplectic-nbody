@@ -16,4 +16,4 @@ Kolmogorov-Smirnov test: is the fit good? are two samples the same?
   no assumption about their shape. Under the null its distribution is universal (the
   Kolmogorov distribution), so one critical-value table works for any continuous law.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\ks_test.svg
+  wrote examples/output\ks_test.svg

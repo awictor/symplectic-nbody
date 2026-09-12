@@ -17,4 +17,4 @@ Carnot: no engine beats eta = 1 - T_c/T_h
   delivers many times the heat of the work it draws (COP >> 1), which is why
   heat pumps beat resistive heaters -- they move heat rather than make it.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\carnot.svg
+  wrote examples/output\carnot.svg

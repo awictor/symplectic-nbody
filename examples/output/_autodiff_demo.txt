@@ -14,4 +14,4 @@ Reverse-mode automatic differentiation: exact gradients through any expression
     learned params: a=2.000, b=1.500, c=0.500
     loss 3.0001 -> 0.000000
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\autodiff.svg
+  wrote examples/output\autodiff.svg

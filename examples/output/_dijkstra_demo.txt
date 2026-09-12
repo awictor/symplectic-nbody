@@ -22,4 +22,4 @@ Dijkstra: cheapest route from a source to every node
     ...#...#.*
     .#.####..G
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\dijkstra.svg
+  wrote examples/output\dijkstra.svg

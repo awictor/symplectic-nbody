@@ -22,4 +22,4 @@ Bezier curves: shaped by control points, evaluated by de Casteljau
   -- that point is on the curve. Keeping the triangle's outer edges splits the curve in
   two. It is numerically stable and the basis of every vector-graphics renderer.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\bezier.svg
+  wrote examples/output\bezier.svg

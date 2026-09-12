@@ -20,4 +20,4 @@ Chinese Remainder Theorem: a number from its remainders
   sum(r_i * M_i * (M_i^-1 mod m_i)) where M_i = M/m_i -- each term hits r_i in its own
   modulus and 0 in the others. The extended Euclidean algorithm supplies the inverses.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\crt.svg
+  wrote examples/output\crt.svg

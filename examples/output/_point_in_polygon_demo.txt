@@ -17,4 +17,4 @@ Point-in-polygon: ray casting vs winding number
   self-overlapping one, even-odd cancels a doubly-wrapped region to 'out' while winding
   keeps it 'in'. Both handle concavity that a convex side-test cannot.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\point_in_polygon.svg
+  wrote examples/output\point_in_polygon.svg

@@ -20,4 +20,4 @@ Multi-armed bandit: exploration vs exploitation
     arm 3: pulled  38, mean 0.395, UCB 0.967  (true 0.4)
     arm 4: pulled 108, mean 0.630, UCB 0.969  (true 0.6)
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\bandit.svg
+  wrote examples/output\bandit.svg

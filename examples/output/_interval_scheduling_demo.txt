@@ -20,4 +20,4 @@ Weighted interval scheduling: the most valuable non-conflicting jobs
   (binary search). Then opt(i) = max(skip job i, value_i + opt(p(i))). O(n log n), and
   tracing back the max choices recovers the chosen set. Equal weights reduce to the greedy.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\interval_scheduling.svg
+  wrote examples/output\interval_scheduling.svg

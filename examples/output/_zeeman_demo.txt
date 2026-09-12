@@ -16,4 +16,4 @@ Zeeman effect: delta_E = g_J m_J mu_B B splits levels (mu_B = 9.274e-24 J/T)
   Sun's magnetic field. The normal triplet (g=1) is the Lorentz-triplet classical
   physics got right; the uneven anomalous patterns forced the discovery of spin.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\zeeman.svg
+  wrote examples/output\zeeman.svg

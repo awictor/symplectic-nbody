@@ -16,4 +16,4 @@ Reservoir sampling: keep a uniform k-sample of a stream of unknown length
   matter how long the stream. It powers log sampling, A/B test bucketing, and
   random line selection from a file too big to hold in memory.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\reservoir.svg
+  wrote examples/output\reservoir.svg

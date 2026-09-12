@@ -21,4 +21,4 @@ Line-segment intersection via the orientation predicate
   at its endpoints); zero orientations mean collinear/touching, settled by a bounding-box
   check. No slopes, so vertical segments are no trouble -- the robust geometric predicate.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\segment_intersection.svg
+  wrote examples/output\segment_intersection.svg

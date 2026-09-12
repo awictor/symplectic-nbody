@@ -24,4 +24,4 @@ Merkle tree: O(log n) proofs that a block belongs to a dataset
   the whole ordered set. An inclusion proof is the sibling hash at each level up to the
   root -- recompute the path, check it lands on the trusted root. Flip any bit and it won't.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\merkle.svg
+  wrote examples/output\merkle.svg

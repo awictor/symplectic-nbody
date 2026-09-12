@@ -14,4 +14,4 @@ Eulerian paths and circuits: every edge exactly once
 
   bowtie trail valid + closed: True
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\eulerian.svg
+  wrote examples/output\eulerian.svg

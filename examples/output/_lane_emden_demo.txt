@@ -12,4 +12,4 @@ Lane-Emden stellar structure: polytrope index n
   exact sin(xi)/xi; n=3 is the Eddington standard model of a star;
   n=5 has finite mass but infinite radius.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\lane_emden.svg
+  wrote examples/output\lane_emden.svg

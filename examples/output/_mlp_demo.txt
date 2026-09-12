@@ -15,4 +15,4 @@ Multi-layer perceptron + backpropagation
   the gradient flows back layer by layer, each reusing the gradient handed down from
   above, so the whole gradient costs one backward pass. Gradient descent does the rest.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\mlp.svg
+  wrote examples/output\mlp.svg

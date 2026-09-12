@@ -35,4 +35,4 @@ Skip list: an ordered map with express lanes for O(log n) search
   bound as a balanced tree, but with random splices instead of rotations. No
   rebalancing: insert picks a random height and links in; delete unlinks. (Redis uses it.)
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\skiplist.svg
+  wrote examples/output\skiplist.svg

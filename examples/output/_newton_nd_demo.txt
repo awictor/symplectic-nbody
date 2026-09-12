@@ -24,4 +24,4 @@ Newton's method in n dimensions: J(x) delta = -F(x), x <- x + delta
   line search that backtracks until the residual falls buys global robustness. This is
   the solver inside circuit simulation, inverse kinematics, and chemical equilibrium.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\newton_nd.svg
+  wrote examples/output\newton_nd.svg

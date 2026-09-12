@@ -19,4 +19,4 @@ Aho-Corasick: match a whole dictionary of patterns in one left-to-right scan
   independent of the pattern count, unlike running one search per pattern. It powers
   virus scanners, spam filters, and DNA motif search.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\aho_corasick.svg
+  wrote examples/output\aho_corasick.svg

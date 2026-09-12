@@ -26,4 +26,4 @@ Differential evolution: DE/rand/1/bin -- donor = a + F*(b - c)
   as it converges (refining), with no schedule to tune. Greedy selection keeps the best
   monotone. It is one of the most robust black-box optimizers for continuous problems.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\differential_evolution.svg
+  wrote examples/output\differential_evolution.svg

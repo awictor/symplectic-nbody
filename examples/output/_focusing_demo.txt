@@ -16,4 +16,4 @@ Gravitational focusing (100 km planetesimal)
   fastest -- runaway growth that seeds planetary embryos. Stir the swarm
   up (high v_inf) and only direct hits count: growth slows to geometric.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\focusing.svg
+  wrote examples/output\focusing.svg

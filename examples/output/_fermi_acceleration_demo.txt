@@ -22,4 +22,4 @@ Fermi acceleration: shocks stamp a power law N(E) ~ E^(-p)
   Every strong shock converges to r=4, p=2 -- so supernova remnants across
   the Galaxy all inject nearly the same E^(-2) cosmic-ray spectrum.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\fermi_acceleration.svg
+  wrote examples/output\fermi_acceleration.svg

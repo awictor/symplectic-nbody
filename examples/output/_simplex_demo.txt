@@ -17,4 +17,4 @@ The simplex method: linear programming by walking polytope vertices
   that improves the objective, until none does -- then that vertex is provably optimal.
   Bland's rule (smallest-index pivot) prevents cycling on degenerate problems.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\simplex.svg
+  wrote examples/output\simplex.svg

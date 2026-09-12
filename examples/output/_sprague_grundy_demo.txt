@@ -17,4 +17,4 @@ Sprague-Grundy: every impartial game is a Nim heap of size = its Grundy number
   Composition: a position with a Nim heap of 5 and a Kayles row of 4 has Grundy
     5 XOR 1 = 4. Combine any games by XOR-ing nimbers.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\sprague_grundy.svg
+  wrote examples/output\sprague_grundy.svg

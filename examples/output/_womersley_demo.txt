@@ -12,4 +12,4 @@ Womersley number alpha = R sqrt(omega/nu): does flow keep up with the heartbeat?
   down the arterial tree far faster than the blood itself moves. High alpha in the
   aorta flattens the profile to a plug and makes the flow lag the pressure by ~90 deg.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\womersley.svg
+  wrote examples/output\womersley.svg

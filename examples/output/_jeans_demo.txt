@@ -18,4 +18,4 @@ Jeans instability: the collapse threshold (c_s = rho0 = G = 1)
   the gas collapses -- the birth of a star. Above it, pressure wins and
   the perturbation is just a sound wave.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\jeans.svg
+  wrote examples/output\jeans.svg

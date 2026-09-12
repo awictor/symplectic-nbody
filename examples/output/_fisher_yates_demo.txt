@@ -14,4 +14,4 @@ Fisher-Yates: swap each position with a random one in the UNSHUFFLED tail
   only n! permutations -- and n^n isn't divisible by n!, so some orderings win. Only
   the shrinking range makes every permutation exactly equally likely.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\fisher_yates.svg
+  wrote examples/output\fisher_yates.svg

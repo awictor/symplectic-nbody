@@ -27,4 +27,4 @@ Union-Find: merge groups and query connectivity in ~O(1) amortized
   in constant time -- which is the whole of Kruskal. It also drives image
   segmentation, percolation, and 'friend circle' / account-merge problems.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\union_find.svg
+  wrote examples/output\union_find.svg

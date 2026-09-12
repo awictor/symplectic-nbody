@@ -11,4 +11,4 @@ Gambler's ruin: bet $1 a round from i dollars, absorbed at 0 or N=100
   chance leaps from 50% to 88% -- and against an infinitely rich house any p <= 1/2 is
   ruin with certainty. That asymmetry is why the house always wins.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\gamblers_ruin.svg
+  wrote examples/output\gamblers_ruin.svg

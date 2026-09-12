@@ -21,4 +21,4 @@ Bridges and articulation points: a 10-node, 3-cluster network
   cut any one and the network splits. Tarjan finds them in one O(V+E) DFS pass; the naive
   check would delete each edge and recount components, O(V*(V+E)).
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\bridges.svg
+  wrote examples/output\bridges.svg

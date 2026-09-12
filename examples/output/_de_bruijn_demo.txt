@@ -27,4 +27,4 @@ De Bruijn sequences: every length-n window exactly once
   (n-1)-length strings, edges are the n-length strings, and every vertex has equal in-
   and out-degree, so Hierholzer's cycle-splicing finds a walk using every edge once.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\de_bruijn.svg
+  wrote examples/output\de_bruijn.svg

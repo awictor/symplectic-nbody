@@ -20,4 +20,4 @@ Arithmetic coding vs Huffman vs entropy
   tiny interval names the message. Integer range coding with renormalization keeps it
   exact without unbounded-precision reals -- the entropy coder inside JPEG and H.264.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\arithmetic_coding.svg
+  wrote examples/output\arithmetic_coding.svg

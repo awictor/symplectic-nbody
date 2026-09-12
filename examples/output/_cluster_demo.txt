@@ -12,4 +12,4 @@ Galaxy clusters: virial temperature and the M-T relation
   bremsstrahlung X-rays. Because kT ~ M^{2/3}, an X-ray temperature
   measures the cluster's total (mostly dark) mass -- how clusters are weighed.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\cluster.svg
+  wrote examples/output\cluster.svg

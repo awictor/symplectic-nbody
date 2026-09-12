@@ -21,4 +21,4 @@ AHU tree isomorphism: a canonical string that is equal iff trees match
   middle of its longest path), found by peeling leaves. General GRAPH isomorphism has no
   known polynomial algorithm, but trees fall in linear time to this bottom-up hashing.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\tree_isomorphism.svg
+  wrote examples/output\tree_isomorphism.svg

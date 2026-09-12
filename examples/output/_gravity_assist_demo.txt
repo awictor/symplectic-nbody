@@ -17,4 +17,4 @@ Gravity assist: bend v_inf in the planet's frame, gain in the Sun's
   way to reach Solar-System escape speed on a fraction of the fuel a direct
   burn would need, while the planets lost a laughably tiny bit of energy.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\gravity_assist.svg
+  wrote examples/output\gravity_assist.svg

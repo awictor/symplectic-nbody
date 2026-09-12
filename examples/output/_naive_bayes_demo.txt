@@ -33,4 +33,4 @@ Multinomial naive Bayes: word counts, a classic spam filter
   log-evidence gives a fast, strong classifier trained in a single counting pass. It is
   the baseline every fancier text or tabular model has to beat.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\naive_bayes.svg
+  wrote examples/output\naive_bayes.svg

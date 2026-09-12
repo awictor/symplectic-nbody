@@ -22,4 +22,4 @@ Baby-step giant-step: discrete logarithm in O(sqrt(n))
   then take giant steps h*(g^-N)^i and look each up. A hit gives x = i*N + j. Both loops
   run sqrt(n) times -- exponentially faster than brute force, but still exponential in bits.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\discrete_log.svg
+  wrote examples/output\discrete_log.svg

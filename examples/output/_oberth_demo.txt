@@ -9,4 +9,4 @@ The Oberth effect: the same burn buys more energy at high speed
   why a powered gravity assist (an Oberth maneuver at closest approach)
   extracts far more than the same burn in deep space.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\oberth.svg
+  wrote examples/output\oberth.svg

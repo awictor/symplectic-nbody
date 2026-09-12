@@ -24,4 +24,4 @@ Minimum spanning arborescence: cheapest one-way broadcast tree
   reached from outside. This is the directed analogue of the minimum spanning tree, where
   Kruskal and Prim don't apply because edge directions constrain the tree.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\arborescence.svg
+  wrote examples/output\arborescence.svg

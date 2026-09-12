@@ -14,4 +14,4 @@ Tanh-sinh (double-exponential) quadrature: taming endpoint singularities
   toward the endpoints without ever reaching them, and the transformed integrand decays
   double-exponentially, so a plain trapezoid rule in t converges with astonishing speed.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\tanh_sinh.svg
+  wrote examples/output\tanh_sinh.svg

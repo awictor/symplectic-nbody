@@ -14,4 +14,4 @@ Debye shielding: lambda_D = sqrt(eps0 kT / n e^2); plasma if N_D >> 1
   Debye length is the screening radius, and with thousands of particles
   inside a Debye sphere the shielding is a smooth collective effect.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\debye.svg
+  wrote examples/output\debye.svg

@@ -28,4 +28,4 @@ Wavelet tree: rank, select, quantile, and range-count in O(log sigma)
   per element (upper half = 1, lower half = 0). Every query walks the O(log sigma)-deep
   tree, using bit-rank to map an index into the correct child -- succinct and fast.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\wavelet_tree.svg
+  wrote examples/output\wavelet_tree.svg

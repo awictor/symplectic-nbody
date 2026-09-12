@@ -18,4 +18,4 @@ Stark effect: an electric field splits (hydrogen: linearly) and ionizes atoms
   Rydberg atom ionizes in a field ten billion times weaker than the ground state --
   which is how Rydberg-atom detectors sense tiny fields and single microwave photons.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\stark.svg
+  wrote examples/output\stark.svg

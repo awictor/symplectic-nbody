@@ -21,4 +21,4 @@ The Hungarian algorithm: optimal assignment in O(n^3)
   set of lines and shifts the smallest uncovered value to create new ones -- until an
   optimal set of independent zeros appears. O(n^3), versus n! for brute force.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\hungarian.svg
+  wrote examples/output\hungarian.svg

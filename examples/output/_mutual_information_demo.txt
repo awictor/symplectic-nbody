@@ -30,4 +30,4 @@ Mutual information: how much one variable tells you about another
   independent, maximal for a deterministic relationship, and blind to nothing -- it
   catches any dependency, which is why it drives feature selection and tree splits.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\mutual_information.svg
+  wrote examples/output\mutual_information.svg

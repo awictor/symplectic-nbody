@@ -17,4 +17,4 @@ Bernoulli: P + 1/2 rho v^2 + rho g h = const -- fast flow, low pressure
   helps hold an airfoil up. A Pitot tube runs it backwards, stopping the flow
   to turn its speed into a pressure an aircraft reads as airspeed.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\bernoulli.svg
+  wrote examples/output\bernoulli.svg

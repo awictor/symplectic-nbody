@@ -26,4 +26,4 @@ Hierarchical agglomerative clustering: a tree of nested groupings
   the entire family of clusterings: cut the tree low for many tight groups, high for a
   few broad ones. No k needed up front -- read it off the biggest gap in merge heights.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\hierarchical.svg
+  wrote examples/output\hierarchical.svg

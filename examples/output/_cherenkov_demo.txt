@@ -15,4 +15,4 @@ Cherenkov radiation: cos(theta) = 1/(n beta), emit only if beta > 1/n
   optical sonic boom that glows blue in a reactor pool. The cone angle reads off
   the velocity, so ring-imaging Cherenkov detectors use it to identify particles.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\cherenkov.svg
+  wrote examples/output\cherenkov.svg

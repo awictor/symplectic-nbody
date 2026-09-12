@@ -19,4 +19,4 @@
   cells and queries both change constantly stays fast, where a static prefix-sum table
   would cost O(R*C) to rebuild after every single update.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\fenwick_2d.svg
+  wrote examples/output\fenwick_2d.svg

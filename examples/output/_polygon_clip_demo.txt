@@ -20,4 +20,4 @@ Sutherland-Hodgman polygon clipping: subject INTERSECT convex window
   crossing point wherever an edge exits or enters -- O(n*k) for an n-gon and k-edge
   convex window. This is how a renderer discards geometry outside the viewport.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\polygon_clip.svg
+  wrote examples/output\polygon_clip.svg

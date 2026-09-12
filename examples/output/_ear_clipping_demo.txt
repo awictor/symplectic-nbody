@@ -11,4 +11,4 @@ Ear-clipping triangulation: any simple polygon into n-2 triangles
   a convex vertex whose diagonal stays inside and whose triangle holds no other vertex.
   Clip the ear, repeat on the smaller polygon; n-2 triangles later, done. O(n^2).
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\ear_clipping.svg
+  wrote examples/output\ear_clipping.svg

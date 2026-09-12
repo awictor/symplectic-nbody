@@ -16,4 +16,4 @@ Relativistic Doppler: classical shift x time dilation
   Stilwell measured it in 1938 -- direct proof of time dilation. A measured
   redshift maps back to a speed: z = 1 means beta = 0.60.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\relativistic_doppler.svg
+  wrote examples/output\relativistic_doppler.svg

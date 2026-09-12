@@ -17,4 +17,4 @@ Manacher's algorithm: all palindromes in O(n)
   center. A running scan keeps the rightmost palindrome found; a new center inherits its
   mirror's radius for free and only expands beyond it -- so total work is linear.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\manacher.svg
+  wrote examples/output\manacher.svg

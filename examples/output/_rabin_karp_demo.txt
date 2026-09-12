@@ -19,4 +19,4 @@ Rabin-Karp: substring search by rolling hash
   matches the pattern's are compared in full, so search is O(n+m) on average -- and because
   every hash match is verified, the result is always exact, never fooled by a collision.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\rabin_karp.svg
+  wrote examples/output\rabin_karp.svg

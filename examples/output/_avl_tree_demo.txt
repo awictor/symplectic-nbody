@@ -23,4 +23,4 @@ AVL tree: a binary search tree that rotates itself back into balance
   to restore balance. Deterministic O(log n) worst case, where a skip list gets there
   probabilistically with coin flips instead of rotations.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\avl_tree.svg
+  wrote examples/output\avl_tree.svg

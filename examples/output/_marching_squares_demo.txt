@@ -19,4 +19,4 @@ Marching squares: iso-contours of a scalar field
   exactly where the field equals the level, so the curve is smooth. Two ambiguous saddle
   cases are resolved by the cell-center average. This is how every contour plot is drawn.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\marching_squares.svg
+  wrote examples/output\marching_squares.svg

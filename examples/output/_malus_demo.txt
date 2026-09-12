@@ -20,4 +20,4 @@ Malus's law I = I0 cos^2(theta): a polarizer passes the aligned field component
   With one polarizer a 90 deg turn kills the light; with many tiny steps it
   survives -- each cos^2 is nearly 1, so the polarization is dragged around intact.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\malus.svg
+  wrote examples/output\malus.svg

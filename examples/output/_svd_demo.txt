@@ -20,4 +20,4 @@ SVD: A = U S V^T -- orthonormal axes and the stretches between them
   the pseudo-inverse -- and PCA (SVD of centred data) finds the directions of greatest
   variance. It underlies image compression, recommender systems, and latent semantics.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\svd.svg
+  wrote examples/output\svd.svg

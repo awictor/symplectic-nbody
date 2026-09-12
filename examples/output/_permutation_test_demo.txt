@@ -1,0 +1,21 @@
+Permutation test: is the gap real, or just how the labels fell?
+
+  small trial (exact enumeration of all label assignments):
+    treated mean 5.72, control mean 3.50, observed diff 2.220
+    enumerated 126 permutations -> exact p = 0.0079
+    significant at 0.05
+
+  larger trial (Monte-Carlo, t-statistic, 20000 shuffles):
+    group A mean 10.41, group B mean 11.80
+    observed t = -2.327, p = 0.0227 (Monte-Carlo)
+
+  paired before/after (sign-flip, exact over 2**n sign patterns):
+    mean drop 1.762 across 8 subjects
+    enumerated 256 sign patterns -> p = 0.0078
+    significant at 0.05
+
+  The p-value IS the fraction of relabellings at least as extreme as what we saw. Under
+  the null the labels are exchangeable, so this fraction is the true tail probability --
+  exact when enumerated, Monte-Carlo estimated with the (b+1)/(B+1) correction otherwise.
+
+  wrote examples/output\permutation_test.svg

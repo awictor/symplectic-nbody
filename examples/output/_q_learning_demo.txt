@@ -16,4 +16,4 @@ Q-learning: model-free reinforcement learning from experience
   The TD update nudges Q(s,a) toward r + gamma max_a' Q(s',a') after each step -- learning
   the optimal action-values from raw experience, off-policy, while exploring epsilon-greedily.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\q_learning.svg
+  wrote examples/output\q_learning.svg

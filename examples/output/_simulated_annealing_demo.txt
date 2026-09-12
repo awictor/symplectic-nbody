@@ -22,4 +22,4 @@ Simulated annealing: global optimization by cooling a fictitious temperature
   settles. Cool slowly enough and it approaches the global optimum -- here a far shorter
   tour than greedy, and the true minimum of a function that traps hill-climbing.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\simulated_annealing.svg
+  wrote examples/output\simulated_annealing.svg

@@ -34,4 +34,4 @@ Elementary cellular automata: 256 rules, each an 8-bit lookup on 3 cells
   come fractals (90), chaos indistinguishable from random (30, once Mathematica's
   RNG), and universal computation (110). Complexity needs almost no ingredients.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\cellular_automaton.svg
+  wrote examples/output\cellular_automaton.svg

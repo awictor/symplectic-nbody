@@ -13,4 +13,4 @@ Roche lobes and binary mass transfer
   (cataclysmic variables, X-ray binaries); from a heavier donor it runs
   away -- the path to mergers and type-Ia supernovae.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\roche_lobe.svg
+  wrote examples/output\roche_lobe.svg

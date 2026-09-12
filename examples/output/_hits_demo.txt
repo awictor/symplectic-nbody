@@ -33,4 +33,4 @@ HITS: hubs and authorities (two scores per node)
   eigenvector of A'A, hubs of AA'. Kleinberg's HITS ran per query; PageRank runs once
   globally. Both turn the link graph into a ranking by linear algebra.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\hits.svg
+  wrote examples/output\hits.svg

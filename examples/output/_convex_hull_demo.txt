@@ -32,4 +32,4 @@ Convex hull: the tightest polygon enclosing a set of points
   would make a right turn. O(n log n), dominated by the sort. The farthest pair always
   lies on the hull, so the diameter needs only the hull vertices.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\convex_hull.svg
+  wrote examples/output\convex_hull.svg

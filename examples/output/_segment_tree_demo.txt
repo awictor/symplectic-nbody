@@ -30,4 +30,4 @@ Segment tree with lazy propagation: O(log n) range query AND range update
   nodes and pushes it to children only when a later operation visits them -- so add-to-a-
   window and query-a-window are both O(log n), which a Fenwick tree (point-update) can't do.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\segment_tree.svg
+  wrote examples/output\segment_tree.svg

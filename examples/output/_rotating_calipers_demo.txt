@@ -12,4 +12,4 @@ Rotating calipers: diameter, width, and minimum-area bounding box
   always among them), the thinnest slab gives the width, and the minimum-area rectangle
   must have a side flush with a hull edge -- so all three fall out of one hull sweep.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\rotating_calipers.svg
+  wrote examples/output\rotating_calipers.svg

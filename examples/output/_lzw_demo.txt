@@ -24,4 +24,4 @@ LZW: adaptive dictionary compression (GIF / Unix compress)
   same dictionary as they read, the compressed stream is just integer codes -- no
   dictionary transmitted, one pass, and the ratio improves the longer the patterns run.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\lzw.svg
+  wrote examples/output\lzw.svg

@@ -24,4 +24,4 @@ Exact rational RREF: linear algebra with certainty, no floating-point error
   floating-point solver that might see 1e-16 and guess wrong. Essential for computer
   algebra, exact geometry, and any rank decision that must be provably correct.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\rational_rref.svg
+  wrote examples/output\rational_rref.svg

@@ -17,4 +17,4 @@ Tarjan's SCC: collapsing a directed graph's cycles into a DAG
   smallest index reachable via one back-edge from its subtree). A vertex whose low-link
   equals its index is an SCC root; the stack above it forms the component. O(V+E).
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\tarjan_scc.svg
+  wrote examples/output\tarjan_scc.svg

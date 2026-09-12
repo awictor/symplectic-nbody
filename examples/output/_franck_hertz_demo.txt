@@ -21,4 +21,4 @@ Franck-Hertz: current dips prove quantized atomic energy (mercury, 4.9 eV)
   dump exactly that quantum inelastically and arrive too slow to be collected -- so
   the current drops. Repeating dips = repeated excitations = energy is quantized.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\franck_hertz.svg
+  wrote examples/output\franck_hertz.svg

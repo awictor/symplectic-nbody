@@ -14,4 +14,4 @@ Black-hole shadow: apparent size 3 sqrt(3) r_s = 5.2 r_s (EHT)
   angular size of an orange on the Moon, which is why the EHT had to link radio
   dishes across the whole Earth to resolve them.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\black_hole_shadow.svg
+  wrote examples/output\black_hole_shadow.svg

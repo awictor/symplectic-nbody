@@ -12,4 +12,4 @@ CMA-ES: covariance matrix adaptation for black-box minimization
   samples, adapts the step size from the length of its cumulative path, and bends the
   covariance toward recent progress -- learning the landscape's curvature without gradients.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\cma_es.svg
+  wrote examples/output\cma_es.svg

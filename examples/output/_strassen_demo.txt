@@ -29,4 +29,4 @@ Strassen's algorithm: multiplying matrices with 7 sub-products, not 8
   exponent from 3 to log2(7) ~ 2.807 -- the first sub-cubic matrix multiply, and the
   starting gun for the decades-long race to lower the exponent further.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\strassen.svg
+  wrote examples/output\strassen.svg

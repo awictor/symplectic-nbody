@@ -20,4 +20,4 @@ Particle swarm optimization: a flock of solutions homing on the optimum
   the swarm's best (social); r1,r2 keep it stochastic. High inertia explores, low
   inertia exploits -- decaying it does both in turn. No gradients, just local rules.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\particle_swarm.svg
+  wrote examples/output\particle_swarm.svg

@@ -28,4 +28,4 @@ k-nearest-neighbours: lazy, non-parametric classification
   neighbours at query time. Small k means low bias but high variance (jagged, noise-
   fitting); large k means the opposite. Cross-validation finds the balance.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\knn.svg
+  wrote examples/output\knn.svg

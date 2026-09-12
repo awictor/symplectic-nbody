@@ -13,4 +13,4 @@ Greenhouse effect: T_surf = T_eq (1 + 3 tau / 4)^(1/4)
   lead-melting 737 K: the runaway greenhouse. Nearly airless Mars and
   hazy-but-cold Titan sit close to their equilibrium temperatures.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\greenhouse.svg
+  wrote examples/output\greenhouse.svg

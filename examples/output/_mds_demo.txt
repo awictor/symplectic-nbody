@@ -37,4 +37,4 @@ Classical MDS: reconstructing a map from a distance table
   recovered up to rotation, reflection, and translation -- distances fix shape, not
   orientation -- so Procrustes rotates the reconstruction back onto the known layout.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\mds.svg
+  wrote examples/output\mds.svg

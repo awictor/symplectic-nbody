@@ -36,4 +36,4 @@ Flood fill: paint bucket, region growing, connected components
   and below -- far fewer stack operations on big flat regions. Run it from every
   unlabeled cell and you get connected-component labeling, the atom of image analysis.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\flood_fill.svg
+  wrote examples/output\flood_fill.svg

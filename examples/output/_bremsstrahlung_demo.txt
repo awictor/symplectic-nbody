@@ -12,4 +12,4 @@ Thermal bremsstrahlung of cluster gas (T = 5e+07 K)
   the Hubble time; the tenuous outskirts effectively never cool. This is
   the X-ray emission whose CMB imprint is the SZ effect.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output/bremsstrahlung.svg
+  wrote examples/output/bremsstrahlung.svg

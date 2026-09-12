@@ -11,4 +11,4 @@ Coupon collector: expected draws to collect all n coupons is E[T] = n * H_n
   as getting the first 35. That n ln n law sets cache warmup, random test coverage,
   and how many samples it takes to see every category at least once.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\coupon_collector.svg
+  wrote examples/output\coupon_collector.svg

@@ -23,4 +23,4 @@ Maximum flow: Edmonds-Karp, min-cut, and bipartite matching
   always takes the shortest such path (BFS) for O(V E^2) time. When no augmenting path
   remains, the source-reachable residual set defines the minimum cut = the maximum flow.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\max_flow.svg
+  wrote examples/output\max_flow.svg

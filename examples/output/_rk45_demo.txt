@@ -21,4 +21,4 @@ Dormand-Prince RK45: adaptive-step ODE solving
   difference estimates the local error, which accepts/rejects the step and rescales it by
   (tol/error)^(1/5). Big steps in calm regions, tiny steps through rapid change.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\rk45.svg
+  wrote examples/output\rk45.svg

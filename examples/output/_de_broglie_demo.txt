@@ -15,4 +15,4 @@ de Broglie wavelength: lambda = h / p -- everything is a wave
   why electron microscopes resolve atoms, and a thermal neutron's ~0.1 nm
   matches crystal spacing, making neutron diffraction a structural probe.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\de_broglie.svg
+  wrote examples/output\de_broglie.svg

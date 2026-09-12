@@ -29,4 +29,4 @@ Sweep-line segment intersection: all crossings, less than all-pairs work
   compared, and because any crossing pair is active together at some sweep position, none
   is missed.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\bentley_ottmann.svg
+  wrote examples/output\bentley_ottmann.svg

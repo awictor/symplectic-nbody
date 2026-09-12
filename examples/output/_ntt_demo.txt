@@ -21,4 +21,4 @@ Number-theoretic transform: FFT in modular arithmetic -> EXACT integer convoluti
   convolution theorem holds identically, but the answer is exact mod p (and the true
   integer whenever the values stay below p). This powers arbitrary-precision multiplication.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\ntt.svg
+  wrote examples/output\ntt.svg

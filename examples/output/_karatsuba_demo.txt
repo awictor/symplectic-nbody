@@ -27,4 +27,4 @@ Karatsuba & Toom-Cook: fast multiplication by fewer sub-products
   in 3 and interpolates a degree-4 product from 5 evaluations, not 9. Each cut of the
   exponent matters enormously for the thousand-digit numbers inside bignum libraries.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\karatsuba.svg
+  wrote examples/output\karatsuba.svg

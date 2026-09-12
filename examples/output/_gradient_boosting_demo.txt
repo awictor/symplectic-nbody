@@ -33,4 +33,4 @@ Gradient boosting: shallow trees added in sequence, each fixing the last's error
   negative gradient of the loss), and a shrunken step of it is added to the model. Small
   learning rates plus many shallow trees is the recipe that wins tabular competitions.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\gradient_boosting.svg
+  wrote examples/output\gradient_boosting.svg

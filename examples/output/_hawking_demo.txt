@@ -14,4 +14,4 @@ Hawking radiation: black holes are not black
   A stellar black hole is nanokelvin-cold and effectively eternal;
   its entropy exceeds that of everything else in the observable universe.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\hawking.svg
+  wrote examples/output\hawking.svg

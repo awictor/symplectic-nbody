@@ -18,4 +18,4 @@ Fick diffusion: a random walk spreads as sqrt(t), not t
   Diffusion is quick across a cell but takes ~30 years across a room, since time
   scales as L^2/D -- why microscopic life relies on it and large bodies need flow.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\diffusion.svg
+  wrote examples/output\diffusion.svg

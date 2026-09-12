@@ -21,4 +21,4 @@ Gaussian process regression: prediction with honest error bars
   pinches to zero at noise-free data and flares back to the prior far away: uncertainty
   you can actually trust, which is why GPs drive Bayesian optimization and active learning.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\gaussian_process.svg
+  wrote examples/output\gaussian_process.svg

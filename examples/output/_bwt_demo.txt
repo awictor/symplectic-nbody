@@ -26,4 +26,4 @@ Burrows-Wheeler transform + the bzip2-style pipeline
   small numbers (mostly zeros), and run-length collapses those into (value, count) pairs.
   Every stage inverts exactly, so the pipeline is lossless: this is bzip2's core.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\bwt.svg
+  wrote examples/output\bwt.svg

@@ -31,4 +31,4 @@ Weighted union-find: solving 'X - Y = d' difference constraints incrementally
   relation; if the two are already connected it instead CHECKS consistency -- so a stream
   of relative measurements is validated in near-constant amortised time per constraint.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\weighted_dsu.svg
+  wrote examples/output\weighted_dsu.svg

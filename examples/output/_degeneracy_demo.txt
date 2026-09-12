@@ -14,4 +14,4 @@ Fermi degeneracy pressure: the quantum floor under dead stars
   That softer exponent is exactly why gravity eventually wins in a
   massive white dwarf -- the origin of the Chandrasekhar mass.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\degeneracy.svg
+  wrote examples/output\degeneracy.svg

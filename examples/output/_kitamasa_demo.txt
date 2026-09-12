@@ -21,4 +21,4 @@ Kitamasa: the N-th linear-recurrence term without unrolling
   O(k^2 log n) -- for n = 10^18 that is a few dozen polynomial multiplies, versus a
   quintillion additions to unroll. It beats even the O(k^3 log n) companion-matrix power.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\kitamasa.svg
+  wrote examples/output\kitamasa.svg

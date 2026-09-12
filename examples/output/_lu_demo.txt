@@ -47,4 +47,4 @@ Cholesky: A = L L' for a symmetric positive-definite A (half the work, no pivoti
   LU factors any square matrix and powers solves, determinants, and inverses;
   Cholesky is the smaller, stabler SPD special case behind least squares and Kalman.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\lu.svg
+  wrote examples/output\lu.svg

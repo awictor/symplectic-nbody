@@ -26,4 +26,4 @@ Galton board: 12 peg rows, each bead L/R by a coin flip -> binomial -> Gaussian
   No bead is steered, yet thousands pile into a smooth bell curve -- the central
   limit theorem made physical. Bias the pegs and the whole pile slides to np.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\galton.svg
+  wrote examples/output\galton.svg

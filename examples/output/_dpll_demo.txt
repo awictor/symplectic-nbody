@@ -18,4 +18,4 @@ DPLL: Boolean satisfiability by backtracking with propagation
   Unit propagation on a forcing chain x1 -> x2 -> ... -> x5:
     x1=T x2=T x3=T x4=T x5=T  -- one forced unit cascades through the whole chain.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\dpll.svg
+  wrote examples/output\dpll.svg

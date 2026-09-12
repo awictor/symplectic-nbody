@@ -16,4 +16,4 @@ Sedov-Taylor blast wave
   R grows as t^2/5 and the shock decelerates as t^-3/5. The same self-
   similar law dates supernova remnants and (run backwards) weighed the bomb.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\sedov.svg
+  wrote examples/output\sedov.svg

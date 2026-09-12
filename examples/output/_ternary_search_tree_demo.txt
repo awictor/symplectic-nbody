@@ -25,4 +25,4 @@ Ternary search tree: trie prefix power with BST space
   alternatives at this position, and a middle link that advances to the next character
   (spelling a key, like a trie). One three-way comparison drives every operation.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\ternary_search_tree.svg
+  wrote examples/output\ternary_search_tree.svg

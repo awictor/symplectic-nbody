@@ -22,4 +22,4 @@ Kalman filter: optimal tracking of a hidden state from noisy measurements
   either the model or the sensor alone -- and the backward smoother, using future data,
   beats the causal filter. This is the math behind GPS, guidance, and sensor fusion.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\kalman.svg
+  wrote examples/output\kalman.svg

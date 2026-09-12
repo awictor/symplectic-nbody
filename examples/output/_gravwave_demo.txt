@@ -6,6 +6,6 @@ Gravitational-wave inspiral (equal-mass binary, GR amplified: v/c~0.20)
   orbital frequency chirps up 4.2x:
                                             ...............:::::::---==+*@
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\gw_inspiral.svg
+  wrote examples/output\gw_inspiral.svg
   Same mechanism as GW150914: the binary radiates orbital energy as
   gravitational waves and spirals to merger, chirping as it goes.

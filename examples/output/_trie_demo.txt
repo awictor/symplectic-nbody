@@ -28,4 +28,4 @@ Trie: prefix tree for autocomplete and O(len) lookup
   words sharing a prefix share its path. That per-character walk is what powers
   autocomplete, spell-check, and longest-prefix IP routing.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\trie.svg
+  wrote examples/output\trie.svg

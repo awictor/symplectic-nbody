@@ -26,4 +26,4 @@ Closest pair of points: O(n log n) divide and conquer
   each point can beat d against at most a constant number of neighbours. Linear merge,
   so T(n) = 2T(n/2) + O(n) = O(n log n): geometry beating the quadratic.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\closest_pair.svg
+  wrote examples/output\closest_pair.svg

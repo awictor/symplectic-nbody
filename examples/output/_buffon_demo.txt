@@ -18,4 +18,4 @@ Buffon's needle: P(cross) = 2L/(pi d), so pi ~ 2 L N / (d C)
   stick lands across a floorboard. No measurement of pi enters anywhere; it emerges
   from the geometry of random position and angle. The first problem in geometric probability.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\buffon.svg
+  wrote examples/output\buffon.svg

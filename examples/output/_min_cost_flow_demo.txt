@@ -18,4 +18,4 @@ Minimum-cost maximum flow: a factory-to-store shipping network
   Same engine, assignment problem: 3 workers -> 3 jobs, min cost 9
     worker->job: [1, 0, 2]  (worker i takes job assign[i])
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\min_cost_flow.svg
+  wrote examples/output\min_cost_flow.svg

@@ -56,4 +56,4 @@ Bresenham rasterization: lines and circles from integer arithmetic only
   correct the error -- no floating point, no division, no rounding. The midpoint circle
   does the same with a decision variable and draws one octant, mirroring it eight ways.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\bresenham.svg
+  wrote examples/output\bresenham.svg

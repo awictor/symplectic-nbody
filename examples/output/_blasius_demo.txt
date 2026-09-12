@@ -13,4 +13,4 @@ Blasius boundary layer: delta = 5.0 x / sqrt(Re_x)  (air, U = 10 m/s)
   The layer thickens as sqrt(x) -- a couple of mm over the front of a wing -- while
   the skin friction thins as 1/sqrt(x), heaviest right at the sharp leading edge.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\blasius.svg
+  wrote examples/output\blasius.svg

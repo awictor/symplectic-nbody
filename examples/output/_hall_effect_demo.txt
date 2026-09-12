@@ -15,4 +15,4 @@ Hall effect: V_H = I B / (n q t) reveals carrier density AND sign
   vs microvolts in a metal: fewer carriers, bigger V_H. Mobility follows from
   mu = |R_H| sigma -- n-Si here: mu = 0.624 m^2/Vs, Hall angle 32.0 deg at 1 T.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\hall_effect.svg
+  wrote examples/output\hall_effect.svg

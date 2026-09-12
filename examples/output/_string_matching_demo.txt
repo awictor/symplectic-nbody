@@ -30,4 +30,4 @@ Linear-time string matching: KMP, Z-algorithm, Manacher
   is O(n*m) and naive palindrome search O(n^2); these are all O(n) -- the difference
   between scanning a genome once and scanning it thousands of times.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\string_matching.svg
+  wrote examples/output\string_matching.svg

@@ -16,4 +16,4 @@ Gale-Shapley stable matching: applicants <-> schools
   ever trade up and applicants only ever move down their list, it ends in <= n^2 proposals
   with a provably stable result -- the mechanism behind real residency and school matches.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\gale_shapley.svg
+  wrote examples/output\gale_shapley.svg

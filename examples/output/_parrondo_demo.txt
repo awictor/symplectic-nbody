@@ -11,4 +11,4 @@ Parrondo's paradox: game A loses, game B loses, but A-and-B-mixed WINS
   occupancy so the good coin comes up more, and the combined drift turns positive.
   The same flashing-ratchet trick drives molecular motors: order pumped from noise.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\parrondo.svg
+  wrote examples/output\parrondo.svg

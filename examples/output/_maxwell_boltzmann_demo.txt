@@ -16,4 +16,4 @@ Maxwell-Boltzmann speeds at T = 300 K (mean KE = 0.039 eV)
   fraction above 3 v_p is only ~0.04%: the exp(-v^2) tail is thin, but it
   is exactly that tail that lets atoms escape gravity and nuclei fuse.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\maxwell_boltzmann.svg
+  wrote examples/output\maxwell_boltzmann.svg

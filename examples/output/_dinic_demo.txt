@@ -24,4 +24,4 @@ Dinic's algorithm: maximum flow by layered blocking flows
   path. The sink's level strictly rises per phase, so only O(V) phases run -- far fewer
   augmentations than one-path-at-a-time Ford-Fulkerson.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\dinic.svg
+  wrote examples/output\dinic.svg

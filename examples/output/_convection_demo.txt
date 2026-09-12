@@ -13,4 +13,4 @@ Convective heat transfer: q = h (T_s - T_inf),  Nu = h L / k
   exponential T(t) = T_inf + (T0 - T_inf) e^(-t/tau). Stiffer convection = bigger h
   = shorter tau: still air takes ~an hour, forced water seconds. Newton's law again.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\convection.svg
+  wrote examples/output\convection.svg

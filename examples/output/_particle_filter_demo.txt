@@ -18,4 +18,4 @@ Particle filter: sequential Monte-Carlo estimation of a nonlinear system
   it just pushes a cloud of samples through the true dynamics, reweights by the
   measurement likelihood, and resamples to concentrate on where the posterior lives.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\particle_filter.svg
+  wrote examples/output\particle_filter.svg

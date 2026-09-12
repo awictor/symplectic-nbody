@@ -456,6 +456,7 @@ def main():
     import gjk_demo
     import ks_test_demo
     import bootstrap_demo
+    import permutation_test_demo
 
     import plot_orbits
 
@@ -881,6 +882,7 @@ def main():
     gjk_txt = run("gjk_demo", gjk_demo.main, True)
     ks_test_txt = run("ks_test_demo", ks_test_demo.main, True)
     bootstrap_txt = run("bootstrap_demo", bootstrap_demo.main, True)
+    permutation_test_txt = run("permutation_test_demo", permutation_test_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7210,6 +7212,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("bootstrap.svg"), "the bootstrap distribution of the mean from 3000 resamples: the histogram approximates the sampling distribution and the green band is the 95% confidence interval read straight off its percentiles")
             + f'<div class="card">{pre(bootstrap_txt)}</div>'
+            + '</div>'),
+        section(
+            "Permutation test: significance by shuffling labels",
+            "A permutation test asks whether the gap between two groups is bigger than what random "
+            "relabelling of the pooled data would produce. Under the null that the two samples come "
+            "from the same distribution the group labels are EXCHANGEABLE, so every assignment of the "
+            "pool to 'A' and 'B' is equally likely: compute the observed statistic, recompute it for "
+            "each relabelling, and the fraction at least as extreme IS the p-value -- no t-distribution, "
+            "no normality, no variance formula, exact by construction. For small samples this module "
+            "ENUMERATES all C(N, n_A) relabellings for a truly exact tail probability; past a threshold "
+            "it switches to Monte-Carlo, sampling a few thousand shuffles with the (b+1)/(B+1) "
+            "correction so the estimate is never zero and stays conservative. The statistic is "
+            "pluggable (difference in means or medians, the Welch t) and a paired sign-flip test covers "
+            "before/after designs by enumerating the 2**n sign patterns. Validated three ways -- the "
+            "Monte-Carlo p matches complete enumeration within sampling error, it tracks the analytic "
+            "t-test p on genuinely-normal samples, and under a true null (both groups from the same "
+            "distribution) it rejects at about the nominal rate over many seeded trials.",
+            '<div class="grid">'
+            + svg_card(out("permutation_test.svg"), "the permutation null distribution of the difference in means from 6000 label shuffles: red bars are relabellings at least as extreme as the observed yellow value -- their mass is the two-sided p-value")
+            + f'<div class="card">{pre(permutation_test_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

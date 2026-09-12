@@ -16,4 +16,4 @@ WalkSAT: solving SAT by flipping variables to repair conflicts
   solution almost instantly, which is why stochastic local search underpins the fastest
   incomplete SAT solvers.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\walksat.svg
+  wrote examples/output\walksat.svg

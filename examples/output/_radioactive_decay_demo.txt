@@ -23,4 +23,4 @@ Radioactive decay: N = N0 2^(-t/t_half); age = t_half log2(N0/N)
   equilibrium, where daughter activity equals parent activity. That balance
   runs medical radioisotope generators and the radon from uranium in rock.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\radioactive_decay.svg
+  wrote examples/output\radioactive_decay.svg

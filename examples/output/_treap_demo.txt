@@ -26,4 +26,4 @@ Treap: a balanced BST from random priorities (tree + heap)
   so its shape equals a BST built from a random insertion order -- balanced with high
   probability. Split and merge (which AVL/red-black trees don't expose) fall out for free.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\treap.svg
+  wrote examples/output\treap.svg

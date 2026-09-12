@@ -25,4 +25,4 @@ Lyndon words: the primes of string concatenation
     ['a', 'aaab', 'aab', 'aabb', 'ab', 'abb', 'abbb', 'b']
     De Bruijn B(2,4) = aaaabaabbababbbb  (length 16 = 2^4)
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\lyndon.svg
+  wrote examples/output\lyndon.svg

@@ -21,4 +21,4 @@ Berlekamp-Massey: find the shortest linear recurrence behind a sequence
     Once you see 2L bits, Berlekamp-Massey recovers the whole register and predicts
     every future bit -- why a raw LFSR is cryptographically useless despite a long period.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\berlekamp_massey.svg
+  wrote examples/output\berlekamp_massey.svg

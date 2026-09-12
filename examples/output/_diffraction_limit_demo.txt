@@ -16,4 +16,4 @@ Diffraction limit: theta = 1.22 lambda / D -- aperture sets resolution
   sodium doublet (589.0 vs 589.6 nm). Bigger apertures and more grating lines are
   the only way past the wave-optics floor; it's why telescopes and dishes grow huge.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\diffraction_limit.svg
+  wrote examples/output\diffraction_limit.svg

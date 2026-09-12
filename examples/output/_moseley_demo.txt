@@ -17,4 +17,4 @@ Moseley's law: sqrt(f) = a(Z - 1) -- X-ray lines order the periodic table
   nuclear charge -- not atomic weight -- and its gaps predicted where undiscovered
   elements (technetium, promethium) had to be. Still the basis of XRF elemental ID.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\moseley.svg
+  wrote examples/output\moseley.svg

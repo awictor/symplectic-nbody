@@ -18,4 +18,4 @@ Hidden Markov model: the occasionally-dishonest casino
   (evaluate), Viterbi maxes over them (decode), Baum-Welch uses forward-backward soft
   counts to relearn the matrices (EM). All in log space so long sequences never underflow.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\hmm.svg
+  wrote examples/output\hmm.svg

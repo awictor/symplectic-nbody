@@ -16,4 +16,4 @@ Louvain community detection: finding a network's natural clusters
   modularity, then collapses communities into super-nodes and recurses. Each phase only
   raises modularity, so it converges fast to a strong hierarchical partition.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\louvain.svg
+  wrote examples/output\louvain.svg

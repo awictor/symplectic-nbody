@@ -62,4 +62,4 @@ Gray-Scott: du/dt = Du lap(u) - u v^2 + F(1-u), dv/dt = Dv lap(v) + u v^2 - (F+k
   uniform mix unstable, and it settles into standing spots and stripes with no
   template. Turing's model of morphogenesis: leopard spots, seashell ridges, and more.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\reaction_diffusion.svg
+  wrote examples/output\reaction_diffusion.svg

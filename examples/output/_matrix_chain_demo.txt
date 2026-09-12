@@ -21,4 +21,4 @@ Matrix-chain multiplication: the cheapest order to multiply a chain
   DP fills an n x n cost table in O(n^3): m[i][j] = min over split k of the cost of the
   two halves plus multiplying them. Recording each split reconstructs the optimal order.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\matrix_chain.svg
+  wrote examples/output\matrix_chain.svg

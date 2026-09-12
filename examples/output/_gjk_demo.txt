@@ -13,4 +13,4 @@ GJK: convex collision detection via the Minkowski difference
 
   example A x B collide: True (their Minkowski difference straddles 0)
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\gjk.svg
+  wrote examples/output\gjk.svg

@@ -24,4 +24,4 @@ Half-plane intersection: the feasible region of linear constraints
   (Sutherland-Hodgman) carves out their intersection -- a convex polygon, or empty if the
   constraints conflict. This is exactly the feasible region of a 2-D linear program.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\half_plane_intersection.svg
+  wrote examples/output\half_plane_intersection.svg

@@ -13,4 +13,4 @@ Birthday problem: with 365 days, just 23 people make a shared birthday likelier 
   PAIRS, ~k^2/2, that drives collisions -- the same square-root law makes a b-bit hash
   collide after ~2^(b/2) tries (the birthday attack), not 2^b.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\birthday.svg
+  wrote examples/output\birthday.svg

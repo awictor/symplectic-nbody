@@ -23,4 +23,4 @@ Rollback disjoint-set union: undoable connectivity
   union by rank -- each union changes O(1) state (one parent, maybe one rank) -- and records
   those changes on a stack, so a snapshot is a stack length and rollback replays it in reverse.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\dsu_rollback.svg
+  wrote examples/output\dsu_rollback.svg

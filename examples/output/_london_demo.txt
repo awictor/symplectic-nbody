@@ -17,4 +17,4 @@ London/Meissner: B(x) = B0 exp(-x/lambda_L), lambda_L = sqrt(m/(mu0 n_s q^2))
   through as quantized vortices (each carrying 2.07e-15 Wb) between H_c1 and H_c2 --
   which is how Nb-Ti and high-Tc magnets survive the huge fields of MRI and fusion.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\london.svg
+  wrote examples/output\london.svg

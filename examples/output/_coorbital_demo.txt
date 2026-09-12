@@ -7,4 +7,4 @@ Coorbital motion in the CR3BP rotating frame (mu = 0.001)
   horseshoe wraps around L3 enclosing both L4 and L5, turning back before
   it reaches the planet (like Saturn's moons Janus & Epimetheus).
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\coorbital.svg
+  wrote examples/output\coorbital.svg

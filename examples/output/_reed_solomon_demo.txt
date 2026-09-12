@@ -19,4 +19,4 @@ Reed-Solomon error correction over GF(256)
   Berlekamp-Massey -> Chien -> Forney pipeline recovers both the error positions and
   their values. This is the code in QR codes, CDs, and deep-space telemetry.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\reed_solomon.svg
+  wrote examples/output\reed_solomon.svg

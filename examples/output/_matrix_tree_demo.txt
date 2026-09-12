@@ -23,4 +23,4 @@ Matrix-Tree theorem: spanning trees = any cofactor of the Laplacian
   and its column, take the determinant -- that integer is the exact spanning-tree count. A
   single linear-algebra step replaces an exponential search over all edge subsets.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\matrix_tree.svg
+  wrote examples/output\matrix_tree.svg

@@ -22,4 +22,4 @@ Jacobi eigenvalue algorithm: A = V D V^T for symmetric A, via rotations
     strictly decreases every step, driving A to diagonal form. Slower than QR for big
     matrices, but simple, robust, and accurate even for the tiniest eigenvalues.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\jacobi_eigen.svg
+  wrote examples/output\jacobi_eigen.svg

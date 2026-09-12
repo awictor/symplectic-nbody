@@ -22,4 +22,4 @@ Householder QR: A = Q R by orthogonal reflections
   product is Q. Because reflections are EXACTLY orthogonal, Q stays orthonormal to machine
   precision even on ill-conditioned inputs where Gram-Schmidt drifts.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\householder_qr.svg
+  wrote examples/output\householder_qr.svg

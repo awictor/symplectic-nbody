@@ -13,4 +13,4 @@ Grashof number Gr = g beta dT L^3 / nu^2: buoyancy-driven natural convection
   or a sun-baked wall, an order of magnitude below a fan's forced convection. The
   layer stays laminar until Ra ~ 1e9 (around a metre here), then trips turbulent.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\grashof.svg
+  wrote examples/output\grashof.svg

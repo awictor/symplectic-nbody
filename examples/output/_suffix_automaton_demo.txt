@@ -20,4 +20,4 @@ Suffix automaton: the smallest machine recognising every substring
   all substrings -- every path from the start spells a distinct one. It answers substring
   membership in O(pattern), counts occurrences, and finds longest common/repeated pieces.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\suffix_automaton.svg
+  wrote examples/output\suffix_automaton.svg

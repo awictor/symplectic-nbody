@@ -26,4 +26,4 @@ Random forest: a committee of decorrelated decision trees
   so their errors cancel while signal adds. The forest boundary is smoother and more
   robust than any single tree -- the strong default for tabular data.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\random_forest.svg
+  wrote examples/output\random_forest.svg

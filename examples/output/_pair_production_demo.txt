@@ -15,4 +15,4 @@ Photon-photon pair production: gamma + gamma -> e+ e-
   PeV photons by the CMB -- the universe has a gamma-ray horizon that
   shrinks as the photon energy rises.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\pair_production.svg
+  wrote examples/output\pair_production.svg

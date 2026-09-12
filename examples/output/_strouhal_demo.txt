@@ -18,4 +18,4 @@ Strouhal number St = f d / U ~ 0.2: the rhythm of vortex shedding
   build destructive vortex-induced vibration (why chimneys wear helical strakes).
   Wake vortices trail ~5 diameters apart.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\strouhal.svg
+  wrote examples/output\strouhal.svg

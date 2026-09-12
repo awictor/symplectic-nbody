@@ -9,4 +9,4 @@ t-SNE: nonlinear dimensionality reduction that preserves neighborhoods
   Student-t kernel in 2-D, minimizing KL(P||Q) by gradient descent. The heavy tail cures
   the crowding problem, letting clusters breathe apart -- which is why the map is so clear.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\tsne.svg
+  wrote examples/output\tsne.svg

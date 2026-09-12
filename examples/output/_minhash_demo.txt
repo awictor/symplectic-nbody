@@ -36,4 +36,4 @@ MinHash + LSH: estimating set similarity at scale
   so matching-position fraction is an unbiased estimate. LSH bands make similar items
   collide in a hash table, turning all-pairs search into a few lookups.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\minhash.svg
+  wrote examples/output\minhash.svg

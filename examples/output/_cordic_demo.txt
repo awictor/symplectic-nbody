@@ -29,4 +29,4 @@ CORDIC: sin, cos, exp, ln, sqrt using only shifts and additions
   the rotation is a bit shift, not a multiply. The running angle homes in on the target,
   and the final x,y are cos and sin (after dividing out the fixed CORDIC gain).
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\cordic.svg
+  wrote examples/output\cordic.svg

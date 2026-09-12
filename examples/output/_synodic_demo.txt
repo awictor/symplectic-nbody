@@ -17,4 +17,4 @@ Synodic period: 1/S = |1/P_planet - 1/P_earth| -- when alignments repeat
   (Earth does the lapping). Near Earth's own orbit the synodic period blows
   up: two bodies at the same distance never change their alignment.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\synodic.svg
+  wrote examples/output\synodic.svg

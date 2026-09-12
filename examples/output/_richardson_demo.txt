@@ -10,4 +10,4 @@ Richardson number Ri = N^2 / (du/dz)^2: buoyant stiffness vs shear (KH at Ri<1/4
   below 1/4 and the interface rolls up into Kelvin-Helmholtz cat's-eye billows --
   the same physics behind clear-air turbulence that jolts aircraft and cloud-edge waves.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\richardson.svg
+  wrote examples/output\richardson.svg

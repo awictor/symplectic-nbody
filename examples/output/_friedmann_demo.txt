@@ -14,4 +14,4 @@ Friedmann cosmology: the expansion of the universe (time in 1/H0)
   Our universe (LCDM) coasted through matter domination and is now
   entering the accelerating dark-energy era.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\friedmann.svg
+  wrote examples/output\friedmann.svg

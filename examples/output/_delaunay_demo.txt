@@ -11,4 +11,4 @@ Delaunay triangulation and the dual Voronoi diagram
   dual is the Delaunay triangulation, whose triangles have empty circumcircles and
   maximize the minimum angle. Voronoi vertices are the triangle circumcentres.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\delaunay.svg
+  wrote examples/output\delaunay.svg

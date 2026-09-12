@@ -21,4 +21,4 @@ Numerical quadrature: integral of e^x cos x on [0, pi]
   (O(h^4)); Romberg and Gauss-Legendre reach machine precision in a few evaluations.
   It powers everything from physics simulations to option pricing to Bayesian evidence.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\quadrature.svg
+  wrote examples/output\quadrature.svg

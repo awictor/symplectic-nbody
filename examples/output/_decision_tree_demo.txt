@@ -27,4 +27,4 @@ Decision tree (CART): recursive best-split classification
   then recurses. The result is a set of axis-aligned rectangles tiling the plane,
   each labelled by majority vote -- readable rules, the base learner of forests.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\decision_tree.svg
+  wrote examples/output\decision_tree.svg

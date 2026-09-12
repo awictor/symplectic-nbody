@@ -21,4 +21,4 @@ Bootstrap: confidence intervals by resampling, no formula needed
   BCa additionally corrects for median bias and skewness (via the jackknife) for sharper
   coverage. It works for ANY statistic, however awkward its variance formula would be.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\bootstrap.svg
+  wrote examples/output\bootstrap.svg

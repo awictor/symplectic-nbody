@@ -13,4 +13,4 @@ Big Bang nucleosynthesis: the origin of primordial helium
   as the weak interaction shuts off, decays to ~1/7, and nearly all
   surviving neutrons end up in helium-4: about a quarter of all mass.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\bbn.svg
+  wrote examples/output\bbn.svg

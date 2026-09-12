@@ -20,4 +20,4 @@ White-dwarf structure and the Chandrasekhar limit
   shrinks, and its mass climbs toward -- but never past -- 1.44 M_sun.
   Beyond it there is no stable white dwarf: it collapses (type-Ia SN).
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\chandrasekhar.svg
+  wrote examples/output\chandrasekhar.svg

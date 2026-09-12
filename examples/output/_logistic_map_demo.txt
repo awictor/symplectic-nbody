@@ -14,4 +14,4 @@ Logistic map x' = r x (1-x): the route to chaos (Feigenbaum delta = 4.6692)
   spacings shrink by the universal Feigenbaum ratio 4.669, the same for any smooth
   unimodal map -- one of the deepest facts in nonlinear dynamics.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\logistic_map.svg
+  wrote examples/output\logistic_map.svg

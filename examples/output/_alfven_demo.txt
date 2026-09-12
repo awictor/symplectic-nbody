@@ -15,4 +15,4 @@ Alfven waves in magnetized plasma: v_A = B / sqrt(mu0 rho)
   and coasts out super-Alfvenic -- decoupled from the Sun's rotation
   (Parker Solar Probe crossed the real surface near ~15-20 R_sun).
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\alfven.svg
+  wrote examples/output\alfven.svg

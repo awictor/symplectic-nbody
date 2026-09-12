@@ -13,4 +13,4 @@ Shakura-Sunyaev disk: T(r) ~ r^(-3/4), L = eta Mdot c^2
   in the ultraviolet: the 'big blue bump' of quasar spectra. Both convert
   ~6% of infalling rest mass to light -- ~8x more than fusion manages.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\accretion_disk.svg
+  wrote examples/output\accretion_disk.svg

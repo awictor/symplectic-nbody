@@ -17,4 +17,4 @@ Welford: one-pass, online mean and variance, numerically stable
   subtracts two nearly-equal huge numbers and loses everything to rounding -- even
   returning negative variances. Accumulators also merge, so shards combine in parallel.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\welford.svg
+  wrote examples/output\welford.svg

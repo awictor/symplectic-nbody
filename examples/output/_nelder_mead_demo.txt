@@ -28,4 +28,4 @@ Nelder-Mead: derivative-free minimization by a crawling simplex
   overshoots, shrinking when stuck. Robust and gradient-free -- the default when all
   you can do is evaluate the function.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\nelder_mead.svg
+  wrote examples/output\nelder_mead.svg

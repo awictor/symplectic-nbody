@@ -13,4 +13,4 @@ Debye model: C_V rises as T^3, plateaus at Dulong-Petit 3R = 24.94 J/mol/K
   soft heavy lead has long since reached the 3R plateau. The T^3 falloff at
   low temperature is the fingerprint of phonon quantization.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\debye_heat.svg
+  wrote examples/output\debye_heat.svg

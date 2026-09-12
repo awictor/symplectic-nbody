@@ -20,4 +20,4 @@ Floyd-Warshall: all-pairs shortest paths in one O(V^3) pass
   and detects negative cycles (a negative diagonal). Used for routing tables and
   network distance matrices.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\floyd_warshall.svg
+  wrote examples/output\floyd_warshall.svg

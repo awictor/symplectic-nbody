@@ -19,4 +19,4 @@ Steiner tree: cheapest network connecting terminals via optional junctions
   along shortest paths. Exponential only in the number of terminals -- so many terminals
   in a large graph stay tractable, unlike brute-forcing every subset of Steiner points.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\steiner_tree.svg
+  wrote examples/output\steiner_tree.svg

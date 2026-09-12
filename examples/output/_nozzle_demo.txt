@@ -18,4 +18,4 @@ de Laval nozzle: converge to sonic throat, diverge to supersonic exhaust
   supersonic stream speeds up as the area GROWS, so the throat must sit exactly at
   Mach 1. Once choked, mass flow is capped by the throat and only the bell sets M_e.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\nozzle.svg
+  wrote examples/output\nozzle.svg

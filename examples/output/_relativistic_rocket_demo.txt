@@ -14,4 +14,4 @@ Relativistic rocket at constant 1 g (acceleration only)
   Earth) and could cross to Andromeda in ~15. The impossible part is fuel: a
   photon drive needs exp(2 phi) times the payload mass, astronomically much.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\relativistic_rocket.svg
+  wrote examples/output\relativistic_rocket.svg

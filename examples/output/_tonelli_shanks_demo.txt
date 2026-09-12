@@ -16,4 +16,4 @@ Tonelli-Shanks: square roots modulo a prime
   finds it: for p = 3 mod 4 it's just n^((p+1)/4), otherwise it iteratively corrects a
   candidate using a quadratic non-residue until the error's order drops to zero.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\tonelli_shanks.svg
+  wrote examples/output\tonelli_shanks.svg

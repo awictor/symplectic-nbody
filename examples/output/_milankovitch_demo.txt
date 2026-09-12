@@ -13,4 +13,4 @@ Milankovitch: 65N midsummer insolation drives ice sheets (grow when it's weak)
   and ice sheets grow -- the ~41 kyr tilt and ~23 kyr precession beats, modulated
   by the ~100 kyr eccentricity envelope, that pace the Pleistocene glacial cycles.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\milankovitch.svg
+  wrote examples/output\milankovitch.svg

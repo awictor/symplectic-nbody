@@ -16,4 +16,4 @@ Yen's algorithm: the K shortest loopless routes from A to F
   such candidate becomes the next route -- alternatives that are genuinely distinct, not
   the best path padded with detours.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\yen_ksp.svg
+  wrote examples/output\yen_ksp.svg

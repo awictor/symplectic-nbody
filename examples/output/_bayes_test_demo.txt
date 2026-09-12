@@ -11,4 +11,4 @@ Bayes & the base-rate fallacy: a 99%-accurate test, a 1-in-1000 disease
   rare disease lets false positives swamp true ones however good the test sounds --
   the base-rate fallacy behind medical screening, spam filters, and profiling.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\bayes_test.svg
+  wrote examples/output\bayes_test.svg

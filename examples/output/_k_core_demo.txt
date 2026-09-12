@@ -18,4 +18,4 @@ k-core decomposition: peeling a network to its dense heart
   bounds clique- and coloring-algorithm runtimes. High-coreness nodes are the robust,
   deeply-embedded core of the network -- the influential centre in social-network analysis.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\k_core.svg
+  wrote examples/output\k_core.svg

@@ -15,4 +15,4 @@ Magnetic braking & gyrochronology: a star's spin is its clock
   rotators brake hardest, so a broad spread of young spins converges
   onto one age-period sequence -- which is what makes the clock work.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\magnetic_braking.svg
+  wrote examples/output\magnetic_braking.svg

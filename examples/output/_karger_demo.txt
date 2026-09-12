@@ -24,4 +24,4 @@ Karger's algorithm: minimum cut by random edge contraction
   a cut. A given minimum cut survives only if none of its few edges is ever contracted --
   probability >= 2/(n(n-1)) per run -- so O(n^2 log n) runs drive the failure chance to ~0.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\karger.svg
+  wrote examples/output\karger.svg

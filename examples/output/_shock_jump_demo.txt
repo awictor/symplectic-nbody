@@ -20,4 +20,4 @@ Rankine-Hugoniot shock jumps (gamma = 5/3)
   remnants, re-entry plasma) while barely compressing it. The downstream
   flow is always subsonic (M2 < 1) -- the shock is a one-way valve.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\shock_jump.svg
+  wrote examples/output\shock_jump.svg

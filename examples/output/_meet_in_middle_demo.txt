@@ -18,4 +18,4 @@ Meet in the middle: split the items, enumerate each half, combine
   two halves of 2^4 = 16 each = 32 sums, then combines by
   sorting + binary search. For n=40 that is a million per half, not a trillion total.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\meet_in_middle.svg
+  wrote examples/output\meet_in_middle.svg

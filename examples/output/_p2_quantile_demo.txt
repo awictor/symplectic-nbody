@@ -21,4 +21,4 @@ P-square: streaming quantiles (latency percentiles) in constant memory
   sample nudges the markers toward their desired positions using parabolic interpolation.
   No samples are stored -- ideal for p99 latency monitoring on a firehose of requests.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\p2_quantile.svg
+  wrote examples/output\p2_quantile.svg

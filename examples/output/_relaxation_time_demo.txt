@@ -16,4 +16,4 @@ Two-body relaxation: t_relax ~ (N / 8 ln N) t_cross
   millions of Hubble times, so it is collisionless -- which is why galaxies
   keep their spiral arms, streams and cold disks intact for a Hubble time.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\relaxation_time.svg
+  wrote examples/output\relaxation_time.svg

@@ -19,4 +19,4 @@ Benford's law: P(d) = log10(1 + 1/d) -- 1 leads ~30% of the time, 9 only ~4.6%
   to the logarithmic digit law. Forensic auditors flag fabricated ledgers and
   election tallies by their departure from it.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\benford.svg
+  wrote examples/output\benford.svg

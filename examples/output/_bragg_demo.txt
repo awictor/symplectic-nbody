@@ -18,4 +18,4 @@ Bragg's law n lambda = 2 d sin(theta): X-ray crystallography
   2 d sin(theta) is a whole number of wavelengths. Reading the spots backwards gives
   the atomic spacings -- how crystallography solved salt, DNA, and countless proteins.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\bragg.svg
+  wrote examples/output\bragg.svg

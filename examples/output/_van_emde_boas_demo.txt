@@ -25,4 +25,4 @@ Van Emde Boas tree: integer sets with O(log log u) successor/predecessor
   tree recurses on the SQUARE ROOT of the universe, and storing min/max directly caps the
   recursion at one call per level -- so T(u) = T(sqrt u) + O(1) = O(log log u).
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\van_emde_boas.svg
+  wrote examples/output\van_emde_boas.svg

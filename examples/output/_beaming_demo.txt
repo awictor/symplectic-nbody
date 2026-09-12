@@ -15,4 +15,4 @@ Relativistic beaming: D = 1/(gamma(1 - beta cos theta)); flux ~ D^(3+a)
   is why M87's jet looks one-sided. The same geometry makes blobs appear to move
   faster than light -- superluminal motion, an illusion of light-travel time.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\beaming.svg
+  wrote examples/output\beaming.svg

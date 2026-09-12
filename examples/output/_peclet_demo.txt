@@ -16,4 +16,4 @@ Peclet number Pe = U L / D: advection (carried) vs diffusion (spreads)
     U =    1e+00 m/s  ->  crossover length = 1.00e-09 m
   Below that length diffusion wins; above it the flow carries faster than spreading.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\peclet.svg
+  wrote examples/output\peclet.svg

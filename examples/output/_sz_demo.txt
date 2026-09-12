@@ -10,4 +10,4 @@ The Sunyaev-Zeldovich effect: hot clusters distorting the CMB
   redshift-independent? True -- the SZ signal does not dim
   with distance, so SZ surveys find clusters clear across the universe.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\sz.svg
+  wrote examples/output\sz.svg

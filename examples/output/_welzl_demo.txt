@@ -12,4 +12,4 @@ Welzl's algorithm: the smallest circle enclosing a point cloud
   in random order; a point inside the current circle is skipped, but one outside must lie
   on the new circle's boundary, so the circle is rebuilt with it fixed there -- O(n) expected.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\welzl.svg
+  wrote examples/output\welzl.svg

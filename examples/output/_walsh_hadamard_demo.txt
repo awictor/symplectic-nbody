@@ -19,4 +19,4 @@ Fast Walsh-Hadamard transform: the FFT for XOR
   the same convolution theorem that makes the FFT fast, but for the XOR group. OR and AND
   convolutions use the subset-sum (zeta) and superset-sum transforms over the bit lattice.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\walsh_hadamard.svg
+  wrote examples/output\walsh_hadamard.svg

@@ -15,4 +15,4 @@ Gravitational-wave strain: measuring a proton-width in kilometers
   of a proton's width. Detecting it is why LIGO is one of the most
   sensitive instruments ever built.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\gw_strain.svg
+  wrote examples/output\gw_strain.svg

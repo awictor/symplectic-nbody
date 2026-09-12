@@ -18,4 +18,4 @@ Capillary length l_c = sqrt(gamma / (rho g)): surface tension vs gravity
   A moving 2 mm drop shatters once it tops the critical Weber number, at
   v = 0.66 m/s -- why rain fragments and sprays atomize.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\capillary.svg
+  wrote examples/output\capillary.svg

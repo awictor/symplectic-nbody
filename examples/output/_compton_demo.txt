@@ -19,4 +19,4 @@ Compton scattering (photon off a stationary electron)
   Compton down-shifts photons off electrons; inverse Compton up-shifts
   them off relativistic electrons -- how CMB and starlight become X-rays.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\compton.svg
+  wrote examples/output\compton.svg

@@ -21,4 +21,4 @@ Prufer sequences: a bijection between labeled trees and integer strings
   distinct tree -- so counting trees reduces to counting strings, and Cayley's formula
   falls out immediately. Decoding a uniformly random string yields a uniformly random tree.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\prufer.svg
+  wrote examples/output\prufer.svg

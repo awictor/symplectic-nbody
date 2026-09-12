@@ -20,4 +20,4 @@ Durand-Kerner: all n roots of a degree-n polynomial simultaneously
   all n roots converge together, quadratically -- no bracketing, no derivative, no
   deflation, and it finds complex roots the real bracketing methods simply cannot see.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\durand_kerner.svg (the 8th roots of unity)
+  wrote examples/output\durand_kerner.svg (the 8th roots of unity)

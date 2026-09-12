@@ -20,4 +20,4 @@ Coin change: fewest coins, number of ways, and the greedy trap
   puts coins in the OUTER loop (combinations) or the amount outer (sequences). Greedy is
   only correct for 'canonical' coin systems; DP is always right.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\coin_change.svg
+  wrote examples/output\coin_change.svg

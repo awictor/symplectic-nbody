@@ -22,4 +22,4 @@ Degree sequences: is a list of wanted connection-counts realizable?
   Havel-Hakimi instead constructs a graph greedily. Both always agree, and match an
   exhaustive search over all simple graphs -- the theory is exact, not heuristic.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\degree_sequence.svg
+  wrote examples/output\degree_sequence.svg

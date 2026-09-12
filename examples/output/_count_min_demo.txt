@@ -21,4 +21,4 @@ Count-Min sketch: 2815 distinct items counted in a 5 x 2719 grid (13595 counters
   the min of the d rows), overshoots by a bounded amount, and merges by addition --
   so counting is distributed. Powers network flow monitors and n-gram frequency tables.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\count_min.svg
+  wrote examples/output\count_min.svg

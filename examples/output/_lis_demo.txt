@@ -22,4 +22,4 @@ Longest increasing subsequence: patience sorting in O(n log n)
   a new pile. The pile count equals the LIS length; back-pointers to the previous pile's
   top at placement time reconstruct the actual subsequence. O(n log n).
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\lis.svg
+  wrote examples/output\lis.svg

@@ -19,4 +19,4 @@ Kelly criterion: even-money bet, win probability p=0.6, edge 20%
   you go broke despite a winning edge. Half-Kelly keeps ~3/4 the growth at far less
   risk, which is why real traders and gamblers bet fractional Kelly.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\kelly.svg
+  wrote examples/output\kelly.svg

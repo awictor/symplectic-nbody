@@ -14,4 +14,4 @@ The main sequence: mass sets luminosity, temperature, and lifetime
   burn out in a few Myr, while red dwarfs sip fuel for hundreds of Gyr.
   Plotting L vs T gives the main sequence -- the backbone of the HR diagram.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\main_sequence.svg
+  wrote examples/output\main_sequence.svg

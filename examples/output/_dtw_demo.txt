@@ -16,4 +16,4 @@ Dynamic time warping: aligning series that vary in speed
   three predecessors (match / insert / delete). The bottom-right cell is the DTW distance,
   and backtracking the minimizing moves recovers the monotone warping path.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\dtw.svg
+  wrote examples/output\dtw.svg

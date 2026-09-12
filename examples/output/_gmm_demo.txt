@@ -31,4 +31,4 @@ Gaussian mixture model (EM): soft, probabilistic clustering
   probability of belonging to each component, so clusters can differ in size, weight,
   and spread -- and the likelihood lets BIC/AIC choose k in a principled way.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\gmm.svg
+  wrote examples/output\gmm.svg

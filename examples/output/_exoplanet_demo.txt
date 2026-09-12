@@ -10,4 +10,4 @@ Exoplanet detection: transit depth and radial-velocity wobble
   wobbles the Sun 12 m/s, Earth just 9 cm/s. Hot Jupiters -- big, close,
   fast -- give the strongest signals, which is why they were found first.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\exoplanet.svg
+  wrote examples/output\exoplanet.svg

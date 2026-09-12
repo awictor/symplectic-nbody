@@ -20,4 +20,4 @@ Sparse table: O(1) range minimum, and binary-lifting LCA
   LCA lifts the deeper node to the other's depth, then both jump up by shrinking
   powers of two until their parents meet -- O(log n) using the 2^k-ancestor table.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\sparse_table.svg
+  wrote examples/output\sparse_table.svg

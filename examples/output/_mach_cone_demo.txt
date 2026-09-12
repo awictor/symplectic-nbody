@@ -24,4 +24,4 @@ Mach cone: sin(mu) = 1/M -- faster flight, tighter cone
   reaching the ground seconds after the jet has already gone by -- and because the
   cone trails at a fixed angle, it sweeps a continuous 'boom carpet' along the track.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\mach_cone.svg
+  wrote examples/output\mach_cone.svg

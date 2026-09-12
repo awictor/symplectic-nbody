@@ -22,4 +22,4 @@ FFT: decompose a signal into its frequency components
   For a million samples the FFT is ~50,000x faster -- the difference between
   instant and infeasible. It is why digital audio, JPEG, MP3, and MRI all exist.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\fft.svg
+  wrote examples/output\fft.svg

@@ -15,4 +15,4 @@ Terminal velocity: drag balances gravity (regime set by Reynolds number)
   into quadratic drag where v ~ sqrt(r), so a hailstone and a steel ball of
   the same size differ only by sqrt(density). The regime boundary is Re ~ 1.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\terminal_velocity.svg
+  wrote examples/output\terminal_velocity.svg

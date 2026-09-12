@@ -13,4 +13,4 @@ Metropolis MCMC: accept a flip with prob min(1, exp(-dE/T)) -- samples exp(-E/T)
   approximates: spins order below ~2.27 J/k_B and disorder above it, with the true
   Onsager critical temperature and genuine critical fluctuations near T_c.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\metropolis.svg
+  wrote examples/output\metropolis.svg

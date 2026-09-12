@@ -18,4 +18,4 @@ Shannon entropy & Huffman coding: compressing a skewed source
   No lossless code can beat the entropy; Huffman lands within one bit of it and is
   optimal among prefix codes -- the reason ZIP, JPEG, and MP3 all carry a Huffman stage.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\shannon.svg
+  wrote examples/output\shannon.svg

@@ -28,4 +28,4 @@ Li Chao tree: minimum of a set of lines at any x, in O(log range)
   it handles lines arriving in ANY order with queries interleaved. This is the standard
   speed-up that turns an O(n^2) DP with linear transition costs into O(n log n).
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\li_chao.svg
+  wrote examples/output\li_chao.svg

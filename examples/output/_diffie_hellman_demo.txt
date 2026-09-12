@@ -14,4 +14,4 @@ Diffie-Hellman: agree on a secret while an eavesdropper listens
   Scale p to 2048 bits and sqrt(p) is ~10^308 steps: the secret is safe, even though
   Alice and Bob each did only a few thousand multiplications. That gap is the point.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\diffie_hellman.svg
+  wrote examples/output\diffie_hellman.svg

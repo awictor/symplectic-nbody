@@ -30,4 +30,4 @@ Comparison sorts: speed, stability, and worst-case trade-offs
   the constants, the memory (merge needs scratch, heap and quick don't), stability, and
   the worst case (merge and heap never degrade; quick can without a good pivot).
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\sorting.svg
+  wrote examples/output\sorting.svg

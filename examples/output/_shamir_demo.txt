@@ -19,4 +19,4 @@ Shamir's secret sharing: any k of n shares reconstruct the secret
   share is a point on it. k points fix the polynomial uniquely (Lagrange interpolation
   recovers f(0)); k-1 points leave infinitely many polynomials, so the secret is hidden.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\shamir.svg
+  wrote examples/output\shamir.svg

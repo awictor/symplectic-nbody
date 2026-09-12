@@ -33,4 +33,4 @@ Dancing Links (DLX): exact cover by Algorithm X
   and the pointers literally dance out and back. The column-with-fewest-options heuristic
   keeps the branching minimal.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\dancing_links.svg
+  wrote examples/output\dancing_links.svg

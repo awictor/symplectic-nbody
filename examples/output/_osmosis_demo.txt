@@ -11,4 +11,4 @@ Osmotic pressure: Pi = i c R T (van't Hoff -- the ideal-gas law for solutes)
   as hard as glucose (i=1). Seawater's ~27 atm is the wall reverse-osmosis must
   beat to squeeze fresh water back out; blood's ~7.6 atm sets isotonic IV fluids.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\osmosis.svg
+  wrote examples/output\osmosis.svg

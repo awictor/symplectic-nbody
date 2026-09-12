@@ -15,4 +15,4 @@ The Penrose process: extracting a black hole's rotational energy
   spin. Doing so raises the irreducible mass and horizon area -- the
   area never shrinks (Hawking), which is the second law for black holes.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\penrose.svg
+  wrote examples/output\penrose.svg

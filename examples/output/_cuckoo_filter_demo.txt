@@ -21,4 +21,4 @@ Cuckoo filter: approximate membership with deletion
   by XORing the first with hash(fingerprint) -- so either bucket recovers the other from
   the fingerprint alone. Full buckets kick out a resident to its alternate (the 'cuckoo').
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\cuckoo_filter.svg
+  wrote examples/output\cuckoo_filter.svg

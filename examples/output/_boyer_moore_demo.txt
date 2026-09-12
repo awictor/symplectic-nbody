@@ -17,4 +17,4 @@ Boyer-Moore: match right-to-left and jump ahead on a mismatch
   A longer pattern with a rare mismatch character leaps forward by nearly its whole
   length, so most of the text is never even examined -- the search is sublinear.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\boyer_moore.svg
+  wrote examples/output\boyer_moore.svg

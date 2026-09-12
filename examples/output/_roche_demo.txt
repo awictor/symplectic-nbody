@@ -13,6 +13,6 @@ Roche limit: tidal disruption of a rubble-pile satellite
 
 Below ~1 Roche the satellite is shredded; above it, it survives.
 
-wrote C:\Users\acwic\symplectic-nbody\examples\output\roche_disruption.svg
+wrote examples/output\roche_disruption.svg
 The rubble pile stretches into a tidal stream -- how Saturn's rings
 and Shoemaker-Levy 9's fragment chain came to be.

@@ -21,4 +21,4 @@ Gaussian elimination / LU: solve A x = b, factor once, reuse
   re-eliminating from scratch. Partial pivoting (swap in the largest pivot) keeps it
   numerically stable -- it underlies circuit analysis, FEM, and every linear solve.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\linsolve.svg
+  wrote examples/output\linsolve.svg

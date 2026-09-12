@@ -17,4 +17,4 @@ Poisson/Laplace by relaxation: steady-state fields on a grid
   harmonic field, smooth with no interior hot spots. Relaxation just sweeps the grid
   averaging until it settles; SOR accelerates by overshooting each averaging step.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\poisson.svg
+  wrote examples/output\poisson.svg

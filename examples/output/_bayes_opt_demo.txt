@@ -23,4 +23,4 @@ Bayesian optimization: minimize an expensive black box in few evaluations
   balancing exploiting the current best against exploring the uncertain regions. This is
   how modern hyperparameter tuners and experiment optimizers work.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\bayes_opt.svg
+  wrote examples/output\bayes_opt.svg

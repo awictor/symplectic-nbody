@@ -17,4 +17,4 @@ Misra-Gries: heavy hitters (> n/k) of a 5000-item stream with 3 counters
   heavy hitters are never missed (a cheap second pass drops the false positives).
   Used for network traffic monitors, trending queries, and word-frequency counting.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\misra_gries.svg
+  wrote examples/output\misra_gries.svg

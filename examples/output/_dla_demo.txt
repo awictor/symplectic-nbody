@@ -11,4 +11,4 @@ Diffusion-limited aggregation: random walkers stick to a growing seed
   faster and the cluster stays sparse and self-similar. Mineral dendrites,
   electrodeposits, viscous fingers, lightning, and soot all grow this way.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\dla.svg
+  wrote examples/output\dla.svg

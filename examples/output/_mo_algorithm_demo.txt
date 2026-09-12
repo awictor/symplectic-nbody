@@ -29,4 +29,4 @@ Mo's algorithm: many range queries in O((n+q) sqrt n) by clever ordering
   Reordering shrinks the distance the window's two ends must travel; each step adds or
   removes one element in O(1), so total time is the total travel, O((n+q) sqrt n).
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\mo_algorithm.svg
+  wrote examples/output\mo_algorithm.svg

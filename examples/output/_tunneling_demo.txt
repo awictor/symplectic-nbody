@@ -20,4 +20,4 @@ Quantum tunneling: T ~ exp(-2 kappa L), kappa = sqrt(2m(V-E))/hbar
   feels individual atoms, and the same barrier penetration drives alpha
   decay (tunneling out) and stellar fusion (tunneling in).
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\tunneling.svg
+  wrote examples/output\tunneling.svg

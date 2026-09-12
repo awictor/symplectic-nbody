@@ -14,4 +14,4 @@ Traveling salesman: exact Held-Karp DP and the 2-opt heuristic
   subproblems for O(n^2 2^n) instead of O(n!). 2-opt repeatedly reverses a segment
   between two edges whenever that shortens the tour -- fast, and within a few percent.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\tsp.svg
+  wrote examples/output\tsp.svg

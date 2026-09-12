@@ -32,4 +32,4 @@ PageRank: ranking a small web by the random surfer's stationary distribution
   The teleport term makes the Google matrix strictly positive, so Perron-Frobenius
   guarantees a unique stationary vector and power iteration converges at rate d.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\pagerank.svg
+  wrote examples/output\pagerank.svg

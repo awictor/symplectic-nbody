@@ -18,4 +18,4 @@ Savitzky-Golay: smoothing that keeps peak shapes, and stable differentiation
   curvature, so unlike a moving average it smooths without blunting features, and its
   derivative gives a stable estimate of the signal's slope.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\savitzky_golay.svg
+  wrote examples/output\savitzky_golay.svg

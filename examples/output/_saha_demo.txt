@@ -17,4 +17,4 @@ Cosmic recombination: when the universe went neutral
   Below z~1100 the universe is neutral and transparent: the photons
   free-stream to us as the cosmic microwave background.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\saha.svg
+  wrote examples/output\saha.svg

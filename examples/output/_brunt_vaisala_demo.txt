@@ -17,4 +17,4 @@ Brunt-Vaisala buoyancy frequency: N^2 = (g/T)(dT/dz + g/c_p)
   adiabatic lapse rate, N^2 flips negative: buoyancy runs away and the
   layer convects. That sign change IS the Schwarzschild convection criterion.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\brunt_vaisala.svg
+  wrote examples/output\brunt_vaisala.svg

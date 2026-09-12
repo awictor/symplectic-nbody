@@ -20,4 +20,4 @@ Kutta-Joukowski: L' = rho U Gamma, and thin-airfoil c_l = 2 pi alpha
   equal-transit myth. Finite wings trail vortices and pay induced drag c_l^2/(pi AR e),
   which is why soaring birds and gliders wear long, high-aspect-ratio wings.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\kutta_joukowski.svg
+  wrote examples/output\kutta_joukowski.svg

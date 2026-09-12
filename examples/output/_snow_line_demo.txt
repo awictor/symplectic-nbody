@@ -21,4 +21,4 @@ The snow line: disk T(r) = (L / 16 pi sigma r^2)^(1/4) ~ r^(-1/2)
   grab nebular gas before the disk dissipated. The snow line is the
   dividing line between the rocky inner and giant/icy outer solar system.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\snow_line.svg
+  wrote examples/output\snow_line.svg

@@ -14,4 +14,4 @@ Percolation: occupy sites with probability p, look for a spanning cluster
   abruptly spans the whole lattice -- a geometric phase transition. Same threshold
   governs forest fires, oil in rock, disease on a contact network, and random resistor grids.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\percolation.svg
+  wrote examples/output\percolation.svg

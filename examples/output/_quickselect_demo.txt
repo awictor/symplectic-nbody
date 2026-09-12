@@ -19,4 +19,4 @@ Quickselect: order statistics in O(n), no full sort
   median-of-medians pivot (groups of five) guarantees it even in the worst case --
   the theoretical proof that selection beats sorting when you need just one rank.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\quickselect.svg
+  wrote examples/output\quickselect.svg

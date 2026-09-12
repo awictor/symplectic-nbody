@@ -9,4 +9,4 @@ separation of two trajectories started 1e-9 apart (log scale):
            ..::::----------------===============+=======++++++++++++************************************#################@
   grew from 1e-9 to ~1.3e-03 -- 6 orders of magnitude. That's why the long-term 3-body problem is unpredictable.
 
-wrote C:\Users\acwic\symplectic-nbody\examples\output\chaos_divergence.svg
+wrote examples/output\chaos_divergence.svg

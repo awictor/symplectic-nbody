@@ -11,4 +11,4 @@ Weighing clusters by their motion: M = alpha sigma^2 R / G (virial)
   needed to bind Coma was ~100x its visible stars: the first case for dark matter.
   With only ~5% of the mass luminous, the dark-matter fraction is ~95%.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\cluster_mass.svg
+  wrote examples/output\cluster_mass.svg

@@ -14,4 +14,4 @@ Abelian sandpile: pile topples at 4 grains, sending one to each neighbour
   trigger an avalanche of any size, scale-free like earthquakes, forest fires, and
   neuronal cascades. The founding model of self-organized criticality.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\sandpile.svg
+  wrote examples/output\sandpile.svg

@@ -15,4 +15,4 @@ Rabi oscillations: P_e(t) = (O^2/O_R^2) sin^2(O_R t/2), O = 2pi x 1 MHz
   it oscillates faster but only part-way. A pi pulse flips a qubit, a pi/2 pulse
   builds a superposition -- the elementary gates of atomic clocks and quantum bits.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\rabi.svg
+  wrote examples/output\rabi.svg

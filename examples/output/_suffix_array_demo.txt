@@ -39,4 +39,4 @@ Suffix array: the sorted order of all suffixes, as an integer index
   run, and the LCP array turns tree queries into array scans -- the largest LCP is the
   longest repeated substring. Built by prefix doubling; LCP by Kasai in linear time.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\suffix_array.svg
+  wrote examples/output\suffix_array.svg

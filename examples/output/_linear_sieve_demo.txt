@@ -25,4 +25,4 @@ Linear sieve: primes + factorization + totient + Mobius, all in O(N)
   breaks the moment that prime divides i, avoiding the double-marking of Eratosthenes and
   making the whole sieve, plus the multiplicative phi and mu arrays, truly O(N).
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\linear_sieve.svg
+  wrote examples/output\linear_sieve.svg

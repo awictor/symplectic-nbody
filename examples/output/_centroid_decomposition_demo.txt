@@ -21,4 +21,4 @@ Centroid decomposition: log-deep divide-and-conquer on a tree
   don't actually cross the centroid. Because each level halves the components, only
   O(log n) levels exist -- turning an O(n^2) all-pairs question into O(n log^2 n).
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\centroid_decomposition.svg
+  wrote examples/output\centroid_decomposition.svg

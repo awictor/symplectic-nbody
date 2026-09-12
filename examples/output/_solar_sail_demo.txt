@@ -16,4 +16,4 @@ Solar sail: sunlight pressure 2F/c on a mirror, ~9 uPa at 1 AU
   pull; beta > 1 escapes the Solar System on sunlight alone. Today's sails
   sit at beta ~ 0.01 -- gentle, but propellant-free and endless.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\solar_sail.svg
+  wrote examples/output\solar_sail.svg

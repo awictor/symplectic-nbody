@@ -16,4 +16,4 @@ Ram-pressure stripping (Gunn-Gott): rho_icm v^2 > 2 pi G Sigma_s Sigma_g
   quenches from the outside in, helping turn infalling spirals into the
   gas-poor S0s and ellipticals that crowd cluster cores.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\ram_pressure.svg
+  wrote examples/output\ram_pressure.svg

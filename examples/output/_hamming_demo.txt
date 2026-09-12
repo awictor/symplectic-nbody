@@ -24,4 +24,4 @@ Hamming(7,4): 4 data bits -> 7 transmitted bits, corrects any single error
   More parity bits per block -> higher rate: the (255,247) code spends just 8 bits
   to protect 247. Add one overall parity bit for SECDED -- the scheme in ECC memory.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\hamming.svg
+  wrote examples/output\hamming.svg

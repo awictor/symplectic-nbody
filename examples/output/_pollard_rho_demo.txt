@@ -21,4 +21,4 @@ Pollard's rho: factoring integers in ~sqrt(smallest factor) steps
     n=100: phi(n)=40, number of divisors=9
     n=720720: phi(n)=138240, number of divisors=240
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\pollard_rho.svg
+  wrote examples/output\pollard_rho.svg

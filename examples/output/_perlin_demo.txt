@@ -17,4 +17,4 @@ Perlin noise: smooth pseudo-random gradient fields
   smoothstep-interpolated dot product of the surrounding gradients with the offset
   vectors. Layering octaves (fBm) is the standard recipe for terrain, clouds, and fire.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\perlin.svg
+  wrote examples/output\perlin.svg

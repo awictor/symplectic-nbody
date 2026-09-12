@@ -15,4 +15,4 @@ Genetic algorithm: optimization by simulated evolution
   genes; mutation adds new variation; elitism preserves the best. The population
   explores many basins at once -- no gradients, works on discrete or black-box problems.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\genetic_algorithm.svg
+  wrote examples/output\genetic_algorithm.svg

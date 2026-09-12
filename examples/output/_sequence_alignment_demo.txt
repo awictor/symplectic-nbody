@@ -37,4 +37,4 @@ Sequence alignment: global (Needleman-Wunsch) vs local (Smith-Waterman)
   cumulative gap penalties and reads the corner (global); Smith-Waterman floors scores
   at zero and starts from the max cell (local). Traceback reconstructs the gapped strings.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\sequence_alignment.svg
+  wrote examples/output\sequence_alignment.svg

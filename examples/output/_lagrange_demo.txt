@@ -8,6 +8,6 @@ L3       -1.005062    0.000000      3.012147
 L4        0.487850    0.866025      2.987998
 L5        0.487850   -0.866025      2.987998
 
-wrote C:\Users\acwic\symplectic-nbody\examples\output\lagrange.svg
+wrote examples/output\lagrange.svg
 L4/L5 (equilateral points) are stable for the Earth-Moon mass ratio;
 that's why Trojan asteroids cluster at the Sun-Jupiter L4/L5.

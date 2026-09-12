@@ -13,4 +13,4 @@
   satisfiable iff no variable shares a strongly connected component with its own negation;
   when it does, x -> ~x -> x forces a contradiction. Assignment reads off the SCC order.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\two_sat.svg
+  wrote examples/output\two_sat.svg

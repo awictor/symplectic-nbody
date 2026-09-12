@@ -17,4 +17,4 @@ Ekman spiral: wind-driven ocean boundary layer at 45 N
   further right and weaker, so the vertical sum points fully across the wind --
   the sideways pumping that drives coastal upwelling and the ocean gyres.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\ekman.svg
+  wrote examples/output\ekman.svg

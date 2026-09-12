@@ -17,4 +17,4 @@ Duffing: x'' + delta x' + alpha x + beta x^3 = gamma cos(omega t)
   the drive (hysteresis). With alpha<0 the potential is a double well -- a buckled
   beam -- and a damped mass rolls into one side; driven hard, the Duffing goes chaotic.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\duffing.svg
+  wrote examples/output\duffing.svg

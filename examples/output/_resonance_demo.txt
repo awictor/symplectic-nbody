@@ -10,4 +10,4 @@ Mean-motion resonance: 2:1 resonant argument phi
   commensurate. This carves the Kirkwood gaps and builds the Laplace
   resonance of Io-Europa-Ganymede.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\resonance.svg
+  wrote examples/output\resonance.svg

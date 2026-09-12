@@ -11,4 +11,4 @@ Chandrasekhar dynamical friction: satellites spiralling in
   few Gyr, while a light globular cluster survives ~a Hubble time. This
   drags massive black holes to galactic centres and erodes cluster orbits.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\dynamical_friction.svg
+  wrote examples/output\dynamical_friction.svg

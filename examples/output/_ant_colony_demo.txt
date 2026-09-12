@@ -25,4 +25,4 @@ Ant colony optimization: pheromone trails solving the travelling salesman
   pheromone evaporates then is redeposited inversely to tour length, so short tours
   reinforce their edges and the colony converges -- swarm intelligence, no central plan.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\ant_colony.svg
+  wrote examples/output\ant_colony.svg

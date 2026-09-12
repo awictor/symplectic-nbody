@@ -19,4 +19,4 @@ LRU / LFU caching: which item to evict when memory is full
   popularity), LRU adapts faster to shifting working sets. Both do get/put in O(1) --
   LRU via a hash map plus a recency-ordered doubly-linked list, LFU via frequency buckets.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\lru_cache.svg
+  wrote examples/output\lru_cache.svg

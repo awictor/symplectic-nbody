@@ -22,4 +22,4 @@ Chebyshev approximation: near-optimal polynomial fits
   interval, clustered at the ends. Expanding in Chebyshev polynomials T_n and evaluating
   by Clenshaw recurrence gives a fit within a small factor of the best possible polynomial.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\chebyshev.svg
+  wrote examples/output\chebyshev.svg

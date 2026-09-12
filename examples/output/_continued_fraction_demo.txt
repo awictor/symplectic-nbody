@@ -19,4 +19,4 @@ Continued fractions: the best rational approximations of a real
     pi: 7:1.3e-03  106:8.3e-05  113:2.7e-07  33102:5.8e-10  33215:3.3e-10
     e: 1:2.8e-01  3:5.2e-02  4:3.2e-02  7:4.0e-03  32:4.7e-04
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\continued_fraction.svg
+  wrote examples/output\continued_fraction.svg

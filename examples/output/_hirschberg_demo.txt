@@ -18,4 +18,4 @@ Hirschberg's algorithm: optimal alignment in linear space
   For genome-scale inputs this is the difference between gigabytes and kilobytes, at the
   cost of only a constant factor more time -- the same optimal alignment, linear space.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\hirschberg.svg
+  wrote examples/output\hirschberg.svg

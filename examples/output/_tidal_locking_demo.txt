@@ -15,4 +15,4 @@ Tidal locking: t_lock ~ a^6 I Q / (G M_p^2 k2 R^5)
   longer than the universe is old. Mercury dodged full locking into a 3:2
   spin-orbit resonance; hot Jupiters at a few stellar radii are all locked.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\tidal_locking.svg
+  wrote examples/output\tidal_locking.svg

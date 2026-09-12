@@ -14,4 +14,4 @@ Gibbs sampling: draw a joint distribution via its conditionals
   intractable, the one-dimensional conditionals are usually simple, and cycling through
   them builds a Markov chain that converges to the joint after burn-in.
 
-  wrote C:\Users\acwic\symplectic-nbody\examples\output\gibbs.svg
+  wrote examples/output\gibbs.svg
