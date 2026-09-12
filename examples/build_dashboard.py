@@ -407,6 +407,7 @@ def main():
     import interval_scheduling_demo
     import coin_change_demo
     import combinatorial_rank_demo
+    import bridges_demo
 
     import plot_orbits
 
@@ -783,6 +784,7 @@ def main():
     interval_scheduling_txt = run("interval_scheduling_demo", interval_scheduling_demo.main, True)
     coin_change_txt = run("coin_change_demo", coin_change_demo.main, True)
     combinatorial_rank_txt = run("combinatorial_rank_demo", combinatorial_rank_demo.main, True)
+    bridges_txt = run("bridges_demo", bridges_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6063,6 +6065,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("combinatorial_rank.svg"), "a 5-bit Gray code: each row is the next integer's code, green cells are 1-bits, and the single yellow cell marks the one bit that flipped from the row above -- exactly one changes per step")
             + f'<div class="card">{pre(combinatorial_rank_txt)}</div>'
+            + '</div>'),
+        section(
+            "Bridges and articulation points: single points of failure",
+            "In an undirected network a BRIDGE is an edge whose removal disconnects the graph and an "
+            "ARTICULATION POINT (cut vertex) is a vertex whose removal does -- the structural weak "
+            "points where one cut severs the network. Finding them is the first question of "
+            "reliability analysis: a graph with none is 2-connected and survives any single failure. "
+            "The naive test deletes each edge or vertex and recounts components, O(V*(V+E)). Tarjan's "
+            "algorithm finds them all in ONE depth-first pass, O(V+E), using the discovery time "
+            "disc[u] (stamped when DFS first reaches u) and the low-link low[u] (smallest disc "
+            "reachable from u's subtree via tree edges plus one back edge). A tree edge (u,v) is a "
+            "bridge exactly when low[v] > disc[u] -- v's subtree has no back edge climbing past u; a "
+            "non-root u is a cut vertex when some child has low[v] >= disc[u], and the DFS root when "
+            "it has two or more children. Parallel edges must be skipped by edge-id, not vertex, so a "
+            "doubled link is never falsely called a bridge. This module finds all bridges and cut "
+            "vertices in one iterative DFS (no recursion, safe on a 5000-deep path) and reports the "
+            "2-edge-connected components left when every bridge is cut. Verified against the "
+            "definition on 400 random graphs: an edge is a bridge iff deleting it raises the "
+            "component count, a vertex is a cut vertex iff deleting it does; trees have every edge a "
+            "bridge, cycles and K5 have neither.",
+            '<div class="grid">'
+            + svg_card(out("bridges.svg"), "a 10-node network of three clusters: red edges are bridges and red nodes are articulation points -- cut any one and the network splits; the dense cluster (with its extra chord) has no internal bridge, but every inter-cluster link does")
+            + f'<div class="card">{pre(bridges_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

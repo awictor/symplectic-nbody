@@ -365,6 +365,7 @@ ruins a long non-symplectic integration.
 | `src/interval_scheduling.py` | Weighted interval scheduling DP + greedy activity selection |
 | `src/coin_change.py` | Coin change: minimum coins + ways to make change (combinations/sequences) |
 | `src/combinatorial_rank.py` | Combinatorial ranking: permutation/combination rank-unrank + Gray code |
+| `src/bridges.py` | Bridges & articulation points (Tarjan) + 2-edge-connected components |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -721,6 +722,7 @@ ruins a long non-symplectic integration.
 | `examples/interval_scheduling_demo.py` | A Gantt chart with the optimal-value jobs vs greedy heuristics |
 | `examples/coin_change_demo.py` | The greedy trap + min-coins-per-amount curve for three coin systems |
 | `examples/combinatorial_rank_demo.py` | Permutation/combination ranking tables + a 5-bit Gray-code bit-flip SVG |
+| `examples/bridges_demo.py` | A 3-cluster network with its failure edges/nodes highlighted in red |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8581,6 +8583,27 @@ collisions, permutation ranks match itertools' lexicographic order, combination 
 itertools.combinations, and consecutive Gray codes differ in exactly one bit. This lets you store a
 permutation as one integer, draw a uniformly random one, or split an enumeration by rank range without
 ever materializing the full set.
+
+## Bridges and articulation points: single points of failure
+
+The structural weak points of a network, found in one DFS pass. `bridges.py`:
+
+```
+$ python examples/bridges_demo.py examples/output
+
+  3 clusters joined by thin links -> bridges: 2--3, 5--6, 8--9
+  articulation points: [2, 3, 5, 6, 8]
+  2-edge-connected components: {0,1,2} {3,4,5} {6,7,8} {9}
+```
+
+A BRIDGE is an edge whose removal disconnects the graph; an ARTICULATION POINT is a vertex whose
+removal does. Tarjan finds all of them in one O(V+E) DFS using disc[u] (discovery time) and low[u]
+(smallest discovery time reachable from u's subtree via one back edge): a tree edge (u,v) is a bridge
+iff low[v] > disc[u], and a non-root u is a cut vertex iff some child has low[v] >= disc[u]. Parallel
+edges are skipped by edge-id so a doubled link is never falsely flagged; the DFS is iterative so a
+5000-deep path doesn't overflow the stack. Verified against the brute-force definition on 400 random
+graphs -- an edge is a bridge iff deleting it raises the component count, a vertex is a cut vertex iff
+deleting it does; trees have every edge a bridge, cycles and K5 have neither.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
