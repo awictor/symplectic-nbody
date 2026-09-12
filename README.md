@@ -355,6 +355,7 @@ ruins a long non-symplectic integration.
 | `src/louvain.py` | Louvain community detection by modularity optimization (weighted graphs) |
 | `src/matrix_chain.py` | Matrix-chain optimal parenthesization by interval DP (O(n^3)) |
 | `src/lis.py` | Longest increasing subsequence via patience sorting (O(n log n), with witness) |
+| `src/continued_fraction.py` | Continued-fraction expansion, convergents, and best rational approximation |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -701,6 +702,7 @@ ruins a long non-symplectic integration.
 | `examples/louvain_demo.py` | Four planted communities recovered, coloured, with the bridging edges highlighted |
 | `examples/matrix_chain_demo.py` | Optimal vs left-to-right cost + the DP cost table as a heatmap |
 | `examples/lis_demo.py` | The LIS highlighted on a bar chart + the patience-sorting piles |
+| `examples/continued_fraction_demo.py` | pi/e/phi/sqrt2 expansions + convergent error vs denominator |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8371,6 +8373,25 @@ a new pile; the pile count equals the LIS length, and back-pointers reconstruct 
 subsequence. This module computes the length and a witness with strict/non-decreasing/decreasing
 variants, verified against brute-force O(2^n) search and the O(n^2) DP that the length is optimal and
 the returned subsequence is genuine.
+
+## Continued fractions: the best rational approximations of a real
+
+Why 355/113 is such a good approximation of pi. `continued_fraction.py`:
+
+```
+$ python examples/continued_fraction_demo.py examples/output
+
+  pi = [3; 7, 15, 1, 292, ...]; convergents 3, 22/7, 333/106, 355/113 (error 2.7e-7)
+  golden ratio = [1; 1, 1, 1, ...]; sqrt(2) = [1; 2, 2, 2, ...]
+  best rational for pi with denominator <= 113 is exactly 355/113
+```
+
+Truncating a continued fraction gives the convergents, the best rational approximations (no smaller
+denominator gets closer). A large partial quotient makes the preceding convergent exceptional -- pi's
+292 is why 355/113 is accurate to seven digits. This module computes the expansion of a real or exact
+fraction, the convergents, and the best rational within a denominator bound, verified that pi's
+convergents are the famous ones, a finite expansion recovers its rational, each convergent is best
+for its denominator, and the golden ratio and sqrt(2) have their known patterns.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

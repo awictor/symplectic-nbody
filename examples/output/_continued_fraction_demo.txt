@@ -1,0 +1,22 @@
+Continued fractions: the best rational approximations of a real
+
+  pi             = [3; 7, 15, 1, 292, 1, 1, 1, ...]
+  e              = [2; 1, 2, 1, 1, 4, 1, 1, ...]
+  golden ratio   = [1; 1, 1, 1, 1, 1, 1, 1, ...]
+  sqrt(2)        = [1; 2, 2, 2, 2, 2, 2, 2, ...]
+
+  Convergents of pi (each the best rational for its denominator):
+                   3  = 3.0000000000   error 1.42e-01
+                22/7  = 3.1428571429   error 1.26e-03
+             333/106  = 3.1415094340   error 8.32e-05
+             355/113  = 3.1415929204   error 2.67e-07
+        103993/33102  = 3.1415926530   error 5.78e-10
+        104348/33215  = 3.1415926539   error 3.32e-10
+    355/113 is accurate to 7 digits because pi's next quotient (292) is huge --
+    a large partial quotient means the preceding convergent is exceptionally good.
+
+  Convergent error falls roughly as 1/denominator^2:
+    pi: 7:1.3e-03  106:8.3e-05  113:2.7e-07  33102:5.8e-10  33215:3.3e-10
+    e: 1:2.8e-01  3:5.2e-02  4:3.2e-02  7:4.0e-03  32:4.7e-04
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\continued_fraction.svg

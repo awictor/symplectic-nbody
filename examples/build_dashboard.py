@@ -397,6 +397,7 @@ def main():
     import louvain_demo
     import matrix_chain_demo
     import lis_demo
+    import continued_fraction_demo
 
     import plot_orbits
 
@@ -763,6 +764,7 @@ def main():
     louvain_txt = run("louvain_demo", louvain_demo.main, True)
     matrix_chain_txt = run("matrix_chain_demo", matrix_chain_demo.main, True)
     lis_txt = run("lis_demo", lis_demo.main, True)
+    continued_fraction_txt = run("continued_fraction_demo", continued_fraction_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5828,6 +5830,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("lis.svg"), "a sequence as bars with its longest increasing subsequence in green, connected in order by the gold line -- the longest run that climbs left to right, found by patience sorting")
             + f'<div class="card">{pre(lis_txt)}</div>'
+            + '</div>'),
+        section(
+            "Continued fractions: the best rational approximations of a real",
+            "Every real number expands as a CONTINUED FRACTION x = a0 + 1/(a1 + 1/(a2 + ...)), found "
+            "greedily: take the integer part, invert the remainder, repeat. Truncating gives the "
+            "CONVERGENTS p_k/q_k, which are the BEST RATIONAL APPROXIMATIONS -- no fraction with a "
+            "smaller denominator is closer. This is why 22/7 and 355/113 are the famous "
+            "approximations of pi, how gear ratios and calendar leap-years are chosen, and how the "
+            "eventually-periodic expansion of a quadratic irrational solves Pell's equation. The "
+            "convergents follow the recurrence p_k = a_k p_{k-1} + p_{k-2}, q_k = a_k q_{k-1} + "
+            "q_{k-2}, always in lowest terms, straddling x and closing in with error bounded by "
+            "1/(q_k q_{k+1}) -- so a large partial quotient (pi's 292) makes the previous convergent "
+            "(355/113, good to 7 digits) exceptional. This module computes the expansion of a real "
+            "or exact fraction, its convergents, and the best rational within a denominator bound, "
+            "verified that pi's convergents are 3, 22/7, 333/106, 355/113, that a finite expansion "
+            "recovers its rational exactly, that each convergent is the best approximation for its "
+            "denominator (checked against all smaller ones), that the golden ratio is all ones and "
+            "sqrt(2) is [1;2,2,...], that convergents alternate around and converge to the target, "
+            "and that best-approximation matches brute force within a denominator bound.",
+            '<div class="grid">'
+            + svg_card(out("continued_fraction.svg"), "log-log convergent error vs denominator for pi, e, sqrt(2), and the golden ratio -- error plunges with denominator, and the golden ratio (the 'most irrational' number, all-ones expansion) is the slowest to approximate")
+            + f'<div class="card">{pre(continued_fraction_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
