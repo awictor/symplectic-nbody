@@ -435,6 +435,7 @@ def main():
     import matrix_tree_demo
     import hirschberg_demo
     import centroid_decomposition_demo
+    import meet_in_middle_demo
 
     import plot_orbits
 
@@ -839,6 +840,7 @@ def main():
     matrix_tree_txt = run("matrix_tree_demo", matrix_tree_demo.main, True)
     hirschberg_txt = run("hirschberg_demo", hirschberg_demo.main, True)
     centroid_decomposition_txt = run("centroid_decomposition_demo", centroid_decomposition_demo.main, True)
+    meet_in_middle_txt = run("meet_in_middle_demo", meet_in_middle_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6727,6 +6729,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("centroid_decomposition.svg"), "a tree coloured by centroid-decomposition level: the red node is the overall centroid (root of the centroid tree), and each deeper colour is a centroid of a smaller, halved piece -- only about log2(n) levels deep")
             + f'<div class="card">{pre(centroid_decomposition_txt)}</div>'
+            + '</div>'),
+        section(
+            "Meet in the middle: halving a brute-force exponent",
+            "Some problems are genuinely exponential -- subset sum over n items with HUGE values, where "
+            "the pseudo-polynomial O(n*W) DP is useless because W is astronomical. Brute force tries "
+            "all 2^n subsets. MEET IN THE MIDDLE cuts the exponent in half: split the items into two "
+            "halves, enumerate all 2^(n/2) subset-sums of each, then COMBINE the lists with sorting "
+            "and binary search (or a hash) to answer the original question -- O(2^(n/2)*n), turning "
+            "an impossible n=40 (a trillion subsets) into a million per half. For SUBSET SUM, store "
+            "the left sums in a set and check target minus each right sum; for CLOSEST SUM or "
+            "MAX-UNDER-CAPACITY, sort one half and binary-search the other; for COUNTING, tally with "
+            "a dictionary. The same halving idea powers baby-step-giant-step discrete log and the "
+            "k-sum problem. This module does subset-sum existence, max sum under a capacity, closest "
+            "sum to a target, and exact-sum counting. Verified against brute enumeration of all 2^n "
+            "subsets -- identical answers on hundreds of random instances -- including values up to "
+            "billions that a DP over W could never handle, and an n=30 instance far beyond brute "
+            "force's reach.",
+            '<div class="grid">'
+            + svg_card(out("meet_in_middle.svg"), "left-half subset sums (blue) and right-half sums (green) laid out on a number line: one from each (red) adds up to the target, found by binary search rather than by enumerating all 2^n combinations")
+            + f'<div class="card">{pre(meet_in_middle_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

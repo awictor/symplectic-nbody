@@ -1,0 +1,21 @@
+Meet in the middle: split the items, enumerate each half, combine
+
+  items: [7, 13, 19, 24, 31, 42, 55, 6]
+
+  subset summing to  50? True  (brute agrees: True)
+  subset summing to 100? True  (brute agrees: True)
+  subset summing to 137? False  (brute agrees: True)
+  subset summing to   3? False  (brute agrees: True)
+
+  max subset sum not exceeding 90: 87
+  closest achievable sum to 100: 100
+  subsets summing to exactly 50: 4
+
+  values up to ~2 billion (a DP over W is hopeless):
+    target 1085115807 reachable? True
+
+  work saving: brute force tries 2^8 = 256 subsets; meet-in-the-middle enumerates
+  two halves of 2^4 = 16 each = 32 sums, then combines by
+  sorting + binary search. For n=40 that is a million per half, not a trillion total.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\meet_in_middle.svg

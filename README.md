@@ -393,6 +393,7 @@ ruins a long non-symplectic integration.
 | `src/matrix_tree.py` | Matrix-Tree theorem: count spanning trees via the Laplacian cofactor |
 | `src/hirschberg.py` | Hirschberg linear-space optimal alignment + LCS |
 | `src/centroid_decomposition.py` | Centroid tree + distance-pair counting on a tree |
+| `src/meet_in_middle.py` | Meet-in-the-middle subset sum / closest sum / count for huge values |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -777,6 +778,7 @@ ruins a long non-symplectic integration.
 | `examples/matrix_tree_demo.py` | A graph beside its Laplacian and its spanning-tree count |
 | `examples/hirschberg_demo.py` | An optimal alignment as a match/gap track + the memory saving |
 | `examples/centroid_decomposition_demo.py` | A tree tinted by centroid-decomposition level + pair counts |
+| `examples/meet_in_middle_demo.py` | Two half-sum lists combining to hit a target on a number line |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9185,6 +9187,24 @@ distance <= k: at each centroid gather distances to all vertices, two-pointer co
 all-pairs-BFS brute force for every k on hundreds of random trees, with the centroid tree confirmed a
 valid single-rooted O(log n)-deep tree (a 63-vertex path decomposes to depth <= 6) plus a 400-vertex
 instance.
+
+## Meet in the middle: halving a brute-force exponent
+
+Solve subset-sum for huge values in O(2^(n/2)) instead of O(2^n). `meet_in_middle.py`:
+
+```
+$ python examples/meet_in_middle_demo.py examples/output
+
+  8 items -> subset sums to 50/100 yes, 137/3 no; max under 90 = 87; count(sum=50) = 4
+  billion-scale values reachable; brute 2^8=256 vs 2^4+2^4=32 sums
+```
+
+Split the items into two halves, enumerate all 2^(n/2) subset-sums of each, then combine: for existence
+store the left sums in a set and look up target minus each right sum; for closest-sum or
+max-under-capacity sort one half and binary-search the other; for counting, tally with a dictionary.
+Works on values far too large for a pseudo-polynomial DP. Verified against brute enumeration of all 2^n
+subsets (existence, max-under, closest, count) on hundreds of random instances, plus billion-scale
+values and an n=30 instance beyond brute force's reach.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
