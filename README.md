@@ -342,6 +342,7 @@ ruins a long non-symplectic integration.
 | `src/mlp.py` | Multi-layer perceptron + backpropagation (sigmoid/tanh/ReLU, momentum SGD) |
 | `src/mdp.py` | Markov decision process: value iteration, policy iteration, gridworld builder |
 | `src/bandit.py` | Multi-armed bandit: epsilon-greedy, UCB1, Thompson sampling with regret tracking |
+| `src/q_learning.py` | Model-free RL: tabular Q-learning and SARSA over a gridworld environment |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -675,6 +676,7 @@ ruins a long non-symplectic integration.
 | `examples/mlp_demo.py` | XOR solved + a learned circular decision boundary a linear model can't draw |
 | `examples/mdp_demo.py` | A gridworld solved to optimality: value heatmap + optimal-action arrows |
 | `examples/bandit_demo.py` | Regret curves for epsilon-greedy/UCB1/Thompson vs random selection |
+| `examples/q_learning_demo.py` | Learning curve + a learned gridworld policy matching value iteration |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8101,6 +8103,25 @@ UCB1 (optimism: mean + sqrt(2 ln t / n), logarithmic regret with no tuning), and
 (Beta-posterior probability-matching), verified that every learning policy beats random, UCB1 and
 Thompson achieve sublinear regret, all identify the best arm as the most-pulled, and UCB1's regret
 grows logarithmically rather than linearly.
+
+## Q-learning: model-free reinforcement learning from experience
+
+Learn the optimal policy from raw experience, no transition model. `q_learning.py`:
+
+```
+$ python examples/q_learning_demo.py examples/output
+
+  6x5 gridworld, agent sees only (s, a, r, s') samples -- never the model
+  learned policy reaches the goal in the optimal 9 steps (matches value iteration)
+  learned agent 5 steps vs random walker 57 steps
+```
+
+Q-learning nudges Q(s,a) toward r + gamma max_a' Q(s',a') after each step (the temporal-difference
+update), learning optimal action-values off-policy while exploring epsilon-greedily; SARSA is the
+on-policy cousin. This module implements both over a step-based gridworld, verified against value
+iteration: the learned greedy policy matches the optimal one and reaches the goal in the optimal
+number of steps (4x3 and 6x6 worlds), the learned Q-values approach the MDP optimum, and a learned
+agent beats a random walker by an order of magnitude.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

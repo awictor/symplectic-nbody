@@ -384,6 +384,7 @@ def main():
     import mlp_demo
     import mdp_demo
     import bandit_demo
+    import q_learning_demo
 
     import plot_orbits
 
@@ -737,6 +738,7 @@ def main():
     mlp_txt = run("mlp_demo", mlp_demo.main, True)
     mdp_txt = run("mdp_demo", mdp_demo.main, True)
     bandit_txt = run("bandit_demo", bandit_demo.main, True)
+    q_learning_txt = run("q_learning_demo", q_learning_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5510,6 +5512,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("bandit.svg"), "cumulative regret by policy: random selection climbs linearly (red) while UCB1 (blue) and Thompson (green) bend flat as they learn the best arm -- the payoff of principled exploration")
             + f'<div class="card">{pre(bandit_txt)}</div>'
+            + '</div>'),
+        section(
+            "Q-learning: model-free reinforcement learning from experience",
+            "Value iteration solves an MDP when you KNOW its transitions and rewards. But an agent "
+            "dropped into an unknown world can only ACT and observe. MODEL-FREE reinforcement "
+            "learning learns to act optimally from raw experience alone. Q-LEARNING learns the "
+            "ACTION-VALUE Q(s, a) -- the expected return of taking action a in state s then acting "
+            "optimally -- purely from sampled transitions (s, a, r, s'), and its greedy policy "
+            "converges to the optimum. The update is TEMPORAL-DIFFERENCE learning: nudge Q(s,a) "
+            "toward r + gamma max_a' Q(s',a'), the reward plus the discounted value of the best next "
+            "action; the bracketed TD ERROR is the surprise between prediction and outcome. "
+            "Q-learning is OFF-POLICY -- it learns the optimal Q while exploring epsilon-greedily. "
+            "SARSA is its on-policy cousin, bootstrapping from the action actually taken. This module "
+            "implements tabular Q-learning and SARSA over a step-based gridworld (the agent never "
+            "sees the transition model), verified against value iteration as ground truth: the "
+            "learned greedy policy matches the optimal policy, reaches the goal in the optimal number "
+            "of steps (on 4x3 and 6x6 gridworlds), the learned Q-values approach the MDP optimum, a "
+            "learned agent reaches the goal far faster than a random walker (5 vs 57 steps), returns "
+            "improve over training, a higher learning rate speeds early learning, and SARSA also "
+            "solves the task.",
+            '<div class="grid">'
+            + svg_card(out("q_learning.svg"), "left: the episode return rising as Q-learning (blue) and SARSA (green) learn from experience; right: the learned value function (color) and greedy policy (arrows) routing to the gold goal")
+            + f'<div class="card">{pre(q_learning_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

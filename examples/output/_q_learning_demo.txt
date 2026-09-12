@@ -1,0 +1,19 @@
+Q-learning: model-free reinforcement learning from experience
+
+  6x5 gridworld, 4 obstacles, goal (5, 4)
+  Q-learning saw only (state, action, reward, next-state) samples -- never the model.
+  after 3000 episodes: policy matches value iteration on 21/25 states
+  greedy rollout: Q-learning 9 steps vs value-iteration optimum 9
+  SARSA (on-policy) rollout: 9 steps
+
+  Learned policy (G = goal, # = obstacle):
+    > > > > > G
+    ^ ^ ^ # > ^
+    ^ ^ ^ < # ^
+    ^ # # > > ^
+    ^ > > > > ^
+
+  The TD update nudges Q(s,a) toward r + gamma max_a' Q(s',a') after each step -- learning
+  the optimal action-values from raw experience, off-policy, while exploring epsilon-greedily.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\q_learning.svg
