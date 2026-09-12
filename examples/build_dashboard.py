@@ -478,6 +478,7 @@ def main():
     import elliptic_curve_demo
     import sha256_demo
     import rope_demo
+    import btree_demo
 
     import plot_orbits
 
@@ -925,6 +926,7 @@ def main():
     elliptic_curve_txt = run("elliptic_curve_demo", elliptic_curve_demo.main, True)
     sha256_txt = run("sha256_demo", sha256_demo.main, True)
     rope_txt = run("rope_demo", rope_demo.main, True)
+    btree_txt = run("btree_demo", btree_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7791,6 +7793,31 @@ def main():
             '<div class="grid">'
             + svg_card(out("rope.svg"), "the tree behind a rope: green leaves hold the actual substrings while blue internal nodes store just the length of their left subtree, so an edit walks a short logarithmic path instead of copying the whole string")
             + f'<div class="card">{pre(rope_txt)}</div>'
+            + '</div>'),
+        section(
+            "The B-tree: the short, fat search tree behind every database",
+            "A binary search tree touches about log2(n) nodes per lookup -- fine in RAM, disastrous on "
+            "disk, where each node visited is a separate seek costing millions of times a comparison. "
+            "The B-TREE (Bayer & McCreight, 1972) packs MANY keys into each node -- hundreds, sized to a "
+            "disk page -- so the tree is short and fat and a lookup in a billion keys touches only three "
+            "or four nodes. That is why B-trees index essentially every relational database and organise "
+            "NTFS, ext4, HFS+, and Btrfs. A B-tree of minimum degree t keeps strict invariants without "
+            "rotations or colour bits: every non-root node holds between t-1 and 2t-1 keys, an internal "
+            "node with k keys has exactly k+1 children whose ranges the keys separate, and -- the "
+            "property that makes balance automatic -- ALL LEAVES SIT AT THE SAME DEPTH. Growth happens at "
+            "the root: an overflowing node is SPLIT about its median, which is pushed up, and if the "
+            "root splits the tree gains a level. Deletion is the intricate converse, borrowing from a "
+            "sibling or merging thin nodes so none falls below t-1 keys. This module implements search, "
+            "insert (proactive top-down splitting), delete (full borrow/merge rebalancing), in-order "
+            "traversal, range queries, and min/max. Validated against Python's dict and sorted as "
+            "oracles over thousands of seeded random operations at four different degrees -- the same "
+            "values, the same absences, an in-order traversal exactly equal to the sorted keys -- with "
+            "the structural invariants (key-count bounds, sorted keys, child count, equal leaf depth) "
+            "checked after EVERY operation; range queries match the sorted slice, the tree stays "
+            "logarithmically shallow, and deleting every key in random order empties it correctly.",
+            '<div class="grid">'
+            + svg_card(out("btree.svg"), "a B-tree of minimum degree 3: each node holds several sorted keys, internal nodes fan out to one more child than they have keys, and every green leaf sits at the same depth -- the balance that keeps a billion-key index three seeks deep")
+            + f'<div class="card">{pre(btree_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

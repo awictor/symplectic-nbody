@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="340" viewBox="0 0 760 340" font-family="monospace">
+<rect width="760" height="340" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="16">B-tree (minimum degree t=3): each node packs several sorted keys</text>
+<rect x="40.0" y="57.0" width="668.0" height="26" rx="3" fill="#161b22" stroke="#ffd43b" stroke-width="2"/>
+<text x="374.0" y="74.0" fill="#e6edf3" font-size="10" text-anchor="middle">12 50 87</text>
+<rect x="40.0" y="287.0" width="173.5" height="26" rx="3" fill="#161b22" stroke="#06d6a0" stroke-width="2"/>
+<text x="126.7" y="304.0" fill="#e6edf3" font-size="10" text-anchor="middle">2 7 8</text>
+<rect x="225.5" y="287.0" width="235.3" height="26" rx="3" fill="#161b22" stroke="#06d6a0" stroke-width="2"/>
+<text x="343.1" y="304.0" fill="#e6edf3" font-size="10" text-anchor="middle">23 26 37 40</text>
+<rect x="472.7" y="287.0" width="111.6" height="26" rx="3" fill="#161b22" stroke="#06d6a0" stroke-width="2"/>
+<text x="528.5" y="304.0" fill="#e6edf3" font-size="10" text-anchor="middle">59 61</text>
+<rect x="596.4" y="287.0" width="111.6" height="26" rx="3" fill="#161b22" stroke="#06d6a0" stroke-width="2"/>
+<text x="652.2" y="304.0" fill="#e6edf3" font-size="10" text-anchor="middle">94 97</text>
+<line x1="374.0" y1="83.0" x2="126.7" y2="287.0" stroke="#30363d" stroke-width="1"/>
+<line x1="374.0" y1="83.0" x2="343.1" y2="287.0" stroke="#30363d" stroke-width="1"/>
+<line x1="374.0" y1="83.0" x2="528.5" y2="287.0" stroke="#30363d" stroke-width="1"/>
+<line x1="374.0" y1="83.0" x2="652.2" y2="287.0" stroke="#30363d" stroke-width="1"/>
+<text x="40" y="326" fill="#8b949e" font-size="11">yellow: root   blue: internal   green: leaves (all at the same depth)</text>
+</svg>

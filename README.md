@@ -436,6 +436,7 @@ ruins a long non-symplectic integration.
 | `src/elliptic_curve.py` | Elliptic-curve group law + ECDH key exchange + ECDSA sign/verify |
 | `src/sha256.py` | SHA-256 from scratch (FIPS 180-4) + streaming API + HMAC-SHA256 |
 | `src/rope.py` | Rope: O(log n) concat/split/insert/delete on huge strings, self-balancing |
+| `src/btree.py` | B-tree ordered map: minimum-degree insert/delete/search + range queries |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -863,6 +864,7 @@ ruins a long non-symplectic integration.
 | `examples/elliptic_curve_demo.py` | Point group law, an ECDH exchange, and ECDSA sign/verify |
 | `examples/sha256_demo.py` | Digests matching hashlib, the avalanche effect, and HMAC |
 | `examples/rope_demo.py` | Middle edits, balance under 5000 inserts, and the rope tree drawn |
+| `examples/btree_demo.py` | Height vs key count (1B keys -> 6 seeks), range query, and the tree drawn |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10065,6 +10067,25 @@ split-then-concat. It rebalances subtrees that grow too tall so depth stays loga
 against a plain Python string over 4000 random edits (insert/delete/concat/split-swap): the rope's
 contents match at every step, index and substring queries agree, split-then-concat is the identity, and
 the tree stays balanced even under adversarial repeated concatenation.
+
+## The B-tree: the short, fat search tree behind every database
+
+The multiway search tree that indexes databases and filesystems. `btree.py`:
+
+```
+$ python examples/btree_demo.py examples/output
+
+  degree t=100: 1,000,000,000 keys -> at most 6 levels (6 disk seeks per lookup)
+  invariants (equal leaf depth, key bounds) hold after every insert and delete
+```
+
+A B-tree packs many keys per node so the tree is short and fat: a lookup in a billion keys touches only
+a few nodes, one disk seek each. Every non-root node holds t-1 to 2t-1 keys, internal nodes fan out to
+one more child than keys, and all leaves sit at the same depth -- balance without rotations. Overflow
+splits about the median; underflow borrows or merges. Implements search, insert, delete, in-order
+traversal, and range queries. Validated against dict and sorted over thousands of random ops at four
+degrees, with the structural invariants checked after every operation, range queries matching the
+sorted slice, and deleting every key emptying the tree correctly.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

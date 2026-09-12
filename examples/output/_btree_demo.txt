@@ -1,0 +1,20 @@
+B-tree: pack many keys per node so the tree stays short and fat
+
+  height vs key count for minimum degree t=100 (a node ~ one disk page):
+            1,000 keys -> at most ~3 levels (3 disk seeks per lookup)
+          100,000 keys -> at most ~4 levels (4 disk seeks per lookup)
+       10,000,000 keys -> at most ~5 levels (5 disk seeks per lookup)
+    1,000,000,000 keys -> at most ~6 levels (6 disk seeks per lookup)
+
+  inserted 24 keys into a t=3 tree: height 3, invariants hold = True
+    sorted traversal: [2, 3, 7, 8, 12, 14, 23, 26, 33, 35, 36, 37, 40, 50, 52, 59, 61, 68, 77, 83, 87, 89, 94, 97]
+    range [20, 50]:   [23, 26, 33, 35, 36, 37, 40, 50]
+
+  after deleting 10 keys: 14 remain, height 2, invariants hold = True
+
+  Every node holds up to 2t-1 keys and all leaves sit at the same depth, so the tree can
+  never degenerate. Overflow splits a node and pushes its median up; underflow borrows from
+  a sibling or merges. With hundreds of keys per node, a billion-row index is three seeks
+  deep -- which is why B-trees index essentially every database on earth.
+
+  wrote examples/output\btree.svg
