@@ -426,6 +426,7 @@ ruins a long non-symplectic integration.
 | `src/myers_diff.py` | Myers O(ND) diff: shortest edit script + LCS + unified diff (the git algorithm) |
 | `src/push_relabel.py` | Push-relabel (Goldberg-Tarjan) max flow + min cut + bipartite matching |
 | `src/butterworth.py` | Butterworth IIR filter design (low/high-pass) + filtfilt + frequency response |
+| `src/unscented_kalman.py` | Unscented Kalman filter: nonlinear state estimation via sigma points |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -843,6 +844,7 @@ ruins a long non-symplectic integration.
 | `examples/myers_diff_demo.py` | A git-style unified diff and the edit graph with its shortest path |
 | `examples/push_relabel_demo.py` | A max-flow network with per-edge utilisation and the min cut drawn |
 | `examples/butterworth_demo.py` | Filter magnitude responses and a 7x denoising of a buried sine |
+| `examples/unscented_kalman_demo.py` | A projectile tracked 4x better than raw range/bearing readings |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9859,6 +9861,24 @@ bilinear transform `s = (1-z^-1)/(1+z^-1)` to get the digital coefficients. Appl
 recurrence or zero-phase filtfilt. Validated against the defining Butterworth properties: exactly -3 dB
 at the cutoff for every order/cutoff, monotone (no-ripple) response, ~6 dB/octave per order of
 roll-off, and clean two-tone separation -- all pure stdlib, no scipy.
+
+## The unscented Kalman filter: nonlinear state estimation
+
+Track a hidden state through nonlinear dynamics without Jacobians. `unscented_kalman.py`:
+
+```
+$ python examples/unscented_kalman_demo.py examples/output
+
+  projectile from noisy range/bearing: raw RMS 4.49 m -> UKF RMS 1.03 m (4.3x better)
+```
+
+The plain Kalman filter is optimal only for linear systems. The UKF (Julier & Uhlmann 1997) handles
+nonlinear dynamics via the unscented transform: pick sigma points that capture the state's mean and
+covariance, push each through the true nonlinear function, and recover the transformed mean and
+covariance -- accurate to second order, no derivatives. Validated the decisive way: on a linear system
+it reproduces the repo's own linear Kalman filter step for step (the transform is exact for affine
+maps), the covariance stays symmetric positive-definite, and on nonlinear tracking (projectile in
+range/bearing, pendulum by angle) the RMS error falls well below the measurement noise.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

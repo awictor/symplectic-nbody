@@ -1,0 +1,15 @@
+Unscented Kalman filter: Cartesian state from nonlinear range/bearing sensing
+
+  tracked 80 steps of a projectile under gravity
+    RMS position error -- raw measurements: 4.485 m
+    RMS position error -- UKF estimate:     1.032 m   (4.3x better)
+
+    final true position   (240.00, 10.32)
+    final UKF estimate    (239.92, 9.76)
+
+  The measurement model (range, bearing) is nonlinear, so a linear Kalman filter cannot be
+  applied directly. The UKF pushes a handful of sigma points through the true nonlinear map
+  and recovers the mean and covariance from the transformed cloud -- accurate to second
+  order, and needing no Jacobians at all.
+
+  wrote examples/output\unscented_kalman.svg
