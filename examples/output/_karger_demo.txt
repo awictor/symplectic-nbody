@@ -1,0 +1,27 @@
+Karger's algorithm: minimum cut by random edge contraction
+
+  6 nodes in two heavy triangles joined by two light bridges (2-3 and 0-5)
+
+  exact minimum cut (Stoer-Wagner): 2, side [3, 4, 5]
+
+  best cut found as random trials accumulate:
+    after   1 trials: best = 2  <- found the true minimum
+    after   2 trials: best = 2  <- found the true minimum
+    after   5 trials: best = 2  <- found the true minimum
+    after  10 trials: best = 2  <- found the true minimum
+    after  25 trials: best = 2  <- found the true minimum
+    after  50 trials: best = 2  <- found the true minimum
+    after 100 trials: best = 2  <- found the true minimum
+
+  63/100 single trials happened to hit the minimum -- each is unlikely alone, but
+  repetition makes finding it almost certain.
+
+  repeated Karger: 2 (matches exact: True)
+  Karger-Stein:    2 (matches exact: True)
+  cut partition: [0, 1, 2] | [3, 4, 5]
+
+  Each trial merges random edges until two super-nodes remain; the edges between them are
+  a cut. A given minimum cut survives only if none of its few edges is ever contracted --
+  probability >= 2/(n(n-1)) per run -- so O(n^2 log n) runs drive the failure chance to ~0.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\karger.svg

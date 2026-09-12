@@ -382,6 +382,7 @@ ruins a long non-symplectic integration.
 | `src/tree_isomorphism.py` | AHU tree isomorphism: linear-time canonical form + center rooting |
 | `src/eulerian.py` | Eulerian paths & circuits (Hierholzer), undirected + directed, existence tests |
 | `src/yen_ksp.py` | Yen's K shortest loopless paths in a directed weighted graph |
+| `src/karger.py` | Karger & Karger-Stein randomized global minimum cut |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -755,6 +756,7 @@ ruins a long non-symplectic integration.
 | `examples/tree_isomorphism_demo.py` | Two relabelled trees vs a different-shape one, centers marked |
 | `examples/eulerian_demo.py` | Konigsberg and friends classified; a bowtie circuit numbered in walk order |
 | `examples/yen_ksp_demo.py` | The four cheapest A-to-F routes, each road coloured by its best route |
+| `examples/karger_demo.py` | Random contraction converging to a two-cluster graph's min cut |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8960,6 +8962,25 @@ stay loopless), then Dijkstra-ing from the spur to the target -- the cheapest su
 next path. Verified against brute force (enumerate every simple path, sort by cost, take the first K)
 on hundreds of random graphs: paths are loopless, valid, distinct, non-decreasing in cost, and exactly
 the K cheapest.
+
+## Karger's algorithm: minimum cut by random contraction
+
+Find a graph's weakest point by luck and repetition. `karger.py`:
+
+```
+$ python examples/karger_demo.py examples/output
+
+  two heavy triangles + two light bridges -> exact min cut 2
+  63/100 single contraction trials happen to hit it; repeated Karger + Karger-Stein: 2
+```
+
+Contract a random edge (merging its endpoints), repeat until two super-vertices remain -- the edges
+between them are a cut, the minimum one with probability >= 2/(n(n-1)) per run, so O(n^2 log n) runs
+make failure vanish. Karger-Stein contracts to ~n/sqrt(2), recurses twice, and keeps the better, for
+O(n^2 log^3 n). Weighted graphs pick edges proportional to weight. Being Monte Carlo, it is checked
+statistically: a contraction cut is always valid (never below the true minimum) and, given enough
+trials, equals the exact Stoer-Wagner value -- confirmed on hundreds of random weighted graphs, with a
+fixed seed for reproducibility.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

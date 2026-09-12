@@ -424,6 +424,7 @@ def main():
     import tree_isomorphism_demo
     import eulerian_demo
     import yen_ksp_demo
+    import karger_demo
 
     import plot_orbits
 
@@ -817,6 +818,7 @@ def main():
     tree_isomorphism_txt = run("tree_isomorphism_demo", tree_isomorphism_demo.main, True)
     eulerian_txt = run("eulerian_demo", eulerian_demo.main, True)
     yen_ksp_txt = run("yen_ksp_demo", yen_ksp_demo.main, True)
+    karger_txt = run("karger_demo", karger_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6473,6 +6475,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("yen_ksp.svg"), "the four cheapest routes from A to F, each road coloured by the best-ranked route that uses it (green shortest, then yellow, orange, purple) -- distinct alternatives a driver could actually take, in cost order")
             + f'<div class="card">{pre(yen_ksp_txt)}</div>'
+            + '</div>'),
+        section(
+            "Karger's algorithm: minimum cut by random contraction",
+            "The GLOBAL MINIMUM CUT is the fewest edges (or least weight) whose removal splits a graph "
+            "in two -- its weakest point. Deterministic algorithms (Stoer-Wagner) find it exactly; "
+            "KARGER'S ALGORITHM (1993) takes a startlingly simple RANDOMIZED route built on one "
+            "operation: CONTRACTION. Pick a random edge, merge its endpoints into a super-vertex "
+            "(keeping parallel edges, dropping self-loops), and repeat until two super-vertices "
+            "remain -- the edges between them are a cut, and with decent probability the minimum one. "
+            "A given minimum cut survives a run only if none of its few edges is ever contracted, "
+            "which happens with probability at least 2/(n(n-1)); repeating O(n^2 log n) times makes "
+            "the failure chance vanish. The KARGER-STEIN refinement contracts only to ~n/sqrt(2) "
+            "vertices -- where a min-cut edge is still unlikely hit -- then recurses twice and keeps "
+            "the better, for O(n^2 log^3 n). Weighted graphs work identically by choosing edges with "
+            "probability proportional to weight. Being Monte Carlo, correctness is checked "
+            "STATISTICALLY: a contraction cut is always valid so never below the true minimum, and "
+            "given enough trials it equals the exact Stoer-Wagner value -- confirmed on hundreds of "
+            "random weighted graphs, with a fixed seed for reproducibility.",
+            '<div class="grid">'
+            + svg_card(out("karger.svg"), "two heavy triangles joined by two light bridges: random contraction repeatedly rediscovers the minimum cut that severs the bridges (red), splitting the graph into its two natural clusters")
+            + f'<div class="card">{pre(karger_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
