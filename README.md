@@ -369,6 +369,7 @@ ruins a long non-symplectic integration.
 | `src/bipartite_matching.py` | Maximum bipartite matching (Hopcroft-Karp) + Konig cover + Hall test |
 | `src/min_cost_flow.py` | Minimum-cost maximum flow (SPFA successive shortest paths) + assignment |
 | `src/sprague_grundy.py` | Sprague-Grundy nimbers (mex + XOR) for Nim, subtraction games, Kayles |
+| `src/walsh_hadamard.py` | Fast Walsh-Hadamard transform + XOR/OR/AND convolutions (integer-exact) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -729,6 +730,7 @@ ruins a long non-symplectic integration.
 | `examples/bipartite_matching_demo.py` | Staffing 5 workers onto 5 jobs with the matched edges in green |
 | `examples/min_cost_flow_demo.py` | A factory-to-store shipping network with per-pipe flow labels |
 | `examples/sprague_grundy_demo.py` | Grundy-number colour strips revealing subtraction/Kayles periodicity |
+| `examples/walsh_hadamard_demo.py` | Two 3-bit distributions combined by XOR/OR/AND as bar panels |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8672,6 +8674,27 @@ compose by XOR (the Nim-sum), so the winning move is the one making the total Ni
 against a brute-force minimax oracle (Grundy==0 iff the position is a theoretical loss, on Nim,
 subtraction, and Kayles), against Nim's XOR-of-heaps rule, the periodicity of subtraction-game nimbers,
 and the published Kayles sequence.
+
+## Fast Walsh-Hadamard transform: the FFT for XOR
+
+Convolve two sequences over bitwise XOR (or OR, or AND) in O(n log n). `walsh_hadamard.py`:
+
+```
+$ python examples/walsh_hadamard_demo.py examples/output
+
+  two 3-bit distributions A,B (each sum 12) combined bitwise:
+  A XOR B = [10,11,13,14,26,25,23,22]   (spreads mass evenly)
+  A OR  B pushes toward all-ones; A AND B pulls toward zero
+  every result conserves total mass 12*12 = 144
+```
+
+The FFT does cyclic convolution (indices added mod n); the FWHT does XOR convolution -- (a*b)[k] =
+sum over i XOR j == k of a[i]*b[j] -- via a butterfly (x,y)->(x+y,x-y) at each of log2(n) stages, then
+pointwise multiply, then inverse. The Hadamard matrix diagonalises the XOR group algebra, so the same
+convolution theorem applies. OR and AND convolutions use the sum-over-subsets (zeta) and superset-sum
+transforms with their Mobius inverses. Everything is integer-exact. Verified against the brute-force
+O(n^2) definition of all three convolutions on hundreds of random arrays, plus round-trip, linearity,
+commutativity, the delta identity, and a 2^16-point transform.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

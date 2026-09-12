@@ -1,0 +1,22 @@
+Fast Walsh-Hadamard transform: the FFT for XOR
+
+  Two independent processes each emit a 3-bit value with these weights:
+    A (sum 12): [4, 3, 2, 1, 1, 1, 0, 0]
+    B (sum 12): [0, 0, 1, 2, 3, 3, 2, 1]
+
+  Distribution of the COMBINED value under each bitwise operation:
+    value:      [0, 1, 2, 3, 4, 5, 6, 7]
+    A XOR B:    [10, 11, 13, 14, 26, 25, 23, 22]
+    A OR  B:    [0, 0, 6, 24, 15, 39, 21, 39]
+    A AND B:    [85, 23, 15, 3, 14, 4, 0, 0]
+
+  Each total mass = 12*12 = 144: XOR 144, OR 144, AND 144 -- all conserved.
+
+  All three match the brute-force O(n^2) definition exactly (integer, no rounding).
+
+  The FWHT computes XOR convolution in O(n log n) by transforming both inputs with the
+  Hadamard butterfly (x,y)->(x+y,x-y), multiplying pointwise, and inverse-transforming --
+  the same convolution theorem that makes the FFT fast, but for the XOR group. OR and AND
+  convolutions use the subset-sum (zeta) and superset-sum transforms over the bit lattice.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\walsh_hadamard.svg

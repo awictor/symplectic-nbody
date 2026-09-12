@@ -411,6 +411,7 @@ def main():
     import bipartite_matching_demo
     import min_cost_flow_demo
     import sprague_grundy_demo
+    import walsh_hadamard_demo
 
     import plot_orbits
 
@@ -791,6 +792,7 @@ def main():
     bipartite_matching_txt = run("bipartite_matching_demo", bipartite_matching_demo.main, True)
     min_cost_flow_txt = run("min_cost_flow_demo", min_cost_flow_demo.main, True)
     sprague_grundy_txt = run("sprague_grundy_demo", sprague_grundy_demo.main, True)
+    walsh_hadamard_txt = run("walsh_hadamard_demo", walsh_hadamard_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6163,6 +6165,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("sprague_grundy.svg"), "Grundy numbers as colour: the subtraction game {1,2,3} (top) has a clean period-4 pattern where every dark cell (Grundy 0) is a losing multiple of 4, while Kayles (bottom) shows the famously irregular nimbers that only settle into period-12 later")
             + f'<div class="card">{pre(sprague_grundy_txt)}</div>'
+            + '</div>'),
+        section(
+            "Fast Walsh-Hadamard transform: the FFT for XOR",
+            "The FFT multiplies polynomials, which is CYCLIC convolution -- combining sequences by "
+            "adding indices mod n. A different convolution combines indices by bitwise XOR: (a*b)[k] "
+            "= sum over i XOR j == k of a[i]*b[j]. This answers questions like the distribution of "
+            "the XOR of two independent random bitmasks, or -- in game theory -- the Nim-sum "
+            "distribution of a combined game. Direct computation is O(n^2); the FAST WALSH-HADAMARD "
+            "TRANSFORM does it in O(n log n), exactly as the FFT speeds up cyclic convolution. The "
+            "FWHT is a butterfly almost identical to the FFT's: at each of the log2(n) stages, pair "
+            "entries a distance h apart and replace (x,y) with (x+y, x-y). By the CONVOLUTION "
+            "THEOREM, transforming both inputs, multiplying pointwise, and inverse-transforming "
+            "yields their XOR convolution -- because the Hadamard matrix diagonalises the XOR group "
+            "algebra. Two relatives over the same bit lattice give the OR convolution (via the "
+            "sum-over-subsets zeta transform and its Mobius inverse) and the AND convolution (via the "
+            "superset-sum transform), covering all three Boolean operations. Everything is "
+            "integer-exact -- no floating-point error. Verified against the brute-force O(n^2) "
+            "definition of each convolution on hundreds of random arrays, against the round-trip "
+            "identity, linearity, commutativity, the delta identity, and a 2^16-point transform.",
+            '<div class="grid">'
+            + svg_card(out("walsh_hadamard.svg"), "combining two 3-bit distributions A and B under each bitwise operation: XOR spreads the mass evenly, OR pushes it toward all-ones, AND pulls it toward zero -- and every result conserves the total mass (12x12=144)")
+            + f'<div class="card">{pre(walsh_hadamard_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
