@@ -1,0 +1,17 @@
+Vantage-point tree: nearest neighbours in any metric space
+
+  2D Euclidean, 1000 points, 8-nearest to (50.0, 50.0):
+    matches brute force: True
+    distance evaluations: 89 of 1000 points (8.9% -- the rest pruned by the triangle inequality)
+
+  edit-distance nearest neighbours (a metric with no coordinates at all):
+    'algorith'     -> algorithm(1), logarithm(4), altruism(5)
+    'logarith'     -> logarithm(1), algorithm(4), gorilla(6)
+    'alocator'     -> allocator(1), aligator(2), alternator(4)
+
+  The tree splits the space by distance to a vantage point: points nearer than the median
+  go inside, farther go outside. A query prunes whole subtrees whenever the triangle
+  inequality proves nothing there can beat the current best -- so it returns EXACTLY the
+  brute-force answer while touching a small fraction of the data, in any metric.
+
+  wrote examples/output\vp_tree.svg

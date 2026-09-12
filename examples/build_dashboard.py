@@ -463,6 +463,7 @@ def main():
     import low_discrepancy_demo
     import thompson_nfa_demo
     import bluestein_demo
+    import vp_tree_demo
 
     import plot_orbits
 
@@ -895,6 +896,7 @@ def main():
     low_discrepancy_txt = run("low_discrepancy_demo", low_discrepancy_demo.main, True)
     thompson_nfa_txt = run("thompson_nfa_demo", thompson_nfa_demo.main, True)
     bluestein_txt = run("bluestein_demo", bluestein_demo.main, True)
+    vp_tree_txt = run("vp_tree_demo", vp_tree_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7385,6 +7387,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("bluestein.svg"), "DFT time against signal length at prime lengths: the direct O(n^2) sum curves steeply upward while Bluestein's O(n log n) transform stays nearly flat, the speedup widening as the length grows")
             + f'<div class="card">{pre(bluestein_txt)}</div>'
+            + '</div>'),
+        section(
+            "Vantage-point trees: nearest neighbours in any metric space",
+            "A k-d tree needs coordinates to split on, axis by axis. But huge classes of "
+            "nearest-neighbour problems have no coordinates at all -- the distance between two DNA "
+            "strings is their edit distance, between two documents a cosine or Jaccard distance -- only "
+            "a black-box metric that obeys the triangle inequality. The VANTAGE-POINT TREE (Yianilos, "
+            "1993) indexes any metric space using pairwise distances alone, answering queries in "
+            "expected O(log n) instead of the O(n) of scanning everything. Construction is a clean use "
+            "of the triangle inequality: pick a vantage point, measure every other point's distance to "
+            "it, take the MEDIAN as a threshold, and split into an inside ball and an outside shell, "
+            "recursing -- no coordinates, just distances. A query prunes by the same inequality: at each "
+            "node it descends the likelier side first, and only searches the other side when the current "
+            "best radius reaches across the boundary, which provably means nothing pruned could have "
+            "beaten the current best. So the pruned search returns EXACTLY the brute-force answer while "
+            "touching a fraction of the data. Supports single and k-nearest neighbours (a bounded "
+            "max-heap) and range queries, over any distance callable. Validated head-on: for Euclidean "
+            "and Manhattan points, string EDIT DISTANCE, and angular distance, the tree's single- and "
+            "k-nearest results match a brute-force scan on every one of hundreds of seeded random "
+            "queries; range queries match a radius filter exactly; and the tree touches only a small "
+            "fraction of the points (about 9% on a 1000-point query), confirming the pruning fires.",
+            '<div class="grid">'
+            + svg_card(out("vp_tree.svg"), "an 8-nearest-neighbour query in a VP-tree: the yellow query, its green nearest neighbours inside the blue k-th-distance ring, all found by touching under 10% of the grey points thanks to triangle-inequality pruning")
+            + f'<div class="card">{pre(vp_tree_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

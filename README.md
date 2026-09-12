@@ -421,6 +421,7 @@ ruins a long non-symplectic integration.
 | `src/low_discrepancy.py` | Van der Corput / Halton / Hammersley + quasi-Monte-Carlo integration |
 | `src/thompson_nfa.py` | Linear-time regex engine (Thompson NFA, no catastrophic backtracking) |
 | `src/bluestein.py` | Bluestein chirp-z DFT: O(n log n) transform at any length, even primes |
+| `src/vp_tree.py` | Vantage-point tree: metric-space nearest neighbours (points, strings, vectors) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -833,6 +834,7 @@ ruins a long non-symplectic integration.
 | `examples/low_discrepancy_demo.py` | Halton vs pseudo-random points and QMC-vs-MC pi convergence |
 | `examples/thompson_nfa_demo.py` | Linear match-time curve of the catastrophic-backtracking pattern |
 | `examples/bluestein_demo.py` | Bluestein vs direct DFT timing at prime lengths (6x-36x speedup) |
+| `examples/vp_tree_demo.py` | A k-NN query touching under 10% of points, plus edit-distance lookup |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9753,6 +9755,27 @@ a self-contained radix-2 FFT. Validated against a direct O(n^2) DFT at powers of
 primes (7, 13, 101, 251) to machine precision, plus round-trip inversion, linearity, known transforms,
 and convolution against a naive reference. Speedup over the direct sum grows from 6x at n=127 to 36x
 at n=1021.
+
+## Vantage-point trees: nearest neighbours in any metric space
+
+Nearest-neighbour search when your data have no coordinates. `vp_tree.py`:
+
+```
+$ python examples/vp_tree_demo.py examples/output
+
+  2D 8-NN over 1000 points: matches brute force, touches 89 points (8.9%)
+  edit-distance NN: 'alocator' -> allocator(1), aligator(2), alternator(4)
+```
+
+A k-d tree needs axes to split on; a vantage-point tree (Yianilos 1993) indexes any metric space from
+pairwise distances alone. It picks a vantage point, splits the rest at the median distance into an
+inside ball and an outside shell, and recurses; queries prune whole subtrees whenever the triangle
+inequality proves nothing there can beat the current best. Works for Euclidean/Manhattan points, string
+edit distance, angular distance -- any metric. Validated: single- and k-nearest results match a
+brute-force scan on hundreds of seeded queries across all those metrics, range queries match a radius
+filter exactly, and only ~9% of points are touched on a 1000-point query (the pruning fires). Note that
+1 - cosine similarity is not a metric (it breaks the triangle inequality), so the angular distance
+`arccos(cos)/pi` is used instead.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
