@@ -368,6 +368,7 @@ ruins a long non-symplectic integration.
 | `src/bridges.py` | Bridges & articulation points (Tarjan) + 2-edge-connected components |
 | `src/bipartite_matching.py` | Maximum bipartite matching (Hopcroft-Karp) + Konig cover + Hall test |
 | `src/min_cost_flow.py` | Minimum-cost maximum flow (SPFA successive shortest paths) + assignment |
+| `src/sprague_grundy.py` | Sprague-Grundy nimbers (mex + XOR) for Nim, subtraction games, Kayles |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -727,6 +728,7 @@ ruins a long non-symplectic integration.
 | `examples/bridges_demo.py` | A 3-cluster network with its failure edges/nodes highlighted in red |
 | `examples/bipartite_matching_demo.py` | Staffing 5 workers onto 5 jobs with the matched edges in green |
 | `examples/min_cost_flow_demo.py` | A factory-to-store shipping network with per-pipe flow labels |
+| `examples/sprague_grundy_demo.py` | Grundy-number colour strips revealing subtraction/Kayles periodicity |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8650,6 +8652,26 @@ Bellman-Ford). It generalises plain max-flow (zero costs) and the assignment pro
 bipartite network). Verified against independent references: the flow value equals the Edmonds-Karp
 max-flow (200 nets), the cost is minimal by brute force over all integer flows (120 tiny nets), and as
 a bipartite assignment its optimum matches the Hungarian algorithm and the best over all permutations.
+
+## Sprague-Grundy: every impartial game is secretly Nim
+
+Compute who wins any impartial game by reducing it to a Nim heap. `sprague_grundy.py`:
+
+```
+$ python examples/sprague_grundy_demo.py examples/output
+
+  Nim (3,4,5): Grundy 2 -> WIN; the only winning move is to (1,4,5)
+  subtraction {1,2,3}: Grundy(n) = n mod 4  (losing heaps are multiples of 4)
+  Kayles rows 0..12: 0,1,2,3,1,4,3,2,1,4,2,6,4  (the famous irregular nimbers)
+```
+
+The Sprague-Grundy theorem: every position of an impartial game (two players, identical moves, last to
+move wins) is equivalent to a Nim heap whose size is the position's GRUNDY NUMBER, computed by the mex
+rule g = mex{ g(reachable) }; the position is a loss for the mover iff g == 0. Independent subgames
+compose by XOR (the Nim-sum), so the winning move is the one making the total Nim-sum zero. Verified
+against a brute-force minimax oracle (Grundy==0 iff the position is a theoretical loss, on Nim,
+subtraction, and Kayles), against Nim's XOR-of-heaps rule, the periodicity of subtraction-game nimbers,
+and the published Kayles sequence.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

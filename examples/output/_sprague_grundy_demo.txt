@@ -1,0 +1,20 @@
+Sprague-Grundy: every impartial game is a Nim heap of size = its Grundy number
+
+  Nim heaps (3, 4, 5): Grundy = 2 (= 3 XOR 4 XOR 5). Nonzero -> a WIN for the mover.
+  Winning moves (leave a Grundy-0 position, i.e. Nim-sum 0):
+    move to (1, 4, 5)
+
+  Nim heaps (1, 2, 3): Grundy = 0 -> a LOSS for the mover; no move escapes.
+
+  Subtraction game, remove [1, 2, 3] stones: Grundy(n) for n=0..15:
+    [0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3]
+    -> periodic with period 4 (Grundy = n mod 4); losing heaps are multiples of 4.
+
+  Kayles (knock down 1 or 2 adjacent pins from a row): Grundy(row of n) for n=0..12:
+    [0, 1, 2, 3, 1, 4, 3, 2, 1, 4, 2, 6, 4]
+    -> the famous irregular Kayles nimbers, eventually periodic with period 12.
+
+  Composition: a position with a Nim heap of 5 and a Kayles row of 4 has Grundy
+    5 XOR 1 = 4. Combine any games by XOR-ing nimbers.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\sprague_grundy.svg

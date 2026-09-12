@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="340" viewBox="0 0 760 340" font-family="monospace">
+<rect width="760" height="340" fill="#0d1117"/>
+<text x="20" y="30" fill="#e6edf3" font-size="18">Grundy numbers as colour: each cell n is coloured by its nimber</text>
+<text x="20" y="50" fill="#8b949e" font-size="12">dark cells are Grundy 0 (losing positions); repeating colour blocks reveal periodicity</text>
+<text x="138" y="128" fill="#8b949e" font-size="12" text-anchor="end">subtract{1,2,3}</text>
+<rect x="150" y="100" width="41" height="40" fill="#161b22"/>
+<text x="170" y="126" fill="#e6edf3" font-size="14" text-anchor="middle">0</text>
+<text x="170" y="94" fill="#8b949e" font-size="9" text-anchor="middle">0</text>
+<rect x="194" y="100" width="41" height="40" fill="#4dabf7"/>
+<text x="214" y="126" fill="#e6edf3" font-size="14" text-anchor="middle">1</text>
+<text x="214" y="94" fill="#8b949e" font-size="9" text-anchor="middle">1</text>
+<rect x="238" y="100" width="41" height="40" fill="#06d6a0"/>
+<text x="258" y="126" fill="#e6edf3" font-size="14" text-anchor="middle">2</text>
+<text x="258" y="94" fill="#8b949e" font-size="9" text-anchor="middle">2</text>
+<rect x="282" y="100" width="41" height="40" fill="#ffd43b"/>
+<text x="302" y="126" fill="#0d1117" font-size="14" text-anchor="middle">3</text>
+<text x="302" y="94" fill="#8b949e" font-size="9" text-anchor="middle">3</text>
+<rect x="326" y="100" width="41" height="40" fill="#161b22"/>
+<text x="346" y="126" fill="#e6edf3" font-size="14" text-anchor="middle">0</text>
+<text x="346" y="94" fill="#8b949e" font-size="9" text-anchor="middle">4</text>
+<rect x="370" y="100" width="41" height="40" fill="#4dabf7"/>
+<text x="390" y="126" fill="#e6edf3" font-size="14" text-anchor="middle">1</text>
+<text x="390" y="94" fill="#8b949e" font-size="9" text-anchor="middle">5</text>
+<rect x="414" y="100" width="41" height="40" fill="#06d6a0"/>
+<text x="434" y="126" fill="#e6edf3" font-size="14" text-anchor="middle">2</text>
+<text x="434" y="94" fill="#8b949e" font-size="9" text-anchor="middle">6</text>
+<rect x="458" y="100" width="41" height="40" fill="#ffd43b"/>
+<text x="478" y="126" fill="#0d1117" font-size="14" text-anchor="middle">3</text>
+<text x="478" y="94" fill="#8b949e" font-size="9" text-anchor="middle">7</text>
+<rect x="502" y="100" width="41" height="40" fill="#161b22"/>
+<text x="522" y="126" fill="#e6edf3" font-size="14" text-anchor="middle">0</text>
+<text x="522" y="94" fill="#8b949e" font-size="9" text-anchor="middle">8</text>
+<rect x="546" y="100" width="41" height="40" fill="#4dabf7"/>
+<text x="566" y="126" fill="#e6edf3" font-size="14" text-anchor="middle">1</text>
+<text x="566" y="94" fill="#8b949e" font-size="9" text-anchor="middle">9</text>
+<rect x="590" y="100" width="41" height="40" fill="#06d6a0"/>
+<text x="610" y="126" fill="#e6edf3" font-size="14" text-anchor="middle">2</text>
+<text x="610" y="94" fill="#8b949e" font-size="9" text-anchor="middle">10</text>
+<rect x="634" y="100" width="41" height="40" fill="#ffd43b"/>
+<text x="654" y="126" fill="#0d1117" font-size="14" text-anchor="middle">3</text>
+<text x="654" y="94" fill="#8b949e" font-size="9" text-anchor="middle">11</text>
+<rect x="678" y="100" width="41" height="40" fill="#161b22"/>
+<text x="698" y="126" fill="#e6edf3" font-size="14" text-anchor="middle">0</text>
+<text x="698" y="94" fill="#8b949e" font-size="9" text-anchor="middle">12</text>
+<text x="138" y="238" fill="#8b949e" font-size="12" text-anchor="end">Kayles row</text>
+<rect x="150" y="210" width="41" height="40" fill="#161b22"/>
+<text x="170" y="236" fill="#e6edf3" font-size="14" text-anchor="middle">0</text>
+<text x="170" y="204" fill="#8b949e" font-size="9" text-anchor="middle">0</text>
+<rect x="194" y="210" width="41" height="40" fill="#4dabf7"/>
+<text x="214" y="236" fill="#e6edf3" font-size="14" text-anchor="middle">1</text>
+<text x="214" y="204" fill="#8b949e" font-size="9" text-anchor="middle">1</text>
+<rect x="238" y="210" width="41" height="40" fill="#06d6a0"/>
+<text x="258" y="236" fill="#e6edf3" font-size="14" text-anchor="middle">2</text>
+<text x="258" y="204" fill="#8b949e" font-size="9" text-anchor="middle">2</text>
+<rect x="282" y="210" width="41" height="40" fill="#ffd43b"/>
+<text x="302" y="236" fill="#0d1117" font-size="14" text-anchor="middle">3</text>
+<text x="302" y="204" fill="#8b949e" font-size="9" text-anchor="middle">3</text>
+<rect x="326" y="210" width="41" height="40" fill="#4dabf7"/>
+<text x="346" y="236" fill="#e6edf3" font-size="14" text-anchor="middle">1</text>
+<text x="346" y="204" fill="#8b949e" font-size="9" text-anchor="middle">4</text>
+<rect x="370" y="210" width="41" height="40" fill="#ff922b"/>
+<text x="390" y="236" fill="#e6edf3" font-size="14" text-anchor="middle">4</text>
+<text x="390" y="204" fill="#8b949e" font-size="9" text-anchor="middle">5</text>
+<rect x="414" y="210" width="41" height="40" fill="#ffd43b"/>
+<text x="434" y="236" fill="#0d1117" font-size="14" text-anchor="middle">3</text>
+<text x="434" y="204" fill="#8b949e" font-size="9" text-anchor="middle">6</text>
+<rect x="458" y="210" width="41" height="40" fill="#06d6a0"/>
+<text x="478" y="236" fill="#e6edf3" font-size="14" text-anchor="middle">2</text>
+<text x="478" y="204" fill="#8b949e" font-size="9" text-anchor="middle">7</text>
+<rect x="502" y="210" width="41" height="40" fill="#4dabf7"/>
+<text x="522" y="236" fill="#e6edf3" font-size="14" text-anchor="middle">1</text>
+<text x="522" y="204" fill="#8b949e" font-size="9" text-anchor="middle">8</text>
+<rect x="546" y="210" width="41" height="40" fill="#ff922b"/>
+<text x="566" y="236" fill="#e6edf3" font-size="14" text-anchor="middle">4</text>
+<text x="566" y="204" fill="#8b949e" font-size="9" text-anchor="middle">9</text>
+<rect x="590" y="210" width="41" height="40" fill="#06d6a0"/>
+<text x="610" y="236" fill="#e6edf3" font-size="14" text-anchor="middle">2</text>
+<text x="610" y="204" fill="#8b949e" font-size="9" text-anchor="middle">10</text>
+<rect x="634" y="210" width="41" height="40" fill="#b197fc"/>
+<text x="654" y="236" fill="#e6edf3" font-size="14" text-anchor="middle">6</text>
+<text x="654" y="204" fill="#8b949e" font-size="9" text-anchor="middle">11</text>
+<rect x="678" y="210" width="41" height="40" fill="#ff922b"/>
+<text x="698" y="236" fill="#e6edf3" font-size="14" text-anchor="middle">4</text>
+<text x="698" y="204" fill="#8b949e" font-size="9" text-anchor="middle">12</text>
+<text x="150" y="300" fill="#8b949e" font-size="12">top: clean period-4 (Grundy = n mod 4). bottom: Kayles, irregular then period-12.</text>
+</svg>

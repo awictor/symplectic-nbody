@@ -410,6 +410,7 @@ def main():
     import bridges_demo
     import bipartite_matching_demo
     import min_cost_flow_demo
+    import sprague_grundy_demo
 
     import plot_orbits
 
@@ -789,6 +790,7 @@ def main():
     bridges_txt = run("bridges_demo", bridges_demo.main, True)
     bipartite_matching_txt = run("bipartite_matching_demo", bipartite_matching_demo.main, True)
     min_cost_flow_txt = run("min_cost_flow_demo", min_cost_flow_demo.main, True)
+    sprague_grundy_txt = run("sprague_grundy_demo", sprague_grundy_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6139,6 +6141,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("min_cost_flow.svg"), "a factory-to-store shipping network: pipe thickness is the flow carried and each label is used/capacity -- the solver pushes the maximum 7 units at the minimum total cost by favouring the cheap factB->whY->hub route")
             + f'<div class="card">{pre(min_cost_flow_txt)}</div>'
+            + '</div>'),
+        section(
+            "Sprague-Grundy: every impartial game is secretly Nim",
+            "An IMPARTIAL game -- two players, perfect information, identical moves for both, last to "
+            "move wins -- has a stunning universal structure. The Sprague-Grundy theorem says every "
+            "position is equivalent to a single Nim heap: it carries a GRUNDY NUMBER (nimber), and a "
+            "position is a LOSS for the player to move exactly when that number is 0. The nimber comes "
+            "from the MEX rule: g(position) = mex{ g(p) : p reachable in one move }, where mex is the "
+            "smallest non-negative integer absent from the set; a terminal position with no moves has "
+            "mex{} = 0, a loss for whoever cannot move. The second miracle is COMPOSITION -- when a "
+            "game splits into independent subgames (several heaps, several rows), the whole's Grundy "
+            "number is the XOR (Nim-sum) of the parts, so who-wins-a-sum-of-games reduces to XOR-ing "
+            "small integers, and the winning move is the one making the total Nim-sum zero. This "
+            "module gives the mex operator, a memoised Grundy solver for any impartial game (supplied "
+            "as a 'moves from a position' function), the Nim-sum combinator, and three worked games: "
+            "Nim, subtraction games, and Kayles. Verified against a brute-force minimax oracle "
+            "(Grundy==0 iff the position is a theoretical loss, on Nim, subtraction, and Kayles) and "
+            "against known results: Nim's XOR-of-heaps rule, the periodicity of subtraction-game "
+            "nimbers (remove {1,2,3} gives Grundy = n mod 4), and the published Kayles sequence.",
+            '<div class="grid">'
+            + svg_card(out("sprague_grundy.svg"), "Grundy numbers as colour: the subtraction game {1,2,3} (top) has a clean period-4 pattern where every dark cell (Grundy 0) is a losing multiple of 4, while Kayles (bottom) shows the famously irregular nimbers that only settle into period-12 later")
+            + f'<div class="card">{pre(sprague_grundy_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
