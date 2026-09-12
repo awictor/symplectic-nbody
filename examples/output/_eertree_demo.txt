@@ -1,0 +1,32 @@
+Eertree: all distinct palindromic substrings in one linear structure
+
+  word: 'abacabadabacaba' (15 characters)
+  tree: 17 nodes (2 roots + one per distinct palindrome)
+
+  distinct palindromic substrings: 15
+  verified against brute enumeration: True
+  classical bound (<= n = 15): satisfied
+
+  distinct palindromes by length:
+    len 1: ['a', 'b', 'c', 'd']
+    len 3: ['aba', 'aca', 'ada']
+    len 5: ['bacab', 'badab']
+    len 7: ['abacaba', 'abadaba']
+    len 9: ['cabadabac']
+    len 11: ['acabadabaca']
+    len 13: ['bacabadabacab']
+    len 15: ['abacabadabacaba']
+
+  most frequent palindromes:
+    'a' occurs 8 times
+    'b' occurs 4 times
+    'aba' occurs 4 times
+    'c' occurs 2 times
+    'aca' occurs 2 times
+
+  palindromic richness: 15/15 distinct -> RICH (maximal)
+  The eertree adds each character in amortised O(1) by walking suffix links to the longest
+  extendable palindromic suffix -- capturing all palindromes in O(n), the palindrome
+  analogue of the suffix automaton.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\eertree.svg

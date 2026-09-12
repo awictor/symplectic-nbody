@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="430" viewBox="0 0 780 430" font-family="monospace">
+<rect width="780" height="430" fill="#0d1117"/>
+<text x="20" y="30" fill="#e6edf3" font-size="18">Distinct palindromes of 'abacabadabacaba', grouped by length</text>
+<text x="20" y="50" fill="#8b949e" font-size="12">each tile is one distinct palindromic substring; brighter = occurs more often</text>
+<text x="30" y="104" fill="#8b949e" font-size="12" text-anchor="start">len 1</text>
+<rect x="110" y="80" width="30" height="34" fill="#4dabf7" opacity="1.00" rx="3"/>
+<text x="125" y="103" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">a</text>
+<rect x="148" y="80" width="30" height="34" fill="#4dabf7" opacity="0.68" rx="3"/>
+<text x="163" y="103" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">b</text>
+<rect x="186" y="80" width="30" height="34" fill="#4dabf7" opacity="0.51" rx="3"/>
+<text x="201" y="103" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">c</text>
+<rect x="224" y="80" width="30" height="34" fill="#4dabf7" opacity="0.43" rx="3"/>
+<text x="239" y="103" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">d</text>
+<text x="30" y="144" fill="#8b949e" font-size="12" text-anchor="start">len 3</text>
+<rect x="110" y="120" width="41" height="34" fill="#06d6a0" opacity="0.68" rx="3"/>
+<text x="130" y="143" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">aba</text>
+<rect x="159" y="120" width="41" height="34" fill="#06d6a0" opacity="0.51" rx="3"/>
+<text x="180" y="143" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">aca</text>
+<rect x="208" y="120" width="41" height="34" fill="#06d6a0" opacity="0.43" rx="3"/>
+<text x="228" y="143" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">ada</text>
+<text x="30" y="184" fill="#8b949e" font-size="12" text-anchor="start">len 5</text>
+<rect x="110" y="160" width="63" height="34" fill="#ffd43b" opacity="0.51" rx="3"/>
+<text x="142" y="183" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">bacab</text>
+<rect x="181" y="160" width="63" height="34" fill="#ffd43b" opacity="0.43" rx="3"/>
+<text x="212" y="183" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">badab</text>
+<text x="30" y="224" fill="#8b949e" font-size="12" text-anchor="start">len 7</text>
+<rect x="110" y="200" width="85" height="34" fill="#ff922b" opacity="0.51" rx="3"/>
+<text x="152" y="223" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">abacaba</text>
+<rect x="203" y="200" width="85" height="34" fill="#ff922b" opacity="0.43" rx="3"/>
+<text x="246" y="223" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">abadaba</text>
+<text x="30" y="264" fill="#8b949e" font-size="12" text-anchor="start">len 9</text>
+<rect x="110" y="240" width="107" height="34" fill="#ff6b6b" opacity="0.43" rx="3"/>
+<text x="164" y="263" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">cabadabac</text>
+<text x="30" y="304" fill="#8b949e" font-size="12" text-anchor="start">len 11</text>
+<rect x="110" y="280" width="129" height="34" fill="#b197fc" opacity="0.43" rx="3"/>
+<text x="174" y="303" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">acabadabaca</text>
+<text x="30" y="344" fill="#8b949e" font-size="12" text-anchor="start">len 13</text>
+<rect x="110" y="320" width="151" height="34" fill="#e6edf3" opacity="0.43" rx="3"/>
+<text x="186" y="343" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">bacabadabacab</text>
+<text x="30" y="384" fill="#8b949e" font-size="12" text-anchor="start">len 15</text>
+<rect x="110" y="360" width="173" height="34" fill="#4dabf7" opacity="0.43" rx="3"/>
+<text x="196" y="383" fill="#0d1117" font-size="12" text-anchor="middle" font-weight="bold">abacabadabacaba</text>
+</svg>

@@ -416,6 +416,7 @@ def main():
     import berlekamp_massey_demo
     import suffix_automaton_demo
     import lyndon_demo
+    import eertree_demo
 
     import plot_orbits
 
@@ -801,6 +802,7 @@ def main():
     berlekamp_massey_txt = run("berlekamp_massey_demo", berlekamp_massey_demo.main, True)
     suffix_automaton_txt = run("suffix_automaton_demo", suffix_automaton_demo.main, True)
     lyndon_txt = run("lyndon_demo", lyndon_demo.main, True)
+    eertree_txt = run("eertree_demo", eertree_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6284,6 +6286,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("lyndon.svg"), "the Duval factorisation of four strings into their unique Lyndon 'primes' (coloured blocks), each factor lexicographically no greater than the one before it -- the string analogue of writing an integer as a non-increasing product of primes")
             + f'<div class="card">{pre(lyndon_txt)}</div>'
+            + '</div>'),
+        section(
+            "Eertree: every distinct palindrome in linear space",
+            "A string of length n contains at most n distinct palindromic substrings (a classical "
+            "bound), and the EERTREE, or palindromic tree, stores ALL of them in O(n) space, built in "
+            "O(n) time. Invented by Mikhail Rubinchik in 2014, it is the palindrome analogue of the "
+            "suffix automaton: where that captures every substring, the eertree captures exactly the "
+            "distinct palindromic ones, answering 'how many distinct palindromes?', 'how many end at "
+            "each position?', and 'how often does each occur?' in linear time -- questions that arise "
+            "in bioinformatics (palindromic DNA marks restriction sites and hairpins) and text "
+            "indexing. The tree has two roots (an imaginary root of length -1 and the empty root of "
+            "length 0) and one node per distinct palindrome, each with its length, a SUFFIX LINK to "
+            "its longest proper palindromic suffix, and character edges where edge c from node v "
+            "leads to the palindrome c+v+c. Building is online: to add a character the algorithm "
+            "walks suffix links from the last palindrome to the longest one that can be extended by "
+            "it, creating a node if new -- and the total link-walking is amortised O(n). Verified "
+            "against brute force -- the distinct count and the per-length set match all O(n^2) "
+            "substrings filtered for the palindrome property, and occurrence counts match direct "
+            "scanning -- on hundreds of random strings, plus the classical <= n bound and that the "
+            "online build equals batch construction.",
+            '<div class="grid">'
+            + svg_card(out("eertree.svg"), "the distinct palindromes of 'abacabadabacaba' grouped by length: this word is palindromically RICH, hitting the maximum of 15 distinct palindromes for its 15 characters, with brighter tiles marking the palindromes that occur most often")
+            + f'<div class="card">{pre(eertree_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

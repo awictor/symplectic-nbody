@@ -374,6 +374,7 @@ ruins a long non-symplectic integration.
 | `src/berlekamp_massey.py` | Shortest linear recurrence of a sequence over Q and GF(2) (LFSR) |
 | `src/suffix_automaton.py` | Suffix automaton: distinct substrings, occurrences, LRS, LCS in O(n) |
 | `src/lyndon.py` | Lyndon words: Duval factorisation, least rotation, FKM generation |
+| `src/eertree.py` | Eertree (palindromic tree): all distinct palindromic substrings in O(n) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -739,6 +740,7 @@ ruins a long non-symplectic integration.
 | `examples/berlekamp_massey_demo.py` | Famous sequence recurrences + a length-5 LFSR keystream cracked |
 | `examples/suffix_automaton_demo.py` | The 'abracadabra' automaton drawn as states by substring length |
 | `examples/lyndon_demo.py` | Duval factorisations as coloured Lyndon-word segments |
+| `examples/eertree_demo.py` | Palindromes of a rich word tiled by length, brightness by frequency |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8785,6 +8787,27 @@ concatenating those whose length divides n builds the De Bruijn sequence. Verifi
 factors are Lyndon, non-increasing, and concatenate back; membership matches the rotation definition;
 the least rotation matches an exhaustive scan; generated words match a brute filter and the Mobius
 necklace-counting formula.
+
+## Eertree: every distinct palindrome in linear space
+
+Store all distinct palindromic substrings of a string in O(n). `eertree.py`:
+
+```
+$ python examples/eertree_demo.py examples/output
+
+  'abacabadabacaba' (15 chars) -> 15 distinct palindromes (RICH: hits the n bound)
+  by length: a,b,c,d | aba,aca,ada | bacab,badab | abacaba,abadaba | ...
+  most frequent: 'a' x8, 'b' x4, 'aba' x4
+```
+
+A string has at most n distinct palindromic substrings; the eertree (palindromic tree, Rubinchik 2014)
+stores them all in O(n) space and time. It is the palindrome analogue of the suffix automaton: two
+roots (lengths -1 and 0), one node per distinct palindrome with a suffix link to its longest proper
+palindromic suffix, edges where c from v gives c+v+c. Building is online -- each character walks suffix
+links to the longest extendable palindromic suffix, amortised O(n). Verified against brute force: the
+distinct count and per-length set match all O(n^2) substrings filtered for the palindrome property,
+occurrence counts match direct scanning, the classical <= n bound holds, and the online build equals
+batch construction.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
