@@ -373,6 +373,7 @@ ruins a long non-symplectic integration.
 | `src/dpll.py` | DPLL SAT solver: unit propagation + pure-literal elimination + backtracking |
 | `src/berlekamp_massey.py` | Shortest linear recurrence of a sequence over Q and GF(2) (LFSR) |
 | `src/suffix_automaton.py` | Suffix automaton: distinct substrings, occurrences, LRS, LCS in O(n) |
+| `src/lyndon.py` | Lyndon words: Duval factorisation, least rotation, FKM generation |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -737,6 +738,7 @@ ruins a long non-symplectic integration.
 | `examples/dpll_demo.py` | A SAT model plus the pigeonhole principle proven UNSAT as bars |
 | `examples/berlekamp_massey_demo.py` | Famous sequence recurrences + a length-5 LFSR keystream cracked |
 | `examples/suffix_automaton_demo.py` | The 'abracadabra' automaton drawn as states by substring length |
+| `examples/lyndon_demo.py` | Duval factorisations as coloured Lyndon-word segments |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8761,6 +8763,28 @@ state when a transition conflicts. Distinct substrings = sum of len[v]-len[link[
 brute force -- the distinct count matches the set of all substrings, membership and occurrence counts
 match direct scanning, the longest common substring matches an O(n*m) DP -- on hundreds of random
 strings, with the state count within the 2n bound.
+
+## Lyndon words: the primes of strings
+
+Factorise any string uniquely into non-increasing Lyndon words in O(n). `lyndon.py`:
+
+```
+$ python examples/lyndon_demo.py examples/output
+
+  banana = b | an | an | a; bbababaab = b | b | ab | ab | aab
+  least rotation of 'cabab' -> 'ababc'; 'bca' -> 'abc'
+  Lyndon words over {a,b} up to length 4 concatenate to De Bruijn B(2,4)
+```
+
+A Lyndon word is strictly smaller than all its rotations; the Chen-Fox-Lyndon theorem factorises every
+string uniquely into a non-increasing sequence of them. Duval's algorithm does it in O(n) time and O(1)
+space with a two-pointer scan (extend the period on a tie, restart on a larger character, emit Lyndon
+words on a smaller one); run over the doubled string it gives the least rotation (necklace
+canonicalisation / Booth's problem). The FKM algorithm generates all Lyndon words up to a length, and
+concatenating those whose length divides n builds the De Bruijn sequence. Verified against brute force:
+factors are Lyndon, non-increasing, and concatenate back; membership matches the rotation definition;
+the least rotation matches an exhaustive scan; generated words match a brute filter and the Mobius
+necklace-counting formula.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

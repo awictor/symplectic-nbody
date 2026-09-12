@@ -415,6 +415,7 @@ def main():
     import dpll_demo
     import berlekamp_massey_demo
     import suffix_automaton_demo
+    import lyndon_demo
 
     import plot_orbits
 
@@ -799,6 +800,7 @@ def main():
     dpll_txt = run("dpll_demo", dpll_demo.main, True)
     berlekamp_massey_txt = run("berlekamp_massey_demo", berlekamp_massey_demo.main, True)
     suffix_automaton_txt = run("suffix_automaton_demo", suffix_automaton_demo.main, True)
+    lyndon_txt = run("lyndon_demo", lyndon_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6259,6 +6261,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("suffix_automaton.svg"), "the suffix automaton of 'abracadabra': 12 states laid out left-to-right by substring length, blue transitions labelled by character and grey dashed suffix links -- every path from the green start state spells one of the 54 distinct substrings")
             + f'<div class="card">{pre(suffix_automaton_txt)}</div>'
+            + '</div>'),
+        section(
+            "Lyndon words: the primes of strings",
+            "A LYNDON WORD is a string strictly smaller (dictionary order) than all of its rotations "
+            "-- 'aab' beats 'aba' and 'baa', so it is Lyndon; 'aba' is not, since its rotation 'aab' "
+            "is smaller. Lyndon words are the primes of concatenation: the CHEN-FOX-LYNDON theorem "
+            "says every string factorises UNIQUELY into a non-increasing sequence of Lyndon words "
+            "w1 >= w2 >= ... >= wk. This underlies the Lyndon basis of free Lie algebras, the "
+            "linear-time bijective Burrows-Wheeler transform, and -- through the last factor -- the "
+            "LEXICOGRAPHICALLY SMALLEST ROTATION of a string (necklace canonicalisation, Booth's "
+            "problem). DUVAL'S ALGORITHM computes the factorisation in O(n) time and O(1) space with "
+            "a two-pointer scan: compare each character to the one a period back, extending the "
+            "period on a tie, restarting on a larger character, and emitting Lyndon words on a "
+            "smaller one; run over the doubled string it yields the least rotation. The FKM "
+            "algorithm generates all Lyndon words up to a length in lexicographic order, and "
+            "concatenating those whose length divides n builds the De Bruijn sequence. Verified "
+            "against brute force: the factorisation's parts are all Lyndon and non-increasing and "
+            "concatenate back, membership matches the rotation definition, the least rotation matches "
+            "an exhaustive scan, and the generated words match both a brute filter and the Mobius "
+            "necklace-counting formula -- on hundreds of random cases.",
+            '<div class="grid">'
+            + svg_card(out("lyndon.svg"), "the Duval factorisation of four strings into their unique Lyndon 'primes' (coloured blocks), each factor lexicographically no greater than the one before it -- the string analogue of writing an integer as a non-increasing product of primes")
+            + f'<div class="card">{pre(lyndon_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

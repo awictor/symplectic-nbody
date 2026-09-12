@@ -1,0 +1,28 @@
+Lyndon words: the primes of string concatenation
+
+  A Lyndon word is strictly smaller than all its rotations. Membership:
+    aab    -> Lyndon
+    aba    -> not Lyndon
+    abcab  -> not Lyndon
+    aabb   -> Lyndon
+    z      -> Lyndon
+    aa     -> not Lyndon
+
+  Chen-Fox-Lyndon factorisation (unique, non-increasing) via Duval O(n):
+    banana       = b | an | an | a
+    bbababaab    = b | b | ab | ab | aab
+    abcabcabc    = abc | abc | abc
+    zyxabc       = z | y | x | abc
+
+  Least rotation (necklace canonicalisation) via Duval over the doubled string:
+    cabab          -> 'ababc'  (rotate by 1)
+    bca            -> 'abc'  (rotate by 2)
+    googgle        -> 'egooggl'  (rotate by 6)
+    tobeornottobe  -> 'beornottobeto'  (rotate by 2)
+
+  Lyndon words over {a,b} up to length 4 (FKM order -- concatenated they form the
+  De Bruijn sequence B(2,4)):
+    ['a', 'aaab', 'aab', 'aabb', 'ab', 'abb', 'abbb', 'b']
+    De Bruijn B(2,4) = aaaabaabbababbbb  (length 16 = 2^4)
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\lyndon.svg
