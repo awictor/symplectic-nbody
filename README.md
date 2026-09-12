@@ -361,6 +361,7 @@ ruins a long non-symplectic integration.
 | `src/discrete_log.py` | Baby-step giant-step discrete logarithm (O(sqrt n)) + multiplicative order |
 | `src/welzl.py` | Welzl's smallest enclosing circle (expected O(n), iterative move-to-front) |
 | `src/cuckoo_filter.py` | Cuckoo filter: approximate membership with deletion (cuckoo hashing) |
+| `src/dsu_rollback.py` | Rollback disjoint-set union (snapshot/undo) for offline dynamic connectivity |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -713,6 +714,7 @@ ruins a long non-symplectic integration.
 | `examples/discrete_log_demo.py` | Breaking a toy Diffie-Hellman + BSGS vs brute-force work curve |
 | `examples/welzl_demo.py` | A point cloud's smallest enclosing circle with its support points |
 | `examples/cuckoo_filter_demo.py` | Deletion + false-positive rate shrinking with fingerprint bits |
+| `examples/dsu_rollback_demo.py` | Component count over edge additions and rollbacks on a timeline |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8495,6 +8497,24 @@ bucket evicts a resident to its alternate (the cuckoo kick). This module impleme
 verified that it never reports a false negative, the false-positive rate shrinks with fingerprint
 size, deletion removes an item while leaving others, deleting one of several duplicates leaves the
 rest, and it packs to a ~95% load factor.
+
+## Rollback disjoint-set union: undoable connectivity
+
+Union-find you can undo -- for offline dynamic connectivity. `dsu_rollback.py`:
+
+```
+$ python examples/dsu_rollback_demo.py examples/output
+
+  8 nodes, add edges (count drops 8->...->2), roll back 3 edges (count jumps to 5)
+  full rollback returns to 8 singletons; connectivity restored exactly
+```
+
+Path compression makes union-find fast but un-undoable; using only union by rank, each union changes
+O(1) state recorded on a stack, so a snapshot is a stack length and rollback replays it in reverse.
+This module implements union/find/component-count/snapshot/rollback, verified against a brute-force
+recompute that connectivity always matches a fresh union-find over the live edges (50 graphs), rolling
+back restores connectivity and count exactly, nested snapshots and full rollback work, and redundant
+unions roll back cleanly.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

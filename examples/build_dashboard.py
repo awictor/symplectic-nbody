@@ -403,6 +403,7 @@ def main():
     import discrete_log_demo
     import welzl_demo
     import cuckoo_filter_demo
+    import dsu_rollback_demo
 
     import plot_orbits
 
@@ -775,6 +776,7 @@ def main():
     discrete_log_txt = run("discrete_log_demo", discrete_log_demo.main, True)
     welzl_txt = run("welzl_demo", welzl_demo.main, True)
     cuckoo_filter_txt = run("cuckoo_filter_demo", cuckoo_filter_demo.main, True)
+    dsu_rollback_txt = run("dsu_rollback_demo", dsu_rollback_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5970,6 +5972,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("cuckoo_filter.svg"), "the false-positive rate falling exponentially as the fingerprint grows (log scale) -- a few more bits per item buys orders-of-magnitude fewer false hits, with deletion Bloom filters can't offer")
             + f'<div class="card">{pre(cuckoo_filter_txt)}</div>'
+            + '</div>'),
+        section(
+            "Rollback disjoint-set union: undoable connectivity",
+            "Ordinary UNION-FIND is nearly constant-time thanks to PATH COMPRESSION, but that same "
+            "compression rewrites the tree unpredictably, so unions cannot be UNDONE. Offline dynamic "
+            "connectivity needs exactly that: process edge additions and queries, then roll back to "
+            "an earlier state. The trick is to drop path compression and use only UNION BY RANK, "
+            "which changes O(1) state per union (one parent pointer, maybe one rank), recorded on a "
+            "stack; rollback pops the stack and restores the saved values. This ROLLBACK DSU "
+            "underlies the offline dynamic-connectivity structure (a segment tree over time), "
+            "Kruskal-style reconnection, and 'components after each edge, later retracted' problems. "
+            "Find is O(log n) (rank keeps trees shallow) rather than inverse-Ackermann, but every "
+            "operation is reversible: a SNAPSHOT is just the stack length. This module implements "
+            "union by rank, find, a component counter, and snapshot/rollback, verified against a "
+            "brute-force recompute: connectivity queries always match a fresh union-find over the "
+            "live edges (50 random graphs), rolling back to a snapshot exactly restores connectivity "
+            "and the component count, nested snapshots roll back correctly, a full add-then-rollback "
+            "returns to all-singletons, redundant unions roll back cleanly, and a dynamic-connectivity "
+            "scenario with edge retraction behaves correctly.",
+            '<div class="grid">'
+            + svg_card(out("dsu_rollback.svg"), "the component count dropping as edges merge groups, then jumping back up at the red rollback points -- the undo that path-compressed union-find cannot provide")
+            + f'<div class="card">{pre(dsu_rollback_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

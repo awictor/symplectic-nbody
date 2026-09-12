@@ -1,0 +1,26 @@
+Rollback disjoint-set union: undoable connectivity
+
+  8 isolated nodes -> 8 components
+
+  Adding edges (recording a snapshot before each):
+    edge 0-1: merged -> 7 components
+    edge 2-3: merged -> 6 components
+    edge 4-5: merged -> 5 components
+    edge 1-2: merged -> 4 components
+    edge 6-7: merged -> 3 components
+    edge 3-4: merged -> 2 components
+
+  Now 2 components; 0-5 chained together, 6-7 a separate pair
+
+  Roll back 3 edges (undo 1-2, 6-7, 3-4):
+    components: 5
+    0 and 3 connected: False (retracted -- the 1-2 bridge is gone)
+    0 and 1 connected: True (kept -- it was before the snapshot)
+
+  Full rollback to the start: 8 components (back to all singletons: True)
+
+  Ordinary union-find uses path compression and cannot be undone. Rollback DSU uses only
+  union by rank -- each union changes O(1) state (one parent, maybe one rank) -- and records
+  those changes on a stack, so a snapshot is a stack length and rollback replays it in reverse.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\dsu_rollback.svg
