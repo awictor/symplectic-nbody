@@ -359,6 +359,7 @@ ruins a long non-symplectic integration.
 | `src/crt.py` | Chinese Remainder Theorem (coprime + general) with extended Euclid and mod inverse |
 | `src/tonelli_shanks.py` | Modular square root (Tonelli-Shanks) + Legendre symbol / residue test |
 | `src/discrete_log.py` | Baby-step giant-step discrete logarithm (O(sqrt n)) + multiplicative order |
+| `src/welzl.py` | Welzl's smallest enclosing circle (expected O(n), iterative move-to-front) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -709,6 +710,7 @@ ruins a long non-symplectic integration.
 | `examples/crt_demo.py` | Sunzi's puzzle + reconstructing a secret from residues + non-coprime handling |
 | `examples/tonelli_shanks_demo.py` | Modular square roots + the residue split + EC point decompression |
 | `examples/discrete_log_demo.py` | Breaking a toy Diffie-Hellman + BSGS vs brute-force work curve |
+| `examples/welzl_demo.py` | A point cloud's smallest enclosing circle with its support points |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8454,6 +8456,24 @@ takes giant steps h*(g^-N)^i, looking each up -- both loops run sqrt(n) times. T
 it modulo a prime plus a multiplicative-order helper, verified against brute force that the returned x
 satisfies g^x = h, existence and validity agree over dozens of primes, no-solution cases are reported,
 and a toy Diffie-Hellman exchange is broken by recovering the secret exponent.
+
+## Welzl's algorithm: the smallest enclosing circle
+
+The tightest circle containing every point, in expected linear time. `welzl.py`:
+
+```
+$ python examples/welzl_demo.py examples/output
+
+  50 points -> smallest circle radius 170.56, pinned by 2 boundary points
+  8% smaller radius than the bounding-box circumscribed circle
+```
+
+The smallest enclosing circle is determined by at most three boundary points; Welzl processes points
+in random order, and when one falls outside the current circle it must lie on the new circle's
+boundary, so the circle is rebuilt with it fixed there. This module implements the iterative
+move-to-front variant, verified against brute force that every point lies inside, the radius matches
+an O(n^4) all-triples minimum over 60 random sets, shrinking the radius excludes a point (minimality),
+and known cases hold (diameter, circumscribed circle, points on a circle) up to 1000-point sets.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

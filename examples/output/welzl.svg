@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" font-family="monospace">
+<rect width="760" height="430" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="18">Smallest enclosing circle (Welzl)</text>
+<text x="20" y="47" fill="#8b949e" font-size="12">blue = points, green = the minimum circle, red = the 2-3 support points that pin it down</text>
+<circle cx="193.8" cy="194.2" r="170.6" fill="#06d6a0" fill-opacity="0.08" stroke="#06d6a0" stroke-width="2"/>
+<circle cx="193.8" cy="194.2" r="3" fill="#06d6a0"/>
+<circle cx="160.4" cy="118.0" r="3" fill="#4dabf7"/>
+<circle cx="95.9" cy="310.8" r="3" fill="#4dabf7"/>
+<circle cx="315.2" cy="308.4" r="3" fill="#4dabf7"/>
+<circle cx="127.7" cy="135.3" r="3" fill="#4dabf7"/>
+<circle cx="205.1" cy="169.2" r="3" fill="#4dabf7"/>
+<circle cx="272.9" cy="110.2" r="3" fill="#4dabf7"/>
+<circle cx="103.6" cy="76.4" r="3" fill="#4dabf7"/>
+<circle cx="201.3" cy="162.7" r="3" fill="#4dabf7"/>
+<circle cx="211.6" cy="187.8" r="3" fill="#4dabf7"/>
+<circle cx="203.6" cy="82.2" r="3" fill="#4dabf7"/>
+<circle cx="163.2" cy="200.1" r="3" fill="#4dabf7"/>
+<circle cx="136.9" cy="160.9" r="3" fill="#4dabf7"/>
+<circle cx="277.7" cy="163.7" r="3" fill="#4dabf7"/>
+<circle cx="309.4" cy="198.5" r="3" fill="#4dabf7"/>
+<circle cx="234.4" cy="232.9" r="3" fill="#4dabf7"/>
+<circle cx="312.1" cy="155.6" r="3" fill="#4dabf7"/>
+<circle cx="215.1" cy="293.1" r="3" fill="#4dabf7"/>
+<circle cx="285.3" cy="302.8" r="3" fill="#4dabf7"/>
+<circle cx="40.5" cy="220.0" r="3" fill="#4dabf7"/>
+<circle cx="180.5" cy="277.2" r="3" fill="#4dabf7"/>
+<circle cx="297.7" cy="84.8" r="3" fill="#4dabf7"/>
+<circle cx="152.8" cy="267.5" r="3" fill="#4dabf7"/>
+<circle cx="232.3" cy="187.5" r="3" fill="#4dabf7"/>
+<circle cx="196.2" cy="113.1" r="3" fill="#4dabf7"/>
+<circle cx="153.7" cy="106.4" r="3" fill="#4dabf7"/>
+<circle cx="206.4" cy="166.2" r="3" fill="#4dabf7"/>
+<circle cx="277.3" cy="271.1" r="3" fill="#4dabf7"/>
+<circle cx="232.5" cy="75.0" r="3" fill="#4dabf7"/>
+<circle cx="301.4" cy="121.8" r="3" fill="#4dabf7"/>
+<circle cx="154.2" cy="212.0" r="3" fill="#4dabf7"/>
+<circle cx="192.5" cy="236.9" r="3" fill="#4dabf7"/>
+<circle cx="194.1" cy="282.5" r="3" fill="#4dabf7"/>
+<circle cx="328.3" cy="118.7" r="3" fill="#4dabf7"/>
+<circle cx="152.2" cy="210.4" r="3" fill="#4dabf7"/>
+<circle cx="120.2" cy="141.3" r="3" fill="#4dabf7"/>
+<circle cx="123.1" cy="211.8" r="3" fill="#4dabf7"/>
+<circle cx="314.9" cy="227.5" r="3" fill="#4dabf7"/>
+<circle cx="131.8" cy="279.0" r="3" fill="#4dabf7"/>
+<circle cx="148.6" cy="133.0" r="3" fill="#4dabf7"/>
+<circle cx="99.0" cy="110.4" r="3" fill="#4dabf7"/>
+<circle cx="101.2" cy="280.1" r="3" fill="#4dabf7"/>
+<circle cx="122.0" cy="82.6" r="3" fill="#4dabf7"/>
+<circle cx="75.5" cy="144.2" r="3" fill="#4dabf7"/>
+<circle cx="232.2" cy="177.2" r="3" fill="#4dabf7"/>
+<circle cx="297.9" cy="259.6" r="3" fill="#4dabf7"/>
+<circle cx="316.0" cy="223.6" r="3" fill="#4dabf7"/>
+<circle cx="151.1" cy="258.5" r="3" fill="#4dabf7"/>
+<circle cx="240.3" cy="140.7" r="3" fill="#4dabf7"/>
+<circle cx="64.5" cy="82.9" r="5" fill="#ff6b6b"/>
+<circle cx="323.0" cy="305.5" r="5" fill="#ff6b6b"/>
+<text x="20" y="414" fill="#06d6a0" font-size="13">radius 170.6, 2 boundary points</text>
+</svg>

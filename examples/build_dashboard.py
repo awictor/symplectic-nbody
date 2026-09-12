@@ -401,6 +401,7 @@ def main():
     import crt_demo
     import tonelli_shanks_demo
     import discrete_log_demo
+    import welzl_demo
 
     import plot_orbits
 
@@ -771,6 +772,7 @@ def main():
     crt_txt = run("crt_demo", crt_demo.main, True)
     tonelli_shanks_txt = run("tonelli_shanks_demo", tonelli_shanks_demo.main, True)
     discrete_log_txt = run("discrete_log_demo", discrete_log_demo.main, True)
+    welzl_txt = run("welzl_demo", welzl_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5922,6 +5924,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("discrete_log.svg"), "the work to solve a discrete log: baby-step giant-step (green, ~sqrt(n)) versus brute force (red, n) on a log-log scale -- the gap that both enables toy attacks and forces real crypto to use enormous groups")
             + f'<div class="card">{pre(discrete_log_txt)}</div>'
+            + '</div>'),
+        section(
+            "Welzl's algorithm: the smallest enclosing circle",
+            "Given a point cloud, the SMALLEST ENCLOSING CIRCLE is the circle of least radius "
+            "containing all of them -- the tightest 'where is everything?' summary, the optimal "
+            "facility placement minimizing the worst-case distance, and the bounding volume for "
+            "collision culling. A key fact makes it tractable: the smallest circle is determined by "
+            "at most THREE boundary points (two as a diameter, or three on a circumcircle). WELZL'S "
+            "ALGORITHM finds it in EXPECTED LINEAR time by randomized incremental construction: "
+            "process points in random order maintaining the current smallest circle; a point already "
+            "inside is skipped, but a point outside MUST lie on the boundary of the new circle, so "
+            "rebuild from the earlier points with it forced onto the boundary. With one, two, then "
+            "three boundary points fixed, the circle is pinned down. This module implements the "
+            "practical iterative (move-to-front) variant, returning the centre and radius, verified "
+            "against brute force and exact references: every point lies inside, the radius matches an "
+            "O(n^4) all-triples minimum over 60 random sets, shrinking the radius excludes a point "
+            "(true minimality), interior points don't change it, and known cases hold (two points "
+            "give a diameter, a square its circumscribed circle, points on a circle recover that "
+            "circle) -- up to 1000-point sets.",
+            '<div class="grid">'
+            + svg_card(out("welzl.svg"), "a point cloud with its smallest enclosing circle (green) and the two or three red support points on the boundary that alone determine it -- the tightest circle containing everything")
+            + f'<div class="card">{pre(welzl_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

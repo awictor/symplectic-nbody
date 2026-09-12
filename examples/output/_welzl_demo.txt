@@ -1,0 +1,15 @@
+Welzl's algorithm: the smallest circle enclosing a point cloud
+
+  50 points
+  smallest enclosing circle: centre (193.8, 164.2), radius 170.56
+  all points inside: True
+  support points (on the boundary): 2 -- the circle is pinned by 2 (a diameter)
+
+  For comparison, the bounding-box circumscribed circle has radius 186.03
+    -> the true minimum circle is 8% smaller in radius
+
+  The smallest circle is determined by at most 3 boundary points. Welzl processes points
+  in random order; a point inside the current circle is skipped, but one outside must lie
+  on the new circle's boundary, so the circle is rebuilt with it fixed there -- O(n) expected.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\welzl.svg
