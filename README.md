@@ -437,6 +437,7 @@ ruins a long non-symplectic integration.
 | `src/sha256.py` | SHA-256 from scratch (FIPS 180-4) + streaming API + HMAC-SHA256 |
 | `src/rope.py` | Rope: O(log n) concat/split/insert/delete on huge strings, self-balancing |
 | `src/btree.py` | B-tree ordered map: minimum-degree insert/delete/search + range queries |
+| `src/cuckoo_hash.py` | Cuckoo hash table: worst-case two-probe lookups, eviction + rehash |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -865,6 +866,7 @@ ruins a long non-symplectic integration.
 | `examples/sha256_demo.py` | Digests matching hashlib, the avalanche effect, and HMAC |
 | `examples/rope_demo.py` | Middle edits, balance under 5000 inserts, and the rope tree drawn |
 | `examples/btree_demo.py` | Height vs key count (1B keys -> 6 seeks), range query, and the tree drawn |
+| `examples/cuckoo_hash_demo.py` | The two-probe guarantee and the two candidate cells per key |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10086,6 +10088,25 @@ splits about the median; underflow borrows or merges. Implements search, insert,
 traversal, and range queries. Validated against dict and sorted over thousands of random ops at four
 degrees, with the structural invariants checked after every operation, range queries matching the
 sorted slice, and deleting every key emptying the tree correctly.
+
+## Cuckoo hashing: worst-case constant-time lookups
+
+A dictionary where every lookup checks at most two cells. `cuckoo_hash.py`:
+
+```
+$ python examples/cuckoo_hash_demo.py examples/output
+
+  key lives only at t1[h1(x)] or t2[h2(x)] -> lookup is ALWAYS 2 probes
+  chaining can hit an O(n) chain; cuckoo never does
+```
+
+Cuckoo hashing (Pagh & Rodler 2001) uses two tables and two hash functions; key x may live only at
+`t1[h1(x)]` or `t2[h2(x)]`, so a lookup checks exactly those two cells. Insertion evicts the resident
+and relocates it to its alternate cell, ping-ponging until an empty slot is hit; a rare cycle triggers a
+rehash. Below ~50% load this is O(1) amortised, so reads stay worst-case constant -- what routers and
+hardware caches need. Validated against dict over 5000 random ops (same values/absences/size/keys), with
+the two-probe guarantee and structural invariants checked directly, growth preserving contents, and the
+load factor bounded.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -479,6 +479,7 @@ def main():
     import sha256_demo
     import rope_demo
     import btree_demo
+    import cuckoo_hash_demo
 
     import plot_orbits
 
@@ -927,6 +928,7 @@ def main():
     sha256_txt = run("sha256_demo", sha256_demo.main, True)
     rope_txt = run("rope_demo", rope_demo.main, True)
     btree_txt = run("btree_demo", btree_demo.main, True)
+    cuckoo_hash_txt = run("cuckoo_hash_demo", cuckoo_hash_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7818,6 +7820,32 @@ def main():
             '<div class="grid">'
             + svg_card(out("btree.svg"), "a B-tree of minimum degree 3: each node holds several sorted keys, internal nodes fan out to one more child than they have keys, and every green leaf sits at the same depth -- the balance that keeps a billion-key index three seeks deep")
             + f'<div class="card">{pre(btree_txt)}</div>'
+            + '</div>'),
+        section(
+            "Cuckoo hashing: worst-case constant-time lookups",
+            "An ordinary hash table is O(1) on average, but a single lookup can degrade to O(n) when many "
+            "keys collide -- unacceptable for a router forwarding table, a real-time system, or a "
+            "hardware cache where the WORST case is what you must budget for. CUCKOO HASHING (Pagh & "
+            "Rodler, 2001) guarantees that every lookup examines AT MOST TWO locations, ever, whatever "
+            "the data. The name is the trick: like a cuckoo chick shoving out its nestmates, an "
+            "insertion that finds its spot occupied EVICTS the resident key, which flies to its own "
+            "alternate location, possibly evicting another, in a chain that almost always settles "
+            "quickly. Two tables and two hash functions h1, h2 mean key x may live ONLY at table1[h1(x)] "
+            "or table2[h2(x)], so a lookup checks exactly those two cells and stops. Insertion "
+            "ping-pongs evicted residents between the tables until an empty cell is hit; a rare cycle "
+            "triggers a REHASH with fresh hash functions, growing if needed, which stays O(1) amortised "
+            "below the ~50% load threshold where the theory guarantees a valid placement exists. This "
+            "module implements the two-table dictionary -- insert, lookup, delete, overwrite, iteration "
+            "-- with automatic rehashing and growth. Validated against Python's dict as an oracle over "
+            "5000 seeded random operations (same values, same absences, same size, same keys); the "
+            "defining WORST-CASE guarantee is checked directly -- every present key is found at one of "
+            "its two hash cells and max probe cost is exactly 2; both structural invariants (no key "
+            "stored outside its two candidate cells) hold after every operation; growth preserves all "
+            "contents across repeated rehashing; deletion frees space for reinsertion; the load factor "
+            "stays below the configured maximum; and string keys work.",
+            '<div class="grid">'
+            + svg_card(out("cuckoo_hash.svg"), "the two cuckoo tables: each key sits in exactly one of its two candidate cells (the ringed pair for the highlighted key), so a lookup is always two probes regardless of how the keys collide")
+            + f'<div class="card">{pre(cuckoo_hash_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

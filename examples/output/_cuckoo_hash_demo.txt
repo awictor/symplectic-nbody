@@ -1,0 +1,20 @@
+Cuckoo hashing: worst-case two-probe lookups, no matter the data
+
+  inserted 12 keys into two tables of size 16 each
+    load factor 0.38, invariants hold = True
+
+  every lookup checks exactly the two candidate cells h1(x) and h2(x):
+    key   3: candidates t1[12], t2[11] -> table 2 cell 11
+    key   7: candidates t1[8], t2[1] -> table 1 cell 8
+    key  99: candidates t1[9], t2[13] -> not present
+
+  worst-case lookup cost vs a chaining hash table:
+    chaining: average O(1) but a bad key can hit an O(n) chain (up to ~100000 probes)
+    cuckoo:   ALWAYS exactly 2 cells, whatever the 100,000 keys look like
+
+  Insert places x in its table-1 slot; if occupied, the resident is evicted to ITS table-2
+  slot, which may evict another, ping-ponging until an empty cell is hit. A rare cycle
+  triggers a rehash. Below ~50% load this settles in O(1) amortised -- so reads stay
+  worst-case constant, which is what routers and hardware caches need.
+
+  wrote examples/output\cuckoo_hash.svg
