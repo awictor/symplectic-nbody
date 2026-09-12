@@ -1,0 +1,21 @@
+Minimum-cost maximum flow: a factory-to-store shipping network
+
+  Maximum shippable: 7 units, at minimum total cost 22
+
+  Flow on each pipe (used / capacity, unit cost):
+    factA  -> whX     3/3  @ 2/unit  = 6
+    factA  -> whY     0/2  @ 4/unit  = 0
+    factB  -> whX     1/2  @ 3/unit  = 3
+    factB  -> whY     3/3  @ 1/unit  = 3
+    whX    -> hub     4/4  @ 1/unit  = 4
+    whY    -> hub     3/4  @ 2/unit  = 6
+
+  Successive shortest paths: each round routes flow along the cheapest remaining path in
+  the residual graph (with negative-cost reverse arcs handled by SPFA), so the running
+  cost is always minimal for the flow sent. When no path remains the flow is both maximum
+  and cheapest -- generalising plain max-flow (zero costs) and the assignment problem.
+
+  Same engine, assignment problem: 3 workers -> 3 jobs, min cost 9
+    worker->job: [1, 0, 2]  (worker i takes job assign[i])
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\min_cost_flow.svg

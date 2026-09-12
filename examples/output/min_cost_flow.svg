@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" font-family="monospace">
+<rect width="760" height="430" fill="#0d1117"/>
+<text x="20" y="30" fill="#e6edf3" font-size="18">Min-cost max-flow: pipe thickness = flow carried, label = used/capacity</text>
+<text x="20" y="50" fill="#8b949e" font-size="12">the cheapest way to push the maximum flow from source (left) to sink (right)</text>
+<line x1="60" y1="215" x2="210" y2="120" stroke="#06d6a0" stroke-width="7.5" opacity="0.85"/>
+<text x="135" y="162" fill="#ffd43b" font-size="11" text-anchor="middle">3/4</text>
+<line x1="60" y1="215" x2="210" y2="310" stroke="#06d6a0" stroke-width="9.5" opacity="0.85"/>
+<text x="135" y="256" fill="#ffd43b" font-size="11" text-anchor="middle">4/4</text>
+<line x1="210" y1="120" x2="400" y2="120" stroke="#06d6a0" stroke-width="7.5" opacity="0.85"/>
+<text x="305" y="114" fill="#ffd43b" font-size="11" text-anchor="middle">3/3</text>
+<line x1="210" y1="120" x2="400" y2="310" stroke="#8b949e" stroke-width="1.0" opacity="0.85"/>
+<text x="305" y="209" fill="#ffd43b" font-size="11" text-anchor="middle">0/2</text>
+<line x1="210" y1="310" x2="400" y2="120" stroke="#06d6a0" stroke-width="3.5" opacity="0.85"/>
+<text x="305" y="209" fill="#ffd43b" font-size="11" text-anchor="middle">1/2</text>
+<line x1="210" y1="310" x2="400" y2="310" stroke="#06d6a0" stroke-width="7.5" opacity="0.85"/>
+<text x="305" y="304" fill="#ffd43b" font-size="11" text-anchor="middle">3/3</text>
+<line x1="400" y1="120" x2="560" y2="215" stroke="#06d6a0" stroke-width="9.5" opacity="0.85"/>
+<text x="480" y="162" fill="#ffd43b" font-size="11" text-anchor="middle">4/4</text>
+<line x1="400" y1="310" x2="560" y2="215" stroke="#06d6a0" stroke-width="7.5" opacity="0.85"/>
+<text x="480" y="256" fill="#ffd43b" font-size="11" text-anchor="middle">3/4</text>
+<line x1="560" y1="215" x2="700" y2="215" stroke="#06d6a0" stroke-width="15.5" opacity="0.85"/>
+<text x="630" y="209" fill="#ffd43b" font-size="11" text-anchor="middle">7/7</text>
+<circle cx="60" cy="215" r="22" fill="#161b22" stroke="#4dabf7" stroke-width="2"/>
+<text x="60" y="219" fill="#e6edf3" font-size="11" text-anchor="middle">source</text>
+<circle cx="210" cy="120" r="22" fill="#161b22" stroke="#4dabf7" stroke-width="2"/>
+<text x="210" y="124" fill="#e6edf3" font-size="11" text-anchor="middle">factA</text>
+<circle cx="210" cy="310" r="22" fill="#161b22" stroke="#4dabf7" stroke-width="2"/>
+<text x="210" y="314" fill="#e6edf3" font-size="11" text-anchor="middle">factB</text>
+<circle cx="400" cy="120" r="22" fill="#161b22" stroke="#4dabf7" stroke-width="2"/>
+<text x="400" y="124" fill="#e6edf3" font-size="11" text-anchor="middle">whX</text>
+<circle cx="400" cy="310" r="22" fill="#161b22" stroke="#4dabf7" stroke-width="2"/>
+<text x="400" y="314" fill="#e6edf3" font-size="11" text-anchor="middle">whY</text>
+<circle cx="560" cy="215" r="22" fill="#161b22" stroke="#4dabf7" stroke-width="2"/>
+<text x="560" y="219" fill="#e6edf3" font-size="11" text-anchor="middle">hub</text>
+<circle cx="700" cy="215" r="22" fill="#161b22" stroke="#4dabf7" stroke-width="2"/>
+<text x="700" y="219" fill="#e6edf3" font-size="11" text-anchor="middle">sink</text>
+</svg>

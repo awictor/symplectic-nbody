@@ -367,6 +367,7 @@ ruins a long non-symplectic integration.
 | `src/combinatorial_rank.py` | Combinatorial ranking: permutation/combination rank-unrank + Gray code |
 | `src/bridges.py` | Bridges & articulation points (Tarjan) + 2-edge-connected components |
 | `src/bipartite_matching.py` | Maximum bipartite matching (Hopcroft-Karp) + Konig cover + Hall test |
+| `src/min_cost_flow.py` | Minimum-cost maximum flow (SPFA successive shortest paths) + assignment |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -725,6 +726,7 @@ ruins a long non-symplectic integration.
 | `examples/combinatorial_rank_demo.py` | Permutation/combination ranking tables + a 5-bit Gray-code bit-flip SVG |
 | `examples/bridges_demo.py` | A 3-cluster network with its failure edges/nodes highlighted in red |
 | `examples/bipartite_matching_demo.py` | Staffing 5 workers onto 5 jobs with the matched edges in green |
+| `examples/min_cost_flow_demo.py` | A factory-to-store shipping network with per-pipe flow labels |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8627,6 +8629,27 @@ neighbours). Verified against brute force on 500 random graphs, against Konig (t
 matching and touches every edge), and against Hall (perfect-left iff the subset condition), plus a
 2000x2000 sparse instance. Distinct from `hungarian.py`, which minimises weighted assignment cost;
 this maximises the unweighted count on an arbitrary bipartite graph.
+
+## Minimum-cost maximum flow: cheapest way to push the most
+
+Ship the maximum flow through a network at the least total cost. `min_cost_flow.py`:
+
+```
+$ python examples/min_cost_flow_demo.py examples/output
+
+  factory-to-store network -> maximum shippable 7 units, min total cost 22
+  favours the cheap factB->whY->hub route; whX saturated at 4/4
+  same engine as assignment: 3 workers -> 3 jobs, min cost 9
+```
+
+Each edge has a capacity and a per-unit cost. SUCCESSIVE SHORTEST PATHS repeatedly pushes flow along
+the cheapest source-to-sink path in the residual graph (each edge of cost c gaining a reverse arc of
+cost -c), so the running cost stays minimal; when no path remains the flow is both maximum and
+cheapest. The negative reverse-arc costs rule out plain Dijkstra, so this uses SPFA (queue-based
+Bellman-Ford). It generalises plain max-flow (zero costs) and the assignment problem (unit-capacity
+bipartite network). Verified against independent references: the flow value equals the Edmonds-Karp
+max-flow (200 nets), the cost is minimal by brute force over all integer flows (120 tiny nets), and as
+a bipartite assignment its optimum matches the Hungarian algorithm and the best over all permutations.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

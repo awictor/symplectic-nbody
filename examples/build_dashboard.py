@@ -409,6 +409,7 @@ def main():
     import combinatorial_rank_demo
     import bridges_demo
     import bipartite_matching_demo
+    import min_cost_flow_demo
 
     import plot_orbits
 
@@ -787,6 +788,7 @@ def main():
     combinatorial_rank_txt = run("combinatorial_rank_demo", combinatorial_rank_demo.main, True)
     bridges_txt = run("bridges_demo", bridges_demo.main, True)
     bipartite_matching_txt = run("bipartite_matching_demo", bipartite_matching_demo.main, True)
+    min_cost_flow_txt = run("min_cost_flow_demo", min_cost_flow_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6114,6 +6116,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("bipartite_matching.svg"), "staffing five workers onto five jobs: grey edges are qualifications, green edges the maximum matching the solver picks -- here a perfect placement where every worker gets a job they can do")
             + f'<div class="card">{pre(bipartite_matching_txt)}</div>'
+            + '</div>'),
+        section(
+            "Minimum-cost maximum flow: cheapest way to push the most",
+            "A flow network's edges each carry a CAPACITY and now a COST PER UNIT. Plain max-flow asks "
+            "how much can be pushed source-to-sink; MINIMUM-COST MAXIMUM FLOW asks for the cheapest "
+            "way to push that maximum. It is the workhorse of operations research -- route goods "
+            "factory-to-store minimising shipping, assign workers minimising cost, schedule for "
+            "maximal throughput at minimal expense -- and it strictly generalises both plain max-flow "
+            "(all costs zero) and the assignment problem (a unit-capacity bipartite network), so one "
+            "solver answers all three. The method is SUCCESSIVE SHORTEST PATHS: repeatedly find the "
+            "cheapest source-to-sink path in the RESIDUAL graph (where each edge of cost c gains a "
+            "reverse arc of cost -c that lets flow be cancelled) and push as much as the bottleneck "
+            "allows. Because every augmentation follows a minimum-cost path, the running cost stays "
+            "minimal, and when none remains the flow is both maximum and cheapest. The negative "
+            "reverse-arc costs mean Dijkstra alone won't do; this uses SPFA (a queue-based "
+            "Bellman-Ford), keeping it simple and dependency-free. Verified against independent "
+            "references: the flow VALUE equals the Edmonds-Karp max-flow (200 random nets), the COST "
+            "is confirmed minimal by brute force over all integer flows (120 tiny nets), and built as "
+            "a bipartite assignment network its optimum matches the Hungarian algorithm and the best "
+            "over all permutations.",
+            '<div class="grid">'
+            + svg_card(out("min_cost_flow.svg"), "a factory-to-store shipping network: pipe thickness is the flow carried and each label is used/capacity -- the solver pushes the maximum 7 units at the minimum total cost by favouring the cheap factB->whY->hub route")
+            + f'<div class="card">{pre(min_cost_flow_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
