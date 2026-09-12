@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" font-family="monospace">
+<rect width="760" height="430" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="18">Gridworld MDP: optimal value (color) and policy (arrows)</text>
+<text x="20" y="47" fill="#8b949e" font-size="12">brighter = higher value (closer to goal); arrows = optimal action; gold = goal, dark = obstacle</text>
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#e6edf3"/></marker></defs>
+<rect x="173.8" y="327.5" width="80.5" height="80.5" fill="rgb(31,104,125)"/>
+<text x="215.0" y="343.5" fill="#e6edf3" font-size="9" text-anchor="middle">+0.29</text>
+<line x1="203.0" y1="374.8" x2="227.0" y2="374.8" stroke="#e6edf3" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="256.2" y="327.5" width="80.5" height="80.5" fill="rgb(35,117,135)"/>
+<text x="297.5" y="343.5" fill="#e6edf3" font-size="9" text-anchor="middle">+0.37</text>
+<line x1="285.5" y1="374.8" x2="309.5" y2="374.8" stroke="#e6edf3" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="338.8" y="327.5" width="80.5" height="80.5" fill="rgb(39,132,147)"/>
+<text x="380.0" y="343.5" fill="#e6edf3" font-size="9" text-anchor="middle">+0.47</text>
+<line x1="380.0" y1="386.8" x2="380.0" y2="362.8" stroke="#e6edf3" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="421.2" y="327.5" width="80.5" height="80.5" fill="rgb(43,146,159)"/>
+<text x="462.5" y="343.5" fill="#e6edf3" font-size="9" text-anchor="middle">+0.57</text>
+<line x1="450.5" y1="374.8" x2="474.5" y2="374.8" stroke="#e6edf3" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="503.8" y="327.5" width="80.5" height="80.5" fill="rgb(48,165,174)"/>
+<text x="545.0" y="343.5" fill="#e6edf3" font-size="9" text-anchor="middle">+0.69</text>
+<line x1="545.0" y1="386.8" x2="545.0" y2="362.8" stroke="#e6edf3" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="173.8" y="245.0" width="80.5" height="80.5" fill="rgb(34,115,134)"/>
+<text x="215.0" y="261.0" fill="#e6edf3" font-size="9" text-anchor="middle">+0.36</text>
+<line x1="215.0" y1="304.2" x2="215.0" y2="280.2" stroke="#e6edf3" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="256.2" y="245.0" width="80.5" height="80.5" fill="#161b22"/>
+<rect x="338.8" y="245.0" width="80.5" height="80.5" fill="rgb(43,148,160)"/>
+<text x="380.0" y="261.0" fill="#e6edf3" font-size="9" text-anchor="middle">+0.58</text>
+<line x1="380.0" y1="304.2" x2="380.0" y2="280.2" stroke="#e6edf3" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="421.2" y="245.0" width="80.5" height="80.5" fill="#161b22"/>
+<rect x="503.8" y="245.0" width="80.5" height="80.5" fill="rgb(53,186,191)"/>
+<text x="545.0" y="261.0" fill="#e6edf3" font-size="9" text-anchor="middle">+0.83</text>
+<line x1="545.0" y1="304.2" x2="545.0" y2="280.2" stroke="#e6edf3" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="173.8" y="162.5" width="80.5" height="80.5" fill="rgb(38,129,145)"/>
+<text x="215.0" y="178.5" fill="#e6edf3" font-size="9" text-anchor="middle">+0.46</text>
+<line x1="215.0" y1="221.8" x2="215.0" y2="197.8" stroke="#e6edf3" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="256.2" y="162.5" width="80.5" height="80.5" fill="#161b22"/>
+<rect x="338.8" y="162.5" width="80.5" height="80.5" fill="rgb(48,167,175)"/>
+<text x="380.0" y="178.5" fill="#e6edf3" font-size="9" text-anchor="middle">+0.70</text>
+<line x1="368.0" y1="209.8" x2="392.0" y2="209.8" stroke="#e6edf3" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="421.2" y="162.5" width="80.5" height="80.5" fill="rgb(54,187,192)"/>
+<text x="462.5" y="178.5" fill="#e6edf3" font-size="9" text-anchor="middle">+0.83</text>
+<line x1="450.5" y1="209.8" x2="474.5" y2="209.8" stroke="#e6edf3" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="503.8" y="162.5" width="80.5" height="80.5" fill="rgb(60,210,210)"/>
+<text x="545.0" y="178.5" fill="#e6edf3" font-size="9" text-anchor="middle">+0.98</text>
+<line x1="545.0" y1="221.8" x2="545.0" y2="197.8" stroke="#e6edf3" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="173.8" y="80.0" width="80.5" height="80.5" fill="rgb(42,146,158)"/>
+<text x="215.0" y="96.0" fill="#e6edf3" font-size="9" text-anchor="middle">+0.56</text>
+<line x1="203.0" y1="127.2" x2="227.0" y2="127.2" stroke="#e6edf3" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="256.2" y="80.0" width="80.5" height="80.5" fill="rgb(48,165,174)"/>
+<text x="297.5" y="96.0" fill="#e6edf3" font-size="9" text-anchor="middle">+0.69</text>
+<line x1="285.5" y1="127.2" x2="309.5" y2="127.2" stroke="#e6edf3" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="338.8" y="80.0" width="80.5" height="80.5" fill="rgb(53,185,190)"/>
+<text x="380.0" y="96.0" fill="#e6edf3" font-size="9" text-anchor="middle">+0.82</text>
+<line x1="368.0" y1="127.2" x2="392.0" y2="127.2" stroke="#e6edf3" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="421.2" y="80.0" width="80.5" height="80.5" fill="rgb(60,210,210)"/>
+<text x="462.5" y="96.0" fill="#e6edf3" font-size="9" text-anchor="middle">+0.98</text>
+<line x1="450.5" y1="127.2" x2="474.5" y2="127.2" stroke="#e6edf3" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="503.8" y="80.0" width="80.5" height="80.5" fill="#ffd43b"/>
+<text x="545.0" y="126.2" fill="#0d1117" font-size="16" text-anchor="middle" font-weight="bold">G</text>
+</svg>

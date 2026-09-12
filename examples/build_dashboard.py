@@ -382,6 +382,7 @@ def main():
     import convolutional_code_demo
     import ear_clipping_demo
     import mlp_demo
+    import mdp_demo
 
     import plot_orbits
 
@@ -733,6 +734,7 @@ def main():
     convolutional_code_txt = run("convolutional_code_demo", convolutional_code_demo.main, True)
     ear_clipping_txt = run("ear_clipping_demo", ear_clipping_demo.main, True)
     mlp_txt = run("mlp_demo", mlp_demo.main, True)
+    mdp_txt = run("mdp_demo", mdp_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5462,6 +5464,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("mlp.svg"), "left: the XOR training loss plunging on a log scale; right: the network's learned output over the plane forming a circular decision boundary (yellow = the true circle) that no linear model could draw")
             + f'<div class="card">{pre(mlp_txt)}</div>'
+            + '</div>'),
+        section(
+            "Markov decision processes: value iteration and policy iteration",
+            "A MARKOV DECISION PROCESS frames sequential decision-making under uncertainty -- a robot "
+            "navigating, inventory being restocked -- with STATES, ACTIONS, stochastic TRANSITIONS, "
+            "REWARDS, and a DISCOUNT that trades immediate against future reward. The goal is a "
+            "POLICY that maximizes expected discounted return, and MDPs are the foundation of "
+            "reinforcement learning. VALUE ITERATION repeatedly applies the BELLMAN OPTIMALITY backup "
+            "V(s) <- max_a sum_s' P(s'|s,a)[R + gamma V(s')]; because this is a contraction (it "
+            "shrinks the gap to the true values by gamma each sweep) it converges geometrically to "
+            "the optimal value function, whose greedy policy is optimal. POLICY ITERATION alternates "
+            "exact policy evaluation with greedy improvement, converging in a handful of rounds. This "
+            "module implements both for a finite MDP plus a stochastic gridworld builder, verified "
+            "that value and policy iteration reach the SAME optimal policy and values, that the "
+            "result satisfies the Bellman optimality equation (zero residual), that a corridor "
+            "yields a straight-to-goal policy, that a higher discount values distant rewards more, "
+            "that a hand-built MDP gives the exact expected value, that stochastic slip is handled, "
+            "and that value iteration's error contracts by exactly the discount factor each sweep on "
+            "a self-looping MDP.",
+            '<div class="grid">'
+            + svg_card(out("mdp.svg"), "a gridworld solved to optimality: cell brightness is the state value (rising toward the gold goal), the arrows are the optimal action in each state, routing around the dark obstacles")
+            + f'<div class="card">{pre(mdp_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

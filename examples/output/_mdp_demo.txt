@@ -1,0 +1,26 @@
+Markov decision process: value iteration and policy iteration
+
+  5x4 gridworld, goal at (4, 3), obstacles [(1, 1), (1, 2), (3, 1)], 10% slip:
+    value iteration converged in 26 sweeps
+    policy iteration converged in 3 rounds
+    same policy: True, same values: True
+    Bellman residual: 1.22e-11 (zero = optimal fixed point)
+
+  Optimal policy (G = goal, # = obstacle):
+    > > > > G
+    ^ # > > ^
+    ^ # ^ # ^
+    > > ^ > ^
+
+  State values (higher = closer to the goal along the optimal path):
+    +0.56  +0.69  +0.82  +0.98  +0.00 
+    +0.46    ##   +0.70  +0.83  +0.98 
+    +0.36    ##   +0.58    ##   +0.83 
+    +0.29  +0.37  +0.47  +0.57  +0.69 
+
+  Value iteration applies the Bellman optimality backup until the value function stops
+  changing (a contraction, converging geometrically). Policy iteration alternates exact
+  policy evaluation with greedy improvement, converging in a handful of rounds. Both find
+  the same optimal policy -- the action in each state that maximizes expected return.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\mdp.svg

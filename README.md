@@ -340,6 +340,7 @@ ruins a long non-symplectic integration.
 | `src/convolutional_code.py` | Convolutional encoder + Viterbi maximum-likelihood decoder for noisy channels |
 | `src/ear_clipping.py` | Ear-clipping polygon triangulation (concave polygons, n-2 triangles) |
 | `src/mlp.py` | Multi-layer perceptron + backpropagation (sigmoid/tanh/ReLU, momentum SGD) |
+| `src/mdp.py` | Markov decision process: value iteration, policy iteration, gridworld builder |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -671,6 +672,7 @@ ruins a long non-symplectic integration.
 | `examples/convolutional_code_demo.py` | Error correction over a noisy channel + coding-gain curve vs uncoded |
 | `examples/ear_clipping_demo.py` | A star, L-shape, and arrow triangulated with exact area conservation |
 | `examples/mlp_demo.py` | XOR solved + a learned circular decision boundary a linear model can't draw |
+| `examples/mdp_demo.py` | A gridworld solved to optimality: value heatmap + optimal-action arrows |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8058,6 +8060,25 @@ module implements a feedforward net with sigmoid/tanh/ReLU activations, full bac
 mini-batch SGD, verified that its analytic gradients match finite differences to 8e-11 (the
 definitive backprop test), that it learns XOR (which a linear model can't), fits a nonlinear
 regression, and separates a circular decision boundary to 99%.
+
+## Markov decision processes: value iteration and policy iteration
+
+Optimal control under uncertainty -- the foundation of reinforcement learning. `mdp.py`:
+
+```
+$ python examples/mdp_demo.py examples/output
+
+  5x4 gridworld, 10% slip: value iteration 26 sweeps, policy iteration 3 rounds
+  same policy and values, Bellman residual 1e-11
+  optimal policy routes around obstacles toward the goal
+```
+
+Value iteration applies the Bellman optimality backup until the value function stops changing (a
+contraction converging geometrically); policy iteration alternates exact evaluation with greedy
+improvement, converging in a few rounds. This module implements both for a finite MDP plus a
+stochastic gridworld builder, verified that the two agree on the optimal policy and values, that the
+result satisfies Bellman optimality (zero residual), that stochastic slip is handled, and that the
+error contracts by exactly the discount factor each sweep.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
