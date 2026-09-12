@@ -1,0 +1,20 @@
+Levinson-Durbin: O(n^2) Toeplitz solving and AR modelling
+
+  Toeplitz system T x = b, T built from first row [4,1,0]:
+    b = [1.0, 2.0, 3.0]  ->  x = [0.1786, 0.2857, 0.6786]
+    matrix positive definite? True
+
+  AR(2) fit on 4000 samples of x_t = 0.75 x_{t-1} - 0.5 x_{t-2} + noise:
+    true coeffs      [0.75, -0.50]
+    recovered coeffs [0.7353, -0.4991]
+    reflection coeffs [-0.4905, 0.4991] (all |k|<1 -> stable)
+    prediction-error variance 0.0916 (noise var ~ 0.0900)
+
+  5-step forecast from the fitted model:
+    [-0.4062, -0.0548, 0.1625, 0.1468, 0.0269]
+
+  A stationary signal has a Toeplitz covariance matrix, so its Yule-Walker normal
+  equations are Toeplitz and Levinson-Durbin solves them in O(n^2) instead of O(n^3),
+  yielding the AR coefficients that LPC, spectral estimation, and forecasting all use.
+
+  wrote examples/output\levinson_durbin.svg

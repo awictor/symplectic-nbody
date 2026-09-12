@@ -458,6 +458,7 @@ def main():
     import bootstrap_demo
     import permutation_test_demo
     import lll_demo
+    import levinson_durbin_demo
 
     import plot_orbits
 
@@ -885,6 +886,7 @@ def main():
     bootstrap_txt = run("bootstrap_demo", bootstrap_demo.main, True)
     permutation_test_txt = run("permutation_test_demo", permutation_test_demo.main, True)
     lll_txt = run("lll_demo", lll_demo.main, True)
+    levinson_durbin_txt = run("levinson_durbin_demo", levinson_durbin_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7258,6 +7260,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("lll.svg"), "the same 2D lattice under two bases: the red original vectors are long and skewed, the green reduced vectors are short and nearly perpendicular yet reach the identical grid of points")
             + f'<div class="card">{pre(lll_txt)}</div>'
+            + '</div>'),
+        section(
+            "Levinson-Durbin: Toeplitz solving and autoregressive models",
+            "A Toeplitz matrix is constant along every diagonal -- exactly the shape of a stationary "
+            "signal's covariance matrix, because the correlation between two samples depends only on "
+            "the lag between them. A general n-by-n system costs O(n^3) to solve; a symmetric Toeplitz "
+            "one falls to O(n^2) time and O(n) memory by the Levinson-Durbin recursion (1947/1960), "
+            "which grows the solution one order at a time with a rank-one correction driven by a "
+            "REFLECTION (PARCOR) coefficient. Those coefficients double as a stability test -- every "
+            "|k| < 1 exactly when the matrix is positive definite -- and their running product gives the "
+            "prediction-error variance for free. The headline use is AUTOREGRESSIVE modelling: fitting "
+            "x_t = a_1 x_{t-1} + ... + a_p x_{t-p} + noise by least squares gives the YULE-WALKER "
+            "equations, a Toeplitz system in the signal's autocorrelation, which this recursion solves "
+            "directly -- the coefficients that linear-predictive speech coding, spectral estimation, and "
+            "one-step forecasting all rely on. This module provides the general Toeplitz solver, the "
+            "autocorrelation estimator, the AR fit, and a predictor. Validated: the solver matches a "
+            "dense Gaussian-elimination solve to machine precision on random positive-definite Toeplitz "
+            "systems (residual driven to zero); on data from a known AR(2) process the recovered "
+            "coefficients match the generating [0.75, -0.5] to two decimals and the reported error "
+            "variance equals the measured residual variance; every reflection coefficient satisfies "
+            "|k| < 1.",
+            '<div class="grid">'
+            + svg_card(out("levinson_durbin.svg"), "an AR(2) model fitted to a synthesised signal by the Levinson-Durbin recursion: the yellow one-step-ahead prediction, computed from just the two previous samples, tracks the blue actual signal closely")
+            + f'<div class="card">{pre(levinson_durbin_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

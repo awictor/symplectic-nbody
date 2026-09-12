@@ -416,6 +416,7 @@ ruins a long non-symplectic integration.
 | `src/bootstrap.py` | Bootstrap CIs (percentile + BCa) + jackknife + standard error |
 | `src/permutation_test.py` | Permutation tests: exact enumeration + Monte-Carlo + paired sign-flip |
 | `src/lll.py` | LLL lattice reduction (exact rational Gram-Schmidt) + integer relations |
+| `src/levinson_durbin.py` | O(n^2) Toeplitz solver + autoregressive (Yule-Walker) fit + predictor |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -823,6 +824,7 @@ ruins a long non-symplectic integration.
 | `examples/bootstrap_demo.py` | The bootstrap distribution of the mean with its 95% CI band |
 | `examples/permutation_test_demo.py` | The permutation null distribution with the rejection region shaded |
 | `examples/lll_demo.py` | A skewed lattice basis vs its short, near-orthogonal LLL reduction |
+| `examples/levinson_durbin_demo.py` | An AR(2) one-step-ahead prediction tracking a synthesised signal |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9643,6 +9645,27 @@ All Gram-Schmidt arithmetic is exact over the rationals, so it never mis-swaps o
 Validated: the reduction is unimodular (Gram determinant, hence the lattice, is preserved), the
 output provably satisfies both LLL conditions, the reduced shortest vector matches a brute-force
 search over integer combinations, and known integer relations are recovered exactly.
+
+## Levinson-Durbin: Toeplitz solving and autoregressive models
+
+Solve a symmetric Toeplitz system in O(n^2) and fit autoregressive models. `levinson_durbin.py`:
+
+```
+$ python examples/levinson_durbin_demo.py examples/output
+
+  Toeplitz T x = b (first row [4,1,0]), b=[1,2,3] -> x=[0.179, 0.286, 0.679]
+  AR(2) fit: recovered [0.735, -0.499] vs true [0.75, -0.50]; error var 0.092
+  reflection coeffs all |k|<1 -> stable; 5-step forecast produced
+```
+
+A stationary signal has a Toeplitz covariance matrix, so its Yule-Walker equations are Toeplitz and
+solvable in O(n^2) instead of O(n^3). The recursion grows the solution one order at a time via
+reflection (PARCOR) coefficients, which double as a positive-definiteness / stability test (|k| < 1)
+and hand back the prediction-error variance for free. The AR coefficients are what LPC speech coding,
+spectral estimation, and one-step forecasting use. Validated: the solver matches a dense
+Gaussian-elimination solve to machine precision on random positive-definite Toeplitz systems, and on
+data from a known AR(2) process the recovered coefficients match the generating [0.75, -0.5] and the
+reported error variance equals the measured residual variance.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
