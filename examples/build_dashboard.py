@@ -391,6 +391,7 @@ def main():
     import tsp_demo
     import poisson_demo
     import manacher_demo
+    import stoer_wagner_demo
 
     import plot_orbits
 
@@ -751,6 +752,7 @@ def main():
     tsp_txt = run("tsp_demo", tsp_demo.main, True)
     poisson_txt = run("poisson_demo", poisson_demo.main, True)
     manacher_txt = run("manacher_demo", manacher_demo.main, True)
+    stoer_wagner_txt = run("stoer_wagner_demo", stoer_wagner_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5682,6 +5684,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("manacher.svg"), "the palindrome radius at each character center of 'abacabadabacaba' -- the self-similar 1,2,1,4,1,2,1,8 profile peaking at the center where the whole string reads as one palindrome")
             + f'<div class="card">{pre(manacher_txt)}</div>'
+            + '</div>'),
+        section(
+            "Stoer-Wagner: the global minimum cut of a weighted graph",
+            "A minimum CUT splits a graph's vertices into two groups so the total weight of edges "
+            "crossing between them is smallest. Unlike the s-t min cut (which fixes which side two "
+            "vertices land on, solved by max-flow), the GLOBAL minimum cut asks for the cheapest cut "
+            "over ALL ways of splitting -- the graph's weakest link, measuring network reliability "
+            "and driving clustering and segmentation. The STOER-WAGNER algorithm finds it in O(V^3) "
+            "with no flow computation, by a strikingly simple idea: MINIMUM CUT PHASES. Each phase "
+            "grows a set from an arbitrary vertex, repeatedly adding the vertex most tightly "
+            "connected to the current set (maximum-adjacency order); the last two vertices added, s "
+            "and t, give a CUT-OF-THE-PHASE that is provably the minimum s-t cut for that pair, and "
+            "the phase then MERGES s and t into one vertex (summing parallel weights) and repeats. "
+            "After V-1 phases every pair has been implicitly considered, and the smallest "
+            "cut-of-the-phase is the global minimum -- no augmenting paths, just orderings and "
+            "merges. This module implements it, returning the cut weight and partition, verified "
+            "against brute force over all vertex bipartitions of small graphs and on known graphs "
+            "(the textbook example gives 4, a bridge gives its single edge, K_n gives n-1, a cycle "
+            "gives two edges), that the partition achieves the reported weight, that parallel edges "
+            "are summed, and that a disconnected graph gives a zero cut.",
+            '<div class="grid">'
+            + svg_card(out("stoer_wagner.svg"), "a weighted graph with its global minimum cut: the two sides in blue and green, the red edges (the weakest partition) crossing between them -- the cheapest way to sever the network")
+            + f'<div class="card">{pre(stoer_wagner_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

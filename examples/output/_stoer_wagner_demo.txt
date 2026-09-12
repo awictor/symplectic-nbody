@@ -1,0 +1,16 @@
+Stoer-Wagner: the global minimum cut of a weighted graph
+
+  Classic 8-vertex graph, 12 weighted edges:
+    global minimum cut weight: 4
+    partition: [2, 3, 6, 7] | [0, 1, 4, 5]
+    brute force confirms: 4
+
+  Two dense clusters joined by 2 weak links:
+    min cut 2 -> partition [4, 5, 6, 7] | [0, 1, 2, 3]
+    the cut finds exactly the weak bridges between the clusters
+
+  Each phase grows a set by repeatedly adding the most tightly-connected vertex; the last
+  vertex added gives a provable s-t min cut, then s and t merge. V-1 phases later, the
+  smallest cut seen is the global minimum -- no max-flow, no augmenting paths.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\stoer_wagner.svg
