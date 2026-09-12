@@ -1,0 +1,22 @@
+Shamir's secret sharing: any k of n shares reconstruct the secret
+
+  secret: 1234567890
+  (3, 5) threshold -> 5 shares, any 3 reconstruct:
+    share 1: 4151667051347653500082243584139699646936...
+    share 2: 6054314218818774026761417985512402722793...
+    share 3: 5707941502413361580037523204118109227568...
+    share 4: 3112548902131416159910559239956819161262...
+    share 5: 9847345341704557308737624593897323309203...
+
+  reconstruct from shares 1,2,3: 1234567890
+  reconstruct from shares 3,4,5: 1234567890
+  reconstruct from just 2 shares: 224901988387653297340306918276... (wrong -- reveals nothing)
+
+  byte secret b'attack at dawn' split (2,4):
+    reconstruct from 2 shares: b'attack at dawn'
+
+  The geometry: the secret is the y-intercept f(0) of a degree-(k-1) polynomial. Each
+  share is a point on it. k points fix the polynomial uniquely (Lagrange interpolation
+  recovers f(0)); k-1 points leave infinitely many polynomials, so the secret is hidden.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\shamir.svg

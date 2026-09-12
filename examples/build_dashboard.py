@@ -386,6 +386,7 @@ def main():
     import bandit_demo
     import q_learning_demo
     import autodiff_demo
+    import shamir_demo
 
     import plot_orbits
 
@@ -741,6 +742,7 @@ def main():
     bandit_txt = run("bandit_demo", bandit_demo.main, True)
     q_learning_txt = run("q_learning_demo", q_learning_demo.main, True)
     autodiff_txt = run("autodiff_demo", autodiff_demo.main, True)
+    shamir_txt = run("shamir_demo", shamir_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5562,6 +5564,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("autodiff.svg"), "a model trained purely by autodiff gradients: the loss plunging on a log scale (left) and the learned a*sin(bx)+c curve landing exactly on the data (right) -- no derivative formulas written by hand")
             + f'<div class="card">{pre(autodiff_txt)}</div>'
+            + '</div>'),
+        section(
+            "Shamir's secret sharing: any k of n pieces reconstruct the secret",
+            "How do you store a secret -- a master key, a launch code -- so no single person holds it, "
+            "yet any sufficiently large group can recover it? SHAMIR'S SECRET SHARING solves this "
+            "with geometry: a polynomial of degree k-1 is uniquely determined by any k of its points, "
+            "but k-1 points reveal NOTHING. Hide the secret as the constant term of a random "
+            "degree-(k-1) polynomial over a finite field GF(p), hand each participant one point "
+            "(x, f(x)) as their SHARE, and any k shares interpolate the polynomial and read off the "
+            "secret f(0) -- while any k-1 shares leave every possible secret equally likely, "
+            "information-theoretic security, not merely computational. The arithmetic lives in "
+            "integers mod a prime so division is exact; reconstruction is LAGRANGE INTERPOLATION at "
+            "x=0 with modular inverses. The scheme is (k, n)-THRESHOLD: any k of the n shares "
+            "suffice, any fewer are useless. This module implements splitting a secret integer (or "
+            "byte string) into shares over a 256-bit prime field and reconstructing it, verified that "
+            "any k of the n shares reconstruct the secret exactly, that every k-subset gives the same "
+            "answer, that no k-1 subset recovers it, that the shares span the field, that a "
+            "byte-string secret round-trips, and on the boundary cases k=1 and k=n.",
+            '<div class="grid">'
+            + svg_card(out("shamir.svg"), "over GF(97): five shares as blue points on a degree-2 polynomial whose gold y-intercept f(0) is the secret -- any three points fix the curve, two leave it undetermined")
+            + f'<div class="card">{pre(shamir_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

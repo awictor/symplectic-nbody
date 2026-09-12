@@ -344,6 +344,7 @@ ruins a long non-symplectic integration.
 | `src/bandit.py` | Multi-armed bandit: epsilon-greedy, UCB1, Thompson sampling with regret tracking |
 | `src/q_learning.py` | Model-free RL: tabular Q-learning and SARSA over a gridworld environment |
 | `src/autodiff.py` | Reverse-mode automatic differentiation (a Value graph with backward, like autograd) |
+| `src/shamir.py` | Shamir's (k,n) secret sharing over a prime field (split + Lagrange reconstruct) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -679,6 +680,7 @@ ruins a long non-symplectic integration.
 | `examples/bandit_demo.py` | Regret curves for epsilon-greedy/UCB1/Thompson vs random selection |
 | `examples/q_learning_demo.py` | Learning curve + a learned gridworld policy matching value iteration |
 | `examples/autodiff_demo.py` | Exact gradients vs finite diff + a model trained with no hand-derived gradients |
+| `examples/shamir_demo.py` | Splitting a secret + the polynomial geometry with the secret at f(0) |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8142,6 +8144,25 @@ yielding the whole gradient in one sweep. This module implements +, -, *, /, **,
 exp/log/sin/cos/tanh/relu/sqrt with backward rules, verified that gradients match finite differences
 and symbolic derivatives, accumulate correctly through graph diamonds, drive gradient descent to the
 analytic optimum, and train a model to recover its true parameters exactly.
+
+## Shamir's secret sharing: any k of n pieces reconstruct the secret
+
+Split a secret so no one holds it but any k together recover it. `shamir.py`:
+
+```
+$ python examples/shamir_demo.py examples/output
+
+  secret 1234567890 split (3,5): any 3 shares reconstruct it exactly
+  just 2 shares -> a wrong value (reveals nothing)
+  byte secret b'attack at dawn' round-trips from 2 of 4 shares
+```
+
+The secret is the constant term of a random degree-(k-1) polynomial over GF(p); each share is a point
+(x, f(x)), and any k points interpolate f(0) = the secret while k-1 leave every secret equally likely
+(information-theoretic security). Reconstruction is Lagrange interpolation at x=0 with modular
+inverses. This module implements (k,n) splitting of integer or byte-string secrets over a 256-bit
+prime and reconstruction, verified that any k shares reconstruct exactly, every k-subset agrees, no
+k-1 subset recovers it, and the k=1 and k=n boundaries work.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
