@@ -334,6 +334,7 @@ ruins a long non-symplectic integration.
 | `src/tarjan_scc.py` | Tarjan's strongly connected components, condensation DAG, topological sort |
 | `src/two_sat.py` | 2-SAT solver via the implication graph + SCCs (linear time, with assignment) |
 | `src/rk45.py` | Dormand-Prince RK45 adaptive-step ODE solver (embedded error control, FSAL) |
+| `src/cordic.py` | CORDIC: cos/sin/atan2/hypot/exp/ln/sqrt with only shifts and additions |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -659,6 +660,7 @@ ruins a long non-symplectic integration.
 | `examples/tarjan_scc_demo.py` | A directed graph's SCCs colored + the condensation DAG beside it |
 | `examples/two_sat_demo.py` | A satisfiable feature-constraint instance + the canonical unsatisfiable formula |
 | `examples/rk45_demo.py` | Van der Pol oscillator with step ticks clustering at the sharp transitions |
+| `examples/cordic_demo.py` | The rotation spiralling to a target angle; cos/sin/exp/ln/sqrt vs the math library |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7932,6 +7934,24 @@ their difference estimates the local error, accepting/rejecting each step and re
 vector ODEs forward or backward with optional sampling at requested times, verified against
 closed-form solutions (decay/growth, harmonic energy conservation, logistic, 2-frequency oscillator),
 with tighter tolerances shrinking the error and faster dynamics demanding more steps.
+
+## CORDIC: trigonometry and logarithms with only shifts and adds
+
+Transcendental functions with no multiplier -- the algorithm inside early calculators. `cordic.py`:
+
+```
+$ python examples/cordic_demo.py examples/output
+
+  cos(1.0472) = 0.5000000000, sin = 0.8660254038 (vs math, ~1e-12)
+  atan2(1,1) = pi/4; hypot(3,4) = 5
+  exp(2) = 7.389056099; ln(10) = 2.302585093; sqrt(50) = 7.071067812
+```
+
+CORDIC rotates a point by ever-smaller angles whose tangents are powers of two, so each rotation is a
+bit shift, not a multiply. Circular mode gives cos/sin (and atan2/hypot by vectoring); hyperbolic mode
+gives exp/ln/sqrt. This module implements all of them with precomputed angle and gain tables using
+only shifts and additions, verified against the math library across their ranges: cos/sin to ~1e-9
+over [-2pi,2pi], atan2 in all quadrants, and exp/ln/sqrt to high precision with range reduction.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

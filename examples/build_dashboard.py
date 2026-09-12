@@ -376,6 +376,7 @@ def main():
     import tarjan_scc_demo
     import two_sat_demo
     import rk45_demo
+    import cordic_demo
 
     import plot_orbits
 
@@ -721,6 +722,7 @@ def main():
     tarjan_scc_txt = run("tarjan_scc_demo", tarjan_scc_demo.main, True)
     two_sat_txt = run("two_sat_demo", two_sat_demo.main, True)
     rk45_txt = run("rk45_demo", rk45_demo.main, True)
+    cordic_txt = run("cordic_demo", cordic_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5312,6 +5314,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("rk45.svg"), "the Van der Pol relaxation oscillator solved by RK45; the orange step ticks below cluster tightly at the sharp switch-backs and spread out across the smooth stretches -- adaptive control at work")
             + f'<div class="card">{pre(rk45_txt)}</div>'
+            + '</div>'),
+        section(
+            "CORDIC: trigonometry and logarithms with only shifts and adds",
+            "How does a calculator or an FPGA with no hardware multiplier compute sin, cos, or a "
+            "logarithm? CORDIC (COordinate Rotation DIgital Computer, Volder 1959) evaluates a whole "
+            "family of transcendental functions using nothing but ADDITION, SUBTRACTION, and BIT "
+            "SHIFTS -- no multiplication, no division, no lookup of the function itself. It powered "
+            "the first scientific calculators and still lives in FPGAs and DSPs wherever a multiplier "
+            "is scarce. The trick is iterative ROTATION by ever-smaller angles whose tangents are "
+            "exact powers of two, so 'multiplying' by the rotation is just a bit shift. To get cos "
+            "and sin, start at (1, 0) and rotate toward the target angle in steps of arctan(2^-i), "
+            "adding or subtracting the shifted coordinates depending on whether the running angle is "
+            "short of or past the target; after n steps the point is (K cos, K sin) for a fixed gain "
+            "K divided out at the end. This is CIRCULAR mode; flipping a sign gives HYPERBOLIC mode "
+            "(exp, ln, sqrt), and a VECTORING variant computes atan2 and hypot. This module "
+            "implements all of them on shift-and-add updates with precomputed angle and gain tables, "
+            "verified against the math library across their ranges: cos/sin to ~1e-9 over "
+            "[-2pi, 2pi], atan2 in all four quadrants, hypot, and exp/ln/sqrt to high precision "
+            "(with range reduction), the Pythagorean identity everywhere, and the circular gain "
+            "matching its analytic product.",
+            '<div class="grid">'
+            + svg_card(out("cordic.svg"), "the CORDIC rotation spiralling around the unit circle toward a target angle -- each step a shift-add rotation of decreasing size -- with the final point's coordinates being cos and sin")
+            + f'<div class="card">{pre(cordic_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

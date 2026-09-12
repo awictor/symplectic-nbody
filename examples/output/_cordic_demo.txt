@@ -1,0 +1,32 @@
+CORDIC: sin, cos, exp, ln, sqrt using only shifts and additions
+
+  Circular functions (vs math library):
+    cos(0.5000) = 0.8775825619  (math 0.8775825619)
+    sin(0.5000) = 0.4794255386  (math 0.4794255386)
+    cos(1.0000) = 0.5403023059  (math 0.5403023059)
+    sin(1.0000) = 0.8414709848  (math 0.8414709848)
+    cos(1.0472) = 0.5000000000  (math 0.5000000000)
+    sin(1.0472) = 0.8660254038  (math 0.8660254038)
+
+  Vectoring mode (rectangular -> polar):
+    atan2(1, 1) = 0.7853981634  (pi/4 = 0.7853981634)
+    hypot(3, 4) = 5.0000000000  (= 5)
+
+  Hyperbolic mode (exp, ln, sqrt):
+    exp(2)   = 7.3890560989  (math 7.3890560989)
+    ln(10)   = 2.3025850930  (math 2.3025850930)
+    sqrt(50) = 7.0710678119  (math 7.0710678119)
+
+  Rotation converging on angle 1.1 rad (each step is a shift-add):
+    after  1 steps: angle 0.785398  (error 3.15e-01)
+    after  3 steps: angle 1.004067  (error 9.59e-02)
+    after  5 steps: angle 1.066003  (error 3.40e-02)
+    after  7 steps: angle 1.112867  (error 1.29e-02)
+    after  9 steps: angle 1.101148  (error 1.15e-03)
+    after 11 steps: angle 1.100172  (error 1.72e-04)
+
+  Each iteration rotates by +/- arctan(2^-i); because tan of the step is a power of two,
+  the rotation is a bit shift, not a multiply. The running angle homes in on the target,
+  and the final x,y are cos and sin (after dividing out the fixed CORDIC gain).
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\cordic.svg
