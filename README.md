@@ -440,6 +440,7 @@ ruins a long non-symplectic integration.
 | `src/cuckoo_hash.py` | Cuckoo hash table: worst-case two-probe lookups, eviction + rehash |
 | `src/dgim.py` | DGIM sliding-window 1-counter over a bit stream in O(log^2 N) memory |
 | `src/rans.py` | rANS entropy coder (Asymmetric Numeral Systems) with a static frequency model |
+| `src/bk_tree.py` | BK-tree fuzzy string search: edit-distance metric tree with pruning |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -871,6 +872,7 @@ ruins a long non-symplectic integration.
 | `examples/cuckoo_hash_demo.py` | The two-probe guarantee and the two candidate cells per key |
 | `examples/dgim_demo.py` | Estimate tracking the exact window count; a 1M-bit window in 27 buckets |
 | `examples/rans_demo.py` | Compression vs Shannon entropy and Huffman on three sources |
+| `examples/bk_tree_demo.py` | Typo correction and how much of the dictionary pruning skips |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10148,6 +10150,24 @@ at table-lookup speed, unlike whole-bit Huffman. Byte-wise renormalisation keeps
 Validated: exact round-trip on the empty string, single symbols, skewed and uniform distributions, and
 hundreds of random strings; compression within a few percent of the Shannon entropy and below Huffman;
 a single repeated symbol compresses to almost nothing; and the frequency model sums exactly to M.
+
+## BK-trees: fuzzy string search by the triangle inequality
+
+Find every dictionary word within edit distance d, fast. `bk_tree.py`:
+
+```
+$ python examples/bk_tree_demo.py examples/output
+
+  'algorithn' -> 'algorithm' (edit distance 1)
+  within 1 of 'book': visited 7 of 26 nodes (27%) -- same answer as a full scan
+```
+
+A BK-tree (Burkhard & Keller 1973) labels its edges by edit distance; a query at distance d descends
+only children whose edge lies in [d-t, d+t], since the triangle inequality proves the rest are too far.
+Built over Levenshtein distance (or any metric), with insertion, tolerance query, and nearest-match.
+Validated by exact agreement with brute force over 30 dictionaries and 1500 queries (no misses or
+extras), nearest-match equal to the true minimum, pruning that visits a fraction of the nodes, and
+order-independence.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

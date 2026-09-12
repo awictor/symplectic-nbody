@@ -1,0 +1,23 @@
+BK-tree: fuzzy string search that prunes with the triangle inequality
+
+  dictionary of 26 words
+
+  spell-check by nearest neighbour:
+    'boook'  -> 'book' (edit distance 1)
+    'craok'  -> 'crook' (edit distance 1)
+    'cae'    -> 'cake' (edit distance 1)
+    'bora'   -> 'bore' (edit distance 1)
+
+  fuzzy search within a tolerance, and how much the pruning skips:
+    within 1 of 'book': ['book', 'boo', 'books', 'boon', 'boot', 'cook', 'look']
+      visited 7 of 26 nodes (27%)
+    within 1 of 'care': ['care', 'cake', 'cape', 'card', 'cart', 'case', 'cave', 'core']
+      visited 13 of 26 nodes (50%)
+    within 2 of 'bone': ['bone', 'bane', 'bond', 'bore', 'band', 'bend', 'boo', 'book', 'boon', 'boot', 'code', 'core', 'cove']
+      visited 25 of 26 nodes (96%)
+
+  Each node's children are indexed by their exact distance to it. A query at distance d only
+  descends children whose edge label is in [d-tol, d+tol] -- every other subtree is provably
+  too far and is skipped. Same answer as a full scan, a fraction of the work.
+
+  wrote examples/output\bk_tree.svg

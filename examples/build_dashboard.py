@@ -482,6 +482,7 @@ def main():
     import cuckoo_hash_demo
     import dgim_demo
     import rans_demo
+    import bk_tree_demo
 
     import plot_orbits
 
@@ -933,6 +934,7 @@ def main():
     cuckoo_hash_txt = run("cuckoo_hash_demo", cuckoo_hash_demo.main, True)
     dgim_txt = run("dgim_demo", dgim_demo.main, True)
     rans_txt = run("rans_demo", rans_demo.main, True)
+    bk_tree_txt = run("bk_tree_demo", bk_tree_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7902,6 +7904,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("rans.svg"), "bits per symbol on three sources: rANS (yellow) sits right on the Shannon entropy floor (green) and below Huffman's whole-bit codes (orange), most dramatically on the skewed source where rounding to whole bits costs the most")
             + f'<div class="card">{pre(rans_txt)}</div>'
+            + '</div>'),
+        section(
+            "BK-trees: fuzzy string search by the triangle inequality",
+            "Spell-checkers, autocomplete, and record deduplication all pose the same query: find every "
+            "dictionary entry within edit distance d of a word. Brute force computes the distance to all "
+            "n entries, hopeless for a large lexicon. The BK-TREE (Burkhard & Keller, 1973) makes it "
+            "fast using the one fact that edit distance is a METRIC -- it obeys the triangle inequality "
+            "dist(a,c) <= dist(a,b) + dist(b,c) -- which lets a tree PRUNE most of the dictionary on "
+            "every query. The tree's edges are labelled by distances: at a node, a word's children are "
+            "the entries at each integer distance from it, no two children sharing a distance. To find "
+            "all words within tolerance t of a query q, compute d = dist(q, node); report the node if "
+            "d <= t, then descend ONLY the children whose edge label lies in [d - t, d + t] -- because "
+            "the triangle inequality proves anything in the other subtrees is too far -- pruning them "
+            "unexamined. This module builds the tree under Levenshtein distance (or any metric), "
+            "supports insertion, the tolerance query, and nearest-match, and counts nodes visited so the "
+            "pruning is measurable. Validated by exact agreement with brute force: over 30 random "
+            "dictionaries and 1500 seeded queries at various tolerances the tree returns EXACTLY the set "
+            "a linear scan finds -- no misses, no extras -- and its nearest-match equals the true "
+            "minimum-distance word over 200 more queries; the pruning genuinely fires (a tolerance-1 "
+            "query visits about a quarter of the nodes); insertion order does not change the result; and "
+            "a typo like 'algorithn' correctly resolves to 'algorithm'.",
+            '<div class="grid">'
+            + svg_card(out("bk_tree.svg"), "a BK-tree over a word list: each edge is labelled by the edit distance between parent and child, and a fuzzy query descends only the edges within its tolerance band -- pruning whole subtrees the triangle inequality proves are too far")
+            + f'<div class="card">{pre(bk_tree_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
