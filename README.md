@@ -351,6 +351,7 @@ ruins a long non-symplectic integration.
 | `src/manacher.py` | Manacher's O(n) longest palindromic substring + palindrome counting |
 | `src/stoer_wagner.py` | Stoer-Wagner global minimum cut of a weighted undirected graph (O(V^3)) |
 | `src/chebyshev.py` | Chebyshev polynomial approximation (Clenshaw eval, cures the Runge phenomenon) |
+| `src/gibbs.py` | Gibbs sampling for multivariate Gaussians and generic conditionals |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -693,6 +694,7 @@ ruins a long non-symplectic integration.
 | `examples/manacher_demo.py` | Longest palindrome + the self-similar radius profile of abacabadabacaba |
 | `examples/stoer_wagner_demo.py` | Global min cut of a graph + two clusters severed at their weak links |
 | `examples/chebyshev_demo.py` | Geometric convergence + Chebyshev taming Runge's function where equispaced blows up |
+| `examples/gibbs_demo.py` | A correlated Gaussian sampled coordinate-wise, cloud filling the covariance ellipse |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8290,6 +8292,25 @@ recurrence; the equal-ripple extrema spread the error evenly (equioscillation). 
 Chebyshev interpolants on any interval, verified that smooth functions reach near machine precision,
 error shrinks geometrically with degree, Runge's function stays bounded where equispaced blows up, and
 a low-degree polynomial is recovered exactly.
+
+## Gibbs sampling: drawing a joint distribution via its conditionals
+
+Sample an intractable joint by resampling one coordinate at a time. `gibbs.py`:
+
+```
+$ python examples/gibbs_demo.py examples/output
+
+  correlated bivariate Gaussian: sampled mean/cov match target, correlation 0.735 exact
+  4-D Gaussian: full mean and covariance recovered
+```
+
+Gibbs sampling cycles through the variables, drawing each from its conditional given the rest -- a
+Markov chain whose stationary distribution is the target joint, and a Metropolis-Hastings special
+case where every proposal is accepted. For a multivariate Gaussian the conditionals are 1-D Gaussians
+from the precision matrix. This module implements it for bivariate/multivariate Gaussians and generic
+user conditionals, verified that the sampled mean, covariance, and correlation converge to the
+target, a 3-D full covariance is recovered, and a discrete conditional sampler reproduces a known
+joint.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

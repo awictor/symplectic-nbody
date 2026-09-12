@@ -1,0 +1,17 @@
+Gibbs sampling: draw a joint distribution via its conditionals
+
+  Correlated bivariate Gaussian (target mean [2.0, -1.0], cov [[3.0, 1.8], [1.8, 2.0]]):
+    sampled mean:       [1.979, -1.013]
+    sampled covariance: [[3.01, 1.80], [1.80, 2.00]]
+    correlation: 0.735 (target 0.735)
+    Each step resamples x | y then y | x from their 1-D Gaussian conditionals -- every
+    proposal accepted (acceptance ratio exactly 1), so no step is wasted.
+
+  4-D Gaussian: sampled mean [0.01, 1.00, 2.00, 3.00] (target [0, 1, 2, 3])
+    diagonal variances: [1.97, 1.48, 1.00, 1.20] (target [2.0, 1.5, 1.0, 1.2])
+
+  Gibbs sampling is the engine of Bayesian computation: even when the joint is
+  intractable, the one-dimensional conditionals are usually simple, and cycling through
+  them builds a Markov chain that converges to the joint after burn-in.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\gibbs.svg

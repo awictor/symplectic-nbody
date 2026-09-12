@@ -393,6 +393,7 @@ def main():
     import manacher_demo
     import stoer_wagner_demo
     import chebyshev_demo
+    import gibbs_demo
 
     import plot_orbits
 
@@ -755,6 +756,7 @@ def main():
     manacher_txt = run("manacher_demo", manacher_demo.main, True)
     stoer_wagner_txt = run("stoer_wagner_demo", stoer_wagner_demo.main, True)
     chebyshev_txt = run("chebyshev_demo", chebyshev_demo.main, True)
+    gibbs_txt = run("gibbs_demo", gibbs_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5732,6 +5734,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("chebyshev.svg"), "Runge's function fit at degree 16: the equispaced interpolant (red) oscillating wildly near the ends while the Chebyshev interpolant (green) hugs the true curve -- the nodes marked below cluster at the edges")
             + f'<div class="card">{pre(chebyshev_txt)}</div>'
+            + '</div>'),
+        section(
+            "Gibbs sampling: drawing a joint distribution via its conditionals",
+            "Sampling from a high-dimensional joint distribution is hard, but sampling from its "
+            "one-dimensional CONDITIONALS -- the distribution of one variable given the others fixed "
+            "-- is often easy. GIBBS SAMPLING cycles through the variables, resampling each from its "
+            "conditional given the current values of the rest; the sequence is a Markov chain whose "
+            "stationary distribution is the target joint, so after a burn-in the samples are draws "
+            "from it. It is the workhorse of Bayesian statistics (hierarchical models, LDA, image "
+            "restoration) because the conditionals stay simple even when the joint is intractable. "
+            "It is a special case of Metropolis-Hastings where every proposal is ACCEPTED (the ratio "
+            "is exactly 1, since we propose from the true conditional), so no step is wasted. For a "
+            "multivariate Gaussian each conditional is a 1-D Gaussian with a mean linear in the other "
+            "coordinates and a variance from the precision matrix. This module implements Gibbs "
+            "sampling for bivariate and general multivariate Gaussians (closed-form conditionals) "
+            "and a generic user-conditional sampler, verified against exact references: the sampled "
+            "mean and covariance of a correlated bivariate Gaussian converge to the true parameters, "
+            "the correlation matches the target (0.735 recovered exactly), a 3-D Gaussian's full "
+            "covariance is recovered, negative and zero correlations are handled, and a generic "
+            "discrete conditional sampler reproduces a known joint distribution.",
+            '<div class="grid">'
+            + svg_card(out("gibbs.svg"), "the Gibbs sample cloud of a correlated bivariate Gaussian (blue) tilted along its correlation, with the target 2-sigma covariance ellipse (yellow) that the samples fill -- coordinate-wise sampling reproducing the full joint")
+            + f'<div class="card">{pre(gibbs_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
