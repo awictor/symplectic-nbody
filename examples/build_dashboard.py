@@ -400,6 +400,7 @@ def main():
     import continued_fraction_demo
     import crt_demo
     import tonelli_shanks_demo
+    import discrete_log_demo
 
     import plot_orbits
 
@@ -769,6 +770,7 @@ def main():
     continued_fraction_txt = run("continued_fraction_demo", continued_fraction_demo.main, True)
     crt_txt = run("crt_demo", crt_demo.main, True)
     tonelli_shanks_txt = run("tonelli_shanks_demo", tonelli_shanks_demo.main, True)
+    discrete_log_txt = run("discrete_log_demo", discrete_log_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5900,6 +5902,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("tonelli_shanks.svg"), "top: which values mod 37 are quadratic residues (green) versus non-residues (gray); below: the square map x -> x^2 mod 37, where each residue is hit by exactly two x -- the two roots Tonelli-Shanks recovers")
             + f'<div class="card">{pre(tonelli_shanks_txt)}</div>'
+            + '</div>'),
+        section(
+            "Baby-step giant-step: the discrete logarithm in O(sqrt(n))",
+            "The DISCRETE LOGARITHM problem -- find x with g^x = h (mod m) -- is the hard problem "
+            "underpinning Diffie-Hellman, ElGamal, and DSA, whose security rests on the belief that "
+            "no fast general algorithm exists. Naive search is O(n) in the order of g; BABY-STEP "
+            "GIANT-STEP cuts that to O(sqrt(n)) by meet-in-the-middle. Write x = i*N + j with "
+            "N = ceil(sqrt(n)); then g^x = h becomes g^j = h*(g^{-N})^i. Precompute a hash table of "
+            "the BABY STEPS g^j for all j, then take GIANT STEPS multiplying h by g^{-N} and looking "
+            "each up -- a hit gives x = i*N + j. Both loops run sqrt(n) times, exponentially faster "
+            "than brute force yet still exponential in the bit-length, which is why real "
+            "cryptographic groups (256-bit and up) stay secure. This module implements BSGS modulo a "
+            "prime and a multiplicative-order helper, verified against brute force: the returned x "
+            "satisfies g^x = h, existence and validity agree with exhaustive search over dozens of "
+            "primes, no-solution cases are reported, a toy Diffie-Hellman exchange is broken by "
+            "recovering the secret exponent (and reconstructing the shared key), and the order helper "
+            "matches known values.",
+            '<div class="grid">'
+            + svg_card(out("discrete_log.svg"), "the work to solve a discrete log: baby-step giant-step (green, ~sqrt(n)) versus brute force (red, n) on a log-log scale -- the gap that both enables toy attacks and forces real crypto to use enormous groups")
+            + f'<div class="card">{pre(discrete_log_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

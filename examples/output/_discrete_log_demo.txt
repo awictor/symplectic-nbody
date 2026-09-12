@@ -1,0 +1,25 @@
+Baby-step giant-step: discrete logarithm in O(sqrt(n))
+
+  Solving g^x = h (mod p):
+    3^x = 13 (mod 17)  ->  x = 4  (check: 3^4 = 13)
+    2^x = 22 (mod 29)  ->  x = 26  (check: 2^26 = 22)
+    7^x = 6 (mod 41)  ->  x = 39  (check: 7^39 = 6)
+
+  Breaking a toy Diffie-Hellman key exchange:
+    public: p=7919, g=7, A=1434, B=7138
+    (Alice and Bob's shared secret: 2002)
+    eavesdropper solves g^x = A -> x = 5555 (Alice's secret was 5555)
+    -> reconstructs the shared secret 2002: True
+    (this works only because p is tiny; real DH uses 2048+ bit primes)
+
+  Baby-step giant-step vs brute force (steps to solve):
+    p=    101: BSGS ~ 2*sqrt(n) =   22 steps   vs brute force n = 100 steps
+    p=   1009: BSGS ~ 2*sqrt(n) =   64 steps   vs brute force n = 1008 steps
+    p=  10007: BSGS ~ 2*sqrt(n) =  202 steps   vs brute force n = 10006 steps
+    p= 100003: BSGS ~ 2*sqrt(n) =  634 steps   vs brute force n = 100002 steps
+
+  Write x = i*N + j with N = ceil(sqrt(n)). Precompute the baby steps g^j in a hash map,
+  then take giant steps h*(g^-N)^i and look each up. A hit gives x = i*N + j. Both loops
+  run sqrt(n) times -- exponentially faster than brute force, but still exponential in bits.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\discrete_log.svg

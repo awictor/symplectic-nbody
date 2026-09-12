@@ -358,6 +358,7 @@ ruins a long non-symplectic integration.
 | `src/continued_fraction.py` | Continued-fraction expansion, convergents, and best rational approximation |
 | `src/crt.py` | Chinese Remainder Theorem (coprime + general) with extended Euclid and mod inverse |
 | `src/tonelli_shanks.py` | Modular square root (Tonelli-Shanks) + Legendre symbol / residue test |
+| `src/discrete_log.py` | Baby-step giant-step discrete logarithm (O(sqrt n)) + multiplicative order |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -707,6 +708,7 @@ ruins a long non-symplectic integration.
 | `examples/continued_fraction_demo.py` | pi/e/phi/sqrt2 expansions + convergent error vs denominator |
 | `examples/crt_demo.py` | Sunzi's puzzle + reconstructing a secret from residues + non-coprime handling |
 | `examples/tonelli_shanks_demo.py` | Modular square roots + the residue split + EC point decompression |
+| `examples/discrete_log_demo.py` | Breaking a toy Diffie-Hellman + BSGS vs brute-force work curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8434,6 +8436,24 @@ This module implements the Legendre symbol, residue test, and modular square roo
 brute force that the root squares back to n, a root exists iff n is a genuine square (checked over
 every residue of 40 primes), both roots are r and p-r, and the Legendre symbol matches a residue
 count, up to million-scale primes.
+
+## Baby-step giant-step: the discrete logarithm in O(sqrt(n))
+
+Solve g^x = h (mod m) by meet-in-the-middle -- and see why crypto needs huge groups. `discrete_log.py`:
+
+```
+$ python examples/discrete_log_demo.py examples/output
+
+  3^x = 13 mod 17 -> x = 4
+  toy Diffie-Hellman (p=7919): eavesdropper recovers Alice's secret 5555 and the shared key
+  work: p=100003 -> BSGS ~634 steps vs brute force 100002
+```
+
+Writing x = i*N + j with N = ceil(sqrt(n)), BSGS precomputes the baby steps g^j in a hash table and
+takes giant steps h*(g^-N)^i, looking each up -- both loops run sqrt(n) times. This module implements
+it modulo a prime plus a multiplicative-order helper, verified against brute force that the returned x
+satisfies g^x = h, existence and validity agree over dozens of primes, no-solution cases are reported,
+and a toy Diffie-Hellman exchange is broken by recovering the secret exponent.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
