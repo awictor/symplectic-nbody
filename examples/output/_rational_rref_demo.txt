@@ -1,0 +1,27 @@
+Exact rational RREF: linear algebra with certainty, no floating-point error
+
+  A =
+      1    2    3
+      4    5    6
+      7    8    9
+
+  RREF(A) =
+         1       0      -1
+         0       1       2
+         0       0       0
+
+  pivot columns: [0, 1]   rank = 2
+  null space (dim 1): (1, -2, 1)
+  null-space vector satisfies A x = 0: True
+
+  the three kinds of linear system:
+    unique  : 2x+y=3, x+3y=5 -> x = (4/5, 7/5)
+    none    : x+y=1, x+y=2 -> none (inconsistent)
+    infinite: x+y+z=6 -> particular (6, 0, 0) + 2 free directions
+
+  Working over Python's Fraction means every pivot test is exact -- so 'is this pivot
+  really zero?' is answered with certainty and the rank is never misjudged, unlike a
+  floating-point solver that might see 1e-16 and guess wrong. Essential for computer
+  algebra, exact geometry, and any rank decision that must be provably correct.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\rational_rref.svg

@@ -449,6 +449,7 @@ def main():
     import householder_qr_demo
     import jacobi_eigen_demo
     import kitamasa_demo
+    import rational_rref_demo
 
     import plot_orbits
 
@@ -867,6 +868,7 @@ def main():
     householder_qr_txt = run("householder_qr_demo", householder_qr_demo.main, True)
     jacobi_eigen_txt = run("jacobi_eigen_demo", jacobi_eigen_demo.main, True)
     kitamasa_txt = run("kitamasa_demo", kitamasa_demo.main, True)
+    rational_rref_txt = run("rational_rref_demo", rational_rref_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7046,6 +7048,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("kitamasa.svg"), "the operation count to find the N-th term: O(n) unrolling (red) versus Kitamasa's O(log n) (green) on a log-log scale -- by n = 10^18 the gap is a quintillion additions against a few dozen polynomial multiplies")
             + f'<div class="card">{pre(kitamasa_txt)}</div>'
+            + '</div>'),
+        section(
+            "Exact rational RREF: linear algebra with certainty",
+            "Row reduction to REDUCED ROW ECHELON FORM is the fundamental linear-algebra algorithm -- "
+            "it reveals RANK, solves systems, computes the NULL SPACE, and tests consistency, all "
+            "from one elimination. In floating point it accumulates rounding and can MISJUDGE whether "
+            "a pivot is truly zero, silently getting the rank wrong. Working over the EXACT RATIONALS "
+            "(Python's Fraction) removes that: every pivot and ratio is an exact fraction, so rank, "
+            "RREF, and the solution set are computed with certainty -- essential in computer algebra, "
+            "exact geometry, and cryptography. The elimination sweeps columns left to right: find a "
+            "nonzero pivot (swap rows if needed), scale the pivot row to 1, and clear that column in "
+            "every other row; pivot columns are basic, the rest free, and the pivot count is the "
+            "rank. For A x = b, augmenting and reducing shows consistency (no [0..0 | nonzero] row) "
+            "and gives a particular solution plus a null-space basis (one vector per free column). "
+            "This module computes exact RREF, rank, null-space basis, and solutions. Verified against "
+            "independent references: the rank matches an independent elimination count, null-space "
+            "vectors satisfy A x = 0 with dimension cols-rank and are independent, solutions satisfy "
+            "A x = b exactly (including the infinite families), and RREF is idempotent -- on hundreds "
+            "of random singular and rectangular matrices.",
+            '<div class="grid">'
+            + svg_card(out("rational_rref.svg"), "the exact RREF of a rank-2 matrix: green pivot columns hold the leading ones, grey free columns each contribute a null-space vector -- computed over fractions so the rank is provably 2, never a floating-point guess")
+            + f'<div class="card">{pre(rational_rref_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

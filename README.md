@@ -407,6 +407,7 @@ ruins a long non-symplectic integration.
 | `src/householder_qr.py` | Householder QR by reflections + least squares + solve |
 | `src/jacobi_eigen.py` | Jacobi symmetric eigendecomposition by Givens rotations |
 | `src/kitamasa.py` | Kitamasa: N-th linear-recurrence term in O(k^2 log n) |
+| `src/rational_rref.py` | Exact rational RREF: rank, null space, exact linear solve |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -805,6 +806,7 @@ ruins a long non-symplectic integration.
 | `examples/householder_qr_demo.py` | A least-squares line fit with residual stubs |
 | `examples/jacobi_eigen_demo.py` | The off-diagonal norm plunging to zero over rotations |
 | `examples/kitamasa_demo.py` | Huge recurrence terms + the O(n) vs O(log n) cost gap |
+| `examples/rational_rref_demo.py` | An exact RREF grid with pivot/free columns + the three system kinds |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9459,6 +9461,25 @@ square-and-multiply (each reduction O(k^2)) then dotting with the initial terms 
 O(k^2 log n) -- beating even the O(k^3 log n) companion-matrix power. Works over integers, rationals, or
 any modulus. Verified against O(n) unrolling for moderate n, known closed forms, modular
 exact-then-reduce, and Cassini's identity at n = 10^15 -- on hundreds of random recurrences.
+
+## Exact rational RREF: linear algebra with certainty
+
+Row-reduce over exact fractions -- rank, null space, and solving with no rounding. `rational_rref.py`:
+
+```
+$ python examples/rational_rref_demo.py examples/output
+
+  [[1,2,3],[4,5,6],[7,8,9]] -> RREF, rank 2, null space (1,-2,1)
+  systems: unique (4/5,7/5), inconsistent -> none, x+y+z=6 -> infinite
+```
+
+Gaussian elimination over Python's Fraction: find a nonzero pivot, scale it to 1, clear its column
+elsewhere; pivot columns are basic, the rest free, and the pivot count is the rank. Because every pivot
+test is exact, the rank is never misjudged the way a floating-point solver's might be. Solving augments
+and reduces, returning a unique solution, "none" for inconsistent systems, or a particular solution
+plus a null-space basis for underdetermined ones. Verified against an independent elimination count
+(rank), the rank-nullity theorem, A x = 0 for null-space vectors, exact A x = b for solutions, and RREF
+idempotence -- on hundreds of random singular and rectangular matrices.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
