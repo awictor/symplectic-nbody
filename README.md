@@ -429,6 +429,7 @@ ruins a long non-symplectic integration.
 | `src/unscented_kalman.py` | Unscented Kalman filter: nonlinear state estimation via sigma points |
 | `src/dct.py` | Discrete cosine transform (DCT-II/III, 1D + 2D) with energy compaction |
 | `src/quaternion.py` | Quaternion rotation: Hamilton product, slerp, axis-angle/matrix/Euler conversions |
+| `src/rrt.py` | RRT and RRT* sampling-based motion planning with obstacle avoidance |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -849,6 +850,7 @@ ruins a long non-symplectic integration.
 | `examples/unscented_kalman_demo.py` | A projectile tracked 4x better than raw range/bearing readings |
 | `examples/dct_demo.py` | Energy compaction and lossy reconstruction of a signal from few coefficients |
 | `examples/quaternion_demo.py` | SLERP vs component-LERP: even arc spacing vs bunching |
+| `examples/rrt_demo.py` | RRT vs RRT* through an obstacle field (RRT* 24% shorter) |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9921,6 +9923,25 @@ and conversions to/from axis-angle, rotation matrices, and Euler angles. Validat
 equals multiplying by the equivalent rotation matrix, every conversion round-trips (up to q/-q sign),
 composition is a homomorphism with an orthonormal det-+1 matrix, and slerp traverses at constant angular
 velocity.
+
+## RRT and RRT*: sampling-based motion planning
+
+Find a collision-free path through a cluttered space. `rrt.py`:
+
+```
+$ python examples/rrt_demo.py examples/output
+
+  plain RRT : path length 183.6 (valid)
+  RRT*      : path length 140.2 (valid) -- 23.6% shorter via rewiring
+```
+
+RRT (LaValle 1998) grows a tree by sampling the space, steering the nearest node a step toward each
+sample, and keeping collision-free moves; samples fall mostly in unexplored regions so the tree rapidly
+fills the free space. RRT* (Karaman & Frazzoli 2011) rewires -- connecting each new node to the
+lowest-cost neighbour and rerouting nearby nodes through it -- to become asymptotically optimal. 2D world
+with circular obstacles, straight-line steering. Validated: every path is collision-free with correct
+endpoints, no tree edge crosses an obstacle, open-space paths are near the straight-line optimum, RRT* is
+no longer than RRT from the same seed, and a walled-off goal reports failure.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

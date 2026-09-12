@@ -471,6 +471,7 @@ def main():
     import unscented_kalman_demo
     import dct_demo
     import quaternion_demo
+    import rrt_demo
 
     import plot_orbits
 
@@ -911,6 +912,7 @@ def main():
     unscented_kalman_txt = run("unscented_kalman_demo", unscented_kalman_demo.main, True)
     dct_txt = run("dct_demo", dct_demo.main, True)
     quaternion_txt = run("quaternion_demo", quaternion_demo.main, True)
+    rrt_txt = run("rrt_demo", rrt_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7601,6 +7603,31 @@ def main():
             '<div class="grid">'
             + svg_card(out("quaternion.svg"), "interpolating a vector 170 degrees around: the green slerp samples are evenly spaced along the arc (constant angular velocity) while the orange component-lerp samples bunch near the ends and rush through the middle")
             + f'<div class="card">{pre(quaternion_txt)}</div>'
+            + '</div>'),
+        section(
+            "RRT and RRT*: sampling-based motion planning",
+            "A robot arm threading between obstacles, a drone crossing a cluttered room, a game character "
+            "navigating a level: all face MOTION PLANNING -- a collision-free path from start to goal "
+            "through a space full of obstacles. Gridding the space works in low dimensions but explodes "
+            "as dimension grows (a 7-joint arm lives in 7D). SAMPLING-BASED planning sidesteps the curse: "
+            "randomly probe the space and connect reachable probes into a tree. The RAPIDLY-EXPLORING "
+            "RANDOM TREE (LaValle, 1998) draws a random sample, finds the nearest tree node, and STEERS a "
+            "small step toward it, keeping the move if the segment is collision-free. Because samples "
+            "mostly fall in large unexplored regions, the nearest node is usually on the frontier, so the "
+            "tree is pulled OUTWARD and fills the free space fast; a small goal bias homes it in. Plain "
+            "RRT finds a path but a jagged, over-long one; RRT* (Karaman & Frazzoli, 2011) adds two "
+            "rewiring steps -- connect each new node to the neighbour giving the lowest cost-to-come, then "
+            "reroute nearby nodes THROUGH the new one if that is cheaper -- making it ASYMPTOTICALLY "
+            "OPTIMAL, relaxing toward the shortest path as samples accumulate. This module implements "
+            "both on a 2D world with circular obstacles and straight-line steering. Validated: every "
+            "returned path is genuinely collision-free (each segment sampled against every obstacle) and "
+            "starts and ends where it should; no tree edge crosses an obstacle; in open space the path is "
+            "within 1.6x of the straight-line optimum; RRT* returns a path no longer than plain RRT from "
+            "the same seed (23.6% shorter on the demo map); a walled-off goal reports failure rather than "
+            "cheating; and runs reproduce under a fixed seed.",
+            '<div class="grid">'
+            + svg_card(out("rrt.svg"), "the RRT* tree (blue) exploring a field of circular obstacles from the yellow start to the purple goal, with the plain-RRT path (orange) and the shorter rewired RRT* path (green) threading between them")
+            + f'<div class="card">{pre(rrt_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
