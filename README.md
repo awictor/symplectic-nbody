@@ -347,6 +347,7 @@ ruins a long non-symplectic integration.
 | `src/shamir.py` | Shamir's (k,n) secret sharing over a prime field (split + Lagrange reconstruct) |
 | `src/merkle.py` | Merkle hash tree with O(log n) inclusion proofs (SHA-256, domain-separated) |
 | `src/tsp.py` | Traveling salesman: exact Held-Karp DP + nearest-neighbour and 2-opt heuristics |
+| `src/poisson.py` | 2-D Poisson/Laplace by relaxation (Jacobi, Gauss-Seidel, SOR) with Dirichlet BCs |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -685,6 +686,7 @@ ruins a long non-symplectic integration.
 | `examples/shamir_demo.py` | Splitting a secret + the polynomial geometry with the secret at f(0) |
 | `examples/merkle_demo.py` | An inclusion proof + tamper detection + the tree with its authentication path |
 | `examples/tsp_demo.py` | Held-Karp exact solve + 2-opt untangling a 60-city nearest-neighbour tour |
+| `examples/poisson_demo.py` | Steady-state heat on a plate + Jacobi/Gauss-Seidel/SOR convergence comparison |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8205,6 +8207,26 @@ the tour, removing the self-crossings a good tour never has. This module impleme
 arbitrary distance matrix, verified that Held-Karp matches brute-force permutation search, 2-opt never
 worsens a tour and averages within ~1% of the Held-Karp optimum, every tour is a valid permutation,
 and the Euclidean helper satisfies the triangle inequality.
+
+## The Poisson equation by relaxation: fields, potentials, and steady heat
+
+Solve laplacian(u) = f on a grid by sweeping neighbour averages. `poisson.py`:
+
+```
+$ python examples/poisson_demo.py examples/output
+
+  40x40 heated plate (hot left 100, cold right 0): center 48.7, harmonic
+  convergence: Jacobi 5261 sweeps, Gauss-Seidel 2733, SOR 158 (30x faster)
+  point charge in a grounded box: symmetric monotone potential, residual 9e-9
+```
+
+Laplace's equation makes every interior point the average of its neighbours (a harmonic field with no
+interior extrema); relaxation sweeps the grid averaging until it settles. Jacobi uses old values,
+Gauss-Seidel the freshly updated ones, and SOR overshoots each correction by omega in (1,2) to
+converge an order of magnitude faster. This module solves 2-D Poisson/Laplace with Dirichlet
+boundaries by all three, verified that linear boundary data reproduces the exact harmonic solution,
+the mean-value property and maximum principle hold, a separable analytic solution is matched to grid
+accuracy, and SOR beats Jacobi by ~30x.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

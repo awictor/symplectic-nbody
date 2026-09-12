@@ -389,6 +389,7 @@ def main():
     import shamir_demo
     import merkle_demo
     import tsp_demo
+    import poisson_demo
 
     import plot_orbits
 
@@ -747,6 +748,7 @@ def main():
     shamir_txt = run("shamir_demo", shamir_demo.main, True)
     merkle_txt = run("merkle_demo", merkle_demo.main, True)
     tsp_txt = run("tsp_demo", tsp_demo.main, True)
+    poisson_txt = run("poisson_demo", poisson_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5634,6 +5636,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("tsp.svg"), "the same 60 cities toured two ways: the nearest-neighbour tour (left, red) riddled with crossings, and the 2-opt tour (right, green) with the crossings untangled and 12% shorter")
             + f'<div class="card">{pre(tsp_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Poisson equation by relaxation: fields, potentials, and steady heat",
+            "The POISSON equation laplacian(u) = f governs the electrostatic potential of a charge, "
+            "the steady-state temperature of a heated plate, and the pressure in incompressible flow; "
+            "with zero source it is LAPLACE'S equation, whose solutions are HARMONIC -- every point "
+            "the average of its surroundings, no interior hot spots. On a grid with fixed boundary "
+            "values, the solution is found by RELAXATION: sweep the grid replacing each cell with the "
+            "source-adjusted average of its four neighbours until the field stops changing. Three "
+            "schemes trade simplicity for speed: JACOBI updates from the old values (simple, slow), "
+            "GAUSS-SEIDEL uses freshly-updated values (about twice as fast), and SUCCESSIVE "
+            "OVER-RELAXATION overshoots each correction by a factor omega in (1,2) -- with the "
+            "optimal omega it converges an order of magnitude faster. This module solves the 2-D "
+            "Poisson/Laplace equation with Dirichlet boundaries by all three methods, verified "
+            "against exact references: Laplace with linear boundary data reproduces the exact linear "
+            "harmonic solution, the discrete solution satisfies the mean-value property and the "
+            "maximum principle (no interior extrema), a separable analytic harmonic solution "
+            "sinh(kx)sin(ky) is matched to grid accuracy, a point charge gives a symmetric monotone "
+            "potential, all three methods converge to the same field, and SOR beats Jacobi by 30x "
+            "(158 vs 5261 sweeps on a 40x40 grid).",
+            '<div class="grid">'
+            + svg_card(out("poisson.svg"), "the steady-state temperature on a plate held hot on the left and cold on the right, solved by relaxation -- a smooth harmonic field whose isotherms curve gently, every interior cell the average of its neighbours")
+            + f'<div class="card">{pre(poisson_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

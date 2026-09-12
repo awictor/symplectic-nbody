@@ -1,0 +1,20 @@
+Poisson/Laplace by relaxation: steady-state fields on a grid
+
+  Steady-state heat on a 40x40 plate (hot left 100, cold right 0):
+    converged in 158 SOR sweeps; harmonic (mean-value error 4.02e-09)
+    center temperature: 48.7 (halfway between the edges)
+
+  Convergence speed (sweeps to tol=1e-8, 40x40 grid):
+    jacobi        :  5261 sweeps
+    gauss_seidel  :  2733 sweeps
+    sor           :   158 sweeps
+    SOR over-relaxes each correction by omega in (1,2), converging an order faster.
+
+  Poisson for a point charge (grounded box): peak potential 37.10
+    residual |laplacian(u) - f|: 9.21e-09
+
+  Laplace's equation makes every interior point the average of its neighbours -- a
+  harmonic field, smooth with no interior hot spots. Relaxation just sweeps the grid
+  averaging until it settles; SOR accelerates by overshooting each averaging step.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\poisson.svg
