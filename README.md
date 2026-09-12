@@ -409,6 +409,7 @@ ruins a long non-symplectic integration.
 | `src/kitamasa.py` | Kitamasa: N-th linear-recurrence term in O(k^2 log n) |
 | `src/rational_rref.py` | Exact rational RREF: rank, null space, exact linear solve |
 | `src/rabin_karp.py` | Rabin-Karp rolling-hash search + multi-pattern + longest common substring |
+| `src/half_plane_intersection.py` | Half-plane intersection: feasible convex region of linear constraints |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -809,6 +810,7 @@ ruins a long non-symplectic integration.
 | `examples/kitamasa_demo.py` | Huge recurrence terms + the O(n) vs O(log n) cost gap |
 | `examples/rational_rref_demo.py` | An exact RREF grid with pivot/free columns + the three system kinds |
 | `examples/rabin_karp_demo.py` | Rolling-hash matches across a text + multi-pattern + sentence LCS |
+| `examples/half_plane_intersection_demo.py` | A 5-constraint feasible region with its LP optimum vertex |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9500,6 +9502,23 @@ is fast and, because every match is verified, always exact. Multi-pattern search
 length and scans once; the longest common substring binary-searches the length with hashed windows.
 Verified against brute-force search on hundreds of random pairs (and a 20k-char text) and the LCS
 against an O(n*m) DP.
+
+## Half-plane intersection: the feasible region of constraints
+
+Intersect linear inequalities into their feasible convex polygon. `half_plane_intersection.py`:
+
+```
+$ python examples/half_plane_intersection_demo.py examples/output
+
+  5 constraints -> feasible 5-gon, area 14.25; maximise 3x+2y at vertex (4.5,1.5)
+  x<=0 and x>=1 -> infeasible (empty region)
+```
+
+Each inequality a x + b y <= c is a half-plane; clipping a large bounding box against them one by one
+(Sutherland-Hodgman) carves out their intersection -- a convex polygon, or empty if they conflict. This
+is exactly the feasible region of a 2-D linear program, whose optimum sits at a vertex. Verified against
+brute force -- a dense grid where a point is feasible iff it satisfies every inequality must match the
+computed polygon -- on hundreds of random systems, plus box/triangle/infeasible cases with exact areas.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

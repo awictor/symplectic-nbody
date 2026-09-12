@@ -1,0 +1,27 @@
+Half-plane intersection: the feasible region of linear constraints
+
+  constraints:
+    x >= 0
+    y >= 0
+    x + y <= 6
+    x + 3y <= 12
+    3x + y <= 15
+
+  feasible region: a 5-gon, area 14.250
+  vertices (corners of the feasible polygon):
+    (0.00, 4.00)
+    (0.00, 0.00)
+    (5.00, 0.00)
+    (4.50, 1.50)
+    (3.00, 3.00)
+
+  maximising 3x + 2y over the region: vertex (4.50, 1.50), value 16.50
+  (a linear objective is always optimised at a vertex -- the heart of the simplex method)
+
+  infeasible example (x <= 0 and x >= 1): feasible? False
+
+  Each inequality is a half-plane; clipping a big bounding box against them one by one
+  (Sutherland-Hodgman) carves out their intersection -- a convex polygon, or empty if the
+  constraints conflict. This is exactly the feasible region of a 2-D linear program.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\half_plane_intersection.svg

@@ -451,6 +451,7 @@ def main():
     import kitamasa_demo
     import rational_rref_demo
     import rabin_karp_demo
+    import half_plane_intersection_demo
 
     import plot_orbits
 
@@ -871,6 +872,7 @@ def main():
     kitamasa_txt = run("kitamasa_demo", kitamasa_demo.main, True)
     rational_rref_txt = run("rational_rref_demo", rational_rref_demo.main, True)
     rabin_karp_txt = run("rabin_karp_demo", rabin_karp_demo.main, True)
+    half_plane_intersection_txt = run("half_plane_intersection_demo", half_plane_intersection_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7093,6 +7095,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("rabin_karp.svg"), "rolling-hash search for 'abra' across a text: only the windows whose hash equals the pattern's are compared in full, and the verified matches (green) are found in a single left-to-right pass")
             + f'<div class="card">{pre(rabin_karp_txt)}</div>'
+            + '</div>'),
+        section(
+            "Half-plane intersection: the feasible region of constraints",
+            "A HALF-PLANE is the solution set of one linear inequality a x + b y <= c -- everything on "
+            "one side of a line. Intersecting many gives a CONVEX POLYGON: the FEASIBLE REGION of a "
+            "system of linear constraints, the geometry underneath 2-D linear programming (the "
+            "optimum of a linear objective sits at one of its vertices), motion-planning free space, "
+            "the kernel of a polygon, and Voronoi-cell construction. It is computed here by "
+            "INCREMENTAL CLIPPING: start from a large bounding box guaranteed to contain any bounded "
+            "region, then clip against each half-plane with the Sutherland-Hodgman algorithm, which "
+            "walks the polygon's edges keeping inside vertices and inserting boundary-crossing points "
+            "-- the result stays convex, so all m constraints are handled in O(m*v). An empty polygon "
+            "means the constraints are infeasible (2-D LP feasibility). This module clips a polygon "
+            "by a half-plane, intersects a list into their feasible polygon, tests feasibility, and "
+            "computes the area. Verified against brute force -- a dense grid where a point is feasible "
+            "iff it satisfies every inequality must match the computed polygon -- on hundreds of "
+            "random constraint systems, plus known shapes (box, triangle, an infeasible pair) with "
+            "exact areas.",
+            '<div class="grid">'
+            + svg_card(out("half_plane_intersection.svg"), "the feasible region (green) of five linear constraints, with the boundary lines and the vertex where a linear objective is maximised (red) -- the polygon the simplex method walks the corners of")
+            + f'<div class="card">{pre(half_plane_intersection_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
