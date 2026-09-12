@@ -461,6 +461,7 @@ def main():
     import levinson_durbin_demo
     import poisson_disk_demo
     import low_discrepancy_demo
+    import thompson_nfa_demo
 
     import plot_orbits
 
@@ -891,6 +892,7 @@ def main():
     levinson_durbin_txt = run("levinson_durbin_demo", levinson_durbin_demo.main, True)
     poisson_disk_txt = run("poisson_disk_demo", poisson_disk_demo.main, True)
     low_discrepancy_txt = run("low_discrepancy_demo", low_discrepancy_demo.main, True)
+    thompson_nfa_txt = run("thompson_nfa_demo", thompson_nfa_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7333,6 +7335,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("low_discrepancy.svg"), "the same number of points from the Halton sequence (left) and a pseudo-random generator (right): Halton covers every sub-square evenly while the random set clumps and leaves gaps, which is exactly why it integrates faster")
             + f'<div class="card">{pre(low_discrepancy_txt)}</div>'
+            + '</div>'),
+        section(
+            "Thompson's NFA: regex matching without catastrophic backtracking",
+            "The regex matcher in most languages backtracks, which is why a pattern like (a*)*b against "
+            "a long run of 'a' can hang for seconds -- CATASTROPHIC BACKTRACKING, an exponential-time "
+            "trap that has taken down production services. Ken Thompson's 1968 construction avoids it "
+            "entirely, matching in GUARANTEED LINEAR TIME however pathological the pattern, by never "
+            "backtracking: instead of trying one path and rewinding, it tracks the SET of all NFA "
+            "states the machine could be in at once and advances the whole set one character at a time, "
+            "so matching an n-character string against an m-state machine always costs O(n*m). This "
+            "engine implements the full pipeline from scratch -- a recursive-descent PARSER (alternation "
+            "|, concatenation, the quantifiers * + ?, grouping, the wildcard ., backslash escapes) with "
+            "correct precedence; a COMPILER that glues tiny two-state machines with epsilon transitions "
+            "by Thompson's rules, so the NFA stays linear in the pattern; and a SIMULATOR using "
+            "on-the-fly subset construction with a cycle-safe epsilon-closure. The API mirrors the "
+            "standard library with fullmatch and search. Validated against Python's own re module as an "
+            "independent oracle: over 1000 seeded random (pattern, string) pairs from the supported "
+            "grammar, both fullmatch and search agree with re on every case; and the catastrophic "
+            "pattern (a*)*b on a 200-'a' string returns in well under a millisecond where a backtracking "
+            "matcher would stall, with match time scaling cleanly linearly in the input.",
+            '<div class="grid">'
+            + svg_card(out("thompson_nfa.svg"), "match time of the catastrophic-backtracking pattern (a*)*b against strings of increasing length: the NFA engine scales linearly (each doubling of the input roughly doubles the time) where a backtracking engine would explode exponentially")
+            + f'<div class="card">{pre(thompson_nfa_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

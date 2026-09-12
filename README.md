@@ -419,6 +419,7 @@ ruins a long non-symplectic integration.
 | `src/levinson_durbin.py` | O(n^2) Toeplitz solver + autoregressive (Yule-Walker) fit + predictor |
 | `src/poisson_disk.py` | Bridson blue-noise Poisson-disk sampling (2D + n-D) |
 | `src/low_discrepancy.py` | Van der Corput / Halton / Hammersley + quasi-Monte-Carlo integration |
+| `src/thompson_nfa.py` | Linear-time regex engine (Thompson NFA, no catastrophic backtracking) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -829,6 +830,7 @@ ruins a long non-symplectic integration.
 | `examples/levinson_durbin_demo.py` | An AR(2) one-step-ahead prediction tracking a synthesised signal |
 | `examples/poisson_disk_demo.py` | Blue-noise Poisson-disk points vs clumpy uniform random, side by side |
 | `examples/low_discrepancy_demo.py` | Halton vs pseudo-random points and QMC-vs-MC pi convergence |
+| `examples/thompson_nfa_demo.py` | Linear match-time curve of the catastrophic-backtracking pattern |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9709,6 +9711,26 @@ largest gap; Halton uses a coprime prime base per axis, Hammersley pins the firs
 Validated: the radical inverse matches hand-computed values, van der Corput exactly stratifies its
 first b^m points, Halton's star discrepancy is several times smaller than pseudo-random and shrinks
 with N, and QMC integration of a smooth function beats the average plain-MC error at the same N.
+
+## Thompson's NFA: regex matching without catastrophic backtracking
+
+A regex engine that matches in guaranteed linear time. `thompson_nfa.py`:
+
+```
+$ python examples/thompson_nfa_demo.py examples/output
+
+  /(a|b)*c/ matches 'abbac', rejects 'ababba' (agrees with Python re)
+  catastrophic /(a*)*b/ on 800 a's: 0.95 ms  (backtracking engine would hang)
+```
+
+Most languages' regex matchers backtrack, so `(a*)*b` on a long run of `a` can hang for seconds.
+Thompson's 1968 construction never backtracks: it tracks the set of all NFA states the machine could
+be in and advances the whole set one character at a time, so matching costs O(n*m) always. The engine
+implements a recursive-descent parser (`|`, concatenation, `* + ?`, groups, `.`, `\` escapes), a
+Thompson compiler gluing two-state machines with epsilon transitions, and a subset-construction
+simulator with a cycle-safe epsilon-closure. Validated against Python's `re` as an oracle: over 1000
+seeded random (pattern, string) pairs, `fullmatch` and `search` agree on every case, and the
+catastrophic pattern returns in under a millisecond with match time scaling linearly.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

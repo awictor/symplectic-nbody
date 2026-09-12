@@ -1,0 +1,36 @@
+Thompson's NFA: regex matching in guaranteed linear time
+
+  /(a|b)*c/  (10 NFA states)
+    fullmatch('abbac'     ) = True   (re agrees: True) OK
+    fullmatch('ababba'    ) = False  (re agrees: True) OK
+    fullmatch('c'         ) = True   (re agrees: True) OK
+
+  /colou?r/  (14 NFA states)
+    fullmatch('color'     ) = True   (re agrees: True) OK
+    fullmatch('colour'    ) = True   (re agrees: True) OK
+    fullmatch('colur'     ) = False  (re agrees: True) OK
+
+  /a.c/  (6 NFA states)
+    fullmatch('abc'       ) = True   (re agrees: True) OK
+    fullmatch('axc'       ) = True   (re agrees: True) OK
+    fullmatch('ac'        ) = False  (re agrees: True) OK
+
+  /(ab)+/  (5 NFA states)
+    fullmatch('ab'        ) = True   (re agrees: True) OK
+    fullmatch('abab'      ) = True   (re agrees: True) OK
+    fullmatch('aba'       ) = False  (re agrees: True) OK
+
+  Catastrophic backtracking pattern /(a*)*b/ against strings of 'a' (no trailing b):
+    a backtracking engine takes exponential time; Thompson's NFA stays linear.
+
+    n=  50: matched=False  time=0.07 ms
+    n= 100: matched=False  time=0.15 ms
+    n= 200: matched=False  time=0.26 ms
+    n= 400: matched=False  time=0.54 ms
+    n= 800: matched=False  time=1.15 ms
+
+  Never backtracks: the engine tracks the SET of all NFA states the machine could be in
+  and advances the whole set one character at a time, so matching costs O(n*m) always --
+  linear in the input length, whatever the pattern.
+
+  wrote examples/output\thompson_nfa.svg
