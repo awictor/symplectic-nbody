@@ -1,0 +1,15 @@
+Butterworth: maximally-flat digital filters via the bilinear transform
+
+  low-pass magnitude at the cutoff fc=0.1 (should be -3 dB = 0.7071):
+    order 2: |H(fc)| = 0.7071  (-3.01 dB);  |H(2*fc)| = -14.1 dB,  |H(4*fc)| = -39.1 dB
+    order 4: |H(fc)| = 0.7071  (-3.01 dB);  |H(2*fc)| = -28.0 dB,  |H(4*fc)| = -78.1 dB
+    order 8: |H(fc)| = 0.7071  (-3.01 dB);  |H(2*fc)| = -55.9 dB,  |H(4*fc)| = -156.2 dB
+
+  denoising a 0.01-cycle/sample sine buried in 0.35 tone + Gaussian noise:
+    RMS error vs clean -- noisy: 0.3126   filtered: 0.0443   (7.1x cleaner)
+
+  The passband is maximally flat (no ripple), the response is down exactly 3 dB at the
+  cutoff, and each extra order adds 6 dB/octave of roll-off. filtfilt runs the filter
+  forwards and backwards so the denoised signal has zero phase lag.
+
+  wrote examples/output\butterworth.svg

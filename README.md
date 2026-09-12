@@ -425,6 +425,7 @@ ruins a long non-symplectic integration.
 | `src/tdigest.py` | t-digest: streaming quantiles over the whole distribution, sharp tails, mergeable |
 | `src/myers_diff.py` | Myers O(ND) diff: shortest edit script + LCS + unified diff (the git algorithm) |
 | `src/push_relabel.py` | Push-relabel (Goldberg-Tarjan) max flow + min cut + bipartite matching |
+| `src/butterworth.py` | Butterworth IIR filter design (low/high-pass) + filtfilt + frequency response |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -841,6 +842,7 @@ ruins a long non-symplectic integration.
 | `examples/tdigest_demo.py` | Streaming p50-p9999 from 500k samples in 64 centroids, plus a merge |
 | `examples/myers_diff_demo.py` | A git-style unified diff and the edit graph with its shortest path |
 | `examples/push_relabel_demo.py` | A max-flow network with per-edge utilisation and the min cut drawn |
+| `examples/butterworth_demo.py` | Filter magnitude responses and a 7x denoising of a buried sine |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9839,6 +9841,24 @@ Uses the FIFO rule (O(V^3)) plus the gap heuristic. Returns flow value, per-edge
 cut. Validated against the repo's independent Dinic solver on 300 random networks (flow values agree
 every time), plus flow conservation, capacity limits, the max-flow min-cut theorem, and bipartite
 matching vs a brute-force augmenting search.
+
+## Butterworth filters: maximally-flat frequency response
+
+Design digital low/high-pass filters with a ripple-free passband. `butterworth.py`:
+
+```
+$ python examples/butterworth_demo.py examples/output
+
+  order 8 low-pass fc=0.1: -3.01 dB at cutoff, -55.9 dB one octave up
+  denoising a buried sine: RMS error 0.31 -> 0.044 (7.1x cleaner)
+```
+
+The Butterworth filter is maximally flat -- no passband ripple, gain falling monotonically. Designed by
+the textbook pipeline: analog prototype poles on the unit circle, tangent frequency pre-warp, then the
+bilinear transform `s = (1-z^-1)/(1+z^-1)` to get the digital coefficients. Applies by direct-form
+recurrence or zero-phase filtfilt. Validated against the defining Butterworth properties: exactly -3 dB
+at the cutoff for every order/cutoff, monotone (no-ripple) response, ~6 dB/octave per order of
+roll-off, and clean two-tone separation -- all pure stdlib, no scipy.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

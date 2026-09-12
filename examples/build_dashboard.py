@@ -467,6 +467,7 @@ def main():
     import tdigest_demo
     import myers_diff_demo
     import push_relabel_demo
+    import butterworth_demo
 
     import plot_orbits
 
@@ -903,6 +904,7 @@ def main():
     tdigest_txt = run("tdigest_demo", tdigest_demo.main, True)
     myers_diff_txt = run("myers_diff_demo", myers_diff_demo.main, True)
     push_relabel_txt = run("push_relabel_demo", push_relabel_demo.main, True)
+    butterworth_txt = run("butterworth_demo", butterworth_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7490,6 +7492,31 @@ def main():
             '<div class="grid">'
             + svg_card(out("push_relabel.svg"), "the classic 6-node max-flow network solved by push-relabel: edges thicken and turn green as they saturate, and the red-ringed nodes are the source side of the minimum cut whose capacity (23) equals the maximum flow")
             + f'<div class="card">{pre(push_relabel_txt)}</div>'
+            + '</div>'),
+        section(
+            "Butterworth filters: maximally-flat frequency response",
+            "Almost every measured signal needs filtering -- strip mains hum from an ECG, kill sensor "
+            "noise before differentiating, split audio into bands, anti-alias before downsampling. A "
+            "digital IIR filter does this by a recurrence (each output a weighted sum of recent inputs "
+            "and outputs), and the BUTTERWORTH design is the classic choice because it is MAXIMALLY "
+            "FLAT: its passband has no ripple at all, the gain falling monotonically toward zero rather "
+            "than wiggling as Chebyshev or elliptic filters do to buy a sharper edge. Designing one is "
+            "the textbook three-step pipeline every scipy.signal call runs underneath: (1) the ANALOG "
+            "PROTOTYPE, whose n poles sit equally spaced on the left half of the unit circle giving "
+            "|H(jw)|^2 = 1/(1 + w^2n); (2) tangent FREQUENCY PRE-WARPING so the digital cutoff lands "
+            "exactly where asked; (3) the BILINEAR TRANSFORM s = (1-z^-1)/(1+z^-1), mapping the stable "
+            "analog filter into a stable digital one and out come the coefficients. This module designs "
+            "low- and high-pass filters of any order, applies them by direct-form recurrence and by "
+            "forward-backward FILTFILT for zero phase lag, and computes the frequency response. "
+            "Validated against the DEFINING Butterworth properties, not another library: the magnitude "
+            "is exactly -3 dB at the cutoff for every order and cutoff tested; the passband gain is ~1 "
+            "and the response is strictly monotone (the no-ripple signature); each extra order adds "
+            "~6 dB/octave of roll-off; a low-pass on a two-tone signal keeps the low tone at unit "
+            "amplitude while removing the high one; and filtfilt has zero phase lag. On the demo it "
+            "denoises a buried sine 7x cleaner in RMS.",
+            '<div class="grid">'
+            + svg_card(out("butterworth.svg"), "top: the flat-passband magnitude response of orders 2/4/8 all crossing -3 dB exactly at the cutoff, steeper with order; bottom: a noisy signal (grey) and its zero-phase filtered version (green) recovering the underlying slow sine")
+            + f'<div class="card">{pre(butterworth_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
