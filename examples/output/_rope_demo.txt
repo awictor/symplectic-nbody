@@ -1,0 +1,18 @@
+Rope: a balanced tree that edits huge strings in O(log n)
+
+  start: 'the quick brown fox'  (length 19, tree height 3)
+  insert 'very ' at 10: 'the quick very brown fox'
+  delete [0,4):         'quick very brown fox'
+  concat ' jumps':      'quick very brown fox jumps'
+
+  after 5000 middle inserts: length 10020, tree height 40
+    ideal height ~log2(n) = 13.3; balanced = True
+    a flat string would have copied ~10020 chars on the LAST insert alone;
+    the rope touched only ~40 nodes on the path.
+
+  Text lives only in the leaves; internal nodes store the left subtree's length so indexing,
+  splitting, and joining walk a logarithmic path. Concatenation is O(1), edits are
+  split-then-concat, and rebalancing keeps the tree from degenerating -- the structure a
+  real text editor uses to stay responsive on huge files.
+
+  wrote examples/output\rope.svg

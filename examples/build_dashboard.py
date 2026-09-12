@@ -477,6 +477,7 @@ def main():
     import wavelet_transform_demo
     import elliptic_curve_demo
     import sha256_demo
+    import rope_demo
 
     import plot_orbits
 
@@ -923,6 +924,7 @@ def main():
     wavelet_transform_txt = run("wavelet_transform_demo", wavelet_transform_demo.main, True)
     elliptic_curve_txt = run("elliptic_curve_demo", elliptic_curve_demo.main, True)
     sha256_txt = run("sha256_demo", sha256_demo.main, True)
+    rope_txt = run("rope_demo", rope_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7763,6 +7765,32 @@ def main():
             '<div class="grid">'
             + svg_card(out("sha256.svg"), "the 32 bytes of two digests whose inputs differ by a single letter: the values are scrambled beyond recognition and roughly half the bytes (red-bordered) change -- the avalanche effect that makes the hash collision-resistant")
             + f'<div class="card">{pre(sha256_txt)}</div>'
+            + '</div>'),
+        section(
+            "The rope: O(log n) editing of enormous strings",
+            "A text editor holding a hundred-megabyte file cannot store it as one flat string: inserting "
+            "a character in the middle would copy the entire buffer, O(n) per keystroke. The ROPE "
+            "(Boehm, Atkinson & Plass, 1995) fixes this by representing a string as a balanced binary "
+            "tree whose LEAVES hold short substrings and whose INTERNAL nodes record only the length of "
+            "their left subtree. The text lives in the leaves; the tree is a scaffold that lets you "
+            "find, split, and join without copying the bulk of the characters. Concatenation is O(1) "
+            "(make a new root over the two ropes); INDEXING walks down using the stored left-lengths in "
+            "O(log n); SPLIT cuts the tree in two in O(log n); and INSERT and DELETE are just "
+            "split-and-concat, so editing the middle of a giant document costs logarithmic time. Balance "
+            "matters -- naive concatenation can build a degenerate linked list -- so this implementation "
+            "REBALANCES a subtree (rebuilding it from its leaves) whenever it grows too tall for its "
+            "size, keeping depth logarithmic. Provides construction, length, indexing, substring, "
+            "concat, split, insert, delete, and materialisation. Validated against a plain Python string "
+            "as an oracle: over 4000 seeded random operations -- middle inserts, range deletes, "
+            "concatenations, split-and-swap -- the rope's flattened contents equal the reference string "
+            "at every step, index and substring queries agree, split-then-concat is the identity, and "
+            "the tree stays balanced (height within a small factor of log2 n) even after edits that "
+            "would degenerate a naive rope: 5000 middle inserts leave a 10020-character rope only 40 "
+            "nodes deep, where a flat buffer would have copied all 10020 characters on the last insert "
+            "alone.",
+            '<div class="grid">'
+            + svg_card(out("rope.svg"), "the tree behind a rope: green leaves hold the actual substrings while blue internal nodes store just the length of their left subtree, so an edit walks a short logarithmic path instead of copying the whole string")
+            + f'<div class="card">{pre(rope_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

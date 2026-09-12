@@ -435,6 +435,7 @@ ruins a long non-symplectic integration.
 | `src/wavelet_transform.py` | Discrete wavelet transform (Haar/db4, 1D + 2D) + denoising |
 | `src/elliptic_curve.py` | Elliptic-curve group law + ECDH key exchange + ECDSA sign/verify |
 | `src/sha256.py` | SHA-256 from scratch (FIPS 180-4) + streaming API + HMAC-SHA256 |
+| `src/rope.py` | Rope: O(log n) concat/split/insert/delete on huge strings, self-balancing |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -861,6 +862,7 @@ ruins a long non-symplectic integration.
 | `examples/wavelet_transform_demo.py` | Localising a transient in detail coefficients, plus denoising |
 | `examples/elliptic_curve_demo.py` | Point group law, an ECDH exchange, and ECDSA sign/verify |
 | `examples/sha256_demo.py` | Digests matching hashlib, the avalanche effect, and HMAC |
+| `examples/rope_demo.py` | Middle edits, balance under 5000 inserts, and the rope tree drawn |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10045,6 +10047,24 @@ streaming update/digest API, and HMAC-SHA256, in pure integer arithmetic. Valida
 hashlib on the empty string, 'abc', multi-block inputs, every length 0-200 bytes (all padding
 boundaries), and hundreds of random strings; NIST vectors match; streaming equals one-shot for every
 chunking; the avalanche effect flips ~half the bits; and HMAC matches the hmac stdlib and RFC 4231.
+
+## The rope: O(log n) editing of enormous strings
+
+Edit huge strings without copying the buffer. `rope.py`:
+
+```
+$ python examples/rope_demo.py examples/output
+
+  5000 middle inserts -> 10020-char rope only 40 nodes deep (log2 n = 13.3)
+  a flat buffer would copy all 10020 chars on the last insert alone
+```
+
+A rope stores a string as a balanced tree with substrings in the leaves and left-subtree lengths in the
+internal nodes, so concatenation is O(1), indexing/split are O(log n), and insert/delete are
+split-then-concat. It rebalances subtrees that grow too tall so depth stays logarithmic. Validated
+against a plain Python string over 4000 random edits (insert/delete/concat/split-swap): the rope's
+contents match at every step, index and substring queries agree, split-then-concat is the identity, and
+the tree stays balanced even under adversarial repeated concatenation.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
