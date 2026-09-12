@@ -387,6 +387,7 @@ ruins a long non-symplectic integration.
 | `src/dinic.py` | Dinic's max-flow (blocking flows on the level graph) + min cut + matching |
 | `src/graph_coloring.py` | Graph coloring: greedy, DSATUR, exact chromatic number |
 | `src/k_core.py` | k-core decomposition: coreness, degeneracy, k-shells |
+| `src/prufer.py` | Prufer sequences: labeled-tree <-> string bijection + Cayley's formula |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -765,6 +766,7 @@ ruins a long non-symplectic integration.
 | `examples/dinic_demo.py` | A pipe network at max flow with the min-cut pipes highlighted |
 | `examples/graph_coloring_demo.py` | An exam-conflict graph coloured into the minimum time slots |
 | `examples/k_core_demo.py` | A network peeled into onion rings sized by coreness |
+| `examples/prufer_demo.py` | A tree beside its Prufer code + Cayley's count enumerated |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9062,6 +9064,24 @@ k-shell (coreness exactly k) gives the network's onion layers. Verified against 
 definition (iterate "remove all degree-<k vertices until stable") on hundreds of random graphs:
 coreness matches, k-cores are nested and each vertex has >= k neighbours inside, the degeneracy
 ordering has <= degeneracy later-neighbours per vertex, and shells partition the graph.
+
+## Prufer sequences: labeled trees as integer strings
+
+Encode any labeled tree as a length-(n-2) string and back. `prufer.py`:
+
+```
+$ python examples/prufer_demo.py examples/output
+
+  star (hub 0) -> [0,0,0,0]; path 0..5 -> [1,2,3,4]; caterpillar -> [1,2,1,2]
+  Cayley: n^(n-2) labeled trees, confirmed by enumeration through n=7
+```
+
+Encoding strips leaves smallest-first, appending each removed leaf's neighbour; decoding inverts it with
+a heap of current leaves; both O(n log n). A vertex appears (degree - 1) times, so leaves never appear.
+Since every length-(n-2) string over {0..n-1} is a valid sequence and each gives a distinct tree,
+counting trees reduces to counting strings -- Cayley's n^(n-2) formula. Verified against brute force:
+encode-then-decode is the identity on hundreds of random trees, every sequence decodes to a valid tree,
+the degree reading matches, and Cayley's count is confirmed by exhaustive enumeration through n=7.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

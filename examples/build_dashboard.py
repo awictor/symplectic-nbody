@@ -429,6 +429,7 @@ def main():
     import dinic_demo
     import graph_coloring_demo
     import k_core_demo
+    import prufer_demo
 
     import plot_orbits
 
@@ -827,6 +828,7 @@ def main():
     dinic_txt = run("dinic_demo", dinic_demo.main, True)
     graph_coloring_txt = run("graph_coloring_demo", graph_coloring_demo.main, True)
     k_core_txt = run("k_core_demo", k_core_demo.main, True)
+    prufer_txt = run("prufer_demo", prufer_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6588,6 +6590,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("k_core.svg"), "a network peeled into onion layers: nodes are placed in concentric rings and sized by coreness, with the dense 3-core hub at the centre and the loosely-attached leaves (coreness 1) on the outer ring")
             + f'<div class="card">{pre(k_core_txt)}</div>'
+            + '</div>'),
+        section(
+            "Prufer sequences: labeled trees as integer strings",
+            "A labeled tree on n vertices can be encoded as a PRUFER SEQUENCE -- a list of exactly n-2 "
+            "vertex labels -- and reconstructed perfectly from it. This 1918 bijection turns tree "
+            "questions into string questions, and its most famous consequence is CAYLEY'S FORMULA: "
+            "since any of the n^(n-2) length-(n-2) strings over {0..n-1} is a valid Prufer sequence, "
+            "there are EXACTLY n^(n-2) labeled trees on n vertices. The code also reads off structure "
+            "-- a vertex appears in it (degree - 1) times, so leaves never appear. ENCODING strips "
+            "leaves smallest-first, appending each removed leaf's neighbour; DECODING inverts it with "
+            "a heap of current leaves; both run in O(n log n). Used to generate a uniformly random "
+            "labeled tree (decode a random string), count degree-constrained trees, and serialize "
+            "trees compactly. Verified against brute force: encode-then-decode is the identity on "
+            "hundreds of random trees, every sequence decodes to a valid tree (n-1 edges, connected, "
+            "acyclic), the degree reading matches, and Cayley's n^(n-2) count is confirmed by "
+            "exhaustively enumerating all trees for n up to 7 -- with distinct sequences shown to give "
+            "distinct trees (a true bijection).",
+            '<div class="grid">'
+            + svg_card(out("prufer.svg"), "a labeled tree beside its Prufer sequence: leaves (yellow) never appear in the code, and each internal vertex appears exactly degree-minus-one times, so the whole degree sequence can be read straight off the string")
+            + f'<div class="card">{pre(prufer_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

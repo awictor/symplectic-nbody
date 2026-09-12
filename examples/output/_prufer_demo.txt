@@ -1,0 +1,24 @@
+Prufer sequences: a bijection between labeled trees and integer strings
+
+  star (hub 0)   Prufer [0, 0, 0, 0]  degrees [5, 1, 1, 1, 1, 1]  roundtrip ok
+  path 0..5      Prufer [1, 2, 3, 4]  degrees [1, 2, 2, 2, 2, 1]  roundtrip ok
+  caterpillar    Prufer [1, 2, 1, 2]  degrees [1, 3, 3, 1, 1, 1]  roundtrip ok
+
+  A vertex appears in the sequence (its degree - 1) times, so leaves never appear --
+  read the tree's whole degree sequence straight off the code.
+
+  Cayley's formula: exactly n^(n-2) labeled trees on n vertices.
+     n     n^(n-2)  enumerated
+     1           1           1
+     2           1           1
+     3           3           3
+     4          16          16
+     5         125         125
+     6        1296        1296
+     7       16807       16807
+
+  Every length-(n-2) string over {0..n-1} is a valid Prufer sequence, and each gives a
+  distinct tree -- so counting trees reduces to counting strings, and Cayley's formula
+  falls out immediately. Decoding a uniformly random string yields a uniformly random tree.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\prufer.svg
