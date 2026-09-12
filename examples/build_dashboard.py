@@ -426,6 +426,7 @@ def main():
     import yen_ksp_demo
     import karger_demo
     import bron_kerbosch_demo
+    import dinic_demo
 
     import plot_orbits
 
@@ -821,6 +822,7 @@ def main():
     yen_ksp_txt = run("yen_ksp_demo", yen_ksp_demo.main, True)
     karger_txt = run("karger_demo", karger_demo.main, True)
     bron_kerbosch_txt = run("bron_kerbosch_demo", bron_kerbosch_demo.main, True)
+    dinic_txt = run("dinic_demo", dinic_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6520,6 +6522,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("bron_kerbosch.svg"), "a seven-person friendship network with all its maximal cliques found; the largest fully-connected group (a mutual-friend triangle) is highlighted in green")
             + f'<div class="card">{pre(bron_kerbosch_txt)}</div>'
+            + '</div>'),
+        section(
+            "Dinic's algorithm: max flow by blocking flows",
+            "MAXIMUM FLOW asks how much can be pushed from a source to a sink through capacitated "
+            "edges -- pipe throughput, network bandwidth, the size of a bipartite matching. "
+            "Ford-Fulkerson augments one path at a time; DINIC'S ALGORITHM (1970) is markedly faster, "
+            "O(V^2*E) in general and O(E*sqrt(V)) on unit capacities (the standard matching engine), "
+            "by pushing MANY paths per phase. Each phase runs a BFS from the source to build the "
+            "LEVEL GRAPH -- level[v] is the shortest edge-distance in the residual network, keeping "
+            "only level L -> L+1 edges -- then a DFS finds a BLOCKING FLOW, saturating an edge on "
+            "every level-respecting source-to-sink path. An ITERATION POINTER skips edges that led "
+            "to dead ends this phase, so the blocking flow costs O(V*E); the sink's level strictly "
+            "rises each phase, bounding phases to O(V). Recovering the residual-reachable set from "
+            "the source gives the minimum cut. Verified against an independent Edmonds-Karp reference "
+            "and the max-flow/min-cut theorem -- the flow value equals the returned cut's capacity -- "
+            "on hundreds of random networks (plus the CLRS textbook graph and a 200-node instance), "
+            "with a bipartite-matching reduction matching an augmenting-path reference.",
+            '<div class="grid">'
+            + svg_card(out("dinic.svg"), "a pipe network carrying its maximum flow of 19 units: pipe thickness is the flow used and red pipes cross the minimum cut, whose capacity (19) equals the max flow exactly as the max-flow min-cut theorem requires")
+            + f'<div class="card">{pre(dinic_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

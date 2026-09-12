@@ -384,6 +384,7 @@ ruins a long non-symplectic integration.
 | `src/yen_ksp.py` | Yen's K shortest loopless paths in a directed weighted graph |
 | `src/karger.py` | Karger & Karger-Stein randomized global minimum cut |
 | `src/bron_kerbosch.py` | Bron-Kerbosch maximal-clique enumeration (pivoting + degeneracy) |
+| `src/dinic.py` | Dinic's max-flow (blocking flows on the level graph) + min cut + matching |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -759,6 +760,7 @@ ruins a long non-symplectic integration.
 | `examples/yen_ksp_demo.py` | The four cheapest A-to-F routes, each road coloured by its best route |
 | `examples/karger_demo.py` | Random contraction converging to a two-cluster graph's min cut |
 | `examples/bron_kerbosch_demo.py` | A friendship network's maximal cliques, the largest highlighted |
+| `examples/dinic_demo.py` | A pipe network at max flow with the min-cut pipes highlighted |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9001,6 +9003,24 @@ branches), and a degeneracy ordering of the outer loop bounds the work to O(d*n*
 against brute force (a set is a maximal clique iff it is a clique no outside vertex is adjacent to all
 of) on hundreds of random graphs, with pivoting and degeneracy variants agreeing, the Moon-Moser graph
 yielding its 3^k cliques, and a 60-vertex sparse instance validated.
+
+## Dinic's algorithm: max flow by blocking flows
+
+Maximum flow, faster than Edmonds-Karp by augmenting many paths per phase. `dinic.py`:
+
+```
+$ python examples/dinic_demo.py examples/output
+
+  6-node pipe network -> max flow 19 (Edmonds-Karp agrees)
+  min cut {S,b}, cut edges S->a (10) + b->d (9) = 19 = max flow
+```
+
+Each phase runs a BFS to build the level graph (level[v] = shortest edge-distance from the source),
+then a DFS pushes a blocking flow along level-increasing edges, saturating an edge per path; an
+iteration pointer skips dead-end edges so a phase costs O(V*E), and only O(V) phases run. Recovering the
+source's residual-reachable set gives the min cut. Verified against an independent Edmonds-Karp
+reference and the max-flow/min-cut theorem on hundreds of random networks (plus the CLRS graph and a
+200-node instance), with a bipartite-matching reduction matching an augmenting-path reference.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,27 @@
+Dinic's algorithm: maximum flow by layered blocking flows
+
+  6 nodes, 9 directed pipes, source S sink T
+
+  maximum flow: 19 units  (Edmonds-Karp agrees: True)
+
+  flow on each pipe (used / capacity):
+    S -> a:  10/10
+    S -> b:  9/10
+    a -> b:  0/2
+    a -> c:  4/4
+    a -> d:  6/8
+    b -> d:  9/9
+    c -> T:  9/10
+    d -> c:  5/6
+    d -> T:  10/10
+
+  minimum cut: source side {S, b}
+  cut edges: [('S', 'a', 10), ('b', 'd', 9)]
+  cut capacity 19 == max flow 19  (max-flow min-cut theorem)
+
+  Each phase: a BFS assigns every node its distance from S (the level graph), then a DFS
+  pushes flow only along level-increasing edges until blocked, saturating an edge on each
+  path. The sink's level strictly rises per phase, so only O(V) phases run -- far fewer
+  augmentations than one-path-at-a-time Ford-Fulkerson.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\dinic.svg
