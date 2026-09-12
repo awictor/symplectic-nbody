@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" font-family="monospace">
+<rect width="760" height="430" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="18">Ear-clipping triangulation of concave polygons</text>
+<text x="20" y="47" fill="#8b949e" font-size="12">each polygon split into n-2 triangles (alternating fills); the outline is drawn in white</text>
+<polygon points="153.0,214.4 126.7,138.6 100.3,214.4" fill="#4dabf7" fill-opacity="0.35" stroke="#4dabf7" stroke-width="1"/>
+<polygon points="153.0,214.4 100.3,214.4 20.0,216.1" fill="#ffd43b" fill-opacity="0.35" stroke="#ffd43b" stroke-width="1"/>
+<polygon points="153.0,214.4 20.0,216.1 84.0,264.6" fill="#ff6b6b" fill-opacity="0.35" stroke="#ff6b6b" stroke-width="1"/>
+<polygon points="153.0,214.4 84.0,264.6 60.7,341.4" fill="#06d6a0" fill-opacity="0.35" stroke="#06d6a0" stroke-width="1"/>
+<polygon points="153.0,214.4 60.7,341.4 126.7,295.6" fill="#b197fc" fill-opacity="0.35" stroke="#b197fc" stroke-width="1"/>
+<polygon points="153.0,214.4 126.7,295.6 192.6,341.4" fill="#ff922b" fill-opacity="0.35" stroke="#ff922b" stroke-width="1"/>
+<polygon points="153.0,214.4 192.6,341.4 169.3,264.6" fill="#e6edf3" fill-opacity="0.35" stroke="#e6edf3" stroke-width="1"/>
+<polygon points="169.3,264.6 233.3,216.1 153.0,214.4" fill="#8b949e" fill-opacity="0.35" stroke="#8b949e" stroke-width="1"/>
+<polygon points="126.7,138.6 100.3,214.4 20.0,216.1 84.0,264.6 60.7,341.4 126.7,295.6 192.6,341.4 169.3,264.6 233.3,216.1 153.0,214.4" fill="none" stroke="#e6edf3" stroke-width="2"/>
+<text x="127" y="390" fill="#8b949e" font-size="12" text-anchor="middle">star: 8 triangles</text>
+<polygon points="273.3,346.7 486.7,346.7 486.7,275.6" fill="#4dabf7" fill-opacity="0.35" stroke="#4dabf7" stroke-width="1"/>
+<polygon points="273.3,346.7 486.7,275.6 344.4,275.6" fill="#ffd43b" fill-opacity="0.35" stroke="#ffd43b" stroke-width="1"/>
+<polygon points="273.3,133.3 273.3,346.7 344.4,275.6" fill="#ff6b6b" fill-opacity="0.35" stroke="#ff6b6b" stroke-width="1"/>
+<polygon points="344.4,275.6 344.4,133.3 273.3,133.3" fill="#06d6a0" fill-opacity="0.35" stroke="#06d6a0" stroke-width="1"/>
+<polygon points="273.3,346.7 486.7,346.7 486.7,275.6 344.4,275.6 344.4,133.3 273.3,133.3" fill="none" stroke="#e6edf3" stroke-width="2"/>
+<text x="380" y="390" fill="#8b949e" font-size="12" text-anchor="middle">L-shape: 4 triangles</text>
+<polygon points="526.7,186.7 526.7,293.3 633.3,293.3" fill="#4dabf7" fill-opacity="0.35" stroke="#4dabf7" stroke-width="1"/>
+<polygon points="633.3,293.3 633.3,346.7 740.0,240.0" fill="#ffd43b" fill-opacity="0.35" stroke="#ffd43b" stroke-width="1"/>
+<polygon points="526.7,186.7 633.3,293.3 740.0,240.0" fill="#ff6b6b" fill-opacity="0.35" stroke="#ff6b6b" stroke-width="1"/>
+<polygon points="740.0,240.0 633.3,133.3 633.3,186.7" fill="#06d6a0" fill-opacity="0.35" stroke="#06d6a0" stroke-width="1"/>
+<polygon points="740.0,240.0 633.3,186.7 526.7,186.7" fill="#b197fc" fill-opacity="0.35" stroke="#b197fc" stroke-width="1"/>
+<polygon points="526.7,186.7 633.3,186.7 633.3,133.3 740.0,240.0 633.3,346.7 633.3,293.3 526.7,293.3" fill="none" stroke="#e6edf3" stroke-width="2"/>
+<text x="633" y="390" fill="#8b949e" font-size="12" text-anchor="middle">arrow: 5 triangles</text>
+</svg>

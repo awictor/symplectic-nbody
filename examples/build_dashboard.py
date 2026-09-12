@@ -380,6 +380,7 @@ def main():
     import savitzky_golay_demo
     import lzw_demo
     import convolutional_code_demo
+    import ear_clipping_demo
 
     import plot_orbits
 
@@ -729,6 +730,7 @@ def main():
     savitzky_golay_txt = run("savitzky_golay_demo", savitzky_golay_demo.main, True)
     lzw_txt = run("lzw_demo", lzw_demo.main, True)
     convolutional_code_txt = run("convolutional_code_demo", convolutional_code_demo.main, True)
+    ear_clipping_txt = run("ear_clipping_demo", ear_clipping_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5413,6 +5415,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("convolutional_code.svg"), "the coding gain: decode success staying high for the coded+Viterbi channel (green) as the bit-error rate rises, while uncoded transmission (red) collapses -- error correction buying reliability")
             + f'<div class="card">{pre(convolutional_code_txt)}</div>'
+            + '</div>'),
+        section(
+            "Ear-clipping: triangulating any simple polygon",
+            "Triangulating a polygon -- splitting it into non-overlapping triangles that exactly tile "
+            "its interior -- is the first step of almost all polygon processing: rendering (GPUs draw "
+            "only triangles), finite-element meshing, area and centroid computation, and collision "
+            "geometry. The TWO EARS THEOREM guarantees every simple polygon with more than three "
+            "vertices has at least two EARS -- a vertex whose neighbours can be joined by a diagonal "
+            "lying entirely inside, cutting off a triangle that contains no other vertex. EAR "
+            "CLIPPING finds an ear, snips it as a triangle, and repeats on the smaller polygon until "
+            "a triangle remains -- the simplest robust triangulation, O(n^2). A vertex is an ear when "
+            "it is CONVEX (the polygon turns the right way, so the diagonal is interior) and no other "
+            "vertex lies INSIDE the candidate triangle; the algorithm fixes the winding from the "
+            "signed area so 'convex' is consistent, then clips and rescans. An n-vertex polygon "
+            "yields exactly n-2 triangles. This module triangulates convex or concave polygons in "
+            "either winding order, verified against exact references: the triangle count is always "
+            "n-2, the triangle areas sum exactly to the polygon's area (shoelace) with no gaps or "
+            "overlaps, every triangle's centroid lies inside the polygon, and stars, L-shapes, "
+            "arrows, and a deeply non-convex comb all triangulate correctly.",
+            '<div class="grid">'
+            + svg_card(out("ear_clipping.svg"), "a star, an L-shape, and an arrow each split into n-2 triangles by ear clipping (alternating fills), the white outline showing they tile the interior exactly")
+            + f'<div class="card">{pre(ear_clipping_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

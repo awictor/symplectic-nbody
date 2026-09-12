@@ -338,6 +338,7 @@ ruins a long non-symplectic integration.
 | `src/savitzky_golay.py` | Savitzky-Golay filter: peak-preserving smoothing and noisy-data differentiation |
 | `src/lzw.py` | LZW adaptive dictionary compression/decompression (GIF-style, capped code width) |
 | `src/convolutional_code.py` | Convolutional encoder + Viterbi maximum-likelihood decoder for noisy channels |
+| `src/ear_clipping.py` | Ear-clipping polygon triangulation (concave polygons, n-2 triangles) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -667,6 +668,7 @@ ruins a long non-symplectic integration.
 | `examples/savitzky_golay_demo.py` | Noisy two-peak signal: SG keeps the peaks where a moving average flattens them |
 | `examples/lzw_demo.py` | Compression ratio improving with repetition + repetitive vs random comparison |
 | `examples/convolutional_code_demo.py` | Error correction over a noisy channel + coding-gain curve vs uncoded |
+| `examples/ear_clipping_demo.py` | A star, L-shape, and arrow triangulated with exact area conservation |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8017,6 +8019,24 @@ tracing back the maximum-likelihood sequence in linear time. This module impleme
 for arbitrary generator polynomials and a Viterbi decoder with zero-tail termination, verified that a
 clean channel decodes exactly, every single-bit error is corrected, Viterbi matches a brute-force
 minimum-distance search over 60 noisy trials, and the classic (7,5) code shows a clear coding gain.
+
+## Ear-clipping: triangulating any simple polygon
+
+Split a concave polygon into n-2 triangles that tile its interior. `ear_clipping.py`:
+
+```
+$ python examples/ear_clipping_demo.py examples/output
+
+  star:    10 vertices -> 8 triangles, area 4.7023 == triangle sum
+  L-shape:  6 vertices -> 4 triangles, area 5.0000 == triangle sum
+  arrow:    7 vertices -> 5 triangles, area 8.0000 == triangle sum
+```
+
+The two-ears theorem guarantees a convex vertex whose diagonal stays inside and whose triangle holds
+no other vertex; ear clipping snips it and repeats, yielding n-2 triangles in O(n^2). This module
+triangulates convex or concave polygons in either winding order, verified against exact references:
+the triangle count is always n-2, the areas sum exactly to the polygon's (shoelace), every triangle
+centroid lies inside, and stars, L-shapes, arrows, and a deeply non-convex comb triangulate correctly.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

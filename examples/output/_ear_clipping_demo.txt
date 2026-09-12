@@ -1,0 +1,14 @@
+Ear-clipping triangulation: any simple polygon into n-2 triangles
+
+  star: 10 vertices -> 8 triangles (n-2 = 8)
+    polygon area 4.7023, triangle sum 4.7023, match True
+  L-shape: 6 vertices -> 4 triangles (n-2 = 4)
+    polygon area 5.0000, triangle sum 5.0000, match True
+  arrow: 7 vertices -> 5 triangles (n-2 = 5)
+    polygon area 8.0000, triangle sum 8.0000, match True
+
+  The two-ears theorem guarantees every simple polygon with >3 vertices has an EAR --
+  a convex vertex whose diagonal stays inside and whose triangle holds no other vertex.
+  Clip the ear, repeat on the smaller polygon; n-2 triangles later, done. O(n^2).
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\ear_clipping.svg
