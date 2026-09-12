@@ -372,6 +372,7 @@ ruins a long non-symplectic integration.
 | `src/walsh_hadamard.py` | Fast Walsh-Hadamard transform + XOR/OR/AND convolutions (integer-exact) |
 | `src/dpll.py` | DPLL SAT solver: unit propagation + pure-literal elimination + backtracking |
 | `src/berlekamp_massey.py` | Shortest linear recurrence of a sequence over Q and GF(2) (LFSR) |
+| `src/suffix_automaton.py` | Suffix automaton: distinct substrings, occurrences, LRS, LCS in O(n) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -735,6 +736,7 @@ ruins a long non-symplectic integration.
 | `examples/walsh_hadamard_demo.py` | Two 3-bit distributions combined by XOR/OR/AND as bar panels |
 | `examples/dpll_demo.py` | A SAT model plus the pigeonhole principle proven UNSAT as bars |
 | `examples/berlekamp_massey_demo.py` | Famous sequence recurrences + a length-5 LFSR keystream cracked |
+| `examples/suffix_automaton_demo.py` | The 'abracadabra' automaton drawn as states by substring length |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8739,6 +8741,26 @@ Verified by round-trip (the recovered recurrence regenerates the input and is ne
 true generator, 300 random recurrences), against a brute-force minimality search, and on GF(2)
 m-sequences whose complexity is recovered from just 2L bits -- the classic reason a raw LFSR keystream
 is cryptographically broken.
+
+## Suffix automaton: one tiny machine, every substring
+
+The smallest automaton recognising every substring, built online in O(n). `suffix_automaton.py`:
+
+```
+$ python examples/suffix_automaton_demo.py examples/output
+
+  'abracadabra' (11 chars) -> 12 states (bound 2n-1 = 21)
+  distinct substrings: 54 (vs 66 raw); 'abra' occurs 2x, 'a' 5x
+  longest repeated substring: 'abra'; LCS with 'cadabraxyz': 'cadabra'
+```
+
+At most 2n-1 states and 3n-4 transitions encode all O(n^2) substrings; every path from the start spells
+a distinct one. Built online in amortised O(n): each state is a class of substrings sharing an endpos
+set, states form a tree under suffix links, and appending a character follows those links and clones a
+state when a transition conflicts. Distinct substrings = sum of len[v]-len[link[v]]. Verified against
+brute force -- the distinct count matches the set of all substrings, membership and occurrence counts
+match direct scanning, the longest common substring matches an O(n*m) DP -- on hundreds of random
+strings, with the state count within the 2n bound.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

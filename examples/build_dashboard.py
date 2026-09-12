@@ -414,6 +414,7 @@ def main():
     import walsh_hadamard_demo
     import dpll_demo
     import berlekamp_massey_demo
+    import suffix_automaton_demo
 
     import plot_orbits
 
@@ -797,6 +798,7 @@ def main():
     walsh_hadamard_txt = run("walsh_hadamard_demo", walsh_hadamard_demo.main, True)
     dpll_txt = run("dpll_demo", dpll_demo.main, True)
     berlekamp_massey_txt = run("berlekamp_massey_demo", berlekamp_massey_demo.main, True)
+    suffix_automaton_txt = run("suffix_automaton_demo", suffix_automaton_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6235,6 +6237,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("berlekamp_massey.svg"), "cracking a length-5 LFSR keystream: the recovered linear complexity climbs as more bits are seen and locks at 5 exactly once 2L=10 bits are observed -- at which point the whole register is known and every future bit is predictable")
             + f'<div class="card">{pre(berlekamp_massey_txt)}</div>'
+            + '</div>'),
+        section(
+            "Suffix automaton: one tiny machine, every substring",
+            "A SUFFIX AUTOMATON is the smallest deterministic automaton that recognises exactly the "
+            "suffixes of a string -- and whose paths from the start state spell every DISTINCT "
+            "SUBSTRING. It is astonishingly compact: at most 2n-1 states and 3n-4 transitions for a "
+            "length-n string, yet it encodes all of the up-to n(n+1)/2 substrings. That makes it the "
+            "Swiss-army knife of string processing: count distinct substrings, test a pattern in "
+            "O(pattern), count how many times each substring occurs, find the longest repeated "
+            "substring, and compute the longest common substring of two strings -- all in linear or "
+            "near-linear time. It is built ONLINE in amortised O(n): each state is an equivalence "
+            "class of substrings sharing the same set of end positions, the states form a tree under "
+            "SUFFIX LINKS (the suffix tree of the reversed string), and appending a character follows "
+            "those links, CLONING a state when a transition would otherwise conflict -- the trick "
+            "that keeps the machine minimal. Distinct substrings then equal the sum over states of "
+            "len[v]-len[link[v]]. Verified against brute force: the distinct-substring count matches "
+            "the set of all O(n^2) substrings, membership and occurrence counts match direct "
+            "scanning, and the longest common substring matches an O(n*m) DP -- on hundreds of random "
+            "strings, with the state count confirmed within the linear 2n bound.",
+            '<div class="grid">'
+            + svg_card(out("suffix_automaton.svg"), "the suffix automaton of 'abracadabra': 12 states laid out left-to-right by substring length, blue transitions labelled by character and grey dashed suffix links -- every path from the green start state spells one of the 54 distinct substrings")
+            + f'<div class="card">{pre(suffix_automaton_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

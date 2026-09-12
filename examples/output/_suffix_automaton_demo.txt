@@ -1,0 +1,23 @@
+Suffix automaton: the smallest machine recognising every substring
+
+  word: 'abracadabra' (11 characters)
+  automaton: 12 states (bound is 2n-1 = 21)
+
+  distinct substrings: 54  (vs 66 raw substrings with repeats)
+  verified against brute enumeration: True
+
+  occurrence counts:
+    'abra' appears 2 time(s)
+    'a' appears 5 time(s)
+    'ra' appears 2 time(s)
+    'cad' appears 1 time(s)
+
+  longest repeated substring: 'abra'
+  longest common substring of 'abracadabra' and 'cadabraxyz': 'cadabra'
+
+  Built online in O(n): each character is appended by following suffix links and cloning
+  a state when a transition would conflict. The result has at most 2n-1 states yet encodes
+  all substrings -- every path from the start spells a distinct one. It answers substring
+  membership in O(pattern), counts occurrences, and finds longest common/repeated pieces.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\suffix_automaton.svg
