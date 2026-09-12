@@ -423,6 +423,7 @@ ruins a long non-symplectic integration.
 | `src/bluestein.py` | Bluestein chirp-z DFT: O(n log n) transform at any length, even primes |
 | `src/vp_tree.py` | Vantage-point tree: metric-space nearest neighbours (points, strings, vectors) |
 | `src/tdigest.py` | t-digest: streaming quantiles over the whole distribution, sharp tails, mergeable |
+| `src/myers_diff.py` | Myers O(ND) diff: shortest edit script + LCS + unified diff (the git algorithm) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -837,6 +838,7 @@ ruins a long non-symplectic integration.
 | `examples/bluestein_demo.py` | Bluestein vs direct DFT timing at prime lengths (6x-36x speedup) |
 | `examples/vp_tree_demo.py` | A k-NN query touching under 10% of points, plus edit-distance lookup |
 | `examples/tdigest_demo.py` | Streaming p50-p9999 from 500k samples in 64 centroids, plus a merge |
+| `examples/myers_diff_demo.py` | A git-style unified diff and the edit graph with its shortest path |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9798,6 +9800,25 @@ centroid count stays bounded (64 for 500k values), any quantile or CDF can be qu
 associative so per-shard digests roll up exactly. Validated against exact sorted quantiles on uniform,
 normal, exponential, and skewed streams: estimates within a few percent, deep-tail (p999) rank error
 under 0.01, bounded size, and split-then-merge matching a single digest.
+
+## Myers' diff: the shortest edit script behind git
+
+The algorithm that produces every `git diff`. `myers_diff.py`:
+
+```
+$ python examples/myers_diff_demo.py examples/output
+
+  char diff 'ABCABBA' -> 'CBABAC': distance 5
+  single changed line among 500: distance 2 (Myers' sweet spot)
+```
+
+Given two sequences, Myers (1986) finds the shortest edit script -- fewest single-element deletions and
+insertions -- turning A into B, the dual of the longest common subsequence. Rather than fill an O(N*M)
+DP table, it searches the edit graph (diagonal = free match, right/down = insert/delete) with a BFS over
+the edit count D, running in O((N+M)*D), tiny when files are similar. Computes distance, the actual
+edit script, the LCS, and a unified diff. Validated: distance equals `len(A)+len(B)-2*LCS` cross-checked
+against an independent DP on hundreds of random pairs, applying the reconstructed script to A reproduces
+B exactly every time, and the LCS is a genuine subsequence of both with the correct length.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

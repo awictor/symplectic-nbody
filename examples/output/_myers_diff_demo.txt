@@ -1,0 +1,25 @@
+Myers' diff: the shortest edit script that turns A into B
+
+  unified diff (old -> new):
+    +import math
+    +
+     def area(r):
+    -    return 3.14 * r * r
+    +    return math.pi * r * r
+     
+     def perimeter(r):
+    -    return 2 * 3.14 * r
+    +    return 2 * math.pi * r
+
+  edit distance: 6 single-line edits
+  common (kept) lines: 3
+  applying the script reproduces new: True
+
+  character diff 'ABCABBA' -> 'CBABAC':  distance 5
+    script: -A-B=C+B=A=B-B=A+C   (= keep, - delete, + insert)
+
+  Myers models the diff as a shortest path in an edit graph: diagonal moves (matches) are
+  free, right/down moves (delete/insert) cost 1. A BFS over the number of edits D finds the
+  corner in O((N+M)*D) -- tiny when the files are similar, which is why git is fast.
+
+  wrote examples/output\myers_diff.svg

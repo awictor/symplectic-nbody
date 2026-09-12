@@ -465,6 +465,7 @@ def main():
     import bluestein_demo
     import vp_tree_demo
     import tdigest_demo
+    import myers_diff_demo
 
     import plot_orbits
 
@@ -899,6 +900,7 @@ def main():
     bluestein_txt = run("bluestein_demo", bluestein_demo.main, True)
     vp_tree_txt = run("vp_tree_demo", vp_tree_demo.main, True)
     tdigest_txt = run("tdigest_demo", tdigest_demo.main, True)
+    myers_diff_txt = run("myers_diff_demo", myers_diff_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7438,6 +7440,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("tdigest.svg"), "the t-digest's estimated quantile function (dashed) laid over the exact one (solid) for a heavy-tailed latency stream: they track closely everywhere and tightest along the steep upper tail, the region the scale function resolves most finely")
             + f'<div class="card">{pre(tdigest_txt)}</div>'
+            + '</div>'),
+        section(
+            "Myers' diff: the shortest edit script behind git",
+            "The red and green lines in every code review come from an algorithm Eugene Myers published "
+            "in 1986. Given two sequences -- lines of a file, characters of a string -- it finds the "
+            "SHORTEST EDIT SCRIPT: the fewest single-element deletions and insertions that turn A into "
+            "B. Minimality is what makes a diff readable, so a one-line change shows as one line rather "
+            "than a rewrite. The edit script is the dual of the LONGEST COMMON SUBSEQUENCE (distance = "
+            "len(A) + len(B) - 2*LCS), and the naive way to find the LCS is an O(N*M) dynamic-"
+            "programming table -- wasteful when two files are large and mostly the same, the usual case "
+            "in version control. Myers' insight is to search the EDIT GRAPH: a shortest path on a grid "
+            "where diagonal moves (matches) are free and right/down moves (insert/delete) cost one, "
+            "found by a breadth-first search over D, the number of edits, that greedily follows free "
+            "diagonals and tracks the furthest-reaching point on each diagonal. It runs in O((N+M)*D) -- "
+            "tiny when the inputs are similar, which is exactly why it scales to real repositories where "
+            "a commit changes a few lines in a huge file. This module computes the edit distance, "
+            "reconstructs the actual script by backtracking the recorded frontier, extracts the LCS, and "
+            "renders a unified diff. Validated: the distance equals len(A)+len(B)-2*LCS cross-checked "
+            "against an independent O(N*M) DP on hundreds of seeded random pairs; APPLYING the "
+            "reconstructed script to A reproduces B exactly every time; the LCS is a genuine subsequence "
+            "of both with the right length; and a single changed line among 500 gives distance 2.",
+            '<div class="grid">'
+            + svg_card(out("myers_diff.svg"), "the edit graph for 'ABCABBA' -> 'CBABAC': green diagonals are free matches, and the yellow path is the shortest edit script -- the more diagonals it can ride, the fewer edits the diff needs")
+            + f'<div class="card">{pre(myers_diff_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

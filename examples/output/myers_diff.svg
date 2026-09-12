@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="372" height="414" viewBox="0 0 372 414" font-family="monospace">
+<rect width="372" height="414" fill="#0d1117"/>
+<text x="60" y="26" fill="#e6edf3" font-size="15">Edit graph 'ABCABBA' -> 'CBABAC': green diagonals are free matches</text>
+<line x1="60" y1="60" x2="60" y2="354" stroke="#21262d" stroke-width="1"/>
+<line x1="102" y1="60" x2="102" y2="354" stroke="#21262d" stroke-width="1"/>
+<line x1="144" y1="60" x2="144" y2="354" stroke="#21262d" stroke-width="1"/>
+<line x1="186" y1="60" x2="186" y2="354" stroke="#21262d" stroke-width="1"/>
+<line x1="228" y1="60" x2="228" y2="354" stroke="#21262d" stroke-width="1"/>
+<line x1="270" y1="60" x2="270" y2="354" stroke="#21262d" stroke-width="1"/>
+<line x1="312" y1="60" x2="312" y2="354" stroke="#21262d" stroke-width="1"/>
+<line x1="60" y1="60" x2="312" y2="60" stroke="#21262d" stroke-width="1"/>
+<line x1="60" y1="102" x2="312" y2="102" stroke="#21262d" stroke-width="1"/>
+<line x1="60" y1="144" x2="312" y2="144" stroke="#21262d" stroke-width="1"/>
+<line x1="60" y1="186" x2="312" y2="186" stroke="#21262d" stroke-width="1"/>
+<line x1="60" y1="228" x2="312" y2="228" stroke="#21262d" stroke-width="1"/>
+<line x1="60" y1="270" x2="312" y2="270" stroke="#21262d" stroke-width="1"/>
+<line x1="60" y1="312" x2="312" y2="312" stroke="#21262d" stroke-width="1"/>
+<line x1="60" y1="354" x2="312" y2="354" stroke="#21262d" stroke-width="1"/>
+<text x="81" y="52" fill="#ff922b" font-size="14" text-anchor="middle">C</text>
+<text x="123" y="52" fill="#ff922b" font-size="14" text-anchor="middle">B</text>
+<text x="165" y="52" fill="#ff922b" font-size="14" text-anchor="middle">A</text>
+<text x="207" y="52" fill="#ff922b" font-size="14" text-anchor="middle">B</text>
+<text x="249" y="52" fill="#ff922b" font-size="14" text-anchor="middle">A</text>
+<text x="291" y="52" fill="#ff922b" font-size="14" text-anchor="middle">C</text>
+<text x="46" y="86" fill="#4dabf7" font-size="14" text-anchor="middle">A</text>
+<text x="46" y="128" fill="#4dabf7" font-size="14" text-anchor="middle">B</text>
+<text x="46" y="170" fill="#4dabf7" font-size="14" text-anchor="middle">C</text>
+<text x="46" y="212" fill="#4dabf7" font-size="14" text-anchor="middle">A</text>
+<text x="46" y="254" fill="#4dabf7" font-size="14" text-anchor="middle">B</text>
+<text x="46" y="296" fill="#4dabf7" font-size="14" text-anchor="middle">B</text>
+<text x="46" y="338" fill="#4dabf7" font-size="14" text-anchor="middle">A</text>
+<line x1="144" y1="60" x2="186" y2="102" stroke="#06d6a0" stroke-width="2.5" opacity="0.4"/>
+<line x1="228" y1="60" x2="270" y2="102" stroke="#06d6a0" stroke-width="2.5" opacity="0.4"/>
+<line x1="102" y1="102" x2="144" y2="144" stroke="#06d6a0" stroke-width="2.5" opacity="0.4"/>
+<line x1="186" y1="102" x2="228" y2="144" stroke="#06d6a0" stroke-width="2.5" opacity="0.4"/>
+<line x1="60" y1="144" x2="102" y2="186" stroke="#06d6a0" stroke-width="2.5" opacity="0.4"/>
+<line x1="270" y1="144" x2="312" y2="186" stroke="#06d6a0" stroke-width="2.5" opacity="0.4"/>
+<line x1="144" y1="186" x2="186" y2="228" stroke="#06d6a0" stroke-width="2.5" opacity="0.4"/>
+<line x1="228" y1="186" x2="270" y2="228" stroke="#06d6a0" stroke-width="2.5" opacity="0.4"/>
+<line x1="102" y1="228" x2="144" y2="270" stroke="#06d6a0" stroke-width="2.5" opacity="0.4"/>
+<line x1="186" y1="228" x2="228" y2="270" stroke="#06d6a0" stroke-width="2.5" opacity="0.4"/>
+<line x1="102" y1="270" x2="144" y2="312" stroke="#06d6a0" stroke-width="2.5" opacity="0.4"/>
+<line x1="186" y1="270" x2="228" y2="312" stroke="#06d6a0" stroke-width="2.5" opacity="0.4"/>
+<line x1="144" y1="312" x2="186" y2="354" stroke="#06d6a0" stroke-width="2.5" opacity="0.4"/>
+<line x1="228" y1="312" x2="270" y2="354" stroke="#06d6a0" stroke-width="2.5" opacity="0.4"/>
+<polyline points="60,60 60,102 60,144 102,186 144,186 186,228 228,270 228,312 270,354 312,354" fill="none" stroke="#ffd43b" stroke-width="3"/>
+<circle cx="60" cy="60" r="3.5" fill="#ffd43b"/>
+<circle cx="60" cy="102" r="3.5" fill="#ffd43b"/>
+<circle cx="60" cy="144" r="3.5" fill="#ffd43b"/>
+<circle cx="102" cy="186" r="3.5" fill="#ffd43b"/>
+<circle cx="144" cy="186" r="3.5" fill="#ffd43b"/>
+<circle cx="186" cy="228" r="3.5" fill="#ffd43b"/>
+<circle cx="228" cy="270" r="3.5" fill="#ffd43b"/>
+<circle cx="228" cy="312" r="3.5" fill="#ffd43b"/>
+<circle cx="270" cy="354" r="3.5" fill="#ffd43b"/>
+<circle cx="312" cy="354" r="3.5" fill="#ffd43b"/>
+</svg>
