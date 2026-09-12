@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="460" height="460" viewBox="0 0 460 460" font-family="monospace">
+<rect width="460" height="460" fill="#0d1117"/>
+<text x="20" y="24" fill="#e6edf3" font-size="15">Segment intersections found by the sweep (red dots)</text>
+<text x="20" y="42" fill="#8b949e" font-size="11">14 crossings among the segments, each discovered exactly once</text>
+<line x1="106.0" y1="354.0" x2="410.0" y2="88.0" stroke="#4dabf7" stroke-width="2" opacity="0.85"/>
+<line x1="106.0" y1="88.0" x2="410.0" y2="354.0" stroke="#06d6a0" stroke-width="2" opacity="0.85"/>
+<line x1="68.0" y1="240.0" x2="448.0" y2="202.0" stroke="#ffd43b" stroke-width="2" opacity="0.85"/>
+<line x1="182.0" y1="392.0" x2="258.0" y2="50.0" stroke="#ff922b" stroke-width="2" opacity="0.85"/>
+<line x1="296.0" y1="392.0" x2="334.0" y2="50.0" stroke="#b197fc" stroke-width="2" opacity="0.85"/>
+<line x1="144.0" y1="164.0" x2="372.0" y2="278.0" stroke="#e6edf3" stroke-width="2" opacity="0.85"/>
+<circle cx="258.0" cy="221.0" r="5" fill="#ff6b6b" stroke="#0d1117" stroke-width="1"/>
+<circle cx="258.0" cy="221.0" r="5" fill="#ff6b6b" stroke="#0d1117" stroke-width="1"/>
+<circle cx="210.8" cy="262.3" r="5" fill="#ff6b6b" stroke="#0d1117" stroke-width="1"/>
+<circle cx="321.1" cy="165.8" r="5" fill="#ff6b6b" stroke="#0d1117" stroke-width="1"/>
+<circle cx="258.0" cy="221.0" r="5" fill="#ff6b6b" stroke="#0d1117" stroke-width="1"/>
+<circle cx="258.0" cy="221.0" r="5" fill="#ff6b6b" stroke="#0d1117" stroke-width="1"/>
+<circle cx="226.2" cy="193.2" r="5" fill="#ff6b6b" stroke="#0d1117" stroke-width="1"/>
+<circle cx="309.9" cy="266.5" r="5" fill="#ff6b6b" stroke="#0d1117" stroke-width="1"/>
+<circle cx="258.0" cy="221.0" r="5" fill="#ff6b6b" stroke="#0d1117" stroke-width="1"/>
+<circle cx="219.1" cy="224.9" r="5" fill="#ff6b6b" stroke="#0d1117" stroke-width="1"/>
+<circle cx="315.6" cy="215.2" r="5" fill="#ff6b6b" stroke="#0d1117" stroke-width="1"/>
+<circle cx="258.0" cy="221.0" r="5" fill="#ff6b6b" stroke="#0d1117" stroke-width="1"/>
+<circle cx="223.8" cy="203.9" r="5" fill="#ff6b6b" stroke="#0d1117" stroke-width="1"/>
+<circle cx="312.0" cy="248.0" r="5" fill="#ff6b6b" stroke="#0d1117" stroke-width="1"/>
+</svg>

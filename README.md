@@ -410,6 +410,7 @@ ruins a long non-symplectic integration.
 | `src/rational_rref.py` | Exact rational RREF: rank, null space, exact linear solve |
 | `src/rabin_karp.py` | Rabin-Karp rolling-hash search + multi-pattern + longest common substring |
 | `src/half_plane_intersection.py` | Half-plane intersection: feasible convex region of linear constraints |
+| `src/bentley_ottmann.py` | Sweep-line segment intersection: all crossings via x-ordered sweep |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -811,6 +812,7 @@ ruins a long non-symplectic integration.
 | `examples/rational_rref_demo.py` | An exact RREF grid with pivot/free columns + the three system kinds |
 | `examples/rabin_karp_demo.py` | Rolling-hash matches across a text + multi-pattern + sentence LCS |
 | `examples/half_plane_intersection_demo.py` | A 5-constraint feasible region with its LP optimum vertex |
+| `examples/bentley_ottmann_demo.py` | Six segments with all their crossings marked |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9519,6 +9521,23 @@ Each inequality a x + b y <= c is a half-plane; clipping a large bounding box ag
 is exactly the feasible region of a 2-D linear program, whose optimum sits at a vertex. Verified against
 brute force -- a dense grid where a point is feasible iff it satisfies every inequality must match the
 computed polygon -- on hundreds of random systems, plus box/triangle/infeasible cases with exact areas.
+
+## Sweep-line segment intersection: all crossings
+
+Find every crossing among n segments without testing all pairs. `bentley_ottmann.py`:
+
+```
+$ python examples/bentley_ottmann_demo.py examples/output
+
+  6 segments -> 14 intersecting pairs (matches brute); 20x20 line grid -> 400 crossings
+```
+
+A vertical line sweeps left to right, keeping only the segments whose x-range straddles it (the active
+set); a new segment is tested only against those, never against segments already ended or not yet
+begun, so every x-disjoint pair is pruned. Any crossing pair is active together at some sweep position,
+so none is missed. Verified against the brute all-pairs test on thousands of random arrangements, plus
+grids, a star of concurrent segments, parallel families, and shared-endpoint cases, with every reported
+crossing point confirmed to lie on both segments.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

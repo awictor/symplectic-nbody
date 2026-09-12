@@ -452,6 +452,7 @@ def main():
     import rational_rref_demo
     import rabin_karp_demo
     import half_plane_intersection_demo
+    import bentley_ottmann_demo
 
     import plot_orbits
 
@@ -873,6 +874,7 @@ def main():
     rational_rref_txt = run("rational_rref_demo", rational_rref_demo.main, True)
     rabin_karp_txt = run("rabin_karp_demo", rabin_karp_demo.main, True)
     half_plane_intersection_txt = run("half_plane_intersection_demo", half_plane_intersection_demo.main, True)
+    bentley_ottmann_txt = run("bentley_ottmann_demo", bentley_ottmann_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7116,6 +7118,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("half_plane_intersection.svg"), "the feasible region (green) of five linear constraints, with the boundary lines and the vertex where a linear objective is maximised (red) -- the polygon the simplex method walks the corners of")
             + f'<div class="card">{pre(half_plane_intersection_txt)}</div>'
+            + '</div>'),
+        section(
+            "Sweep-line segment intersection: all crossings",
+            "How many of n line segments cross, and where? Brute force tests all O(n^2) pairs; a SWEEP "
+            "LINE does far less by moving a vertical line left to right and keeping only the segments "
+            "whose x-range currently straddles it -- the ACTIVE set. Two segments can only intersect "
+            "where their x-ranges overlap, which is exactly when both are active, so a new segment is "
+            "tested only against the currently-active ones, never against segments already ended or "
+            "not yet begun. Segments enter at their left endpoint and leave at their right, driven by "
+            "an x-ordered event queue; every pair with disjoint x-ranges (the vast majority in "
+            "typical inputs) is pruned away. This is the idea behind GIS map overlay, polygon "
+            "self-intersection detection, and boolean shape operations -- the classic Bentley-Ottmann "
+            "sweep additionally orders the active set by height and tests only neighbours for the "
+            "O((n+k) log n) bound; this keeps the simpler, provably-complete x-overlap pruning. "
+            "Verified against the brute all-pairs test -- identical sets of intersecting pairs on "
+            "THOUSANDS of random arrangements -- plus grids, a star of concurrent segments, parallel "
+            "families, and shared-endpoint cases, with every reported crossing point confirmed to lie "
+            "on both segments.",
+            '<div class="grid">'
+            + svg_card(out("bentley_ottmann.svg"), "six segments with all fourteen of their pairwise crossings marked in red: the sweep finds each exactly once, comparing a segment only against those whose x-range overlaps it rather than against all the others")
+            + f'<div class="card">{pre(bentley_ottmann_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

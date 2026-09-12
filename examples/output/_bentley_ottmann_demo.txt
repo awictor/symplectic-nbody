@@ -1,0 +1,32 @@
+Sweep-line segment intersection: all crossings, less than all-pairs work
+
+  6 segments; 14 intersecting pairs found
+
+    segment 0 x segment 1  at (5.00, 4.50)
+    segment 0 x segment 2  at (5.00, 4.50)
+    segment 0 x segment 3  at (3.76, 3.41)
+    segment 0 x segment 4  at (6.66, 5.95)
+    segment 0 x segment 5  at (5.00, 4.50)
+    segment 1 x segment 2  at (5.00, 4.50)
+    segment 1 x segment 3  at (4.16, 5.23)
+    segment 1 x segment 4  at (6.37, 3.30)
+    segment 1 x segment 5  at (5.00, 4.50)
+    segment 2 x segment 3  at (3.98, 4.40)
+    segment 2 x segment 4  at (6.52, 4.65)
+    segment 2 x segment 5  at (5.00, 4.50)
+    segment 3 x segment 5  at (4.10, 4.95)
+    segment 4 x segment 5  at (6.42, 3.79)
+
+  matches brute all-pairs test: True
+
+  a 20x20 line grid (40 segments): 400 crossings
+  (all-pairs would test 780 pairs; the sweep skips every pair
+  whose x-ranges don't overlap -- here the parallel lines within each family)
+
+  The sweep moves a vertical line left to right, keeping only segments whose x-range
+  straddles it (the active set). A new segment is tested only against those -- never
+  against segments that have already ended or not yet begun -- so disjoint pairs are never
+  compared, and because any crossing pair is active together at some sweep position, none
+  is missed.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\bentley_ottmann.svg
