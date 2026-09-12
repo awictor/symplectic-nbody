@@ -373,6 +373,7 @@ def main():
     import hungarian_demo
     import dtw_demo
     import p2_quantile_demo
+    import tarjan_scc_demo
 
     import plot_orbits
 
@@ -715,6 +716,7 @@ def main():
     hungarian_txt = run("hungarian_demo", hungarian_demo.main, True)
     dtw_txt = run("dtw_demo", dtw_demo.main, True)
     p2_quantile_txt = run("p2_quantile_demo", p2_quantile_demo.main, True)
+    tarjan_scc_txt = run("tarjan_scc_demo", tarjan_scc_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5237,6 +5239,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("p2_quantile.svg"), "the P-square p95 latency estimate (blue) converging to the true final percentile (yellow dashed) as the stream grows -- computed in constant memory the whole time")
             + f'<div class="card">{pre(p2_quantile_txt)}</div>'
+            + '</div>'),
+        section(
+            "Tarjan's strongly connected components and the condensation DAG",
+            "In a directed graph, a STRONGLY CONNECTED COMPONENT is a maximal set of vertices where "
+            "every vertex can reach every other -- the graph's cycles collapsed into equivalence "
+            "classes. Shrinking each SCC to a single node yields the CONDENSATION, which is always a "
+            "DAG, so every directed graph is a directed-acyclic graph of its cycles -- the structure "
+            "behind dependency and dead-code analysis, deadlock detection, 2-SAT, and the web graph's "
+            "block model. TARJAN'S ALGORITHM finds all SCCs in a single depth-first search in "
+            "O(V + E). It gives each vertex a DISCOVERY INDEX and a LOW-LINK (the smallest index "
+            "reachable from its subtree via at most one back-edge to a vertex still on the DFS "
+            "stack); a vertex whose low-link equals its own index is the ROOT of an SCC, and "
+            "everything pushed onto an auxiliary stack after it forms that component. Because the "
+            "low-link propagates cycle reachability, the roots partition the vertices into exactly "
+            "the SCCs, discovered in reverse topological order of the condensation. This module "
+            "implements Tarjan's SCC iteratively (no recursion-depth limit), the condensation DAG, a "
+            "Kahn topological sort, and a cycle test, verified against a brute-force "
+            "mutual-reachability check (two vertices share an SCC iff each reaches the other) over "
+            "100 random graphs, that the condensation is always acyclic, that SCCs come in reverse "
+            "topological order, that a cycle is one component and a DAG is all singletons, and on a "
+            "5000-cycle that the iterative DFS survives without hitting Python's recursion limit.",
+            '<div class="grid">'
+            + svg_card(out("tarjan_scc.svg"), "left: a directed graph with each strongly connected component in its own colour; right: the condensation, each cycle collapsed to one node, forming an acyclic dependency chain")
+            + f'<div class="card">{pre(tarjan_scc_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

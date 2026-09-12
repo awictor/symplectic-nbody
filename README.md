@@ -331,6 +331,7 @@ ruins a long non-symplectic integration.
 | `src/hungarian.py` | Hungarian algorithm: optimal O(n^3) assignment (Kuhn-Munkres), min or max |
 | `src/dtw.py` | Dynamic time warping: distance + warping path, Sakoe-Chiba band, multi-dimensional |
 | `src/p2_quantile.py` | P-square streaming quantile estimation (p50/p95/p99) in O(1) memory |
+| `src/tarjan_scc.py` | Tarjan's strongly connected components, condensation DAG, topological sort |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -653,6 +654,7 @@ ruins a long non-symplectic integration.
 | `examples/hungarian_demo.py` | Worker-job assignment beating the greedy heuristic, with the cost matrix drawn |
 | `examples/dtw_demo.py` | Two speed-varying signals aligned, DTW 6.6x smaller than Euclidean, warp path drawn |
 | `examples/p2_quantile_demo.py` | Latency p50/p90/p95/p99 from a 200k stream in 20 floats, estimate converging |
+| `examples/tarjan_scc_demo.py` | A directed graph's SCCs colored + the condensation DAG beside it |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -7866,6 +7868,26 @@ toward their targets via parabolic interpolation, falling back to linear if the 
 ordering. The middle marker is the estimate. This module implements the single-quantile estimator and
 a multi-quantile histogram, verified against exact quantiles on uniform, normal, and exponential
 streams (errors near 0.01%), with exact min/max markers and a constant-stream sanity check.
+
+## Tarjan's strongly connected components and the condensation DAG
+
+Collapse a directed graph's cycles into a DAG in one DFS. `tarjan_scc.py`:
+
+```
+$ python examples/tarjan_scc_demo.py examples/output
+
+  8 vertices -> SCCs {5,6,7}, {3,4}, {0,1,2} (reverse topological order)
+  condensation DAG: {0,1,2} -> {3,4} -> {5,6,7}, acyclic
+  original graph has a cycle: True; condensation has a cycle: False
+```
+
+Tarjan's algorithm gives each vertex a discovery index and a low-link (smallest index reachable via
+one back-edge from its subtree); a vertex whose low-link equals its index roots an SCC, and the DFS
+stack above it is the component -- all in O(V+E). Shrinking each SCC to a node gives the condensation,
+always a DAG. This module implements it iteratively (no recursion-depth limit), plus the condensation,
+a Kahn topological sort, and a cycle test, verified against brute-force mutual reachability over 100
+random graphs, that the condensation is always acyclic, that SCCs come in reverse topological order,
+and on a 5000-cycle that the iterative DFS survives.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
