@@ -438,6 +438,7 @@ ruins a long non-symplectic integration.
 | `src/rope.py` | Rope: O(log n) concat/split/insert/delete on huge strings, self-balancing |
 | `src/btree.py` | B-tree ordered map: minimum-degree insert/delete/search + range queries |
 | `src/cuckoo_hash.py` | Cuckoo hash table: worst-case two-probe lookups, eviction + rehash |
+| `src/dgim.py` | DGIM sliding-window 1-counter over a bit stream in O(log^2 N) memory |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -867,6 +868,7 @@ ruins a long non-symplectic integration.
 | `examples/rope_demo.py` | Middle edits, balance under 5000 inserts, and the rope tree drawn |
 | `examples/btree_demo.py` | Height vs key count (1B keys -> 6 seeks), range query, and the tree drawn |
 | `examples/cuckoo_hash_demo.py` | The two-probe guarantee and the two candidate cells per key |
+| `examples/dgim_demo.py` | Estimate tracking the exact window count; a 1M-bit window in 27 buckets |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10107,6 +10109,25 @@ rehash. Below ~50% load this is O(1) amortised, so reads stay worst-case constan
 hardware caches need. Validated against dict over 5000 random ops (same values/absences/size/keys), with
 the two-probe guarantee and structural invariants checked directly, growth preserving contents, and the
 load factor bounded.
+
+## DGIM: counting a sliding window of an infinite stream
+
+Count the 1s in the last N bits of an endless stream in tiny memory. `dgim.py`:
+
+```
+$ python examples/dgim_demo.py examples/output
+
+  1,048,576-bit window summarised by just 27 buckets after 2M pushes
+  error tightens 0.36 -> 0.11 as buckets-per-size goes 2 -> 8
+```
+
+DGIM (Datar, Gionis, Indyk & Motwani 2002) summarises the window with power-of-two-sized buckets, at
+most a constant number of each size, so it needs only O(log^2 N) memory. A new 1 makes a size-1 bucket;
+too many of one size merge into the next (binary carry); the query sums in-window bucket sizes but
+halves the oldest (which straddles the boundary), bounding the error to 50% (~1/(k-1) with k per size).
+Validated against an exact deque window: the estimate stays within its guaranteed band over long random
+and bursty streams, more buckets tighten it, sub-window queries obey the bound, and the memory is
+logarithmic.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,15 @@
+DGIM: count the 1s in the last N bits of an infinite stream, in O(log^2 N) memory
+
+  buckets_per_size=2: worst relative error 0.360 (guaranteed <= 1.00), 13 buckets stored
+  buckets_per_size=4: worst relative error 0.200 (guaranteed <= 0.33), 25 buckets stored
+  buckets_per_size=8: worst relative error 0.111 (guaranteed <= 0.14), 46 buckets stored
+
+  window of 1,048,576 bits after 2,000,000 pushes:
+    stored just 27 buckets (a full window would need 1,048,576 bits)
+
+  Buckets have power-of-two sizes and there are at most a constant number of each, so the
+  window is summarised by O(log^2 N) numbers. The only error comes from halving the oldest
+  bucket, which straddles the window edge -- bounded by 50% with two buckets per size, and
+  ~1/(k-1) with k. The technique behind sliding-window analytics on unbounded streams.
+
+  wrote examples/output\dgim.svg

@@ -480,6 +480,7 @@ def main():
     import rope_demo
     import btree_demo
     import cuckoo_hash_demo
+    import dgim_demo
 
     import plot_orbits
 
@@ -929,6 +930,7 @@ def main():
     rope_txt = run("rope_demo", rope_demo.main, True)
     btree_txt = run("btree_demo", btree_demo.main, True)
     cuckoo_hash_txt = run("cuckoo_hash_demo", cuckoo_hash_demo.main, True)
+    dgim_txt = run("dgim_demo", dgim_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7846,6 +7848,32 @@ def main():
             '<div class="grid">'
             + svg_card(out("cuckoo_hash.svg"), "the two cuckoo tables: each key sits in exactly one of its two candidate cells (the ringed pair for the highlighted key), so a lookup is always two probes regardless of how the keys collide")
             + f'<div class="card">{pre(cuckoo_hash_txt)}</div>'
+            + '</div>'),
+        section(
+            "DGIM: counting a sliding window of an infinite stream",
+            "A stream of bits arrives forever -- packets that errored or not, clicks that converted or "
+            "not -- and you want, at any moment, roughly how many 1s occurred in the LAST N of them. "
+            "Storing the window costs N bits, impossible when N is a billion and the stream never ends. "
+            "The DGIM algorithm (Datar, Gionis, Indyk & Motwani, 2002) answers in only O(log^2 N) bits "
+            "-- a few dozen numbers for a billion-bit window -- with a guaranteed relative error of at "
+            "most 50%, tunable smaller. It summarises the window with EXPONENTIAL BUCKETS: each records "
+            "a timestamp and a size that is a power of two (how many 1s it covers), and there are at "
+            "most a constant number of each size. A new 1 becomes a size-1 bucket; when too many of one "
+            "size appear, the two oldest MERGE into the next size up -- exactly binary-counter carry "
+            "propagation -- and buckets that slide past N are dropped. To answer the query, sum the "
+            "in-window bucket sizes but count the oldest one only HALVED, since it straddles the "
+            "boundary and we cannot know how much is inside; that single halving is the entire error, "
+            "bounded by the oldest bucket's size and hence within 50% (or ~1/(k-1) with k buckets per "
+            "size). This module implements the sliding-window counter -- push a bit, query the last N or "
+            "any smaller k -- with the bucket invariant maintained incrementally. Validated against an "
+            "exact deque-based window: the estimate always lands within its guaranteed error band over "
+            "long random and bursty streams at several window sizes and densities; more buckets per size "
+            "empirically tightens the error (0.36 -> 0.11 as k goes 2 -> 8); sub-window queries obey the "
+            "same bound; and the memory really is logarithmic -- a 1,048,576-bit window is summarised by "
+            "27 buckets after two million pushes.",
+            '<div class="grid">'
+            + svg_card(out("dgim.svg"), "top: the DGIM estimate (dashed) tracking the exact sliding-window count (solid) as the stream's density sweeps up and down; bottom: the handful of power-of-two buckets that summarise a million-bit window")
+            + f'<div class="card">{pre(dgim_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
