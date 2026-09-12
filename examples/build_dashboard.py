@@ -436,6 +436,7 @@ def main():
     import hirschberg_demo
     import centroid_decomposition_demo
     import meet_in_middle_demo
+    import fenwick_2d_demo
 
     import plot_orbits
 
@@ -841,6 +842,7 @@ def main():
     hirschberg_txt = run("hirschberg_demo", hirschberg_demo.main, True)
     centroid_decomposition_txt = run("centroid_decomposition_demo", centroid_decomposition_demo.main, True)
     meet_in_middle_txt = run("meet_in_middle_demo", meet_in_middle_demo.main, True)
+    fenwick_2d_txt = run("fenwick_2d_demo", fenwick_2d_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6749,6 +6751,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("meet_in_middle.svg"), "left-half subset sums (blue) and right-half sums (green) laid out on a number line: one from each (red) adds up to the target, found by binary search rather than by enumerating all 2^n combinations")
             + f'<div class="card">{pre(meet_in_middle_txt)}</div>'
+            + '</div>'),
+        section(
+            "2D Fenwick tree: dynamic rectangle sums on a grid",
+            "A Fenwick tree (binary indexed tree) answers prefix sums and point updates in O(log n) by "
+            "storing partial sums at indices keyed to their lowest set bit. The 2D FENWICK TREE lifts "
+            "this to a grid -- a Fenwick tree of Fenwick trees -- supporting POINT UPDATE (add to a "
+            "cell) and PREFIX-RECTANGLE SUM (total from the origin to a cell) each in O(log R * log "
+            "C); an arbitrary rectangle follows by inclusion-exclusion of four prefix sums. It is the "
+            "engine behind dynamic 2D range queries: time-varying image integral tables, counting "
+            "points in a rectangle as points are inserted, and grid simulations where both cells and "
+            "queries change constantly -- cases a static prefix-sum table cannot handle, since every "
+            "update would cost O(R*C) to rebuild. Updating (r,c) walks both indices UP by adding the "
+            "lowest set bit; querying walks them DOWN by subtracting it, each visiting O(log) nodes. "
+            "This module implements point update, prefix and arbitrary rectangle sums, point reads, "
+            "and matrix construction. Verified against a brute-force 2D prefix-sum reference -- every "
+            "rectangle query matches after arbitrary interleaved updates -- on hundreds of random "
+            "grids, plus a 200x200 grid with 2000 updates.",
+            '<div class="grid">'
+            + svg_card(out("fenwick_2d.svg"), "a grid heatmap with a query rectangle outlined in yellow: its sum is computed by combining four prefix-rectangle sums, each in log-squared time, so the answer stays fast even as cells are updated")
+            + f'<div class="card">{pre(fenwick_2d_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -1,0 +1,22 @@
+2D Fenwick tree: point updates and rectangle sums in O(log R * log C)
+
+  grid:
+     3  1  4  1  5
+     9  2  6  5  3
+     5  8  9  7  9
+     3  2  3  8  4
+
+  rectangle sums:
+    (0,0)-(3,4):  97  (brute 97)
+    (1,1)-(2,3):  37  (brute 37)
+    (0,2)-(3,2):  22  (brute 22)
+    (2,0)-(2,4):  38  (brute 38)
+
+  update: add 100 to cell (2,2), then re-query the center block (1,1)-(2,3):
+    before 37, after 137 (brute 137) -- changed by 100
+
+  Both the update and the query touch only O(log R * log C) tree nodes -- so a grid whose
+  cells and queries both change constantly stays fast, where a static prefix-sum table
+  would cost O(R*C) to rebuild after every single update.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\fenwick_2d.svg

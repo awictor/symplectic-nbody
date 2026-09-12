@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420" font-family="monospace">
+<rect width="720" height="420" fill="#0d1117"/>
+<text x="20" y="30" fill="#e6edf3" font-size="18">2D Fenwick tree: rectangle sum of the highlighted block</text>
+<text x="20" y="50" fill="#8b949e" font-size="12">cell brightness = value; the yellow box is a query rectangle summed in log-squared time</text>
+<rect x="90" y="90" width="58" height="58" fill="rgb(40,110,160)"/>
+<text x="119" y="124" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">3</text>
+<rect x="150" y="90" width="58" height="58" fill="rgb(40,76,186)"/>
+<text x="179" y="124" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">1</text>
+<rect x="210" y="90" width="58" height="58" fill="rgb(40,126,146)"/>
+<text x="239" y="124" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">4</text>
+<rect x="270" y="90" width="58" height="58" fill="rgb(40,76,186)"/>
+<text x="299" y="124" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">1</text>
+<rect x="330" y="90" width="58" height="58" fill="rgb(40,143,133)"/>
+<text x="359" y="124" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">5</text>
+<rect x="90" y="150" width="58" height="58" fill="rgb(40,210,80)"/>
+<text x="119" y="184" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">9</text>
+<rect x="150" y="150" width="58" height="58" fill="rgb(40,93,173)"/>
+<text x="179" y="184" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">2</text>
+<rect x="210" y="150" width="58" height="58" fill="rgb(40,160,120)"/>
+<text x="239" y="184" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">6</text>
+<rect x="270" y="150" width="58" height="58" fill="rgb(40,143,133)"/>
+<text x="299" y="184" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">5</text>
+<rect x="330" y="150" width="58" height="58" fill="rgb(40,110,160)"/>
+<text x="359" y="184" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">3</text>
+<rect x="90" y="210" width="58" height="58" fill="rgb(40,143,133)"/>
+<text x="119" y="244" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">5</text>
+<rect x="150" y="210" width="58" height="58" fill="rgb(40,193,93)"/>
+<text x="179" y="244" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">8</text>
+<rect x="210" y="210" width="58" height="58" fill="rgb(40,210,80)"/>
+<text x="239" y="244" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">9</text>
+<rect x="270" y="210" width="58" height="58" fill="rgb(40,176,106)"/>
+<text x="299" y="244" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">7</text>
+<rect x="330" y="210" width="58" height="58" fill="rgb(40,210,80)"/>
+<text x="359" y="244" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">9</text>
+<rect x="90" y="270" width="58" height="58" fill="rgb(40,110,160)"/>
+<text x="119" y="304" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">3</text>
+<rect x="150" y="270" width="58" height="58" fill="rgb(40,93,173)"/>
+<text x="179" y="304" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">2</text>
+<rect x="210" y="270" width="58" height="58" fill="rgb(40,110,160)"/>
+<text x="239" y="304" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">3</text>
+<rect x="270" y="270" width="58" height="58" fill="rgb(40,193,93)"/>
+<text x="299" y="304" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">8</text>
+<rect x="330" y="270" width="58" height="58" fill="rgb(40,126,146)"/>
+<text x="359" y="304" fill="#0d1117" font-size="15" text-anchor="middle" font-weight="bold">4</text>
+<rect x="148" y="148" width="182" height="122" fill="none" stroke="#ffd43b" stroke-width="3"/>
+<text x="90" y="360" fill="#ffd43b" font-size="14">rectangle (1,1)-(2,3) sum = 37</text>
+</svg>

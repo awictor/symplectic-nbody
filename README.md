@@ -394,6 +394,7 @@ ruins a long non-symplectic integration.
 | `src/hirschberg.py` | Hirschberg linear-space optimal alignment + LCS |
 | `src/centroid_decomposition.py` | Centroid tree + distance-pair counting on a tree |
 | `src/meet_in_middle.py` | Meet-in-the-middle subset sum / closest sum / count for huge values |
+| `src/fenwick_2d.py` | 2D Fenwick tree: point update + rectangle sum in O(log R log C) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -779,6 +780,7 @@ ruins a long non-symplectic integration.
 | `examples/hirschberg_demo.py` | An optimal alignment as a match/gap track + the memory saving |
 | `examples/centroid_decomposition_demo.py` | A tree tinted by centroid-decomposition level + pair counts |
 | `examples/meet_in_middle_demo.py` | Two half-sum lists combining to hit a target on a number line |
+| `examples/fenwick_2d_demo.py` | A grid heatmap with a query rectangle and its dynamic sum |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9205,6 +9207,24 @@ max-under-capacity sort one half and binary-search the other; for counting, tall
 Works on values far too large for a pseudo-polynomial DP. Verified against brute enumeration of all 2^n
 subsets (existence, max-under, closest, count) on hundreds of random instances, plus billion-scale
 values and an n=30 instance beyond brute force's reach.
+
+## 2D Fenwick tree: dynamic rectangle sums on a grid
+
+Point updates and rectangle sums on a grid, each in O(log R log C). `fenwick_2d.py`:
+
+```
+$ python examples/fenwick_2d_demo.py examples/output
+
+  4x5 grid -> rectangle (1,1)-(2,3) sum 37; add 100 to (2,2) -> re-query 137
+  all rectangle queries match a brute grid after interleaved updates
+```
+
+A Fenwick tree of Fenwick trees: updating a cell walks both indices up by adding the lowest set bit,
+a prefix-rectangle query walks them down by subtracting it, and an arbitrary rectangle is four prefix
+sums by inclusion-exclusion. Unlike a static prefix-sum table (O(R*C) to rebuild per update), it stays
+fast when cells and queries both change constantly. Verified against a brute 2D prefix-sum reference:
+every rectangle query matches after arbitrary interleaved updates on hundreds of random grids, plus a
+200x200 grid with 2000 updates.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
