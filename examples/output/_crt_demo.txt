@@ -1,0 +1,23 @@
+Chinese Remainder Theorem: a number from its remainders
+
+  Sunzi's classic puzzle (3rd century): a number leaves remainder
+    2 mod 3, 3 mod 5, 2 mod 7 -- what is it?
+    -> x = 23 (mod 105); check: 23%3=2, 23%5=3, 23%7=2
+
+  Reconstruct 8675309 from its residues mod [101, 103, 107, 109, 113]:
+    residues: [15, 31, 70, 108, 73]
+    CRT gives 8675309 (mod 13710311357); matches the secret: True
+
+  RSA speedup idea: instead of one exponentiation mod n = p*q,
+  do two mod p and mod q (each ~half the size, ~4x faster) and recombine with CRT.
+    value 123456789 recovered from (mod 1000003, mod 1000033): True
+
+  Non-coprime moduli (generalized CRT):
+    x = 3 mod 4 and x = 5 mod 6 -> 11 mod 12
+    x = 1 mod 2 and x = 0 mod 4 -> None (contradiction)
+
+  For pairwise-coprime moduli there's a unique answer mod their product, built as
+  sum(r_i * M_i * (M_i^-1 mod m_i)) where M_i = M/m_i -- each term hits r_i in its own
+  modulus and 0 in the others. The extended Euclidean algorithm supplies the inverses.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\crt.svg

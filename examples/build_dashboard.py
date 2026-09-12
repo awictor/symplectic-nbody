@@ -398,6 +398,7 @@ def main():
     import matrix_chain_demo
     import lis_demo
     import continued_fraction_demo
+    import crt_demo
 
     import plot_orbits
 
@@ -765,6 +766,7 @@ def main():
     matrix_chain_txt = run("matrix_chain_demo", matrix_chain_demo.main, True)
     lis_txt = run("lis_demo", lis_demo.main, True)
     continued_fraction_txt = run("continued_fraction_demo", continued_fraction_demo.main, True)
+    crt_txt = run("crt_demo", crt_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5852,6 +5854,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("continued_fraction.svg"), "log-log convergent error vs denominator for pi, e, sqrt(2), and the golden ratio -- error plunges with denominator, and the golden ratio (the 'most irrational' number, all-ones expansion) is the slowest to approximate")
             + f'<div class="card">{pre(continued_fraction_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Chinese Remainder Theorem: a number from its remainders",
+            "If you know a number's remainders modulo several pairwise-coprime moduli, the CHINESE "
+            "REMAINDER THEOREM says there is a UNIQUE value modulo their product matching all of them, "
+            "and constructs it. This ancient result (Sunzi, 3rd century) is the backbone of modern "
+            "computing: RSA decryption speeds up about 4x by working modulo the prime factors "
+            "separately and recombining with CRT; big-integer and polynomial arithmetic run in "
+            "parallel residue systems; and it underlies secret sharing and error-correcting codes. "
+            "It rests on the EXTENDED EUCLIDEAN ALGORITHM, which finds the Bezout identity a*x + b*y "
+            "= gcd(a,b) and hence modular inverses. Given x = r_i (mod m_i) with coprime moduli, CRT "
+            "builds x = sum r_i * M_i * (M_i^-1 mod m_i) mod M, each term hitting r_i in its own "
+            "modulus and 0 in the others. When the moduli are not coprime the system is solvable only "
+            "if the congruences agree on each pairwise gcd -- a generalized CRT that merges "
+            "congruences and detects contradictions. This module implements extended Euclid, modular "
+            "inverse, and both CRTs, verified against brute force: the solution satisfies every "
+            "congruence and is the smallest non-negative one (matching exhaustive search over 200 "
+            "systems), the Bezout identity is correct over 300 random pairs, non-coprime systems are "
+            "solved when consistent and rejected when contradictory, and the classic Sunzi puzzle "
+            "gives 23.",
+            '<div class="grid">'
+            + svg_card(out("crt.svg"), "the Sunzi puzzle visualized: each coloured row shades the numbers satisfying one congruence, and the red line marks x=23, the single value where all three stripes overlap")
+            + f'<div class="card">{pre(crt_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="400" viewBox="0 0 760 400" font-family="monospace">
+<rect width="760" height="400" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="18">CRT: the unique value where all congruence stripes align</text>
+<text x="20" y="47" fill="#8b949e" font-size="12">each row shades the values matching one congruence; they coincide only at x = 23</text>
+<text x="20" y="108" fill="#4dabf7" font-size="12">x%3=2</text>
+<rect x="72.8" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="91.9" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="111.0" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="130.2" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="149.3" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="168.5" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="187.6" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="206.8" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="225.9" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="245.0" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="264.2" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="283.3" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="302.5" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="321.6" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="340.8" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="359.9" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="379.0" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="398.2" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="417.3" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="436.5" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="455.6" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="474.8" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="493.9" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="513.0" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="532.2" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="551.3" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="570.5" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="589.6" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="608.8" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="627.9" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="647.0" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="666.2" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="685.3" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="704.5" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<rect x="723.6" y="90.0" width="6.4" height="30" fill="#4dabf7" fill-opacity="0.7"/>
+<text x="20" y="178" fill="#ffd43b" font-size="12">x%5=3</text>
+<rect x="79.1" y="160.0" width="6.4" height="30" fill="#ffd43b" fill-opacity="0.7"/>
+<rect x="111.0" y="160.0" width="6.4" height="30" fill="#ffd43b" fill-opacity="0.7"/>
+<rect x="143.0" y="160.0" width="6.4" height="30" fill="#ffd43b" fill-opacity="0.7"/>
+<rect x="174.9" y="160.0" width="6.4" height="30" fill="#ffd43b" fill-opacity="0.7"/>
+<rect x="206.8" y="160.0" width="6.4" height="30" fill="#ffd43b" fill-opacity="0.7"/>
+<rect x="238.7" y="160.0" width="6.4" height="30" fill="#ffd43b" fill-opacity="0.7"/>
+<rect x="270.6" y="160.0" width="6.4" height="30" fill="#ffd43b" fill-opacity="0.7"/>
+<rect x="302.5" y="160.0" width="6.4" height="30" fill="#ffd43b" fill-opacity="0.7"/>
+<rect x="334.4" y="160.0" width="6.4" height="30" fill="#ffd43b" fill-opacity="0.7"/>
+<rect x="366.3" y="160.0" width="6.4" height="30" fill="#ffd43b" fill-opacity="0.7"/>
+<rect x="398.2" y="160.0" width="6.4" height="30" fill="#ffd43b" fill-opacity="0.7"/>
+<rect x="430.1" y="160.0" width="6.4" height="30" fill="#ffd43b" fill-opacity="0.7"/>
+<rect x="462.0" y="160.0" width="6.4" height="30" fill="#ffd43b" fill-opacity="0.7"/>
+<rect x="493.9" y="160.0" width="6.4" height="30" fill="#ffd43b" fill-opacity="0.7"/>
+<rect x="525.8" y="160.0" width="6.4" height="30" fill="#ffd43b" fill-opacity="0.7"/>
+<rect x="557.7" y="160.0" width="6.4" height="30" fill="#ffd43b" fill-opacity="0.7"/>
+<rect x="589.6" y="160.0" width="6.4" height="30" fill="#ffd43b" fill-opacity="0.7"/>
+<rect x="621.5" y="160.0" width="6.4" height="30" fill="#ffd43b" fill-opacity="0.7"/>
+<rect x="653.4" y="160.0" width="6.4" height="30" fill="#ffd43b" fill-opacity="0.7"/>
+<rect x="685.3" y="160.0" width="6.4" height="30" fill="#ffd43b" fill-opacity="0.7"/>
+<rect x="717.2" y="160.0" width="6.4" height="30" fill="#ffd43b" fill-opacity="0.7"/>
+<text x="20" y="248" fill="#06d6a0" font-size="12">x%7=2</text>
+<rect x="72.8" y="230.0" width="6.4" height="30" fill="#06d6a0" fill-opacity="0.7"/>
+<rect x="117.4" y="230.0" width="6.4" height="30" fill="#06d6a0" fill-opacity="0.7"/>
+<rect x="162.1" y="230.0" width="6.4" height="30" fill="#06d6a0" fill-opacity="0.7"/>
+<rect x="206.8" y="230.0" width="6.4" height="30" fill="#06d6a0" fill-opacity="0.7"/>
+<rect x="251.4" y="230.0" width="6.4" height="30" fill="#06d6a0" fill-opacity="0.7"/>
+<rect x="296.1" y="230.0" width="6.4" height="30" fill="#06d6a0" fill-opacity="0.7"/>
+<rect x="340.8" y="230.0" width="6.4" height="30" fill="#06d6a0" fill-opacity="0.7"/>
+<rect x="385.4" y="230.0" width="6.4" height="30" fill="#06d6a0" fill-opacity="0.7"/>
+<rect x="430.1" y="230.0" width="6.4" height="30" fill="#06d6a0" fill-opacity="0.7"/>
+<rect x="474.8" y="230.0" width="6.4" height="30" fill="#06d6a0" fill-opacity="0.7"/>
+<rect x="519.4" y="230.0" width="6.4" height="30" fill="#06d6a0" fill-opacity="0.7"/>
+<rect x="564.1" y="230.0" width="6.4" height="30" fill="#06d6a0" fill-opacity="0.7"/>
+<rect x="608.8" y="230.0" width="6.4" height="30" fill="#06d6a0" fill-opacity="0.7"/>
+<rect x="653.4" y="230.0" width="6.4" height="30" fill="#06d6a0" fill-opacity="0.7"/>
+<rect x="698.1" y="230.0" width="6.4" height="30" fill="#06d6a0" fill-opacity="0.7"/>
+<line x1="210.0" y1="82" x2="210.0" y2="300" stroke="#ff6b6b" stroke-width="2.5"/>
+<text x="210.0" y="318" fill="#ff6b6b" font-size="14" text-anchor="middle">x = 23</text>
+</svg>

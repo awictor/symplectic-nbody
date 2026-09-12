@@ -356,6 +356,7 @@ ruins a long non-symplectic integration.
 | `src/matrix_chain.py` | Matrix-chain optimal parenthesization by interval DP (O(n^3)) |
 | `src/lis.py` | Longest increasing subsequence via patience sorting (O(n log n), with witness) |
 | `src/continued_fraction.py` | Continued-fraction expansion, convergents, and best rational approximation |
+| `src/crt.py` | Chinese Remainder Theorem (coprime + general) with extended Euclid and mod inverse |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -703,6 +704,7 @@ ruins a long non-symplectic integration.
 | `examples/matrix_chain_demo.py` | Optimal vs left-to-right cost + the DP cost table as a heatmap |
 | `examples/lis_demo.py` | The LIS highlighted on a bar chart + the patience-sorting piles |
 | `examples/continued_fraction_demo.py` | pi/e/phi/sqrt2 expansions + convergent error vs denominator |
+| `examples/crt_demo.py` | Sunzi's puzzle + reconstructing a secret from residues + non-coprime handling |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8392,6 +8394,25 @@ denominator gets closer). A large partial quotient makes the preceding convergen
 fraction, the convergents, and the best rational within a denominator bound, verified that pi's
 convergents are the famous ones, a finite expansion recovers its rational, each convergent is best
 for its denominator, and the golden ratio and sqrt(2) have their known patterns.
+
+## The Chinese Remainder Theorem: a number from its remainders
+
+Reconstruct a number from its remainders modulo coprime moduli. `crt.py`:
+
+```
+$ python examples/crt_demo.py examples/output
+
+  Sunzi: x = 2 mod 3, 3 mod 5, 2 mod 7 -> x = 23 (mod 105)
+  reconstruct 8675309 from residues mod [101,103,107,109,113] -> exact
+  non-coprime: x = 3 mod 4 and 5 mod 6 -> 11 mod 12; 1 mod 2 and 0 mod 4 -> contradiction
+```
+
+For pairwise-coprime moduli CRT builds the unique solution as sum(r_i * M_i * (M_i^-1 mod m_i)) mod M,
+with modular inverses from the extended Euclidean algorithm; a generalized version merges non-coprime
+congruences and detects contradictions. This module implements extended Euclid, modular inverse, and
+both CRTs, verified against brute force that the solution satisfies every congruence and is the
+smallest non-negative one, the Bezout identity is correct over 300 random pairs, and non-coprime
+systems are solved when consistent and rejected when not.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
