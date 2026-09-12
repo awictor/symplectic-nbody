@@ -455,6 +455,7 @@ def main():
     import bentley_ottmann_demo
     import gjk_demo
     import ks_test_demo
+    import bootstrap_demo
 
     import plot_orbits
 
@@ -879,6 +880,7 @@ def main():
     bentley_ottmann_txt = run("bentley_ottmann_demo", bentley_ottmann_demo.main, True)
     gjk_txt = run("gjk_demo", gjk_demo.main, True)
     ks_test_txt = run("ks_test_demo", ks_test_demo.main, True)
+    bootstrap_txt = run("bootstrap_demo", bootstrap_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7186,6 +7188,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("ks_test.svg"), "two empirical CDFs (blue and green staircases) with the maximal vertical gap D marked in red -- the KS statistic, here large because the two samples come from shifted distributions")
             + f'<div class="card">{pre(ks_test_txt)}</div>'
+            + '</div>'),
+        section(
+            "Bootstrap: confidence intervals by resampling",
+            "Classical confidence intervals need a formula for the sampling distribution of your "
+            "statistic -- easy for the mean, awful for the median, a ratio, or a trimmed mean. The "
+            "BOOTSTRAP (Efron, 1979) sidesteps all of it: the sample is the best stand-in for the "
+            "population, so RESAMPLE it with replacement thousands of times, recompute the statistic "
+            "on each resample, and the spread of those replicates approximates its true sampling "
+            "distribution -- giving standard errors and confidence intervals for ANY statistic "
+            "without deriving its variance. The PERCENTILE interval reads the 2.5th and 97.5th "
+            "percentiles of the replicates; the BCa (bias-corrected and accelerated) interval refines "
+            "it by correcting for median bias (a z0 from the fraction of replicates below the "
+            "estimate) and skewness (an acceleration estimated by the JACKKNIFE, leaving each point "
+            "out in turn), shifting the percentiles for far better coverage on skewed statistics. "
+            "This module computes replicates, percentile and BCa intervals, the bootstrap standard "
+            "error, and the jackknife bias/SE. Verified against known quantities -- the bootstrap SE "
+            "of the mean matches analytic s/sqrt(n), the jackknife is exact for the mean, intervals "
+            "bracket the estimate and lie in the data range -- and a 90% interval covers the true "
+            "mean about 90% of the time over 200 seeded datasets.",
+            '<div class="grid">'
+            + svg_card(out("bootstrap.svg"), "the bootstrap distribution of the mean from 3000 resamples: the histogram approximates the sampling distribution and the green band is the 95% confidence interval read straight off its percentiles")
+            + f'<div class="card">{pre(bootstrap_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

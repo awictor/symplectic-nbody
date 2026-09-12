@@ -1,0 +1,24 @@
+Bootstrap: confidence intervals by resampling, no formula needed
+
+  sample of 80 draws (true mean 50): observed mean 50.868, median 51.315
+
+  the MEAN (which does have a formula, so we can check ourselves):
+    bootstrap SE 0.7444  vs analytic s/sqrt(n) 0.7523
+    95% percentile CI: [49.469, 52.325]  (brackets 50: True)
+    95% BCa CI:        [49.468, 52.324]
+    jackknife bias 0.00e+00 (exactly 0 for the mean), SE 0.7523
+
+  the MEDIAN (no simple closed-form CI -- the bootstrap just works):
+    95% percentile CI: [48.829, 52.905]
+    95% BCa CI:        [48.685, 52.905]
+
+  the SPREAD (standard deviation), likewise:
+    95% BCa CI for the std: [5.684, 8.188]  (true 8)
+
+  The bootstrap treats the sample as a stand-in for the population: resample it with
+  replacement thousands of times, recompute the statistic each time, and the spread of
+  those replicates is the sampling distribution -- read off the CI from its percentiles.
+  BCa additionally corrects for median bias and skewness (via the jackknife) for sharper
+  coverage. It works for ANY statistic, however awkward its variance formula would be.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\bootstrap.svg

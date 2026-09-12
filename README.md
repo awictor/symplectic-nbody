@@ -413,6 +413,7 @@ ruins a long non-symplectic integration.
 | `src/bentley_ottmann.py` | Sweep-line segment intersection: all crossings via x-ordered sweep |
 | `src/gjk.py` | GJK convex collision detection + Minkowski difference |
 | `src/ks_test.py` | Kolmogorov-Smirnov one- and two-sample tests + reference CDFs |
+| `src/bootstrap.py` | Bootstrap CIs (percentile + BCa) + jackknife + standard error |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -817,6 +818,7 @@ ruins a long non-symplectic integration.
 | `examples/bentley_ottmann_demo.py` | Six segments with all their crossings marked |
 | `examples/gjk_demo.py` | Two shapes + their Minkowski difference with the origin inside |
 | `examples/ks_test_demo.py` | Two empirical CDFs with the maximal-gap KS statistic marked |
+| `examples/bootstrap_demo.py` | The bootstrap distribution of the mean with its 95% CI band |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9578,6 +9580,24 @@ is universal (the Kolmogorov distribution), so one critical-value table works fo
 Verified against the brute ECDF gap on a fine grid (one- and two-sample), the D=0/D=1 extremes and
 symmetry, and statistically -- same-distribution samples rarely reject at 5% while clearly different
 ones reject with high power over many seeded trials.
+
+## Bootstrap: confidence intervals by resampling
+
+Get a confidence interval for any statistic without a variance formula. `bootstrap.py`:
+
+```
+$ python examples/bootstrap_demo.py examples/output
+
+  mean of N(50,8) sample: bootstrap SE 0.74 ~ analytic s/sqrt(n) 0.75; 95% CI brackets 50
+  median and std CIs from the same resampling; BCa corrects skew via the jackknife
+```
+
+Resample the data with replacement thousands of times, recompute the statistic each time, and the
+spread of those replicates is its sampling distribution -- read the CI off its percentiles. The BCa
+interval corrects for median bias and skewness (acceleration from the jackknife) for sharper coverage.
+Verified against known quantities -- bootstrap SE of the mean matches analytic s/sqrt(n), the jackknife
+is exact for the mean, intervals bracket the estimate -- and a 90% interval covers the true mean about
+90% of the time over 200 seeded datasets.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

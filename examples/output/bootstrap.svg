@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="380" viewBox="0 0 760 380" font-family="monospace">
+<rect width="760" height="380" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="17">Bootstrap distribution of the mean (3000 resamples)</text>
+<text x="20" y="47" fill="#8b949e" font-size="12">the histogram approximates the sampling distribution; the green band is the 95% CI</text>
+<rect x="180.2" y="70.0" width="404.2" height="250" fill="#06d6a0" opacity="0.15"/>
+<rect x="50.0" y="313.8" width="15.8" height="6.2" fill="#4dabf7"/>
+<rect x="66.8" y="318.8" width="15.8" height="1.2" fill="#4dabf7"/>
+<rect x="83.5" y="312.6" width="15.8" height="7.4" fill="#4dabf7"/>
+<rect x="100.2" y="313.8" width="15.8" height="6.2" fill="#4dabf7"/>
+<rect x="117.0" y="310.1" width="15.8" height="9.9" fill="#4dabf7"/>
+<rect x="133.8" y="296.6" width="15.8" height="23.4" fill="#4dabf7"/>
+<rect x="150.5" y="286.7" width="15.8" height="33.3" fill="#4dabf7"/>
+<rect x="167.2" y="274.4" width="15.8" height="45.6" fill="#4dabf7"/>
+<rect x="184.0" y="269.5" width="15.8" height="50.5" fill="#4dabf7"/>
+<rect x="200.8" y="232.6" width="15.8" height="87.4" fill="#4dabf7"/>
+<rect x="217.5" y="231.3" width="15.8" height="88.7" fill="#4dabf7"/>
+<rect x="234.2" y="209.2" width="15.8" height="110.8" fill="#4dabf7"/>
+<rect x="251.0" y="173.4" width="15.8" height="146.6" fill="#4dabf7"/>
+<rect x="267.8" y="180.8" width="15.8" height="139.2" fill="#4dabf7"/>
+<rect x="284.5" y="161.1" width="15.8" height="158.9" fill="#4dabf7"/>
+<rect x="301.2" y="109.4" width="15.8" height="210.6" fill="#4dabf7"/>
+<rect x="318.0" y="145.1" width="15.8" height="174.9" fill="#4dabf7"/>
+<rect x="334.8" y="92.2" width="15.8" height="227.8" fill="#4dabf7"/>
+<rect x="351.5" y="83.5" width="15.8" height="236.5" fill="#4dabf7"/>
+<rect x="368.2" y="70.0" width="15.8" height="250.0" fill="#4dabf7"/>
+<rect x="385.0" y="105.7" width="15.8" height="214.3" fill="#4dabf7"/>
+<rect x="401.8" y="103.3" width="15.8" height="216.7" fill="#4dabf7"/>
+<rect x="418.5" y="113.1" width="15.8" height="206.9" fill="#4dabf7"/>
+<rect x="435.2" y="119.3" width="15.8" height="200.7" fill="#4dabf7"/>
+<rect x="452.0" y="164.8" width="15.8" height="155.2" fill="#4dabf7"/>
+<rect x="468.8" y="193.2" width="15.8" height="126.8" fill="#4dabf7"/>
+<rect x="485.5" y="203.0" width="15.8" height="117.0" fill="#4dabf7"/>
+<rect x="502.2" y="219.0" width="15.8" height="101.0" fill="#4dabf7"/>
+<rect x="519.0" y="223.9" width="15.8" height="96.1" fill="#4dabf7"/>
+<rect x="535.8" y="251.0" width="15.8" height="69.0" fill="#4dabf7"/>
+<rect x="552.5" y="268.3" width="15.8" height="51.7" fill="#4dabf7"/>
+<rect x="569.2" y="290.4" width="15.8" height="29.6" fill="#4dabf7"/>
+<rect x="586.0" y="288.0" width="15.8" height="32.0" fill="#4dabf7"/>
+<rect x="602.8" y="297.8" width="15.8" height="22.2" fill="#4dabf7"/>
+<rect x="619.5" y="305.2" width="15.8" height="14.8" fill="#4dabf7"/>
+<rect x="636.2" y="308.9" width="15.8" height="11.1" fill="#4dabf7"/>
+<rect x="653.0" y="315.1" width="15.8" height="4.9" fill="#4dabf7"/>
+<rect x="669.8" y="316.3" width="15.8" height="3.7" fill="#4dabf7"/>
+<rect x="686.5" y="317.5" width="15.8" height="2.5" fill="#4dabf7"/>
+<rect x="703.2" y="316.3" width="15.8" height="3.7" fill="#4dabf7"/>
+<line x1="378.2" y1="70.0" x2="378.2" y2="320.0" stroke="#ffd43b" stroke-width="2"/>
+<text x="378" y="66" fill="#ffd43b" font-size="11" text-anchor="middle">estimate</text>
+<line x1="180.2" y1="70.0" x2="180.2" y2="320.0" stroke="#06d6a0" stroke-width="1.5" stroke-dasharray="3 3"/>
+<line x1="584.4" y1="70.0" x2="584.4" y2="320.0" stroke="#06d6a0" stroke-width="1.5" stroke-dasharray="3 3"/>
+<text x="385" y="348" fill="#8b949e" font-size="12" text-anchor="middle">bootstrap mean</text>
+</svg>
