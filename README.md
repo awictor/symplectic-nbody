@@ -360,6 +360,7 @@ ruins a long non-symplectic integration.
 | `src/tonelli_shanks.py` | Modular square root (Tonelli-Shanks) + Legendre symbol / residue test |
 | `src/discrete_log.py` | Baby-step giant-step discrete logarithm (O(sqrt n)) + multiplicative order |
 | `src/welzl.py` | Welzl's smallest enclosing circle (expected O(n), iterative move-to-front) |
+| `src/cuckoo_filter.py` | Cuckoo filter: approximate membership with deletion (cuckoo hashing) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -711,6 +712,7 @@ ruins a long non-symplectic integration.
 | `examples/tonelli_shanks_demo.py` | Modular square roots + the residue split + EC point decompression |
 | `examples/discrete_log_demo.py` | Breaking a toy Diffie-Hellman + BSGS vs brute-force work curve |
 | `examples/welzl_demo.py` | A point cloud's smallest enclosing circle with its support points |
+| `examples/cuckoo_filter_demo.py` | Deletion + false-positive rate shrinking with fingerprint bits |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8474,6 +8476,25 @@ boundary, so the circle is rebuilt with it fixed there. This module implements t
 move-to-front variant, verified against brute force that every point lies inside, the radius matches
 an O(n^4) all-triples minimum over 60 random sets, shrinking the radius excludes a point (minimality),
 and known cases hold (diameter, circumscribed circle, points on a circle) up to 1000-point sets.
+
+## Cuckoo filters: approximate membership with deletion
+
+Bloom-like membership that Bloom filters can't match: it deletes. `cuckoo_filter.py`:
+
+```
+$ python examples/cuckoo_filter_demo.py examples/output
+
+  2000 items, no false negatives; false-positive rate 0.00002 at 16 fingerprint bits
+  deletion: 'user-500' present -> deleted -> absent, others unaffected
+  FP rate vs bits: 4->0.067, 8->0.0008, 16->~0
+```
+
+Each item stores a small fingerprint in one of two candidate buckets, the second found by XORing the
+first with hash(fingerprint), so either bucket recovers the other from the fingerprint alone; a full
+bucket evicts a resident to its alternate (the cuckoo kick). This module implements add/contains/delete,
+verified that it never reports a false negative, the false-positive rate shrinks with fingerprint
+size, deletion removes an item while leaving others, deleting one of several duplicates leaves the
+rest, and it packs to a ~95% load factor.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

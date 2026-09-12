@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420" font-family="monospace">
+<rect width="760" height="420" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="18">Cuckoo filter: false-positive rate vs fingerprint bits</text>
+<text x="20" y="47" fill="#8b949e" font-size="12">more fingerprint bits -> exponentially fewer false positives (log scale); no false negatives ever</text>
+<line x1="70" y1="360" x2="720" y2="360" stroke="#484f58" stroke-width="1.5"/>
+<line x1="70" y1="80" x2="70" y2="360" stroke="#484f58" stroke-width="1.5"/>
+<polyline points="70.0,80.0 178.3,93.5 286.7,190.8 395.0,267.0 503.3,267.0 720.0,360.0" fill="none" stroke="#4dabf7" stroke-width="2.2"/>
+<circle cx="70.0" cy="80.0" r="4" fill="#4dabf7"/>
+<text x="70" y="378" fill="#8b949e" font-size="10" text-anchor="middle">4</text>
+<circle cx="178.3" cy="93.5" r="4" fill="#4dabf7"/>
+<text x="178" y="378" fill="#8b949e" font-size="10" text-anchor="middle">6</text>
+<circle cx="286.7" cy="190.8" r="4" fill="#4dabf7"/>
+<text x="287" y="378" fill="#8b949e" font-size="10" text-anchor="middle">8</text>
+<circle cx="395.0" cy="267.0" r="4" fill="#4dabf7"/>
+<text x="395" y="378" fill="#8b949e" font-size="10" text-anchor="middle">10</text>
+<circle cx="503.3" cy="267.0" r="4" fill="#4dabf7"/>
+<text x="503" y="378" fill="#8b949e" font-size="10" text-anchor="middle">12</text>
+<circle cx="720.0" cy="360.0" r="4" fill="#4dabf7"/>
+<text x="720" y="378" fill="#8b949e" font-size="10" text-anchor="middle">16</text>
+<text x="395" y="408" fill="#8b949e" font-size="12" text-anchor="middle">fingerprint bits</text>
+</svg>

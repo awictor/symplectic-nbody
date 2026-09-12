@@ -1,0 +1,24 @@
+Cuckoo filter: approximate membership with deletion
+
+  added 2000 items, load factor 0.24
+  no false negatives: True
+  false positives on 50000 absent items: 1 (rate 0.00002)
+
+  Deletion (impossible with a Bloom filter):
+    'user-500' present: True
+    after delete:        False
+    'user-501' unaffected: True
+
+  False-positive rate shrinks as the fingerprint grows:
+     4 bits: false-positive rate 0.06656
+     6 bits: false-positive rate 0.03904
+     8 bits: false-positive rate 0.00082
+    10 bits: false-positive rate 0.00004
+    12 bits: false-positive rate 0.00004
+    16 bits: false-positive rate 0.00000
+
+  Each item stores a small fingerprint in one of two candidate buckets, the second found
+  by XORing the first with hash(fingerprint) -- so either bucket recovers the other from
+  the fingerprint alone. Full buckets kick out a resident to its alternate (the 'cuckoo').
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\cuckoo_filter.svg

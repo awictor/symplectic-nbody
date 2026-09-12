@@ -402,6 +402,7 @@ def main():
     import tonelli_shanks_demo
     import discrete_log_demo
     import welzl_demo
+    import cuckoo_filter_demo
 
     import plot_orbits
 
@@ -773,6 +774,7 @@ def main():
     tonelli_shanks_txt = run("tonelli_shanks_demo", tonelli_shanks_demo.main, True)
     discrete_log_txt = run("discrete_log_demo", discrete_log_demo.main, True)
     welzl_txt = run("welzl_demo", welzl_demo.main, True)
+    cuckoo_filter_txt = run("cuckoo_filter_demo", cuckoo_filter_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5946,6 +5948,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("welzl.svg"), "a point cloud with its smallest enclosing circle (green) and the two or three red support points on the boundary that alone determine it -- the tightest circle containing everything")
             + f'<div class="card">{pre(welzl_txt)}</div>'
+            + '</div>'),
+        section(
+            "Cuckoo filters: approximate membership with deletion",
+            "A BLOOM FILTER answers 'have I seen this?' in tiny space but cannot DELETE items. The "
+            "CUCKOO FILTER matches Bloom's space and false-positive rate, is often faster, AND "
+            "supports deletion -- which is why it backs routers, databases, and deduplication that "
+            "must remove items. Like Bloom it never gives a FALSE NEGATIVE; it only occasionally "
+            "gives a false positive. It stores a small FINGERPRINT of each item in a table of "
+            "buckets, with two candidate buckets per item found by CUCKOO HASHING: i2 = i1 XOR "
+            "hash(fingerprint), the trick that lets either bucket recover the other from just the "
+            "stored fingerprint, so lookups and deletes need only the fingerprint. Insertion places "
+            "the fingerprint in either candidate; if both are full it evicts a random resident to "
+            "ITS alternate bucket and repeats -- the 'cuckoo' kicking-out that reaches ~95% load. "
+            "This module implements add, contains, and delete with configurable bucket size and "
+            "fingerprint bits, verified that it never reports a false negative (every added, "
+            "not-deleted item tests present), that the false-positive rate is small and shrinks with "
+            "fingerprint size (0.067 at 4 bits down to ~0 at 16), that deletion removes an item while "
+            "leaving others, that deleting one of several duplicates leaves the rest, that it packs "
+            "to a ~95% load factor, and that it is reproducible from a seed.",
+            '<div class="grid">'
+            + svg_card(out("cuckoo_filter.svg"), "the false-positive rate falling exponentially as the fingerprint grows (log scale) -- a few more bits per item buys orders-of-magnitude fewer false hits, with deletion Bloom filters can't offer")
+            + f'<div class="card">{pre(cuckoo_filter_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
