@@ -405,6 +405,7 @@ def main():
     import cuckoo_filter_demo
     import dsu_rollback_demo
     import interval_scheduling_demo
+    import coin_change_demo
 
     import plot_orbits
 
@@ -779,6 +780,7 @@ def main():
     cuckoo_filter_txt = run("cuckoo_filter_demo", cuckoo_filter_demo.main, True)
     dsu_rollback_txt = run("dsu_rollback_demo", dsu_rollback_demo.main, True)
     interval_scheduling_txt = run("interval_scheduling_demo", interval_scheduling_demo.main, True)
+    coin_change_txt = run("coin_change_demo", coin_change_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6017,6 +6019,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("interval_scheduling.svg"), "a Gantt chart of job requests on the time axis, bar height showing value, with the optimal non-overlapping set highlighted green -- the maximum-value schedule no greedy heuristic finds")
             + f'<div class="card">{pre(interval_scheduling_txt)}</div>'
+            + '</div>'),
+        section(
+            "Coin change: fewest coins, ways to make change, and the greedy trap",
+            "Given coin denominations and a target, two classic questions: the MINIMUM number of "
+            "coins summing to the amount, and the NUMBER OF WAYS to make it. Both are textbook "
+            "DYNAMIC PROGRAMMING, and both expose a trap: the obvious GREEDY (take the largest coin "
+            "that fits) is right for canonical currency like US coins but FAILS for many denomination "
+            "sets -- with {1, 3, 4} making 6, greedy gives 4+1+1 (3 coins) while the optimum is 3+3 "
+            "(2 coins). Only DP is guaranteed correct. The minimum-coins DP builds min[a] = 1 + min "
+            "over coins c of min[a-c], with recorded choices reconstructing the coin multiset. The "
+            "counting DP is subtler: iterating coins in the OUTER loop counts order-independent "
+            "COMBINATIONS, while the amount outer counts ordered SEQUENCES. This module computes the "
+            "minimum coins (with the coins used), makeability, and both counts, verified against "
+            "brute force: the minimum is truly minimal and the reconstructed coins sum to the amount "
+            "(150 random instances), unmakeable amounts are detected, the combination count matches a "
+            "brute enumeration, greedy-defeating sets are handled ({1,3,4}->6 gives 2, {1,15,25}->30 "
+            "gives 2 vs greedy's 6), and canonical currency agrees with greedy.",
+            '<div class="grid">'
+            + svg_card(out("coin_change.svg"), "the minimum coins needed for each amount under three denomination systems -- dense sets (US) stay flat, sparse ones climb, and the DP finds the true optimum where greedy would stumble")
+            + f'<div class="card">{pre(coin_change_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

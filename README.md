@@ -363,6 +363,7 @@ ruins a long non-symplectic integration.
 | `src/cuckoo_filter.py` | Cuckoo filter: approximate membership with deletion (cuckoo hashing) |
 | `src/dsu_rollback.py` | Rollback disjoint-set union (snapshot/undo) for offline dynamic connectivity |
 | `src/interval_scheduling.py` | Weighted interval scheduling DP + greedy activity selection |
+| `src/coin_change.py` | Coin change: minimum coins + ways to make change (combinations/sequences) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -717,6 +718,7 @@ ruins a long non-symplectic integration.
 | `examples/cuckoo_filter_demo.py` | Deletion + false-positive rate shrinking with fingerprint bits |
 | `examples/dsu_rollback_demo.py` | Component count over edge additions and rollbacks on a timeline |
 | `examples/interval_scheduling_demo.py` | A Gantt chart with the optimal-value jobs vs greedy heuristics |
+| `examples/coin_change_demo.py` | The greedy trap + min-coins-per-amount curve for three coin systems |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8535,6 +8537,25 @@ finishing before i starts (binary search), O(n log n). This module implements th
 the chosen jobs and the greedy count-maximizer, verified against brute force over all 2^n subsets that
 the DP finds the true maximum, the returned jobs are non-overlapping and sum to it, the greedy count
 matches the maximum independent set, and equal weights reduce the DP to the greedy count.
+
+## Coin change: fewest coins, ways to make change, and the greedy trap
+
+Minimum coins and the number of ways -- where greedy fails and DP is exact. `coin_change.py`:
+
+```
+$ python examples/coin_change_demo.py examples/output
+
+  US 63c -> 6 coins; the greedy trap: {1,3,4} make 6 -> DP 2 (3+3), greedy 3 (4+1+1)
+  {1,15,25} make 30 -> DP 2 (15+15), greedy 6 (25 + five 1s)
+  5 with {1,2,5}: 4 combinations, 9 ordered sequences
+```
+
+The minimum-coins DP is min[a] = 1 + min over coins c of min[a-c] with reconstructed coins; the
+counting DP puts coins in the outer loop for order-independent combinations, the amount outer for
+ordered sequences. This module computes minimum coins, makeability, and both counts, verified against
+brute force over 150 random instances that the minimum is truly minimal, unmakeable amounts are
+detected, the combination count matches enumeration, and greedy-defeating denomination sets are
+handled correctly.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

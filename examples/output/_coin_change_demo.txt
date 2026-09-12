@@ -1,0 +1,23 @@
+Coin change: fewest coins, number of ways, and the greedy trap
+
+  US currency {1, 5, 10, 25} (greedy works here):
+    63c -> 6 coins [1, 1, 1, 10, 25, 25]
+    99c -> 9 coins [1, 1, 1, 1, 10, 10, 25, 25, 25]
+    41c -> 4 coins [1, 5, 10, 25]
+
+  The greedy trap -- coins {1, 3, 4}, make 6:
+    DP optimum: 2 coins [3, 3]
+    greedy (largest-first): 3 coins (4 + 1 + 1) -- WRONG, one more coin than needed
+
+  Another greedy failure -- coins {1, 15, 25}, make 30:
+    DP: 2 coins [15, 15]; greedy: 6 coins (25 + five 1s)
+
+  Number of ways to make change (combinations vs ordered sequences):
+    5 with {1,2,5}: 4 combinations, 9 ordered sequences
+    10 with {1,2,5}: 10 combinations, 128 ordered sequences
+
+  The minimum-coins DP builds min[a] = 1 + min over coins c of min[a-c]. The counting DP
+  puts coins in the OUTER loop (combinations) or the amount outer (sequences). Greedy is
+  only correct for 'canonical' coin systems; DP is always right.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\coin_change.svg
