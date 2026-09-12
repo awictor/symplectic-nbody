@@ -400,6 +400,7 @@ ruins a long non-symplectic integration.
 | `src/durand_kerner.py` | Durand-Kerner: all complex roots of a polynomial simultaneously |
 | `src/tanh_sinh.py` | Tanh-sinh (double-exponential) quadrature for endpoint singularities |
 | `src/ntt.py` | Number-theoretic transform: exact integer convolution + big-int multiply |
+| `src/karatsuba.py` | Karatsuba & Toom-3 fast multiplication + Karatsuba polynomial multiply |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -791,6 +792,7 @@ ruins a long non-symplectic integration.
 | `examples/durand_kerner_demo.py` | Polynomial roots found at once + the 8th roots of unity plotted |
 | `examples/tanh_sinh_demo.py` | Singular integrals nailed vs Simpson + the clustering abscissae |
 | `examples/ntt_demo.py` | Exact polynomial product + big-integer multiply by digit convolution |
+| `examples/karatsuba_demo.py` | Big-int products + the complexity-exponent curves of each method |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9324,6 +9326,23 @@ Convolution is transform, pointwise multiply, inverse -- exactly mod p. Powers b
 multiplication (convolve digit arrays, then carry). Verified against schoolbook O(n^2) convolution and
 Python's exact bignum multiplication -- identical on hundreds of inputs including 500-digit numbers --
 plus round-trip and agreement with the complex FFT convolution.
+
+## Karatsuba & Toom-Cook: fast multiplication by fewer sub-products
+
+Multiply big numbers below O(n^2) by trading multiplications for additions. `karatsuba.py`:
+
+```
+$ python examples/karatsuba_demo.py examples/output
+
+  12345678 * 87654321 and (10^300-1)^2 computed exactly by both methods
+  schoolbook O(n^2), Karatsuba O(n^1.585), Toom-3 O(n^1.465)
+```
+
+Karatsuba splits each number in two and gets the middle cross-term from ONE product (x1+x0)(y1+y0)
+minus the two already known -- 3 sub-multiplications instead of 4. Toom-3 splits in three, evaluates the
+part-polynomials at 5 points, and interpolates -- 5 instead of 9. Verified against Python's exact bignum
+multiply and an independent schoolbook limb reference on hundreds of random inputs (including
+1000-digit numbers, negatives, edge cases), with the polynomial version matched to direct convolution.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

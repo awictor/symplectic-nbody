@@ -442,6 +442,7 @@ def main():
     import durand_kerner_demo
     import tanh_sinh_demo
     import ntt_demo
+    import karatsuba_demo
 
     import plot_orbits
 
@@ -853,6 +854,7 @@ def main():
     durand_kerner_txt = run("durand_kerner_demo", durand_kerner_demo.main, True)
     tanh_sinh_txt = run("tanh_sinh_demo", tanh_sinh_demo.main, True)
     ntt_txt = run("ntt_demo", ntt_demo.main, True)
+    karatsuba_txt = run("karatsuba_demo", karatsuba_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6888,6 +6890,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("ntt.svg"), "an exact polynomial product computed by the NTT: the coefficients of A times B are each an exact integer (convolution done in modular arithmetic), with none of the floating-point rounding a complex FFT would introduce")
             + f'<div class="card">{pre(ntt_txt)}</div>'
+            + '</div>'),
+        section(
+            "Karatsuba & Toom-Cook: fast multiplication by fewer sub-products",
+            "Long multiplication of two n-digit numbers costs O(n^2). In 1960 Karatsuba showed this is "
+            "not optimal: splitting x = x1*B + x0 and y = y1*B + y0, the naive product needs four "
+            "half-size multiplications (x1*y1, x1*y0, x0*y1, x0*y0), but KARATSUBA computes the "
+            "middle cross-term x1*y0 + x0*y1 from a SINGLE extra product (x1+x0)(y1+y0) minus the two "
+            "already known -- 3 multiplications instead of 4, giving O(n^1.585). TOOM-COOK generalises "
+            "it: split into k parts, treat as polynomials, evaluate at 2k-1 points, multiply "
+            "pointwise, and interpolate -- Toom-3 needs 5 multiplications instead of 9, giving "
+            "O(n^1.465), the sweet spot before FFT/NTT methods take over for enormous inputs. These "
+            "are the classic stepping stones of fast multiplication that live inside every "
+            "arbitrary-precision library. This module implements recursive Karatsuba (schoolbook "
+            "fallback for small inputs), Toom-3, and Karatsuba polynomial multiplication. Verified "
+            "against Python's exact bignum multiply and an independent schoolbook limb reference -- "
+            "identical on hundreds of random inputs including 1000-digit numbers, negatives, and edge "
+            "cases -- with the polynomial version matched to direct convolution.",
+            '<div class="grid">'
+            + svg_card(out("karatsuba.svg"), "the runtime O(n^e) of schoolbook (e=2), Karatsuba (e=1.585), and Toom-3 (e=1.465): each algebraic trick that trades a multiplication for a few additions drops the exponent, and for thousand-digit numbers that gap is enormous")
+            + f'<div class="card">{pre(karatsuba_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
