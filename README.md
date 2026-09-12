@@ -411,6 +411,7 @@ ruins a long non-symplectic integration.
 | `src/rabin_karp.py` | Rabin-Karp rolling-hash search + multi-pattern + longest common substring |
 | `src/half_plane_intersection.py` | Half-plane intersection: feasible convex region of linear constraints |
 | `src/bentley_ottmann.py` | Sweep-line segment intersection: all crossings via x-ordered sweep |
+| `src/gjk.py` | GJK convex collision detection + Minkowski difference |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -813,6 +814,7 @@ ruins a long non-symplectic integration.
 | `examples/rabin_karp_demo.py` | Rolling-hash matches across a text + multi-pattern + sentence LCS |
 | `examples/half_plane_intersection_demo.py` | A 5-constraint feasible region with its LP optimum vertex |
 | `examples/bentley_ottmann_demo.py` | Six segments with all their crossings marked |
+| `examples/gjk_demo.py` | Two shapes + their Minkowski difference with the origin inside |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9538,6 +9540,24 @@ begun, so every x-disjoint pair is pruned. Any crossing pair is active together 
 so none is missed. Verified against the brute all-pairs test on thousands of random arrangements, plus
 grids, a star of concurrent segments, parallel families, and shared-endpoint cases, with every reported
 crossing point confirmed to lie on both segments.
+
+## GJK: convex collision by the Minkowski difference
+
+Detect whether two convex shapes overlap without building their intersection. `gjk.py`:
+
+```
+$ python examples/gjk_demo.py examples/output
+
+  overlapping squares, touching corner, pentagon-in-hexagon -> collide; far apart -> not
+  GJK verdict matches both SAT and the Minkowski-contains-origin test
+```
+
+Convex A and B overlap iff their Minkowski difference A(-)B = {a - b} contains the origin. GJK explores
+that difference lazily via a support function (the farthest vertex in a direction), growing a simplex
+toward the origin -- deciding overlap in a few iterations regardless of vertex count, the collision core
+of physics engines. Verified against two independent references, the Separating Axis Theorem and a
+convex-hull Minkowski-origin test, with identical verdicts on hundreds of random polygon pairs, plus
+translation-invariance and self-collision.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

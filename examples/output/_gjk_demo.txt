@@ -1,0 +1,16 @@
+GJK: convex collision detection via the Minkowski difference
+
+  case                        GJK    SAT  Minkowski
+  overlapping squares        True   True       True
+  touching at a corner       True   True       True
+  far apart                 False  False      False
+  pentagon in hexagon        True   True       True
+
+  Two convex shapes overlap iff their Minkowski difference A(-)B = {a - b} contains the
+  origin. GJK never builds that difference: it queries SUPPORT points (the farthest vertex
+  in a direction) to grow a simplex toward the origin, deciding overlap in a few iterations
+  no matter how many vertices the shapes have. It is the collision core of physics engines.
+
+  example A x B collide: True (their Minkowski difference straddles 0)
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\gjk.svg

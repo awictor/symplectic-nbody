@@ -453,6 +453,7 @@ def main():
     import rabin_karp_demo
     import half_plane_intersection_demo
     import bentley_ottmann_demo
+    import gjk_demo
 
     import plot_orbits
 
@@ -875,6 +876,7 @@ def main():
     rabin_karp_txt = run("rabin_karp_demo", rabin_karp_demo.main, True)
     half_plane_intersection_txt = run("half_plane_intersection_demo", half_plane_intersection_demo.main, True)
     bentley_ottmann_txt = run("bentley_ottmann_demo", bentley_ottmann_demo.main, True)
+    gjk_txt = run("gjk_demo", gjk_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7139,6 +7141,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("bentley_ottmann.svg"), "six segments with all fourteen of their pairwise crossings marked in red: the sweep finds each exactly once, comparing a segment only against those whose x-range overlaps it rather than against all the others")
             + f'<div class="card">{pre(bentley_ottmann_txt)}</div>'
+            + '</div>'),
+        section(
+            "GJK: convex collision by the Minkowski difference",
+            "Do two convex shapes overlap? The GILBERT-JOHNSON-KEERTHI algorithm answers this without "
+            "building their intersection, using one deep fact: convex sets A and B overlap iff their "
+            "MINKOWSKI DIFFERENCE A(-)B = {a - b} contains the origin. GJK never constructs that "
+            "difference -- it explores it lazily through a SUPPORT FUNCTION (the farthest point of a "
+            "shape in a direction) and grows a SIMPLEX (point, segment, triangle) of "
+            "difference-points toward the origin. Each step picks the direction from the simplex "
+            "toward the origin, adds the support point there, and if that point fails to pass the "
+            "origin the shapes are disjoint; otherwise the do-simplex step keeps the sub-face closest "
+            "to the origin and repeats, terminating when the simplex encloses the origin (collision) "
+            "or no progress is possible (separation). It is the collision core of physics engines, "
+            "robotics, and games, converging in a few iterations regardless of vertex count. This "
+            "module implements the support function, Minkowski difference, and the full 2-D GJK "
+            "simplex logic. Verified against two independent references -- the Separating Axis "
+            "Theorem and a convex-hull test that the Minkowski difference contains the origin -- with "
+            "identical collide/no-collide verdicts on hundreds of random polygon pairs, plus "
+            "translation-invariance and self-collision checks.",
+            '<div class="grid">'
+            + svg_card(out("gjk.svg"), "left: two overlapping rectangles A and B; right: their Minkowski difference A(-)B (yellow hull over grey difference points) with the origin (red) inside it -- the exact algebraic condition for the two shapes to collide")
+            + f'<div class="card">{pre(gjk_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
