@@ -1,0 +1,24 @@
+Kitamasa: the N-th linear-recurrence term without unrolling
+
+  sequence     char poly                     term 30
+  Fibonacci    x^2 - 1x - 1                   832040
+  Tribonacci   x^3 - 1x^2 - 1x - 1          15902591
+  Pell         x^2 - 2x - 1             107578520350
+  Perrin       x^3 - 1x - 1                     4610
+
+  exact small Fibonacci (verified against O(n) unrolling):
+    F(10) = 55
+    F(50) = 12586269025
+    F(100) = 354224848179261915075
+
+  enormous terms modulo p = 1000000007 (impossible by unrolling):
+    F(1000000) mod p = 918091266
+    F(1000000000000) mod p = 730695249
+    F(1000000000000000000) mod p = 209783453
+
+  Kitamasa computes x^n mod c(x) by square-and-multiply (each reduction O(k^2)), then dots
+  the resulting coefficient vector with the initial terms. So the N-th term costs only
+  O(k^2 log n) -- for n = 10^18 that is a few dozen polynomial multiplies, versus a
+  quintillion additions to unroll. It beats even the O(k^3 log n) companion-matrix power.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\kitamasa.svg

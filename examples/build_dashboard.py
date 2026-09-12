@@ -448,6 +448,7 @@ def main():
     import walksat_demo
     import householder_qr_demo
     import jacobi_eigen_demo
+    import kitamasa_demo
 
     import plot_orbits
 
@@ -865,6 +866,7 @@ def main():
     walksat_txt = run("walksat_demo", walksat_demo.main, True)
     householder_qr_txt = run("householder_qr_demo", householder_qr_demo.main, True)
     jacobi_eigen_txt = run("jacobi_eigen_demo", jacobi_eigen_demo.main, True)
+    kitamasa_txt = run("kitamasa_demo", kitamasa_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7024,6 +7026,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("jacobi_eigen.svg"), "the off-diagonal Frobenius norm plunging toward zero rotation by rotation (log scale): each Givens rotation zeros the largest off-diagonal entry, and the matrix converges to diagonal form -- its diagonal then holding the eigenvalues")
             + f'<div class="card">{pre(jacobi_eigen_txt)}</div>'
+            + '</div>'),
+        section(
+            "Kitamasa: the N-th recurrence term in log time",
+            "A linear recurrence s[n] = c1 s[n-1] + ... + ck s[n-k] can be unrolled in O(n), hopeless "
+            "for the 10^18-th term. The companion-matrix power gets it in O(k^3 log n); KITAMASA'S "
+            "METHOD does it in O(k^2 log n) using POLYNOMIALS, never forming the matrix. The key "
+            "identity: s[n] is a fixed linear combination of the first k terms whose coefficients are "
+            "those of x^n reduced modulo the CHARACTERISTIC POLYNOMIAL c(x) = x^k - c1 x^(k-1) - ... "
+            "- ck. So computing s[n] reduces to x^n mod c(x): start from x, square-and-multiply with "
+            "a reduction mod c(x) after each step (each O(k^2)), and after O(log n) steps dot the "
+            "resulting coefficient vector with the initial terms. It works over the integers, "
+            "rationals, or any modulus -- the workhorse for 'find the enormous N-th term' problems in "
+            "Fibonacci-like sequences, tilings, and fixed-graph path counts. This module builds the "
+            "characteristic polynomial, computes x^n mod c(x), and evaluates the term. Verified "
+            "against O(n) unrolling for moderate n, against known closed forms (Fibonacci, "
+            "Tribonacci, Pell, powers of two), by modular results matching exact-then-reduce, and by "
+            "Cassini's identity at n = 10^15 -- on hundreds of random recurrences.",
+            '<div class="grid">'
+            + svg_card(out("kitamasa.svg"), "the operation count to find the N-th term: O(n) unrolling (red) versus Kitamasa's O(log n) (green) on a log-log scale -- by n = 10^18 the gap is a quintillion additions against a few dozen polynomial multiplies")
+            + f'<div class="card">{pre(kitamasa_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

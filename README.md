@@ -406,6 +406,7 @@ ruins a long non-symplectic integration.
 | `src/walksat.py` | WalkSAT: randomized local-search SAT solver (incomplete) |
 | `src/householder_qr.py` | Householder QR by reflections + least squares + solve |
 | `src/jacobi_eigen.py` | Jacobi symmetric eigendecomposition by Givens rotations |
+| `src/kitamasa.py` | Kitamasa: N-th linear-recurrence term in O(k^2 log n) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -803,6 +804,7 @@ ruins a long non-symplectic integration.
 | `examples/walksat_demo.py` | A 3-SAT solve with the falling conflict-count trajectory |
 | `examples/householder_qr_demo.py` | A least-squares line fit with residual stubs |
 | `examples/jacobi_eigen_demo.py` | The off-diagonal norm plunging to zero over rotations |
+| `examples/kitamasa_demo.py` | Huge recurrence terms + the O(n) vs O(log n) cost gap |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9439,6 +9441,24 @@ largest off-diagonal entry; the off-diagonal mass strictly decreases every step,
 form while the accumulated rotations build the eigenvectors. Verified by reconstruction (V D V^T = A),
 orthonormality, the eigen-equation A v = lambda v, the trace and determinant identities, and agreement
 with the repository's power-iteration eigenvalues -- on hundreds of random symmetric matrices.
+
+## Kitamasa: the N-th recurrence term in log time
+
+Find the enormous N-th term of a linear recurrence in O(k^2 log n). `kitamasa.py`:
+
+```
+$ python examples/kitamasa_demo.py examples/output
+
+  Fibonacci char poly x^2-x-1; F(100) exact = 354224848179261915075
+  F(10^18) mod 1e9+7 = 209783453 (impossible to unroll)
+```
+
+s[n] is a fixed linear combination of the first k terms whose coefficients are those of x^n reduced
+modulo the characteristic polynomial c(x) = x^k - c1 x^(k-1) - ... - ck. Computing x^n mod c(x) by
+square-and-multiply (each reduction O(k^2)) then dotting with the initial terms gives s[n] in
+O(k^2 log n) -- beating even the O(k^3 log n) companion-matrix power. Works over integers, rationals, or
+any modulus. Verified against O(n) unrolling for moderate n, known closed forms, modular
+exact-then-reduce, and Cassini's identity at n = 10^15 -- on hundreds of random recurrences.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
