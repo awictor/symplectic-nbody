@@ -405,6 +405,7 @@ ruins a long non-symplectic integration.
 | `src/dancing_links.py` | Dancing Links (DLX): Algorithm X exact cover + N-queens |
 | `src/walksat.py` | WalkSAT: randomized local-search SAT solver (incomplete) |
 | `src/householder_qr.py` | Householder QR by reflections + least squares + solve |
+| `src/jacobi_eigen.py` | Jacobi symmetric eigendecomposition by Givens rotations |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -801,6 +802,7 @@ ruins a long non-symplectic integration.
 | `examples/dancing_links_demo.py` | Knuth's exact-cover example + a 6-queens board on a chessboard |
 | `examples/walksat_demo.py` | A 3-SAT solve with the falling conflict-count trajectory |
 | `examples/householder_qr_demo.py` | A least-squares line fit with residual stubs |
+| `examples/jacobi_eigen_demo.py` | The off-diagonal norm plunging to zero over rotations |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9420,6 +9422,23 @@ everything below the diagonal; n reflections triangularize A into R and their pr
 Q, which stays orthonormal to machine precision where Gram-Schmidt drifts. Verified by reconstruction
 (QR = A), orthonormality (Q^T Q = I), R triangularity, and agreement of the least-squares solution with
 the normal equations and the repository's Gram-Schmidt QR -- on hundreds of random matrices.
+
+## Jacobi eigenvalues: diagonalising by rotations
+
+Diagonalise a symmetric matrix A = V D V^T via Givens rotations. `jacobi_eigen.py`:
+
+```
+$ python examples/jacobi_eigen_demo.py examples/output
+
+  4x4 symmetric -> eigenvalues 6.84, 2.27, 1.08, -2.20; reconstruction error ~1e-15
+  off-diagonal norm falls 5.29 -> 2.6e-16 over 19 rotations
+```
+
+Each rotation in the (p,q) plane, at the angle with cot(2 theta) = (a_qq-a_pp)/(2 a_pq), zeros the
+largest off-diagonal entry; the off-diagonal mass strictly decreases every step, driving A to diagonal
+form while the accumulated rotations build the eigenvectors. Verified by reconstruction (V D V^T = A),
+orthonormality, the eigen-equation A v = lambda v, the trace and determinant identities, and agreement
+with the repository's power-iteration eigenvalues -- on hundreds of random symmetric matrices.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

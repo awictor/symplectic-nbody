@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="360" viewBox="0 0 740 360" font-family="monospace">
+<rect width="740" height="360" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="17">Jacobi convergence: off-diagonal norm vs rotation (log scale)</text>
+<text x="20" y="47" fill="#8b949e" font-size="12">each rotation zeros the largest off-diagonal entry; the norm plunges toward 0 (diagonal)</text>
+<line x1="60" y1="300" x2="700" y2="300" stroke="#30363d"/>
+<line x1="60" y1="300" x2="60" y2="60" stroke="#30363d"/>
+<polyline points="60.0,60.0 93.7,61.8 127.4,70.1 161.1,74.5 194.7,77.7 228.4,82.8 262.1,87.7 295.8,94.6 329.5,109.6 363.2,113.1 396.8,119.3 430.5,142.8 464.2,160.3 497.9,176.7 531.6,203.7 565.3,240.7 598.9,277.7 632.6,285.4 666.3,300.0 700.0,300.0" fill="none" stroke="#06d6a0" stroke-width="2"/>
+<circle cx="60.0" cy="60.0" r="3" fill="#4dabf7"/>
+<circle cx="93.7" cy="61.8" r="3" fill="#4dabf7"/>
+<circle cx="127.4" cy="70.1" r="3" fill="#4dabf7"/>
+<circle cx="161.1" cy="74.5" r="3" fill="#4dabf7"/>
+<circle cx="194.7" cy="77.7" r="3" fill="#4dabf7"/>
+<circle cx="228.4" cy="82.8" r="3" fill="#4dabf7"/>
+<circle cx="262.1" cy="87.7" r="3" fill="#4dabf7"/>
+<circle cx="295.8" cy="94.6" r="3" fill="#4dabf7"/>
+<circle cx="329.5" cy="109.6" r="3" fill="#4dabf7"/>
+<circle cx="363.2" cy="113.1" r="3" fill="#4dabf7"/>
+<circle cx="396.8" cy="119.3" r="3" fill="#4dabf7"/>
+<circle cx="430.5" cy="142.8" r="3" fill="#4dabf7"/>
+<circle cx="464.2" cy="160.3" r="3" fill="#4dabf7"/>
+<circle cx="497.9" cy="176.7" r="3" fill="#4dabf7"/>
+<circle cx="531.6" cy="203.7" r="3" fill="#4dabf7"/>
+<circle cx="565.3" cy="240.7" r="3" fill="#4dabf7"/>
+<circle cx="598.9" cy="277.7" r="3" fill="#4dabf7"/>
+<circle cx="632.6" cy="285.4" r="3" fill="#4dabf7"/>
+<circle cx="666.3" cy="300.0" r="3" fill="#4dabf7"/>
+<circle cx="700.0" cy="300.0" r="3" fill="#4dabf7"/>
+<text x="380" y="330" fill="#8b949e" font-size="12" text-anchor="middle">rotation number -></text>
+</svg>

@@ -447,6 +447,7 @@ def main():
     import dancing_links_demo
     import walksat_demo
     import householder_qr_demo
+    import jacobi_eigen_demo
 
     import plot_orbits
 
@@ -863,6 +864,7 @@ def main():
     dancing_links_txt = run("dancing_links_demo", dancing_links_demo.main, True)
     walksat_txt = run("walksat_demo", walksat_demo.main, True)
     householder_qr_txt = run("householder_qr_demo", householder_qr_demo.main, True)
+    jacobi_eigen_txt = run("jacobi_eigen_demo", jacobi_eigen_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7001,6 +7003,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("householder_qr.svg"), "a least-squares line fit computed via Householder QR: the green line minimises the summed squared vertical residuals (orange stubs) to the blue data points -- the workhorse application of the stable QR factorization")
             + f'<div class="card">{pre(householder_qr_txt)}</div>'
+            + '</div>'),
+        section(
+            "Jacobi eigenvalues: diagonalising by rotations",
+            "Every real symmetric matrix diagonalises as A = V D V^T with V orthogonal and D the real "
+            "eigenvalues. The JACOBI algorithm (1846) finds this by a sequence of GIVENS ROTATIONS, "
+            "each chosen to zero out the largest off-diagonal entry: a rotation in the (p,q) plane by "
+            "the angle with cot(2 theta) = (a_qq - a_pp)/(2 a_pq) annihilates a_pq, and successive "
+            "rotations drive the off-diagonal mass to zero while the accumulated rotations build the "
+            "eigenvector matrix. It is slower than QR-based methods for large matrices but prized for "
+            "its simplicity, robustness, and high relative accuracy even for tiny eigenvalues -- which "
+            "keeps it alive in high-accuracy and parallel settings. Each step finds the largest "
+            "off-diagonal entry, computes the rotation, and applies it to two rows and columns of A "
+            "and to V; the sum of squared off-diagonal entries strictly decreases every rotation, so "
+            "it converges, and sweeping until that norm is tiny leaves the eigenvalues on the "
+            "diagonal and eigenvectors in V. This module returns eigenvalues and orthonormal "
+            "eigenvectors. Verified by reconstruction (V D V^T = A), orthonormality, the eigen-"
+            "equation A v = lambda v, the trace and determinant identities, and agreement with the "
+            "repository's power-iteration eigenvalues -- on hundreds of random symmetric matrices.",
+            '<div class="grid">'
+            + svg_card(out("jacobi_eigen.svg"), "the off-diagonal Frobenius norm plunging toward zero rotation by rotation (log scale): each Givens rotation zeros the largest off-diagonal entry, and the matrix converges to diagonal form -- its diagonal then holding the eigenvalues")
+            + f'<div class="card">{pre(jacobi_eigen_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

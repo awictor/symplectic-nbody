@@ -1,0 +1,25 @@
+Jacobi eigenvalue algorithm: A = V D V^T for symmetric A, via rotations
+
+  symmetric matrix A:
+      4.0    1.0   -2.0    2.0
+      1.0    2.0    0.0    1.0
+     -2.0    0.0    3.0   -2.0
+      2.0    1.0   -2.0   -1.0
+
+  eigenvalues (descending): [6.8446, 2.2685, 1.0844, -2.1975]
+  eigenvectors orthonormal: True
+  reconstruction error |V D V^T - A|: 7.11e-15
+  sum of eigenvalues = 8.0000  (trace = 8)
+
+  each eigenpair satisfies A v = lambda v:
+    lambda =   6.8446   |A v - lambda v| = 5.3e-15
+    lambda =   2.2685   |A v - lambda v| = 1.6e-15
+    lambda =   1.0844   |A v - lambda v| = 3.3e-16
+    lambda =  -2.1975   |A v - lambda v| = 1.3e-15
+
+  off-diagonal Frobenius norm falls from 5.292 to 2.6e-16 over 19 rotations
+    each rotation zeros the largest off-diagonal entry; the total off-diagonal mass
+    strictly decreases every step, driving A to diagonal form. Slower than QR for big
+    matrices, but simple, robust, and accurate even for the tiniest eigenvalues.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\jacobi_eigen.svg
