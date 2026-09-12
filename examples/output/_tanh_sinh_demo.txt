@@ -1,0 +1,17 @@
+Tanh-sinh (double-exponential) quadrature: taming endpoint singularities
+
+  integrand                             exact      tanh-sinh        Simpson
+  x^2                              0.33333333     0.33333333     0.33333333
+  exp(x)                           1.71828183     1.71828183     1.71828183
+  1/sqrt(x)  (blows up at 0)       2.00000000     1.99999999     1.99109949
+  ln(1/x)  (log blowup at 0)       1.00000000     1.00000000     0.99979276
+  1/sqrt(1-x^2)  (blows up at 1)   1.57079633     1.57079631     1.56450271
+  1/sqrt(x(1-x))  (both ends)      3.14159265     3.14159262     3.12379161
+
+  On smooth integrands both methods nail it; on the singular ones tanh-sinh stays
+  accurate to ~1e-8 while naive Simpson loses digits (its endpoint sample sits on or near
+  the blow-up). The substitution x = tanh(pi/2 sinh t) clusters abscissae exponentially
+  toward the endpoints without ever reaching them, and the transformed integrand decays
+  double-exponentially, so a plain trapezoid rule in t converges with astonishing speed.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\tanh_sinh.svg

@@ -398,6 +398,7 @@ ruins a long non-symplectic integration.
 | `src/linear_sieve.py` | Linear sieve: primes + SPF + Euler totient + Mobius in O(N) |
 | `src/weighted_dsu.py` | Weighted union-find: difference constraints + parity/bipartite |
 | `src/durand_kerner.py` | Durand-Kerner: all complex roots of a polynomial simultaneously |
+| `src/tanh_sinh.py` | Tanh-sinh (double-exponential) quadrature for endpoint singularities |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -787,6 +788,7 @@ ruins a long non-symplectic integration.
 | `examples/linear_sieve_demo.py` | The totient curve and Mobius bars from one linear-sieve pass |
 | `examples/weighted_dsu_demo.py` | Difference constraints accepted/rejected + an odd-cycle contradiction |
 | `examples/durand_kerner_demo.py` | Polynomial roots found at once + the 8th roots of unity plotted |
+| `examples/tanh_sinh_demo.py` | Singular integrals nailed vs Simpson + the clustering abscissae |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9284,6 +9286,24 @@ from spread complex seeds -- no bracketing, no derivative, no deflation -- conve
 every root, including complex ones the real bracketing methods can't see. Verified by construction
 (build a polynomial from known roots and recover them), residual (p at each root ~0), and Vieta's
 formulas (the roots' symmetric functions reproduce the coefficients) on hundreds of random polynomials.
+
+## Tanh-sinh quadrature: integrating through singularities
+
+Integrate functions that blow up at the endpoints, where classical rules fail. `tanh_sinh.py`:
+
+```
+$ python examples/tanh_sinh_demo.py examples/output
+
+  1/sqrt(x) -> 2, ln(1/x) -> 1, 1/sqrt(1-x^2) -> pi/2, 1/sqrt(x(1-x)) -> pi
+  tanh-sinh ~1e-8 on these; naive Simpson loses 2-3 digits
+```
+
+The substitution x = tanh((pi/2) sinh t) makes the transformed integrand decay double-exponentially
+and clusters abscissae exponentially toward the endpoints (never reaching them), so a plain trapezoid
+rule in t converges with the correct-digit count roughly doubling per step halving -- taming integrable
+endpoint singularities. Verified against closed forms: smooth integrands to machine precision, the
+singular integrals of 1/sqrt(x), ln(1/x), 1/sqrt(1-x^2), and both-ends 1/sqrt(x(1-x))=pi, plus a
+fine-Simpson reference on smooth cases.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

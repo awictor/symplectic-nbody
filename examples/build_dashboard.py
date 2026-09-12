@@ -440,6 +440,7 @@ def main():
     import linear_sieve_demo
     import weighted_dsu_demo
     import durand_kerner_demo
+    import tanh_sinh_demo
 
     import plot_orbits
 
@@ -849,6 +850,7 @@ def main():
     linear_sieve_txt = run("linear_sieve_demo", linear_sieve_demo.main, True)
     weighted_dsu_txt = run("weighted_dsu_demo", weighted_dsu_demo.main, True)
     durand_kerner_txt = run("durand_kerner_demo", durand_kerner_demo.main, True)
+    tanh_sinh_txt = run("tanh_sinh_demo", tanh_sinh_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6841,6 +6843,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("durand_kerner.svg"), "the eight roots of x^8-1 plotted in the complex plane: Durand-Kerner finds all of them at once, evenly spaced on the unit circle -- the complex roots the real bracketing methods can't see")
             + f'<div class="card">{pre(durand_kerner_txt)}</div>'
+            + '</div>'),
+        section(
+            "Tanh-sinh quadrature: integrating through singularities",
+            "Trapezoid, Simpson, and Gauss-Legendre assume a smooth bounded integrand and fail on an "
+            "INTEGRABLE SINGULARITY at an endpoint -- 1/sqrt(x), ln(x), 1/sqrt(1-x^2) -- because a "
+            "sample lands on the blow-up. TANH-SINH (double-exponential) quadrature, from Takahasi "
+            "and Mori (1974), is the standard tool for exactly these, and is astonishingly robust: "
+            "the correct-digit count roughly doubles each time the step halves. The trick is the "
+            "substitution x = tanh((pi/2) sinh t): as t sweeps the real line, x sweeps (-1,1) with "
+            "abscissae clustering exponentially toward the endpoints without ever reaching them, and "
+            "the transformed integrand decays double-exponentially, so a plain equally-spaced "
+            "trapezoid rule in t converges extremely fast. Halving the step nests the abscissae; the "
+            "method refines until successive levels agree, and any finite interval maps linearly onto "
+            "[-1,1]. This module integrates over an arbitrary finite interval with automatic level "
+            "refinement. Verified against closed forms -- smooth integrands to machine precision, and "
+            "the endpoint-singular integrals of 1/sqrt(x), ln(1/x), 1/sqrt(1-x^2), and the "
+            "both-ends-singular 1/sqrt(x(1-x)) = pi where classical rules lose digits -- plus a "
+            "fine-Simpson reference on smooth cases.",
+            '<div class="grid">'
+            + svg_card(out("tanh_sinh.svg"), "the tanh-sinh abscissae on [-1,1]: equally-spaced points in t map to points that pile up exponentially toward the endpoints, exactly where singular integrands need the most resolution")
+            + f'<div class="card">{pre(tanh_sinh_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
