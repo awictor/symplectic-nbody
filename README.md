@@ -424,6 +424,7 @@ ruins a long non-symplectic integration.
 | `src/vp_tree.py` | Vantage-point tree: metric-space nearest neighbours (points, strings, vectors) |
 | `src/tdigest.py` | t-digest: streaming quantiles over the whole distribution, sharp tails, mergeable |
 | `src/myers_diff.py` | Myers O(ND) diff: shortest edit script + LCS + unified diff (the git algorithm) |
+| `src/push_relabel.py` | Push-relabel (Goldberg-Tarjan) max flow + min cut + bipartite matching |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -839,6 +840,7 @@ ruins a long non-symplectic integration.
 | `examples/vp_tree_demo.py` | A k-NN query touching under 10% of points, plus edit-distance lookup |
 | `examples/tdigest_demo.py` | Streaming p50-p9999 from 500k samples in 64 centroids, plus a merge |
 | `examples/myers_diff_demo.py` | A git-style unified diff and the edit graph with its shortest path |
+| `examples/push_relabel_demo.py` | A max-flow network with per-edge utilisation and the min cut drawn |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9819,6 +9821,24 @@ the edit count D, running in O((N+M)*D), tiny when files are similar. Computes d
 edit script, the LCS, and a unified diff. Validated: distance equals `len(A)+len(B)-2*LCS` cross-checked
 against an independent DP on hundreds of random pairs, applying the reconstructed script to A reproduces
 B exactly every time, and the LCS is a genuine subsequence of both with the correct length.
+
+## Push-relabel: maximum flow from the other direction
+
+Max flow via preflow and heights instead of augmenting paths. `push_relabel.py`:
+
+```
+$ python examples/push_relabel_demo.py examples/output
+
+  CLRS 6-node network: push-relabel = 23, Dinic = 23 (MATCH)
+  min cut {0,1,2,4} capacity 23 = max flow (max-flow min-cut theorem)
+```
+
+Push-relabel (Goldberg-Tarjan 1988) maintains a preflow -- nodes may hold excess -- and a height per
+node, then PUSHES excess downhill or RELABELS stuck nodes upward until only the sink holds excess.
+Uses the FIFO rule (O(V^3)) plus the gap heuristic. Returns flow value, per-edge flow, and the min
+cut. Validated against the repo's independent Dinic solver on 300 random networks (flow values agree
+every time), plus flow conservation, capacity limits, the max-flow min-cut theorem, and bipartite
+matching vs a brute-force augmenting search.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

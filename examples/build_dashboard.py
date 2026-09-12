@@ -466,6 +466,7 @@ def main():
     import vp_tree_demo
     import tdigest_demo
     import myers_diff_demo
+    import push_relabel_demo
 
     import plot_orbits
 
@@ -901,6 +902,7 @@ def main():
     vp_tree_txt = run("vp_tree_demo", vp_tree_demo.main, True)
     tdigest_txt = run("tdigest_demo", tdigest_demo.main, True)
     myers_diff_txt = run("myers_diff_demo", myers_diff_demo.main, True)
+    push_relabel_txt = run("push_relabel_demo", push_relabel_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7464,6 +7466,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("myers_diff.svg"), "the edit graph for 'ABCABBA' -> 'CBABAC': green diagonals are free matches, and the yellow path is the shortest edit script -- the more diagonals it can ride, the fewer edits the diff needs")
             + f'<div class="card">{pre(myers_diff_txt)}</div>'
+            + '</div>'),
+        section(
+            "Push-relabel: maximum flow from the other direction",
+            "Maximum flow -- the most you can push from a source to a sink through capacitated pipes -- "
+            "decides bipartite matchings, image segmentation, scheduling, and (by max-flow min-cut) the "
+            "cheapest way to sever a network. The augmenting-path solvers elsewhere in this repo "
+            "(Edmonds-Karp, Dinic) keep a valid flow and repeatedly push along an s-t path with spare "
+            "capacity. Push-relabel (Goldberg-Tarjan, 1988) attacks it from the opposite side, and is "
+            "often faster. It maintains a PREFLOW -- a relaxed object where a node may receive more than "
+            "it sends, holding the surplus as EXCESS -- and a HEIGHT per node. Two local moves: PUSH "
+            "shoves excess to a lower neighbour along a residual edge; RELABEL lifts a stuck node one "
+            "above its lowest residual neighbour so a push becomes possible. Water flows downhill; "
+            "excess that can never reach the sink is eventually lifted above the source and drains back, "
+            "and when only the sink holds excess the preflow has become a maximum flow. This "
+            "implementation uses the FIFO rule for an O(V^3) bound plus the GAP HEURISTIC (if no node "
+            "sits at some height, jump everything above it straight to the top), and returns the flow "
+            "value, per-edge flow, and the minimum cut. Validated the way a second algorithm should be "
+            "-- against the repository's independent Dinic solver on 300 seeded random networks, where "
+            "the flow values agree every time -- plus flow conservation and capacity limits at every "
+            "node, the max-flow min-cut theorem (the reported cut capacity equals the flow and separates "
+            "source from sink), and bipartite matching matching a brute-force augmenting search.",
+            '<div class="grid">'
+            + svg_card(out("push_relabel.svg"), "the classic 6-node max-flow network solved by push-relabel: edges thicken and turn green as they saturate, and the red-ringed nodes are the source side of the minimum cut whose capacity (23) equals the maximum flow")
+            + f'<div class="card">{pre(push_relabel_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
