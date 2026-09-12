@@ -406,6 +406,7 @@ def main():
     import dsu_rollback_demo
     import interval_scheduling_demo
     import coin_change_demo
+    import combinatorial_rank_demo
 
     import plot_orbits
 
@@ -781,6 +782,7 @@ def main():
     dsu_rollback_txt = run("dsu_rollback_demo", dsu_rollback_demo.main, True)
     interval_scheduling_txt = run("interval_scheduling_demo", interval_scheduling_demo.main, True)
     coin_change_txt = run("coin_change_demo", coin_change_demo.main, True)
+    combinatorial_rank_txt = run("combinatorial_rank_demo", combinatorial_rank_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6039,6 +6041,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("coin_change.svg"), "the minimum coins needed for each amount under three denomination systems -- dense sets (US) stay flat, sparse ones climb, and the DP finds the true optimum where greedy would stumble")
             + f'<div class="card">{pre(coin_change_txt)}</div>'
+            + '</div>'),
+        section(
+            "Combinatorial ranking: objects as integers",
+            "Every finite combinatorial object -- a permutation of n items, a k-subset of n, a "
+            "bit-string -- can be given a unique integer RANK from 0 to (count-1), and recovered from "
+            "it by UNRANKING. This bijection is the engine of combinatorial generation: store a "
+            "permutation as one integer, draw a uniformly random one by ranking a random integer, or "
+            "split an enumeration across machines by rank range -- all without ever building the "
+            "(often astronomically large) full set. Permutations use the FACTORIAL NUMBER SYSTEM: the "
+            "Lehmer code counts, at each position, how many not-yet-used smaller elements remain, and "
+            "those digits times descending factorials give the lexicographic rank. Combinations use "
+            "the COMBINATORIAL NUMBER SYSTEM, a mixed-radix representation in binomial coefficients. "
+            "Gray code ranks bit-strings so consecutive ranks differ in exactly one bit (rank = n XOR "
+            "n>>1), the reflected binary code used in rotary encoders to avoid transition glitches. "
+            "All exact integer arithmetic, so unranking jumps straight to the trillionth permutation "
+            "of 15 elements. Verified against brute force: ranking then unranking is the identity, "
+            "ranks form a contiguous 0..N-1 bijection with no gaps or collisions, permutation ranks "
+            "match Python's lexicographic itertools order, combination ranks match "
+            "itertools.combinations, and consecutive Gray codes differ in exactly one bit.",
+            '<div class="grid">'
+            + svg_card(out("combinatorial_rank.svg"), "a 5-bit Gray code: each row is the next integer's code, green cells are 1-bits, and the single yellow cell marks the one bit that flipped from the row above -- exactly one changes per step")
+            + f'<div class="card">{pre(combinatorial_rank_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

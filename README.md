@@ -364,6 +364,7 @@ ruins a long non-symplectic integration.
 | `src/dsu_rollback.py` | Rollback disjoint-set union (snapshot/undo) for offline dynamic connectivity |
 | `src/interval_scheduling.py` | Weighted interval scheduling DP + greedy activity selection |
 | `src/coin_change.py` | Coin change: minimum coins + ways to make change (combinations/sequences) |
+| `src/combinatorial_rank.py` | Combinatorial ranking: permutation/combination rank-unrank + Gray code |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -719,6 +720,7 @@ ruins a long non-symplectic integration.
 | `examples/dsu_rollback_demo.py` | Component count over edge additions and rollbacks on a timeline |
 | `examples/interval_scheduling_demo.py` | A Gantt chart with the optimal-value jobs vs greedy heuristics |
 | `examples/coin_change_demo.py` | The greedy trap + min-coins-per-amount curve for three coin systems |
+| `examples/combinatorial_rank_demo.py` | Permutation/combination ranking tables + a 5-bit Gray-code bit-flip SVG |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8556,6 +8558,29 @@ ordered sequences. This module computes minimum coins, makeability, and both cou
 brute force over 150 random instances that the minimum is truly minimal, unmakeable amounts are
 detected, the combination count matches enumeration, and greedy-defeating denomination sets are
 handled correctly.
+
+## Combinatorial ranking: objects as integers
+
+Every finite combinatorial object can be bijected to an integer. `combinatorial_rank.py`:
+
+```
+$ python examples/combinatorial_rank_demo.py examples/output
+
+  permutation rank 12 <-> [2, 0, 1, 3]   (Lehmer / factorial number system)
+  3-subset rank 5 of {0..5} <-> [0, 2, 4] (combinatorial number system)
+  trillionth permutation of 15: jumps straight there, no enumeration
+  Gray code 0..7 -> 0,1,3,2,6,7,5,4      (consecutive codes differ in one bit)
+```
+
+Permutations rank via the Lehmer code (each digit counts remaining smaller elements, times descending
+factorials); k-subsets rank via the combinatorial number system, a mixed-radix in binomial
+coefficients; Gray code ranks bit-strings so consecutive ranks flip exactly one bit (n XOR n>>1). All
+exact integer arithmetic, so unranking a trillion-index permutation is instant. Verified against brute
+force: rank-then-unrank is the identity, ranks are a contiguous 0..N-1 bijection with no gaps or
+collisions, permutation ranks match itertools' lexicographic order, combination ranks match
+itertools.combinations, and consecutive Gray codes differ in exactly one bit. This lets you store a
+permutation as one integer, draw a uniformly random one, or split an enumeration by rank range without
+ever materializing the full set.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
