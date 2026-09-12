@@ -1,0 +1,17 @@
+GMRES: minimal-residual Krylov solver for nonsymmetric systems
+
+  80-point convection-diffusion operator (nonsymmetric, matrix-free):
+    converged: True in 80 iterations
+    true residual ||b - A x||: 1.47e-13
+    residual monotonically non-increasing: True
+
+  ill-scaled system (diagonal spanning 3 orders of magnitude):
+    without preconditioner: 40 iterations
+    with Jacobi precondition: 8 iterations (5.0x fewer)
+
+  GMRES builds an orthonormal Krylov basis by Arnoldi iteration and, at every step, returns
+  the subspace vector that MINIMISES ||b - A x|| via a small Givens-rotated least-squares
+  solve -- so the residual can only fall. Unlike conjugate gradient it needs no symmetry,
+  which is why it is the default solver for convection, electromagnetics, and CFD.
+
+  wrote examples/output\gmres.svg

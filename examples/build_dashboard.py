@@ -484,6 +484,7 @@ def main():
     import rans_demo
     import bk_tree_demo
     import lanczos_demo
+    import gmres_demo
 
     import plot_orbits
 
@@ -937,6 +938,7 @@ def main():
     rans_txt = run("rans_demo", rans_demo.main, True)
     bk_tree_txt = run("bk_tree_demo", bk_tree_demo.main, True)
     lanczos_txt = run("lanczos_demo", lanczos_demo.main, True)
+    gmres_txt = run("gmres_demo", gmres_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -7957,6 +7959,32 @@ def main():
             '<div class="grid">'
             + svg_card(out("lanczos.svg"), "top: the error in the largest Ritz value plunging on a log scale as Lanczos iterations accumulate -- full accuracy in a fraction of n steps; bottom: the ring-graph Laplacian's cosine-band spectrum recovered matrix-free")
             + f'<div class="card">{pre(lanczos_txt)}</div>'
+            + '</div>'),
+        section(
+            "GMRES: solving nonsymmetric systems by minimising the residual",
+            "Conjugate gradient solves A x = b beautifully, but only when A is symmetric positive-"
+            "definite. The matrices from fluid flow, convection-diffusion, and electromagnetics are "
+            "NONSYMMETRIC, and CG breaks on them. GMRES (Generalized Minimal RESidual; Saad & Schultz, "
+            "1986) is the workhorse for exactly this case: it solves any nonsingular system using only "
+            "matrix-vector products -- so it runs on sparse or implicit operators -- and at each step "
+            "produces the vector in the growing Krylov subspace that MINIMISES the residual "
+            "||b - A x|| in the least-squares sense, so the residual is monotonically non-increasing and "
+            "it converges in at most n steps. ARNOLDI iteration builds an orthonormal Krylov basis by "
+            "modified Gram-Schmidt (the nonsymmetric generalisation of Lanczos), producing an upper-"
+            "Hessenberg H; the least-squares problem is triangularised incrementally with GIVENS "
+            "ROTATIONS, which also yield the current residual norm for free so you can stop the instant "
+            "it is small. Practical GMRES is RESTARTED -- GMRES(m) -- to keep memory bounded. This "
+            "module implements full and restarted GMRES from a matrix-vector callable, with an optional "
+            "preconditioner. Validated: the solution matches the repository's dense LU solve to a tight "
+            "tolerance on nonsymmetric, symmetric, and diagonally-dominant systems, with the true "
+            "||b - A x|| below the requested threshold; the residual history is monotonically "
+            "non-increasing; full GMRES converges within n iterations and restarted GMRES(m) reaches "
+            "the same answer; a Jacobi preconditioner cuts an ill-scaled system from 40 iterations to 8 "
+            "(5x fewer); it works matrix-free on an operator given only as a function; and an exact "
+            "initial guess returns immediately.",
+            '<div class="grid">'
+            + svg_card(out("gmres.svg"), "GMRES residual falling on a log scale: the blue convection-diffusion solve, and an ill-scaled system converging slowly without a preconditioner (orange) but fast with a Jacobi one (green) -- the residual can only decrease, the defining minimal-residual property")
+            + f'<div class="card">{pre(gmres_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -442,6 +442,7 @@ ruins a long non-symplectic integration.
 | `src/rans.py` | rANS entropy coder (Asymmetric Numeral Systems) with a static frequency model |
 | `src/bk_tree.py` | BK-tree fuzzy string search: edit-distance metric tree with pruning |
 | `src/lanczos.py` | Lanczos Krylov eigensolver: extreme eigenvalues, matrix-free, reorthogonalised |
+| `src/gmres.py` | GMRES Krylov solver for nonsymmetric systems (Arnoldi + Givens, restart, precond) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -875,6 +876,7 @@ ruins a long non-symplectic integration.
 | `examples/rans_demo.py` | Compression vs Shannon entropy and Huffman on three sources |
 | `examples/bk_tree_demo.py` | Typo correction and how much of the dictionary pruning skips |
 | `examples/lanczos_demo.py` | Largest eigenvalue converging in m<<n steps; a matrix-free Laplacian |
+| `examples/gmres_demo.py` | Residual convergence and a 5x preconditioner speedup on an ill-scaled system |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10189,6 +10191,24 @@ matrix-vector products, so it runs on sparse or implicit operators. Uses full re
 QL tridiagonal eigensolver. Validated: the full-iteration spectrum matches the dense Jacobi solver, the
 largest eigenvalue converges in m<<n steps, Ritz vectors satisfy Av=λv, and matrix-free on a graph
 Laplacian it recovers the known zero eigenvalue and correct band.
+
+## GMRES: solving nonsymmetric systems by minimising the residual
+
+The Krylov solver for the nonsymmetric systems conjugate gradient can't touch. `gmres.py`:
+
+```
+$ python examples/gmres_demo.py examples/output
+
+  80-point convection-diffusion (matrix-free): converged, residual 1.5e-13
+  ill-scaled system: 40 iterations -> 8 with a Jacobi preconditioner (5x fewer)
+```
+
+GMRES (Saad & Schultz 1986) builds an orthonormal Krylov basis by Arnoldi iteration and, at each step,
+returns the subspace vector that minimises ||b - A x|| via a Givens-rotated least-squares solve, so the
+residual only falls. Needs only matrix-vector products (sparse/implicit operators), supports restarting
+and preconditioning. Validated: solution matches a dense LU solve on nonsymmetric/symmetric/diagonally-
+dominant systems, the residual is monotone, full GMRES converges within n steps, restarted GMRES(m)
+matches it, a Jacobi preconditioner cuts iterations 5x, and it works matrix-free.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
