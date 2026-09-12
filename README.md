@@ -345,6 +345,7 @@ ruins a long non-symplectic integration.
 | `src/q_learning.py` | Model-free RL: tabular Q-learning and SARSA over a gridworld environment |
 | `src/autodiff.py` | Reverse-mode automatic differentiation (a Value graph with backward, like autograd) |
 | `src/shamir.py` | Shamir's (k,n) secret sharing over a prime field (split + Lagrange reconstruct) |
+| `src/merkle.py` | Merkle hash tree with O(log n) inclusion proofs (SHA-256, domain-separated) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -681,6 +682,7 @@ ruins a long non-symplectic integration.
 | `examples/q_learning_demo.py` | Learning curve + a learned gridworld policy matching value iteration |
 | `examples/autodiff_demo.py` | Exact gradients vs finite diff + a model trained with no hand-derived gradients |
 | `examples/shamir_demo.py` | Splitting a secret + the polynomial geometry with the secret at f(0) |
+| `examples/merkle_demo.py` | An inclusion proof + tamper detection + the tree with its authentication path |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -8163,6 +8165,26 @@ The secret is the constant term of a random degree-(k-1) polynomial over GF(p); 
 inverses. This module implements (k,n) splitting of integer or byte-string secrets over a 256-bit
 prime and reconstruction, verified that any k shares reconstruct exactly, every k-subset agrees, no
 k-1 subset recovers it, and the k=1 and k=n boundaries work.
+
+## Merkle trees: compact proofs of membership in a dataset
+
+Prove an item is in a dataset with O(log n) hashes -- the structure behind blockchains and Git. `merkle.py`:
+
+```
+$ python examples/merkle_demo.py examples/output
+
+  8 transaction blocks -> one Merkle root
+  inclusion proof for block 3: 3 sibling hashes, verifies against the root
+  altered block / forged proof / wrong root all rejected
+  1,000,000 blocks -> a 20-hash (640-byte) proof, not a 1M-block download
+```
+
+The leaves are block hashes, each parent hashes its two children, and the root fingerprints the whole
+ordered set. An inclusion proof is the sibling hash at each level from the leaf to the root; a verifier
+who trusts only the root recomputes the path and checks it lands there. This module builds a tree
+(SHA-256 with domain-separated leaf/node prefixes), generates and verifies proofs, checked that valid
+proofs verify, tampering with the block/proof/root all fail, the proof length is logarithmic, and
+changing or reordering any block changes the root.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

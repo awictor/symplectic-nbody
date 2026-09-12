@@ -1,0 +1,27 @@
+Merkle tree: O(log n) proofs that a block belongs to a dataset
+
+  8 transaction blocks -> Merkle root 51483b2847f13ec776c5681c...
+
+  Inclusion proof for block 3 ('tx: Dot->Eve 3'):
+    3 sibling hashes (log2(8) = 3):
+      left  sibling: 72836eadad4c42f34826586e...
+      left  sibling: 3674ff0918216c59cf6644d7...
+      right sibling: b308c557eb8da518dba34f35...
+    verifies against the root: True
+    (a verifier who trusts only the root confirms membership without the other blocks)
+
+  Tamper detection:
+    altered block verifies: False (rejected)
+    forged proof verifies:  False (rejected)
+
+  Proof size grows logarithmically (download shrinks from O(n) to O(log n)):
+            8 blocks: proof ~ 3 hashes (96 bytes) vs 8 blocks to download
+           64 blocks: proof ~ 6 hashes (192 bytes) vs 64 blocks to download
+         1024 blocks: proof ~ 10 hashes (320 bytes) vs 1024 blocks to download
+      1000000 blocks: proof ~ 20 hashes (640 bytes) vs 1000000 blocks to download
+
+  Each leaf is a block's hash; each parent hashes its two children; the root fingerprints
+  the whole ordered set. An inclusion proof is the sibling hash at each level up to the
+  root -- recompute the path, check it lands on the trusted root. Flip any bit and it won't.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\merkle.svg

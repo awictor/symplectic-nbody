@@ -387,6 +387,7 @@ def main():
     import q_learning_demo
     import autodiff_demo
     import shamir_demo
+    import merkle_demo
 
     import plot_orbits
 
@@ -743,6 +744,7 @@ def main():
     q_learning_txt = run("q_learning_demo", q_learning_demo.main, True)
     autodiff_txt = run("autodiff_demo", autodiff_demo.main, True)
     shamir_txt = run("shamir_demo", shamir_demo.main, True)
+    merkle_txt = run("merkle_demo", merkle_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -5585,6 +5587,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("shamir.svg"), "over GF(97): five shares as blue points on a degree-2 polynomial whose gold y-intercept f(0) is the secret -- any three points fix the curve, two leave it undetermined")
             + f'<div class="card">{pre(shamir_txt)}</div>'
+            + '</div>'),
+        section(
+            "Merkle trees: compact proofs of membership in a dataset",
+            "A MERKLE TREE hashes a list of data blocks into a single ROOT such that any change to any "
+            "block changes the root, and any single block can be proven to belong with a proof of "
+            "only O(log n) hashes -- without revealing the other blocks. It is the structure behind "
+            "blockchain transaction commitments, Git's content addressing, certificate transparency "
+            "logs, and peer-to-peer file verification, turning 'is this item in the set?' from an "
+            "O(n) download into an O(log n) proof. The leaves are the hashes of the blocks; each "
+            "internal node hashes its two children; the root fingerprints the entire ordered dataset "
+            "(flip one bit anywhere and it changes). To prove block i is included, supply the "
+            "AUTHENTICATION PATH -- the sibling hash at each level from leaf to root -- and a verifier "
+            "who trusts only the root recomputes the path and checks it lands on the root. This "
+            "module builds a tree over byte blocks (SHA-256 with domain-separated leaf and node "
+            "prefixes, the standard second-preimage defence), generates inclusion proofs, and "
+            "verifies them, checked that a valid proof for every block verifies, that tampering with "
+            "the block, the proof, or the root all fail, that the proof length is logarithmic (a "
+            "million blocks need a 20-hash proof), that changing or reordering any block changes the "
+            "root, and on odd block counts where the last node is promoted.",
+            '<div class="grid">'
+            + svg_card(out("merkle.svg"), "the Merkle tree with one leaf's authentication path highlighted: green is the proven leaf up to the root, gold the sibling hashes the proof supplies -- log(n) hashes to prove membership")
+            + f'<div class="card">{pre(merkle_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
