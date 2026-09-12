@@ -389,6 +389,7 @@ ruins a long non-symplectic integration.
 | `src/k_core.py` | k-core decomposition: coreness, degeneracy, k-shells |
 | `src/prufer.py` | Prufer sequences: labeled-tree <-> string bijection + Cayley's formula |
 | `src/gale_shapley.py` | Gale-Shapley stable matching (deferred acceptance) + stability check |
+| `src/degree_sequence.py` | Graphic degree sequences: Havel-Hakimi + Erdos-Gallai + realize |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -769,6 +770,7 @@ ruins a long non-symplectic integration.
 | `examples/k_core_demo.py` | A network peeled into onion rings sized by coreness |
 | `examples/prufer_demo.py` | A tree beside its Prufer code + Cayley's count enumerated |
 | `examples/gale_shapley_demo.py` | Applicants stably matched to schools with each side's rank shown |
+| `examples/degree_sequence_demo.py` | Realizability tests + a Havel-Hakimi witness graph |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9103,6 +9105,24 @@ matching) and reviewer-pessimal; swapping roles gives the reviewer-optimal match
 brute force: no blocking pair, everyone matched, no proposer beats his partner in any enumerated stable
 matching, the reviewer-optimal variant is reviewer-optimal, and unique-stable instances make the two
 agree -- on hundreds of random profiles plus a 200x200 instance.
+
+## Degree sequences: which connection wish-lists are real?
+
+Decide whether a list of degrees is realizable, and build a witness. `degree_sequence.py`:
+
+```
+$ python examples/degree_sequence_demo.py examples/output
+
+  (2,2,2) triangle, (4,1,1,1,1) star, K4 -> graphic; (3,3,3,1), odd-sum (1,1,1) -> not
+  Havel-Hakimi (3,3,2,2): [3,3,2,2] -> [2,1,1] -> [0,0]; witness graph built
+```
+
+Havel-Hakimi removes the largest degree d, subtracts 1 from the next d degrees, and recurses (graphic
+iff it reaches all zeros); Erdos-Gallai tests prefix-sum <= k(k-1) + sum min(d_i,k) for every k. The two
+always agree. realize() builds a simple witness graph with exactly the requested degrees. Verified
+against brute force (search all simple graphs for the exact degree sequence) on hundreds of random
+sequences: the criteria agree with each other and with true realizability, the witness is simple with
+the right degrees, and the handshake even-sum and d-regular (n*d even) rules hold.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

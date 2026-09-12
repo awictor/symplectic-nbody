@@ -1,0 +1,25 @@
+Degree sequences: is a list of wanted connection-counts realizable?
+
+  sequence               graphic?   check
+  triangle               yes        (EG=HH=brute agree: True)
+  star K(1,4)            yes        (EG=HH=brute agree: True)
+  K4                     yes        (EG=HH=brute agree: True)
+  impossible (3,3,3,1)   no         (EG=HH=brute agree: True)
+  odd sum (1,1,1)        no         (EG=HH=brute agree: True)
+  mixed (3,2,2,2,1)      yes        (EG=HH=brute agree: True)
+
+  Havel-Hakimi reduction of (3,3,2,2) -- connect the top vertex, subtract, repeat:
+    [3, 3, 2, 2]
+    [2, 1, 1]
+    [0, 0]
+    -> graphic
+
+  witness graph for [3, 2, 2, 2, 1]:
+    edges: [(0, 1), (0, 2), (0, 3), (1, 2), (3, 4)]
+    achieved degree sequence: [3, 2, 2, 2, 1]
+
+  Erdos-Gallai tests the inequality sum(first k) <= k(k-1) + sum min(d_i,k) for every k;
+  Havel-Hakimi instead constructs a graph greedily. Both always agree, and match an
+  exhaustive search over all simple graphs -- the theory is exact, not heuristic.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\degree_sequence.svg

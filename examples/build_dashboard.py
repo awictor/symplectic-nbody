@@ -431,6 +431,7 @@ def main():
     import k_core_demo
     import prufer_demo
     import gale_shapley_demo
+    import degree_sequence_demo
 
     import plot_orbits
 
@@ -831,6 +832,7 @@ def main():
     k_core_txt = run("k_core_demo", k_core_demo.main, True)
     prufer_txt = run("prufer_demo", prufer_demo.main, True)
     gale_shapley_txt = run("gale_shapley_demo", gale_shapley_demo.main, True)
+    degree_sequence_txt = run("degree_sequence_demo", degree_sequence_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6634,6 +6636,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("gale_shapley.svg"), "four applicants stably matched to four schools: green links pair each side so that no applicant and school both prefer each other over their assigned partner -- here every school lands its top choice")
             + f'<div class="card">{pre(gale_shapley_txt)}</div>'
+            + '</div>'),
+        section(
+            "Degree sequences: which connection wish-lists are real?",
+            "A GRAPHIC sequence is a list of non-negative integers that is the degree sequence of some "
+            "simple graph. Not every list qualifies -- (3,3,3,1) cannot be realised, since three "
+            "vertices each wanting three neighbours among only four force a repeated edge. Deciding "
+            "this, and building a witness graph, matters for network modelling, prescribed-degree "
+            "random-graph generation, and molecular valence sequences. The HAVEL-HAKIMI algorithm is "
+            "constructive: remove the largest degree d, subtract 1 from the next d degrees (wiring "
+            "that vertex to the d hungriest others), and recurse -- the sequence is graphic iff the "
+            "reduction reaches all zeros, and the recorded edges are a witness. The ERDOS-GALLAI "
+            "theorem is a direct test: a descending even-sum sequence is graphic iff every prefix "
+            "sum of length k is at most k(k-1) + sum of min(d_i, k) over the rest. The two always "
+            "agree. This module tests realizability by both, constructs a realizing simple graph, and "
+            "shows the reduction steps. Verified against brute force -- exhaustively searching all "
+            "simple graphs for one with the exact degree sequence -- confirming the criteria agree "
+            "with each other and with true realizability, the constructed graph is simple with "
+            "precisely the requested degrees, and the handshake even-sum and d-regular (n*d even) "
+            "rules hold, on hundreds of random sequences.",
+            '<div class="grid">'
+            + svg_card(out("degree_sequence.svg"), "a simple graph built by Havel-Hakimi to realise the sequence (3,2,2,2,1): each node is labelled by the degree it achieves, matching the requested wish-list exactly")
+            + f'<div class="card">{pre(degree_sequence_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
