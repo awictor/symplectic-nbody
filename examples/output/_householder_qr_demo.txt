@@ -1,0 +1,25 @@
+Householder QR: A = Q R by orthogonal reflections
+
+  A =
+      12.0   -51.0     4.0
+       6.0   167.0   -68.0
+      -4.0    24.0   -41.0
+
+  R (upper triangular) =
+     -14.000   -21.000    14.000
+       0.000  -175.000    70.000
+       0.000     0.000    35.000
+
+  Q orthonormal (Q^T Q = I): True
+  R upper triangular: True
+  reconstruction error |QR - A|: 2.84e-14
+
+  least-squares line fit to 8 noisy points: y = 1.033 + 1.990 x
+  (data generated near y = 1 + 2x)
+
+  Each reflection H = I - 2 v v^T / (v^T v) mirrors a column onto the axis, zeroing every
+  entry below the diagonal in one shot; n reflections triangularize A into R, and their
+  product is Q. Because reflections are EXACTLY orthogonal, Q stays orthonormal to machine
+  precision even on ill-conditioned inputs where Gram-Schmidt drifts.
+
+  wrote C:\Users\acwic\symplectic-nbody\examples\output\householder_qr.svg

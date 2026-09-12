@@ -404,6 +404,7 @@ ruins a long non-symplectic integration.
 | `src/strassen.py` | Strassen sub-cubic matrix multiplication (7 block products, padded) |
 | `src/dancing_links.py` | Dancing Links (DLX): Algorithm X exact cover + N-queens |
 | `src/walksat.py` | WalkSAT: randomized local-search SAT solver (incomplete) |
+| `src/householder_qr.py` | Householder QR by reflections + least squares + solve |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -799,6 +800,7 @@ ruins a long non-symplectic integration.
 | `examples/strassen_demo.py` | The seven block products + n^3 vs n^2.807 cost curves |
 | `examples/dancing_links_demo.py` | Knuth's exact-cover example + a 6-queens board on a chessboard |
 | `examples/walksat_demo.py` | A 3-SAT solve with the falling conflict-count trajectory |
+| `examples/householder_qr_demo.py` | A least-squares line fit with residual stubs |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -9401,6 +9403,23 @@ escape local minima -- with bounded flips and restarts. Incomplete (can't prove 
 large satisfiable instances where DPLL's tree explodes. Verified against the complete DPLL solver: on
 hundreds of random satisfiable formulas WalkSAT returns a genuine model, and it never falsely claims to
 solve an unsatisfiable one.
+
+## Householder QR: orthogonal factorization by reflections
+
+Factor A = Q R stably via reflections, and solve least squares. `householder_qr.py`:
+
+```
+$ python examples/householder_qr_demo.py examples/output
+
+  classic [[12,-51,4],...] -> R diag (-14,-175,35); QR-A error ~1e-14
+  least-squares line fit to 8 noisy points: y = 1.03 + 1.99 x (data near 1+2x)
+```
+
+Applies reflections H = I - 2 v v^T / (v^T v), each mirroring a column onto a coordinate axis to zero
+everything below the diagonal; n reflections triangularize A into R and their product is the orthogonal
+Q, which stays orthonormal to machine precision where Gram-Schmidt drifts. Verified by reconstruction
+(QR = A), orthonormality (Q^T Q = I), R triangularity, and agreement of the least-squares solution with
+the normal equations and the repository's Gram-Schmidt QR -- on hundreds of random matrices.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

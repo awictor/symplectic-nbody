@@ -446,6 +446,7 @@ def main():
     import strassen_demo
     import dancing_links_demo
     import walksat_demo
+    import householder_qr_demo
 
     import plot_orbits
 
@@ -861,6 +862,7 @@ def main():
     strassen_txt = run("strassen_demo", strassen_demo.main, True)
     dancing_links_txt = run("dancing_links_demo", dancing_links_demo.main, True)
     walksat_txt = run("walksat_demo", walksat_demo.main, True)
+    householder_qr_txt = run("householder_qr_demo", householder_qr_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -6978,6 +6980,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("walksat.svg"), "the conflict trajectory of a WalkSAT run: the number of unsatisfied clauses jitters downward as variable flips repair conflicts, reaching zero (green) the moment a satisfying assignment is found")
             + f'<div class="card">{pre(walksat_txt)}</div>'
+            + '</div>'),
+        section(
+            "Householder QR: orthogonal factorization by reflections",
+            "The QR factorization writes A = Q R with Q orthogonal and R upper triangular -- the "
+            "stable backbone of least-squares regression, the QR eigenvalue iteration, and "
+            "orthogonalization. Gram-Schmidt builds it column by column but loses orthogonality to "
+            "rounding on ill-conditioned inputs; the HOUSEHOLDER method is the standard for its "
+            "superior stability. Instead of orthogonalizing columns it applies a sequence of "
+            "REFLECTIONS -- H = I - 2 v v^T / (v^T v), each mirroring a column onto a coordinate axis "
+            "so that everything below the diagonal in that column becomes zero in one shot. After n "
+            "reflections A is triangularized into R, and the product of the reflections is the "
+            "orthogonal Q. The reflection vector v = x - alpha e1 with alpha = -sign(x1)||x|| is "
+            "chosen to avoid cancellation, and because each reflection is EXACTLY orthogonal, the "
+            "computed Q stays orthonormal to machine precision where Gram-Schmidt drifts. This module "
+            "computes the full and thin factorizations and solves square and least-squares systems. "
+            "Verified by reconstruction (Q R = A), orthonormality (Q^T Q = I), triangularity of R, "
+            "and agreement of the least-squares solution with the normal equations and with the "
+            "repository's Gram-Schmidt QR -- on hundreds of random matrices of assorted shapes.",
+            '<div class="grid">'
+            + svg_card(out("householder_qr.svg"), "a least-squares line fit computed via Householder QR: the green line minimises the summed squared vertical residuals (orange stubs) to the blue data points -- the workhorse application of the stable QR factorization")
+            + f'<div class="card">{pre(householder_qr_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
