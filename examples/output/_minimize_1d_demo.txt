@@ -1,0 +1,18 @@
+1D minimization: finding the bottom of a curve with only function values
+
+  function                         golden x  evals        brent x  evals
+  (x-3)^2 + 1                      3.000000     58       3.000000     32
+  x^4 - 2x^2 (double well)         1.000000     54       1.000000     13
+  cos(x)                           3.141593     55       3.141593     32
+  -exp(-(x-2)^2)                   2.000000     57       2.000000     31
+    (Brent's parabolic steps reach the same minimum in far fewer evaluations)
+
+  auto-bracketing from x0=0: found bracket (9, 17, 33),
+    then Brent located the minimum at x = 13.700000 (true 13.7)
+
+  Golden section keeps a bracket guaranteed to hold the minimum and shrinks it by ~0.618
+  each step -- slow but foolproof on any unimodal curve. Brent tries a fast parabolic jump
+  and falls back to golden section when the parabola misbehaves, getting superlinear speed
+  with the same guarantee -- the default 1D minimizer inside every optimizer's line search.
+
+  wrote examples/output\minimize_1d.svg

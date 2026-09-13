@@ -452,6 +452,7 @@ ruins a long non-symplectic integration.
 | `src/top_trading_cycles.py` | Top Trading Cycles: strategy-proof core allocation of indivisible goods |
 | `src/xor_basis.py` | XOR linear basis over GF(2): max/min subset XOR, membership, rank, k-th value |
 | `src/vcg_auction.py` | VCG mechanism + second-price auction: efficient, strategy-proof allocation |
+| `src/minimize_1d.py` | Derivative-free 1D minimization: golden section, Brent, auto-bracketing |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -895,6 +896,7 @@ ruins a long non-symplectic integration.
 | `examples/top_trading_cycles_demo.py` | Room reallocation with the trading cycles and pointing graph |
 | `examples/xor_basis_demo.py` | Max subset XOR, the reachable set, and the binary echelon basis |
 | `examples/vcg_auction_demo.py` | Ad-slot assignment with externality payments and a lying test |
+| `examples/minimize_1d_demo.py` | Golden vs Brent eval counts and shrinking golden-section brackets |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10389,6 +10391,24 @@ a given outcome, making truth-telling a dominant strategy. Implements the single
 auction and the general combinatorial assignment. Validated: strategy-proofness checked directly (no
 profitable lie over many profiles), efficiency vs brute force, individual rationality (utilities >= 0,
 payments in [0, value]), and the second-price rule.
+
+## One-dimensional minimization: golden section and Brent
+
+Find the bottom of a curve with only function values. `minimize_1d.py`:
+
+```
+$ python examples/minimize_1d_demo.py examples/output
+
+  (x-3)^2+1: golden 58 evals, Brent 32; same minimizer
+  double well: Brent 13 evals; auto-bracketing from x0=0 finds min at 13.7
+```
+
+Golden-section search shrinks a bracket around a unimodal minimum by ~0.618 each step (robust, linear);
+Brent's method tries fast parabolic jumps and falls back to golden section when they misbehave
+(superlinear, still guaranteed) -- the default 1D minimizer in a line search. Also auto-brackets a
+minimum by walking downhill. Validated on functions with known minima (both methods hit the minimizer,
+Brent in far fewer evaluations), the exact golden-ratio interval shrinkage, valid bracketing in either
+direction, and endpoint/narrow-valley/multimodal edge cases.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

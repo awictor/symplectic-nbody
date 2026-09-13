@@ -18,7 +18,7 @@ Matrix permanent: the determinant's #P-complete twin -- it counts matchings
     n=15: naive ~19,615,115,520,000   Ryser ~     491,520   (39,907,055x fewer)
     n=20: naive ~48,658,040,163,532,800,000   Ryser ~  20,971,520   (2,320,196,159,531x fewer)
 
-  9x9 random matrix: naive 543.4 ms, Ryser 0.62 ms (875x faster), same answer True
+  9x9 random matrix: naive 494.8 ms, Ryser 0.41 ms (1211x faster), same answer True
 
   perm(A) = sum over permutations of prod A[i][sigma(i)] -- the determinant without signs.
   That missing sign makes it #P-complete (harder than NP), but Ryser's inclusion-exclusion

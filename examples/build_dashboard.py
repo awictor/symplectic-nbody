@@ -494,6 +494,7 @@ def main():
     import top_trading_cycles_demo
     import xor_basis_demo
     import vcg_auction_demo
+    import minimize_1d_demo
 
     import plot_orbits
 
@@ -957,6 +958,7 @@ def main():
     top_trading_cycles_txt = run("top_trading_cycles_demo", top_trading_cycles_demo.main, True)
     xor_basis_txt = run("xor_basis_demo", xor_basis_demo.main, True)
     vcg_auction_txt = run("vcg_auction_demo", vcg_auction_demo.main, True)
+    minimize_1d_txt = run("minimize_1d_demo", minimize_1d_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8230,6 +8232,31 @@ def main():
             '<div class="grid">'
             + svg_card(out("vcg_auction.svg"), "a VCG assignment of three ad slots to three advertisers: the green cells are the value-maximising allocation, and each winner pays the externality it imposes on the others -- the pricing that makes truthful bidding optimal")
             + f'<div class="card">{pre(vcg_auction_txt)}</div>'
+            + '</div>'),
+        section(
+            "One-dimensional minimization: golden section and Brent",
+            "Countless problems reduce to minimising f(x) over an interval where f is expensive, noisy, "
+            "or has no derivative formula: calibrate one parameter, find the best step in a line search, "
+            "locate the trough of an experimental curve. Derivative-free minimizers need only to "
+            "EVALUATE f, and they are the workhorses inside every optimizer's line search. GOLDEN-SECTION "
+            "search keeps a bracket [a, b] known to contain the minimum of a UNIMODAL function, probes at "
+            "the golden-ratio positions, and discards the end beyond the higher probe -- shrinking the "
+            "bracket by ~0.618 each step while reusing one probe, robust but linear. SUCCESSIVE "
+            "PARABOLIC interpolation jumps to the vertex of a parabola through three points, converging "
+            "superlinearly when it works but able to diverge. BRENT'S METHOD combines them: try the fast "
+            "parabolic step, fall back to a safe golden-section step whenever the parabola misbehaves -- "
+            "superlinear speed with guaranteed convergence, the default 1D minimizer in scientific "
+            "libraries. The module also brackets a minimum automatically by walking downhill with a "
+            "growing step. Validated on functions with known minima -- parabolas, x^4, cos on [0, 2pi], "
+            "a negative Gaussian, awkward unimodal shapes -- where both methods locate the minimizer to "
+            "a tight tolerance and Brent does it in far fewer evaluations (13-32 vs golden's 54-58, its "
+            "superlinear convergence confirmed by counting calls); golden section is verified to shrink "
+            "the interval by exactly the golden ratio each step; the bracketing routine returns a valid "
+            "downhill bracket in either direction; and endpoint minima, narrow valleys, and multimodal "
+            "functions (correctly finding a local minimum) are handled.",
+            '<div class="grid">'
+            + svg_card(out("minimize_1d.svg"), "top: golden-section brackets (coloured bars) closing in on the minimum of a curve step by step; bottom: the error decreasing steadily on a log scale as the interval shrinks by the golden ratio")
+            + f'<div class="card">{pre(minimize_1d_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
