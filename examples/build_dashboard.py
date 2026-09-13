@@ -531,6 +531,7 @@ def main():
     import distance_transform_demo
     import goertzel_demo
     import barycentric_demo
+    import sinkhorn_demo
 
     import plot_orbits
 
@@ -1031,6 +1032,7 @@ def main():
     distance_transform_txt = run("distance_transform_demo", distance_transform_demo.main, True)
     goertzel_txt = run("goertzel_demo", goertzel_demo.main, True)
     barycentric_txt = run("barycentric_demo", barycentric_demo.main, True)
+    sinkhorn_txt = run("sinkhorn_demo", sinkhorn_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9083,6 +9085,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("barycentric.svg"), "Degree-12 interpolation of Runge's function: equispaced nodes (red) oscillate wildly near the interval ends while Chebyshev nodes (green) hug the true curve (gray) -- Runge's phenomenon and its cure")
             + f'<div class="card">{pre(barycentric_txt)}</div>'
+            + '</div>'),
+        section(
+            "Sinkhorn optimal transport: the earth mover's distance",
+            "Optimal transport asks the least-effort way to move a pile of sand shaped like "
+            "distribution a into a hole shaped like b: minimize the total cost sum P_ij C_ij over "
+            "transport plans P whose row sums are a and column sums are b. The minimum is the "
+            "WASSERSTEIN (earth mover's) distance -- a geometry-aware metric that, unlike KL "
+            "divergence, stays finite and meaningful even when the distributions don't overlap. "
+            "Solving it exactly is a linear program; Cuturi (2013) added an entropy penalty that "
+            "makes the optimal plan P = diag(u) K diag(v) with K = exp(-C/eps), found by SINKHORN "
+            "iteration -- alternately rescaling rows to match a and columns to match b, just two "
+            "matrix-vector products per step. The penalty eps trades sharpness for speed and "
+            "stability. Validated: the plan's row and column sums match the target marginals; as eps "
+            "shrinks the regularized cost approaches the exact 1-D Wasserstein distance from sorted "
+            "CDFs; self-transport costs zero; the cost is symmetric; moving a spike costs exactly the "
+            "ground distance; and the closed-form 1-D Wasserstein matches a greedy monotone "
+            "transport. The distribution-distance companion to the Shannon-entropy and Hungarian "
+            "assignment tools.",
+            '<div class="grid">'
+            + svg_card(out("sinkhorn.svg"), "A source histogram (blue) transported to a target (green): the Sinkhorn transport plan (right, bright = more mass moved) hugs the diagonal because short moves are cheap, and its total cost is the Wasserstein distance")
+            + f'<div class="card">{pre(sinkhorn_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -489,6 +489,7 @@ ruins a long non-symplectic integration.
 | `src/distance_transform.py` | Exact Euclidean distance transform in O(n) (Felzenszwalb-Huttenlocher) |
 | `src/goertzel.py` | Goertzel single-bin DFT in O(n) + DTMF touch-tone decoder |
 | `src/barycentric.py` | Barycentric Lagrange interpolation + Chebyshev nodes (cures Runge) |
+| `src/sinkhorn.py` | Sinkhorn optimal transport (entropic Wasserstein) + exact 1-D Wasserstein |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -969,6 +970,7 @@ ruins a long non-symplectic integration.
 | `examples/distance_transform_demo.py` | Distance field of a sparse binary image as an ASCII grid + heatmap |
 | `examples/goertzel_demo.py` | A tone found in noise + a phone number decoded from DTMF audio |
 | `examples/barycentric_demo.py` | Runge's phenomenon: equispaced diverges while Chebyshev converges |
+| `examples/sinkhorn_demo.py` | Two histograms + the transport plan heatmap, cost approaching Wasserstein |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11128,6 +11130,23 @@ precompute. Equally spaced nodes suffer Runge's phenomenon (error grows with deg
 clustered at the ends, converge geometrically. Validated: passes through every node, matches naive
 Lagrange, reproduces low-degree polynomials exactly, and Chebyshev beats equispaced on Runge's
 function. The interpolation companion to the Chebyshev-series and spline tools.
+
+## Sinkhorn optimal transport: the earth mover's distance
+
+The least-cost way to reshape one distribution into another. `sinkhorn.py`:
+
+```
+$ python examples/sinkhorn_demo.py examples/output
+
+  exact 1-D transport cost 2.84; Sinkhorn cost 3.15 (eps=1) -> 2.84 (eps=0.1)
+  transport plan hugs the diagonal (short moves are cheap)
+```
+
+Minimize sum P_ij C_ij over plans P with the right marginals; the minimum is the Wasserstein distance.
+Cuturi's entropic regularization gives P = diag(u) K diag(v), found by Sinkhorn's alternating
+row/column rescaling. Validated: plan marginals match, the cost approaches the exact 1-D Wasserstein
+as eps shrinks, self-transport is zero, cost is symmetric, and a spike costs the ground distance. The
+distribution-distance companion to the Shannon-entropy and Hungarian assignment tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

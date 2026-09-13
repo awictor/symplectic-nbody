@@ -1,0 +1,30 @@
+Sinkhorn optimal transport: least-cost plan to reshape one distribution into another
+
+  Exact 1-D optimal transport cost (squared): 2.8400
+
+       eps   iterations   regularized cost
+      1.00          211             3.1467
+      0.50          570             2.9202
+      0.20         3957             2.8409
+      0.10        20000             2.8400
+      0.05        20000             2.8400
+    -> as the entropy penalty eps shrinks, the cost approaches the exact 2.8400.
+
+  A slice of the transport plan (rows = source bins, cols = target bins, x1000):
+         0   1   2   3   4   5   6   7   8   9
+     0    20   0   0   0   0   0   0   0   0   0
+     1    10  40   0   0   0   0   0   0   0   0
+     2     0   0  50  70  30   0   0   0   0   0
+     3     0   0   0   0  70 150  30   0   0   0
+     4     0   0   0   0   0   0 190  10   0   0
+     5     0   0   0   0   0   0   0 120   0   0
+     6     0   0   0   0   0   0   0  50  50   0
+     7     0   0   0   0   0   0   0   0  50  10
+     8     0   0   0   0   0   0   0   0   0  30
+     9     0   0   0   0   0   0   0   0   0  20
+
+  Mass moves from the left peak of 'a' toward the right peak of 'b'; the plan sits near
+  the diagonal because moving mass a short distance is cheap. The total cost is the
+  Wasserstein (earth mover's) distance -- a geometry-aware metric between distributions.
+
+  wrote examples/output\sinkhorn.svg
