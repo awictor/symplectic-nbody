@@ -474,6 +474,7 @@ ruins a long non-symplectic integration.
 | `src/ransac.py` | RANSAC robust fitting: line/circle through heavy outliers + adaptive iterations |
 | `src/lomb_scargle.py` | Lomb-Scargle periodogram: periods in unevenly-sampled data + false-alarm prob |
 | `src/isotonic.py` | Isotonic regression (PAVA): optimal monotone fit + probability calibration |
+| `src/partitions.py` | Integer partitions: Euler pentagonal p(n), generation, Euler's theorem, conjugate |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -939,6 +940,7 @@ ruins a long non-symplectic integration.
 | `examples/ransac_demo.py` | Line and circle recovered from 40% outliers vs least squares |
 | `examples/lomb_scargle_demo.py` | Variable-star light curve and its period recovered from irregular nights |
 | `examples/isotonic_demo.py` | Monotone step fit to a noisy curve + isotonic probability calibration |
+| `examples/partitions_demo.py` | p(n) growth on log scale, Ferrers diagrams, Euler's identity |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10836,6 +10838,24 @@ pooled weighted mean -- the unique optimum, the greatest convex minorant of the 
 Validated against the exact O(n^3) min-max formula (weighted too), the KKT block-mean condition, and
 noise recovery. The showcase application is isotonic probability calibration. The shape-constrained
 companion to the least-squares and smoothing tools.
+
+## Integer partitions and Euler's pentagonal theorem
+
+Counting the ways to write n as a sum, exactly, in O(n^1.5). `partitions.py`:
+
+```
+$ python examples/partitions_demo.py examples/output
+
+  p(100) = 190,569,292    p(200) = 3,972,999,029,388
+  Euler: #(distinct parts) == #(odd parts) for every n
+```
+
+Euler's pentagonal number theorem collapses the partition recurrence to a signed sum over O(sqrt n)
+previous values, since prod(1-x^k) is nonzero only at pentagonal numbers j(3j-1)/2. The module counts
+p(n), generates partitions, counts restricted variants, and conjugates (Ferrers transpose). Validated
+against brute enumeration and a knapsack DP, plus three identities: Euler's distinct-equals-odd,
+self-conjugate-equals-distinct-odd, and the conjugate involution. The combinatorial-counting
+companion to the ranking and enumeration notes.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

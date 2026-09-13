@@ -1,0 +1,31 @@
+Integer partitions: the ways to write n as a sum, and Euler's pentagonal magic
+
+  Explosive growth of p(n) (Euler pentagonal recurrence, O(n^1.5)):
+    p(  1) = 1
+    p(  5) = 7
+    p( 10) = 42
+    p( 20) = 627
+    p( 50) = 204,226
+    p(100) = 190,569,292
+    p(200) = 3,972,999,029,388
+
+  The 7 partitions of 5, as Ferrers diagrams:
+    5            *****
+    4+1          ****  *
+    3+2          ***  **
+    3+1+1        ***  *  *
+    2+2+1        **  **  *
+    2+1+1+1      **  *  *  *
+    1+1+1+1+1    *  *  *  *  *
+
+  Euler's theorem -- #(distinct parts) == #(odd parts):
+      n   distinct    odd
+      5          3      3
+     10         10     10
+     15         27     27
+     20         64     64
+
+  Conjugate (Ferrers transpose) of (4, 2, 1) is (3, 2, 1, 1):
+    largest part 4 <-> number of parts 4
+
+  wrote examples/output\partitions.svg

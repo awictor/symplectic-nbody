@@ -516,6 +516,7 @@ def main():
     import ransac_demo
     import lomb_scargle_demo
     import isotonic_demo
+    import partitions_demo
 
     import plot_orbits
 
@@ -1001,6 +1002,7 @@ def main():
     ransac_txt = run("ransac_demo", ransac_demo.main, True)
     lomb_scargle_txt = run("lomb_scargle_demo", lomb_scargle_demo.main, True)
     isotonic_txt = run("isotonic_demo", isotonic_demo.main, True)
+    partitions_txt = run("partitions_demo", partitions_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8752,6 +8754,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("isotonic.svg"), "Noisy samples of a monotone curve (orange), the true curve (gray dashed), and the isotonic fit (green step function) -- a staircase of pooled-violator blocks that never decreases, cutting the error to the truth by about 80 percent")
             + f'<div class="card">{pre(isotonic_txt)}</div>'
+            + '</div>'),
+        section(
+            "Integer partitions and Euler's pentagonal theorem",
+            "A partition of n writes it as a sum of positive integers, order ignored: p(4) = 5. The "
+            "partition function grows astonishingly fast -- p(100) is about 190 million, p(200) "
+            "nearly four trillion -- yet is computed EXACTLY in O(n^1.5) by Euler's pentagonal number "
+            "theorem. The generating function 1/prod(1-x^k) has a reciprocal whose coefficients are "
+            "almost all zero, nonzero only at the generalised pentagonal numbers j(3j-1)/2, "
+            "collapsing the recurrence to a signed sum over just O(sqrt n) previous values. The "
+            "module counts p(n), generates every partition, counts restricted partitions (distinct "
+            "parts, odd parts, exactly k parts), and takes the conjugate (Ferrers-diagram transpose). "
+            "Validated against brute-force enumeration and a knapsack DP: the pentagonal recurrence "
+            "reproduces both counts and the known values (p(10)=42, p(100)=190569292); Euler's "
+            "theorem (partitions into distinct parts equal partitions into odd parts) holds; the "
+            "self-conjugate partitions equal the distinct-odd-part partitions; the conjugate is an "
+            "involution swapping largest-part with number-of-parts; and the counts into exactly k "
+            "parts sum to p(n). The combinatorial-counting companion to the combinatorial-ranking "
+            "and Catalan-style enumeration notes.",
+            '<div class="grid">'
+            + svg_card(out("partitions.svg"), "Left: p(n) on a log scale, growing sub-exponentially as Euler's recurrence tracks it exactly. Right: the Ferrers diagram of 5+3+3+1, whose column counts give the conjugate partition")
+            + f'<div class="card">{pre(partitions_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
