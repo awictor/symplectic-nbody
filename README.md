@@ -517,6 +517,7 @@ ruins a long non-symplectic integration.
 | `src/ldpc.py` | LDPC codes: sparse parity checks + bit-flipping / sum-product decoders |
 | `src/wang_landau.py` | Wang-Landau flat-histogram sampling: density of states, all-temperature thermodynamics |
 | `src/svm_smo.py` | Support vector machine trained by SMO (linear / polynomial / RBF kernels) |
+| `src/mfcc.py` | Mel-frequency cepstral coefficients: mel filterbank + log + DCT audio features |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1025,6 +1026,7 @@ ruins a long non-symplectic integration.
 | `examples/ldpc_demo.py` | LDPC word-error rate: sum-product vs bit-flipping over a noisy channel |
 | `examples/wang_landau_demo.py` | Specific-heat curve from one Wang-Landau run vs exact density of states |
 | `examples/svm_smo_demo.py` | RBF-SVM decision regions separating two interleaving half-moons |
+| `examples/mfcc_demo.py` | Mel filterbank + MFCC heatmap of a rising chirp |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11709,6 +11711,30 @@ data gets all labels correct with functional margins >= 1, the dual constraint h
 vectors have alpha > 0, a two-point max-margin line is exact, and RBF / polynomial kernels solve XOR
 and concentric rings. The maximum-margin, kernel companion to the perceptron and logistic-regression
 classifiers.
+
+## MFCC: the features speech recognition hears
+
+Reduce a slice of audio to the compact cepstral vector recognizers classify on. `mfcc.py`:
+
+```
+$ python examples/mfcc_demo.py examples/output
+
+  input: 0.5s chirp sweeping 300 Hz -> 3000 Hz at 8000 Hz sample rate
+  output: 49 frames x 13 coefficients
+  mel scale warps frequency (fine low, coarse high):
+          Hz       mel
+         100     150.5
+        1000    1000.0
+        4000    2146.1
+```
+
+The MFCC pipeline: frame the signal into ~25 ms Hamming windows, take the FFT power spectrum, warp to
+the mel scale (fine at low frequencies, coarse at high) and sum power under triangular filters, take
+the log of each band, then a DCT to decorrelate the bands and compact the spectral shape into the
+first dozen coefficients. Reuses the repo's FFT and DCT. Validated: mel<->hz round-trips, the
+filterbank is triangular and overlapping, a tone's FFT power matches a brute-force DFT, the log-mel/DCT
+stage matches a direct DCT, and distinct tones give distinct MFCCs. The audio-feature companion to the
+FFT, the DCT, and the spectrogram.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

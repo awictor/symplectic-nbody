@@ -559,6 +559,7 @@ def main():
     import ldpc_demo
     import wang_landau_demo
     import svm_smo_demo
+    import mfcc_demo
 
     import plot_orbits
 
@@ -1087,6 +1088,7 @@ def main():
     ldpc_txt = run("ldpc_demo", ldpc_demo.main, True)
     wang_landau_txt = run("wang_landau_demo", wang_landau_demo.main, True)
     svm_smo_txt = run("svm_smo_demo", svm_smo_demo.main, True)
+    mfcc_txt = run("mfcc_demo", mfcc_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9701,6 +9703,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("svm_smo.svg"), "An RBF-kernel SVM separating two interleaving half-moons that no straight line can: the shaded decision regions bend through the gap, and only the ringed support vectors (alpha > 0) shape the boundary")
             + f'<div class="card">{pre(svm_smo_txt)}</div>'
+            + '</div>'),
+        section(
+            "MFCC: the features speech recognition hears",
+            "Nearly every speech recognizer, speaker-ID system, and music classifier of the last few "
+            "decades begins by reducing a slice of audio to a short vector of MEL-FREQUENCY CEPSTRAL "
+            "COEFFICIENTS, engineered to mimic human hearing and discard what does not matter for "
+            "recognition. The pipeline is a chain of signal-processing ideas: FRAME the signal into "
+            "~25 ms windows and taper with a Hamming window; take the POWER SPECTRUM via the FFT; warp "
+            "to the MEL SCALE (mel = 2595 log10(1 + f/700), fine at low frequencies, coarse at high) "
+            "and sum power under a bank of TRIANGULAR filters; take the LOG of each band (loudness is "
+            "logarithmic, and the log turns the multiplicative source-filter model additive); and "
+            "finally a DISCRETE COSINE TRANSFORM, which DECORRELATES the correlated mel bands and "
+            "compacts the spectral shape into the first dozen coefficients. Reuses the repo's FFT and "
+            "DCT. Validated: mel<->hz round-trips and is monotonic; the filterbank is triangular, "
+            "non-negative, and overlapping; a pure tone lights up the band containing it and its FFT "
+            "power matches a brute-force DFT; the log-mel/DCT stage matches a direct DCT; distinct "
+            "tones give distinct MFCCs while repeats match; and coefficient 0 tracks energy. The "
+            "audio-feature companion to the FFT, the DCT, and the spectrogram.",
+            '<div class="grid">'
+            + svg_card(out("mfcc.svg"), "The triangular mel filterbank (top, evenly spaced on the perceptual mel scale so low frequencies get finer resolution) and the 13 MFCC coefficients of a rising chirp over time (bottom) -- the cepstral pattern shifts as the pitch sweeps up")
+            + f'<div class="card">{pre(mfcc_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

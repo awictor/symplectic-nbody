@@ -1,0 +1,20 @@
+MFCC: mel-frequency cepstral coefficients, the front end of speech recognition
+
+  input: 0.5s chirp sweeping 300 Hz -> 3000 Hz at 8000 Hz sample rate
+  output: 49 frames x 13 coefficients
+
+  mel scale warps frequency (fine low, coarse high):
+          Hz       mel
+         100     150.5
+         500     607.4
+        1000    1000.0
+        2000    1521.4
+        4000    2146.1
+
+  MFCC[0] (log-energy) range over the sweep: -50.20 .. -36.79
+  MFCC[2] (spectral shape) range:            -11.95 .. 6.59
+
+  The heatmap's coefficient pattern shifts as the pitch rises -- exactly the
+  compact, decorrelated representation a recognizer classifies on.
+
+  wrote examples/output\mfcc.svg
