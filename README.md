@@ -523,6 +523,7 @@ ruins a long non-symplectic integration.
 | `src/boruvka.py` | Boruvka's minimum spanning tree (round-based, parallel-friendly, 1926) |
 | `src/qft.py` | Quantum Fourier transform + phase estimation on the statevector simulator |
 | `src/shor.py` | Shor's factoring algorithm: quantum period-finding + continued fractions |
+| `src/kosaraju.py` | Kosaraju's two-pass DFS strongly-connected-components + condensation |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1037,6 +1038,7 @@ ruins a long non-symplectic integration.
 | `examples/boruvka_demo.py` | Boruvka MST built in rounds, edges coloured by round of addition |
 | `examples/qft_demo.py` | QFT period-finding spectrum + phase estimation (Shor's core) |
 | `examples/shor_demo.py` | Shor factoring 21 end to end: period 6 -> QFT peaks -> 7 x 3 |
+| `examples/kosaraju_demo.py` | SCC decomposition coloured by component + condensation DAG |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11861,6 +11863,30 @@ recovers r by continued fractions and finishes with gcd. Validated: factors 15, 
 into their correct primes; the recovered order satisfies a^r = 1 mod N; primes return None; perfect
 powers are detected; every factorization verifies. The headline application of the quantum Fourier
 transform.
+
+## Kosaraju's algorithm: strongly connected components in two DFS passes
+
+Find the islands of mutual reachability in a directed graph, then contract them to a DAG. `kosaraju.py`:
+
+```
+$ python examples/kosaraju_demo.py examples/output
+
+  11 vertices, 14 directed edges
+  Kosaraju found 4 strongly connected components:
+    SCC 0: [0, 1, 2]
+    SCC 1: [3, 4, 5]
+    SCC 2: [8, 9, 10]
+    SCC 3: [6, 7]
+  matches Tarjan's decomposition: True
+  condensation (SCC DAG): 4 super-nodes, edges [(0, 1), (1, 2), (1, 3)]
+```
+
+Kosaraju rests on the fact that a graph and its transpose share the same SCCs. Two DFS sweeps: one on
+the original recording finish order, one on the transpose in decreasing finish order -- each tree in
+the second pass is one SCC. Validated against the repo's Tarjan implementation: identical partition on
+40 random graphs, every component genuinely strongly connected, cycles collapse to one component, DAGs
+give singletons, and the condensation is acyclic. The two-pass DFS companion to Tarjan's SCC, the
+topological sort, and the 2-SAT solver.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

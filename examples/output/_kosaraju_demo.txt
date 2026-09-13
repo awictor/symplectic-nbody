@@ -1,0 +1,16 @@
+Kosaraju's algorithm: strongly connected components in two DFS passes
+
+  11 vertices, 14 directed edges
+  Kosaraju found 4 strongly connected components:
+    SCC 0: [0, 1, 2]
+    SCC 1: [3, 4, 5]
+    SCC 2: [8, 9, 10]
+    SCC 3: [6, 7]
+
+  matches Tarjan's decomposition: True
+
+  condensation (SCC DAG): 4 super-nodes, edges [(0, 1), (1, 2), (1, 3)]
+  the condensation is always acyclic -- contracting each SCC removes every cycle,
+  which is why SCC decomposition is step one in 2-SAT and dependency analysis.
+
+  wrote examples/output\kosaraju.svg

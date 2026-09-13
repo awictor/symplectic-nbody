@@ -565,6 +565,7 @@ def main():
     import boruvka_demo
     import qft_demo
     import shor_demo
+    import kosaraju_demo
 
     import plot_orbits
 
@@ -1099,6 +1100,7 @@ def main():
     boruvka_txt = run("boruvka_demo", boruvka_demo.main, True)
     qft_txt = run("qft_demo", qft_demo.main, True)
     shor_txt = run("shor_demo", shor_demo.main, True)
+    kosaraju_txt = run("kosaraju_demo", kosaraju_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9842,6 +9844,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("shor.svg"), "Shor factoring 21: the period of 2^x mod 21 is r=6, and the QFT's probability peaks near multiples of Q/r = 128/6 = 21 encode it -- continued fractions recover r, then gcd(2^3 +/- 1, 21) gives 7 and 3")
             + f'<div class="card">{pre(shor_txt)}</div>'
+            + '</div>'),
+        section(
+            "Kosaraju's algorithm: strongly connected components in two DFS passes",
+            "A directed graph's STRONGLY CONNECTED COMPONENTS are its maximal sets of mutually "
+            "reachable vertices -- islands where everyone can reach everyone. Contracting each SCC to "
+            "a point turns any directed graph into a DAG (the CONDENSATION), which is why SCC "
+            "decomposition is step one in 2-SAT, dead-code elimination, and dependency-cycle "
+            "detection. Kosaraju's algorithm (1978) rests on one fact: a graph and its TRANSPOSE have "
+            "the same SCCs, because mutual reachability survives reversing every edge. Two DFS sweeps: "
+            "first on the original graph, pushing each vertex when it FINISHES; then on the transpose, "
+            "starting from the highest finish time down -- each DFS tree in that second pass is exactly "
+            "one SCC. Taking vertices in decreasing finish order confines each transpose-DFS to a "
+            "single component, so it cannot leak. Validated against the repo's Tarjan implementation: "
+            "identical partition on 40 random graphs; every component is genuinely strongly connected "
+            "(all-pairs reachability by BFS) and the parts are disjoint and cover the graph; a cycle "
+            "is one component and a DAG is all singletons; and the condensation is acyclic with edges "
+            "running source-to-sink. The two-pass DFS companion to Tarjan's SCC, the topological "
+            "sort, and the 2-SAT solver.",
+            '<div class="grid">'
+            + svg_card(out("kosaraju.svg"), "Kosaraju's two-pass DFS on an 11-vertex graph: four strongly connected components (coloured), and the condensation below contracting each to a super-node -- always a DAG, since collapsing the cycles removes them")
+            + f'<div class="card">{pre(kosaraju_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
