@@ -503,6 +503,7 @@ def main():
     import suurballe_demo
     import variates_demo
     import gomory_hu_demo
+    import hopcroft_karp_demo
 
     import plot_orbits
 
@@ -975,6 +976,7 @@ def main():
     suurballe_txt = run("suurballe_demo", suurballe_demo.main, True)
     variates_txt = run("variates_demo", variates_demo.main, True)
     gomory_hu_txt = run("gomory_hu_demo", gomory_hu_demo.main, True)
+    hopcroft_karp_txt = run("hopcroft_karp_demo", hopcroft_karp_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8459,6 +8461,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("gomory_hu.svg"), "A dumbbell graph -- two heavy triangles joined by a thin waist -- and its Gomory-Hu tree. Within-cluster pairs cost 12 (two heavy edges), any across-waist pair costs 3; all 15 cuts read off the 5-edge tree")
             + f'<div class="card">{pre(gomory_hu_txt)}</div>'
+            + '</div>'),
+        section(
+            "Hopcroft-Karp: maximum bipartite matching in O(E sqrt(V))",
+            "A bipartite graph pairs two sides -- applicants and jobs, say -- with edges only across "
+            "the divide, and a matching assigns them without double-booking. The naive "
+            "augmenting-path method is O(V*E); Hopcroft and Karp (1973) instead find a MAXIMAL SET "
+            "of shortest vertex-disjoint augmenting paths per round (a layered BFS then a DFS along "
+            "those layers), the shortest augmenting length strictly increases each round, and after "
+            "O(sqrt(V)) rounds the matching is maximum -- the O(E sqrt(V)) bound. By KOENIG'S "
+            "theorem the maximum matching equals the minimum vertex cover in a bipartite graph, and "
+            "the module reads that cover straight off the final alternating BFS forest (plus a "
+            "Hall's-theorem deficient-set witness when no perfect matching exists). Validated three "
+            "ways: the matching size agrees with an independent Kuhn augmenting-path matcher, with "
+            "the repo's max-flow bipartite matcher, and with brute-force search over all matchings "
+            "on 300 random graphs; Koenig duality (|matching| = |cover|) and that the cover really "
+            "covers every edge both hold. The specialised bipartite companion to the general-graph "
+            "blossom matcher.",
+            '<div class="grid">'
+            + svg_card(out("hopcroft_karp.svg"), "A hiring graph: five applicants, four jobs. Green edges are the maximum matching (four jobs filled); gold rings mark the minimum vertex cover, equal in size to the matching by Koenig's theorem")
+            + f'<div class="card">{pre(hopcroft_karp_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

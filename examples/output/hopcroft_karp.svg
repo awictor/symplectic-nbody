@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" font-family="monospace">
+<rect width="760" height="430" fill="#0d1117"/>
+<text x="20" y="30" fill="#e6edf3" font-size="15">Maximum matching (green) and minimum vertex cover (gold rings)</text>
+<text x="190" y="55" fill="#8b949e" font-size="11" text-anchor="middle">applicants</text>
+<text x="570" y="55" fill="#8b949e" font-size="11" text-anchor="middle">jobs</text>
+<line x1="190" y1="70" x2="570" y2="70" stroke="#06d6a0" stroke-width="3"/>
+<line x1="190" y1="70" x2="570" y2="283" stroke="#30363d" stroke-width="1"/>
+<line x1="190" y1="150" x2="570" y2="70" stroke="#30363d" stroke-width="1"/>
+<line x1="190" y1="150" x2="570" y2="177" stroke="#06d6a0" stroke-width="3"/>
+<line x1="190" y1="230" x2="570" y2="177" stroke="#30363d" stroke-width="1"/>
+<line x1="190" y1="230" x2="570" y2="390" stroke="#06d6a0" stroke-width="3"/>
+<line x1="190" y1="310" x2="570" y2="283" stroke="#06d6a0" stroke-width="3"/>
+<line x1="190" y1="310" x2="570" y2="390" stroke="#30363d" stroke-width="1"/>
+<line x1="190" y1="390" x2="570" y2="177" stroke="#30363d" stroke-width="1"/>
+<circle cx="190" cy="70" r="15" fill="#161b22" stroke="#4dabf7" stroke-width="2"/><text x="190" y="74" fill="#4dabf7" font-size="9" text-anchor="middle">Ada</text>
+<circle cx="190" cy="150" r="15" fill="#161b22" stroke="#4dabf7" stroke-width="2"/><text x="190" y="154" fill="#4dabf7" font-size="9" text-anchor="middle">Ben</text>
+<circle cx="190" cy="230" r="15" fill="#161b22" stroke="#4dabf7" stroke-width="2"/><text x="190" y="234" fill="#4dabf7" font-size="9" text-anchor="middle">Cid</text>
+<circle cx="190" cy="310" r="15" fill="#161b22" stroke="#4dabf7" stroke-width="2"/><text x="190" y="314" fill="#4dabf7" font-size="9" text-anchor="middle">Dot</text>
+<circle cx="190" cy="390" r="15" fill="#161b22" stroke="#4dabf7" stroke-width="2"/><text x="190" y="394" fill="#4dabf7" font-size="9" text-anchor="middle">Eli</text>
+<circle cx="570" cy="70" r="21" fill="none" stroke="#ffd43b" stroke-width="2"/><circle cx="570" cy="70" r="15" fill="#161b22" stroke="#b197fc" stroke-width="2"/><text x="570" y="74" fill="#b197fc" font-size="9" text-anchor="middle">Bac</text>
+<circle cx="570" cy="177" r="21" fill="none" stroke="#ffd43b" stroke-width="2"/><circle cx="570" cy="177" r="15" fill="#161b22" stroke="#b197fc" stroke-width="2"/><text x="570" y="181" fill="#b197fc" font-size="9" text-anchor="middle">Fro</text>
+<circle cx="570" cy="283" r="21" fill="none" stroke="#ffd43b" stroke-width="2"/><circle cx="570" cy="283" r="15" fill="#161b22" stroke="#b197fc" stroke-width="2"/><text x="570" y="287" fill="#b197fc" font-size="9" text-anchor="middle">Dat</text>
+<circle cx="570" cy="390" r="21" fill="none" stroke="#ffd43b" stroke-width="2"/><circle cx="570" cy="390" r="15" fill="#161b22" stroke="#b197fc" stroke-width="2"/><text x="570" y="394" fill="#b197fc" font-size="9" text-anchor="middle">Dev</text>
+<text x="380" y="415" fill="#8b949e" font-size="10" text-anchor="middle">|matching| = |cover| = 4 (Koenig duality)</text>
+</svg>

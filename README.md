@@ -461,6 +461,7 @@ ruins a long non-symplectic integration.
 | `src/suurballe.py` | Suurballe's algorithm: minimum-cost pair of edge-disjoint paths |
 | `src/variates.py` | Random variate generation: exponential/gamma/beta/normal/Poisson/binomial |
 | `src/gomory_hu.py` | Gomory-Hu tree: all-pairs min cuts from n-1 max-flow calls (Gusfield) |
+| `src/hopcroft_karp.py` | Maximum bipartite matching in O(E sqrt(V)) + Koenig min vertex cover |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -913,6 +914,7 @@ ruins a long non-symplectic integration.
 | `examples/suurballe_demo.py` | Two edge-disjoint backbone routes drawn in different colours |
 | `examples/variates_demo.py` | Histograms of five distributions with empirical vs analytic moments |
 | `examples/gomory_hu_demo.py` | Dumbbell graph and its Gomory-Hu tree, full all-pairs cut table |
+| `examples/hopcroft_karp_demo.py` | Applicant-to-job matching with Koenig minimum vertex cover |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10567,6 +10569,25 @@ lightest edge on the unique path between them in a single weighted tree, built h
 n-1 max-flow (Dinic) computations on the unchanged graph. Validated: across 200 random graphs the
 tree's path-minimum equals an independent brute-force s-t min cut for every pair. The all-pairs
 companion to Stoer-Wagner's single global cut.
+
+## Hopcroft-Karp: maximum bipartite matching in O(E sqrt(V))
+
+Pair two sides of a graph -- applicants and jobs -- without double-booking. `hopcroft_karp.py`:
+
+```
+$ python examples/hopcroft_karp_demo.py examples/output
+
+  Maximum matching size: 4
+    Ada -> Backend   Ben -> Frontend   Cid -> DevOps   Dot -> Data
+  Koenig minimum vertex cover (size 4 == matching 4)
+```
+
+Hopcroft and Karp (1973) find a maximal set of shortest vertex-disjoint augmenting paths per round
+(layered BFS then DFS), converging in O(sqrt(V)) rounds. By Koenig's theorem the maximum matching
+equals the minimum vertex cover in a bipartite graph, read straight off the alternating BFS forest;
+a Hall's-theorem deficient set is the witness when no perfect matching exists. Validated three ways:
+matching size agrees with an independent Kuhn matcher, the repo's max-flow matcher, and brute-force
+search over all matchings on 300 random graphs, with Koenig duality holding throughout.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

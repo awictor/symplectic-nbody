@@ -1,0 +1,26 @@
+Hopcroft-Karp: maximum bipartite matching in O(E sqrt(V))
+
+  5 applicants, 4 jobs, 9 qualifications.
+
+  Who qualifies for what:
+     Ada: Backend, Data
+     Ben: Backend, Frontend
+     Cid: Frontend, DevOps
+     Dot: Data, DevOps
+     Eli: Frontend
+
+  Maximum matching size: 4  (jobs filled without double-booking)
+     Ada -> Backend
+     Ben -> Frontend
+     Cid -> DevOps
+     Dot -> Data
+    unassigned: Eli
+
+  Koenig minimum vertex cover (size 4 == matching 4):
+    Backend (job), Frontend (job), Data (job), DevOps (job)
+
+  Koenig's theorem: in any bipartite graph the largest matching equals the smallest
+  set of vertices touching every edge. The cover is the bottleneck -- pick these few
+  people/roles and every qualification runs through one of them.
+
+  wrote examples/output\hopcroft_karp.svg
