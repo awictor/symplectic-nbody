@@ -522,6 +522,7 @@ def main():
     import nmf_demo
     import johnson_lindenstrauss_demo
     import stirling_demo
+    import belief_propagation_demo
 
     import plot_orbits
 
@@ -1013,6 +1014,7 @@ def main():
     nmf_txt = run("nmf_demo", nmf_demo.main, True)
     johnson_lindenstrauss_txt = run("johnson_lindenstrauss_demo", johnson_lindenstrauss_demo.main, True)
     stirling_txt = run("stirling_demo", stirling_demo.main, True)
+    belief_propagation_txt = run("belief_propagation_demo", belief_propagation_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8887,6 +8889,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("stirling.svg"), "The Stirling triangle of the second kind as a heatmap: cell (n,k) is the number of ways to partition an n-set into k blocks, and each row sums to the Bell number B(n) shown alongside")
             + f'<div class="card">{pre(stirling_txt)}</div>'
+            + '</div>'),
+        section(
+            "Belief propagation: exact inference on a tree",
+            "A probabilistic model over many discrete variables factorizes as a product of local "
+            "factors, and the central question is each variable's MARGINAL -- the joint summed over "
+            "all others -- which naively ranges over exponentially many configurations. When the "
+            "FACTOR GRAPH is a TREE, the sum-product algorithm (belief propagation, Pearl 1982) "
+            "computes every marginal EXACTLY in linear time by passing messages: a variable sends a "
+            "factor the product of its other incoming messages, a factor sends a variable the sum "
+            "over its other variables of the factor times their messages, and a belief is the "
+            "product of all incoming messages. Two sweeps suffice on a tree. This is the engine "
+            "behind LDPC and turbo decoding, the HMM forward-backward algorithm (a chain is a tree), "
+            "and Kalman smoothing; max-product instead finds the MAP configuration. Validated "
+            "against brute force: on random tree factor graphs the sum-product marginals and the "
+            "partition function match exact enumeration of the joint, the max-product MAP matches the "
+            "true argmax, a chain reproduces HMM-style marginals, and cyclic graphs are correctly "
+            "rejected. The graphical-model companion to the HMM and Gibbs-sampling notes.",
+            '<div class="grid">'
+            + svg_card(out("belief_propagation.svg"), "A chain of binary spins whose neighbours prefer to agree, with one biased end: belief propagation computes each spin's marginal exactly, and the bias decays smoothly down the chain (0.80, 0.65, 0.58, 0.54, 0.52)")
+            + f'<div class="card">{pre(belief_propagation_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

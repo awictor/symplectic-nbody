@@ -480,6 +480,7 @@ ruins a long non-symplectic integration.
 | `src/nmf.py` | Non-negative matrix factorization (Lee-Seung multiplicative updates) + KL variant |
 | `src/johnson_lindenstrauss.py` | JL random projection: distance-preserving dimension reduction (Gaussian + Achlioptas) |
 | `src/stirling.py` | Stirling numbers (both kinds), Bell numbers, set partitions and cycles |
+| `src/belief_propagation.py` | Sum-product / max-product on tree factor graphs: exact marginals, MAP, Z |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -951,6 +952,7 @@ ruins a long non-symplectic integration.
 | `examples/nmf_demo.py` | Term-document matrix factored into two recovered topics |
 | `examples/johnson_lindenstrauss_demo.py` | Distortion-vs-dimension curve + projected-distance scatter |
 | `examples/stirling_demo.py` | Stirling triangles, set partitions, Bell numbers three ways |
+| `examples/belief_propagation_demo.py` | Spin chain marginals by message passing, bias decay down the chain |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10955,6 +10957,24 @@ linking powers to falling factorials. Validated against exhaustive set-partition
 enumeration, Dobinski's series, the row-sum identities, the inverse-matrix duality, and the
 falling-factorial polynomial identities. The set-structure companion to the integer-partition and
 ranking notes.
+
+## Belief propagation: exact inference on a tree
+
+Marginals of a factorized distribution by message passing. `belief_propagation.py`:
+
+```
+$ python examples/belief_propagation_demo.py examples/output
+
+  biased spin chain -> P(spin=1): 0.80, 0.65, 0.58, 0.54, 0.52 (bias decays)
+  matches brute enumeration exactly; MAP = [1,1,1,1,1]
+```
+
+On a tree factor graph the sum-product algorithm computes every marginal exactly in linear time:
+variables and factors exchange messages, and a belief is the product of incoming messages. This is
+the engine behind LDPC/turbo decoding and the HMM forward-backward algorithm; max-product finds the
+MAP. Validated against brute enumeration of the joint (marginals, partition function, and MAP) on
+random tree factor graphs, with cyclic graphs correctly rejected. The graphical-model companion to
+the HMM and Gibbs-sampling notes.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
