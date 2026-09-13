@@ -500,6 +500,7 @@ ruins a long non-symplectic integration.
 | `src/tv_denoise.py` | 1-D total-variation denoising (edge-preserving, dual projected gradient) |
 | `src/convex_hull_3d.py` | 3-D convex hull by the incremental algorithm + volume/area/containment |
 | `src/affine_alignment.py` | Gotoh affine-gap sequence alignment (global + local) |
+| `src/adams.py` | Adams-Bashforth / Moulton predictor-corrector multistep ODE integrator |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -991,6 +992,7 @@ ruins a long non-symplectic integration.
 | `examples/tv_denoise_demo.py` | Piecewise-constant signal denoised: sharp TV edges vs a smeared average |
 | `examples/convex_hull_3d_demo.py` | 3-D hull of a point cloud drawn in oblique projection |
 | `examples/affine_alignment_demo.py` | Linear vs affine gap alignment of an inserted block |
+| `examples/adams_demo.py` | ODE error-vs-steps convergence: Adams-Bashforth, PECE, RK4 |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11333,6 +11335,23 @@ Gotoh's algorithm runs three DP matrices (match, gap-in-x, gap-in-y) so gap open
 extension, in O(nm). Validated: matches linear NW at equal penalties, prefers a single gap block, the
 recovered alignment scores recompute, local alignment stays non-negative and finds embedded motifs.
 The affine-cost companion to the Needleman-Wunsch / Smith-Waterman aligners.
+
+## Adams-Bashforth-Moulton: multistep ODE integration
+
+Reuse past derivative evaluations instead of throwing them away. `adams.py`:
+
+```
+$ python examples/adams_demo.py examples/output
+
+  y'=-y on [0,3]: 4th-order error falls as h^4; PECE order measured 4.17
+  each PECE step: 2 f-evaluations vs RK4's 4, at comparable accuracy
+```
+
+Adams-Bashforth (explicit) and Adams-Moulton (implicit) fit a polynomial through the last few
+derivatives; the predictor-corrector combines them (PECE), bootstrapping with RK4. Validated against
+exact solutions (decay, oscillator, logistic), measured convergence orders 2/3/4 matching theory, PECE
+beating plain AB, and energy conservation. The multistep companion to the RK45 and symplectic
+integrators.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

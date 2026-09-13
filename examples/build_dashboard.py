@@ -542,6 +542,7 @@ def main():
     import tv_denoise_demo
     import convex_hull_3d_demo
     import affine_alignment_demo
+    import adams_demo
 
     import plot_orbits
 
@@ -1053,6 +1054,7 @@ def main():
     tv_denoise_txt = run("tv_denoise_demo", tv_denoise_demo.main, True)
     convex_hull_3d_txt = run("convex_hull_3d_demo", convex_hull_3d_demo.main, True)
     affine_alignment_txt = run("affine_alignment_demo", affine_alignment_demo.main, True)
+    adams_txt = run("adams_demo", adams_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9324,6 +9326,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("affine_alignment.svg"), "Aligning two sequences differing by an inserted block: the affine-gap model collapses the insertion into one contiguous gap (red), matching a single biological indel event, with matches in green and mismatches in yellow")
             + f'<div class="card">{pre(affine_alignment_txt)}</div>'
+            + '</div>'),
+        section(
+            "Adams-Bashforth-Moulton: multistep ODE integration",
+            "Solving y' = f(t, y), single-step methods like Runge-Kutta throw away their work each step "
+            "-- RK4 evaluates f four times per step and forgets them. MULTISTEP methods are thriftier: "
+            "they remember the last few derivative values, fit a polynomial through them, and each new "
+            "step costs only ONE new evaluation of f -- a big saving when the right-hand side is "
+            "expensive. Adams-Bashforth is explicit (extrapolating the derivative polynomial); "
+            "Adams-Moulton is implicit, one order more accurate and far more stable. The "
+            "predictor-corrector (PECE) scheme PREDICTS with Adams-Bashforth, EVALUATES f there, and "
+            "CORRECTS with Adams-Moulton -- two f-evaluations per step, high order, good stability. "
+            "The first steps bootstrap with RK4. Validated against exact solutions and convergence "
+            "theory: the integrators reproduce exponential decay, the harmonic oscillator, and a "
+            "logistic curve to high accuracy; the measured convergence orders match the nominal ones "
+            "(2, 3, 4 as halving the step cuts the error by 4x, 8x, 16x); the predictor-corrector "
+            "beats plain Adams-Bashforth at the same order; and the oscillator's energy stays near "
+            "its analytic value. The multistep companion to the RK45 and symplectic integrators.",
+            '<div class="grid">'
+            + svg_card(out("adams.svg"), "Error versus number of steps on a log-log plot: Adams-Bashforth, the predictor-corrector, and RK4 all fall as the fourth power of the step size (slope -4), but the multistep methods reach it with fewer f-evaluations")
+            + f'<div class="card">{pre(adams_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
