@@ -567,6 +567,7 @@ def main():
     import shor_demo
     import kosaraju_demo
     import qr_algorithm_demo
+    import universal_codes_demo
 
     import plot_orbits
 
@@ -1103,6 +1104,7 @@ def main():
     shor_txt = run("shor_demo", shor_demo.main, True)
     kosaraju_txt = run("kosaraju_demo", kosaraju_demo.main, True)
     qr_algorithm_txt = run("qr_algorithm_demo", qr_algorithm_demo.main, True)
+    universal_codes_txt = run("universal_codes_demo", universal_codes_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9889,6 +9891,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("qr_algorithm.svg"), "The QR iteration driving a matrix to triangular form: the largest subdiagonal magnitude decays from 2.2 to 1e-12 over 40 steps (log scale), the eigenvalues settling onto the diagonal as the off-diagonal structure dissolves")
             + f'<div class="card">{pre(qr_algorithm_txt)}</div>'
+            + '</div>'),
+        section(
+            "Universal integer codes: self-delimiting compression of small numbers",
+            "How do you write an integer to a bitstream without knowing in advance how big it will get "
+            "-- no fixed field, no agreed maximum? You need a SELF-DELIMITING code whose bits announce "
+            "where the number ends. These UNIVERSAL CODES back real compressors -- search-engine "
+            "inverted indexes (gaps between document IDs), FLAC audio, any format coding runs of small "
+            "integers -- spending few bits on the small values that dominate while still representing "
+            "arbitrarily large ones. ELIAS GAMMA writes floor(log2 n) zeros then n in binary; ELIAS "
+            "DELTA gamma-codes the length first (shorter for large n); ELIAS OMEGA recursively "
+            "prepends lengths; and GOLOMB-RICE splits n into a unary quotient and binary remainder, "
+            "the OPTIMAL prefix code for a GEOMETRIC distribution (Rice = the M=2^k bit-shift case). "
+            "Validated exhaustively: every code round-trips every integer in a large range; codes are "
+            "prefix-free and self-delimiting (a concatenation of hundreds decodes back exactly with no "
+            "separators); measured lengths match the closed-form formulas; Rice is the k-bit Golomb "
+            "special case; and on a geometric source the tuned Golomb code beats fixed-width. The "
+            "universal-integer-code companion to the Huffman, arithmetic, and rANS entropy coders.",
+            '<div class="grid">'
+            + svg_card(out("universal_codes.svg"), "Bits per value coding 400 inverted-index gaps: fixed-width spends 6.0, Elias gamma 4.8, and the mean-tuned Golomb code 4.3 -- landing near the 3.95-bit entropy floor because the gaps are nearly geometric, which is why search engines Golomb-code posting lists")
+            + f'<div class="card">{pre(universal_codes_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

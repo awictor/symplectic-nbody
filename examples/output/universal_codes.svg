@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="380" viewBox="0 0 760 380" font-family="monospace">
+<rect width="760" height="380" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="15">Bits per value coding inverted-index gaps (lower is better)</text>
+<rect x="150" y="65.8" width="509.1" height="32.4" fill="#8b949e"/>
+<text x="142" y="86.0" fill="#e6edf3" font-size="11" text-anchor="end">fixed-width</text>
+<text x="664.1" y="86.0" fill="#e6edf3" font-size="10">6.00</text>
+<rect x="150" y="119.8" width="405.2" height="32.4" fill="#4dabf7"/>
+<text x="142" y="140.0" fill="#e6edf3" font-size="11" text-anchor="end">Elias gamma</text>
+<text x="560.2" y="140.0" fill="#e6edf3" font-size="10">4.78</text>
+<rect x="150" y="173.8" width="444.8" height="32.4" fill="#06d6a0"/>
+<text x="142" y="194.0" fill="#e6edf3" font-size="11" text-anchor="end">Elias delta</text>
+<text x="599.8" y="194.0" fill="#e6edf3" font-size="10">5.24</text>
+<rect x="150" y="227.8" width="444.6" height="32.4" fill="#b197fc"/>
+<text x="142" y="248.0" fill="#e6edf3" font-size="11" text-anchor="end">Elias omega</text>
+<text x="599.6" y="248.0" fill="#e6edf3" font-size="10">5.24</text>
+<rect x="150" y="281.8" width="361.2" height="32.4" fill="#ffd43b"/>
+<text x="142" y="302.0" fill="#e6edf3" font-size="11" text-anchor="end">Golomb (M=5)</text>
+<text x="516.2" y="302.0" fill="#e6edf3" font-size="10">4.26</text>
+<line x1="485.0" y1="55" x2="485.0" y2="325" stroke="#ff6b6b" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="489.0" y="67" fill="#ff6b6b" font-size="10">entropy 3.95</text>
+</svg>

@@ -525,6 +525,7 @@ ruins a long non-symplectic integration.
 | `src/shor.py` | Shor's factoring algorithm: quantum period-finding + continued fractions |
 | `src/kosaraju.py` | Kosaraju's two-pass DFS strongly-connected-components + condensation |
 | `src/qr_algorithm.py` | QR eigenvalue algorithm: Hessenberg + shifted QR with complex-pair deflation |
+| `src/universal_codes.py` | Universal integer codes: Elias gamma/delta/omega + Golomb-Rice |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1041,6 +1042,7 @@ ruins a long non-symplectic integration.
 | `examples/shor_demo.py` | Shor factoring 21 end to end: period 6 -> QFT peaks -> 7 x 3 |
 | `examples/kosaraju_demo.py` | SCC decomposition coloured by component + condensation DAG |
 | `examples/qr_algorithm_demo.py` | QR iteration subdiagonal decaying to 1e-12 as eigenvalues emerge |
+| `examples/universal_codes_demo.py` | Bits/value coding inverted-index gaps vs the entropy floor |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11913,6 +11915,29 @@ arithmetic. Validated: matches Jacobi on symmetric matrices, triangular eigenval
 sum = trace and product = determinant, rotation matrices give exact complex pairs, and the eigenvalues
 equal the characteristic-polynomial roots from Durand-Kerner. The general-eigenvalue companion to the
 Jacobi, Lanczos, and power-iteration methods.
+
+## Universal integer codes: self-delimiting compression of small numbers
+
+Write integers to a bitstream with no fixed maximum, spending few bits on the small ones. `universal_codes.py`:
+
+```
+$ python examples/universal_codes_demo.py examples/output
+
+  400 inverted-index gaps, mean gap 6.5, max 52,  Golomb M = 5
+    scheme              total bits  bits/value  vs fixed
+    fixed-width               2400        6.00     1.00x
+    Elias gamma               1910        4.78     0.80x
+    Golomb (M=5)              1703        4.26     0.71x
+  empirical entropy floor: 3.95 bits/value
+```
+
+Elias gamma writes floor(log2 n) zeros then n in binary; delta gamma-codes the length first; omega
+recurses on lengths; Golomb-Rice splits n into a unary quotient and binary remainder, the optimal
+prefix code for a geometric distribution. Validated exhaustively: every code round-trips every integer
+in a large range, codes are prefix-free and self-delimiting (concatenations decode back exactly), the
+length formulas are exact, Rice is the M=2^k Golomb case, and tuned Golomb beats fixed-width on a
+geometric source. The universal-integer-code companion to the Huffman, arithmetic, and rANS entropy
+coders.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
