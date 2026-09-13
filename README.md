@@ -460,6 +460,7 @@ ruins a long non-symplectic integration.
 | `src/shunting_yard.py` | Shunting-yard expression evaluator: infix -> RPN -> value with precedence |
 | `src/suurballe.py` | Suurballe's algorithm: minimum-cost pair of edge-disjoint paths |
 | `src/variates.py` | Random variate generation: exponential/gamma/beta/normal/Poisson/binomial |
+| `src/gomory_hu.py` | Gomory-Hu tree: all-pairs min cuts from n-1 max-flow calls (Gusfield) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -911,6 +912,7 @@ ruins a long non-symplectic integration.
 | `examples/shunting_yard_demo.py` | Expressions to RPN with the token-by-token shunt shown |
 | `examples/suurballe_demo.py` | Two edge-disjoint backbone routes drawn in different colours |
 | `examples/variates_demo.py` | Histograms of five distributions with empirical vs analytic moments |
+| `examples/gomory_hu_demo.py` | Dumbbell graph and its Gomory-Hu tree, full all-pairs cut table |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10545,6 +10547,26 @@ gammas), Poisson (Knuth), binomial (summed Bernoullis) -- the building blocks of
 two ways: empirical moments match the analytic mean/variance to within a few standard errors, and a
 chi-square goodness-of-fit test does not reject the claimed distribution; support constraints,
 reproducibility, and special cases (Gamma(1,theta)=Exponential, Beta(1,1)=uniform) all hold.
+
+## Gomory-Hu tree: all-pairs min cuts from n-1 max-flow calls
+
+Every pair of vertices has a min cut; there are C(n,2) pairs but only n-1 distinct cuts, and
+they pack into a tree. `gomory_hu.py`:
+
+```
+$ python examples/gomory_hu_demo.py examples/output
+
+           A0   A1   A2   B3   B4   B5
+    A0      .   12   12    3    3    3
+    B3      3    3    3    .   13   12
+```
+
+Two heavy triangles joined by a thin waist: within-cluster pairs cost 12 (sever two heavy edges),
+any across-waist pair costs 3. Gomory and Hu (1961) proved the min cut of any pair (s,t) equals the
+lightest edge on the unique path between them in a single weighted tree, built here by Gusfield's
+n-1 max-flow (Dinic) computations on the unchanged graph. Validated: across 200 random graphs the
+tree's path-minimum equals an independent brute-force s-t min cut for every pair. The all-pairs
+companion to Stoer-Wagner's single global cut.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

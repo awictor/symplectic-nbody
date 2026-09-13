@@ -502,6 +502,7 @@ def main():
     import shunting_yard_demo
     import suurballe_demo
     import variates_demo
+    import gomory_hu_demo
 
     import plot_orbits
 
@@ -973,6 +974,7 @@ def main():
     shunting_yard_txt = run("shunting_yard_demo", shunting_yard_demo.main, True)
     suurballe_txt = run("suurballe_demo", suurballe_demo.main, True)
     variates_txt = run("variates_demo", variates_demo.main, True)
+    gomory_hu_txt = run("gomory_hu_demo", gomory_hu_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8439,6 +8441,24 @@ def main():
             '<div class="grid">'
             + svg_card(out("variates.svg"), "50000-draw histograms of five distributions -- the right-skewed exponential and gamma, the bounded beta, the discrete Poisson and binomial -- all generated from a single stream of uniform random numbers")
             + f'<div class="card">{pre(variates_txt)}</div>'
+            + '</div>'),
+        section(
+            "Gomory-Hu tree: all-pairs min cuts from n-1 max-flow calls",
+            "An undirected weighted graph on n vertices has one minimum cut per pair -- the least "
+            "edge weight separating them -- and there are C(n, 2) pairs. Gomory and Hu (1961) proved "
+            "only n-1 of those cuts are ever distinct, and they pack into a single weighted TREE on "
+            "the same vertices: the min cut of ANY pair (s, t) equals the LIGHTEST edge on the unique "
+            "tree path between them, and removing that edge gives the actual cut bipartition. So the "
+            "whole quadratic all-pairs table lives in n-1 numbers. This builds the tree with "
+            "Gusfield's algorithm -- n-1 ordinary s-t max-flow computations (Dinic) on the unchanged "
+            "graph, wiring a parent pointer per vertex with one reparent fix-up. Validated "
+            "exhaustively: across 200 random graphs the tree's path-minimum equals an independent "
+            "brute-force s-t min cut for EVERY pair, the tree always has n-1 edges, and hand cases "
+            "(path bottleneck, 4-cycle, K4, bridged dumbbell) all check out. The all-pairs companion "
+            "to Stoer-Wagner's single global cut and Dinic's single s-t cut.",
+            '<div class="grid">'
+            + svg_card(out("gomory_hu.svg"), "A dumbbell graph -- two heavy triangles joined by a thin waist -- and its Gomory-Hu tree. Within-cluster pairs cost 12 (two heavy edges), any across-waist pair costs 3; all 15 cuts read off the 5-edge tree")
+            + f'<div class="card">{pre(gomory_hu_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
