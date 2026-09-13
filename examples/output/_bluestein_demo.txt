@@ -5,10 +5,10 @@ Bluestein: the FFT for any length, even a prime
     round-trip idft(dft(x)) error: 3.77e-14
 
   timing Bluestein O(n log n) vs direct O(n^2):
-    n=  127: Bluestein    0.80 ms   direct     4.76 ms   speedup   5.9x
-    n=  251: Bluestein    1.82 ms   direct    19.24 ms   speedup  10.5x
-    n=  509: Bluestein    4.63 ms   direct    91.91 ms   speedup  19.9x
-    n= 1021: Bluestein   13.14 ms   direct   467.33 ms   speedup  35.6x
+    n=  127: Bluestein    0.81 ms   direct     5.04 ms   speedup   6.2x
+    n=  251: Bluestein    2.48 ms   direct    19.95 ms   speedup   8.0x
+    n=  509: Bluestein    4.10 ms   direct    81.16 ms   speedup  19.8x
+    n= 1021: Bluestein    9.17 ms   direct   390.56 ms   speedup  42.6x
 
   Bluestein rewrites the DFT exponent n*k = (n^2 + k^2 - (k-n)^2)/2, turning the transform
   into a convolution that a power-of-two FFT computes in O(n log n) -- so ANY length becomes

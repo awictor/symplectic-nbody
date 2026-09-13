@@ -449,6 +449,7 @@ ruins a long non-symplectic integration.
 | `src/permanent.py` | Matrix permanent (Ryser + Glynn) + bipartite perfect-matching count |
 | `src/blossom.py` | Edmonds' blossom: maximum matching in general graphs (odd cycles) |
 | `src/red_black_tree.py` | Red-black tree: self-balancing ordered map + order statistics (select/rank) |
+| `src/top_trading_cycles.py` | Top Trading Cycles: strategy-proof core allocation of indivisible goods |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -889,6 +890,7 @@ ruins a long non-symplectic integration.
 | `examples/permanent_demo.py` | Bipartite matching count and the naive-vs-Ryser operation gap |
 | `examples/blossom_demo.py` | Matching odd cycles and a Petersen-graph perfect matching |
 | `examples/red_black_tree_demo.py` | Balance under sorted insertion and order-statistic queries |
+| `examples/top_trading_cycles_demo.py` | Room reallocation with the trading cycles and pointing graph |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10329,6 +10331,24 @@ and the Linux kernel use it. Each node is augmented with its subtree size, makin
 tree (select the k-th key, rank a key, both O(log n)). Validated against dict and sorted over 6000
 random operations, with the red-black invariants checked after every op, height within bound, select/rank
 matching the sorted list, and sorted insertion staying balanced.
+
+## Top Trading Cycles: the strategy-proof allocation for swapping goods
+
+Reallocate indivisible goods to the unique core, and no one can game it. `top_trading_cycles.py`:
+
+```
+$ python examples/top_trading_cycles_demo.py examples/output
+
+  Ann<->Cy swap rooms, Di<->Ed swap, Bo/Fi keep theirs
+  individually rational, Pareto efficient, in the core -- all True
+```
+
+Each person points to the owner of their favourite remaining object; with every node pointing somewhere
+a cycle must exist, its members trade around it and leave, and the rest repeat -- terminating in at most
+n rounds with the unique core allocation (Gale, via Shapley & Scarf 1974). Strategy-proof, Pareto-
+efficient, individually rational -- the basis of kidney-exchange and school-choice mechanisms. Validated:
+always a valid permutation, individually rational, Pareto efficient and in the core (brute-forced over
+permutations and coalitions), strategy-proof on sampled misreports, and cycles partition the population.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

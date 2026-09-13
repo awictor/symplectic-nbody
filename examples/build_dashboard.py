@@ -491,6 +491,7 @@ def main():
     import permanent_demo
     import blossom_demo
     import red_black_tree_demo
+    import top_trading_cycles_demo
 
     import plot_orbits
 
@@ -951,6 +952,7 @@ def main():
     permanent_txt = run("permanent_demo", permanent_demo.main, True)
     blossom_txt = run("blossom_demo", blossom_demo.main, True)
     red_black_tree_txt = run("red_black_tree_demo", red_black_tree_demo.main, True)
+    top_trading_cycles_txt = run("top_trading_cycles_demo", top_trading_cycles_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8151,6 +8153,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("red_black_tree.svg"), "a red-black tree with its nodes coloured red and black: the colour rules keep every root-to-leaf path within a factor of two in length, and each node's subtree size (labels) powers O(log n) rank and select queries")
             + f'<div class="card">{pre(red_black_tree_txt)}</div>'
+            + '</div>'),
+        section(
+            "Top Trading Cycles: the strategy-proof allocation for swapping goods",
+            "n people each OWN one indivisible object -- a dorm room, a kidney-donor slot, a locker -- "
+            "and each ranks all the objects. Can we reshuffle who holds what so no coalition could break "
+            "away and do better by trading among themselves? TOP TRADING CYCLES (David Gale, via "
+            "Shapley & Scarf 1974) produces the UNIQUE allocation in the CORE, and it is STRATEGY-PROOF "
+            "(no one gains by lying), Pareto-efficient, and individually rational -- a rare trifecta "
+            "that made it the foundation of kidney-exchange and school-choice mechanisms. The algorithm "
+            "is graph theory: build a directed graph where each person points to the owner of their "
+            "favourite remaining object; with every node having out-degree one, a CYCLE must exist; "
+            "everyone in it trades around the cycle and leaves the market; repeat on the survivors. Each "
+            "round clears at least one cycle, so it terminates in at most n rounds, and the outcome is "
+            "provably the unique core allocation (self-loops are length-one cycles -- keep your own). "
+            "This module runs TTC from an ownership list and preference table, returning the allocation "
+            "and the cycles cleared each round. Validated: the output is always a valid permutation; it "
+            "is INDIVIDUALLY RATIONAL (no one worse than their endowment); it is PARETO EFFICIENT and in "
+            "the CORE, both checked by brute force over all permutations and coalitions on small "
+            "instances; it is STRATEGY-PROOF on sampled unilateral misreports (lying never yields a "
+            "more-preferred object); all-own-favourite gives the identity and a full preference cycle "
+            "shifts everyone around; and the cleared cycles exactly partition the population.",
+            '<div class="grid">'
+            + svg_card(out("top_trading_cycles.svg"), "the first-round pointing graph: each person points to the owner of their favourite room, and because every node points somewhere a trading cycle (green) must form -- its members swap and leave, the rest repeat")
+            + f'<div class="card">{pre(top_trading_cycles_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

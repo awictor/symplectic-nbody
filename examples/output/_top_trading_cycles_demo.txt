@@ -1,0 +1,27 @@
+Top Trading Cycles: everyone trades to the core, and no one can game it
+
+  6 people, each owning one room, each ranking all rooms:
+
+    round 1: trading cycle Ann -> Cy -> (back to Ann)
+    round 1: trading cycle Di -> Ed -> (back to Di)
+    round 1: Fi keeps their own room (self-loop)
+    round 2: Bo keeps their own room (self-loop)
+
+  final allocation:
+     Ann gets room 2 (Cy's)  (traded up)
+      Bo gets room 1 (Bo's)
+      Cy gets room 0 (Ann's)  (traded up)
+      Di gets room 4 (Ed's)  (traded up)
+      Ed gets room 3 (Di's)  (traded up)
+      Fi gets room 5 (Fi's)
+
+  individually rational (no one worse off): True
+  Pareto efficient: True
+  in the core (no coalition can do better): True
+
+  Each person points to the owner of their favourite remaining room; with everyone pointing
+  somewhere, a cycle must exist -- its members trade around it and leave. Repeat on the rest.
+  The result is the unique core allocation, and lying about preferences can never help you --
+  the property that made TTC the basis of kidney-exchange and school-choice mechanisms.
+
+  wrote examples/output\top_trading_cycles.svg

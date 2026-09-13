@@ -2,13 +2,13 @@ Force-evaluation time: direct O(N^2) vs Barnes-Hut O(N log N), theta=0.5
 
      N    direct (ms)     bh (ms)   speedup
 ---------------------------------------------
-   200          13.89       19.69      0.7x
-   400          50.66       51.69      1.0x
-   800         195.32      150.16      1.3x
-  1600         785.79      445.13      1.8x
-  3200        3327.34     1233.44      2.7x
+   200          10.25       13.02      0.8x
+   400          41.63       44.39      0.9x
+   800         168.77      152.50      1.1x
+  1600         698.57      461.28      1.5x
+  3200        3275.87     1252.20      2.6x
 
-empirical scaling exponent  direct ~ N^1.98   barnes-hut ~ N^1.50
+empirical scaling exponent  direct ~ N^2.07   barnes-hut ~ N^1.66
 direct sits at ~2.0 (quadratic). barnes-hut is clearly sub-quadratic;
 its exponent falls toward the N log N asymptote as N grows and the
 per-call tree-build overhead is amortized over more force terms.
