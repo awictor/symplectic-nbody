@@ -1,0 +1,15 @@
+SVM by SMO: the maximum-margin classifier, with a nonlinear RBF kernel
+
+  two interleaving half-moons, 80 points, not linearly separable
+
+    classifier              train accuracy
+    linear SVM                      95.0%
+    RBF SVM (gamma=2)              100.0%
+
+  RBF SVM: 11 support vectors out of 80 points
+  min functional margin over training set: 0.999  (>= 1 => on/outside margin)
+
+  The linear boundary cannot separate the moons; the RBF kernel bends the
+  boundary through the gap. Only the support vectors (alpha > 0) shape it.
+
+  wrote examples/output\svm_smo.svg

@@ -558,6 +558,7 @@ def main():
     import fm_index_demo
     import ldpc_demo
     import wang_landau_demo
+    import svm_smo_demo
 
     import plot_orbits
 
@@ -1085,6 +1086,7 @@ def main():
     fm_index_txt = run("fm_index_demo", fm_index_demo.main, True)
     ldpc_txt = run("ldpc_demo", ldpc_demo.main, True)
     wang_landau_txt = run("wang_landau_demo", wang_landau_demo.main, True)
+    svm_smo_txt = run("svm_smo_demo", svm_smo_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9678,6 +9680,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("wang_landau.svg"), "Specific heat per spin of a 4x4 Ising lattice computed from a single Wang-Landau run (dots) against the exact density of states (line): both peak near the finite-size critical temperature, and the whole curve came from one simulation")
             + f'<div class="card">{pre(wang_landau_txt)}</div>'
+            + '</div>'),
+        section(
+            "Support vector machines: the maximum-margin boundary via SMO",
+            "A support vector machine draws the boundary that separates two classes with the WIDEST "
+            "possible margin -- as far as it can get from the nearest point of either class. Where a "
+            "perceptron stops at the first boundary that works, the SVM solves for the UNIQUE "
+            "maximum-margin hyperplane, a convex quadratic program in the dual multipliers alpha_i "
+            "with 0 <= alpha_i <= C and sum alpha_i y_i = 0. The points with alpha_i > 0 are the "
+            "SUPPORT VECTORS -- the only ones that touch the margin and define the boundary. A KERNEL "
+            "K(x, x') lets the same algebra draw NONLINEAR boundaries by an implicit map into a "
+            "higher-dimensional space, so a Gaussian (RBF) kernel carves out curved regions. Training "
+            "is Platt's SEQUENTIAL MINIMAL OPTIMIZATION: the equality constraint means you cannot move "
+            "one alpha alone, so SMO optimizes TWO at a time (closed form) and sweeps until every KKT "
+            "condition holds. Validated: on separable data all labels are correct with functional "
+            "margins >= 1, the dual constraint holds, only support vectors have alpha > 0, a "
+            "two-point max-margin line is reproduced exactly (w0 = 1, boundary at x = 1), and RBF / "
+            "polynomial kernels solve XOR and concentric rings. The maximum-margin, kernel companion "
+            "to the perceptron and logistic-regression classifiers.",
+            '<div class="grid">'
+            + svg_card(out("svm_smo.svg"), "An RBF-kernel SVM separating two interleaving half-moons that no straight line can: the shaded decision regions bend through the gap, and only the ringed support vectors (alpha > 0) shape the boundary")
+            + f'<div class="card">{pre(svm_smo_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

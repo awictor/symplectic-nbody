@@ -516,6 +516,7 @@ ruins a long non-symplectic integration.
 | `src/fm_index.py` | FM-index: BWT backward-search full-text index (count/locate in O(pattern)) |
 | `src/ldpc.py` | LDPC codes: sparse parity checks + bit-flipping / sum-product decoders |
 | `src/wang_landau.py` | Wang-Landau flat-histogram sampling: density of states, all-temperature thermodynamics |
+| `src/svm_smo.py` | Support vector machine trained by SMO (linear / polynomial / RBF kernels) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1023,6 +1024,7 @@ ruins a long non-symplectic integration.
 | `examples/fm_index_demo.py` | Backward-search range narrowing to a DNA pattern's occurrence count |
 | `examples/ldpc_demo.py` | LDPC word-error rate: sum-product vs bit-flipping over a noisy channel |
 | `examples/wang_landau_demo.py` | Specific-heat curve from one Wang-Landau run vs exact density of states |
+| `examples/svm_smo_demo.py` | RBF-SVM decision regions separating two interleaving half-moons |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11683,6 +11685,30 @@ follow at every temperature from a single run. Validated against the exact g(E) 
 enumeration of all 2^N configurations of a small Ising lattice: recovered ln g matches, the total sums
 to 2^N, and the thermodynamic curves agree. The flat-histogram, all-temperatures companion to the
 fixed-temperature Metropolis Ising sampler.
+
+## Support vector machines: the maximum-margin boundary via SMO
+
+The classifier that separates two classes with the widest possible margin. `svm_smo.py`:
+
+```
+$ python examples/svm_smo_demo.py examples/output
+
+  two interleaving half-moons, 80 points, not linearly separable
+    classifier              train accuracy
+    linear SVM                      95.0%
+    RBF SVM (gamma=2)              100.0%
+  RBF SVM: 11 support vectors out of 80 points
+```
+
+An SVM solves for the unique maximum-margin hyperplane, a convex quadratic program in the dual
+multipliers with 0 <= alpha_i <= C and sum alpha_i y_i = 0; the points with alpha_i > 0 are the
+support vectors that define the boundary. A kernel draws nonlinear boundaries by an implicit map, so
+an RBF kernel carves curved regions. Training uses Platt's sequential minimal optimization -- optimize
+two multipliers at a time (closed form), sweep until every KKT condition holds. Validated: separable
+data gets all labels correct with functional margins >= 1, the dual constraint holds, only support
+vectors have alpha > 0, a two-point max-margin line is exact, and RBF / polynomial kernels solve XOR
+and concentric rings. The maximum-margin, kernel companion to the perceptron and logistic-regression
+classifiers.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
