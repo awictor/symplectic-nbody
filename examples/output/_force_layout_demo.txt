@@ -1,0 +1,13 @@
+Force-directed layout (Fruchterman-Reingold): nodes repel, edges pull
+
+  ring (10-cycle):
+    energy     6.83 ->     1.86   mean edge 0.374, mean non-edge 0.940
+  two clusters + bridge:
+    energy     8.89 ->     3.38   mean edge 0.300, mean non-edge 1.080
+  binary tree:
+    energy     3.70 ->     1.47   mean edge 0.459, mean non-edge 0.953
+
+  Energy drops as the layout relaxes; edges end up shorter than non-edges, so connected
+  nodes cluster and the graph's structure becomes visible without any manual placement.
+
+  wrote examples/output\force_layout.svg

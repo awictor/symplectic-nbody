@@ -527,6 +527,7 @@ def main():
     import kde_demo
     import thomas_demo
     import iterative_solvers_demo
+    import force_layout_demo
 
     import plot_orbits
 
@@ -1023,6 +1024,7 @@ def main():
     kde_txt = run("kde_demo", kde_demo.main, True)
     thomas_txt = run("thomas_demo", thomas_demo.main, True)
     iterative_solvers_txt = run("iterative_solvers_demo", iterative_solvers_demo.main, True)
+    force_layout_txt = run("force_layout_demo", force_layout_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8998,6 +9000,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("iterative_solvers.svg"), "Left: the Poisson solution field u = sin(pi x) sin(pi y). Right: iterations to converge -- Jacobi 815, Gauss-Seidel 409, optimal SOR just 55, all reaching the same solution")
             + f'<div class="card">{pre(iterative_solvers_txt)}</div>'
+            + '</div>'),
+        section(
+            "Force-directed graph layout: drawing with springs",
+            "A graph has no inherent geometry, so to SEE its structure the nodes must be placed on a "
+            "plane. Force-directed layout treats the drawing as a physical system: every pair of "
+            "nodes repels like charged particles (spreading them out) and every edge acts as a spring "
+            "pulling its endpoints together (keeping connected nodes near). Relaxing to equilibrium "
+            "reveals the graph's shape -- clusters bunch, symmetric graphs draw symmetrically. The "
+            "Fruchterman-Reingold algorithm makes the forces scale-free with an ideal edge length "
+            "k = sqrt(area/n): repulsion k^2/d between all pairs, attraction d^2/k along edges, with "
+            "a cooling temperature that shrinks each iteration so big moves happen early and fine "
+            "adjustments late. Validated by the physics and by structure: the system energy decreases "
+            "as the layout relaxes; connected nodes end up closer on average than non-connected ones; "
+            "a cycle lays out as a near-regular ring with equal edge lengths; two dense clusters "
+            "joined by one edge separate into two groups; nodes stay within the frame; and the layout "
+            "is deterministic under a seed. The visualization companion to the graph algorithms "
+            "throughout the repo.",
+            '<div class="grid">'
+            + svg_card(out("force_layout.svg"), "Three graphs -- a ring, two clusters joined by a bridge, and a binary tree -- each drawn by simulating springs and repulsion until the layout energy settles, with no manual placement")
+            + f'<div class="card">{pre(force_layout_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

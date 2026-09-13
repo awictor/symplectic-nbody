@@ -485,6 +485,7 @@ ruins a long non-symplectic integration.
 | `src/kde.py` | Kernel density estimation: 5 kernels, Silverman/Scott bandwidth, adaptive variant |
 | `src/thomas.py` | Thomas tridiagonal solver + Crank-Nicolson heat equation (unconditionally stable) |
 | `src/iterative_solvers.py` | Jacobi / Gauss-Seidel / SOR stationary solvers + 2-D Poisson equation |
+| `src/force_layout.py` | Fruchterman-Reingold force-directed graph layout (springs + repulsion) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -961,6 +962,7 @@ ruins a long non-symplectic integration.
 | `examples/kde_demo.py` | Bimodal density estimated at three bandwidths with a sample rug |
 | `examples/thomas_demo.py` | Heat spike diffusing under Crank-Nicolson vs the analytic Gaussian |
 | `examples/iterative_solvers_demo.py` | 2-D Poisson field + iteration counts (Jacobi vs GS vs SOR) |
+| `examples/force_layout_demo.py` | A ring, a two-cluster network, and a tree laid out by force simulation |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11053,6 +11055,23 @@ Jacobi (diagonal split, parallel), Gauss-Seidel (lower-triangle, updates propaga
 on diagonally-dominant and SPD systems, with the iteration-count ordering GS <= Jacobi and SOR
 fewest, and the 2-D Poisson solver matching a manufactured sin*sin analytic solution. The
 iterative-linear-algebra companion to the LU/Cholesky solvers and conjugate gradient.
+
+## Force-directed graph layout: drawing with springs
+
+Place graph nodes by simulating physics. `force_layout.py`:
+
+```
+$ python examples/force_layout_demo.py examples/output
+
+  ring/clusters/tree: energy drops as the layout relaxes
+  edges end up shorter than non-edges, so structure becomes visible
+```
+
+Fruchterman-Reingold: every pair of nodes repels (k^2/d), every edge is a spring (d^2/k), with a
+cooling temperature so big moves happen early. Validated by the physics and structure -- energy
+decreases, connected nodes end up closer than non-connected, a cycle draws as a near-regular ring, two
+clusters joined by one edge separate, and the layout is deterministic under a seed. The visualization
+companion to the graph algorithms throughout the repo.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
