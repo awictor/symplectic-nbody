@@ -490,6 +490,7 @@ def main():
     import interval_tree_demo
     import permanent_demo
     import blossom_demo
+    import red_black_tree_demo
 
     import plot_orbits
 
@@ -949,6 +950,7 @@ def main():
     interval_tree_txt = run("interval_tree_demo", interval_tree_demo.main, True)
     permanent_txt = run("permanent_demo", permanent_demo.main, True)
     blossom_txt = run("blossom_demo", blossom_demo.main, True)
+    red_black_tree_txt = run("red_black_tree_demo", red_black_tree_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8123,6 +8125,32 @@ def main():
             '<div class="grid">'
             + svg_card(out("blossom.svg"), "the Petersen graph -- ten vertices, three-regular, riddled with odd cycles -- with a perfect matching found by the blossom algorithm highlighted in green, every vertex covered exactly once")
             + f'<div class="card">{pre(blossom_txt)}</div>'
+            + '</div>'),
+        section(
+            "Red-black trees: the balanced map behind std::map and the kernel",
+            "A binary search tree gives O(log n) lookups only if it stays balanced; feed a plain BST "
+            "sorted data and it degenerates into a linked list, O(n) per operation. The RED-BLACK TREE "
+            "keeps itself balanced through insertions and deletions using a single bit of colour per "
+            "node and a handful of local rotations, guaranteeing the height never exceeds 2 log2(n+1). "
+            "It is the balanced tree industry actually ships: C++'s std::map/std::set, Java's "
+            "TreeMap/TreeSet, and the Linux kernel's scheduler and virtual-memory areas are all "
+            "red-black trees, chosen over AVL because looser balance means far fewer rotations on "
+            "update-heavy workloads. Four colour invariants -- root black, no red node with a red child, "
+            "and equal BLACK HEIGHT on every root-to-null path -- force the longest path to be at most "
+            "twice the shortest. Insertion adds a red leaf and repairs any red-red violation by "
+            "recolouring and rotating up; deletion fixes a double-black deficit by borrowing blackness "
+            "from a sibling or pushing it up, each fix local and O(1). This implementation augments "
+            "every node with its SUBTREE SIZE, making it an ORDER-STATISTIC tree that answers 'the k-th "
+            "smallest key' (select) and 'how many keys are below x' (rank) in O(log n). Validated "
+            "against Python's dict and sorted over 6000 seeded random insert/delete/search operations -- "
+            "same memberships and values, in-order traversal exactly the sorted keys -- with the "
+            "red-black invariants (root black, no red-red edge, equal black height) checked directly "
+            "after EVERY operation and the height verified within the 2 log2(n+1) bound; select and rank "
+            "match the sorted key list; sorted insertion of 100000 keys stays 31 deep (a BST would be "
+            "100000); and deleting every key empties the tree while preserving invariants throughout.",
+            '<div class="grid">'
+            + svg_card(out("red_black_tree.svg"), "a red-black tree with its nodes coloured red and black: the colour rules keep every root-to-leaf path within a factor of two in length, and each node's subtree size (labels) powers O(log n) rank and select queries")
+            + f'<div class="card">{pre(red_black_tree_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

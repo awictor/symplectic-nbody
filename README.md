@@ -448,6 +448,7 @@ ruins a long non-symplectic integration.
 | `src/interval_tree.py` | Centered interval tree: O(log n + k) stabbing and range-overlap queries |
 | `src/permanent.py` | Matrix permanent (Ryser + Glynn) + bipartite perfect-matching count |
 | `src/blossom.py` | Edmonds' blossom: maximum matching in general graphs (odd cycles) |
+| `src/red_black_tree.py` | Red-black tree: self-balancing ordered map + order statistics (select/rank) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -887,6 +888,7 @@ ruins a long non-symplectic integration.
 | `examples/interval_tree_demo.py` | Calendar stabbing/range queries with the clashing meetings drawn |
 | `examples/permanent_demo.py` | Bipartite matching count and the naive-vs-Ryser operation gap |
 | `examples/blossom_demo.py` | Matching odd cycles and a Petersen-graph perfect matching |
+| `examples/red_black_tree_demo.py` | Balance under sorted insertion and order-statistic queries |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10309,6 +10311,24 @@ general matching to the bipartite augmenting-path hunt. Repeat until no augmenti
 the matching is then maximum). Validated by exact agreement with brute force over 300 random graphs
 (always valid), on odd cycles and the Petersen graph, against the bipartite matcher, on complete graphs,
 and with Berge optimality confirmed.
+
+## Red-black trees: the balanced map behind std::map and the kernel
+
+The self-balancing ordered map that industry ships, with order statistics. `red_black_tree.py`:
+
+```
+$ python examples/red_black_tree_demo.py examples/output
+
+  sorted insertion of 100000 keys -> height 31 (a plain BST would be 100000)
+  select(2)=3rd smallest, rank(55)=how many keys < 55, both O(log n)
+```
+
+Four colour invariants (root black, no red-red edge, equal black height on every root-to-null path)
+keep the height within 2 log2(n+1) with O(1) rotations per update -- why C++'s std::map, Java's TreeMap,
+and the Linux kernel use it. Each node is augmented with its subtree size, making it an order-statistic
+tree (select the k-th key, rank a key, both O(log n)). Validated against dict and sorted over 6000
+random operations, with the red-black invariants checked after every op, height within bound, select/rank
+matching the sorted list, and sorted insertion staying balanced.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

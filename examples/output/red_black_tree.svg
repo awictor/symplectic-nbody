@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="380" viewBox="0 0 760 380" font-family="monospace">
+<rect width="760" height="380" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="16">Red-black tree: node colours enforce balance (labels show subtree size)</text>
+<line x1="436.7" y1="70.0" x2="210.0" y2="156.7" stroke="#30363d" stroke-width="1"/>
+<line x1="210.0" y1="156.7" x2="96.7" y2="243.3" stroke="#30363d" stroke-width="1"/>
+<line x1="96.7" y1="243.3" x2="40.0" y2="330.0" stroke="#30363d" stroke-width="1"/>
+<line x1="96.7" y1="243.3" x2="153.3" y2="330.0" stroke="#30363d" stroke-width="1"/>
+<line x1="210.0" y1="156.7" x2="323.3" y2="243.3" stroke="#30363d" stroke-width="1"/>
+<line x1="323.3" y1="243.3" x2="266.7" y2="330.0" stroke="#30363d" stroke-width="1"/>
+<line x1="323.3" y1="243.3" x2="380.0" y2="330.0" stroke="#30363d" stroke-width="1"/>
+<line x1="436.7" y1="70.0" x2="606.7" y2="156.7" stroke="#30363d" stroke-width="1"/>
+<line x1="606.7" y1="156.7" x2="493.3" y2="243.3" stroke="#30363d" stroke-width="1"/>
+<line x1="493.3" y1="243.3" x2="550.0" y2="330.0" stroke="#30363d" stroke-width="1"/>
+<line x1="606.7" y1="156.7" x2="663.3" y2="243.3" stroke="#30363d" stroke-width="1"/>
+<line x1="663.3" y1="243.3" x2="720.0" y2="330.0" stroke="#30363d" stroke-width="1"/>
+<circle cx="40.0" cy="330.0" r="15" fill="#ff6b6b" stroke="#ff6b6b" stroke-width="2"/>
+<text x="40.0" y="334.0" fill="#e6edf3" font-size="11" text-anchor="middle">1</text>
+<text x="40.0" y="311.0" fill="#8b949e" font-size="8" text-anchor="middle">sz1</text>
+<circle cx="96.7" cy="243.3" r="15" fill="#30363d" stroke="#8b949e" stroke-width="2"/>
+<text x="96.7" y="247.3" fill="#e6edf3" font-size="11" text-anchor="middle">3</text>
+<text x="96.7" y="224.3" fill="#8b949e" font-size="8" text-anchor="middle">sz3</text>
+<circle cx="153.3" cy="330.0" r="15" fill="#ff6b6b" stroke="#ff6b6b" stroke-width="2"/>
+<text x="153.3" y="334.0" fill="#e6edf3" font-size="11" text-anchor="middle">4</text>
+<text x="153.3" y="311.0" fill="#8b949e" font-size="8" text-anchor="middle">sz1</text>
+<circle cx="210.0" cy="156.7" r="15" fill="#ff6b6b" stroke="#ff6b6b" stroke-width="2"/>
+<text x="210.0" y="160.7" fill="#e6edf3" font-size="11" text-anchor="middle">5</text>
+<text x="210.0" y="137.7" fill="#8b949e" font-size="8" text-anchor="middle">sz7</text>
+<circle cx="266.7" cy="330.0" r="15" fill="#ff6b6b" stroke="#ff6b6b" stroke-width="2"/>
+<text x="266.7" y="334.0" fill="#e6edf3" font-size="11" text-anchor="middle">6</text>
+<text x="266.7" y="311.0" fill="#8b949e" font-size="8" text-anchor="middle">sz1</text>
+<circle cx="323.3" cy="243.3" r="15" fill="#30363d" stroke="#8b949e" stroke-width="2"/>
+<text x="323.3" y="247.3" fill="#e6edf3" font-size="11" text-anchor="middle">7</text>
+<text x="323.3" y="224.3" fill="#8b949e" font-size="8" text-anchor="middle">sz3</text>
+<circle cx="380.0" cy="330.0" r="15" fill="#ff6b6b" stroke="#ff6b6b" stroke-width="2"/>
+<text x="380.0" y="334.0" fill="#e6edf3" font-size="11" text-anchor="middle">8</text>
+<text x="380.0" y="311.0" fill="#8b949e" font-size="8" text-anchor="middle">sz1</text>
+<circle cx="436.7" cy="70.0" r="15" fill="#30363d" stroke="#8b949e" stroke-width="2"/>
+<text x="436.7" y="74.0" fill="#e6edf3" font-size="11" text-anchor="middle">10</text>
+<text x="436.7" y="51.0" fill="#8b949e" font-size="8" text-anchor="middle">sz13</text>
+<circle cx="493.3" cy="243.3" r="15" fill="#30363d" stroke="#8b949e" stroke-width="2"/>
+<text x="493.3" y="247.3" fill="#e6edf3" font-size="11" text-anchor="middle">12</text>
+<text x="493.3" y="224.3" fill="#8b949e" font-size="8" text-anchor="middle">sz2</text>
+<circle cx="550.0" cy="330.0" r="15" fill="#ff6b6b" stroke="#ff6b6b" stroke-width="2"/>
+<text x="550.0" y="334.0" fill="#e6edf3" font-size="11" text-anchor="middle">13</text>
+<text x="550.0" y="311.0" fill="#8b949e" font-size="8" text-anchor="middle">sz1</text>
+<circle cx="606.7" cy="156.7" r="15" fill="#ff6b6b" stroke="#ff6b6b" stroke-width="2"/>
+<text x="606.7" y="160.7" fill="#e6edf3" font-size="11" text-anchor="middle">15</text>
+<text x="606.7" y="137.7" fill="#8b949e" font-size="8" text-anchor="middle">sz5</text>
+<circle cx="663.3" cy="243.3" r="15" fill="#30363d" stroke="#8b949e" stroke-width="2"/>
+<text x="663.3" y="247.3" fill="#e6edf3" font-size="11" text-anchor="middle">18</text>
+<text x="663.3" y="224.3" fill="#8b949e" font-size="8" text-anchor="middle">sz2</text>
+<circle cx="720.0" cy="330.0" r="15" fill="#ff6b6b" stroke="#ff6b6b" stroke-width="2"/>
+<text x="720.0" y="334.0" fill="#e6edf3" font-size="11" text-anchor="middle">20</text>
+<text x="720.0" y="311.0" fill="#8b949e" font-size="8" text-anchor="middle">sz1</text>
+<text x="20" y="366" fill="#8b949e" font-size="11">red and black nodes; every root-to-leaf path has the same number of black nodes</text>
+</svg>

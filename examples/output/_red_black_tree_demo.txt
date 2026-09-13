@@ -1,0 +1,20 @@
+Red-black tree: guaranteed O(log n), with order statistics
+
+  inserting 1..N in sorted order (a plain BST would become a linked list):
+    N=   100: height 11  (bound 2*log2(N+1) = 13.3, a BST would be 100), balanced = True
+    N=  1000: height 17  (bound 2*log2(N+1) = 19.9, a BST would be 1000), balanced = True
+    N=100000: height 31  (bound 2*log2(N+1) = 33.2, a BST would be 100000), balanced = True
+
+  order-statistic queries on [5, 10, 20, 25, 30, 50, 60, 70, 80, 90]:
+    3rd smallest (select 2): 20
+    median (select 5): 50
+    largest (select 9): 90
+    rank of 55 (how many keys < 55): 6
+    rank of 90: 9
+
+  Four colour invariants -- root black, no red-red edge, equal black height on every
+  root-to-null path -- force the longest path to be at most twice the shortest, so the
+  tree self-balances with O(1) rotations per update. Augmenting each node with its subtree
+  size turns it into an order-statistic tree: select and rank in O(log n).
+
+  wrote examples/output\red_black_tree.svg
