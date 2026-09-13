@@ -1,0 +1,21 @@
+Total-variation denoising: edge-preserving, unlike a blur
+
+  Signal: 4 constant levels + noise (100 samples).
+
+              method   RMSE to truth   plateaus
+         noisy input          0.3386         --
+      moving average          0.4401         --
+          TV denoise          0.2489          5
+
+  TV denoising recovers the flat levels with sharp edges; the moving average rounds
+  every step into a ramp, so its error is higher near the jumps.
+
+  Lambda trade-off (more smoothing -> fewer plateaus, lower total variation):
+     lambda   total variation   plateaus
+        0.5             8.405         18
+        1.0             7.534         10
+        3.0             6.472          7
+        6.0             5.253          4
+       12.0             2.853          4
+
+  wrote examples/output\tv_denoise.svg

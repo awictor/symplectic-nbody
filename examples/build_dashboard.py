@@ -539,6 +539,7 @@ def main():
     import string_similarity_demo
     import hmc_demo
     import omp_demo
+    import tv_denoise_demo
 
     import plot_orbits
 
@@ -1047,6 +1048,7 @@ def main():
     string_similarity_txt = run("string_similarity_demo", string_similarity_demo.main, True)
     hmc_txt = run("hmc_demo", hmc_demo.main, True)
     omp_txt = run("omp_demo", omp_demo.main, True)
+    tv_denoise_txt = run("tv_denoise_demo", tv_denoise_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9258,6 +9260,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("omp.svg"), "A length-60 signal with just 4 nonzero coefficients, recovered exactly from 20 random measurements: the OMP recovery (green rings) lands precisely on the true spikes (gray stems), a wildly underdetermined system made solvable by sparsity")
             + f'<div class="card">{pre(omp_txt)}</div>'
+            + '</div>'),
+        section(
+            "Total-variation denoising: keeping edges sharp",
+            "Ordinary smoothing removes noise but blurs edges -- a sharp step becomes a gentle ramp. "
+            "TOTAL-VARIATION denoising (the 1-D fused lasso / Rudin-Osher-Fatemi model) does better: "
+            "it minimizes 0.5*sum(u-y)^2 + lambda*sum|u_{i+1}-u_i|, trading fidelity against the total "
+            "variation. The L1 penalty on jumps drives most differences to exactly zero, producing a "
+            "piecewise-CONSTANT result that keeps genuine edges crisp while flattening noise into "
+            "plateaus -- the workhorse behind edge-preserving denoising, changepoint detection, and "
+            "genomic copy-number segmentation. This convex problem is solved by dual "
+            "projected-gradient descent (u = y - D^T p over the box |p| &lt;= lambda). Validated "
+            "against a fine-grid brute-force optimum on small signals and by the model's properties: "
+            "it recovers a clean piecewise-constant signal from noise (lower error than a moving "
+            "average, which rounds every step into a ramp); larger lambda gives fewer, longer "
+            "plateaus and lower total variation; lambda = 0 returns the input; a huge lambda collapses "
+            "to the data mean; and the output never overshoots the data range. The edge-preserving "
+            "companion to the Savitzky-Golay / kernel smoothers and the isotonic-regression fit.",
+            '<div class="grid">'
+            + svg_card(out("tv_denoise.svg"), "A noisy four-level signal: TV denoising (green) snaps back to flat plateaus with sharp step edges, while a moving average (orange) smears every jump into a ramp and does worse than the raw data near the edges")
+            + f'<div class="card">{pre(tv_denoise_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -497,6 +497,7 @@ ruins a long non-symplectic integration.
 | `src/string_similarity.py` | Jaro-Winkler, q-gram Jaccard/Dice, Soundex phonetic matching |
 | `src/hmc.py` | Hamiltonian Monte Carlo (leapfrog + Metropolis) + random-walk baseline |
 | `src/omp.py` | Orthogonal matching pursuit: sparse recovery / compressed sensing |
+| `src/tv_denoise.py` | 1-D total-variation denoising (edge-preserving, dual projected gradient) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -985,6 +986,7 @@ ruins a long non-symplectic integration.
 | `examples/string_similarity_demo.py` | Fuzzy name ranking + Soundex phonetic grouping |
 | `examples/hmc_demo.py` | HMC vs random-walk Metropolis on a correlated Gaussian ridge |
 | `examples/omp_demo.py` | Sparse signal recovered exactly from few random measurements |
+| `examples/tv_denoise_demo.py` | Piecewise-constant signal denoised: sharp TV edges vs a smeared average |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11277,6 +11279,23 @@ least-squares fit on the active set, repeat. Validated: recovers a planted k-spa
 and coefficients from m ~ a few times k measurements, residual decreases monotonically, a square
 system is solved exactly, and error stays bounded under noise. The sparse-recovery companion to the
 SVD/least-squares and FFT signal tools.
+
+## Total-variation denoising: keeping edges sharp
+
+Edge-preserving 1-D denoising by the fused-lasso / ROF model. `tv_denoise.py`:
+
+```
+$ python examples/tv_denoise_demo.py examples/output
+
+  4-level noisy signal: TV RMSE 0.25 vs moving-average 0.44 (which smears the steps)
+  larger lambda -> fewer plateaus, lower total variation
+```
+
+Minimize 0.5*sum(u-y)^2 + lambda*sum|u_{i+1}-u_i| by dual projected-gradient descent; the L1 jump
+penalty yields a piecewise-constant fit with sharp edges. Validated against a fine-grid brute-force
+optimum on small signals and by properties: recovers a clean piecewise-constant signal, larger lambda
+gives fewer plateaus, lambda=0 returns the input, huge lambda collapses to the mean, no overshoot. The
+edge-preserving companion to the Savitzky-Golay smoothers and isotonic regression.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
