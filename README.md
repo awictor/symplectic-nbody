@@ -470,6 +470,7 @@ ruins a long non-symplectic integration.
 | `src/sos_dp.py` | Sum over subsets: zeta/Moebius transforms + OR/AND/subset-sum convolutions |
 | `src/regret_matching.py` | Regret matching / flat CFR: Nash equilibria of zero-sum games by self-play |
 | `src/persistent_segment_tree.py` | Persistent segment tree: version history + range k-th smallest |
+| `src/huffman.py` | Huffman coding: optimal prefix code + canonical form, entropy bracket |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -931,6 +932,7 @@ ruins a long non-symplectic integration.
 | `examples/sos_dp_demo.py` | Boolean-lattice Hasse diagram of the subset-sum transform |
 | `examples/regret_matching_demo.py` | RPS converging to uniform + exploitability falling to zero |
 | `examples/persistent_segment_tree_demo.py` | Range k-th smallest via prefix-version differencing |
+| `examples/huffman_demo.py` | Huffman code tree for a sentence with entropy comparison |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10754,6 +10756,25 @@ range k-th smallest: one version per array prefix, and the multiset of a[l..r] i
 version l-1, walked in O(log V). Validated against brute force -- all versions reproduce correct
 range sums and the range k-th smallest matches a sort of the subarray across thousands of queries.
 The version-history companion to the segment tree and wavelet tree.
+
+## Huffman coding: the optimal prefix-free code
+
+Minimum expected code length, provably. `huffman.py`:
+
+```
+$ python examples/huffman_demo.py examples/output
+
+  Shannon entropy 4.293 <= Huffman 4.333 < 5.293   (H <= L < H+1)
+  221 bits vs 408 bits ASCII, round-trip decode matches
+```
+
+Greedily merge the two least-frequent nodes under a new parent: rarest symbols end up deepest. The
+choice is provably optimal by an exchange argument, and the cost is bracketed by the Shannon entropy,
+H <= L < H+1. Also builds the canonical code (same lengths, standard-order codewords so the decoder
+needs only the length table). Validated by matching a brute-force search over all prefix codes via
+Kraft-inequality enumeration, prefix-freeness, message round-trips, the entropy bracket, and a dyadic
+distribution hitting entropy exactly. The optimal-prefix-code companion to the arithmetic coder and
+rANS.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

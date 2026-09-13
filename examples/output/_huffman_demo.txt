@@ -1,0 +1,45 @@
+Huffman coding: the optimal prefix-free code
+
+  Message (51 chars, 27 distinct symbols):
+    "the quick brown fox jumps over the lazy dog the fox"
+
+    symbol  freq     Huffman   canonical
+       ' '    10          00          00
+       'o'     5         010         010
+       'e'     4        1001        0110
+       'h'     3        0111        0111
+       't'     3        1000        1000
+       'f'     2       10100       10010
+       'r'     2       10101       10011
+       'u'     2       10110       10100
+       'x'     2       10111       10101
+       'a'     1      110000      110000
+       'b'     1      110001      110001
+       'c'     1      110010      110010
+       'd'     1      110011      110011
+       'g'     1      110100      110100
+       'i'     1      110101      110101
+       'j'     1      110110      110110
+       'k'     1      110111      110111
+       'l'     1      111000      111000
+       'm'     1      111001      111001
+       'n'     1      111010      111010
+       'p'     1      111011      111011
+       'q'     1      111100      111100
+       's'     1      111101      111101
+       'v'     1      111110      111110
+       'w'     1      111111      111111
+       'y'     1       01100       10110
+       'z'     1       01101       10111
+
+  Shannon entropy:        4.2932 bits/symbol
+  Huffman expected length:4.3333 bits/symbol  (H <= L < H+1)
+  Fixed-width code:       5 bits/symbol
+  Compression ratio vs fixed-width: 1.154x
+  Encoded size: 221 bits vs 255 bits fixed vs 408 bits ASCII
+  Round-trip decode matches original: True
+
+  The greedy merge of the two rarest nodes is provably optimal (exchange argument);
+  no prefix code has smaller expected length. Rare symbols sit deepest in the tree.
+
+  wrote examples/output\huffman.svg

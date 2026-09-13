@@ -512,6 +512,7 @@ def main():
     import sos_dp_demo
     import regret_matching_demo
     import persistent_segment_tree_demo
+    import huffman_demo
 
     import plot_orbits
 
@@ -993,6 +994,7 @@ def main():
     sos_dp_txt = run("sos_dp_demo", sos_dp_demo.main, True)
     regret_matching_txt = run("regret_matching_demo", regret_matching_demo.main, True)
     persistent_segment_tree_txt = run("persistent_segment_tree_demo", persistent_segment_tree_demo.main, True)
+    huffman_txt = run("huffman_demo", huffman_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8661,6 +8663,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("persistent_segment_tree.svg"), "The 3rd-smallest element of a subarray, found by differencing two prefix versions of a persistent count tree -- the range is highlighted above, the sorted subarray with the answer marked below")
             + f'<div class="card">{pre(persistent_segment_tree_txt)}</div>'
+            + '</div>'),
+        section(
+            "Huffman coding: the optimal prefix-free code",
+            "Given symbols with frequencies, a prefix code assigns each a bit-string so no codeword "
+            "is a prefix of another -- decoding is unambiguous with no delimiters. Huffman's 1952 "
+            "greedy algorithm builds the code of minimum expected length by repeatedly merging the "
+            "two least-frequent nodes under a new parent: the rarest symbols end up deepest, the "
+            "common ones shallow. The greedy choice is provably optimal by an exchange argument, and "
+            "the cost obeys the tight bracket H &lt;= L &lt; H + 1 against the Shannon entropy H -- "
+            "never shorter than entropy, never wasting a full bit. The module also builds the "
+            "CANONICAL code (same lengths, codewords in a standard order so the decoder needs only "
+            "the length table) and encodes/decodes bitstreams. Validated by optimality and "
+            "correctness: the expected length equals a brute-force search over all prefix codes via "
+            "Kraft-inequality enumeration for small alphabets, the code is prefix-free and "
+            "round-trips any message, the entropy bracket holds, canonical and tree codes share "
+            "lengths, and a dyadic distribution (1/2, 1/4, 1/8, 1/8) hits entropy exactly. The "
+            "optimal-prefix-code companion to the arithmetic coder and rANS.",
+            '<div class="grid">'
+            + svg_card(out("huffman.svg"), "The Huffman code tree for a sample sentence: left edges are 0, right edges 1, and each leaf is a symbol at a depth equal to its codeword length -- frequent letters near the root, rare ones deep")
+            + f'<div class="card">{pre(huffman_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
