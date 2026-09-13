@@ -1,0 +1,16 @@
+Chinese Postman: the shortest closed walk down every street
+
+  network: 9 streets, total length 34.0
+    odd-degree junctions (dead-ends for parity): [1, 4]
+    must retrace 6.0 of length to fix parity (min-cost pairing of odd junctions)
+    optimal postman route length: 40.0  = 34.0 (all streets) + 6.0 (retraced)
+
+  an Eulerian block (square): the circuit is [0, 1, 2, 3, 0]
+    (every street once, back to the start, zero retracing)
+
+  Euler: a connected graph has a walk using every edge exactly once iff every junction has
+  even degree. Odd junctions force retracing; the cheapest fix pairs them up along shortest
+  paths -- a minimum-weight matching -- so the postman's optimal route is simply the sum of
+  all streets plus that minimum matching cost. Polynomial-time, unlike its cousin the TSP.
+
+  wrote examples/output\chinese_postman.svg

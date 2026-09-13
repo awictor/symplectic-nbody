@@ -453,6 +453,7 @@ ruins a long non-symplectic integration.
 | `src/xor_basis.py` | XOR linear basis over GF(2): max/min subset XOR, membership, rank, k-th value |
 | `src/vcg_auction.py` | VCG mechanism + second-price auction: efficient, strategy-proof allocation |
 | `src/minimize_1d.py` | Derivative-free 1D minimization: golden section, Brent, auto-bracketing |
+| `src/chinese_postman.py` | Chinese Postman route inspection: shortest closed walk over every edge |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -897,6 +898,7 @@ ruins a long non-symplectic integration.
 | `examples/xor_basis_demo.py` | Max subset XOR, the reachable set, and the binary echelon basis |
 | `examples/vcg_auction_demo.py` | Ad-slot assignment with externality payments and a lying test |
 | `examples/minimize_1d_demo.py` | Golden vs Brent eval counts and shrinking golden-section brackets |
+| `examples/chinese_postman_demo.py` | Street network with odd junctions paired and retraced paths drawn |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10409,6 +10411,24 @@ Brent's method tries fast parabolic jumps and falls back to golden section when 
 minimum by walking downhill. Validated on functions with known minima (both methods hit the minimizer,
 Brent in far fewer evaluations), the exact golden-ratio interval shrinkage, valid bracketing in either
 direction, and endpoint/narrow-valley/multimodal edge cases.
+
+## The Chinese Postman problem: covering every edge cheaply
+
+Shortest closed walk down every street, in polynomial time. `chinese_postman.py`:
+
+```
+$ python examples/chinese_postman_demo.py examples/output
+
+  9 streets total 34; odd junctions {1,4} force 6 of retracing -> optimal route 40
+  Eulerian block: circuit uses every edge once, zero retracing
+```
+
+Euler: a connected graph has a walk using every edge once iff every vertex has even degree. Odd vertices
+force retracing; the cheapest fix pairs them along shortest paths (a minimum-weight matching), so the
+route length is total edge weight plus the minimum matching cost -- polynomial, unlike TSP. Uses
+Floyd-Warshall distances and exact odd-vertex matching, with a Hierholzer Eulerian circuit for the
+even case. Validated: route = edges + min matching (matching brute-forced over pairings on 200 graphs),
+valid Eulerian circuits, the handshake lemma, disconnected-graph detection, and hand instances.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

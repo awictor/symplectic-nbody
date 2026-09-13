@@ -23,11 +23,11 @@ Thompson's NFA: regex matching in guaranteed linear time
   Catastrophic backtracking pattern /(a*)*b/ against strings of 'a' (no trailing b):
     a backtracking engine takes exponential time; Thompson's NFA stays linear.
 
-    n=  50: matched=False  time=0.10 ms
-    n= 100: matched=False  time=0.20 ms
-    n= 200: matched=False  time=0.40 ms
-    n= 400: matched=False  time=0.81 ms
-    n= 800: matched=False  time=1.60 ms
+    n=  50: matched=False  time=0.06 ms
+    n= 100: matched=False  time=0.12 ms
+    n= 200: matched=False  time=0.24 ms
+    n= 400: matched=False  time=0.48 ms
+    n= 800: matched=False  time=0.97 ms
 
   Never backtracks: the engine tracks the SET of all NFA states the machine could be in
   and advances the whole set one character at a time, so matching costs O(n*m) always --

@@ -495,6 +495,7 @@ def main():
     import xor_basis_demo
     import vcg_auction_demo
     import minimize_1d_demo
+    import chinese_postman_demo
 
     import plot_orbits
 
@@ -959,6 +960,7 @@ def main():
     xor_basis_txt = run("xor_basis_demo", xor_basis_demo.main, True)
     vcg_auction_txt = run("vcg_auction_demo", vcg_auction_demo.main, True)
     minimize_1d_txt = run("minimize_1d_demo", minimize_1d_demo.main, True)
+    chinese_postman_txt = run("chinese_postman_demo", chinese_postman_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8257,6 +8259,31 @@ def main():
             '<div class="grid">'
             + svg_card(out("minimize_1d.svg"), "top: golden-section brackets (coloured bars) closing in on the minimum of a curve step by step; bottom: the error decreasing steadily on a log scale as the interval shrinks by the golden ratio")
             + f'<div class="card">{pre(minimize_1d_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Chinese Postman problem: covering every edge cheaply",
+            "A mail carrier must walk down EVERY street and return to the depot; a snowplough must clear "
+            "every road; a drone must inspect every pipeline segment. This is ROUTE INSPECTION, the "
+            "Chinese Postman Problem (Kwan Mei-Ko, 1962): the shortest closed walk in a weighted graph "
+            "that uses every edge at least once. It is the edge-covering cousin of the Travelling "
+            "Salesman -- and, remarkably, unlike TSP it is solvable in POLYNOMIAL time. Euler's insight: "
+            "a connected graph has a closed walk using every edge EXACTLY once (an Eulerian circuit) iff "
+            "every vertex has EVEN degree. Odd-degree vertices -- always even in number, by the "
+            "handshake lemma -- force the postman to retrace some edges, and the cheapest way is to "
+            "pair the odd vertices and duplicate the edges along a SHORTEST PATH between each pair, "
+            "turning both endpoints even. Choosing the pairing that minimises total duplicated length is "
+            "exactly a MINIMUM-WEIGHT PERFECT MATCHING on the odd vertices, so the optimal route length "
+            "is (sum of all edge weights) + (minimum matching cost). This module computes the route "
+            "length via Floyd-Warshall all-pairs distances and exact odd-vertex matching, and builds an "
+            "actual Eulerian circuit (Hierholzer) for the already-even case. Validated: the route length "
+            "equals total edge weight plus the minimum matching cost, that matching verified against "
+            "brute force over all pairings on 200 random graphs; Eulerian graphs need zero retracing and "
+            "the returned circuit genuinely uses every edge once and returns to the start; the handshake "
+            "lemma holds; disconnected graphs report no route; and hand instances (a square needs no "
+            "retracing, a path retraces its whole length, a spur is retraced) match.",
+            '<div class="grid">'
+            + svg_card(out("chinese_postman.svg"), "a street network where the two odd-degree junctions (red) are paired along a shortest path (yellow dashed) that the postman must retrace -- the minimum extra distance that makes an Eulerian tour possible")
+            + f'<div class="card">{pre(chinese_postman_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
