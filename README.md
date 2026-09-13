@@ -455,6 +455,7 @@ ruins a long non-symplectic integration.
 | `src/minimize_1d.py` | Derivative-free 1D minimization: golden section, Brent, auto-bracketing |
 | `src/chinese_postman.py` | Chinese Postman route inspection: shortest closed walk over every edge |
 | `src/bankers.py` | Banker's algorithm: deadlock avoidance, safety check, deadlock detection |
+| `src/page_replacement.py` | Page-replacement policies (FIFO/LRU/Clock/LFU/optimal) + Belady's anomaly |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -901,6 +902,7 @@ ruins a long non-symplectic integration.
 | `examples/minimize_1d_demo.py` | Golden vs Brent eval counts and shrinking golden-section brackets |
 | `examples/chinese_postman_demo.py` | Street network with odd junctions paired and retraced paths drawn |
 | `examples/bankers_demo.py` | Safe-sequence check, a granted vs refused request, and a deadlock |
+| `examples/page_replacement_demo.py` | Fault counts by policy and Belady's anomaly under FIFO |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10449,6 +10451,23 @@ process whose remaining NEED fits the free pool, finishes it, and returns its re
 safety check (with a safe sequence), request-grant decision, and deadlock detection. Validated against a
 brute-force search over all n! completion orders on 300 random states, the Silberschatz textbook
 instance, grant-safety invariance, need/available refusal, and circular-wait detection.
+
+## Page replacement: which page to evict, and Belady's paradox
+
+Count page faults across policies and watch Belady's anomaly. `page_replacement.py`:
+
+```
+$ python examples/page_replacement_demo.py examples/output
+
+  optimal 9 (floor), LFU 11, LRU 12, CLOCK 14, FIFO 15
+  FIFO anomaly: 3 frames -> 9 faults, 4 frames -> 10; LRU immune
+```
+
+FIFO, LRU, Clock, LFU, and Belady's optimal (evict the page used farthest in the future) as fault
+counters over a reference string. LRU and optimal are stack algorithms (more frames never increase
+faults); FIFO can exhibit Belady's anomaly. Validated: optimal is the minimum-fault policy over 400
+random strings and never below the compulsory-miss bound, LRU/optimal are monotone in frame count, FIFO
+reproduces the anomaly on the classic string, and every eviction trace is valid.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -497,6 +497,7 @@ def main():
     import minimize_1d_demo
     import chinese_postman_demo
     import bankers_demo
+    import page_replacement_demo
 
     import plot_orbits
 
@@ -963,6 +964,7 @@ def main():
     minimize_1d_txt = run("minimize_1d_demo", minimize_1d_demo.main, True)
     chinese_postman_txt = run("chinese_postman_demo", chinese_postman_demo.main, True)
     bankers_txt = run("bankers_demo", bankers_demo.main, True)
+    page_replacement_txt = run("page_replacement_demo", page_replacement_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8311,6 +8313,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("bankers.svg"), "the allocation and need tables of five processes over three resource types, and the safe finishing sequence the banker verified before granting -- the order in which every process can reach its maximum and release")
             + f'<div class="card">{pre(bankers_txt)}</div>'
+            + '</div>'),
+        section(
+            "Page replacement: which page to evict, and Belady's paradox",
+            "Physical memory holds far fewer pages than a program touches, so the OS keeps a small set "
+            "of frames and, when a referenced page is absent (a PAGE FAULT), evicts a resident page to "
+            "make room. WHICH page to evict is the page-replacement policy, and it sets how many slow "
+            "disk fetches the program suffers -- the central trade-off of virtual memory, and the same "
+            "question for CPU caches and CDN edges. FIFO evicts the longest-resident page (simple but "
+            "prone to BELADY'S ANOMALY, where MORE frames cause MORE faults); LRU evicts the "
+            "least-recently-used and is a STACK ALGORITHM immune to the anomaly; CLOCK is the cheap "
+            "second-chance LRU approximation real kernels run; LFU evicts the least-frequently-used; and "
+            "Belady's OPTIMAL (MIN) evicts the page whose next use is farthest in the future -- "
+            "unrealisable online but provably the minimum-fault policy, the gold standard. This module "
+            "runs each policy over a reference string, returning fault counts and eviction traces, and "
+            "demonstrates the anomaly. Validated: over 400 random reference strings and frame counts "
+            "Belady's optimal incurs NO MORE faults than any other policy and never fewer than the "
+            "compulsory-miss lower bound; LRU and optimal are verified STACK ALGORITHMS (faults monotone "
+            "in frame count) while FIFO reproduces Belady's anomaly on the classic string (3 frames -> 9 "
+            "faults, 4 frames -> 10); every trace is valid (compulsory first-touch miss, no fault on a "
+            "resident hit, resident set within the frames); and hand instances match.",
+            '<div class="grid">'
+            + svg_card(out("page_replacement.svg"), "top: page faults by policy, with Belady's optimal the unbeatable floor and the others approximating it; bottom: FIFO's fault count rising from 3 to 4 frames (Belady's anomaly) while LRU only falls")
+            + f'<div class="card">{pre(page_replacement_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

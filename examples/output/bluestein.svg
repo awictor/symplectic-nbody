@@ -4,17 +4,17 @@
 <text x="20" y="47" fill="#8b949e" font-size="12">the direct sum curves upward quadratically; Bluestein stays nearly flat</text>
 <line x1="60" y1="320" x2="720" y2="320" stroke="#30363d" stroke-width="1"/>
 <line x1="60" y1="320" x2="60" y2="70" stroke="#30363d" stroke-width="1"/>
-<polyline points="142.1,317.2 222.3,300.0 389.0,253.1 720.0,70.0" fill="none" stroke="#ff6b6b" stroke-width="2"/>
-<circle cx="142.1" cy="317.2" r="3.5" fill="#ff6b6b"/>
-<circle cx="222.3" cy="300.0" r="3.5" fill="#ff6b6b"/>
-<circle cx="389.0" cy="253.1" r="3.5" fill="#ff6b6b"/>
+<polyline points="142.1,313.9 222.3,296.2 389.0,246.7 720.0,70.0" fill="none" stroke="#ff6b6b" stroke-width="2"/>
+<circle cx="142.1" cy="313.9" r="3.5" fill="#ff6b6b"/>
+<circle cx="222.3" cy="296.2" r="3.5" fill="#ff6b6b"/>
+<circle cx="389.0" cy="246.7" r="3.5" fill="#ff6b6b"/>
 <circle cx="720.0" cy="70.0" r="3.5" fill="#ff6b6b"/>
 <text x="80" y="90" fill="#ff6b6b" font-size="12">direct O(n^2)</text>
-<polyline points="142.1,319.5 222.3,318.9 389.0,316.0 720.0,311.1" fill="none" stroke="#06d6a0" stroke-width="2"/>
-<circle cx="142.1" cy="319.5" r="3.5" fill="#06d6a0"/>
-<circle cx="222.3" cy="318.9" r="3.5" fill="#06d6a0"/>
-<circle cx="389.0" cy="316.0" r="3.5" fill="#06d6a0"/>
-<circle cx="720.0" cy="311.1" r="3.5" fill="#06d6a0"/>
+<polyline points="142.1,319.1 222.3,317.9 389.0,315.2 720.0,313.4" fill="none" stroke="#06d6a0" stroke-width="2"/>
+<circle cx="142.1" cy="319.1" r="3.5" fill="#06d6a0"/>
+<circle cx="222.3" cy="317.9" r="3.5" fill="#06d6a0"/>
+<circle cx="389.0" cy="315.2" r="3.5" fill="#06d6a0"/>
+<circle cx="720.0" cy="313.4" r="3.5" fill="#06d6a0"/>
 <text x="80" y="110" fill="#06d6a0" font-size="12">Bluestein O(n log n)</text>
 <text x="390" y="350" fill="#8b949e" font-size="12" text-anchor="middle">signal length n (prime)</text>
 <text x="20" y="68" fill="#8b949e" font-size="11">time (ms)</text>

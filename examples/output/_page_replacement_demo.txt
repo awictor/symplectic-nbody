@@ -1,0 +1,25 @@
+Page replacement: which page to evict, and the optimal we can only approximate
+
+  reference string (20 accesses), 3 frames:
+    [7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2, 1, 2, 0, 1, 7, 0, 1]
+
+    policy     faults   excess over optimal
+    OPTIMAL       9      (optimal)
+    LFU          11      +2
+    LRU          12      +3
+    CLOCK        14      +5
+    FIFO         15      +6
+    (Belady's optimal evicts the page whose next use is farthest away -- unbeatable but
+     needs the future; real policies approximate it from the past)
+
+  Belady's anomaly -- MORE frames, MORE faults (only FIFO):
+    string [1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5]
+    FIFO with 3 frames: 9 faults
+    FIFO with 4 frames: 10 faults   <- more frames, more faults!
+    LRU is immune: 10 faults at 3, 8 at 4
+
+  LRU and Belady's optimal are STACK algorithms -- adding frames can never increase faults --
+  so they are anomaly-free; FIFO ignores usage and can misbehave. Clock is the cheap LRU
+  approximation real kernels run, trading a little accuracy for O(1) eviction.
+
+  wrote examples/output\page_replacement.svg
