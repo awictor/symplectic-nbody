@@ -1,0 +1,19 @@
+Thomas + Crank-Nicolson: implicit heat diffusion, O(n) per step, any time step
+
+  Bar of 201 points, alpha=1.0, dt=0.1, dx=0.100
+  Stability ratio r = alpha dt/dx^2 = 10.00  (explicit needs r <= 0.5)
+
+    time   peak (CN)   peak (analytic)   total heat
+     0.0      1.0000            1.0000       2.0053
+     1.0      0.4922            0.4924       2.0053
+     2.0      0.3714            0.3714       2.0053
+     3.0      0.3105            0.3105       2.0049
+     4.0      0.2722            0.2722       2.0026
+
+  Explicit scheme at the same dt after 30 steps: max |u| = 5.9e+31
+  -> the explicit scheme oscillates and diverges (r > 0.5); Crank-Nicolson stays smooth.
+
+  Each Crank-Nicolson step solves a tridiagonal system by the Thomas algorithm in O(n),
+  so the whole simulation is linear-time per step no matter how large the step.
+
+  wrote examples/output\thomas.svg

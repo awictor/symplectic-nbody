@@ -525,6 +525,7 @@ def main():
     import belief_propagation_demo
     import randomized_svd_demo
     import kde_demo
+    import thomas_demo
 
     import plot_orbits
 
@@ -1019,6 +1020,7 @@ def main():
     belief_propagation_txt = run("belief_propagation_demo", belief_propagation_demo.main, True)
     randomized_svd_txt = run("randomized_svd_demo", randomized_svd_demo.main, True)
     kde_txt = run("kde_demo", kde_demo.main, True)
+    thomas_txt = run("thomas_demo", thomas_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8953,6 +8955,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("kde.svg"), "A bimodal sample (yellow rug) with kernel density estimates at three bandwidths: too-narrow (spiky red), Silverman (green), and too-wide (washed-out blue), against the true density in gray dashes")
             + f'<div class="card">{pre(kde_txt)}</div>'
+            + '</div>'),
+        section(
+            "Thomas algorithm and Crank-Nicolson: implicit diffusion in O(n)",
+            "A TRIDIAGONAL system -- nonzero only on the diagonal and its two neighbours -- arises "
+            "whenever a 1-D problem couples each point to its immediate neighbours: finite-difference "
+            "derivatives, cubic splines, and the implicit time-stepping of the heat equation. "
+            "Gaussian elimination is O(n^3), but the THOMAS algorithm solves a tridiagonal system in "
+            "O(n) with one forward sweep and a back-substitution. The showcase is the heat equation "
+            "u_t = alpha u_xx: an explicit scheme is only stable for r = alpha dt/dx^2 &lt;= 1/2, so "
+            "refining the mesh collapses the time step, but the CRANK-NICOLSON scheme (averaging the "
+            "spatial derivative across old and new time levels) is UNCONDITIONALLY STABLE and "
+            "second-order accurate -- each step a tridiagonal solve, hence O(n) regardless of "
+            "stiffness. Validated against ground truth: Thomas matches a dense Gaussian-elimination "
+            "solve on random systems; Crank-Nicolson diffusing a Gaussian matches the analytic "
+            "sqrt(t)-broadening, conserves heat, decays a sine mode at the exact exp(-alpha k^2 t) "
+            "rate, relaxes to the linear steady state, and stays bounded at time steps where the "
+            "explicit scheme diverges to 1e31. The numerical-PDE companion to the analytic diffusion "
+            "(Fick's law) note.",
+            '<div class="grid">'
+            + svg_card(out("thomas.svg"), "A hot spike on a bar diffusing under Crank-Nicolson: the profile spreads and flattens over time, tracking the analytic sqrt(t)-broadening Gaussian, at a time step where the explicit scheme would blow up")
+            + f'<div class="card">{pre(thomas_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

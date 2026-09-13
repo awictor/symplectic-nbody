@@ -483,6 +483,7 @@ ruins a long non-symplectic integration.
 | `src/belief_propagation.py` | Sum-product / max-product on tree factor graphs: exact marginals, MAP, Z |
 | `src/randomized_svd.py` | Randomized SVD (Halko-Martinsson-Tropp): fast near-optimal top-k factorization |
 | `src/kde.py` | Kernel density estimation: 5 kernels, Silverman/Scott bandwidth, adaptive variant |
+| `src/thomas.py` | Thomas tridiagonal solver + Crank-Nicolson heat equation (unconditionally stable) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -957,6 +958,7 @@ ruins a long non-symplectic integration.
 | `examples/belief_propagation_demo.py` | Spin chain marginals by message passing, bias decay down the chain |
 | `examples/randomized_svd_demo.py` | Randomized vs exact singular-value spectrum + error-vs-rank curve |
 | `examples/kde_demo.py` | Bimodal density estimated at three bandwidths with a sample rug |
+| `examples/thomas_demo.py` | Heat spike diffusing under Crank-Nicolson vs the analytic Gaussian |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11014,6 +11016,24 @@ leave-one-out selection, and an adaptive variable-bandwidth variant. Validated b
 integration to one, recovery of a standard normal and a bimodal mixture, the smoothness/bandwidth
 relationship, and the LOO likelihood peaking near the plug-in value. The nonparametric-density
 companion to the Gaussian-mixture and mean-shift tools.
+
+## Thomas algorithm and Crank-Nicolson: implicit diffusion in O(n)
+
+Solve tridiagonal systems and the heat equation, linear time per step. `thomas.py`:
+
+```
+$ python examples/thomas_demo.py examples/output
+
+  r = alpha dt/dx^2 = 10 (explicit needs <= 0.5)
+  Crank-Nicolson peak matches analytic broadening; explicit diverges to 1e31
+```
+
+The Thomas algorithm solves a tridiagonal system in O(n) (one forward sweep, one back-substitution).
+Crank-Nicolson time-steps the heat equation by a tridiagonal solve per step, unconditionally stable
+and second-order accurate. Validated: Thomas matches dense Gaussian elimination; Crank-Nicolson
+matches analytic Gaussian broadening, the exp(-alpha k^2 t) sine-mode decay, and the linear steady
+state, staying bounded where the explicit scheme blows up. The numerical-PDE companion to the analytic
+diffusion (Fick's law) note.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
