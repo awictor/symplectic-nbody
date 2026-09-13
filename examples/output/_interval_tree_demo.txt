@@ -1,0 +1,19 @@
+Interval tree: every interval overlapping a point or range, without scanning all
+
+  8 meetings loaded into the tree
+
+  stabbing query -- who is busy at a given hour?
+    at 9:00 -> ['design', 'standup']
+    at 13:00 -> ['1:1', 'deep-work', 'lunch-review']
+    at 15:00 -> ['deep-work', 'sync']
+    at 19:00 -> free
+
+  range query -- what clashes with a proposed 14:00-16:00 slot?
+    clashes: ['1:1', 'deep-work', 'interview', 'sync']
+
+  A centered interval tree stores intervals containing the median endpoint at each node,
+  kept in two sorted lists (by start, by end). A stabbing query walks one list until it
+  passes the point and recurses into only the relevant subtree -- O(log n + hits), never a
+  full scan, which is how genome browsers and calendars stay fast on millions of intervals.
+
+  wrote examples/output\interval_tree.svg

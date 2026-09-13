@@ -487,6 +487,7 @@ def main():
     import gmres_demo
     import golay_demo
     import gauss_quadrature_demo
+    import interval_tree_demo
 
     import plot_orbits
 
@@ -943,6 +944,7 @@ def main():
     gmres_txt = run("gmres_demo", gmres_demo.main, True)
     golay_txt = run("golay_demo", golay_demo.main, True)
     gauss_quadrature_txt = run("gauss_quadrature_demo", gauss_quadrature_demo.main, True)
+    interval_tree_txt = run("interval_tree_demo", interval_tree_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8039,6 +8041,32 @@ def main():
             '<div class="grid">'
             + svg_card(out("gauss_quadrature.svg"), "top: the nine Gauss-Hermite nodes sitting under the e^{-x^2} weight, their stem heights the quadrature weights, clustered where the weight is largest; bottom: the error on a smooth integral plunging geometrically as nodes are added")
             + f'<div class="card">{pre(gauss_quadrature_txt)}</div>'
+            + '</div>'),
+        section(
+            "Interval trees: every overlap of a point or range, fast",
+            "Genome browsers ask which genes span a locus; calendars ask which meetings clash with a "
+            "slot; a network monitor asks which leases were active at a timestamp. All are the same "
+            "query -- given a set of intervals, report every one that OVERLAPS a query point (a "
+            "STABBING query) or a query range. Scanning all n is O(n) per query, wasteful when the set "
+            "is large and queries frequent. The INTERVAL TREE answers a stabbing query in O(log n + k) "
+            "for k hits, pruning most intervals untouched. This is the CENTERED design: the root's "
+            "center is the median of all endpoints, every interval CONTAINING that center is stored "
+            "there in two sorted lists (by left endpoint and by right endpoint), intervals entirely "
+            "left of the center go to a left subtree and those entirely right to a right subtree, "
+            "recursively. To stab a point q left of the center, every stored interval whose left "
+            "endpoint is <= q overlaps q -- walk the left-sorted list until one starts too late, then "
+            "stop -- and recurse only into the left child, since the right subtree provably cannot "
+            "contain a hit. Range queries combine that descent with a full report of the intervals that "
+            "must intersect. This module builds the tree (O(n log n)), does stabbing and range-overlap "
+            "queries with payloads, and counts. Validated by exact agreement with brute force over 40 "
+            "random interval sets and 3200 seeded stabbing and range queries -- same intervals, no "
+            "misses, no extras -- across degenerate zero-length intervals, touching closed endpoints, "
+            "fully nested and identical intervals, and queries outside the whole range; the "
+            "endpoint-sorted lists are verified sorted, every stored interval genuinely contains its "
+            "node's center, and the left/right partition is correct.",
+            '<div class="grid">'
+            + svg_card(out("interval_tree.svg"), "a day of meetings as intervals: a 14:00-16:00 range query (green band) and the four meetings the tree reports as clashing (green bars), found without scanning the calendar")
+            + f'<div class="card">{pre(interval_tree_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

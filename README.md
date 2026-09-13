@@ -445,6 +445,7 @@ ruins a long non-symplectic integration.
 | `src/gmres.py` | GMRES Krylov solver for nonsymmetric systems (Arnoldi + Givens, restart, precond) |
 | `src/golay.py` | Extended binary Golay [24,12,8] code: corrects 3 errors, syndrome decoding |
 | `src/gauss_quadrature.py` | Gauss-Hermite / Gauss-Laguerre quadrature via Golub-Welsch |
+| `src/interval_tree.py` | Centered interval tree: O(log n + k) stabbing and range-overlap queries |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -881,6 +882,7 @@ ruins a long non-symplectic integration.
 | `examples/gmres_demo.py` | Residual convergence and a 5x preconditioner speedup on an ill-scaled system |
 | `examples/golay_demo.py` | Correcting 3 flipped bits and the code's perfect weight distribution |
 | `examples/gauss_quadrature_demo.py` | Infinite-domain integrals, node placement, geometric convergence |
+| `examples/interval_tree_demo.py` | Calendar stabbing/range queries with the clashing meetings drawn |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10249,6 +10251,24 @@ every polynomial up to degree 2n-1 exactly. The Golub-Welsch algorithm finds the
 Jacobi matrix -- one eigenproblem, solved by QL iteration. Includes a Gaussian-expectation helper.
 Validated: exactness to degree 2n-1 on monomials, positive weights summing to the total mass, symmetric
 Hermite nodes, known integrals (sqrt(pi), the Gamma function, E[e^x]=sqrt(e)), and geometric convergence.
+
+## Interval trees: every overlap of a point or range, fast
+
+Report every interval overlapping a query point or range in O(log n + k). `interval_tree.py`:
+
+```
+$ python examples/interval_tree_demo.py examples/output
+
+  busy at 13:00 -> ['1:1', 'deep-work', 'lunch-review']
+  clashes with 14:00-16:00 -> ['1:1', 'deep-work', 'interview', 'sync']
+```
+
+A centered interval tree stores intervals containing the median endpoint at each node in two sorted
+lists (by start, by end); a stabbing query walks one list until it passes the point and recurses into
+only the relevant subtree. Supports stabbing, range-overlap, and count queries with payloads.
+Validated by exact agreement with brute force over 40 random sets and 3200 queries -- across zero-length
+intervals, touching closed endpoints, nested and identical intervals, and out-of-range queries -- with
+node invariants (center containment, sorted lists, correct partition) checked directly.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
