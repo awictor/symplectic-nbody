@@ -493,6 +493,7 @@ def main():
     import red_black_tree_demo
     import top_trading_cycles_demo
     import xor_basis_demo
+    import vcg_auction_demo
 
     import plot_orbits
 
@@ -955,6 +956,7 @@ def main():
     red_black_tree_txt = run("red_black_tree_demo", red_black_tree_demo.main, True)
     top_trading_cycles_txt = run("top_trading_cycles_demo", top_trading_cycles_demo.main, True)
     xor_basis_txt = run("xor_basis_demo", xor_basis_demo.main, True)
+    vcg_auction_txt = run("vcg_auction_demo", vcg_auction_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8203,6 +8205,31 @@ def main():
             '<div class="grid">'
             + svg_card(out("xor_basis.svg"), "the input numbers as bit-rows reduced to a binary echelon basis with one pivot per bit (yellow): the span of these few vectors is every value a subset XOR can reach")
             + f'<div class="card">{pre(xor_basis_txt)}</div>'
+            + '</div>'),
+        section(
+            "The VCG mechanism: the auction where honesty wins",
+            "You are selling things -- ad slots, spectrum, cloud servers -- to bidders with private "
+            "valuations. A pay-what-you-bid auction invites gaming: shade your bid and win cheaply. The "
+            "VICKREY-CLARKE-GROVES mechanism is the profound answer: it chooses the outcome that "
+            "MAXIMISES total value and charges each winner an amount engineered so that bidding your "
+            "TRUE valuation is a DOMINANT STRATEGY -- no matter what others do, you can never do better "
+            "by lying. That strategy-proofness-plus-efficiency is why VCG underlies spectrum auctions, "
+            "and its single-item case, the SECOND-PRICE auction (highest bidder wins, pays the "
+            "second-highest bid), is the ancestor of ad-exchange pricing. The rule: pick the allocation "
+            "maximising the sum of reported values, then charge each winner its EXTERNALITY -- the harm "
+            "its presence does to everyone else, (best total the OTHERS could get without this bidder) "
+            "minus (what the others actually get). A bidder pays exactly the opportunity cost it imposes, "
+            "so its report only affects WHETHER it wins, never HOW MUCH it pays for a given outcome -- "
+            "which is what makes honesty optimal. This module implements the second-price auction and "
+            "the general combinatorial VCG assignment of items to bidders, computing the efficient "
+            "allocation and each winner's payment. Validated: STRATEGY-PROOFNESS checked directly -- over "
+            "many random profiles no bidder raises its true utility by reporting any other valuation; "
+            "EFFICIENCY -- the allocation maximises total value, verified against brute force; INDIVIDUAL "
+            "RATIONALITY -- utilities are non-negative and payments lie in [0, winner's value]; the "
+            "single-item case charges the second-highest bid; and the externality payments match by hand.",
+            '<div class="grid">'
+            + svg_card(out("vcg_auction.svg"), "a VCG assignment of three ad slots to three advertisers: the green cells are the value-maximising allocation, and each winner pays the externality it imposes on the others -- the pricing that makes truthful bidding optimal")
+            + f'<div class="card">{pre(vcg_auction_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

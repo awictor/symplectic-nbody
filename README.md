@@ -451,6 +451,7 @@ ruins a long non-symplectic integration.
 | `src/red_black_tree.py` | Red-black tree: self-balancing ordered map + order statistics (select/rank) |
 | `src/top_trading_cycles.py` | Top Trading Cycles: strategy-proof core allocation of indivisible goods |
 | `src/xor_basis.py` | XOR linear basis over GF(2): max/min subset XOR, membership, rank, k-th value |
+| `src/vcg_auction.py` | VCG mechanism + second-price auction: efficient, strategy-proof allocation |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -893,6 +894,7 @@ ruins a long non-symplectic integration.
 | `examples/red_black_tree_demo.py` | Balance under sorted insertion and order-statistic queries |
 | `examples/top_trading_cycles_demo.py` | Room reallocation with the trading cycles and pointing graph |
 | `examples/xor_basis_demo.py` | Max subset XOR, the reachable set, and the binary echelon basis |
+| `examples/vcg_auction_demo.py` | Ad-slot assignment with externality payments and a lying test |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10369,6 +10371,24 @@ pivots; membership reduces and checks zero; the count is 2^rank; and the reduced
 reachable values for k-th-smallest. Every query is O(bits). Validated against brute force over all 2^n
 subsets (max, min, reachable set, count, membership, k-th enumeration), plus rank behaviour, 200-bit
 values, and a 200-number bag beating 2000 sampled subsets.
+
+## The VCG mechanism: the auction where honesty wins
+
+The efficient, strategy-proof auction behind spectrum sales and ad exchanges. `vcg_auction.py`:
+
+```
+$ python examples/vcg_auction_demo.py examples/output
+
+  second-price: highest bidder wins, pays the second-highest bid
+  3 ad slots: efficient allocation, each winner pays its externality; lying never helps
+```
+
+VCG picks the value-maximising allocation and charges each winner its externality -- the harm its
+presence does to everyone else -- so a bidder's report changes whether it wins, never what it pays for
+a given outcome, making truth-telling a dominant strategy. Implements the single-item second-price
+auction and the general combinatorial assignment. Validated: strategy-proofness checked directly (no
+profitable lie over many profiles), efficiency vs brute force, individual rationality (utilities >= 0,
+payments in [0, value]), and the second-price rule.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="380" viewBox="0 0 760 380" font-family="monospace">
+<rect width="760" height="380" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="16">VCG allocation: green cells are won; each winner pays its externality</text>
+<text x="165" y="62" fill="#8b949e" font-size="12" text-anchor="middle">top</text>
+<text x="255" y="62" fill="#8b949e" font-size="12" text-anchor="middle">mid</text>
+<text x="345" y="62" fill="#8b949e" font-size="12" text-anchor="middle">low</text>
+<text x="108" y="115" fill="#8b949e" font-size="12" text-anchor="end">Acme</text>
+<rect x="120.0" y="70.0" width="84.0" height="84.0" rx="4" fill="#06d6a0" stroke="#30363d" stroke-width="1"/>
+<text x="162" y="117" fill="#0d1117" font-size="18" text-anchor="middle">30</text>
+<rect x="210.0" y="70.0" width="84.0" height="84.0" rx="4" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+<text x="252" y="117" fill="#e6edf3" font-size="18" text-anchor="middle">18</text>
+<rect x="300.0" y="70.0" width="84.0" height="84.0" rx="4" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+<text x="342" y="117" fill="#e6edf3" font-size="18" text-anchor="middle">6</text>
+<text x="410" y="115" fill="#ffd43b" font-size="13">pays 24</text>
+<text x="108" y="205" fill="#8b949e" font-size="12" text-anchor="end">Bolt</text>
+<rect x="120.0" y="160.0" width="84.0" height="84.0" rx="4" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+<text x="162" y="207" fill="#e6edf3" font-size="18" text-anchor="middle">24</text>
+<rect x="210.0" y="160.0" width="84.0" height="84.0" rx="4" fill="#06d6a0" stroke="#30363d" stroke-width="1"/>
+<text x="252" y="207" fill="#0d1117" font-size="18" text-anchor="middle">20</text>
+<rect x="300.0" y="160.0" width="84.0" height="84.0" rx="4" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+<text x="342" y="207" fill="#e6edf3" font-size="18" text-anchor="middle">10</text>
+<text x="410" y="205" fill="#ffd43b" font-size="13">pays 18</text>
+<text x="108" y="295" fill="#8b949e" font-size="12" text-anchor="end">Cog</text>
+<rect x="120.0" y="250.0" width="84.0" height="84.0" rx="4" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+<text x="162" y="297" fill="#e6edf3" font-size="18" text-anchor="middle">15</text>
+<rect x="210.0" y="250.0" width="84.0" height="84.0" rx="4" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+<text x="252" y="297" fill="#e6edf3" font-size="18" text-anchor="middle">14</text>
+<rect x="300.0" y="250.0" width="84.0" height="84.0" rx="4" fill="#06d6a0" stroke="#30363d" stroke-width="1"/>
+<text x="342" y="297" fill="#0d1117" font-size="18" text-anchor="middle">12</text>
+<text x="410" y="295" fill="#ffd43b" font-size="13">pays 10</text>
+<text x="20" y="364" fill="#8b949e" font-size="11">total value maximised = 62; honesty is every bidder best strategy</text>
+</svg>

@@ -1,0 +1,27 @@
+VCG: the auction where honesty is the dominant strategy
+
+  single-item second-price (Vickrey) auction, bids [12, 20, 15, 8]:
+    bidder 1 wins, pays the second-highest bid = 15, surplus 5
+
+  combinatorial VCG: assign ['top', 'mid', 'low'] to ['Acme', 'Bolt', 'Cog']
+    value matrix (advertiser x slot):
+             top   mid   low
+       Acme   30    18     6
+       Bolt   24    20    10
+        Cog   15    14    12
+
+    efficient allocation (maximises total value = 62):
+       Acme: top           pays   24  (externality on others), utility    6
+       Bolt: mid           pays   18  (externality on others), utility    2
+        Cog: low           pays   10  (externality on others), utility    2
+
+  can Acme do better by lying about its values?
+    truthful utility 6; best utility over tried lies 6
+    -> lying never beats the truth: True
+
+  VCG picks the value-maximising allocation, then charges each winner the harm it does to
+  everyone else (its externality). Because your report only changes WHETHER you win, not what
+  you pay for a given outcome, truth-telling is a dominant strategy -- the principle behind
+  spectrum auctions and the second-price ad exchanges that run the web.
+
+  wrote examples/output\vcg_auction.svg
