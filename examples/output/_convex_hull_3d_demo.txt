@@ -1,0 +1,15 @@
+3-D convex hull: shrink-wrap around a point cloud (incremental algorithm)
+
+  40 random points in a cube [-1,1]^3.
+  Hull: 22 vertices, 40 triangular faces.
+  Euler's formula V - E + F = 2 holds: True
+  All points inside the hull: True
+  Hull volume 3.7426, surface area 12.7381
+  Interior points discarded: 18 of 40 were inside.
+
+  Unit cube (8 corners + center): hull volume 1.000, area 6.000 (expect 1.0 and 6.0)
+
+  The incremental algorithm adds points one at a time, deleting the faces each new point
+  can 'see' and stitching new triangles across the horizon -- interior points see nothing.
+
+  wrote examples/output\convex_hull_3d.svg

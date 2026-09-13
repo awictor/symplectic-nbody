@@ -498,6 +498,7 @@ ruins a long non-symplectic integration.
 | `src/hmc.py` | Hamiltonian Monte Carlo (leapfrog + Metropolis) + random-walk baseline |
 | `src/omp.py` | Orthogonal matching pursuit: sparse recovery / compressed sensing |
 | `src/tv_denoise.py` | 1-D total-variation denoising (edge-preserving, dual projected gradient) |
+| `src/convex_hull_3d.py` | 3-D convex hull by the incremental algorithm + volume/area/containment |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -987,6 +988,7 @@ ruins a long non-symplectic integration.
 | `examples/hmc_demo.py` | HMC vs random-walk Metropolis on a correlated Gaussian ridge |
 | `examples/omp_demo.py` | Sparse signal recovered exactly from few random measurements |
 | `examples/tv_denoise_demo.py` | Piecewise-constant signal denoised: sharp TV edges vs a smeared average |
+| `examples/convex_hull_3d_demo.py` | 3-D hull of a point cloud drawn in oblique projection |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11296,6 +11298,23 @@ penalty yields a piecewise-constant fit with sharp edges. Validated against a fi
 optimum on small signals and by properties: recovers a clean piecewise-constant signal, larger lambda
 gives fewer plateaus, lambda=0 returns the input, huge lambda collapses to the mean, no overshoot. The
 edge-preserving companion to the Savitzky-Golay smoothers and isotonic regression.
+
+## 3-D convex hull: shrink-wrap around a point cloud
+
+The smallest polyhedron enclosing points in space. `convex_hull_3d.py`:
+
+```
+$ python examples/convex_hull_3d_demo.py examples/output
+
+  40 random points -> 22 hull vertices, 40 faces; Euler V-E+F=2 holds
+  unit cube + interior points -> volume 1, area 6, exactly 8 vertices
+```
+
+The incremental algorithm adds each point by deleting the faces it can see, finding the horizon, and
+stitching new triangles across it. Validated: every point lies inside every face's supporting plane,
+Euler's formula (F = 2V-4) holds, a cube gives volume 1 / area 6, a tetrahedron volume 1/6, sphere
+points are all vertices, and coplanar inputs are detected. The 3-D companion to the 2-D convex hull
+and the Delaunay tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

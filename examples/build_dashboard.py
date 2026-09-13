@@ -540,6 +540,7 @@ def main():
     import hmc_demo
     import omp_demo
     import tv_denoise_demo
+    import convex_hull_3d_demo
 
     import plot_orbits
 
@@ -1049,6 +1050,7 @@ def main():
     hmc_txt = run("hmc_demo", hmc_demo.main, True)
     omp_txt = run("omp_demo", omp_demo.main, True)
     tv_denoise_txt = run("tv_denoise_demo", tv_denoise_demo.main, True)
+    convex_hull_3d_txt = run("convex_hull_3d_demo", convex_hull_3d_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9280,6 +9282,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("tv_denoise.svg"), "A noisy four-level signal: TV denoising (green) snaps back to flat plateaus with sharp step edges, while a moving average (orange) smears every jump into a ramp and does worse than the raw data near the edges")
             + f'<div class="card">{pre(tv_denoise_txt)}</div>'
+            + '</div>'),
+        section(
+            "3-D convex hull: shrink-wrap around a point cloud",
+            "The convex hull of points in space is the smallest convex polyhedron containing them all "
+            "-- the shape shrink-wrap takes around a scatter of dots -- a mesh of triangular faces "
+            "that underlies collision detection, mesh generation, the 3-D Delaunay triangulation, and "
+            "shape analysis. This builds it by the INCREMENTAL algorithm: start from an oriented "
+            "tetrahedron, then add each point by deleting the faces it can SEE (it lies outside their "
+            "plane), finding the horizon edges bordering that region, and stitching new triangles "
+            "from the point to each horizon edge; interior points see no faces and are discarded. "
+            "Validated geometrically and combinatorially: on random clouds every input point lies "
+            "inside every face's supporting plane and Euler's formula V - E + F = 2 holds (with "
+            "F = 2V - 4 for a triangulated hull); a unit cube plus interior points gives a hull of "
+            "exactly 8 vertices, volume 1, and area 6; a tetrahedron has volume 1/6; every point on "
+            "a sphere is a hull vertex; interior points are excluded; and coplanar inputs are "
+            "detected. The 3-D companion to the 2-D convex hull and the Delaunay / geometry tools.",
+            '<div class="grid">'
+            + svg_card(out("convex_hull_3d.svg"), "The convex hull of 40 random points in a cube, drawn in an oblique projection: 22 of the points end up as hull vertices (yellow) with 40 triangular faces, and the 18 interior points (gray) see no faces and are discarded")
+            + f'<div class="card">{pre(convex_hull_3d_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
