@@ -1,0 +1,14 @@
+RANSAC: consensus fitting that ignores outliers
+
+  Line fit to 60 inliers + 40 outliers (true y = 1.5x + 2.0):
+    RANSAC found 62 inliers in 10 iterations
+    RANSAC line:  y = 1.494 x + 2.056   (matches truth)
+    OLS line:     y = 1.205 x + 3.660   (dragged off by outliers)
+
+  Circle fit to 70 inliers + 35 outliers (true center (5.0,5.0) r=4.0):
+    RANSAC center (5.16, 5.04) r=4.04, 74 inliers
+
+  RANSAC draws a minimal sample, counts agreeing points, keeps the biggest consensus.
+  One clean sample reveals the model, so it survives outlier fractions that wreck OLS.
+
+  wrote examples/output\ransac.svg

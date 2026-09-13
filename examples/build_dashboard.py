@@ -513,6 +513,7 @@ def main():
     import regret_matching_demo
     import persistent_segment_tree_demo
     import huffman_demo
+    import ransac_demo
 
     import plot_orbits
 
@@ -995,6 +996,7 @@ def main():
     regret_matching_txt = run("regret_matching_demo", regret_matching_demo.main, True)
     persistent_segment_tree_txt = run("persistent_segment_tree_demo", persistent_segment_tree_demo.main, True)
     huffman_txt = run("huffman_demo", huffman_demo.main, True)
+    ransac_txt = run("ransac_demo", ransac_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8683,6 +8685,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("huffman.svg"), "The Huffman code tree for a sample sentence: left edges are 0, right edges 1, and each leaf is a symbol at a depth equal to its codeword length -- frequent letters near the root, rare ones deep")
             + f'<div class="card">{pre(huffman_txt)}</div>'
+            + '</div>'),
+        section(
+            "RANSAC: fitting through the outliers",
+            "Least squares fits every point, so a few gross outliers -- mismeasurements, wrong "
+            "correspondences, points from another object -- drag the fit arbitrarily far from the "
+            "truth. RANSAC (Fischler and Bolles, 1981) assumes most data is good and the rest is "
+            "noise to ignore: it repeatedly draws the MINIMAL random sample defining the model (2 "
+            "points for a line, 3 for a circle), fits it, counts how many of all the points agree "
+            "within a tolerance (the CONSENSUS SET), and keeps the model with the largest consensus, "
+            "then refits on those inliers. Because one clean sample suffices to reveal the right "
+            "model, RANSAC tolerates outlier fractions that destroy least squares. The number of "
+            "iterations follows the closed form N = log(1-p)/log(1-w^s) for inlier fraction w and "
+            "sample size s, shrunk adaptively as a better consensus is found. Validated on synthetic "
+            "data with known ground truth: under 40 percent line outliers and 33 percent circle "
+            "outliers RANSAC recovers the true parameters to tolerance while ordinary least squares "
+            "is dragged off, the recovered inlier set matches the planted inliers, and the adaptive "
+            "iteration count matches the formula. The robust-estimation companion to the "
+            "least-squares fits.",
+            '<div class="grid">'
+            + svg_card(out("ransac.svg"), "Left: a line hidden in 40 percent outliers -- RANSAC (green) recovers it while least squares (red) is pulled off by the noise. Right: a circle robustly fit through 33 percent scattered outliers")
+            + f'<div class="card">{pre(ransac_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

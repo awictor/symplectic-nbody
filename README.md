@@ -471,6 +471,7 @@ ruins a long non-symplectic integration.
 | `src/regret_matching.py` | Regret matching / flat CFR: Nash equilibria of zero-sum games by self-play |
 | `src/persistent_segment_tree.py` | Persistent segment tree: version history + range k-th smallest |
 | `src/huffman.py` | Huffman coding: optimal prefix code + canonical form, entropy bracket |
+| `src/ransac.py` | RANSAC robust fitting: line/circle through heavy outliers + adaptive iterations |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -933,6 +934,7 @@ ruins a long non-symplectic integration.
 | `examples/regret_matching_demo.py` | RPS converging to uniform + exploitability falling to zero |
 | `examples/persistent_segment_tree_demo.py` | Range k-th smallest via prefix-version differencing |
 | `examples/huffman_demo.py` | Huffman code tree for a sentence with entropy comparison |
+| `examples/ransac_demo.py` | Line and circle recovered from 40% outliers vs least squares |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10775,6 +10777,26 @@ needs only the length table). Validated by matching a brute-force search over al
 Kraft-inequality enumeration, prefix-freeness, message round-trips, the entropy bracket, and a dyadic
 distribution hitting entropy exactly. The optimal-prefix-code companion to the arithmetic coder and
 rANS.
+
+## RANSAC: fitting through the outliers
+
+Robust model fitting that ignores outliers by consensus. `ransac.py`:
+
+```
+$ python examples/ransac_demo.py examples/output
+
+  true y = 1.5x + 2.0
+  RANSAC:  y = 1.494 x + 2.056   (matches truth)
+  OLS:     y = 1.205 x + 3.660   (dragged off by 40% outliers)
+```
+
+Repeatedly draw the minimal sample defining the model (2 points for a line, 3 for a circle), count
+how many points agree within tolerance, keep the largest consensus set, then refit on it. One clean
+sample reveals the model, so RANSAC survives outlier fractions that wreck least squares. Iterations
+follow N = log(1-p)/log(1-w^s), shrunk adaptively. Validated on synthetic data with known ground
+truth -- line under 40% outliers, circle under 33% -- recovering the true parameters while OLS is
+dragged off, with the recovered inliers matching the planted ones. The robust-estimation companion
+to the least-squares fits.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
