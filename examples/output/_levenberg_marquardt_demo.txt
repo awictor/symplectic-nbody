@@ -1,0 +1,21 @@
+Levenberg-Marquardt: nonlinear least-squares fit of a Gaussian peak
+
+  true parameters:  amp=4.000  center=2.000  width=0.700
+  initial guess:    amp=1.000  center=1.000  width=1.500
+  LM fit:           amp=4.000  center=1.998  width=0.701
+  converged in 9 iterations, final SSR = 0.0942
+
+  sum of squared residuals per accepted step:
+    step  0:   115.1582  ########################################
+    step  1:    91.8213  ###############################
+    step  2:    60.1770  ####################
+    step  3:    34.7531  ############
+    step  4:    16.1207  #####
+    step  5:     0.1641  
+    step  6:     0.0943  
+    step  7:     0.0942  
+    step  9:     0.0942  
+
+  parameter std-errors from the covariance: amp +/-0.016, center +/-0.003, width +/-0.003
+
+  wrote examples/output\levenberg_marquardt.svg

@@ -519,6 +519,7 @@ ruins a long non-symplectic integration.
 | `src/svm_smo.py` | Support vector machine trained by SMO (linear / polynomial / RBF kernels) |
 | `src/mfcc.py` | Mel-frequency cepstral coefficients: mel filterbank + log + DCT audio features |
 | `src/quantum_circuit.py` | Statevector quantum circuit simulator: gates, entanglement, Deutsch-Jozsa, Grover |
+| `src/levenberg_marquardt.py` | Levenberg-Marquardt nonlinear least-squares curve fitting (adaptive damping) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1029,6 +1030,7 @@ ruins a long non-symplectic integration.
 | `examples/svm_smo_demo.py` | RBF-SVM decision regions separating two interleaving half-moons |
 | `examples/mfcc_demo.py` | Mel filterbank + MFCC heatmap of a rising chirp |
 | `examples/quantum_circuit_demo.py` | Grover's search amplifying a marked state + Bell entanglement |
+| `examples/levenberg_marquardt_demo.py` | Fitting a noisy Gaussian peak, SSR dropping 115 -> 0.09 |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11762,6 +11764,27 @@ steps instead of N/2. Validated exactly: gates preserve the norm, HH = I, Bell g
 correlations, the CNOT/Toffoli truth tables hold, Deutsch-Jozsa is correct, and Grover drives the
 marked probability above 0.99 in the predicted number of steps. The gate-level companion to the
 quantum-statistics and quantum-Hall notes.
+
+## Levenberg-Marquardt: the workhorse of nonlinear curve fitting
+
+Fit a nonlinear model to data by adaptively blending Gauss-Newton and gradient descent. `levenberg_marquardt.py`:
+
+```
+$ python examples/levenberg_marquardt_demo.py examples/output
+
+  true parameters:  amp=4.000  center=2.000  width=0.700
+  initial guess:    amp=1.000  center=1.000  width=1.500
+  LM fit:           amp=4.000  center=1.998  width=0.701
+  converged in 9 iterations, final SSR = 0.0942
+```
+
+LM solves (J^T J + lambda diag(J^T J)) delta = -J^T r, adapting the damping lambda by trust: shrink it
+when the cost drops (Gauss-Newton), grow it when the cost rises (gradient descent). Marquardt's
+diagonal scaling makes it invariant to parameter units. Validated: recovers exact parameters of
+noiseless exponential, Gaussian, and sinusoidal models from poor starts; matches the analytic
+normal-equations solution on a linear model; the cost decreases monotonically; an analytic Jacobian
+agrees with finite differences; and it drives the Rosenbrock residuals to zero at (1, 1). The
+nonlinear-least-squares companion to the BFGS / L-BFGS optimizers and the linear-regression tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

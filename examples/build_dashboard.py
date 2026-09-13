@@ -561,6 +561,7 @@ def main():
     import svm_smo_demo
     import mfcc_demo
     import quantum_circuit_demo
+    import levenberg_marquardt_demo
 
     import plot_orbits
 
@@ -1091,6 +1092,7 @@ def main():
     svm_smo_txt = run("svm_smo_demo", svm_smo_demo.main, True)
     mfcc_txt = run("mfcc_demo", mfcc_demo.main, True)
     quantum_circuit_txt = run("quantum_circuit_demo", quantum_circuit_demo.main, True)
+    levenberg_marquardt_txt = run("levenberg_marquardt_demo", levenberg_marquardt_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9747,6 +9749,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("quantum_circuit.svg"), "Grover's search over 64 items: the marked state's probability climbs from the uniform 1/64 to 0.997 at the optimal ~6 iterations, then falls again -- amplitude amplification is a rotation, so overshooting rotates past the target")
             + f'<div class="card">{pre(quantum_circuit_txt)}</div>'
+            + '</div>'),
+        section(
+            "Levenberg-Marquardt: the workhorse of nonlinear curve fitting",
+            "Fitting a nonlinear model to data -- a decaying exponential to a sensor trace, a Gaussian "
+            "peak to a spectrum -- means minimizing the sum of squared residuals. Two classic methods "
+            "fail in complementary ways: GRADIENT DESCENT is robust far from the optimum but crawls in "
+            "curved valleys, while GAUSS-NEWTON (approximating the Hessian by J^T J) converges "
+            "quadratically near the optimum but diverges when that approximation is poor. "
+            "LEVENBERG-MARQUARDT blends them with a damping lambda: solve "
+            "(J^T J + lambda diag(J^T J)) delta = -J^T r, where large lambda gives a safe "
+            "gradient-descent step and small lambda a bold Gauss-Newton leap. It ADAPTS lambda by "
+            "trust -- shrink it when the cost drops (trust Gauss-Newton), grow it when the cost rises "
+            "(fall back to gradient descent). Marquardt's diagonal scaling makes it invariant to "
+            "parameter units, which is why it is what SciPy and every instrument-calibration routine "
+            "reach for. Validated: it recovers the exact parameters of noiseless exponential, "
+            "Gaussian, and sinusoidal models from poor starts; on a linear model it matches the "
+            "analytic normal-equations solution exactly; the cost decreases monotonically over "
+            "accepted steps; an analytic Jacobian agrees with finite differences; and it drives the "
+            "Rosenbrock residuals to zero at (1, 1). The nonlinear-least-squares companion to the "
+            "BFGS / L-BFGS optimizers and the linear-regression tools.",
+            '<div class="grid">'
+            + svg_card(out("levenberg_marquardt.svg"), "Levenberg-Marquardt fitting a Gaussian peak to noisy data from a poor initial guess (gray dashed): the converged fit (green) recovers the amplitude, centre, and width, its sum of squared residuals dropping from 115 to 0.09 in nine steps")
+            + f'<div class="card">{pre(levenberg_marquardt_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
