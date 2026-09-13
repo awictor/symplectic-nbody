@@ -1,0 +1,23 @@
+Lowest common ancestor by binary lifting: O(log n) per query
+
+  A 10-node org tree rooted at CEO. Precomputed 2^k-ancestor table, then:
+
+             u             v          LCA  dist
+       Mgr-API      Mgr-Data   Dir-Backend     2
+       Mgr-API  Dir-Frontend       VP-Eng     3
+      Mgr-Data      Mgr-West          CEO     6
+       Mgr-API      Mgr-West          CEO     6
+  Dir-Frontend      VP-Sales          CEO     3
+
+  k-th ancestor of Mgr-API (node 7):
+    0 up -> Mgr-API
+    1 up -> Dir-Backend
+    2 up -> VP-Eng
+    3 up -> CEO
+
+  Path from Mgr-API to Mgr-West (jump one step at a time):
+    Mgr-API -> Dir-Backend -> VP-Eng -> CEO -> VP-Ops -> Dir-Field -> Mgr-West
+
+  dist(u,v) = depth[u] + depth[v] - 2*depth[lca]. The whole path routes through the LCA.
+
+  wrote examples/output\lca.svg

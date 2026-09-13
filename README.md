@@ -462,6 +462,7 @@ ruins a long non-symplectic integration.
 | `src/variates.py` | Random variate generation: exponential/gamma/beta/normal/Poisson/binomial |
 | `src/gomory_hu.py` | Gomory-Hu tree: all-pairs min cuts from n-1 max-flow calls (Gusfield) |
 | `src/hopcroft_karp.py` | Maximum bipartite matching in O(E sqrt(V)) + Koenig min vertex cover |
+| `src/lca.py` | Lowest common ancestor by binary lifting: O(log n) LCA / distance / k-th ancestor |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -915,6 +916,7 @@ ruins a long non-symplectic integration.
 | `examples/variates_demo.py` | Histograms of five distributions with empirical vs analytic moments |
 | `examples/gomory_hu_demo.py` | Dumbbell graph and its Gomory-Hu tree, full all-pairs cut table |
 | `examples/hopcroft_karp_demo.py` | Applicant-to-job matching with Koenig minimum vertex cover |
+| `examples/lca_demo.py` | Org-tree LCA / distance / k-th-ancestor queries, path highlighted |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10588,6 +10590,25 @@ equals the minimum vertex cover in a bipartite graph, read straight off the alte
 a Hall's-theorem deficient set is the witness when no perfect matching exists. Validated three ways:
 matching size agrees with an independent Kuhn matcher, the repo's max-flow matcher, and brute-force
 search over all matchings on 300 random graphs, with Koenig duality holding throughout.
+
+## Lowest common ancestor by binary lifting
+
+The deepest node above two others in a rooted tree, in O(log n) per query. `lca.py`:
+
+```
+$ python examples/lca_demo.py examples/output
+
+           u             v          LCA  dist
+     Mgr-API      Mgr-West          CEO     6
+  path: Mgr-API -> Dir-Backend -> VP-Eng -> CEO -> VP-Ops -> Dir-Field -> Mgr-West
+```
+
+Precompute each node's 2^k-th ancestor (up[k][v] = up[k-1][up[k-1][v]]) so any ancestor jump turns
+on the bits of its length. An LCA query equalises depths with one jump, then lifts both nodes by the
+largest powers of two that keep them apart. The same table gives k-th ancestor, tree distance
+(depth[u]+depth[v]-2*depth[lca]), and the node k steps along a u-v path. Validated on random trees
+against a naive root-path intersection and BFS distance for every pair. The ancestor-query companion
+to sparse-table RMQ and centroid decomposition.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

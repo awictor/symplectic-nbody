@@ -504,6 +504,7 @@ def main():
     import variates_demo
     import gomory_hu_demo
     import hopcroft_karp_demo
+    import lca_demo
 
     import plot_orbits
 
@@ -977,6 +978,7 @@ def main():
     variates_txt = run("variates_demo", variates_demo.main, True)
     gomory_hu_txt = run("gomory_hu_demo", gomory_hu_demo.main, True)
     hopcroft_karp_txt = run("hopcroft_karp_demo", hopcroft_karp_demo.main, True)
+    lca_txt = run("lca_demo", lca_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8481,6 +8483,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("hopcroft_karp.svg"), "A hiring graph: five applicants, four jobs. Green edges are the maximum matching (four jobs filled); gold rings mark the minimum vertex cover, equal in size to the matching by Koenig's theorem")
             + f'<div class="card">{pre(hopcroft_karp_txt)}</div>'
+            + '</div>'),
+        section(
+            "Lowest common ancestor by binary lifting",
+            "In a rooted tree the lowest common ancestor of two nodes is the deepest node above "
+            "both -- where their paths to the root first meet. It powers tree distances "
+            "(dist(u,v) = depth[u] + depth[v] - 2*depth[lca]), path queries, and much of "
+            "competitive tree algorithmics. Walking both nodes to the root is O(n) per query; BINARY "
+            "LIFTING precomputes each node's 2^k-th ancestor (up[k][v] = up[k-1][up[k-1][v]]) so any "
+            "ancestor jump turns on the bits of its length, giving O(log n) queries after O(n log n) "
+            "preprocessing. An LCA query equalises the two depths with one jump, then lifts both by "
+            "the largest powers of two that keep them apart; their common parent is the answer. The "
+            "same table answers k-th ancestor and the node k steps along a u-v path. Validated on "
+            "random trees: the binary-lifting LCA matches a naive root-path intersection for every "
+            "pair, distances match a BFS shortest path, k-th ancestor matches walking parents one "
+            "at a time, and the identities (lca(u,root)=root, lca(u,u)=u, symmetry) hold. The "
+            "ancestor-query companion to sparse-table RMQ and centroid decomposition.",
+            '<div class="grid">'
+            + svg_card(out("lca.svg"), "A 10-node org tree; the highlighted query LCA(Mgr-API, Mgr-West) = CEO with the six-edge path between them routing up through the common ancestor (red) and back down")
+            + f'<div class="card">{pre(lca_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
