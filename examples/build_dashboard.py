@@ -545,6 +545,7 @@ def main():
     import adams_demo
     import bfgs_demo
     import mean_shift_demo
+    import pade_demo
 
     import plot_orbits
 
@@ -1059,6 +1060,7 @@ def main():
     adams_txt = run("adams_demo", adams_demo.main, True)
     bfgs_txt = run("bfgs_demo", bfgs_demo.main, True)
     mean_shift_txt = run("mean_shift_demo", mean_shift_demo.main, True)
+    pade_txt = run("pade_demo", pade_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9390,6 +9392,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("mean_shift.svg"), "Points from four blobs, coloured by the mode each one climbs to: mean shift finds all four clusters and their centres automatically, with a couple of mode-climb trajectories (dashed) tracing the ascent to the density peaks (white rings)")
             + f'<div class="card">{pre(mean_shift_txt)}</div>'
+            + '</div>'),
+        section(
+            "Pade approximants: rational functions that outreach Taylor series",
+            "A Taylor series approximates a function by a polynomial, but polynomials cannot capture a "
+            "POLE (a blow-up like 1/(1-x)) and often converge only in a small disk. A PADE APPROXIMANT "
+            "[m/n] is a RATIONAL function P(x)/Q(x) whose own Taylor expansion agrees with the "
+            "target's through order m+n. Because it can put zeros in the denominator it reproduces "
+            "poles, extends the accurate range far beyond the Taylor radius, and often converges where "
+            "the series diverges -- the workhorse behind library function evaluation, analytic "
+            "continuation, and resumming divergent perturbation series in physics. The coefficients "
+            "come from a single linear system matching f(x)Q(x) = P(x) through order m+n. Validated: "
+            "the approximant's own series matches the input Taylor coefficients through order m+n; "
+            "[m/0] reduces to the Taylor polynomial; the [1/1] approximant of 1/(1-x) is exact "
+            "(recovering the pole); Pade approximants of exp, log(1+x), and arctan are far more "
+            "accurate than the same-order Taylor polynomial over a wide interval; and a function with "
+            "poles is tracked to machine precision past its Taylor radius, where the series diverges "
+            "to dozens. The rational-approximation companion to the barycentric / Chebyshev "
+            "interpolation and sequence-acceleration tools.",
+            '<div class="grid">'
+            + svg_card(out("pade.svg"), "Approximating exp(x) from nine Taylor coefficients: the degree-8 Taylor polynomial (red) peels away from the truth (gray dashed) as x grows, while the [4/4] Pade approximant (green) stays glued to it")
+            + f'<div class="card">{pre(pade_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

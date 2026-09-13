@@ -503,6 +503,7 @@ ruins a long non-symplectic integration.
 | `src/adams.py` | Adams-Bashforth / Moulton predictor-corrector multistep ODE integrator |
 | `src/bfgs.py` | BFGS quasi-Newton optimization (inverse-Hessian approximation + line search) |
 | `src/mean_shift.py` | Mean-shift clustering: mode-seeking, no k needed (Gaussian + flat kernels) |
+| `src/pade.py` | Pade rational approximants from Taylor coefficients (outreach Taylor, capture poles) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -997,6 +998,7 @@ ruins a long non-symplectic integration.
 | `examples/adams_demo.py` | ODE error-vs-steps convergence: Adams-Bashforth, PECE, RK4 |
 | `examples/bfgs_demo.py` | BFGS path down the Rosenbrock valley vs crawling gradient descent |
 | `examples/mean_shift_demo.py` | Four blobs auto-clustered by mode-seeking, bandwidth sweep |
+| `examples/pade_demo.py` | Pade vs Taylor for exp and a function with poles |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11388,6 +11390,22 @@ same peak are one cluster, so the cluster count follows from the bandwidth, not 
 recovers the right blob count and mode locations, smaller bandwidth finds more clusters, points label
 by nearest mode, the mode-climb monotonically increases the density, and both kernels work. The
 mode-seeking companion to k-means/DBSCAN/GMM and the KDE density tools.
+
+## Pade approximants: rational functions that outreach Taylor series
+
+Rational P(x)/Q(x) that captures poles and converges where Taylor diverges. `pade.py`:
+
+```
+$ python examples/pade_demo.py examples/output
+
+  exp at x=3: Taylor(8) error 7.6e-2, Pade [4/4] error 2.0e-2
+  1/((1-x)(1+2x)) at x=0.9: Taylor diverges to 46, Pade exact to 1e-14
+```
+
+A single linear system matches f(x)Q(x) = P(x) through order m+n. Validated: the approximant's series
+matches the input Taylor coefficients, [1/1] of 1/(1-x) is exact, and Pade beats same-order Taylor for
+exp/log/arctan and tracks a function with poles past its Taylor radius. The rational-approximation
+companion to the barycentric/Chebyshev interpolation and sequence-acceleration tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
