@@ -521,6 +521,7 @@ ruins a long non-symplectic integration.
 | `src/quantum_circuit.py` | Statevector quantum circuit simulator: gates, entanglement, Deutsch-Jozsa, Grover |
 | `src/levenberg_marquardt.py` | Levenberg-Marquardt nonlinear least-squares curve fitting (adaptive damping) |
 | `src/boruvka.py` | Boruvka's minimum spanning tree (round-based, parallel-friendly, 1926) |
+| `src/qft.py` | Quantum Fourier transform + phase estimation on the statevector simulator |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1033,6 +1034,7 @@ ruins a long non-symplectic integration.
 | `examples/quantum_circuit_demo.py` | Grover's search amplifying a marked state + Bell entanglement |
 | `examples/levenberg_marquardt_demo.py` | Fitting a noisy Gaussian peak, SSR dropping 115 -> 0.09 |
 | `examples/boruvka_demo.py` | Boruvka MST built in rounds, edges coloured by round of addition |
+| `examples/qft_demo.py` | QFT period-finding spectrum + phase estimation (Shor's core) |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11810,6 +11812,30 @@ why Boruvka underlies GPU MST implementations. A deterministic index tie-break p
 cycles. Validated against the repo's Kruskal: identical MST weight on random graphs, always a spanning
 tree/forest, no cycles under ties, and a match to brute force on tiny graphs. The round-based,
 parallel-friendly companion to the Kruskal and Prim MST tools.
+
+## Quantum Fourier transform: the engine inside Shor's algorithm
+
+The quantum DFT that powers Shor's factoring and phase estimation. `qft.py`:
+
+```
+$ python examples/qft_demo.py examples/output
+
+  input state: uniform over k = 1 mod 4  ->  [1, 5, 9, 13, 17, 21, 25, 29]
+  after QFT, probability concentrates at multiples of N/r = 32/4 = 8:
+     basis k   probability
+           0        0.2500
+           8        0.2500
+          16        0.2500
+          24        0.2500
+  peaks at [0, 8, 16, 24] = multiples of 8; reading the spacing recovers r = 4
+```
+
+The QFT acts on 2^n amplitudes exactly as the DFT acts on a length-2^n vector, but with only O(n^2)
+gates: on each qubit a Hadamard then controlled phase rotations from the less-significant qubits, then
+a qubit-order reversal. Runs on the repo's statevector simulator. Validated exactly against a classical
+DFT for n=1..4, the inverse undoes the forward transform, QFT|0> is uniform, QFT|k> is the expected
+phase ramp, and phase estimation recovers dyadic phases exactly. The quantum-algorithm companion to the
+gate-level circuit simulator and the classical FFT/DFT.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

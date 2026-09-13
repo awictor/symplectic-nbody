@@ -563,6 +563,7 @@ def main():
     import quantum_circuit_demo
     import levenberg_marquardt_demo
     import boruvka_demo
+    import qft_demo
 
     import plot_orbits
 
@@ -1095,6 +1096,7 @@ def main():
     quantum_circuit_txt = run("quantum_circuit_demo", quantum_circuit_demo.main, True)
     levenberg_marquardt_txt = run("levenberg_marquardt_demo", levenberg_marquardt_demo.main, True)
     boruvka_txt = run("boruvka_demo", boruvka_demo.main, True)
+    qft_txt = run("qft_demo", qft_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9795,6 +9797,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("boruvka.svg"), "Boruvka's MST on 30 points, edges coloured by the round they were added: 30 components collapse to 8, then 3, then 1 in just three rounds -- each round at least halves the count, the O(log V) bound")
             + f'<div class="card">{pre(boruvka_txt)}</div>'
+            + '</div>'),
+        section(
+            "Quantum Fourier transform: the engine inside Shor's algorithm",
+            "The QFT is the quantum analogue of the DFT and the beating heart of Shor's factoring and "
+            "quantum phase estimation. It acts on the 2^n AMPLITUDES of an n-qubit register exactly as "
+            "the DFT acts on a length-2^n vector, but with only O(n^2) gates instead of O(n 2^n) "
+            "operations -- an exponential edge in gate count (the catch: you cannot read all "
+            "amplitudes out, so it is useful only when a later measurement collapses the interference "
+            "into the answer). The circuit is beautifully regular: on each qubit apply a HADAMARD then "
+            "a cascade of CONTROLLED PHASE rotations R_k = diag(1, e^{2 pi i / 2^k}) from the "
+            "less-significant qubits, then reverse the qubit order -- n Hadamards and n(n-1)/2 "
+            "controlled phases, exactly how the DFT's twiddle factors get built bit by bit. Runs on "
+            "the repo's statevector simulator. Validated exactly against a classical DFT: the QFT of "
+            "an arbitrary state is the DFT of its amplitude vector (n=1..4); the inverse QFT undoes "
+            "it; QFT|0> is the uniform superposition and QFT of the uniform state is |0>; QFT|k> is "
+            "the expected phase ramp; and PHASE ESTIMATION recovers dyadic phases exactly and others "
+            "to the register's resolution. The quantum-algorithm companion to the gate-level circuit "
+            "simulator and the classical FFT/DFT.",
+            '<div class="grid">'
+            + svg_card(out("qft.svg"), "The QFT of a state periodic with period r=4 over 32 basis states: the output probability concentrates entirely at multiples of N/r = 8, so reading the peak spacing recovers the period -- the period-finding step at the core of Shor's algorithm")
+            + f'<div class="card">{pre(qft_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

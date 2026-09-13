@@ -1,0 +1,21 @@
+Quantum Fourier transform: period finding (the heart of Shor's algorithm)
+
+  register: 5 qubits, N = 32 basis states
+  input state: uniform over k = 1 mod 4  ->  [1, 5, 9, 13, 17, 21, 25, 29]
+  (this is the state Shor's algorithm holds after measuring the modular-exponent register)
+
+  after QFT, probability concentrates at multiples of N/r = 32/4 = 8:
+     basis k   probability
+           0        0.2500   <- peak
+           8        0.2500   <- peak
+          16        0.2500   <- peak
+          24        0.2500   <- peak
+
+  peaks at [0, 8, 16, 24] = multiples of 8; reading the spacing recovers r = 4
+
+  Phase estimation (inverse QFT reading a phase off an eigenstate):
+    true phi = 0.250  ->  estimate 0.2500  (integer readout 16/64)
+    true phi = 0.125  ->  estimate 0.1250  (integer readout 8/64)
+    true phi = 0.300  ->  estimate 0.2969  (integer readout 19/64)
+
+  wrote examples/output\qft.svg
