@@ -1,0 +1,22 @@
+Kernel density estimation: the smooth cousin of the histogram
+
+  200 samples from a bimodal mixture (peaks at -2 and +2.5).
+  Silverman bandwidth: 0.7515   Scott bandwidth: 0.8351
+
+  Bandwidth choice by leave-one-out log-likelihood:
+     bandwidth   LOO log-lik              note
+         0.100        -463.5                  
+         0.200        -397.3                  
+         0.752        -392.4       (Silverman)
+         0.500        -383.3                  
+         1.000        -407.2                  
+         2.000        -463.5                  
+    -> best LOO bandwidth ~ 0.500
+
+  Kernel comparison at the left peak (x=-2), Silverman bandwidth:
+         gaussian: f_hat(-2) = 0.2044  (true 0.3420)
+     epanechnikov: f_hat(-2) = 0.2626  (true 0.3420)
+       triangular: f_hat(-2) = 0.2717  (true 0.3420)
+           cosine: f_hat(-2) = 0.2646  (true 0.3420)
+
+  wrote examples/output\kde.svg

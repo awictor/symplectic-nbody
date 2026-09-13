@@ -524,6 +524,7 @@ def main():
     import stirling_demo
     import belief_propagation_demo
     import randomized_svd_demo
+    import kde_demo
 
     import plot_orbits
 
@@ -1017,6 +1018,7 @@ def main():
     stirling_txt = run("stirling_demo", stirling_demo.main, True)
     belief_propagation_txt = run("belief_propagation_demo", belief_propagation_demo.main, True)
     randomized_svd_txt = run("randomized_svd_demo", randomized_svd_demo.main, True)
+    kde_txt = run("kde_demo", kde_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8931,6 +8933,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("randomized_svd.svg"), "Left: the singular-value spectrum -- randomized top-k values (yellow dots) land exactly on the exact ones (gray bars). Right: rank-k reconstruction error tracking the optimal bound as rank grows")
             + f'<div class="card">{pre(randomized_svd_txt)}</div>'
+            + '</div>'),
+        section(
+            "Kernel density estimation: the smooth histogram",
+            "A histogram estimates a distribution by binning, but its blocky, bin-placement-dependent "
+            "shape throws away information. KERNEL DENSITY ESTIMATION replaces each data point with a "
+            "smooth bump (the kernel) and averages them: f_hat(x) = (1/nh) sum K((x - x_i)/h). The "
+            "BANDWIDTH h is the one crucial knob -- too small is spiky and overfit, too large washes "
+            "features out. KDE is nonparametric, assuming only smoothness, and is the smooth cousin of "
+            "the histogram and the density model behind mean-shift and continuous naive Bayes. The "
+            "kernel can be Gaussian, Epanechnikov (variance-optimal), triangular, uniform, or cosine; "
+            "the bandwidth from Silverman's or Scott's plug-in rule, or by leave-one-out likelihood. "
+            "An adaptive variant widens the kernel in sparse regions. Validated by the defining "
+            "properties and known distributions: every kernel's estimate is non-negative and "
+            "integrates to one, it recovers a standard normal and a bimodal mixture (peaks in the "
+            "right places), wider bandwidths are smoother, the plug-in rules give positive bandwidths "
+            "that shrink as n grows, and the leave-one-out likelihood peaks near the plug-in value. "
+            "The nonparametric-density companion to the Gaussian-mixture and mean-shift tools.",
+            '<div class="grid">'
+            + svg_card(out("kde.svg"), "A bimodal sample (yellow rug) with kernel density estimates at three bandwidths: too-narrow (spiky red), Silverman (green), and too-wide (washed-out blue), against the true density in gray dashes")
+            + f'<div class="card">{pre(kde_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

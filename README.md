@@ -482,6 +482,7 @@ ruins a long non-symplectic integration.
 | `src/stirling.py` | Stirling numbers (both kinds), Bell numbers, set partitions and cycles |
 | `src/belief_propagation.py` | Sum-product / max-product on tree factor graphs: exact marginals, MAP, Z |
 | `src/randomized_svd.py` | Randomized SVD (Halko-Martinsson-Tropp): fast near-optimal top-k factorization |
+| `src/kde.py` | Kernel density estimation: 5 kernels, Silverman/Scott bandwidth, adaptive variant |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -955,6 +956,7 @@ ruins a long non-symplectic integration.
 | `examples/stirling_demo.py` | Stirling triangles, set partitions, Bell numbers three ways |
 | `examples/belief_propagation_demo.py` | Spin chain marginals by message passing, bias decay down the chain |
 | `examples/randomized_svd_demo.py` | Randomized vs exact singular-value spectrum + error-vs-rank curve |
+| `examples/kde_demo.py` | Bimodal density estimated at three bandwidths with a sample rug |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10994,6 +10996,24 @@ to a small basis Q, SVD the small Q^T A, and lift back (Halko-Martinsson-Tropp 2
 sharpen slow spectra. Validated against the exact Jacobi SVD: top-k singular values and reconstruction
 error match to tolerance, singular vectors are orthonormal, and an exactly rank-r matrix is recovered
 essentially exactly. The fast-approximate companion to the exact SVD.
+
+## Kernel density estimation: the smooth histogram
+
+A smooth nonparametric density from samples. `kde.py`:
+
+```
+$ python examples/kde_demo.py examples/output
+
+  bimodal sample -> KDE recovers both peaks; Silverman bandwidth 0.75
+  leave-one-out log-likelihood peaks near the plug-in bandwidth
+```
+
+Replace each point with a kernel bump and average: f_hat(x) = (1/nh) sum K((x-x_i)/h). Five kernels
+(Gaussian, Epanechnikov, triangular, uniform, cosine), Silverman/Scott plug-in bandwidths or
+leave-one-out selection, and an adaptive variable-bandwidth variant. Validated by non-negativity,
+integration to one, recovery of a standard normal and a bimodal mixture, the smoothness/bandwidth
+relationship, and the LOO likelihood peaking near the plug-in value. The nonparametric-density
+companion to the Gaussian-mixture and mean-shift tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
