@@ -1,0 +1,13 @@
+Finite-volume shock capturing: Burgers equation u_t + (u^2/2)_x = 0
+
+  200 cells, evolve to t = 0.25 (a shock has formed by now)
+
+    quantity                         initial     Godunov       MUSCL
+    mass (integral of u)             1.00000     1.00000     1.00000
+    total variation                   2.0000      1.9670      1.9900
+
+  shock transition width: Godunov 28 cells, MUSCL 22 cells
+  mass is conserved to round-off by both; MUSCL captures the shock in fewer cells
+  without the oscillations a naive high-order scheme would produce.
+
+  wrote examples/output\finite_volume.svg

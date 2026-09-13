@@ -526,6 +526,7 @@ ruins a long non-symplectic integration.
 | `src/kosaraju.py` | Kosaraju's two-pass DFS strongly-connected-components + condensation |
 | `src/qr_algorithm.py` | QR eigenvalue algorithm: Hessenberg + shifted QR with complex-pair deflation |
 | `src/universal_codes.py` | Universal integer codes: Elias gamma/delta/omega + Golomb-Rice |
+| `src/finite_volume.py` | Godunov + MUSCL finite-volume shock capturing for conservation laws |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1043,6 +1044,7 @@ ruins a long non-symplectic integration.
 | `examples/kosaraju_demo.py` | SCC decomposition coloured by component + condensation DAG |
 | `examples/qr_algorithm_demo.py` | QR iteration subdiagonal decaying to 1e-12 as eigenvalues emerge |
 | `examples/universal_codes_demo.py` | Bits/value coding inverted-index gaps vs the entropy floor |
+| `examples/finite_volume_demo.py` | Burgers shock: Godunov vs MUSCL sharpness, mass conserved |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11938,6 +11940,28 @@ in a large range, codes are prefix-free and self-delimiting (concatenations deco
 length formulas are exact, Rice is the M=2^k Golomb case, and tuned Golomb beats fixed-width on a
 geometric source. The universal-integer-code companion to the Huffman, arithmetic, and rANS entropy
 coders.
+
+## Finite-volume shock capturing: Godunov and MUSCL for conservation laws
+
+Solve conservation laws with shocks that form in finite time, without oscillations. `finite_volume.py`:
+
+```
+$ python examples/finite_volume_demo.py examples/output
+
+  200 cells, evolve to t = 0.25 (a shock has formed)
+    quantity                 initial   Godunov     MUSCL
+    mass (integral of u)     1.00000   1.00000   1.00000
+    total variation           2.0000    1.9670    1.9900
+  shock transition width: Godunov 28 cells, MUSCL 22 cells
+```
+
+Finite volume tracks cell averages, updating them through face fluxes so the total is conserved
+exactly and the scheme converges to the correct weak solution. Godunov solves the exact Riemann
+problem at each face (a min/max rule for convex flux); MUSCL reconstructs a minmod-limited linear
+profile and advances with SSP Runge-Kutta for a sharp, TVD, second-order result. Validated: advection
+transports at the exact speed conserving mass and total variation, Burgers forms a shock at the
+Rankine-Hugoniot speed, rarefactions spread correctly, and MUSCL is measurably higher-order than
+Godunov. The shock-capturing companion to the Crank-Nicolson, Thomas, and Poisson PDE tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

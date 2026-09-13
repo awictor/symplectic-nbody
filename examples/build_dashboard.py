@@ -568,6 +568,7 @@ def main():
     import kosaraju_demo
     import qr_algorithm_demo
     import universal_codes_demo
+    import finite_volume_demo
 
     import plot_orbits
 
@@ -1105,6 +1106,7 @@ def main():
     kosaraju_txt = run("kosaraju_demo", kosaraju_demo.main, True)
     qr_algorithm_txt = run("qr_algorithm_demo", qr_algorithm_demo.main, True)
     universal_codes_txt = run("universal_codes_demo", universal_codes_demo.main, True)
+    finite_volume_txt = run("finite_volume_demo", finite_volume_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9911,6 +9913,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("universal_codes.svg"), "Bits per value coding 400 inverted-index gaps: fixed-width spends 6.0, Elias gamma 4.8, and the mean-tuned Golomb code 4.3 -- landing near the 3.95-bit entropy floor because the gaps are nearly geometric, which is why search engines Golomb-code posting lists")
             + f'<div class="card">{pre(universal_codes_txt)}</div>'
+            + '</div>'),
+        section(
+            "Finite-volume shock capturing: Godunov and MUSCL for conservation laws",
+            "Conservation laws u_t + f(u)_x = 0 -- advection, traffic flow, gas dynamics -- develop "
+            "SHOCKS, discontinuities that form in finite time even from smooth data. Naive finite "
+            "differences oscillate at these jumps and can converge to the WRONG shock speed. The "
+            "FINITE-VOLUME method tracks cell AVERAGES and updates them through fluxes across faces, "
+            "u_i' = u_i - (dt/dx)(F_{i+1/2} - F_{i-1/2}), so the total is conserved exactly and the "
+            "scheme converges to the correct weak solution. The face flux is the heart: GODUNOV "
+            "(first order) solves the exact RIEMANN PROBLEM at each face -- for a convex flux a simple "
+            "min/max rule that picks entropy-satisfying shocks -- robust but smearing; MUSCL (second "
+            "order) reconstructs a limited linear profile in each cell (minmod SLOPE LIMITER kills "
+            "oscillations) and advances with SSP Runge-Kutta, giving sharp, non-oscillatory, "
+            "total-variation-diminishing shocks. Validated against analytic truth: advection "
+            "transports a profile at the exact speed while conserving mass and total variation; "
+            "Burgers forms a shock travelling at the Rankine-Hugoniot speed (f(uL)-f(uR))/(uL-uR); a "
+            "rarefaction fan spreads correctly; mass is conserved to round-off; and MUSCL is "
+            "measurably higher-order than Godunov. The shock-capturing companion to the "
+            "Crank-Nicolson, Thomas, and Poisson PDE tools.",
+            '<div class="grid">'
+            + svg_card(out("finite_volume.svg"), "The Burgers equation steepening a smooth sine profile (gray) into a shock: first-order Godunov (orange) smears it over ~28 cells while second-order MUSCL (blue) captures it in ~22 with no overshoot -- both conserving mass exactly")
+            + f'<div class="card">{pre(finite_volume_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
