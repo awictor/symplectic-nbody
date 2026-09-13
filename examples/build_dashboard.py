@@ -577,6 +577,7 @@ def main():
     import simplicial_homology_demo
     import persistent_homology_demo
     import stern_brocot_demo
+    import pell_demo
 
     import plot_orbits
 
@@ -1123,6 +1124,7 @@ def main():
     simplicial_homology_txt = run("simplicial_homology_demo", simplicial_homology_demo.main, True)
     persistent_homology_txt = run("persistent_homology_demo", persistent_homology_demo.main, True)
     stern_brocot_txt = run("stern_brocot_demo", stern_brocot_demo.main, True)
+    pell_txt = run("pell_demo", pell_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10119,6 +10121,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("stern_brocot.svg"), "The top levels of the Stern-Brocot tree: each node is the mediant of its nearest ancestors to the left and right, and the whole tree is a binary search tree on value that enumerates every positive rational exactly once")
             + f'<div class="card">{pre(stern_brocot_txt)}</div>'
+            + '</div>'),
+        section(
+            "Pell's equation: x^2 - D y^2 = 1 from the continued fraction of sqrt(D)",
+            "Pell's equation x^2 - D y^2 = 1 (non-square D) is one of the oldest in number theory -- "
+            "Brahmagupta studied it in the 7th century, Lagrange solved it. It has infinitely many "
+            "integer solutions, but the smallest (the FUNDAMENTAL SOLUTION) can be enormous for tiny "
+            "D: for D=61 it is x=1766319049, y=226153980, exactly the case Fermat posed as a challenge "
+            "knowing naive search fails. The key: sqrt(D) has an eventually PERIODIC continued "
+            "fraction, and a convergent at the end of a period gives the fundamental solution -- if the "
+            "period length is even it solves +1, if odd it solves the NEGATIVE Pell equation and its "
+            "square gives +1. All further solutions follow from the recurrence "
+            "(x + y sqrt D) = (x1 + y1 sqrt D)^n. Computed with exact integer arithmetic (no floats, so "
+            "correct for huge D). Validated: known fundamental solutions including D=61 and D=109; "
+            "x^2 - D y^2 = 1 holds exactly for the fundamental and generated solutions over D=2..199; "
+            "perfect squares give no solution; the negative Pell equation is solvable exactly when the "
+            "CF period is odd (checked D=2..99); and the CF period is a palindrome ending in 2*a0. The "
+            "Diophantine companion to the continued-fraction and Stern-Brocot tools.",
+            '<div class="grid">'
+            + svg_card(out("pell.svg"), "The digit-length of the fundamental solution x of x^2 - D y^2 = 1 plotted against D: it jumps chaotically, D=61 needing ten digits while its neighbours need two or three -- the erratic growth that makes Pell's equation hard")
+            + f'<div class="card">{pre(pell_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -535,6 +535,7 @@ ruins a long non-symplectic integration.
 | `src/simplicial_homology.py` | Betti numbers + torsion of triangulated spaces via boundary matrices + SNF |
 | `src/persistent_homology.py` | H_0 persistence barcode of a point cloud (Vietoris-Rips = MST edges) |
 | `src/stern_brocot.py` | Stern-Brocot tree + Farey sequences: enumerate rationals, best approximation |
+| `src/pell.py` | Pell's equation x^2 - D y^2 = 1 via periodic continued fraction of sqrt(D) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1061,6 +1062,7 @@ ruins a long non-symplectic integration.
 | `examples/simplicial_homology_demo.py` | Betti-number table for circle/sphere/torus/RP^2 |
 | `examples/persistent_homology_demo.py` | H_0 barcode of a 3-cluster cloud; long bars = clusters |
 | `examples/stern_brocot_demo.py` | Best rational approximations of pi + Farey sequence + tree |
+| `examples/pell_demo.py` | Pell fundamental solutions (incl D=61) + chaotic digit-length growth |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12149,6 +12151,29 @@ construction under a denominator bound, with consecutive fractions satisfying bc
 every rational's path reconstructs it and matches its continued fraction, the best approximation beats
 every no-larger-denominator fraction by brute force, and the Farey sequence matches brute enumeration.
 The rational-enumeration companion to the continued-fraction tools.
+
+## Pell's equation: x^2 - D y^2 = 1 from the continued fraction of sqrt(D)
+
+Find the (often enormous) smallest integer solution of Pell's equation. `pell.py`:
+
+```
+$ python examples/pell_demo.py examples/output
+
+  fundamental solutions:
+       D     cf period          x           y
+       2         [1;2]          3           2
+      13   [3;1,1,1,1,6]      649         180
+      61   [7;1,4,3,1,...]  1766319049  226153980   (Fermat's challenge)
+  1766319049^2 - 61*226153980^2 = 1
+```
+
+sqrt(D) has a periodic continued fraction, and a convergent at the end of a period gives the
+fundamental solution (even period -> +1; odd period -> solves the negative Pell equation, whose square
+gives +1). Further solutions follow from (x + y sqrt D) = (x1 + y1 sqrt D)^n. Exact integer arithmetic
+throughout. Validated: known fundamental solutions including D=61 and D=109; x^2 - D y^2 = 1 exactly
+over D=2..199; the negative Pell equation is solvable exactly when the CF period is odd; and the period
+is a palindrome ending in 2*a0. The Diophantine companion to the continued-fraction and Stern-Brocot
+tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
