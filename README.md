@@ -534,6 +534,7 @@ ruins a long non-symplectic integration.
 | `src/smith_normal_form.py` | Smith Normal Form of an integer matrix + abelian-group / homology readout |
 | `src/simplicial_homology.py` | Betti numbers + torsion of triangulated spaces via boundary matrices + SNF |
 | `src/persistent_homology.py` | H_0 persistence barcode of a point cloud (Vietoris-Rips = MST edges) |
+| `src/stern_brocot.py` | Stern-Brocot tree + Farey sequences: enumerate rationals, best approximation |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1059,6 +1060,7 @@ ruins a long non-symplectic integration.
 | `examples/smith_normal_form_demo.py` | Integer matrix -> diagonal SNF + cokernel group + homology |
 | `examples/simplicial_homology_demo.py` | Betti-number table for circle/sphere/torus/RP^2 |
 | `examples/persistent_homology_demo.py` | H_0 barcode of a 3-cluster cloud; long bars = clusters |
+| `examples/stern_brocot_demo.py` | Best rational approximations of pi + Farey sequence + tree |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12124,6 +12126,29 @@ union-find sweep computes the barcode. Validated against the repo's MST and brut
 counts: n bars with one infinite, finite deaths equal MST edges, total persistence equals MST weight,
 and the Betti_0 curve matches the epsilon-graph component count at every threshold. The
 topological-data-analysis companion to the simplicial-homology, union-find/MST, and clustering tools.
+
+## The Stern-Brocot tree: every rational once, and the best approximations of pi
+
+A binary tree containing every positive rational exactly once, in lowest terms. `stern_brocot.py`:
+
+```
+$ python examples/stern_brocot_demo.py examples/output
+
+  approximating pi with growing denominator bounds:
+     max denom    fraction         value       error
+             8        22/7  3.1428571429    1.26e-03
+           113     355/113  3.1415929204    2.67e-07
+        100000  312689/99532                2.91e-11
+  Farey F_6: 0  1/6  1/5  1/4  1/3  2/5  1/2  3/5  2/3  3/4  4/5  5/6  1
+```
+
+The tree is built by mediants -- (a+c)/(b+d) between a/b and c/d, always already reduced -- and is a
+binary search tree on value, so descending toward a real number gives its best rational approximations
+(the step run-lengths are the continued-fraction coefficients). Farey sequences are the same
+construction under a denominator bound, with consecutive fractions satisfying bc - ad = 1. Validated:
+every rational's path reconstructs it and matches its continued fraction, the best approximation beats
+every no-larger-denominator fraction by brute force, and the Farey sequence matches brute enumeration.
+The rational-enumeration companion to the continued-fraction tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

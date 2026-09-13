@@ -576,6 +576,7 @@ def main():
     import smith_normal_form_demo
     import simplicial_homology_demo
     import persistent_homology_demo
+    import stern_brocot_demo
 
     import plot_orbits
 
@@ -1121,6 +1122,7 @@ def main():
     smith_normal_form_txt = run("smith_normal_form_demo", smith_normal_form_demo.main, True)
     simplicial_homology_txt = run("simplicial_homology_demo", simplicial_homology_demo.main, True)
     persistent_homology_txt = run("persistent_homology_demo", persistent_homology_demo.main, True)
+    stern_brocot_txt = run("stern_brocot_demo", stern_brocot_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10096,6 +10098,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("persistent_homology.svg"), "A point cloud of three clusters (left) and its H_0 persistence barcode (right): two long inter-cluster bars plus one infinite bar reveal three robust components, while the many short bars are within-cluster noise -- and every finite death is a minimum-spanning-tree edge length")
             + f'<div class="card">{pre(persistent_homology_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Stern-Brocot tree: every rational once, and the best approximations of pi",
+            "There is a single binary tree containing EVERY positive rational exactly once, already in "
+            "lowest terms -- the STERN-BROCOT TREE (1858/1861, the latter by a clockmaker designing "
+            "gear ratios). It is built by MEDIANTS: between a/b and c/d sits (a+c)/(b+d), which is "
+            "always already reduced, and every reduced fraction appears at a unique node. The tree is "
+            "also a binary search tree ordered by value, so descending left/right is exactly asking "
+            "'smaller or larger?' -- the natural home of best rational approximation, where the "
+            "run-lengths of same-direction steps are precisely the CONTINUED-FRACTION coefficients. "
+            "Restricting the construction to a bounded denominator gives the FAREY SEQUENCE, whose "
+            "consecutive fractions a/b < c/d satisfy the unimodular relation bc - ad = 1. Validated: "
+            "every rational's path reconstructs it and matches its continued fraction; the best "
+            "approximation agrees with the repo's continued-fraction routine and beats every "
+            "no-larger-denominator fraction by brute force; the Farey sequence matches a brute "
+            "enumeration with bc - ad = 1 on every pair; and pi resolves to 22/7, then 355/113 (Zu "
+            "Chongzhi's fifth-century value, accurate to 3e-7), as the denominator bound grows. The "
+            "rational-enumeration companion to the continued-fraction and rational-arithmetic tools.",
+            '<div class="grid">'
+            + svg_card(out("stern_brocot.svg"), "The top levels of the Stern-Brocot tree: each node is the mediant of its nearest ancestors to the left and right, and the whole tree is a binary search tree on value that enumerates every positive rational exactly once")
+            + f'<div class="card">{pre(stern_brocot_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
