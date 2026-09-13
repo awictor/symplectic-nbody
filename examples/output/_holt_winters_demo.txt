@@ -1,0 +1,16 @@
+Exponential smoothing: level, trend, and season from a decaying weighted average
+
+  Monthly series (60 months): trend +1.2/month + 12-month seasonal cycle + noise.
+
+            method   12-month forecast RMSE vs truth
+        SES (flat)                            19.831
+      Holt (trend)                            16.343
+      Holt-Winters                             3.270
+
+  SES forecasts a flat line (ignores trend and season); Holt adds the slope but misses
+  the seasonal swing; Holt-Winters reinstates both and forecasts the year ahead accurately.
+
+  Recovered seasonal pattern (12 months, additive deviations):
+    -1  +6  +11  +13  +12  +6  -1  -8  -12  -13  -11  -3
+
+  wrote examples/output\holt_winters.svg

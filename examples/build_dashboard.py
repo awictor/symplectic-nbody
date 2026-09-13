@@ -548,6 +548,7 @@ def main():
     import pade_demo
     import prony_demo
     import hp_filter_demo
+    import holt_winters_demo
 
     import plot_orbits
 
@@ -1065,6 +1066,7 @@ def main():
     pade_txt = run("pade_demo", pade_demo.main, True)
     prony_txt = run("prony_demo", prony_demo.main, True)
     hp_filter_txt = run("hp_filter_demo", hp_filter_demo.main, True)
+    holt_winters_txt = run("holt_winters_demo", holt_winters_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9458,6 +9460,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("hp_filter.svg"), "A synthetic GDP-like series (gray) with its Hodrick-Prescott trend (green, the classic quarterly lambda=1600) and the extracted business-cycle component below -- the noise and short-run swings peeled cleanly off the smooth trend")
             + f'<div class="card">{pre(hp_filter_txt)}</div>'
+            + '</div>'),
+        section(
+            "Exponential smoothing: forecasting level, trend, and season",
+            "The oldest and still one of the most widely-used forecasting families, exponential "
+            "smoothing predicts a series by an average of its past that decays geometrically -- last "
+            "week matters more than last year. SIMPLE exponential smoothing fits a flat series "
+            "(level only); HOLT'S method adds a TREND for a sloped forecast; and HOLT-WINTERS adds a "
+            "SEASONAL component of period m, so the forecast reinstates a repeating calendar pattern "
+            "on top of the trending level -- the workhorse for demand, traffic, and any series with "
+            "a rhythm. Each is a simple online recurrence, O(1) memory per step, yet captures level, "
+            "trend, and season together. Validated against synthetic series: SES tracks a noisy "
+            "constant to its mean and forecasts flat; Holt recovers a linear trend and extrapolates "
+            "it; Holt-Winters reproduces a trend-plus-seasonal series and forecasts a year ahead "
+            "with far lower error than SES or Holt (RMSE 3.3 versus 20 and 16 on a monthly example); "
+            "a higher smoothing factor reacts faster to a level shift; and the one-step error is "
+            "small for a well-specified model. The forecasting companion to the Kalman filter and "
+            "the autocorrelation / spectral tools.",
+            '<div class="grid">'
+            + svg_card(out("holt_winters.svg"), "A monthly series with trend and seasonality: Holt-Winters tracks the level (blue), then forecasts a year ahead (green) that lands almost exactly on the true future (red dashed), reinstating both the slope and the seasonal swing")
+            + f'<div class="card">{pre(holt_winters_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
