@@ -488,6 +488,7 @@ def main():
     import golay_demo
     import gauss_quadrature_demo
     import interval_tree_demo
+    import permanent_demo
 
     import plot_orbits
 
@@ -945,6 +946,7 @@ def main():
     golay_txt = run("golay_demo", golay_demo.main, True)
     gauss_quadrature_txt = run("gauss_quadrature_demo", gauss_quadrature_demo.main, True)
     interval_tree_txt = run("interval_tree_demo", interval_tree_demo.main, True)
+    permanent_txt = run("permanent_demo", permanent_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8067,6 +8069,33 @@ def main():
             '<div class="grid">'
             + svg_card(out("interval_tree.svg"), "a day of meetings as intervals: a 14:00-16:00 range query (green band) and the four meetings the tree reports as clashing (green bars), found without scanning the calendar")
             + f'<div class="card">{pre(interval_tree_txt)}</div>'
+            + '</div>'),
+        section(
+            "The matrix permanent: counting matchings with Ryser's formula",
+            "The permanent of a matrix looks exactly like the determinant with the minus signs removed: "
+            "sum over all permutations of the product A[i][sigma(i)]. That one missing sign changes "
+            "everything -- the determinant collapses to O(n^3) by Gaussian elimination because "
+            "sign-alternation makes row operations telescope, but the permanent has no such structure "
+            "and is #P-COMPLETE, believed fundamentally harder than any NP problem because it COUNTS "
+            "rather than decides. And what it counts is central: the permanent of a 0/1 biadjacency "
+            "matrix is the exact number of PERFECT MATCHINGS of a bipartite graph (every worker "
+            "assigned a distinct qualified job), and in quantum optics the permanent of the "
+            "interferometer matrix is the amplitude of a boson-sampling outcome -- the heart of "
+            "quantum-advantage experiments. Summing all n! permutations is hopeless past n~12; RYSER'S "
+            "FORMULA (1963) uses inclusion-exclusion over the 2^n column subsets to get O(2^n n), "
+            "iterated in Gray-code order so each subset differs from the last by one column flip, a "
+            "single add or subtract. GLYNN'S formula is an independent alternative of the same "
+            "complexity. This module implements the naive definition (for validation), Ryser, Glynn, "
+            "and the bipartite perfect-matching count. Validated: all three methods agree exactly on "
+            "integers and to floating tolerance on reals; Ryser matches the naive sum exhaustively up "
+            "to n=8; known values check out (all-ones is n!, identity and permutation matrices are 1, a "
+            "zero row gives 0); the matching count matches a brute-force enumerator and gives n! for "
+            "the complete bipartite graph K_n,n; and the permanent is multilinear in the rows. On a 9x9 "
+            "matrix Ryser is about 940x faster than the naive sum, and the operation gap reaches a "
+            "trillion-fold by n=20.",
+            '<div class="grid">'
+            + svg_card(out("permanent.svg"), "operations to compute the permanent on a log scale: both the naive n! sum (red) and Ryser's 2^n formula (green) grow explosively -- it is #P-complete -- but Ryser is astronomically smaller, the difference between infeasible and merely exponential")
+            + f'<div class="card">{pre(permanent_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

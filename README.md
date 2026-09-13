@@ -446,6 +446,7 @@ ruins a long non-symplectic integration.
 | `src/golay.py` | Extended binary Golay [24,12,8] code: corrects 3 errors, syndrome decoding |
 | `src/gauss_quadrature.py` | Gauss-Hermite / Gauss-Laguerre quadrature via Golub-Welsch |
 | `src/interval_tree.py` | Centered interval tree: O(log n + k) stabbing and range-overlap queries |
+| `src/permanent.py` | Matrix permanent (Ryser + Glynn) + bipartite perfect-matching count |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -883,6 +884,7 @@ ruins a long non-symplectic integration.
 | `examples/golay_demo.py` | Correcting 3 flipped bits and the code's perfect weight distribution |
 | `examples/gauss_quadrature_demo.py` | Infinite-domain integrals, node placement, geometric convergence |
 | `examples/interval_tree_demo.py` | Calendar stabbing/range queries with the clashing meetings drawn |
+| `examples/permanent_demo.py` | Bipartite matching count and the naive-vs-Ryser operation gap |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10269,6 +10271,24 @@ only the relevant subtree. Supports stabbing, range-overlap, and count queries w
 Validated by exact agreement with brute force over 40 random sets and 3200 queries -- across zero-length
 intervals, touching closed endpoints, nested and identical intervals, and out-of-range queries -- with
 node invariants (center containment, sorted lists, correct partition) checked directly.
+
+## The matrix permanent: counting matchings with Ryser's formula
+
+The determinant's #P-complete twin -- it counts perfect matchings. `permanent.py`:
+
+```
+$ python examples/permanent_demo.py examples/output
+
+  bipartite matching count = 5 (brute force agrees)
+  9x9 matrix: Ryser 940x faster than the naive n! sum; gap ~1e12 by n=20
+```
+
+The permanent is the determinant without the minus signs, which makes it #P-complete. It counts perfect
+matchings of a bipartite graph (permanent of the 0/1 biadjacency) and gives boson-sampling amplitudes.
+Ryser's formula computes it in O(2^n n) via inclusion-exclusion over column subsets, iterated in
+Gray-code order; Glynn's formula is an independent cross-check. Validated: naive/Ryser/Glynn agree
+exactly on integers and to tolerance on reals, Ryser matches the definition exhaustively to n=8, known
+values (all-ones = n!, K_n,n = n! matchings), matching count vs brute force, and row-multilinearity.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

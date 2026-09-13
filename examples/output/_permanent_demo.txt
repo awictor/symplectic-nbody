@@ -1,0 +1,28 @@
+Matrix permanent: the determinant's #P-complete twin -- it counts matchings
+
+  bipartite qualification matrix (worker x job):
+           web   db   ml  ops
+     Ann  1    1    0    0
+     Bob  1    1    1    0
+      Cy  0    1    1    1
+     Dee  0    0    1    1
+
+  perfect matchings (everyone assigned a distinct qualified job): 5
+    (brute-force enumeration agrees: 5)
+
+  operation count: naive n! sum vs Ryser's O(2^n n):
+    n= 5: naive ~               600   Ryser ~         160   (4x fewer)
+    n= 8: naive ~           322,560   Ryser ~       2,048   (158x fewer)
+    n=10: naive ~        36,288,000   Ryser ~      10,240   (3,544x fewer)
+    n=12: naive ~     5,748,019,200   Ryser ~      49,152   (116,944x fewer)
+    n=15: naive ~19,615,115,520,000   Ryser ~     491,520   (39,907,055x fewer)
+    n=20: naive ~48,658,040,163,532,800,000   Ryser ~  20,971,520   (2,320,196,159,531x fewer)
+
+  9x9 random matrix: naive 499.9 ms, Ryser 0.43 ms (1168x faster), same answer True
+
+  perm(A) = sum over permutations of prod A[i][sigma(i)] -- the determinant without signs.
+  That missing sign makes it #P-complete (harder than NP), but Ryser's inclusion-exclusion
+  over the 2^n column subsets, iterated in Gray-code order, computes it in O(2^n n) -- the
+  method behind bipartite matching counts and boson-sampling amplitudes.
+
+  wrote examples/output\permanent.svg
