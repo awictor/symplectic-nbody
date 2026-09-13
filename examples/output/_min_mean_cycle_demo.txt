@@ -1,0 +1,22 @@
+Karp's minimum mean cycle: the loop of least average edge weight, in O(V*E)
+
+  Directed graph, edges (from -> to : weight):
+    A -> B : +2.0
+    B -> C : +2.0
+    C -> A : +2.0
+    C -> D : +1.0
+    D -> E : -4.0
+    E -> C : +1.0
+    B -> D : +5.0
+    D -> B : +5.0
+
+  Minimum mean cycle: D -> E -> C -> D
+  Mean weight: -0.6667  (verified: -0.6667)
+  Negative cycle detected (minimum mean < 0).
+
+  Karp's theorem: lambda* = min_v max_k (d_n(v) - d_k(v)) / (n - k), where d_k(v)
+  is the least weight of an exactly-k-edge walk from a source. One O(V*E) DP sweep,
+  no cycle enumeration. The min mean cycle is the negative-cycle certificate, the
+  optimal steady-state of a cyclic schedule, and the pivot in min-cost-flow cancelling.
+
+  wrote examples/output\min_mean_cycle.svg

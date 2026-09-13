@@ -463,6 +463,7 @@ ruins a long non-symplectic integration.
 | `src/gomory_hu.py` | Gomory-Hu tree: all-pairs min cuts from n-1 max-flow calls (Gusfield) |
 | `src/hopcroft_karp.py` | Maximum bipartite matching in O(E sqrt(V)) + Koenig min vertex cover |
 | `src/lca.py` | Lowest common ancestor by binary lifting: O(log n) LCA / distance / k-th ancestor |
+| `src/min_mean_cycle.py` | Karp's minimum mean cycle in O(V*E), negative-cycle certificate |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -917,6 +918,7 @@ ruins a long non-symplectic integration.
 | `examples/gomory_hu_demo.py` | Dumbbell graph and its Gomory-Hu tree, full all-pairs cut table |
 | `examples/hopcroft_karp_demo.py` | Applicant-to-job matching with Koenig minimum vertex cover |
 | `examples/lca_demo.py` | Org-tree LCA / distance / k-th-ancestor queries, path highlighted |
+| `examples/min_mean_cycle_demo.py` | Directed graph with the minimum mean cycle highlighted |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10609,6 +10611,24 @@ largest powers of two that keep them apart. The same table gives k-th ancestor, 
 (depth[u]+depth[v]-2*depth[lca]), and the node k steps along a u-v path. Validated on random trees
 against a naive root-path intersection and BFS distance for every pair. The ancestor-query companion
 to sparse-table RMQ and centroid decomposition.
+
+## Karp's minimum mean cycle
+
+The tightest average-weight loop in a directed graph, in O(V*E). `min_mean_cycle.py`:
+
+```
+$ python examples/min_mean_cycle_demo.py examples/output
+
+  Minimum mean cycle: D -> E -> C -> D
+  Mean weight: -0.6667   (negative mean = negative cycle certificate)
+```
+
+With d_k(v) the least weight of an exactly-k-edge walk from a source, Karp (1978) proved the minimum
+cycle mean is min over v of max over k of (d_n(v)-d_k(v))/(n-k) -- one O(V*E) DP sweep, no cycle
+enumeration. A virtual zero-weight source makes it work on graphs that aren't strongly connected; the
+optimal walk is reconstructed by backpointers to recover the cycle. Validated against brute-force
+enumeration on 300 random graphs and against Bellman-Ford (minimum mean < 0 iff a negative cycle
+exists). The cyclic-optimum companion to Floyd-Warshall and the min-cost-flow cancelling rule.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

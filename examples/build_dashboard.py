@@ -505,6 +505,7 @@ def main():
     import gomory_hu_demo
     import hopcroft_karp_demo
     import lca_demo
+    import min_mean_cycle_demo
 
     import plot_orbits
 
@@ -979,6 +980,7 @@ def main():
     gomory_hu_txt = run("gomory_hu_demo", gomory_hu_demo.main, True)
     hopcroft_karp_txt = run("hopcroft_karp_demo", hopcroft_karp_demo.main, True)
     lca_txt = run("lca_demo", lca_demo.main, True)
+    min_mean_cycle_txt = run("min_mean_cycle_demo", min_mean_cycle_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8502,6 +8504,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("lca.svg"), "A 10-node org tree; the highlighted query LCA(Mgr-API, Mgr-West) = CEO with the six-edge path between them routing up through the common ancestor (red) and back down")
             + f'<div class="card">{pre(lca_txt)}</div>'
+            + '</div>'),
+        section(
+            "Karp's minimum mean cycle",
+            "A cycle's mean weight is its total edge weight over its length; the minimum mean cycle "
+            "is the tightest-average loop in a directed graph. It is a central object: minimum mean "
+            "&lt; 0 certifies a negative cycle, it is the optimal steady-state cost of a cyclic "
+            "schedule, and it is the pivot that makes the min-cost-flow cancel-the-most-negative-"
+            "cycle strategy polynomial. Enumerating cycles is exponential; Karp (1978) gets it in "
+            "O(V*E) with a dynamic program. Let d_k(v) be the least weight of a walk of EXACTLY k "
+            "edges from a source (d_k(v) = min over edges (u,v) of d_{k-1}(u) + w). Karp proved the "
+            "minimum cycle mean is min over v of max over k of (d_n(v) - d_k(v)) / (n - k) -- one "
+            "sweep of the d-table, no enumeration. A virtual zero-weight source reaches every "
+            "vertex so the recurrence works on graphs that are not strongly connected. The module "
+            "reconstructs the optimal walk by backpointers and extracts the closing cycle. "
+            "Validated against brute-force cycle enumeration on 300 random graphs (with negative "
+            "weights) and against Bellman-Ford: minimum mean &lt; 0 exactly when a negative cycle "
+            "exists, and the recovered cycle is a real simple cycle whose mean equals lambda*. The "
+            "cyclic-optimum companion to Floyd-Warshall.",
+            '<div class="grid">'
+            + svg_card(out("min_mean_cycle.svg"), "A directed graph with three competing cycles; the minimum mean cycle C-D-E (red, mean -0.667) wins over the weight-2 triangle and the expensive B-D 2-cycle -- and its negative mean certifies a negative cycle")
+            + f'<div class="card">{pre(min_mean_cycle_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
