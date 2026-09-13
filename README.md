@@ -469,6 +469,7 @@ ruins a long non-symplectic integration.
 | `src/weisfeiler_lehman.py` | Weisfeiler-Lehman color refinement: graph isomorphism test + WL kernel |
 | `src/sos_dp.py` | Sum over subsets: zeta/Moebius transforms + OR/AND/subset-sum convolutions |
 | `src/regret_matching.py` | Regret matching / flat CFR: Nash equilibria of zero-sum games by self-play |
+| `src/persistent_segment_tree.py` | Persistent segment tree: version history + range k-th smallest |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -929,6 +930,7 @@ ruins a long non-symplectic integration.
 | `examples/weisfeiler_lehman_demo.py` | Color refinement rounds + the 1-WL regular-graph blind spot |
 | `examples/sos_dp_demo.py` | Boolean-lattice Hasse diagram of the subset-sum transform |
 | `examples/regret_matching_demo.py` | RPS converging to uniform + exploitability falling to zero |
+| `examples/persistent_segment_tree_demo.py` | Range k-th smallest via prefix-version differencing |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10734,6 +10736,24 @@ equilibrium (Hart and Mas-Colell, 2000). This is the flat case of CFR, the engin
 poker, converging like O(1/sqrt(T)) as measured by exploitability. Validated by convergence and known
 equilibria (RPS to uniform, dominant-strategy games to the pure strategy) and against a brute-force
 minimax over the simplex. The learning-dynamics companion to the LP simplex and the VCG note.
+
+## Persistent segment tree: querying the past
+
+Every update makes a new version; all old versions stay queryable. `persistent_segment_tree.py`:
+
+```
+$ python examples/persistent_segment_tree_demo.py examples/output
+
+  5-th smallest of a[0..8] = 5    2-th smallest of a[2..5] (8,1,9,3) = 3
+  re-query v1 after v2,v3 exist: 10  (unchanged -- persistent)
+```
+
+Path copying clones only the O(log n) nodes on the changed root-to-leaf path per update, sharing the
+rest with the prior version, so n updates give n+1 snapshots in O(n log n) memory. The showcase is
+range k-th smallest: one version per array prefix, and the multiset of a[l..r] is version r minus
+version l-1, walked in O(log V). Validated against brute force -- all versions reproduce correct
+range sums and the range k-th smallest matches a sort of the subarray across thousands of queries.
+The version-history companion to the segment tree and wavelet tree.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

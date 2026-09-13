@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" font-family="monospace">
+<rect width="760" height="430" fill="#0d1117"/>
+<text x="20" y="30" fill="#e6edf3" font-size="15">3-rd smallest in a[2..7] found by differencing two prefix versions</text>
+<rect x="60" y="70" width="60" height="44" rx="5" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+<text x="90" y="98" fill="#30363d" font-size="14" text-anchor="middle">5</text>
+<text x="90" y="128" fill="#8b949e" font-size="8" text-anchor="middle">a0</text>
+<rect x="130" y="70" width="60" height="44" rx="5" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+<text x="160" y="98" fill="#30363d" font-size="14" text-anchor="middle">2</text>
+<text x="160" y="128" fill="#8b949e" font-size="8" text-anchor="middle">a1</text>
+<rect x="200" y="70" width="60" height="44" rx="5" fill="#161b22" stroke="#4dabf7" stroke-width="2.5"/>
+<text x="230" y="98" fill="#4dabf7" font-size="14" text-anchor="middle">8</text>
+<text x="230" y="128" fill="#8b949e" font-size="8" text-anchor="middle">a2</text>
+<rect x="270" y="70" width="60" height="44" rx="5" fill="#161b22" stroke="#4dabf7" stroke-width="2.5"/>
+<text x="300" y="98" fill="#4dabf7" font-size="14" text-anchor="middle">1</text>
+<text x="300" y="128" fill="#8b949e" font-size="8" text-anchor="middle">a3</text>
+<rect x="340" y="70" width="60" height="44" rx="5" fill="#161b22" stroke="#4dabf7" stroke-width="2.5"/>
+<text x="370" y="98" fill="#4dabf7" font-size="14" text-anchor="middle">9</text>
+<text x="370" y="128" fill="#8b949e" font-size="8" text-anchor="middle">a4</text>
+<rect x="410" y="70" width="60" height="44" rx="5" fill="#161b22" stroke="#4dabf7" stroke-width="2.5"/>
+<text x="440" y="98" fill="#4dabf7" font-size="14" text-anchor="middle">3</text>
+<text x="440" y="128" fill="#8b949e" font-size="8" text-anchor="middle">a5</text>
+<rect x="480" y="70" width="60" height="44" rx="5" fill="#161b22" stroke="#4dabf7" stroke-width="2.5"/>
+<text x="510" y="98" fill="#4dabf7" font-size="14" text-anchor="middle">7</text>
+<text x="510" y="128" fill="#8b949e" font-size="8" text-anchor="middle">a6</text>
+<rect x="550" y="70" width="60" height="44" rx="5" fill="#161b22" stroke="#4dabf7" stroke-width="2.5"/>
+<text x="580" y="98" fill="#4dabf7" font-size="14" text-anchor="middle">4</text>
+<text x="580" y="128" fill="#8b949e" font-size="8" text-anchor="middle">a7</text>
+<rect x="620" y="70" width="60" height="44" rx="5" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+<text x="650" y="98" fill="#30363d" font-size="14" text-anchor="middle">6</text>
+<text x="650" y="128" fill="#8b949e" font-size="8" text-anchor="middle">a8</text>
+<text x="60" y="208" fill="#8b949e" font-size="11">subarray sorted: the 3-rd is 4</text>
+<circle cx="82" cy="245" r="15" fill="#161b22" stroke="#8b949e" stroke-width="1.5"/>
+<text x="82" y="249" fill="#8b949e" font-size="12" text-anchor="middle">1</text>
+<circle cx="152" cy="245" r="15" fill="#161b22" stroke="#8b949e" stroke-width="1.5"/>
+<text x="152" y="249" fill="#8b949e" font-size="12" text-anchor="middle">3</text>
+<circle cx="222" cy="245" r="20" fill="#161b22" stroke="#06d6a0" stroke-width="3"/>
+<text x="222" y="249" fill="#06d6a0" font-size="12" text-anchor="middle">4</text>
+<circle cx="292" cy="245" r="15" fill="#161b22" stroke="#8b949e" stroke-width="1.5"/>
+<text x="292" y="249" fill="#8b949e" font-size="12" text-anchor="middle">7</text>
+<circle cx="362" cy="245" r="15" fill="#161b22" stroke="#8b949e" stroke-width="1.5"/>
+<text x="362" y="249" fill="#8b949e" font-size="12" text-anchor="middle">8</text>
+<circle cx="432" cy="245" r="15" fill="#161b22" stroke="#8b949e" stroke-width="1.5"/>
+<text x="432" y="249" fill="#8b949e" font-size="12" text-anchor="middle">9</text>
+<text x="60" y="410" fill="#ffd43b" font-size="12">answer: 4  (the persistent tree walks both prefix versions at once, O(log V))</text>
+</svg>

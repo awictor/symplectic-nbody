@@ -511,6 +511,7 @@ def main():
     import weisfeiler_lehman_demo
     import sos_dp_demo
     import regret_matching_demo
+    import persistent_segment_tree_demo
 
     import plot_orbits
 
@@ -991,6 +992,7 @@ def main():
     weisfeiler_lehman_txt = run("weisfeiler_lehman_demo", weisfeiler_lehman_demo.main, True)
     sos_dp_txt = run("sos_dp_demo", sos_dp_demo.main, True)
     regret_matching_txt = run("regret_matching_demo", regret_matching_demo.main, True)
+    persistent_segment_tree_txt = run("persistent_segment_tree_demo", persistent_segment_tree_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8639,6 +8641,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("regret_matching.svg"), "Left: self-play converges Rock-Paper-Scissors to the uniform 1/3 equilibrium. Right: exploitability falling toward zero on a log-log plot as iterations grow -- the O(1/sqrt(T)) approach to Nash")
             + f'<div class="card">{pre(regret_matching_txt)}</div>'
+            + '</div>'),
+        section(
+            "Persistent segment tree: querying the past",
+            "An ordinary segment tree updates in O(log n) but destroys the old state. A PERSISTENT "
+            "segment tree keeps every version alive: an update returns a new root, sharing all "
+            "untouched subtrees with the previous version and allocating only the O(log n) nodes on "
+            "the changed root-to-leaf path (PATH COPYING, the same idea as immutable data structures "
+            "in functional languages). So n updates cost O(n log n) memory yet leave n+1 "
+            "fully-queryable snapshots of the array's history. The classic application shown here is "
+            "the K-TH SMALLEST ELEMENT IN A SUBARRAY: build one version per array prefix counting "
+            "values seen so far, then the multiset of a[l..r] is 'version r minus version l-1', and "
+            "a single simultaneous walk down both versions -- comparing the left-subtree count "
+            "difference against k -- finds the k-th smallest in O(log V). Validated against brute "
+            "force: every version reproduces the correct range sums (old versions unchanged by later "
+            "updates), and the range k-th smallest matches a sort of the actual subarray for "
+            "thousands of random queries including min, median, and max. The version-history "
+            "companion to the segment tree and wavelet tree.",
+            '<div class="grid">'
+            + svg_card(out("persistent_segment_tree.svg"), "The 3rd-smallest element of a subarray, found by differencing two prefix versions of a persistent count tree -- the range is highlighted above, the sorted subarray with the answer marked below")
+            + f'<div class="card">{pre(persistent_segment_tree_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
