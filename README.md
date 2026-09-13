@@ -468,6 +468,7 @@ ruins a long non-symplectic integration.
 | `src/heavy_light.py` | Heavy-light decomposition: O(log^2 n) tree-path sum/max/update queries |
 | `src/weisfeiler_lehman.py` | Weisfeiler-Lehman color refinement: graph isomorphism test + WL kernel |
 | `src/sos_dp.py` | Sum over subsets: zeta/Moebius transforms + OR/AND/subset-sum convolutions |
+| `src/regret_matching.py` | Regret matching / flat CFR: Nash equilibria of zero-sum games by self-play |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -927,6 +928,7 @@ ruins a long non-symplectic integration.
 | `examples/heavy_light_demo.py` | Tree coloured by heavy chain with path sum/max/update queries |
 | `examples/weisfeiler_lehman_demo.py` | Color refinement rounds + the 1-WL regular-graph blind spot |
 | `examples/sos_dp_demo.py` | Boolean-lattice Hasse diagram of the subset-sum transform |
+| `examples/regret_matching_demo.py` | RPS converging to uniform + exploitability falling to zero |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10714,6 +10716,24 @@ products -- OR-convolution is moebius(zeta(f).zeta(g)), and the disjoint subset-
 from a ranked-by-popcount zeta. Validated against brute force: the transform matches the O(3^n)
 definition, zeta/moebius are exact inverses, and OR/AND/subset-sum convolutions match their defining
 sums. The lattice-transform companion to the FFT and the Walsh-Hadamard (XOR) convolution.
+
+## Regret matching: learning Nash equilibria from self-play
+
+Nash equilibria of zero-sum games with no LP solver. `regret_matching.py`:
+
+```
+$ python examples/regret_matching_demo.py examples/output
+
+  Rock-Paper-Scissors -> (0.333, 0.333, 0.333), value 0
+  Exploitability: 1.089 (10 iters) -> 0.018 (30000 iters)
+```
+
+Play each action with probability proportional to your positive cumulative regret for not having
+played it; two such players in self-play have their average strategies converge to a Nash
+equilibrium (Hart and Mas-Colell, 2000). This is the flat case of CFR, the engine behind superhuman
+poker, converging like O(1/sqrt(T)) as measured by exploitability. Validated by convergence and known
+equilibria (RPS to uniform, dominant-strategy games to the pure strategy) and against a brute-force
+minimax over the simplex. The learning-dynamics companion to the LP simplex and the VCG note.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

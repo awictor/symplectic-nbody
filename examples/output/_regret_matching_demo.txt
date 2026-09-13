@@ -1,0 +1,28 @@
+Regret matching (flat CFR): Nash equilibria from self-play, no LP solver
+
+  Rock-Paper-Scissors:
+        Rock: row 0.333   col 0.333
+       Paper: row 0.333   col 0.333
+    Scissors: row 0.333   col 0.333
+    game value +0.0000  exploitability 0.00000
+    -> converges to uniform 1/3 each, value 0 (the known equilibrium).
+
+  Skewed RPS (a Rock win pays +2):
+        Rock: row 0.253
+       Paper: row 0.497
+    Scissors: row 0.250
+    game value +0.0000  (brute minimax +0.0000)
+    -> equilibrium shifts AWAY from Rock, since the opponent avoids the costly matchup.
+
+  Exploitability vs iterations (4x4 game):
+        10: 1.08949 ########################################
+        30: 0.55252 ####################
+       100: 0.29694 ##########
+       300: 0.18875 ######
+      1000: 0.08673 ###
+      3000: 0.05030 #
+     10000: 0.02909 #
+     30000: 0.01804 
+    -> falls like O(1/sqrt(T)); average strategy approaches Nash.
+
+  wrote examples/output\regret_matching.svg

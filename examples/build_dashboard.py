@@ -510,6 +510,7 @@ def main():
     import heavy_light_demo
     import weisfeiler_lehman_demo
     import sos_dp_demo
+    import regret_matching_demo
 
     import plot_orbits
 
@@ -989,6 +990,7 @@ def main():
     heavy_light_txt = run("heavy_light_demo", heavy_light_demo.main, True)
     weisfeiler_lehman_txt = run("weisfeiler_lehman_demo", weisfeiler_lehman_demo.main, True)
     sos_dp_txt = run("sos_dp_demo", sos_dp_demo.main, True)
+    regret_matching_txt = run("regret_matching_demo", regret_matching_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8616,6 +8618,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("sos_dp.svg"), "The boolean lattice on three elements as a Hasse diagram; each node holds F(S), the sum of f over all subsets of S -- a cumulative sum flowing upward from the empty set to the full universe")
             + f'<div class="card">{pre(sos_dp_txt)}</div>'
+            + '</div>'),
+        section(
+            "Regret matching: learning Nash equilibria from self-play",
+            "A two-player zero-sum game has a value and an optimal pair of mixed strategies (a Nash "
+            "equilibrium) by von Neumann's minimax theorem -- but finding them usually means a "
+            "linear program. REGRET MATCHING (Hart and Mas-Colell, 2000) is a one-line online rule "
+            "instead: play each action with probability proportional to your positive cumulative "
+            "REGRET for not having played it, where regret is the payoff you would have gotten minus "
+            "the payoff you did. Two such players in self-play have their AVERAGE strategies converge "
+            "to a Nash equilibrium and their average payoff to the game value -- no matrix inversion. "
+            "This is the flat, single-decision case of counterfactual regret minimization (CFR), the "
+            "engine behind superhuman poker; its regret bound gives O(1/sqrt(T)) convergence, "
+            "measured by EXPLOITABILITY (how much a best responder could beat the average strategy), "
+            "which is zero at equilibrium. Validated by convergence and known equilibria: "
+            "exploitability falls toward zero, Rock-Paper-Scissors converges to uniform with value "
+            "zero, a dominant-strategy game to the pure strategy, and the self-play value matches an "
+            "independent brute-force minimax over the simplex for small games. The learning-dynamics "
+            "companion to the LP simplex and the VCG mechanism-design note.",
+            '<div class="grid">'
+            + svg_card(out("regret_matching.svg"), "Left: self-play converges Rock-Paper-Scissors to the uniform 1/3 equilibrium. Right: exploitability falling toward zero on a log-log plot as iterations grow -- the O(1/sqrt(T)) approach to Nash")
+            + f'<div class="card">{pre(regret_matching_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
