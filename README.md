@@ -459,6 +459,7 @@ ruins a long non-symplectic integration.
 | `src/rt_scheduling.py` | Real-time scheduling: RM/EDF schedulability tests + hyperperiod simulation |
 | `src/shunting_yard.py` | Shunting-yard expression evaluator: infix -> RPN -> value with precedence |
 | `src/suurballe.py` | Suurballe's algorithm: minimum-cost pair of edge-disjoint paths |
+| `src/variates.py` | Random variate generation: exponential/gamma/beta/normal/Poisson/binomial |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -909,6 +910,7 @@ ruins a long non-symplectic integration.
 | `examples/rt_scheduling_demo.py` | RM/EDF tests, an EDF-only-schedulable set, and the two timelines |
 | `examples/shunting_yard_demo.py` | Expressions to RPN with the token-by-token shunt shown |
 | `examples/suurballe_demo.py` | Two edge-disjoint backbone routes drawn in different colours |
+| `examples/variates_demo.py` | Histograms of five distributions with empirical vs analytic moments |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10526,6 +10528,23 @@ path's edges at zero cost, run a second Dijkstra, and XOR the two edge sets into
 Unlike greedy delete-and-retry it is exact and never misses a feasible pair. Validated against brute
 force over 400 random graphs (disjoint, minimum-cost), bridge detection, reference Dijkstra, and
 non-negative reduced costs. (Simple graphs -- one edge per ordered pair.)
+
+## Random variate generation: sampling the named distributions
+
+Turn uniform randoms into any named distribution. `variates.py`:
+
+```
+$ python examples/variates_demo.py examples/output
+
+  Gamma(3, 1.5): empirical mean 4.500 vs 4.500, var 6.79 vs 6.75
+  Poisson(4), Binomial(20,0.3), Beta(2,5): all moments match
+```
+
+Exponential (inverse transform), normal (Box-Muller), gamma (Marsaglia-Tsang squeeze), beta (ratio of
+gammas), Poisson (Knuth), binomial (summed Bernoullis) -- the building blocks of Monte-Carlo. Validated
+two ways: empirical moments match the analytic mean/variance to within a few standard errors, and a
+chi-square goodness-of-fit test does not reject the claimed distribution; support constraints,
+reproducibility, and special cases (Gamma(1,theta)=Exponential, Beta(1,1)=uniform) all hold.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

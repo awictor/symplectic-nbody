@@ -501,6 +501,7 @@ def main():
     import rt_scheduling_demo
     import shunting_yard_demo
     import suurballe_demo
+    import variates_demo
 
     import plot_orbits
 
@@ -971,6 +972,7 @@ def main():
     rt_scheduling_txt = run("rt_scheduling_demo", rt_scheduling_demo.main, True)
     shunting_yard_txt = run("shunting_yard_demo", shunting_yard_demo.main, True)
     suurballe_txt = run("suurballe_demo", suurballe_demo.main, True)
+    variates_txt = run("variates_demo", variates_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8413,6 +8415,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("suurballe.svg"), "a backbone routed 0 to 5 by two edge-disjoint paths (blue and green) that share no link, so either one alone survives any single cable cut -- and their combined cost is the provable minimum")
             + f'<div class="card">{pre(suurballe_txt)}</div>'
+            + '</div>'),
+        section(
+            "Random variate generation: sampling the named distributions",
+            "A computer's RNG gives only uniform numbers in [0, 1), yet simulations, Bayesian inference, "
+            "and stochastic models need samples from EXPONENTIAL, GAMMA, BETA, NORMAL, POISSON, and "
+            "BINOMIAL distributions. Turning uniforms into these is the craft of VARIATE GENERATION, and "
+            "each distribution has its own trick: INVERSE TRANSFORM (-ln U / rate gives the exponential, "
+            "since its CDF inverts cleanly); BOX-MULLER for the normal (a pair of uniforms becomes a "
+            "pair of Gaussians via polar coordinates); MARSAGLIA-TSANG's fast squeeze for the gamma (the "
+            "workhorse -- beta, chi-square, and Dirichlet all reduce to it); BETA as a ratio of two "
+            "gammas; KNUTH's uniform-product method for the Poisson; and summed Bernoullis for the "
+            "binomial. This module implements all of these on a seeded generator with each "
+            "distribution's exact analytic mean and variance for checking. Validated two ways: MOMENTS "
+            "-- over 40000 samples the empirical mean and variance match the analytic ones to within a "
+            "few standard errors for every distribution (exponential's 1/lambda, gamma's k-theta, "
+            "Poisson's lambda = variance, binomial's np and np(1-p)); and GOODNESS OF FIT -- a "
+            "chi-square test on binned samples does not reject the claimed distribution, and the "
+            "discrete Poisson/binomial pmfs match their observed frequencies. Support constraints hold "
+            "(exponential/gamma non-negative, beta in [0,1], Poisson/binomial non-negative integers), "
+            "streams are reproducible under a seed, and known special cases match (Gamma(1, theta) is "
+            "Exponential; Beta(1,1) is uniform).",
+            '<div class="grid">'
+            + svg_card(out("variates.svg"), "50000-draw histograms of five distributions -- the right-skewed exponential and gamma, the bounded beta, the discrete Poisson and binomial -- all generated from a single stream of uniform random numbers")
+            + f'<div class="card">{pre(variates_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

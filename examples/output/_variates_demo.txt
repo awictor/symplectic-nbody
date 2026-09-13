@@ -1,0 +1,17 @@
+Variate generation: turning uniform randoms into any named distribution
+
+  distribution              emp mean    true     emp var    true
+  Exponential(rate=1.5)        0.672   0.667       0.453   0.444
+  Gamma(k=3, theta=1.5)        4.500   4.500       6.786   6.750
+  Beta(2, 5)                   0.286   0.286       0.025   0.026
+  Poisson(lambda=4)            4.019   4.000       4.040   4.000
+  Binomial(20, 0.3)            5.998   6.000       4.188   4.200
+
+    (empirical moments track the analytic ones -- the samplers are correct)
+
+  Each distribution has its own transform of uniforms: exponential inverts its CDF
+  (-ln U / rate), the normal comes from Box-Muller, the gamma from Marsaglia-Tsang's
+  squeeze, beta from a ratio of gammas, Poisson from Knuth's uniform-product, binomial from
+  summed Bernoullis -- the building blocks of every Monte-Carlo simulation.
+
+  wrote examples/output\variates.svg
