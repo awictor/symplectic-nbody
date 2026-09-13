@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420" font-family="monospace">
+<rect width="760" height="420" fill="#0d1117"/>
+<text x="20" y="24" fill="#e6edf3" font-size="14">Point cloud (left) and its H_0 persistence barcode (right); long bars = clusters</text>
+<rect x="40" y="50" width="300" height="320" fill="none" stroke="#30363d"/>
+<circle cx="40.0" cy="338.8" r="3.5" fill="#4dabf7"/>
+<circle cx="72.8" cy="355.9" r="3.5" fill="#4dabf7"/>
+<circle cx="54.7" cy="331.0" r="3.5" fill="#4dabf7"/>
+<circle cx="77.5" cy="334.4" r="3.5" fill="#4dabf7"/>
+<circle cx="46.4" cy="339.2" r="3.5" fill="#4dabf7"/>
+<circle cx="45.9" cy="342.9" r="3.5" fill="#4dabf7"/>
+<circle cx="78.5" cy="370.0" r="3.5" fill="#4dabf7"/>
+<circle cx="46.0" cy="337.0" r="3.5" fill="#4dabf7"/>
+<circle cx="326.9" cy="335.9" r="3.5" fill="#4dabf7"/>
+<circle cx="328.2" cy="310.1" r="3.5" fill="#4dabf7"/>
+<circle cx="306.3" cy="296.5" r="3.5" fill="#4dabf7"/>
+<circle cx="340.0" cy="316.5" r="3.5" fill="#4dabf7"/>
+<circle cx="323.5" cy="310.0" r="3.5" fill="#4dabf7"/>
+<circle cx="293.0" cy="329.9" r="3.5" fill="#4dabf7"/>
+<circle cx="322.0" cy="304.9" r="3.5" fill="#4dabf7"/>
+<circle cx="324.9" cy="278.9" r="3.5" fill="#4dabf7"/>
+<circle cx="171.2" cy="61.7" r="3.5" fill="#4dabf7"/>
+<circle cx="179.4" cy="89.6" r="3.5" fill="#4dabf7"/>
+<circle cx="181.4" cy="50.0" r="3.5" fill="#4dabf7"/>
+<circle cx="187.3" cy="99.2" r="3.5" fill="#4dabf7"/>
+<circle cx="206.3" cy="63.1" r="3.5" fill="#4dabf7"/>
+<circle cx="175.3" cy="87.0" r="3.5" fill="#4dabf7"/>
+<circle cx="187.7" cy="83.9" r="3.5" fill="#4dabf7"/>
+<circle cx="195.9" cy="98.1" r="3.5" fill="#4dabf7"/>
+<rect x="400" y="50" width="320" height="320" fill="none" stroke="#30363d"/>
+<line x1="400.0" y1="56.7" x2="402.1" y2="56.7" stroke="#8b949e" stroke-width="11.3"/>
+<line x1="400.0" y1="70.0" x2="403.7" y2="70.0" stroke="#8b949e" stroke-width="11.3"/>
+<line x1="400.0" y1="83.3" x2="405.3" y2="83.3" stroke="#8b949e" stroke-width="11.3"/>
+<line x1="400.0" y1="96.7" x2="405.5" y2="96.7" stroke="#8b949e" stroke-width="11.3"/>
+<line x1="400.0" y1="110.0" x2="405.6" y2="110.0" stroke="#8b949e" stroke-width="11.3"/>
+<line x1="400.0" y1="123.3" x2="407.4" y2="123.3" stroke="#8b949e" stroke-width="11.3"/>
+<line x1="400.0" y1="136.7" x2="410.2" y2="136.7" stroke="#8b949e" stroke-width="11.3"/>
+<line x1="400.0" y1="150.0" x2="411.3" y2="150.0" stroke="#8b949e" stroke-width="11.3"/>
+<line x1="400.0" y1="163.3" x2="411.9" y2="163.3" stroke="#8b949e" stroke-width="11.3"/>
+<line x1="400.0" y1="176.7" x2="413.2" y2="176.7" stroke="#8b949e" stroke-width="11.3"/>
+<line x1="400.0" y1="190.0" x2="415.1" y2="190.0" stroke="#8b949e" stroke-width="11.3"/>
+<line x1="400.0" y1="203.3" x2="415.3" y2="203.3" stroke="#8b949e" stroke-width="11.3"/>
+<line x1="400.0" y1="216.7" x2="416.5" y2="216.7" stroke="#8b949e" stroke-width="11.3"/>
+<line x1="400.0" y1="230.0" x2="420.3" y2="230.0" stroke="#8b949e" stroke-width="11.3"/>
+<line x1="400.0" y1="243.3" x2="421.5" y2="243.3" stroke="#8b949e" stroke-width="11.3"/>
+<line x1="400.0" y1="256.7" x2="424.3" y2="256.7" stroke="#8b949e" stroke-width="11.3"/>
+<line x1="400.0" y1="270.0" x2="424.8" y2="270.0" stroke="#8b949e" stroke-width="11.3"/>
+<line x1="400.0" y1="283.3" x2="425.3" y2="283.3" stroke="#8b949e" stroke-width="11.3"/>
+<line x1="400.0" y1="296.7" x2="427.3" y2="296.7" stroke="#8b949e" stroke-width="11.3"/>
+<line x1="400.0" y1="310.0" x2="429.8" y2="310.0" stroke="#8b949e" stroke-width="11.3"/>
+<line x1="400.0" y1="323.3" x2="435.8" y2="323.3" stroke="#8b949e" stroke-width="11.3"/>
+<line x1="400.0" y1="336.7" x2="631.6" y2="336.7" stroke="#ffd43b" stroke-width="11.3"/>
+<line x1="400.0" y1="350.0" x2="656.0" y2="350.0" stroke="#ffd43b" stroke-width="11.3"/>
+<line x1="400.0" y1="363.3" x2="720.0" y2="363.3" stroke="#06d6a0" stroke-width="11.3"/>
+<text x="400" y="386" fill="#8b949e" font-size="9">eps = 0</text>
+<text x="720" y="386" fill="#8b949e" font-size="9" text-anchor="end">eps grows -&gt;</text>
+<text x="716" y="62" fill="#06d6a0" font-size="9" text-anchor="end">green = infinite (whole cloud)</text>
+<text x="716" y="76" fill="#ffd43b" font-size="9" text-anchor="end">yellow = inter-cluster</text>
+</svg>

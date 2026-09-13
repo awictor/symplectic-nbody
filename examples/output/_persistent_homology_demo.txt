@@ -1,0 +1,17 @@
+Persistent homology H_0: the barcode of a point cloud
+
+  24 points in 3 clusters
+  barcode: 24 bars (23 finite + 1 infinite)
+
+  longest finite bars (deaths):
+    death at eps =  51.11   (inter-cluster)
+    death at eps =  46.24   (inter-cluster)
+    death at eps =   7.16   (within-cluster)
+    death at eps =   5.95   (within-cluster)
+    death at eps =   5.45   (within-cluster)
+
+  2 long bars + 1 infinite = 3 robust components -> 3 clusters recovered
+  finite deaths == MST edge weights: True
+  total persistence (= MST weight): 163.63
+
+  wrote examples/output\persistent_homology.svg

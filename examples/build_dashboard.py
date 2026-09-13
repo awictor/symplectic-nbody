@@ -575,6 +575,7 @@ def main():
     import cartesian_tree_demo
     import smith_normal_form_demo
     import simplicial_homology_demo
+    import persistent_homology_demo
 
     import plot_orbits
 
@@ -1119,6 +1120,7 @@ def main():
     cartesian_tree_txt = run("cartesian_tree_demo", cartesian_tree_demo.main, True)
     smith_normal_form_txt = run("smith_normal_form_demo", smith_normal_form_demo.main, True)
     simplicial_homology_txt = run("simplicial_homology_demo", simplicial_homology_demo.main, True)
+    persistent_homology_txt = run("persistent_homology_demo", persistent_homology_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10072,6 +10074,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("simplicial_homology.svg"), "Betti numbers of standard spaces computed from their triangulations: the circle has one loop, the sphere one void, the torus two loops and a void, and the projective plane a Z/2 torsion class -- each verified against the Euler-Poincare identity")
             + f'<div class="card">{pre(simplicial_homology_txt)}</div>'
+            + '</div>'),
+        section(
+            "Persistent homology: the barcode of a point cloud",
+            "Real data has no single scale: connect points closer than epsilon and you get a different "
+            "complex for every epsilon. PERSISTENT HOMOLOGY -- the engine of TOPOLOGICAL DATA ANALYSIS "
+            "-- tracks how the topology changes as epsilon grows, recording when each feature is BORN "
+            "and DIES. The output is a BARCODE: long bars are robust features of the underlying shape, "
+            "short bars are sampling noise, a multiscale coordinate-free summary provably stable under "
+            "perturbation. This computes H_0 (connected components) over the VIETORIS-RIPS filtration: "
+            "every point is born at epsilon 0, and as edges appear in length order each one joining two "
+            "components kills the younger (the ELDER RULE), leaving one bar to infinity. The beautiful "
+            "fact: the finite H_0 bars die at EXACTLY the edge weights of the MINIMUM SPANNING TREE -- "
+            "persistent H_0 and the MST are the same information -- so the computation is a union-find "
+            "sweep over sorted edges. Validated against the repo's MST and a brute-force component "
+            "count: exactly n bars with one infinite; the finite deaths equal the MST edge weights; "
+            "total persistence equals the MST weight; the Betti_0 curve matches the epsilon-graph "
+            "component count at every threshold; and well-separated clusters produce exactly that many "
+            "long bars. The topological-data-analysis companion to the simplicial-homology, "
+            "union-find/MST, and clustering tools.",
+            '<div class="grid">'
+            + svg_card(out("persistent_homology.svg"), "A point cloud of three clusters (left) and its H_0 persistence barcode (right): two long inter-cluster bars plus one infinite bar reveal three robust components, while the many short bars are within-cluster noise -- and every finite death is a minimum-spanning-tree edge length")
+            + f'<div class="card">{pre(persistent_homology_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

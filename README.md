@@ -533,6 +533,7 @@ ruins a long non-symplectic integration.
 | `src/cartesian_tree.py` | O(n) Cartesian tree; range-minimum-query via lowest-common-ancestor |
 | `src/smith_normal_form.py` | Smith Normal Form of an integer matrix + abelian-group / homology readout |
 | `src/simplicial_homology.py` | Betti numbers + torsion of triangulated spaces via boundary matrices + SNF |
+| `src/persistent_homology.py` | H_0 persistence barcode of a point cloud (Vietoris-Rips = MST edges) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1057,6 +1058,7 @@ ruins a long non-symplectic integration.
 | `examples/cartesian_tree_demo.py` | Cartesian tree structure + RMQ-as-LCA queries |
 | `examples/smith_normal_form_demo.py` | Integer matrix -> diagonal SNF + cokernel group + homology |
 | `examples/simplicial_homology_demo.py` | Betti-number table for circle/sphere/torus/RP^2 |
+| `examples/persistent_homology_demo.py` | H_0 barcode of a 3-cluster cloud; long bars = clusters |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12101,6 +12103,27 @@ the torsion (invariant factors > 1 of d_{k+1}). Built on the repo's SNF. Validat
 homology of the circle, sphere, torus, and projective plane (the last with a Z/2 torsion class), with
 d d = 0 and the Euler-Poincare identity chi = sum (-1)^k b_k holding throughout. The topology
 application of the Smith Normal Form.
+
+## Persistent homology: the barcode of a point cloud
+
+Track a point cloud's connected components across all scales at once. `persistent_homology.py`:
+
+```
+$ python examples/persistent_homology_demo.py examples/output
+
+  24 points in 3 clusters, barcode: 24 bars (23 finite + 1 infinite)
+  longest finite deaths: 51.11, 46.24 (inter-cluster), then 7.16, 5.95 (within-cluster)
+  2 long bars + 1 infinite = 3 components -> 3 clusters recovered
+  finite deaths == MST edge weights: True
+```
+
+Persistent H_0 tracks connected components over the Vietoris-Rips filtration: points are born at
+epsilon 0, and each edge (in length order) that merges two components kills the younger one, leaving
+one bar to infinity. The finite bars die exactly at the minimum-spanning-tree edge weights, so a
+union-find sweep computes the barcode. Validated against the repo's MST and brute-force component
+counts: n bars with one infinite, finite deaths equal MST edges, total persistence equals MST weight,
+and the Betti_0 curve matches the epsilon-graph component count at every threshold. The
+topological-data-analysis companion to the simplicial-homology, union-find/MST, and clustering tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
