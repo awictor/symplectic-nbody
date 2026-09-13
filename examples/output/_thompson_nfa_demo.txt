@@ -24,7 +24,7 @@ Thompson's NFA: regex matching in guaranteed linear time
     a backtracking engine takes exponential time; Thompson's NFA stays linear.
 
     n=  50: matched=False  time=0.11 ms
-    n= 100: matched=False  time=0.22 ms
+    n= 100: matched=False  time=0.21 ms
     n= 200: matched=False  time=0.41 ms
     n= 400: matched=False  time=0.82 ms
     n= 800: matched=False  time=1.65 ms

@@ -541,6 +541,7 @@ def main():
     import omp_demo
     import tv_denoise_demo
     import convex_hull_3d_demo
+    import affine_alignment_demo
 
     import plot_orbits
 
@@ -1051,6 +1052,7 @@ def main():
     omp_txt = run("omp_demo", omp_demo.main, True)
     tv_denoise_txt = run("tv_denoise_demo", tv_denoise_demo.main, True)
     convex_hull_3d_txt = run("convex_hull_3d_demo", convex_hull_3d_demo.main, True)
+    affine_alignment_txt = run("affine_alignment_demo", affine_alignment_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9301,6 +9303,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("convex_hull_3d.svg"), "The convex hull of 40 random points in a cube, drawn in an oblique projection: 22 of the points end up as hull vertices (yellow) with 40 triangular faces, and the 18 interior points (gray) see no faces and are discarded")
             + f'<div class="card">{pre(convex_hull_3d_txt)}</div>'
+            + '</div>'),
+        section(
+            "Affine-gap alignment: opening and extending gaps differently",
+            "Sequence alignment inserts GAPS to bring matching characters into register. The simplest "
+            "model charges a fixed penalty per gap character, but that misrepresents biology and "
+            "text: a single long gap (one insertion/deletion event) is far more likely than many "
+            "scattered short ones, yet linear scoring penalises them equally. The AFFINE gap model "
+            "charges a large OPENING cost plus a small EXTENSION cost per character, so one gap of "
+            "length 5 costs open + 5*extend -- much cheaper than five separate gaps. Gotoh's "
+            "algorithm (1982) handles this in O(nm) by running three DP matrices in parallel: one "
+            "for a matched/substituted pair and one each for a gap in x or y, whose transitions "
+            "choose between opening a gap (from the match matrix) or extending one. Validated: with "
+            "equal open and extension penalties the affine score matches the linear-gap "
+            "Needleman-Wunsch; one long gap scores higher than the same total split into pieces (the "
+            "whole point); a returned alignment's affine score recomputes to the reported value; "
+            "local alignment never scores below zero and finds an embedded motif; and identical "
+            "sequences align perfectly. The affine-cost companion to the linear-gap "
+            "Needleman-Wunsch / Smith-Waterman aligners.",
+            '<div class="grid">'
+            + svg_card(out("affine_alignment.svg"), "Aligning two sequences differing by an inserted block: the affine-gap model collapses the insertion into one contiguous gap (red), matching a single biological indel event, with matches in green and mismatches in yellow")
+            + f'<div class="card">{pre(affine_alignment_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

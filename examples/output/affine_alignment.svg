@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="340" viewBox="0 0 760 340" font-family="monospace">
+<rect width="760" height="340" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="15">Linear-gap alignment (top) vs affine-gap alignment (bottom, one clean block)</text>
+<text x="30" y="57" fill="#8b949e" font-size="11">linear gap</text>
+<rect x="40" y="65" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="52" y="81" fill="#06d6a0" font-size="11" text-anchor="middle">A</text>
+<rect x="66" y="65" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="78" y="81" fill="#06d6a0" font-size="11" text-anchor="middle">C</text>
+<rect x="92" y="65" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="104" y="81" fill="#06d6a0" font-size="11" text-anchor="middle">G</text>
+<rect x="118" y="65" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="130" y="81" fill="#06d6a0" font-size="11" text-anchor="middle">T</text>
+<rect x="144" y="65" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="156" y="81" fill="#06d6a0" font-size="11" text-anchor="middle">A</text>
+<rect x="170" y="65" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="182" y="81" fill="#06d6a0" font-size="11" text-anchor="middle">C</text>
+<rect x="196" y="65" width="24" height="24" rx="3" fill="#2a1215" stroke="#ff6b6b" stroke-width="1"/>
+<text x="208" y="81" fill="#ff6b6b" font-size="11" text-anchor="middle">-</text>
+<rect x="222" y="65" width="24" height="24" rx="3" fill="#2a1215" stroke="#ff6b6b" stroke-width="1"/>
+<text x="234" y="81" fill="#ff6b6b" font-size="11" text-anchor="middle">-</text>
+<rect x="248" y="65" width="24" height="24" rx="3" fill="#2a1215" stroke="#ff6b6b" stroke-width="1"/>
+<text x="260" y="81" fill="#ff6b6b" font-size="11" text-anchor="middle">-</text>
+<rect x="274" y="65" width="24" height="24" rx="3" fill="#2a1215" stroke="#ff6b6b" stroke-width="1"/>
+<text x="286" y="81" fill="#ff6b6b" font-size="11" text-anchor="middle">-</text>
+<rect x="300" y="65" width="24" height="24" rx="3" fill="#2a1215" stroke="#ff6b6b" stroke-width="1"/>
+<text x="312" y="81" fill="#ff6b6b" font-size="11" text-anchor="middle">-</text>
+<rect x="326" y="65" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="338" y="81" fill="#06d6a0" font-size="11" text-anchor="middle">G</text>
+<rect x="352" y="65" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="364" y="81" fill="#06d6a0" font-size="11" text-anchor="middle">T</text>
+<rect x="378" y="65" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="390" y="81" fill="#06d6a0" font-size="11" text-anchor="middle">A</text>
+<rect x="404" y="65" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="416" y="81" fill="#06d6a0" font-size="11" text-anchor="middle">C</text>
+<rect x="430" y="65" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="442" y="81" fill="#06d6a0" font-size="11" text-anchor="middle">G</text>
+<rect x="456" y="65" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="468" y="81" fill="#06d6a0" font-size="11" text-anchor="middle">T</text>
+<rect x="40" y="97" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="52" y="113" fill="#06d6a0" font-size="11" text-anchor="middle">A</text>
+<rect x="66" y="97" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="78" y="113" fill="#06d6a0" font-size="11" text-anchor="middle">C</text>
+<rect x="92" y="97" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="104" y="113" fill="#06d6a0" font-size="11" text-anchor="middle">G</text>
+<rect x="118" y="97" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="130" y="113" fill="#06d6a0" font-size="11" text-anchor="middle">T</text>
+<rect x="144" y="97" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="156" y="113" fill="#06d6a0" font-size="11" text-anchor="middle">A</text>
+<rect x="170" y="97" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="182" y="113" fill="#06d6a0" font-size="11" text-anchor="middle">C</text>
+<rect x="196" y="97" width="24" height="24" rx="3" fill="#2a2410" stroke="#ffd43b" stroke-width="1"/>
+<text x="208" y="113" fill="#ffd43b" font-size="11" text-anchor="middle">A</text>
+<rect x="222" y="97" width="24" height="24" rx="3" fill="#2a2410" stroke="#ffd43b" stroke-width="1"/>
+<text x="234" y="113" fill="#ffd43b" font-size="11" text-anchor="middle">A</text>
+<rect x="248" y="97" width="24" height="24" rx="3" fill="#2a2410" stroke="#ffd43b" stroke-width="1"/>
+<text x="260" y="113" fill="#ffd43b" font-size="11" text-anchor="middle">A</text>
+<rect x="274" y="97" width="24" height="24" rx="3" fill="#2a2410" stroke="#ffd43b" stroke-width="1"/>
+<text x="286" y="113" fill="#ffd43b" font-size="11" text-anchor="middle">G</text>
+<rect x="300" y="97" width="24" height="24" rx="3" fill="#2a2410" stroke="#ffd43b" stroke-width="1"/>
+<text x="312" y="113" fill="#ffd43b" font-size="11" text-anchor="middle">G</text>
+<rect x="326" y="97" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="338" y="113" fill="#06d6a0" font-size="11" text-anchor="middle">G</text>
+<rect x="352" y="97" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="364" y="113" fill="#06d6a0" font-size="11" text-anchor="middle">T</text>
+<rect x="378" y="97" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="390" y="113" fill="#06d6a0" font-size="11" text-anchor="middle">A</text>
+<rect x="404" y="97" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="416" y="113" fill="#06d6a0" font-size="11" text-anchor="middle">C</text>
+<rect x="430" y="97" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="442" y="113" fill="#06d6a0" font-size="11" text-anchor="middle">G</text>
+<rect x="456" y="97" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="468" y="113" fill="#06d6a0" font-size="11" text-anchor="middle">T</text>
+<text x="30" y="202" fill="#8b949e" font-size="11">affine gap</text>
+<rect x="40" y="210" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="52" y="226" fill="#06d6a0" font-size="11" text-anchor="middle">A</text>
+<rect x="66" y="210" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="78" y="226" fill="#06d6a0" font-size="11" text-anchor="middle">C</text>
+<rect x="92" y="210" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="104" y="226" fill="#06d6a0" font-size="11" text-anchor="middle">G</text>
+<rect x="118" y="210" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="130" y="226" fill="#06d6a0" font-size="11" text-anchor="middle">T</text>
+<rect x="144" y="210" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="156" y="226" fill="#06d6a0" font-size="11" text-anchor="middle">A</text>
+<rect x="170" y="210" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="182" y="226" fill="#06d6a0" font-size="11" text-anchor="middle">C</text>
+<rect x="196" y="210" width="24" height="24" rx="3" fill="#2a1215" stroke="#ff6b6b" stroke-width="1"/>
+<text x="208" y="226" fill="#ff6b6b" font-size="11" text-anchor="middle">-</text>
+<rect x="222" y="210" width="24" height="24" rx="3" fill="#2a1215" stroke="#ff6b6b" stroke-width="1"/>
+<text x="234" y="226" fill="#ff6b6b" font-size="11" text-anchor="middle">-</text>
+<rect x="248" y="210" width="24" height="24" rx="3" fill="#2a1215" stroke="#ff6b6b" stroke-width="1"/>
+<text x="260" y="226" fill="#ff6b6b" font-size="11" text-anchor="middle">-</text>
+<rect x="274" y="210" width="24" height="24" rx="3" fill="#2a1215" stroke="#ff6b6b" stroke-width="1"/>
+<text x="286" y="226" fill="#ff6b6b" font-size="11" text-anchor="middle">-</text>
+<rect x="300" y="210" width="24" height="24" rx="3" fill="#2a1215" stroke="#ff6b6b" stroke-width="1"/>
+<text x="312" y="226" fill="#ff6b6b" font-size="11" text-anchor="middle">-</text>
+<rect x="326" y="210" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="338" y="226" fill="#06d6a0" font-size="11" text-anchor="middle">G</text>
+<rect x="352" y="210" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="364" y="226" fill="#06d6a0" font-size="11" text-anchor="middle">T</text>
+<rect x="378" y="210" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="390" y="226" fill="#06d6a0" font-size="11" text-anchor="middle">A</text>
+<rect x="404" y="210" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="416" y="226" fill="#06d6a0" font-size="11" text-anchor="middle">C</text>
+<rect x="430" y="210" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="442" y="226" fill="#06d6a0" font-size="11" text-anchor="middle">G</text>
+<rect x="456" y="210" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="468" y="226" fill="#06d6a0" font-size="11" text-anchor="middle">T</text>
+<rect x="40" y="242" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="52" y="258" fill="#06d6a0" font-size="11" text-anchor="middle">A</text>
+<rect x="66" y="242" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="78" y="258" fill="#06d6a0" font-size="11" text-anchor="middle">C</text>
+<rect x="92" y="242" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="104" y="258" fill="#06d6a0" font-size="11" text-anchor="middle">G</text>
+<rect x="118" y="242" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="130" y="258" fill="#06d6a0" font-size="11" text-anchor="middle">T</text>
+<rect x="144" y="242" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="156" y="258" fill="#06d6a0" font-size="11" text-anchor="middle">A</text>
+<rect x="170" y="242" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="182" y="258" fill="#06d6a0" font-size="11" text-anchor="middle">C</text>
+<rect x="196" y="242" width="24" height="24" rx="3" fill="#2a2410" stroke="#ffd43b" stroke-width="1"/>
+<text x="208" y="258" fill="#ffd43b" font-size="11" text-anchor="middle">A</text>
+<rect x="222" y="242" width="24" height="24" rx="3" fill="#2a2410" stroke="#ffd43b" stroke-width="1"/>
+<text x="234" y="258" fill="#ffd43b" font-size="11" text-anchor="middle">A</text>
+<rect x="248" y="242" width="24" height="24" rx="3" fill="#2a2410" stroke="#ffd43b" stroke-width="1"/>
+<text x="260" y="258" fill="#ffd43b" font-size="11" text-anchor="middle">A</text>
+<rect x="274" y="242" width="24" height="24" rx="3" fill="#2a2410" stroke="#ffd43b" stroke-width="1"/>
+<text x="286" y="258" fill="#ffd43b" font-size="11" text-anchor="middle">G</text>
+<rect x="300" y="242" width="24" height="24" rx="3" fill="#2a2410" stroke="#ffd43b" stroke-width="1"/>
+<text x="312" y="258" fill="#ffd43b" font-size="11" text-anchor="middle">G</text>
+<rect x="326" y="242" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="338" y="258" fill="#06d6a0" font-size="11" text-anchor="middle">G</text>
+<rect x="352" y="242" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="364" y="258" fill="#06d6a0" font-size="11" text-anchor="middle">T</text>
+<rect x="378" y="242" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="390" y="258" fill="#06d6a0" font-size="11" text-anchor="middle">A</text>
+<rect x="404" y="242" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="416" y="258" fill="#06d6a0" font-size="11" text-anchor="middle">C</text>
+<rect x="430" y="242" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="442" y="258" fill="#06d6a0" font-size="11" text-anchor="middle">G</text>
+<rect x="456" y="242" width="24" height="24" rx="3" fill="#0d2a20" stroke="#06d6a0" stroke-width="1"/>
+<text x="468" y="258" fill="#06d6a0" font-size="11" text-anchor="middle">T</text>
+<text x="30" y="328" fill="#8b949e" font-size="9">green = match, yellow = mismatch, red = gap</text>
+</svg>

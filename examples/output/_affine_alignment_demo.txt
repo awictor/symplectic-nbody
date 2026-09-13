@@ -1,0 +1,24 @@
+Affine-gap alignment (Gotoh): one long gap beats many short ones
+
+  Aligning:
+    a = ACGTACGTACGT
+    b = ACGTACAAAGGGTACGT
+
+  Linear gap model (each gap char costs the same):
+    ACGTAC-----GTACGT
+    ACGTACAAAGGGTACGT   score 19
+    gap runs: 1
+
+  Affine gap model (open -4, extend -1: one big gap is cheap):
+    ACGTAC-----GTACGT
+    ACGTACAAAGGGTACGT   score 15.0
+    gap runs: 1
+
+  With affine scoring the insertion aligns as ONE contiguous gap, matching the single
+  biological indel event -- linear scoring has no reason to prefer that over scattered gaps.
+
+  Local affine alignment of an embedded motif:
+    GATTACA
+    GATTACA   score 14.0
+
+  wrote examples/output\affine_alignment.svg
