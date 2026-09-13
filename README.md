@@ -486,6 +486,7 @@ ruins a long non-symplectic integration.
 | `src/thomas.py` | Thomas tridiagonal solver + Crank-Nicolson heat equation (unconditionally stable) |
 | `src/iterative_solvers.py` | Jacobi / Gauss-Seidel / SOR stationary solvers + 2-D Poisson equation |
 | `src/force_layout.py` | Fruchterman-Reingold force-directed graph layout (springs + repulsion) |
+| `src/distance_transform.py` | Exact Euclidean distance transform in O(n) (Felzenszwalb-Huttenlocher) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -963,6 +964,7 @@ ruins a long non-symplectic integration.
 | `examples/thomas_demo.py` | Heat spike diffusing under Crank-Nicolson vs the analytic Gaussian |
 | `examples/iterative_solvers_demo.py` | 2-D Poisson field + iteration counts (Jacobi vs GS vs SOR) |
 | `examples/force_layout_demo.py` | A ring, a two-cluster network, and a tree laid out by force simulation |
+| `examples/distance_transform_demo.py` | Distance field of a sparse binary image as an ASCII grid + heatmap |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11072,6 +11074,22 @@ cooling temperature so big moves happen early. Validated by the physics and stru
 decreases, connected nodes end up closer than non-connected, a cycle draws as a near-regular ring, two
 clusters joined by one edge separate, and the layout is deterministic under a seed. The visualization
 companion to the graph algorithms throughout the repo.
+
+## Exact Euclidean distance transform in linear time
+
+Distance from every pixel to the nearest feature. `distance_transform.py`:
+
+```
+$ python examples/distance_transform_demo.py examples/output
+
+  sparse binary image -> exact distance field, matches brute force at every pixel
+```
+
+Felzenszwalb-Huttenlocher: the squared transform is separable, and along each row it is the lower
+envelope of identical-curvature parabolas (one per site), found in a single O(n) sweep -- run down
+columns then across rows for the exact 2-D Euclidean distance in linear time. Validated against an
+exhaustive nearest-feature search at every pixel over random images, plus single-point radial
+distances and the 1-D lower-envelope. The image/geometry companion to the Voronoi and k-d tree tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

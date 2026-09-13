@@ -528,6 +528,7 @@ def main():
     import thomas_demo
     import iterative_solvers_demo
     import force_layout_demo
+    import distance_transform_demo
 
     import plot_orbits
 
@@ -1025,6 +1026,7 @@ def main():
     thomas_txt = run("thomas_demo", thomas_demo.main, True)
     iterative_solvers_txt = run("iterative_solvers_demo", iterative_solvers_demo.main, True)
     force_layout_txt = run("force_layout_demo", force_layout_demo.main, True)
+    distance_transform_txt = run("distance_transform_demo", distance_transform_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9020,6 +9022,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("force_layout.svg"), "Three graphs -- a ring, two clusters joined by a bridge, and a binary tree -- each drawn by simulating springs and repulsion until the layout energy settles, with no manual placement")
             + f'<div class="card">{pre(force_layout_txt)}</div>'
+            + '</div>'),
+        section(
+            "Exact Euclidean distance transform in linear time",
+            "Given a binary image where some pixels are FEATURE, the distance transform labels every "
+            "pixel with its distance to the nearest feature pixel -- the basis of shape matching, "
+            "skeletonization, the medial axis, obstacle-avoiding path planning, and signed-distance "
+            "fonts. Naively it is O(n^2), every pixel against every feature. Felzenszwalb and "
+            "Huttenlocher (2004) compute the EXACT Euclidean transform in O(n) with a separable "
+            "trick: the squared transform along one row minimizes f(i) + (x - i)^2 over sites i, "
+            "which is the LOWER ENVELOPE of a family of identical-curvature parabolas, found in a "
+            "single sweep that maintains the parabolas currently on the envelope. Run it down every "
+            "column then across every row and the exact 2-D distance falls out linearly. Validated "
+            "against brute force: the transform matches an exhaustive nearest-feature search at every "
+            "pixel across random images; a single feature gives exact radial distances; feature "
+            "pixels have distance zero; the 1-D transform matches its own brute minimization; and "
+            "nearest-feature lookups return real sites. The image/geometry companion to the Voronoi, "
+            "k-d tree, and morphological tools.",
+            '<div class="grid">'
+            + svg_card(out("distance_transform.svg"), "The distance field of a sparse binary image: each pixel coloured by its exact Euclidean distance to the nearest feature (ringed red), dark near and bright far -- computed in linear time, not by per-pair search")
+            + f'<div class="card">{pre(distance_transform_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

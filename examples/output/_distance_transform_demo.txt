@@ -1,0 +1,25 @@
+Exact Euclidean distance transform: distance to nearest feature, in O(n)
+
+  12x20 image, 5 feature pixels at [(2, 3), (5, 15), (9, 8), (1, 18), (10, 2)].
+
+  Matches brute-force nearest-feature search at every pixel: True
+
+  Distance field (rounded), features shown as '#':
+     4  3  2  2  2  3  4  4  5  6  7  6  6  5  4  3  2  1  1  1
+     3  2  1  1  1  2  3  4  5  6  6  6  5  4  4  3  2  1  #  1
+     3  2  1  #  1  2  3  4  5  6  6  5  4  4  3  3  2  1  1  1
+     3  2  1  1  1  2  3  4  5  6  5  4  4  3  2  2  2  2  2  2
+     4  3  2  2  2  3  4  4  5  5  5  4  3  2  1  1  1  2  3  3
+     4  4  3  3  3  4  4  4  4  4  4  4  3  2  1  #  1  2  3  4
+     4  4  4  4  4  4  4  3  3  3  4  4  3  2  1  1  1  2  3  4
+     4  3  3  3  4  4  3  2  2  2  3  4  4  3  2  2  2  3  4  4
+     3  2  2  2  3  3  2  1  1  1  2  3  4  4  3  3  3  4  4  5
+     2  1  1  1  2  3  2  1  #  1  2  3  4  4  4  4  4  4  5  6
+     2  1  #  1  2  3  2  1  1  1  2  3  4  5  5  5  5  5  6  6
+     2  1  1  1  2  3  3  2  2  2  3  4  4  5  6  6  6  6  7  7
+
+  Farthest pixel is 7.21 from any feature.
+  Separable trick: 1-D lower-envelope-of-parabolas transform down columns then across
+  rows gives the exact 2-D Euclidean distance in linear time, no per-pair search.
+
+  wrote examples/output\distance_transform.svg
