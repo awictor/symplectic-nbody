@@ -530,6 +530,7 @@ ruins a long non-symplectic integration.
 | `src/kaplan_meier.py` | Kaplan-Meier survival estimator + Greenwood variance + log-rank test |
 | `src/mcts.py` | Monte Carlo Tree Search (UCT) with a minimax solver + tic-tac-toe |
 | `src/integer_programming.py` | Integer LP by branch and bound over the simplex LP relaxation |
+| `src/cartesian_tree.py` | O(n) Cartesian tree; range-minimum-query via lowest-common-ancestor |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1051,6 +1052,7 @@ ruins a long non-symplectic integration.
 | `examples/kaplan_meier_demo.py` | Treatment vs control survival curves + log-rank test |
 | `examples/mcts_demo.py` | MCTS visit counts concentrating on the winning tic-tac-toe move |
 | `examples/integer_programming_demo.py` | ILP: LP relaxation, integrality gap, knapsack, node pruning |
+| `examples/cartesian_tree_demo.py` | Cartesian tree structure + RMQ-as-LCA queries |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12034,6 +12036,26 @@ repo's simplex solver -- whose two-phase artificial handling was hardened here (
 after phase 1 could silently absorb value and violate a >= constraint). Validated against brute-force
 integer search on random ILPs and 0/1 knapsacks, with the LP bound always dominating the integer
 optimum. The integer-optimization companion to the simplex LP solver and the knapsack tools.
+
+## Cartesian trees: range-minima become tree ancestors
+
+Turn an array into a tree where the minimum of any range is a lowest common ancestor. `cartesian_tree.py`:
+
+```
+$ python examples/cartesian_tree_demo.py examples/output
+
+  sequence: [9, 3, 7, 1, 8, 5, 6, 2, 4]
+  root = index 3 (value 1, the global minimum)
+  a[4..8]  min idx 7  min val 2   (= LCA of nodes 4 and 8)
+```
+
+A Cartesian tree is a BST on position and a min-heap on value at once, built in O(n) with one stack
+pass. Its point is the equivalence: the minimum of a[i..j] is the LCA of nodes i and j, which underlies
+the O(n)-preprocessing / O(1)-query RMQ algorithm and suffix-array LCP structures. Validated: the
+in-order traversal reproduces the sequence and the heap property holds everywhere (the unique
+Cartesian tree), the O(n) build matches a naive recursive one, and RMQ via tree-LCA agrees with the
+sparse-table RMQ and brute force over every subrange. The array-to-tree companion to the sparse-table
+RMQ/LCA, the treap, and the suffix-array tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

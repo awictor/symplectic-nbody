@@ -1,0 +1,28 @@
+Cartesian tree: range-minimum-query becomes lowest-common-ancestor
+
+  sequence: [9, 3, 7, 1, 8, 5, 6, 2, 4]
+  Cartesian tree (min-heap on value, BST on position):
+    root = index 3 (value 1, the global minimum)
+    node 0 (val 9): L=. R=.
+    node 1 (val 3): L=0 R=2
+    node 2 (val 7): L=. R=.
+    node 3 (val 1): L=1 R=7
+    node 4 (val 8): L=. R=.
+    node 5 (val 5): L=4 R=6
+    node 6 (val 6): L=. R=.
+    node 7 (val 2): L=5 R=8
+    node 8 (val 4): L=. R=.
+
+  Range-minimum queries via LCA on the tree:
+         range  min idx  min val  brute
+    a[0..3]        3        1      3
+    a[2..6]        3        1      3
+    a[4..8]        7        2      7
+    a[1..7]        3        1      3
+    a[5..8]        7        2      7
+    a[0..8]        3        1      3
+
+  Every query is the LCA of its two endpoints -- so O(n) preprocessing plus an O(1)
+  LCA structure gives O(1) range-minimum, the classic RMQ<->LCA equivalence.
+
+  wrote examples/output\cartesian_tree.svg

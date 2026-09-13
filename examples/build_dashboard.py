@@ -572,6 +572,7 @@ def main():
     import kaplan_meier_demo
     import mcts_demo
     import integer_programming_demo
+    import cartesian_tree_demo
 
     import plot_orbits
 
@@ -1113,6 +1114,7 @@ def main():
     kaplan_meier_txt = run("kaplan_meier_demo", kaplan_meier_demo.main, True)
     mcts_txt = run("mcts_demo", mcts_demo.main, True)
     integer_programming_txt = run("integer_programming_demo", integer_programming_demo.main, True)
+    cartesian_tree_txt = run("cartesian_tree_demo", cartesian_tree_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10004,6 +10006,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("integer_programming.svg"), "A production-planning ILP: the LP relaxation optimum (3, 1.5) = 21 is fractional and unbuildable, so branch and bound descends to the true integer optimum (4, 0) = 20 -- an integrality gap of 1, found by exploring just five tree nodes")
             + f'<div class="card">{pre(integer_programming_txt)}</div>'
+            + '</div>'),
+        section(
+            "Cartesian trees: range-minima become tree ancestors",
+            "A CARTESIAN TREE on a sequence is a binary tree with two properties at once: its in-order "
+            "traversal returns the sequence (a BST on POSITION) and every node is smaller than its "
+            "children (a MIN-HEAP on VALUE). There is exactly one such tree for distinct values, and "
+            "it builds in LINEAR TIME with a single stack pass -- no sorting. Its power: it makes "
+            "RANGE-MINIMUM-QUERY and LOWEST-COMMON-ANCESTOR the SAME problem. The minimum of a[i..j] "
+            "sits, by the heap property, at the LCA of nodes i and j; conversely the LCA is the array "
+            "minimum between them. This equivalence is the heart of the O(n)-preprocessing / "
+            "O(1)-query RMQ algorithm and shows up in suffix-array LCP structures, treaps, and pattern "
+            "matching. The build keeps the tree's rightmost spine on a stack: for each element, pop "
+            "everything larger (it becomes the left subtree), attach as the right child of what "
+            "remains, push. Validated: the in-order traversal reproduces the sequence and the heap "
+            "property holds at every node (so it is the unique Cartesian tree); the O(n) build matches "
+            "a naive recursive one; and range-minimum queries via tree-LCA agree with the repo's "
+            "sparse-table RMQ and brute force over every subrange. The array-to-tree companion to the "
+            "sparse-table RMQ/LCA, the treap, and the suffix-array tools.",
+            '<div class="grid">'
+            + svg_card(out("cartesian_tree.svg"), "The Cartesian tree of a sequence, each node placed at its array position (x) and value (y, smaller = higher): the global minimum is the root, and the minimum of any range a[i..j] is exactly the lowest common ancestor of nodes i and j")
+            + f'<div class="card">{pre(cartesian_tree_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
