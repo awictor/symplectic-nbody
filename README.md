@@ -472,6 +472,7 @@ ruins a long non-symplectic integration.
 | `src/persistent_segment_tree.py` | Persistent segment tree: version history + range k-th smallest |
 | `src/huffman.py` | Huffman coding: optimal prefix code + canonical form, entropy bracket |
 | `src/ransac.py` | RANSAC robust fitting: line/circle through heavy outliers + adaptive iterations |
+| `src/lomb_scargle.py` | Lomb-Scargle periodogram: periods in unevenly-sampled data + false-alarm prob |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -935,6 +936,7 @@ ruins a long non-symplectic integration.
 | `examples/persistent_segment_tree_demo.py` | Range k-th smallest via prefix-version differencing |
 | `examples/huffman_demo.py` | Huffman code tree for a sentence with entropy comparison |
 | `examples/ransac_demo.py` | Line and circle recovered from 40% outliers vs least squares |
+| `examples/lomb_scargle_demo.py` | Variable-star light curve and its period recovered from irregular nights |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10797,6 +10799,24 @@ follow N = log(1-p)/log(1-w^s), shrunk adaptively. Validated on synthetic data w
 truth -- line under 40% outliers, circle under 33% -- recovering the true parameters while OLS is
 dragged off, with the recovered inliers matching the planted ones. The robust-estimation companion
 to the least-squares fits.
+
+## Lomb-Scargle periodogram: periods from irregular samples
+
+Spectral analysis where the FFT can't go -- unevenly-sampled data. `lomb_scargle.py`:
+
+```
+$ python examples/lomb_scargle_demo.py examples/output
+
+  131 irregular observations over 198 days (true period 8.4 days)
+  Detected period: 8.383 days   false-alarm prob 0.0   fitted amplitude 1.379 (injected 1.4)
+```
+
+Fit a sinusoid of each trial frequency by least squares directly to the irregular samples; peaks mark
+real periods. Scargle's time offset makes the basis orthogonal so peak significance (a false-alarm
+probability) is computable. Validated against ground truth and the FFT: the periodogram peaks at the
+injected frequency for even and random-uneven sampling, matches a direct FFT power spectrum on even
+data, resolves two tones, and recovers the injected amplitude and phase. The uneven-sampling
+companion to the FFT.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

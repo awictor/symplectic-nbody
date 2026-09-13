@@ -514,6 +514,7 @@ def main():
     import persistent_segment_tree_demo
     import huffman_demo
     import ransac_demo
+    import lomb_scargle_demo
 
     import plot_orbits
 
@@ -997,6 +998,7 @@ def main():
     persistent_segment_tree_txt = run("persistent_segment_tree_demo", persistent_segment_tree_demo.main, True)
     huffman_txt = run("huffman_demo", huffman_demo.main, True)
     ransac_txt = run("ransac_demo", ransac_demo.main, True)
+    lomb_scargle_txt = run("lomb_scargle_demo", lomb_scargle_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8706,6 +8708,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("ransac.svg"), "Left: a line hidden in 40 percent outliers -- RANSAC (green) recovers it while least squares (red) is pulled off by the noise. Right: a circle robustly fit through 33 percent scattered outliers")
             + f'<div class="card">{pre(ransac_txt)}</div>'
+            + '</div>'),
+        section(
+            "Lomb-Scargle periodogram: periods from irregular samples",
+            "The FFT needs samples on a regular grid, but real time series often aren't -- a variable "
+            "star is seen only on clear nights, a radial-velocity planet hunt gets scattered "
+            "telescope time. Interpolating to a grid distorts the spectrum. The Lomb-Scargle "
+            "periodogram (Lomb 1976, Scargle 1982) instead fits a sinusoid of each trial frequency "
+            "by LEAST SQUARES directly to the irregular samples and reports the variance it explains; "
+            "peaks mark real periods. Scargle's time-offset tau makes the sine/cosine basis "
+            "orthogonal over the sample times, giving the statistic a clean chi-square null "
+            "distribution so peak significance (a false-alarm probability) is computable. The module "
+            "builds a data-driven frequency grid, the normalized periodogram, the best period, the "
+            "false-alarm probability, and a least-squares amplitude/phase fit. Validated against "
+            "ground truth and the FFT: on data from a known sinusoid (even OR randomly uneven) the "
+            "periodogram peaks at the injected frequency, on even sampling the peak matches a direct "
+            "FFT power spectrum, two tones give two peaks, the recovered amplitude matches the "
+            "injected one, and the false-alarm probability is near one for noise and near zero at a "
+            "strong peak. The uneven-sampling companion to the FFT.",
+            '<div class="grid">'
+            + svg_card(out("lomb_scargle.svg"), "A simulated variable star observed on irregular nights (top, note the gaps) and its Lomb-Scargle power spectrum (bottom) -- the sharp peak recovers the 8.4-day period the FFT could not reach on this uneven sampling")
+            + f'<div class="card">{pre(lomb_scargle_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

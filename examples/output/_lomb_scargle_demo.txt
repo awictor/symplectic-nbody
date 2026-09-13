@@ -1,0 +1,18 @@
+Lomb-Scargle periodogram: periods from irregular samples, where the FFT can't go
+
+  131 irregular observations over 198 days (true period 8.4 days).
+
+  Trial frequencies: 575 from 0.0006 to 0.3668 cycles/day
+  Detected period:   8.3828 days  (peak power 63.85)
+  False-alarm prob:  0.00e+00  (chance this peak is noise)
+  Fitted amplitude:  1.379  (injected 1.4)
+
+  Top 3 periodogram peaks (period, power):
+    P =   8.383 days   power 63.85
+    P =   7.610 days   power 3.34
+    P =   7.061 days   power 2.79
+
+  Each trial frequency's power is how well a least-squares sinusoid at that frequency
+  fits the irregular samples -- no grid, no interpolation. The tall peak is the period.
+
+  wrote examples/output\lomb_scargle.svg
