@@ -537,6 +537,7 @@ ruins a long non-symplectic integration.
 | `src/stern_brocot.py` | Stern-Brocot tree + Farey sequences: enumerate rationals, best approximation |
 | `src/pell.py` | Pell's equation x^2 - D y^2 = 1 via periodic continued fraction of sqrt(D) |
 | `src/fibonacci.py` | Fast-doubling Fibonacci/Lucas, Pisano period, Zeckendorf, Cassini/GCD identities |
+| `src/lucas_lehmer.py` | Lucas-Lehmer Mersenne-prime test + general Lucas sequences + Baillie-PSW half |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1065,6 +1066,7 @@ ruins a long non-symplectic integration.
 | `examples/stern_brocot_demo.py` | Best rational approximations of pi + Farey sequence + tree |
 | `examples/pell_demo.py` | Pell fundamental solutions (incl D=61) + chaotic digit-length growth |
 | `examples/fibonacci_demo.py` | Million-digit F_n, Pisano periods, F(10^100) mod m, Zeckendorf |
+| `examples/lucas_lehmer_demo.py` | Mersenne primes found by Lucas-Lehmer + the s_k recurrence |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12197,6 +12199,26 @@ doubling, the Pisano period, and the Zeckendorf representation. Validated: fast 
 naive recurrence and matrix power, Cassini's identity and the GCD property hold, the Pisano period
 cycles (pi(10)=60), and every Zeckendorf representation is non-consecutive. The fast-recurrence
 companion to the Kitamasa linear-recurrence solver.
+
+## Lucas-Lehmer: the deterministic test behind the largest known primes
+
+Certify Mersenne primes M_p = 2^p - 1 the way GIMPS does. `lucas_lehmer.py`:
+
+```
+$ python examples/lucas_lehmer_demo.py examples/output
+
+  s_0=4, s_(k+1)=s_k^2-2 mod 127:  [4, 14, 67, 42, 111, 0]
+  s_(p-2) = 0  ->  M_7 = 127 is PRIME
+  Mersenne primes M_p for p <= 150:  [2, 3, 5, 7, 13, 17, 19, 31, 61, 89, 107, 127]
+```
+
+For an odd prime p, s_0 = 4, s_{k+1} = s_k^2 - 2 mod (2^p - 1); M_p is prime iff s_{p-2} = 0. It is
+exact, not probabilistic, and the modular reduction is a cheap bit-fold, so it scales to exponents in
+the tens of millions. The module also implements general Lucas sequences U_n, V_n by fast doubling and
+a Lucas probable-prime test (half of Baillie-PSW). Validated: it finds the Mersenne-prime exponents
+{2,3,5,7,13,17,19,31,61,89,107,127} and rejects composites, agreeing with a real primality check; the
+Lucas sequences satisfy V_n^2 - D U_n^2 = 4 Q^n and reproduce Fibonacci and Lucas numbers. The
+Mersenne-prime companion to the Fibonacci fast-doubling and Miller-Rabin tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

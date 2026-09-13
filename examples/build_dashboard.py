@@ -579,6 +579,7 @@ def main():
     import stern_brocot_demo
     import pell_demo
     import fibonacci_demo
+    import lucas_lehmer_demo
 
     import plot_orbits
 
@@ -1127,6 +1128,7 @@ def main():
     stern_brocot_txt = run("stern_brocot_demo", stern_brocot_demo.main, True)
     pell_txt = run("pell_demo", pell_demo.main, True)
     fibonacci_txt = run("fibonacci_demo", fibonacci_demo.main, True)
+    lucas_lehmer_txt = run("lucas_lehmer_demo", lucas_lehmer_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10163,6 +10165,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("fibonacci.svg"), "The Pisano period pi(m) -- the length of the cycle of F_n mod m -- plotted for m up to 100; the yellow bars are the maximal pi(m) = 6m cases, and the period is what lets F_n mod m be computed for astronomically large n")
             + f'<div class="card">{pre(fibonacci_txt)}</div>'
+            + '</div>'),
+        section(
+            "Lucas-Lehmer: the deterministic test behind the largest known primes",
+            "Every record-breaking largest-known prime for decades has been a MERSENNE PRIME, "
+            "M_p = 2^p - 1, and the reason is the LUCAS-LEHMER test: a startlingly simple, "
+            "DETERMINISTIC primality test for exactly these numbers. For an odd prime p, set s_0 = 4 "
+            "and s_{k+1} = s_k^2 - 2 modulo M_p; then M_p is prime if and only if s_{p-2} = 0. That is "
+            "the entire test -- p-2 squarings and one comparison, exact rather than probabilistic. The "
+            "modular reduction by 2^p - 1 is a cheap bit-fold (high bits wrap onto low ones), which is "
+            "why it scales to exponents in the tens of millions -- the algorithm the GIMPS project "
+            "runs to find primes with over 20 million digits. The module also implements the general "
+            "LUCAS SEQUENCES U_n, V_n by fast doubling and a Lucas probable-prime test (half of "
+            "Baillie-PSW). Validated exactly: it identifies the Mersenne-prime exponents "
+            "{2,3,5,7,13,17,19,31,61,89,107,127} and rejects the composites, agreeing with a genuine "
+            "primality check on 2^p-1; the Lucas sequences match their recurrence and the identity "
+            "V_n^2 - D U_n^2 = 4 Q^n, and reproduce Fibonacci (U) and Lucas (V) numbers. The "
+            "Mersenne-prime companion to the Fibonacci fast-doubling and Miller-Rabin tools.",
+            '<div class="grid">'
+            + svg_card(out("lucas_lehmer.svg"), "Which prime exponents p yield a Mersenne prime M_p = 2^p - 1: only 12 of the primes up to 150 (green) do, and they thin out fast -- the rarity that makes each newly found Mersenne prime a record")
+            + f'<div class="card">{pre(lucas_lehmer_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
