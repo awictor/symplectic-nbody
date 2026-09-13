@@ -447,6 +447,7 @@ ruins a long non-symplectic integration.
 | `src/gauss_quadrature.py` | Gauss-Hermite / Gauss-Laguerre quadrature via Golub-Welsch |
 | `src/interval_tree.py` | Centered interval tree: O(log n + k) stabbing and range-overlap queries |
 | `src/permanent.py` | Matrix permanent (Ryser + Glynn) + bipartite perfect-matching count |
+| `src/blossom.py` | Edmonds' blossom: maximum matching in general graphs (odd cycles) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -885,6 +886,7 @@ ruins a long non-symplectic integration.
 | `examples/gauss_quadrature_demo.py` | Infinite-domain integrals, node placement, geometric convergence |
 | `examples/interval_tree_demo.py` | Calendar stabbing/range queries with the clashing meetings drawn |
 | `examples/permanent_demo.py` | Bipartite matching count and the naive-vs-Ryser operation gap |
+| `examples/blossom_demo.py` | Matching odd cycles and a Petersen-graph perfect matching |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10289,6 +10291,24 @@ Ryser's formula computes it in O(2^n n) via inclusion-exclusion over column subs
 Gray-code order; Glynn's formula is an independent cross-check. Validated: naive/Ryser/Glynn agree
 exactly on integers and to tolerance on reals, Ryser matches the definition exhaustively to n=8, known
 values (all-ones = n!, K_n,n = n! matchings), matching count vs brute force, and row-multilinearity.
+
+## Edmonds' blossom algorithm: matching in a general graph
+
+Maximum matching when the graph has odd cycles a bipartite matcher can't handle. `blossom.py`:
+
+```
+$ python examples/blossom_demo.py examples/output
+
+  triangle -> 1 edge, pentagon -> 2, Petersen graph -> perfect matching of 5
+  size matches brute force over 300 random graphs
+```
+
+A blossom is an odd cycle reached by an alternating path; Edmonds (1965) contracts it into a
+super-vertex, finds an augmenting path in the smaller graph, then lifts the result back -- reducing
+general matching to the bipartite augmenting-path hunt. Repeat until no augmenting path remains (Berge:
+the matching is then maximum). Validated by exact agreement with brute force over 300 random graphs
+(always valid), on odd cycles and the Petersen graph, against the bipartite matcher, on complete graphs,
+and with Berge optimality confirmed.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

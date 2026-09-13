@@ -26,8 +26,8 @@ Thompson's NFA: regex matching in guaranteed linear time
     n=  50: matched=False  time=0.11 ms
     n= 100: matched=False  time=0.21 ms
     n= 200: matched=False  time=0.41 ms
-    n= 400: matched=False  time=0.83 ms
-    n= 800: matched=False  time=1.65 ms
+    n= 400: matched=False  time=0.81 ms
+    n= 800: matched=False  time=1.64 ms
 
   Never backtracks: the engine tracks the SET of all NFA states the machine could be in
   and advances the whole set one character at a time, so matching costs O(n*m) always --

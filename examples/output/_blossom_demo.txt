@@ -1,0 +1,18 @@
+Edmonds' blossom: maximum matching in a general graph (odd cycles and all)
+
+  odd cycles -- where naive bipartite matching fails:
+    3-cycle: matched 1 edges (max possible floor(3/2) = 1), valid = True
+    5-cycle: matched 2 edges (max possible floor(5/2) = 2), valid = True
+    7-cycle: matched 3 edges (max possible floor(7/2) = 3), valid = True
+
+  Petersen graph (10 vertices, 3-regular): perfect matching of 5 edges
+    matched pairs: [(0, 1), (2, 3), (4, 9), (5, 7), (6, 8)]
+
+  triangle-with-tails graph: matched 3 edges (brute force: 3)
+
+  A blossom is an odd cycle reached by an alternating path. Edmonds contracts each one into
+  a super-vertex, finds an augmenting path in the smaller graph, then expands the blossom to
+  thread the path back -- turning general matching into the bipartite augmenting-path hunt,
+  and founding the theory of polynomial-time algorithms along the way.
+
+  wrote examples/output\blossom.svg

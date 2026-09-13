@@ -489,6 +489,7 @@ def main():
     import gauss_quadrature_demo
     import interval_tree_demo
     import permanent_demo
+    import blossom_demo
 
     import plot_orbits
 
@@ -947,6 +948,7 @@ def main():
     gauss_quadrature_txt = run("gauss_quadrature_demo", gauss_quadrature_demo.main, True)
     interval_tree_txt = run("interval_tree_demo", interval_tree_demo.main, True)
     permanent_txt = run("permanent_demo", permanent_demo.main, True)
+    blossom_txt = run("blossom_demo", blossom_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8096,6 +8098,31 @@ def main():
             '<div class="grid">'
             + svg_card(out("permanent.svg"), "operations to compute the permanent on a log scale: both the naive n! sum (red) and Ryser's 2^n formula (green) grow explosively -- it is #P-complete -- but Ryser is astronomically smaller, the difference between infeasible and merely exponential")
             + f'<div class="card">{pre(permanent_txt)}</div>'
+            + '</div>'),
+        section(
+            "Edmonds' blossom algorithm: matching in a general graph",
+            "Maximum matching -- pairing up as many vertices as possible with no vertex in two pairs -- "
+            "is easy on a BIPARTITE graph: alternating BFS finds augmenting paths. But on a general "
+            "graph, where edges form ODD CYCLES (a triangle, a pentagon), that breaks: an augmenting "
+            "search marches around the odd cycle and fools itself, because you cannot two-colour an odd "
+            "cycle into matched-side and free-side. Matching in general graphs stayed open until Jack "
+            "Edmonds' 1965 BLOSSOM algorithm -- a founding result of combinatorial optimization and the "
+            "paper that first argued polynomial time is the right definition of efficient. A BLOSSOM is "
+            "an odd cycle reached by an alternating path; Edmonds' insight is to CONTRACT it into a "
+            "single super-vertex, search for an augmenting path in the smaller graph, then LIFT the "
+            "result back, threading the path around the expanded blossom. An augmenting path exists in "
+            "the original graph iff one does in the contracted one, so contracting away every blossom "
+            "reduces general matching to the familiar augmenting-path hunt; repeat until none remains "
+            "and the matching is maximum by Berge's theorem. This module implements the O(V^3) algorithm "
+            "on an undirected graph, returning the matching and its size. Validated by exact agreement "
+            "with brute force over 300 random general graphs (always a valid set of disjoint real "
+            "edges), on the cases that DEFINE the problem -- a triangle matches 1 edge, a pentagon 2, "
+            "the Petersen graph a perfect matching of 5 -- on bipartite graphs against the repository's "
+            "bipartite matcher, on complete graphs (floor(n/2), with odd K_n leaving one vertex), and "
+            "with Berge optimality confirmed (no augmenting path remains).",
+            '<div class="grid">'
+            + svg_card(out("blossom.svg"), "the Petersen graph -- ten vertices, three-regular, riddled with odd cycles -- with a perfect matching found by the blossom algorithm highlighted in green, every vertex covered exactly once")
+            + f'<div class="card">{pre(blossom_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
