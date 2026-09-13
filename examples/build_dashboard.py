@@ -556,6 +556,7 @@ def main():
     import marching_tetrahedra_demo
     import cmaes_demo
     import fm_index_demo
+    import ldpc_demo
 
     import plot_orbits
 
@@ -1081,6 +1082,7 @@ def main():
     marching_tetrahedra_txt = run("marching_tetrahedra_demo", marching_tetrahedra_demo.main, True)
     cmaes_txt = run("cmaes_demo", cmaes_demo.main, True)
     fm_index_txt = run("fm_index_demo", fm_index_demo.main, True)
+    ldpc_txt = run("ldpc_demo", ldpc_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9632,6 +9634,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("fm_index.svg"), "Backward search for a 3-mer in a DNA text: the BWT-row range starts as the whole text and narrows one character at a time, right to left, until its width is exactly the number of occurrences")
             + f'<div class="card">{pre(fm_index_txt)}</div>'
+            + '</div>'),
+        section(
+            "LDPC codes: sparse parity checks near the Shannon limit",
+            "Low-density parity-check codes (Gallager, 1962; rediscovered in the 1990s) are the "
+            "error-correcting codes in Wi-Fi, 5G, and deep-space links, and they come astonishingly "
+            "close to the CHANNEL CAPACITY Shannon proved is the ceiling on reliable communication. "
+            "The magic is SPARSITY: the code is a parity-check matrix H where every check touches only "
+            "a few bits and every bit only a few checks, so iterative message passing on the code's "
+            "TANNER GRAPH is both cheap and near-optimal. A codeword satisfies H c = 0 (mod 2); "
+            "systematic Gauss-Jordan over GF(2) gives the encoder. Two decoders run on the graph: "
+            "BIT-FLIPPING (hard) flips whichever bits sit in the most unsatisfied checks; SUM-PRODUCT "
+            "belief propagation (soft) passes log-likelihood messages -- checks tell bits what parity "
+            "implies via the tanh rule, bits combine them -- and is the near-capacity decoder. "
+            "Validated exactly: every codeword satisfies H c = 0, encode/decode round-trips, both "
+            "decoders correct all single-bit errors on a good-distance code, a successful decode is "
+            "always a valid codeword, and sum-product corrects strictly more than bit-flipping over a "
+            "noisy channel. The modern, graph-based coding companion to the algebraic Hamming, "
+            "Reed-Muller, Reed-Solomon, and convolutional codes.",
+            '<div class="grid">'
+            + svg_card(out("ldpc.svg"), "Word-error rate of a rate-0.35 LDPC code over a binary symmetric channel: the soft-decision sum-product decoder (blue) beats hard-decision bit-flipping (orange) at every noise level, because it uses the channel's confidence, not just the received bits")
+            + f'<div class="card">{pre(ldpc_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

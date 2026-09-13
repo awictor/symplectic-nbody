@@ -1,0 +1,19 @@
+LDPC codes: sparse parity checks + message passing, near the Shannon limit
+
+  regular (3,4) LDPC: n=20 bits, m=15 checks, k=7 message bits
+  rate 7/20 = 0.35, minimum distance 6
+
+  Word-error rate over 200 random codewords per noise level:
+      flip p    bit-flip WER   sum-product WER
+        0.02           0.020             0.015
+        0.04           0.080             0.000
+        0.06           0.140             0.040
+        0.08           0.360             0.135
+        0.10           0.305             0.130
+        0.14           0.490             0.280
+
+  Sum-product (soft) beats bit-flipping (hard) at every noise level -- it uses the
+  channel confidence, not just the received bits. This gap is why LDPC + BP is the
+  decoder in Wi-Fi, 5G, and deep-space links.
+
+  wrote examples/output\ldpc.svg

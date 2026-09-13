@@ -514,6 +514,7 @@ ruins a long non-symplectic integration.
 | `src/marching_tetrahedra.py` | 3-D isosurface meshing via tetrahedral split (watertight, table-free) |
 | `src/cmaes.py` | CMA-ES: covariance-matrix-adaptation evolution strategy (variable-metric, derivative-free) |
 | `src/fm_index.py` | FM-index: BWT backward-search full-text index (count/locate in O(pattern)) |
+| `src/ldpc.py` | LDPC codes: sparse parity checks + bit-flipping / sum-product decoders |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1019,6 +1020,7 @@ ruins a long non-symplectic integration.
 | `examples/marching_tetrahedra_demo.py` | Metaball isosurface meshed + sphere-area convergence to 4 pi r^2 |
 | `examples/cmaes_demo.py` | CMA-ES tracking the Rosenbrock banana to the (1,1) optimum |
 | `examples/fm_index_demo.py` | Backward-search range narrowing to a DNA pattern's occurrence count |
+| `examples/ldpc_demo.py` | LDPC word-error rate: sum-product vs bit-flipping over a noisy channel |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11628,6 +11630,32 @@ occurrence count, found in O(pattern) time regardless of text length. A sampled 
 to positions by LF-mapping. Validated against brute force on random, DNA, and repetitive texts, with
 LF-mapping inverting the BWT back to the original. The compressed-index companion to the suffix array,
 the Burrows-Wheeler transform, and the wavelet tree.
+
+## LDPC codes: sparse parity checks near the Shannon limit
+
+The error-correcting codes in Wi-Fi, 5G, and deep-space links. `ldpc.py`:
+
+```
+$ python examples/ldpc_demo.py examples/output
+
+  regular (3,4) LDPC: n=20 bits, m=15 checks, k=7 message bits
+  rate 7/20 = 0.35, minimum distance 6
+
+  Word-error rate over 200 random codewords per noise level:
+      flip p    bit-flip WER   sum-product WER
+        0.04           0.080             0.000
+        0.08           0.360             0.135
+        0.14           0.490             0.280
+```
+
+An LDPC code is a parity-check matrix H that is sparse -- every check touches few bits, every bit few
+checks -- so iterative message passing on its Tanner graph is cheap and near-optimal. A codeword
+satisfies H c = 0 over GF(2); systematic Gauss-Jordan gives the encoder. Bit-flipping (hard decision)
+flips the bits in the most unsatisfied checks; sum-product belief propagation (soft decision) passes
+log-likelihood messages via the tanh rule and decodes near capacity. Validated exactly: every codeword
+satisfies H c = 0, both decoders correct all single-bit errors on a good-distance code, and
+sum-product beats bit-flipping at every noise level. The modern, graph-based coding companion to the
+algebraic Hamming, Reed-Muller, Reed-Solomon, and convolutional codes.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
