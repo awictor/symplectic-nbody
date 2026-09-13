@@ -527,6 +527,7 @@ ruins a long non-symplectic integration.
 | `src/qr_algorithm.py` | QR eigenvalue algorithm: Hessenberg + shifted QR with complex-pair deflation |
 | `src/universal_codes.py` | Universal integer codes: Elias gamma/delta/omega + Golomb-Rice |
 | `src/finite_volume.py` | Godunov + MUSCL finite-volume shock capturing for conservation laws |
+| `src/kaplan_meier.py` | Kaplan-Meier survival estimator + Greenwood variance + log-rank test |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1045,6 +1046,7 @@ ruins a long non-symplectic integration.
 | `examples/qr_algorithm_demo.py` | QR iteration subdiagonal decaying to 1e-12 as eigenvalues emerge |
 | `examples/universal_codes_demo.py` | Bits/value coding inverted-index gaps vs the entropy floor |
 | `examples/finite_volume_demo.py` | Burgers shock: Godunov vs MUSCL sharpness, mass conserved |
+| `examples/kaplan_meier_demo.py` | Treatment vs control survival curves + log-rank test |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11962,6 +11964,28 @@ profile and advances with SSP Runge-Kutta for a sharp, TVD, second-order result.
 transports at the exact speed conserving mass and total variation, Burgers forms a shock at the
 Rankine-Hugoniot speed, rarefactions spread correctly, and MUSCL is measurably higher-order than
 Godunov. The shock-capturing companion to the Crank-Nicolson, Thomas, and Poisson PDE tools.
+
+## Kaplan-Meier: survival curves from censored data
+
+Estimate a survival curve when many subjects have not yet had the event. `kaplan_meier.py`:
+
+```
+$ python examples/kaplan_meier_demo.py examples/output
+
+  control:   60 subjects, 54 events, 6 censored
+  treatment: 60 subjects, 48 events, 12 censored
+  median survival:  control 3.94,  treatment 10.23
+  log-rank test:  chi2 = 10.03  (1 dof),  p ~ 0.0015
+  -> significant difference between the survival curves
+```
+
+The Kaplan-Meier product-limit multiplies (1 - d_i/n_i) at each event time, with censored subjects
+counting toward the at-risk set until they leave without causing a drop; Greenwood's formula gives
+confidence bands; and the log-rank test compares two groups by observed-minus-expected events.
+Validated: with no censoring the curve is exactly 1 minus the empirical CDF, a textbook example
+reproduces the published probabilities, Greenwood's variance matches a direct computation, and the
+log-rank statistic is small for identical groups and large for separated ones. The censored-data
+companion to the empirical-CDF, bootstrap, and Kolmogorov-Smirnov tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

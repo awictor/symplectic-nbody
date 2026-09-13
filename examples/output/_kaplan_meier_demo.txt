@@ -1,0 +1,15 @@
+Kaplan-Meier: censored survival curves and the log-rank test
+
+  control:   60 subjects, 54 events, 6 censored
+  treatment: 60 subjects, 48 events, 12 censored
+
+  median survival:  control 3.94,  treatment 10.23
+
+  log-rank test:  chi2 = 10.03  (1 dof),  p ~ 0.0015
+  observed control events 54 vs 38.7 expected under the null
+  -> significant difference between the survival curves
+
+  Censoring is handled exactly: censored subjects stay in the at-risk set until
+  their censoring time, then leave without causing a drop in the curve.
+
+  wrote examples/output\kaplan_meier.svg

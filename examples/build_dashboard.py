@@ -569,6 +569,7 @@ def main():
     import qr_algorithm_demo
     import universal_codes_demo
     import finite_volume_demo
+    import kaplan_meier_demo
 
     import plot_orbits
 
@@ -1107,6 +1108,7 @@ def main():
     qr_algorithm_txt = run("qr_algorithm_demo", qr_algorithm_demo.main, True)
     universal_codes_txt = run("universal_codes_demo", universal_codes_demo.main, True)
     finite_volume_txt = run("finite_volume_demo", finite_volume_demo.main, True)
+    kaplan_meier_txt = run("kaplan_meier_demo", kaplan_meier_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9935,6 +9937,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("finite_volume.svg"), "The Burgers equation steepening a smooth sine profile (gray) into a shock: first-order Godunov (orange) smears it over ~28 cells while second-order MUSCL (blue) captures it in ~22 with no overshoot -- both conserving mass exactly")
             + f'<div class="card">{pre(finite_volume_txt)}</div>'
+            + '</div>'),
+        section(
+            "Kaplan-Meier: survival curves from censored data, and the log-rank test",
+            "Survival analysis asks how long until an event -- relapse, failure, churn -- and its hard "
+            "part is CENSORING: when a study ends many subjects have not yet had the event, so you know "
+            "only that their time EXCEEDS some value. The KAPLAN-MEIER estimator (1958, one of the "
+            "most-cited papers in science) handles it exactly by a PRODUCT-LIMIT: at each event time "
+            "t_i with d_i events among n_i still at risk, the survival function multiplies by "
+            "(1 - d_i/n_i), and censored subjects count toward n_i right up until they leave without "
+            "causing a drop. GREENWOOD'S formula gives the variance and confidence bands. To compare "
+            "two groups the LOG-RANK TEST sums observed-minus-expected events (a hypergeometric "
+            "argument at each event time) into a chi-squared statistic -- the standard test behind "
+            "every clinical-trial survival plot. Validated: with no censoring the KM curve is exactly "
+            "1 minus the empirical CDF; the curve is monotone from 1 and each drop matches the "
+            "product-limit factor; a textbook example reproduces the published probabilities; "
+            "Greenwood's variance matches a direct computation; the median is where the curve crosses "
+            "0.5; and the log-rank statistic is ~0 for identical groups and large for well-separated "
+            "ones. The censored-data companion to the empirical-CDF, bootstrap, and "
+            "Kolmogorov-Smirnov tools.",
+            '<div class="grid">'
+            + svg_card(out("kaplan_meier.svg"), "Kaplan-Meier curves for a treatment and control arm with right-censoring (ticks): the treatment survives markedly longer (median 10.2 vs 3.9), and the log-rank test rejects the null at p = 0.0015")
+            + f'<div class="card">{pre(kaplan_meier_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
