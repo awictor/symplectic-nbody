@@ -1,0 +1,16 @@
+Boruvka's algorithm: MST in synchronized rounds, each component grabbing its cheapest edge
+
+  30 points, complete Euclidean graph (435 edges)
+
+     round   edges added   components left
+         1            22                 8
+         2             5                 3
+         3             2                 1
+
+  3 rounds for 30 vertices (Boruvka needs O(log V) ~ 5)
+  MST weight: 399.425   (Kruskal cross-check: 399.425, match: True)
+
+  Each round at least halves the component count -- that's the O(log V) round bound,
+  and every round's cheapest-edge search is independent, so Boruvka parallelizes.
+
+  wrote examples/output\boruvka.svg

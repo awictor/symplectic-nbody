@@ -520,6 +520,7 @@ ruins a long non-symplectic integration.
 | `src/mfcc.py` | Mel-frequency cepstral coefficients: mel filterbank + log + DCT audio features |
 | `src/quantum_circuit.py` | Statevector quantum circuit simulator: gates, entanglement, Deutsch-Jozsa, Grover |
 | `src/levenberg_marquardt.py` | Levenberg-Marquardt nonlinear least-squares curve fitting (adaptive damping) |
+| `src/boruvka.py` | Boruvka's minimum spanning tree (round-based, parallel-friendly, 1926) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1031,6 +1032,7 @@ ruins a long non-symplectic integration.
 | `examples/mfcc_demo.py` | Mel filterbank + MFCC heatmap of a rising chirp |
 | `examples/quantum_circuit_demo.py` | Grover's search amplifying a marked state + Bell entanglement |
 | `examples/levenberg_marquardt_demo.py` | Fitting a noisy Gaussian peak, SSR dropping 115 -> 0.09 |
+| `examples/boruvka_demo.py` | Boruvka MST built in rounds, edges coloured by round of addition |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11785,6 +11787,29 @@ noiseless exponential, Gaussian, and sinusoidal models from poor starts; matches
 normal-equations solution on a linear model; the cost decreases monotonically; an analytic Jacobian
 agrees with finite differences; and it drives the Rosenbrock residuals to zero at (1, 1). The
 nonlinear-least-squares companion to the BFGS / L-BFGS optimizers and the linear-regression tools.
+
+## Boruvka's algorithm: the parallel minimum spanning tree
+
+The oldest MST algorithm (1926), and the most parallel. `boruvka.py`:
+
+```
+$ python examples/boruvka_demo.py examples/output
+
+  30 points, complete Euclidean graph (435 edges)
+     round   edges added   components left
+         1            22                 8
+         2             5                 3
+         3             2                 1
+  MST weight: 399.425   (Kruskal cross-check: 399.425, match: True)
+```
+
+Boruvka builds the MST in synchronized rounds: every component simultaneously grabs its cheapest
+outgoing edge, all are added at once, and the joined components merge. At least half the components
+vanish each round, so O(log V) rounds suffice, and the per-round search is embarrassingly parallel --
+why Boruvka underlies GPU MST implementations. A deterministic index tie-break prevents equal-weight
+cycles. Validated against the repo's Kruskal: identical MST weight on random graphs, always a spanning
+tree/forest, no cycles under ties, and a match to brute force on tiny graphs. The round-based,
+parallel-friendly companion to the Kruskal and Prim MST tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

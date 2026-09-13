@@ -562,6 +562,7 @@ def main():
     import mfcc_demo
     import quantum_circuit_demo
     import levenberg_marquardt_demo
+    import boruvka_demo
 
     import plot_orbits
 
@@ -1093,6 +1094,7 @@ def main():
     mfcc_txt = run("mfcc_demo", mfcc_demo.main, True)
     quantum_circuit_txt = run("quantum_circuit_demo", quantum_circuit_demo.main, True)
     levenberg_marquardt_txt = run("levenberg_marquardt_demo", levenberg_marquardt_demo.main, True)
+    boruvka_txt = run("boruvka_demo", boruvka_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9772,6 +9774,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("levenberg_marquardt.svg"), "Levenberg-Marquardt fitting a Gaussian peak to noisy data from a poor initial guess (gray dashed): the converged fit (green) recovers the amplitude, centre, and width, its sum of squared residuals dropping from 115 to 0.09 in nine steps")
             + f'<div class="card">{pre(levenberg_marquardt_txt)}</div>'
+            + '</div>'),
+        section(
+            "Boruvka's algorithm: the parallel minimum spanning tree",
+            "Boruvka found this in 1926 -- decades before Kruskal or Prim, while planning the "
+            "electrical grid of Moravia -- making it arguably the first graph algorithm ever "
+            "published. It builds the MINIMUM SPANNING TREE by component growth in synchronized "
+            "ROUNDS: every component simultaneously finds its own CHEAPEST OUTGOING EDGE, all those "
+            "edges are added at once, and the components they join merge. Because at least half the "
+            "components disappear each round, only O(log V) rounds are needed, each scanning the edges "
+            "in O(E) -- and the per-round cheapest-edge search is embarrassingly parallel, which is "
+            "why Boruvka underlies modern parallel and GPU MST implementations. The one subtlety is "
+            "ties: two components picking equal-weight edges can form a cycle, fixed by a "
+            "deterministic index tie-break (the cut property applied to all components at once). "
+            "Validated against the repo's Kruskal implementation: identical MST weight on random "
+            "graphs (the weight is unique even when the edge set is not), always a spanning "
+            "tree/forest, no cycles under equal weights, and a match to brute-force minimum over all "
+            "spanning trees on tiny graphs. The round-based, parallel-friendly companion to the "
+            "Kruskal and Prim MST tools and the union-find structure.",
+            '<div class="grid">'
+            + svg_card(out("boruvka.svg"), "Boruvka's MST on 30 points, edges coloured by the round they were added: 30 components collapse to 8, then 3, then 1 in just three rounds -- each round at least halves the count, the O(log V) bound")
+            + f'<div class="card">{pre(boruvka_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
