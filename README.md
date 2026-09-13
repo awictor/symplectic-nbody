@@ -512,6 +512,7 @@ ruins a long non-symplectic integration.
 | `src/remez.py` | Remez exchange for the true minimax polynomial (equioscillation) |
 | `src/christofides.py` | Christofides 1.5-approximation for metric TSP (MST + matching + Euler) |
 | `src/marching_tetrahedra.py` | 3-D isosurface meshing via tetrahedral split (watertight, table-free) |
+| `src/cmaes.py` | CMA-ES: covariance-matrix-adaptation evolution strategy (variable-metric, derivative-free) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1015,6 +1016,7 @@ ruins a long non-symplectic integration.
 | `examples/remez_demo.py` | Minimax vs Chebyshev vs least-squares error curves for e^x |
 | `examples/christofides_demo.py` | Christofides tour vs Held-Karp optimum, MST + matching drawn |
 | `examples/marching_tetrahedra_demo.py` | Metaball isosurface meshed + sphere-area convergence to 4 pi r^2 |
+| `examples/cmaes_demo.py` | CMA-ES tracking the Rosenbrock banana to the (1,1) optimum |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11573,6 +11575,30 @@ faces and interpolate identically on the shared edge, so the mesh is watertight 
 holes. Validated on a sphere: vertices lie on the surface to O(dx^2), the surface area converges to
 4 pi r^2, and a flat plane reproduces its area exactly. The 3-D companion to the marching-squares
 contour extractor.
+
+## CMA-ES: the optimizer that learns its own search shape
+
+State-of-the-art derivative-free optimization for hard, ill-conditioned landscapes. `cmaes.py`:
+
+```
+$ python examples/cmaes_demo.py examples/output
+
+  Reaching known global optima from random starts:
+    function      start                      f(best)   iters
+    sphere        [3.0, -2.0, 1.5, 0.7]      1.60e-12     100
+    ellipsoid     [2.0, 2.0, 2.0, 2.0]      3.20e-12     134
+    Rosenbrock    [-1.2, 1.0, 0.5]          3.63e-12     241
+    Rastrigin     [0.3, -0.2]               6.86e-12      64
+```
+
+Each generation CMA-ES samples a population from a multivariate Gaussian, keeps the best, moves the
+mean to their weighted average, and reshapes the Gaussian: cumulative step-size adaptation grows or
+shrinks the overall scale, and a rank-one + rank-mu update bends the covariance toward the directions
+that just improved. The search ellipsoid learns to stretch along the fruitful axes -- a
+variable-metric method, like BFGS, with no derivative. The covariance factorization reuses the repo's
+Jacobi eigensolver. Validated on sphere, the cond-1e6 ellipsoid, Rosenbrock, and Rastrigin, all
+driven to their global optima. The derivative-free companion to differential evolution, particle
+swarm, and Nelder-Mead.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

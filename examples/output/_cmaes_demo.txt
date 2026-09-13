@@ -1,0 +1,14 @@
+CMA-ES: a derivative-free optimizer that learns its own search shape
+
+  Reaching known global optima from random starts:
+    function      start                      f(best)   iters
+    sphere        [3.0, -2.0, 1.5, 0.7]      1.60e-12     100
+    ellipsoid     [2.0, 2.0, 2.0, 2.0]      3.20e-12     134
+    Rosenbrock    [-1.2, 1.0, 0.5]          3.63e-12     241
+    Rastrigin     [0.3, -0.2]               6.86e-12      64
+
+  2-D Rosenbrock from [-1.3, 1.2]: converged to (1.00000, 1.00000), f = 8.41e-13
+  The global minimum is exactly (1, 1). The covariance ellipse elongates
+  along the curved valley floor, which is why CMA-ES tracks the banana so well.
+
+  wrote examples/output\cmaes.svg

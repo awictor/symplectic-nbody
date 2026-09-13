@@ -554,6 +554,7 @@ def main():
     import remez_demo
     import christofides_demo
     import marching_tetrahedra_demo
+    import cmaes_demo
 
     import plot_orbits
 
@@ -1077,6 +1078,7 @@ def main():
     remez_txt = run("remez_demo", remez_demo.main, True)
     christofides_txt = run("christofides_demo", christofides_demo.main, True)
     marching_tetrahedra_txt = run("marching_tetrahedra_demo", marching_tetrahedra_demo.main, True)
+    cmaes_txt = run("cmaes_demo", cmaes_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9587,6 +9589,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("marching_tetrahedra.svg"), "A two-blob metaball isosurface meshed into thousands of depth-shaded triangles by marching tetrahedra -- the mesh is watertight because neighbouring tetrahedra share whole faces")
             + f'<div class="card">{pre(marching_tetrahedra_txt)}</div>'
+            + '</div>'),
+        section(
+            "CMA-ES: the optimizer that learns its own search shape",
+            "CMA-ES (Hansen & Ostermeier, 2001) is widely regarded as the state of the art for hard, "
+            "black-box, continuous optimization -- non-convex, ill-conditioned, non-separable "
+            "landscapes with no usable gradient. Each generation it SAMPLES a population from a "
+            "multivariate Gaussian N(m, sigma^2 C), keeps the best, moves the mean to their weighted "
+            "average, and then RESHAPES the Gaussian: cumulative step-size adaptation (a 'conjugate' "
+            "evolution path) grows or shrinks sigma, and a rank-one + rank-mu update bends the "
+            "covariance C toward the directions that just produced improvement. Over generations the "
+            "search ellipsoid stretches along the fruitful axes and shrinks across the rest -- a "
+            "variable-metric method, like BFGS, that never touches a derivative. The C = B D^2 B^T "
+            "factorization uses the repo's Jacobi eigensolver. Validated on the canonical hard "
+            "functions -- sphere, the cond-1e6 ellipsoid, the banana-shaped Rosenbrock valley, and "
+            "multimodal Rastrigin -- all driven to their known global optima (~1e-12) from random "
+            "starts, with a monotone best-so-far and box-constraint handling. The variable-metric, "
+            "derivative-free companion to differential evolution, particle swarm, and Nelder-Mead.",
+            '<div class="grid">'
+            + svg_card(out("cmaes.svg"), "CMA-ES tracking the curved floor of the Rosenbrock banana: the distribution mean walks from the start (yellow) to the global optimum (1, 1) (red), the covariance ellipse elongating along the valley as it goes")
+            + f'<div class="card">{pre(cmaes_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
