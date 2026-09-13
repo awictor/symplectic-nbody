@@ -518,6 +518,7 @@ def main():
     import isotonic_demo
     import partitions_demo
     import dfa_minimization_demo
+    import cyk_demo
 
     import plot_orbits
 
@@ -1005,6 +1006,7 @@ def main():
     isotonic_txt = run("isotonic_demo", isotonic_demo.main, True)
     partitions_txt = run("partitions_demo", partitions_demo.main, True)
     dfa_minimization_txt = run("dfa_minimization_demo", dfa_minimization_demo.main, True)
+    cyk_txt = run("cyk_demo", cyk_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8798,6 +8800,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("dfa_minimization.svg"), "A redundant 6-state DFA for 'even number of 1s' -- three interchangeable copies of each parity -- collapses to the canonical 2-state minimal automaton, accepting exactly the same language")
             + f'<div class="card">{pre(dfa_minimization_txt)}</div>'
+            + '</div>'),
+        section(
+            "CYK parsing: context-free recognition by dynamic programming",
+            "Regular languages fall to finite automata, but nested structure -- balanced parentheses, "
+            "arithmetic, the grammar of a programming language -- needs CONTEXT-FREE grammars, which "
+            "can be ambiguous and are not parseable left to right in general. The Cocke-Younger-"
+            "Kasami algorithm decides membership in O(n^3 * |grammar|) by dynamic programming over "
+            "substrings, and works for ANY context-free grammar -- ambiguous ones included -- which "
+            "LL/LR parsers cannot. With the grammar in Chomsky Normal Form (rules A -> B C or A -> a) "
+            "it fills a triangular table where cell (i, L) holds every nonterminal deriving the "
+            "length-L span at i: length-1 cells from terminal rules, longer spans by trying each "
+            "split point. The string is accepted iff the start symbol reaches the apex, and the same "
+            "recurrence COUNTS parse trees (the degree of ambiguity). Validated against brute force: "
+            "membership and parse-tree count match an exhaustive recursive derivation search over all "
+            "short strings; classic grammars (balanced parentheses, a^n b^n, even palindromes) accept "
+            "exactly the right strings; recovered parse trees yield the input; and the ambiguous "
+            "S -> S S | a produces Catalan-number parse counts. The context-free companion to the "
+            "Thompson NFA (regular) and shunting-yard (operator-precedence) tools.",
+            '<div class="grid">'
+            + svg_card(out("cyk.svg"), "The CYK triangular chart for '(()())': each cell lists the nonterminals deriving that substring, filled bottom-up from the input row until the start symbol S reaches the apex and the string is accepted")
+            + f'<div class="card">{pre(cyk_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

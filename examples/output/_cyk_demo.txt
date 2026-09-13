@@ -1,0 +1,34 @@
+CYK parsing: deciding context-free membership in O(n^3), any grammar
+
+  Grammar (Chomsky Normal Form) for balanced parentheses:
+    S -> S S | L R | L T,   T -> S R,   L -> '(',   R -> ')'
+
+    string   accepted   parses
+        ()       True        1
+      (())       True        1
+      ()()       True        1
+    (()())       True        1
+       (()      False        0
+        )(      False        0
+       (((      False        0
+
+  CYK table for '(())' (cell[i,L] = nonterminals deriving the L-char span at i):
+    L=1: {L}       {L}       {R}       {R}     
+    L=2: .         {S}       .       
+    L=3: .         {T}     
+    L=4: {S}     
+    -> start symbol S in top cell: string accepted.
+
+  Ambiguous grammar S -> S S | a. Number of parse trees of a^n (Catalan numbers):
+    a^1: 1 parses
+    a^2: 1 parses
+    a^3: 2 parses
+    a^4: 5 parses
+    a^5: 14 parses
+    a^6: 42 parses
+    a^7: 132 parses
+
+  CYK fills a triangular table over all substrings, so it parses ANY context-free
+  grammar -- ambiguous ones included -- which LL/LR parsers cannot.
+
+  wrote examples/output\cyk.svg

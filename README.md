@@ -476,6 +476,7 @@ ruins a long non-symplectic integration.
 | `src/isotonic.py` | Isotonic regression (PAVA): optimal monotone fit + probability calibration |
 | `src/partitions.py` | Integer partitions: Euler pentagonal p(n), generation, Euler's theorem, conjugate |
 | `src/dfa_minimization.py` | DFA minimization (Hopcroft) + language equivalence via canonical form |
+| `src/cyk.py` | CYK context-free parsing: membership, parse-tree count, one parse tree |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -943,6 +944,7 @@ ruins a long non-symplectic integration.
 | `examples/isotonic_demo.py` | Monotone step fit to a noisy curve + isotonic probability calibration |
 | `examples/partitions_demo.py` | p(n) growth on log scale, Ferrers diagrams, Euler's identity |
 | `examples/dfa_minimization_demo.py` | A 6-state DFA collapsing to its 2-state canonical form |
+| `examples/cyk_demo.py` | CYK triangular chart + Catalan-number parse counts of an ambiguous grammar |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10876,6 +10878,24 @@ O(n log n). By Myhill-Nerode the minimal DFA is a canonical form, so language eq
 minimizing both and checking isomorphism. Validated by exhaustive short-string language preservation
 and against an independent Moore partition-refinement minimizer across 200 random automata. The
 automata-theory companion to the Thompson NFA regex engine and the suffix automaton.
+
+## CYK parsing: context-free recognition by dynamic programming
+
+Membership in a context-free language in O(n^3), any grammar. `cyk.py`:
+
+```
+$ python examples/cyk_demo.py examples/output
+
+  balanced parens: () (()) ()() (()())  all accepted; (() )( ((( rejected
+  ambiguous S -> S S | a: parses of a^n = Catalan numbers 1,1,2,5,14,42
+```
+
+With the grammar in Chomsky Normal Form, CYK fills a triangular table where cell (i,L) holds every
+nonterminal deriving the length-L span at i; the string is accepted iff the start symbol reaches the
+apex, and the same recurrence counts parse trees. Works for ambiguous grammars, unlike LL/LR.
+Validated against an exhaustive recursive-derivation search (membership and parse count) plus classic
+grammars and Catalan-number ambiguity. The context-free companion to the Thompson NFA and
+shunting-yard tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
