@@ -141,8 +141,22 @@ def solve(c, constraints, maximize=True):
         art_val = sum(bcol[i] for i in range(m) if basis[i] in art_cols)
         if art_val > 1e-6:
             return LPResult("infeasible", None, None)
-        # drive any remaining artificial out of the basis if possible (degenerate)
-        # (left in place with value 0 is harmless for phase 2 since their cost is 0 there)
+        # Drive any artificial still in the basis OUT before phase 2. Leaving it in is NOT harmless:
+        # a phase-2 pivot can push value back into a basic artificial (it is only forbidden from
+        # ENTERING, not from absorbing value when a structural variable leaves), which silently
+        # violates the constraint that artificial was standing in for. For each row whose basis is
+        # an artificial, pivot in any non-artificial column with a nonzero entry; if the whole row is
+        # zero across non-artificial columns the row is redundant and is left as-is (value 0).
+        art_set = set(art_cols)
+        for i in range(m):
+            if basis[i] in art_set:
+                pivot_col = None
+                for j in range(total_cols):
+                    if j not in art_set and abs(A[i][j]) > 1e-9:
+                        pivot_col = j
+                        break
+                if pivot_col is not None:
+                    _pivot(A, bcol, basis, i, pivot_col)
 
     # ---- Phase 2: optimize the real objective ----
     real_c = [0.0] * total_cols

@@ -571,6 +571,7 @@ def main():
     import finite_volume_demo
     import kaplan_meier_demo
     import mcts_demo
+    import integer_programming_demo
 
     import plot_orbits
 
@@ -1111,6 +1112,7 @@ def main():
     finite_volume_txt = run("finite_volume_demo", finite_volume_demo.main, True)
     kaplan_meier_txt = run("kaplan_meier_demo", kaplan_meier_demo.main, True)
     mcts_txt = run("mcts_demo", mcts_demo.main, True)
+    integer_programming_txt = run("integer_programming_demo", integer_programming_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9982,6 +9984,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("mcts.svg"), "MCTS root visit counts on a tic-tac-toe position with an immediate win at cell 2: after 2000 iterations the search has poured 1843 of them into the winning move (win rate 1.0) and only a handful into each alternative -- the visit count, not the raw win rate, is the decision")
             + f'<div class="card">{pre(mcts_txt)}</div>'
+            + '</div>'),
+        section(
+            "Integer programming: branch and bound over the LP relaxation",
+            "Linear programming is polynomial; demand that the variables be INTEGERS and it becomes "
+            "NP-hard -- integer linear programming, the modeling language of scheduling, routing, "
+            "knapsacks, and cutting stock. BRANCH AND BOUND turns the fast LP solver into an exact "
+            "integer one: solve the LP RELAXATION (an upper bound on the integer optimum), and if a "
+            "variable comes out fractional at 3.4, BRANCH into x <= 3 and x >= 4 -- excluding 3.4 but "
+            "keeping every integer point. The BOUND prunes: keep the best integer solution found so "
+            "far (the incumbent), and discard any subtree whose relaxation cannot beat it. Runs on the "
+            "repo's simplex LP solver (whose two-phase artificial handling was hardened in the "
+            "process -- a basic artificial left after phase 1 could silently absorb value and violate "
+            "a >= constraint). Validated against brute-force integer search: it finds the true optimum "
+            "on random small ILPs and 0/1 knapsacks; the solution is integer and feasible; the LP "
+            "relaxation bound always dominates the integer optimum; and classic instances match "
+            "hand-computed answers. The integer-optimization companion to the simplex LP solver and "
+            "the knapsack tools.",
+            '<div class="grid">'
+            + svg_card(out("integer_programming.svg"), "A production-planning ILP: the LP relaxation optimum (3, 1.5) = 21 is fractional and unbuildable, so branch and bound descends to the true integer optimum (4, 0) = 20 -- an integrality gap of 1, found by exploring just five tree nodes")
+            + f'<div class="card">{pre(integer_programming_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

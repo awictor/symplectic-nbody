@@ -529,6 +529,7 @@ ruins a long non-symplectic integration.
 | `src/finite_volume.py` | Godunov + MUSCL finite-volume shock capturing for conservation laws |
 | `src/kaplan_meier.py` | Kaplan-Meier survival estimator + Greenwood variance + log-rank test |
 | `src/mcts.py` | Monte Carlo Tree Search (UCT) with a minimax solver + tic-tac-toe |
+| `src/integer_programming.py` | Integer LP by branch and bound over the simplex LP relaxation |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1049,6 +1050,7 @@ ruins a long non-symplectic integration.
 | `examples/finite_volume_demo.py` | Burgers shock: Godunov vs MUSCL sharpness, mass conserved |
 | `examples/kaplan_meier_demo.py` | Treatment vs control survival curves + log-rank test |
 | `examples/mcts_demo.py` | MCTS visit counts concentrating on the winning tic-tac-toe move |
+| `examples/integer_programming_demo.py` | ILP: LP relaxation, integrality gap, knapsack, node pruning |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12011,6 +12013,27 @@ and became AlphaGo with a value network in place of the random rollout. Validate
 minimax solver on tic-tac-toe: MCTS never loses from the empty board, takes immediate wins, blocks
 immediate losses, and its agreement with optimal play grows with the budget. The self-play search
 companion to the minimax idea, the UCB bandit, and the Sprague-Grundy tools.
+
+## Integer programming: branch and bound over the LP relaxation
+
+Solve NP-hard integer programs exactly by pruning with the LP bound. `integer_programming.py`:
+
+```
+$ python examples/integer_programming_demo.py examples/output
+
+  max 5x + 4y  s.t. 6x+4y<=24, x+2y<=6
+    LP relaxation optimum: 21.00  (fractional, not buildable)
+    integer optimum:       20  at x = [4, 0]
+    integrality gap:       1.00,  nodes explored: 5
+  0/1 knapsack: value 240 (matches brute force over 32 subsets) in 17 LP nodes
+```
+
+Branch and bound solves the LP relaxation, branches a fractional variable into x<=floor and x>=ceil,
+and prunes any subtree whose relaxation cannot beat the best integer solution so far. Runs on the
+repo's simplex solver -- whose two-phase artificial handling was hardened here (a basic artificial left
+after phase 1 could silently absorb value and violate a >= constraint). Validated against brute-force
+integer search on random ILPs and 0/1 knapsacks, with the LP bound always dominating the integer
+optimum. The integer-optimization companion to the simplex LP solver and the knapsack tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
