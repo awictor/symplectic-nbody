@@ -479,6 +479,7 @@ ruins a long non-symplectic integration.
 | `src/cyk.py` | CYK context-free parsing: membership, parse-tree count, one parse tree |
 | `src/nmf.py` | Non-negative matrix factorization (Lee-Seung multiplicative updates) + KL variant |
 | `src/johnson_lindenstrauss.py` | JL random projection: distance-preserving dimension reduction (Gaussian + Achlioptas) |
+| `src/stirling.py` | Stirling numbers (both kinds), Bell numbers, set partitions and cycles |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -949,6 +950,7 @@ ruins a long non-symplectic integration.
 | `examples/cyk_demo.py` | CYK triangular chart + Catalan-number parse counts of an ambiguous grammar |
 | `examples/nmf_demo.py` | Term-document matrix factored into two recovered topics |
 | `examples/johnson_lindenstrauss_demo.py` | Distortion-vs-dimension curve + projected-distance scatter |
+| `examples/stirling_demo.py` | Stirling triangles, set partitions, Bell numbers three ways |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10935,6 +10937,24 @@ Multiply each vector by a random matrix (Gaussian, or sparse Achlioptas +/-sqrt(
 dimension is independent of the original. Validated empirically: worst-case distortion stays within
 the eps bound and shrinks with dimension, the mean squared-distance ratio is unbiased, and both
 matrix variants satisfy the bound. The distance-preserving companion to PCA/SVD and t-SNE.
+
+## Stirling and Bell numbers: partitions and cycles
+
+Counting set partitions and permutation cycles. `stirling.py`:
+
+```
+$ python examples/stirling_demo.py examples/output
+
+  S(n,k) rows sum to Bell numbers: 1, 1, 2, 5, 15, 52, 203, 877, 4140
+  c(n,k) rows sum to n!;  Bell via sum-of-Stirling, Bell triangle, Dobinski all agree
+```
+
+S(n,k) counts set partitions into k blocks (Bell number B(n) sums over k); c(n,k) counts permutations
+with k cycles. Pascal-like recurrences, row sums to Bell/n!, and the two kinds are inverse matrices
+linking powers to falling factorials. Validated against exhaustive set-partition and permutation-cycle
+enumeration, Dobinski's series, the row-sum identities, the inverse-matrix duality, and the
+falling-factorial polynomial identities. The set-structure companion to the integer-partition and
+ranking notes.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

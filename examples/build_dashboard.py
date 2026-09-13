@@ -521,6 +521,7 @@ def main():
     import cyk_demo
     import nmf_demo
     import johnson_lindenstrauss_demo
+    import stirling_demo
 
     import plot_orbits
 
@@ -1011,6 +1012,7 @@ def main():
     cyk_txt = run("cyk_demo", cyk_demo.main, True)
     nmf_txt = run("nmf_demo", nmf_demo.main, True)
     johnson_lindenstrauss_txt = run("johnson_lindenstrauss_demo", johnson_lindenstrauss_demo.main, True)
+    stirling_txt = run("stirling_demo", stirling_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8865,6 +8867,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("johnson_lindenstrauss.svg"), "Left: worst-case distance distortion falling as the target dimension grows (60 points from 500 dimensions). Right: projected-to-50-dimensions distances scatter tightly along the y=x line against the originals")
             + f'<div class="card">{pre(johnson_lindenstrauss_txt)}</div>'
+            + '</div>'),
+        section(
+            "Stirling and Bell numbers: partitions and cycles",
+            "Two of the most important sequences in combinatorics count the ways to structure n "
+            "labelled objects. The Stirling number of the SECOND kind S(n,k) counts partitions of an "
+            "n-set into k non-empty blocks; the BELL number B(n) sums those over all k -- the total "
+            "number of set partitions (B(3)=5). The Stirling number of the FIRST kind c(n,k) counts "
+            "permutations of n elements with exactly k cycles. Each obeys a Pascal-like recurrence "
+            "with a combinatorial story (element n joins an existing block/cycle or starts its own), "
+            "the first-kind rows sum to n! and the second-kind rows to the Bell number, and the two "
+            "kinds are inverse triangular matrices connecting ordinary powers to falling factorials. "
+            "Validated against brute force: S(n,k) matches an exhaustive set-partition count, c(n,k) "
+            "a permutation-by-cycle count, and B(n) both a total-partition enumeration and Dobinski's "
+            "series; the row-sum identities hold; the two kinds verify as inverse matrices; and the "
+            "falling-factorial polynomial identities (x^n = sum S(n,k)(x)_k) check out over a range "
+            "of integers. The set-structure companion to the integer-partition and "
+            "combinatorial-ranking notes.",
+            '<div class="grid">'
+            + svg_card(out("stirling.svg"), "The Stirling triangle of the second kind as a heatmap: cell (n,k) is the number of ways to partition an n-set into k blocks, and each row sums to the Bell number B(n) shown alongside")
+            + f'<div class="card">{pre(stirling_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
