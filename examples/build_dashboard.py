@@ -498,6 +498,7 @@ def main():
     import chinese_postman_demo
     import bankers_demo
     import page_replacement_demo
+    import rt_scheduling_demo
 
     import plot_orbits
 
@@ -965,6 +966,7 @@ def main():
     chinese_postman_txt = run("chinese_postman_demo", chinese_postman_demo.main, True)
     bankers_txt = run("bankers_demo", bankers_demo.main, True)
     page_replacement_txt = run("page_replacement_demo", page_replacement_demo.main, True)
+    rt_scheduling_txt = run("rt_scheduling_demo", rt_scheduling_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8336,6 +8338,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("page_replacement.svg"), "top: page faults by policy, with Belady's optimal the unbeatable floor and the others approximating it; bottom: FIFO's fault count rising from 3 to 4 frames (Belady's anomaly) while LRU only falls")
             + f'<div class="card">{pre(page_replacement_txt)}</div>'
+            + '</div>'),
+        section(
+            "Real-time scheduling: can the deadlines always be met?",
+            "A flight controller, an engine ECU, a pacemaker: each runs PERIODIC TASKS -- task i wakes "
+            "every T_i units and must finish its C_i units of work before its deadline. Missing one can "
+            "be catastrophic, so before deploying you must PROVE the set is SCHEDULABLE. Liu and Layland "
+            "answered this in 1973 for the two canonical policies. RATE-MONOTONIC assigns fixed priority "
+            "by rate (shorter period = higher priority) and is the optimal fixed-priority policy; its "
+            "SUFFICIENT test is that total utilisation U = sum(C_i/T_i) is at most n(2^(1/n)-1), a bound "
+            "falling from 1.0 toward ln 2 ~ 0.693 as n grows. EARLIEST-DEADLINE-FIRST always runs the "
+            "job with the nearest absolute deadline, the optimal dynamic-priority policy, with a "
+            "stunningly simple EXACT test: schedulable iff U <= 1 -- so EDF can use the processor fully "
+            "where RM cannot. This module computes utilisation, applies both tests, and -- the ground "
+            "truth -- SIMULATES each policy over one HYPERPERIOD (the LCM of the periods, after which the "
+            "schedule repeats), reporting any missed deadline. Validated: the EDF test is EXACT -- the "
+            "simulation misses a deadline exactly when U > 1, over 400 random task sets; the RM "
+            "Liu-Layland test is SUFFICIENT (under the bound the simulation always meets every deadline) "
+            "and shown NON-necessary (above-bound sets that still schedule exist); EDF DOMINATES RM "
+            "(schedules everything RM does, plus a U=0.97 set RM misses); a set with U slightly above 1 "
+            "misses under both; and the hyperperiod is the LCM of the periods.",
+            '<div class="grid">'
+            + svg_card(out("rt_scheduling.svg"), "the RM and EDF schedules over one hyperperiod, each tick coloured by the task that runs and the carets marking job releases -- the two policies interleave the same tasks differently to hit every deadline")
+            + f'<div class="card">{pre(rt_scheduling_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

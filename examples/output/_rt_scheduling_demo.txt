@@ -1,0 +1,25 @@
+Real-time scheduling: proving periodic tasks always meet their deadlines
+
+  task set (C=compute, T=period):
+    A: C=1, T=4  (uses 0.250 of the CPU)
+    B: C=2, T=6  (uses 0.333 of the CPU)
+    C: C=1, T=8  (uses 0.125 of the CPU)
+  total utilisation U = 0.7083, hyperperiod = 24
+
+  RM Liu-Layland bound for 3 tasks: 0.7798
+    RM sufficient test (U <= bound): True
+    RM exact (simulation):           True
+  EDF exact test (U <= 1):           True
+    EDF exact (simulation):          True
+
+  a harder set X(C=2,T=5), Y(C=4,T=7): U = 0.9714
+    RM schedulable:  False
+    EDF schedulable: True
+    (EDF's dynamic deadlines use the CPU more fully than RM's fixed priorities)
+
+  Rate-monotonic gives shorter-period tasks higher fixed priority; Liu-Layland proved it
+  optimal among fixed-priority policies, schedulable whenever U <= n(2^(1/n)-1). EDF always
+  runs the job with the nearest deadline and is exactly schedulable iff U <= 1 -- the most
+  any policy can promise. Both are checked against a full hyperperiod simulation here.
+
+  wrote examples/output\rt_scheduling.svg
