@@ -1,0 +1,15 @@
+Stationary iterative solvers: Jacobi, Gauss-Seidel, SOR on the 2-D Poisson equation
+
+  -Laplacian(u) = 2 pi^2 sin(pi x) sin(pi y) on a 14x14 interior grid.
+  Manufactured exact solution u = sin(pi x) sin(pi y).
+
+          method   iterations   max error
+          jacobi          815    3.62e-03
+    gauss_seidel          409    3.62e-03
+             sor           55    3.62e-03
+
+  Optimal SOR omega = 1.6558
+  SOR is 14.8x fewer iterations than Jacobi -- O(N) vs O(N^2) scaling.
+  All three converge to the same solution; only the speed differs.
+
+  wrote examples/output\iterative_solvers.svg

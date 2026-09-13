@@ -484,6 +484,7 @@ ruins a long non-symplectic integration.
 | `src/randomized_svd.py` | Randomized SVD (Halko-Martinsson-Tropp): fast near-optimal top-k factorization |
 | `src/kde.py` | Kernel density estimation: 5 kernels, Silverman/Scott bandwidth, adaptive variant |
 | `src/thomas.py` | Thomas tridiagonal solver + Crank-Nicolson heat equation (unconditionally stable) |
+| `src/iterative_solvers.py` | Jacobi / Gauss-Seidel / SOR stationary solvers + 2-D Poisson equation |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -959,6 +960,7 @@ ruins a long non-symplectic integration.
 | `examples/randomized_svd_demo.py` | Randomized vs exact singular-value spectrum + error-vs-rank curve |
 | `examples/kde_demo.py` | Bimodal density estimated at three bandwidths with a sample rug |
 | `examples/thomas_demo.py` | Heat spike diffusing under Crank-Nicolson vs the analytic Gaussian |
+| `examples/iterative_solvers_demo.py` | 2-D Poisson field + iteration counts (Jacobi vs GS vs SOR) |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11034,6 +11036,23 @@ and second-order accurate. Validated: Thomas matches dense Gaussian elimination;
 matches analytic Gaussian broadening, the exp(-alpha k^2 t) sine-mode decay, and the linear steady
 state, staying bounded where the explicit scheme blows up. The numerical-PDE companion to the analytic
 diffusion (Fick's law) note.
+
+## Stationary iterative solvers: Jacobi, Gauss-Seidel, SOR
+
+Sparse linear systems by iteration, not elimination. `iterative_solvers.py`:
+
+```
+$ python examples/iterative_solvers_demo.py examples/output
+
+  2-D Poisson: Jacobi 815 iters, Gauss-Seidel 409, optimal SOR 55 (14.8x faster)
+  all converge to the same solution (max error 3.6e-3, discretization limited)
+```
+
+Jacobi (diagonal split, parallel), Gauss-Seidel (lower-triangle, updates propagate in-sweep), and SOR
+(over-relaxed, O(N) vs O(N^2) on Poisson with optimal omega). Validated against a dense direct solve
+on diagonally-dominant and SPD systems, with the iteration-count ordering GS <= Jacobi and SOR
+fewest, and the 2-D Poisson solver matching a manufactured sin*sin analytic solution. The
+iterative-linear-algebra companion to the LU/Cholesky solvers and conjugate gradient.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -526,6 +526,7 @@ def main():
     import randomized_svd_demo
     import kde_demo
     import thomas_demo
+    import iterative_solvers_demo
 
     import plot_orbits
 
@@ -1021,6 +1022,7 @@ def main():
     randomized_svd_txt = run("randomized_svd_demo", randomized_svd_demo.main, True)
     kde_txt = run("kde_demo", kde_demo.main, True)
     thomas_txt = run("thomas_demo", thomas_demo.main, True)
+    iterative_solvers_txt = run("iterative_solvers_demo", iterative_solvers_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8976,6 +8978,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("thomas.svg"), "A hot spike on a bar diffusing under Crank-Nicolson: the profile spreads and flattens over time, tracking the analytic sqrt(t)-broadening Gaussian, at a time step where the explicit scheme would blow up")
             + f'<div class="card">{pre(thomas_txt)}</div>'
+            + '</div>'),
+        section(
+            "Stationary iterative solvers: Jacobi, Gauss-Seidel, SOR",
+            "For a large sparse system A x = b, direct elimination is O(n^3) and destroys sparsity. "
+            "The stationary iterative methods split A = M - N and iterate cheaply, converging when "
+            "the spectral radius of M^-1 N is below one. JACOBI uses the diagonal (each update reads "
+            "only old neighbours -- fully parallel but slowest); GAUSS-SEIDEL uses the lower triangle "
+            "(updates propagate within the sweep, roughly twice as fast); SOR adds an over-relaxation "
+            "factor omega that overshoots the correction, and with the optimal omega the iteration "
+            "count for the model Poisson problem drops from O(N^2) to O(N). The canonical test is the "
+            "discrete Poisson equation, whose five-point stencil is sparse, symmetric, and "
+            "diagonally dominant. Validated against ground truth: all three converge to the same "
+            "solution as a dense direct solve on diagonally-dominant and SPD systems; Gauss-Seidel "
+            "takes no more iterations than Jacobi and optimal SOR far fewer; and the 2-D Poisson "
+            "solver reproduces a manufactured analytic solution (a product of sines) to "
+            "discretization accuracy. The iterative-linear-algebra companion to the LU/Cholesky "
+            "direct solvers and the conjugate gradient method.",
+            '<div class="grid">'
+            + svg_card(out("iterative_solvers.svg"), "Left: the Poisson solution field u = sin(pi x) sin(pi y). Right: iterations to converge -- Jacobi 815, Gauss-Seidel 409, optimal SOR just 55, all reaching the same solution")
+            + f'<div class="card">{pre(iterative_solvers_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
