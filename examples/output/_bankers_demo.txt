@@ -1,0 +1,28 @@
+Banker's algorithm: lend resources only if a safe finishing order still exists
+
+     allocation    max        need
+  P0  [0, 1, 0]     [7, 5, 3]   [7, 4, 3]
+  P1  [2, 0, 0]     [3, 2, 2]   [1, 2, 2]
+  P2  [3, 0, 2]     [9, 0, 2]   [6, 0, 0]
+  P3  [2, 1, 1]     [2, 2, 2]   [0, 1, 1]
+  P4  [0, 0, 2]     [4, 3, 3]   [4, 3, 1]
+  available: [3, 3, 2]
+
+  state is SAFE: True
+  safe finishing sequence: P1 -> P3 -> P4 -> P0 -> P2
+    (each process's remaining need fits the pool when its turn comes, then it releases)
+
+  P1 requests one more A and two more C, i.e. [1,0,2]:
+    granted: True   (state stays safe; available now [2, 3, 0])
+
+  P4 requests [3,3,0] (would drain the pool into an unsafe state):
+    granted: False   (refused -- P4 must wait to avoid risking deadlock)
+
+  deadlock detection: P0 holds A wants B, P1 holds B wants A, nothing free:
+    deadlocked processes: [0, 1]   (a genuine circular wait)
+
+  A state is safe if some order lets every process reach its MAX and finish, freeing its
+  resources for the next. The banker grants a request only when the resulting state is still
+  safe -- so the system can always drain to completion and never paints itself into deadlock.
+
+  wrote examples/output\bankers.svg

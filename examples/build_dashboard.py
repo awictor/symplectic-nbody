@@ -496,6 +496,7 @@ def main():
     import vcg_auction_demo
     import minimize_1d_demo
     import chinese_postman_demo
+    import bankers_demo
 
     import plot_orbits
 
@@ -961,6 +962,7 @@ def main():
     vcg_auction_txt = run("vcg_auction_demo", vcg_auction_demo.main, True)
     minimize_1d_txt = run("minimize_1d_demo", minimize_1d_demo.main, True)
     chinese_postman_txt = run("chinese_postman_demo", chinese_postman_demo.main, True)
+    bankers_txt = run("bankers_demo", bankers_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8284,6 +8286,31 @@ def main():
             '<div class="grid">'
             + svg_card(out("chinese_postman.svg"), "a street network where the two odd-degree junctions (red) are paired along a shortest path (yellow dashed) that the postman must retrace -- the minimum extra distance that makes an Eulerian tour possible")
             + f'<div class="card">{pre(chinese_postman_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Banker's algorithm: granting resources without deadlock",
+            "An operating system hands out resources -- memory, locks, connections -- to processes that "
+            "request them incrementally. The danger is DEADLOCK: A holds resource 1 and waits for 2 while "
+            "B holds 2 and waits for 1, and neither can proceed. Dijkstra's BANKER'S ALGORITHM (1965) "
+            "prevents it by DEADLOCK AVOIDANCE: grant a request only if the resulting state is still "
+            "SAFE -- meaning some order lets all processes run to completion. The name is Dijkstra's "
+            "analogy: a banker lends only if it can still satisfy every customer's credit line in some "
+            "sequence. The state is three tables -- ALLOCATION (held), MAX (will ever need), AVAILABLE "
+            "(free pool) -- with NEED = MAX - ALLOCATION. The safety check: with the free pool, "
+            "repeatedly find a process whose remaining need fits, pretend it finishes and RELEASES "
+            "everything back to the pool; if all finish, the state is safe and the order is a SAFE "
+            "SEQUENCE. To grant a request, tentatively apply it and re-run the check -- grant only if "
+            "still safe. This module implements the safety check (returning a safe sequence), the "
+            "request-grant decision, and a deadlock detector for the no-max case. Validated: the safety "
+            "verdict matches a brute-force search over all n! completion orders on 300 random states, "
+            "and every returned safe sequence genuinely lets each process finish; the classic "
+            "Silberschatz instance is safe with its documented sequence; granting a request never "
+            "produces an unsafe state; requests exceeding NEED or AVAILABLE are refused; releasing keeps "
+            "safety; and the deadlock detector catches a circular wait, sees it broken when a unit frees "
+            "up, and never flags idle processes.",
+            '<div class="grid">'
+            + svg_card(out("bankers.svg"), "the allocation and need tables of five processes over three resource types, and the safe finishing sequence the banker verified before granting -- the order in which every process can reach its maximum and release")
+            + f'<div class="card">{pre(bankers_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

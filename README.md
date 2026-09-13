@@ -454,6 +454,7 @@ ruins a long non-symplectic integration.
 | `src/vcg_auction.py` | VCG mechanism + second-price auction: efficient, strategy-proof allocation |
 | `src/minimize_1d.py` | Derivative-free 1D minimization: golden section, Brent, auto-bracketing |
 | `src/chinese_postman.py` | Chinese Postman route inspection: shortest closed walk over every edge |
+| `src/bankers.py` | Banker's algorithm: deadlock avoidance, safety check, deadlock detection |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -899,6 +900,7 @@ ruins a long non-symplectic integration.
 | `examples/vcg_auction_demo.py` | Ad-slot assignment with externality payments and a lying test |
 | `examples/minimize_1d_demo.py` | Golden vs Brent eval counts and shrinking golden-section brackets |
 | `examples/chinese_postman_demo.py` | Street network with odd junctions paired and retraced paths drawn |
+| `examples/bankers_demo.py` | Safe-sequence check, a granted vs refused request, and a deadlock |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10429,6 +10431,24 @@ route length is total edge weight plus the minimum matching cost -- polynomial, 
 Floyd-Warshall distances and exact odd-vertex matching, with a Hierholzer Eulerian circuit for the
 even case. Validated: route = edges + min matching (matching brute-forced over pairings on 200 graphs),
 valid Eulerian circuits, the handshake lemma, disconnected-graph detection, and hand instances.
+
+## The Banker's algorithm: granting resources without deadlock
+
+Grant resources only when a safe finishing order still exists. `bankers.py`:
+
+```
+$ python examples/bankers_demo.py examples/output
+
+  state SAFE, sequence P1 -> P3 -> P4 -> P0 -> P2
+  safe request granted; dangerous request refused; circular wait detected as deadlock
+```
+
+Dijkstra's Banker's algorithm avoids deadlock by granting a request only if the resulting state is
+safe -- some order lets every process reach its MAX and release. The safety check repeatedly finds a
+process whose remaining NEED fits the free pool, finishes it, and returns its resources. Implements the
+safety check (with a safe sequence), request-grant decision, and deadlock detection. Validated against a
+brute-force search over all n! completion orders on 300 random states, the Silberschatz textbook
+instance, grant-safety invariance, need/available refusal, and circular-wait detection.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
