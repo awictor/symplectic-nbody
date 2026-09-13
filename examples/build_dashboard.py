@@ -530,6 +530,7 @@ def main():
     import force_layout_demo
     import distance_transform_demo
     import goertzel_demo
+    import barycentric_demo
 
     import plot_orbits
 
@@ -1029,6 +1030,7 @@ def main():
     force_layout_txt = run("force_layout_demo", force_layout_demo.main, True)
     distance_transform_txt = run("distance_transform_demo", distance_transform_demo.main, True)
     goertzel_txt = run("goertzel_demo", goertzel_demo.main, True)
+    barycentric_txt = run("barycentric_demo", barycentric_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9062,6 +9064,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("goertzel.svg"), "Left: a 1000 Hz tone buried in noise leaps out of a Goertzel detector bank (one O(n) recurrence per probe frequency). Right: the DTMF row x column grid where 697+1336 Hz light up keypad digit 5")
             + f'<div class="card">{pre(goertzel_txt)}</div>'
+            + '</div>'),
+        section(
+            "Barycentric interpolation and Runge's phenomenon",
+            "Given n+1 points with distinct nodes, exactly one polynomial of degree n passes through "
+            "them. The textbook Lagrange formula is O(n^2) to evaluate and numerically shaky; the "
+            "BARYCENTRIC form used in practice precomputes weights w_i = 1/prod(x_i - x_j) once, then "
+            "evaluates in O(n) as (sum w_i y_i/(x-x_i)) / (sum w_i/(x-x_i)) -- stable and easy to "
+            "update. But node placement decides everything: equally spaced nodes suffer RUNGE'S "
+            "PHENOMENON, the interpolant oscillating wildly near the ends with error that GROWS as "
+            "the degree rises, while CHEBYSHEV nodes clustered toward the ends (with simple "
+            "closed-form weights (-1)^i) converge geometrically for analytic functions. Validated: "
+            "the interpolant passes exactly through every data point, matches a naive Lagrange "
+            "evaluation, reproduces low-degree polynomials to machine precision, and on Runge's "
+            "function the equispaced error explodes to hundreds by degree 24 while Chebyshev shrinks "
+            "below 0.01 -- same degree, opposite fate. The interpolation companion to the "
+            "Chebyshev-series and spline tools.",
+            '<div class="grid">'
+            + svg_card(out("barycentric.svg"), "Degree-12 interpolation of Runge's function: equispaced nodes (red) oscillate wildly near the interval ends while Chebyshev nodes (green) hug the true curve (gray) -- Runge's phenomenon and its cure")
+            + f'<div class="card">{pre(barycentric_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

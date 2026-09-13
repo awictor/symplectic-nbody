@@ -488,6 +488,7 @@ ruins a long non-symplectic integration.
 | `src/force_layout.py` | Fruchterman-Reingold force-directed graph layout (springs + repulsion) |
 | `src/distance_transform.py` | Exact Euclidean distance transform in O(n) (Felzenszwalb-Huttenlocher) |
 | `src/goertzel.py` | Goertzel single-bin DFT in O(n) + DTMF touch-tone decoder |
+| `src/barycentric.py` | Barycentric Lagrange interpolation + Chebyshev nodes (cures Runge) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -967,6 +968,7 @@ ruins a long non-symplectic integration.
 | `examples/force_layout_demo.py` | A ring, a two-cluster network, and a tree laid out by force simulation |
 | `examples/distance_transform_demo.py` | Distance field of a sparse binary image as an ASCII grid + heatmap |
 | `examples/goertzel_demo.py` | A tone found in noise + a phone number decoded from DTMF audio |
+| `examples/barycentric_demo.py` | Runge's phenomenon: equispaced diverges while Chebyshev converges |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11109,6 +11111,23 @@ standard method for touch-tone decoding. Validated against the DFT: the complex 
 DFT bin to machine precision for every k, the power matches |DFT|^2, a pure sinusoid peaks in its own
 bin, and the DTMF decoder recovers dialled strings while single tones and noise decode to nothing. The
 targeted-frequency companion to the FFT and Levinson-Durbin tools.
+
+## Barycentric interpolation and Runge's phenomenon
+
+Stable O(n) polynomial interpolation, and why node placement matters. `barycentric.py`:
+
+```
+$ python examples/barycentric_demo.py examples/output
+
+  Runge 1/(1+25x^2), degree 24: equispaced error 257, Chebyshev error 0.008
+  smooth function exp(-x)cos(4x), Chebyshev degree 24: error 1e-15
+```
+
+The second barycentric form evaluates the interpolating polynomial in O(n) after an O(n^2) weight
+precompute. Equally spaced nodes suffer Runge's phenomenon (error grows with degree); Chebyshev nodes,
+clustered at the ends, converge geometrically. Validated: passes through every node, matches naive
+Lagrange, reproduces low-degree polynomials exactly, and Chebyshev beats equispaced on Runge's
+function. The interpolation companion to the Chebyshev-series and spline tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

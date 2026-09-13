@@ -1,0 +1,22 @@
+Barycentric Lagrange interpolation: stable O(n) evaluation, and Runge's trap
+
+  Interpolating Runge's function 1/(1+25x^2) on [-1, 1]:
+
+   degree   equispaced max error   Chebyshev max error
+        4              4.383e-01             4.600e-01
+        8              1.045e+00             2.047e-01
+       12              3.663e+00             8.440e-02
+       16              1.439e+01             3.671e-02
+       20              5.977e+01             1.774e-02
+       24              2.572e+02             8.163e-03
+
+  Equally spaced nodes -> Runge's phenomenon: the interpolant oscillates wildly near the
+  ends and the error GROWS with degree. Chebyshev nodes (clustered at the ends) converge
+  geometrically -- same polynomial degree, opposite fate, decided only by node placement.
+
+  A smooth analytic function exp(-x)cos(4x):
+    Chebyshev degree  8: max error 4.92e-03
+    Chebyshev degree 16: max error 1.62e-09
+    Chebyshev degree 24: max error 1.11e-15
+
+  wrote examples/output\barycentric.svg
