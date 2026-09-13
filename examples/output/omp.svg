@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="360" viewBox="0 0 760 360" font-family="monospace">
+<rect width="760" height="360" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="15">Sparse signal (n=60) recovered from just m=20 measurements by OMP</text>
+<line x1="40" y1="185.0" x2="720" y2="185.0" stroke="#30363d" stroke-width="1"/>
+<line x1="132.2" y1="185.0" x2="132.2" y2="80.8" stroke="#8b949e" stroke-width="2"/>
+<circle cx="132.2" cy="80.8" r="4" fill="none" stroke="#06d6a0" stroke-width="2"/>
+<line x1="293.6" y1="185.0" x2="293.6" y2="260.0" stroke="#8b949e" stroke-width="2"/>
+<circle cx="293.6" cy="260.0" r="4" fill="none" stroke="#06d6a0" stroke-width="2"/>
+<line x1="512.5" y1="185.0" x2="512.5" y2="60.0" stroke="#8b949e" stroke-width="2"/>
+<circle cx="512.5" cy="60.0" r="4" fill="none" stroke="#06d6a0" stroke-width="2"/>
+<line x1="673.9" y1="185.0" x2="673.9" y2="276.7" stroke="#8b949e" stroke-width="2"/>
+<circle cx="673.9" cy="276.7" r="4" fill="none" stroke="#06d6a0" stroke-width="2"/>
+<text x="40" y="328" fill="#8b949e" font-size="10">gray stems = true signal, green rings = OMP recovery (they coincide exactly)</text>
+</svg>

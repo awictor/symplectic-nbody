@@ -496,6 +496,7 @@ ruins a long non-symplectic integration.
 | `src/hilbert.py` | Hilbert transform / analytic signal: envelope + instantaneous frequency |
 | `src/string_similarity.py` | Jaro-Winkler, q-gram Jaccard/Dice, Soundex phonetic matching |
 | `src/hmc.py` | Hamiltonian Monte Carlo (leapfrog + Metropolis) + random-walk baseline |
+| `src/omp.py` | Orthogonal matching pursuit: sparse recovery / compressed sensing |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -983,6 +984,7 @@ ruins a long non-symplectic integration.
 | `examples/hilbert_demo.py` | AM envelope recovery + chirp instantaneous frequency |
 | `examples/string_similarity_demo.py` | Fuzzy name ranking + Soundex phonetic grouping |
 | `examples/hmc_demo.py` | HMC vs random-walk Metropolis on a correlated Gaussian ridge |
+| `examples/omp_demo.py` | Sparse signal recovered exactly from few random measurements |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11258,6 +11260,23 @@ symplectic leapfrog integrator; accept on the tiny energy error. The momentum ca
 from the start with high acceptance. Validated: recovers standard-normal and correlated-Gaussian
 moments and correlation, high acceptance, lower autocorrelation than random-walk Metropolis, and works
 with a finite-difference gradient. The gradient-guided sampler completing the Metropolis/Gibbs family.
+
+## Orthogonal matching pursuit: sparse recovery from few measurements
+
+The compressed-sensing miracle: recover a sparse signal from far fewer measurements than unknowns.
+`omp.py`:
+
+```
+$ python examples/omp_demo.py examples/output
+
+  60-length signal, 4 nonzero: exact recovery from 20 random measurements (error 1e-16)
+```
+
+Greedily add the column of the measurement matrix most correlated with the residual, re-solve the
+least-squares fit on the active set, repeat. Validated: recovers a planted k-sparse signal's support
+and coefficients from m ~ a few times k measurements, residual decreases monotonically, a square
+system is solved exactly, and error stays bounded under noise. The sparse-recovery companion to the
+SVD/least-squares and FFT signal tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -538,6 +538,7 @@ def main():
     import hilbert_demo
     import string_similarity_demo
     import hmc_demo
+    import omp_demo
 
     import plot_orbits
 
@@ -1045,6 +1046,7 @@ def main():
     hilbert_txt = run("hilbert_demo", hilbert_demo.main, True)
     string_similarity_txt = run("string_similarity_demo", string_similarity_demo.main, True)
     hmc_txt = run("hmc_demo", hmc_demo.main, True)
+    omp_txt = run("omp_demo", omp_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9237,6 +9239,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("hmc.svg"), "Samples from a strongly correlated Gaussian ridge: HMC (left) tracks it with 0.99 acceptance and low autocorrelation, while random-walk Metropolis (right) shuffles across the narrow ridge and decorrelates far more slowly")
             + f'<div class="card">{pre(hmc_txt)}</div>'
+            + '</div>'),
+        section(
+            "Orthogonal matching pursuit: sparse recovery from few measurements",
+            "COMPRESSED SENSING turns a startling fact into an algorithm: a signal that is SPARSE "
+            "(only k of n coordinates nonzero) can be recovered from far fewer than n linear "
+            "measurements. Given a fat measurement matrix A (m x n, m &lt;&lt; n) and y = A x, solving "
+            "for x is underdetermined -- but if x is k-sparse and A is incoherent, the sparsest "
+            "solution is unique and recoverable. This underlies MRI acceleration, single-pixel "
+            "cameras, and radar. ORTHOGONAL MATCHING PURSUIT builds the support greedily: find the "
+            "column most correlated with the residual, add it, re-solve the least-squares fit on the "
+            "active columns (so the residual is orthogonal to all chosen atoms), and repeat. "
+            "Validated: on a planted k-sparse signal measured by a random Gaussian matrix, OMP "
+            "recovers the exact support and coefficients when m is a few times k; the residual "
+            "decreases monotonically; it stops at the right sparsity; a fully-measured square system "
+            "is solved exactly; and it degrades gracefully under measurement noise. The sparse-"
+            "recovery companion to the SVD / least-squares and FFT-based signal tools.",
+            '<div class="grid">'
+            + svg_card(out("omp.svg"), "A length-60 signal with just 4 nonzero coefficients, recovered exactly from 20 random measurements: the OMP recovery (green rings) lands precisely on the true spikes (gray stems), a wildly underdetermined system made solvable by sparsity")
+            + f'<div class="card">{pre(omp_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

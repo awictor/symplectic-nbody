@@ -1,0 +1,15 @@
+Orthogonal matching pursuit: sparse recovery from compressed measurements
+
+  Signal length n = 60, sparsity k = 4 (only 4 nonzero coefficients).
+
+   measurements m   recovered support?   max coeff error
+                8                   no          3.00e+00
+               15                   no          2.50e+00
+               20                  YES          8.88e-16
+               25                  YES          4.44e-16
+
+  Around m ~ 20 random measurements (a few times k) OMP nails all 60 coefficients
+  exactly, though the system is wildly underdetermined -- the sparsity is what makes it
+  solvable. This is the principle behind MRI acceleration and single-pixel cameras.
+
+  wrote examples/output\omp.svg
