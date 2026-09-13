@@ -1,0 +1,13 @@
+Hamiltonian Monte Carlo: gradient-guided sampling of a correlated Gaussian
+
+  Target: 2-D Gaussian with correlation 0.9 (a narrow diagonal ridge).
+
+                                    true rho 0.9
+                   HMC: accept 0.99  recovered rho +0.916  lag-5 autocorr 0.530
+  random-walk Metropolis: accept 0.70  recovered rho +0.887  lag-5 autocorr 0.878
+
+  Both are correct in the limit, but HMC's momentum carries it along the ridge in long
+  informed sweeps, so its samples decorrelate far faster -- lower autocorrelation means
+  more effective samples per step. Random walk shuffles slowly across the narrow ridge.
+
+  wrote examples/output\hmc.svg

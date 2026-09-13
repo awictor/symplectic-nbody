@@ -537,6 +537,7 @@ def main():
     import latin_hypercube_demo
     import hilbert_demo
     import string_similarity_demo
+    import hmc_demo
 
     import plot_orbits
 
@@ -1043,6 +1044,7 @@ def main():
     latin_hypercube_txt = run("latin_hypercube_demo", latin_hypercube_demo.main, True)
     hilbert_txt = run("hilbert_demo", hilbert_demo.main, True)
     string_similarity_txt = run("string_similarity_demo", string_similarity_demo.main, True)
+    hmc_txt = run("hmc_demo", hmc_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9214,6 +9216,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("string_similarity.svg"), "Ranking candidate names against the misspelling 'Jonathon' by Jaro-Winkler: the intended 'Jonathan' tops the list at 0.95, with the prefix bonus separating close matches from distant ones")
             + f'<div class="card">{pre(string_similarity_txt)}</div>'
+            + '</div>'),
+        section(
+            "Hamiltonian Monte Carlo: sampling by rolling a ball on the log-density",
+            "MCMC draws samples from a distribution known only up to a constant. Random-walk "
+            "Metropolis proposes small random steps, but on correlated or high-dimensional targets it "
+            "random-walks agonizingly slowly. HAMILTONIAN MONTE CARLO borrows physics: treat the "
+            "negative log-density as a POTENTIAL, give the sample a random Gaussian MOMENTUM, and let "
+            "the pair roll along Hamilton's equations. Because the dynamics conserve energy and "
+            "preserve phase-space volume, following a trajectory for a while and accepting on the "
+            "tiny energy error gives proposals FAR from the start with near-certain acceptance -- "
+            "exploring in long informed sweeps rather than a timid walk. The trajectory uses the "
+            "LEAPFROG (velocity-Verlet) integrator, which is symplectic (energy doesn't drift) and "
+            "reversible (needed for detailed balance). Validated: on a standard normal the sample "
+            "mean and variance match 0 and 1; on a correlated 2-D Gaussian it recovers the means, "
+            "variances, and correlation; the acceptance rate is high; it mixes far better than "
+            "random-walk Metropolis (lower autocorrelation at equal cost); and it works with a "
+            "finite-difference gradient. The gradient-guided sampler completing the Metropolis / "
+            "Gibbs MCMC family.",
+            '<div class="grid">'
+            + svg_card(out("hmc.svg"), "Samples from a strongly correlated Gaussian ridge: HMC (left) tracks it with 0.99 acceptance and low autocorrelation, while random-walk Metropolis (right) shuffles across the narrow ridge and decorrelates far more slowly")
+            + f'<div class="card">{pre(hmc_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

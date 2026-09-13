@@ -495,6 +495,7 @@ ruins a long non-symplectic integration.
 | `src/latin_hypercube.py` | Latin hypercube sampling + maximin design, variance reduction vs MC |
 | `src/hilbert.py` | Hilbert transform / analytic signal: envelope + instantaneous frequency |
 | `src/string_similarity.py` | Jaro-Winkler, q-gram Jaccard/Dice, Soundex phonetic matching |
+| `src/hmc.py` | Hamiltonian Monte Carlo (leapfrog + Metropolis) + random-walk baseline |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -981,6 +982,7 @@ ruins a long non-symplectic integration.
 | `examples/latin_hypercube_demo.py` | LHS vs random point sets + integration variance comparison |
 | `examples/hilbert_demo.py` | AM envelope recovery + chirp instantaneous frequency |
 | `examples/string_similarity_demo.py` | Fuzzy name ranking + Soundex phonetic grouping |
+| `examples/hmc_demo.py` | HMC vs random-walk Metropolis on a correlated Gaussian ridge |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11239,6 +11241,23 @@ Jaccard/Dice measure substring-bag overlap; Soundex maps sound-alikes to a share
 Validated against textbook values (Jaro Martha/Marhta = 0.944, Winkler 0.961), metric properties
 (Dice >= Jaccard, Winkler >= Jaro), and standard Soundex codes including the tricky H/W cases
 (Tymczak -> T522). The fuzzy-matching companion to the Levenshtein edit-distance tools.
+
+## Hamiltonian Monte Carlo: sampling by rolling a ball on the log-density
+
+Gradient-guided MCMC that mixes far faster than a random walk. `hmc.py`:
+
+```
+$ python examples/hmc_demo.py examples/output
+
+  correlated Gaussian rho=0.9: HMC accept 0.99, lag-5 autocorr 0.53
+  random-walk Metropolis: accept 0.70, lag-5 autocorr 0.88 (mixes slowly)
+```
+
+Treat -log p as a potential, add a random momentum, and roll along Hamilton's equations by the
+symplectic leapfrog integrator; accept on the tiny energy error. The momentum carries proposals far
+from the start with high acceptance. Validated: recovers standard-normal and correlated-Gaussian
+moments and correlation, high acceptance, lower autocorrelation than random-walk Metropolis, and works
+with a finite-difference gradient. The gradient-guided sampler completing the Metropolis/Gibbs family.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
