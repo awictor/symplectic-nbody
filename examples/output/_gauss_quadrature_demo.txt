@@ -1,0 +1,23 @@
+Gaussian quadrature on infinite domains: exact with a handful of points
+
+  Gauss-Hermite (weight e^{-x^2} over the whole line):
+    integral e^{-x^2} dx        = 1.7724538509  (exact sqrt(pi) = 1.7724538509)
+    integral cos(x) e^{-x^2} dx  = 1.3803884470  (exact = 1.3803884470)
+    5-point nodes: [-2.0202, -0.9586, -0.0, 0.9586, 2.0202]  (symmetric)
+
+  Gauss-Laguerre (weight e^{-x} over the half-line):
+    integral x^3 e^{-x} dx = 6.000000  (exact 3! = 6)
+    Gamma(1.5) = integral x^0.5 e^{-x} = 0.886855  (exact 0.886227)
+    Gamma(3.5) = integral x^2.5 e^{-x} = 3.323352  (exact 3.323351)
+    Gamma(5.5) = integral x^4.5 e^{-x} = 52.342778  (exact 52.342778)
+
+  Gaussian expectations via change of variables x = mu + sqrt(2) sigma t:
+    E[x^2] for N(0,1)       = 1.000000  (=1)
+    E[e^x]  for N(0,1)      = 1.648721  (= sqrt(e) = 1.648721)
+    P-ish: E[max(x,0)] N(0,1) = 0.403081  (= 1/sqrt(2pi) = 0.398942)
+
+  The n nodes are the roots of the degree-n orthogonal polynomial for the weight, found as
+  the eigenvalues of a tridiagonal Jacobi matrix (Golub-Welsch); the rule is then exact for
+  every polynomial up to degree 2n-1 and converges geometrically on smooth integrands.
+
+  wrote examples/output\gauss_quadrature.svg

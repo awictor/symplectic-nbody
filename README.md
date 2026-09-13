@@ -444,6 +444,7 @@ ruins a long non-symplectic integration.
 | `src/lanczos.py` | Lanczos Krylov eigensolver: extreme eigenvalues, matrix-free, reorthogonalised |
 | `src/gmres.py` | GMRES Krylov solver for nonsymmetric systems (Arnoldi + Givens, restart, precond) |
 | `src/golay.py` | Extended binary Golay [24,12,8] code: corrects 3 errors, syndrome decoding |
+| `src/gauss_quadrature.py` | Gauss-Hermite / Gauss-Laguerre quadrature via Golub-Welsch |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -879,6 +880,7 @@ ruins a long non-symplectic integration.
 | `examples/lanczos_demo.py` | Largest eigenvalue converging in m<<n steps; a matrix-free Laplacian |
 | `examples/gmres_demo.py` | Residual convergence and a 5x preconditioner speedup on an ill-scaled system |
 | `examples/golay_demo.py` | Correcting 3 flipped bits and the code's perfect weight distribution |
+| `examples/gauss_quadrature_demo.py` | Infinite-domain integrals, node placement, geometric convergence |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10229,6 +10231,24 @@ weight-<=3 error to a unique coset leader. Validated exhaustively: all 4096 mess
 decoder corrects EVERY weight-0..3 error pattern across all bit positions, the minimum distance is 8,
 the weight enumerator matches the famous (1,759,2576,759,1), weight-4 errors never silently miscorrect,
 and the code is linear.
+
+## Gaussian quadrature on infinite domains: Gauss-Hermite and Gauss-Laguerre
+
+Integrate over the whole line or half-line with a natural weight, exactly. `gauss_quadrature.py`:
+
+```
+$ python examples/gauss_quadrature_demo.py examples/output
+
+  integral cos(x) e^{-x^2} exact to machine precision with 8 nodes
+  E[e^x] under N(0,1) = sqrt(e); Gamma(s+1) via Gauss-Laguerre
+```
+
+Gauss-Hermite (weight e^{-x^2}) and Gauss-Laguerre (weight e^{-x}) place n nodes/weights that integrate
+every polynomial up to degree 2n-1 exactly. The Golub-Welsch algorithm finds them as the eigenvalues
+(nodes) and squared eigenvector-first-components (weights) of the orthogonal polynomials' tridiagonal
+Jacobi matrix -- one eigenproblem, solved by QL iteration. Includes a Gaussian-expectation helper.
+Validated: exactness to degree 2n-1 on monomials, positive weights summing to the total mass, symmetric
+Hermite nodes, known integrals (sqrt(pi), the Gamma function, E[e^x]=sqrt(e)), and geometric convergence.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

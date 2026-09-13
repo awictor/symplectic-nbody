@@ -486,6 +486,7 @@ def main():
     import lanczos_demo
     import gmres_demo
     import golay_demo
+    import gauss_quadrature_demo
 
     import plot_orbits
 
@@ -941,6 +942,7 @@ def main():
     lanczos_txt = run("lanczos_demo", lanczos_demo.main, True)
     gmres_txt = run("gmres_demo", gmres_demo.main, True)
     golay_txt = run("golay_demo", golay_demo.main, True)
+    gauss_quadrature_txt = run("gauss_quadrature_demo", gauss_quadrature_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8011,6 +8013,32 @@ def main():
             '<div class="grid">'
             + svg_card(out("golay.svg"), "a 24-bit Golay codeword sent, corrupted by 3 flipped bits (red), and decoded: the recovered row is bit-for-bit identical to the original, three errors erased by twelve parity bits")
             + f'<div class="card">{pre(golay_txt)}</div>'
+            + '</div>'),
+        section(
+            "Gaussian quadrature on infinite domains: Gauss-Hermite and Gauss-Laguerre",
+            "Ordinary quadrature integrates over a finite interval, but a huge share of the integrals "
+            "that matter run to infinity with a natural weight: the expectation of anything under a "
+            "Gaussian is an integral over the whole line with weight e^{-x^2}, and a Laplace transform "
+            "or radial physics integral runs over the half-line with weight e^{-x}. Truncating and "
+            "gridding these is wasteful. GAUSS-HERMITE (for e^{-x^2}) and GAUSS-LAGUERRE (for e^{-x}) "
+            "place n nodes and weights so cunningly that the rule integrates every polynomial up to "
+            "degree 2n-1 EXACTLY -- the maximum possible for n points -- and converges geometrically on "
+            "smooth integrands. The nodes are the roots of the corresponding orthogonal polynomials, and "
+            "the GOLUB-WELSCH algorithm finds them elegantly: those polynomials obey a three-term "
+            "recurrence whose coefficients form a symmetric tridiagonal JACOBI matrix, and the "
+            "quadrature nodes are exactly its EIGENVALUES while the weights come from the squared first "
+            "components of its EIGENVECTORS -- so an n-point rule is one tridiagonal eigenproblem, solved "
+            "here by QL iteration. Provides both rules, their integrators, and a Gaussian-expectation "
+            "helper via the substitution x = mu + sqrt(2) sigma t. Validated: exactness to degree 2n-1 "
+            "checked directly on monomials against their closed forms (Hermite double-factorial moments, "
+            "Laguerre factorial moments); weights positive and summing to the total mass (sqrt(pi), 1); "
+            "Hermite nodes symmetric with a zero node for odd n; known integrals matching -- e^{-x^2} "
+            "integrates to sqrt(pi), the Gamma function via Laguerre, E[x^2] = sigma^2 + mu^2 and E[e^x] "
+            "= sqrt(e) under a normal; and geometric convergence on cos(x) e^{-x^2} to machine "
+            "precision.",
+            '<div class="grid">'
+            + svg_card(out("gauss_quadrature.svg"), "top: the nine Gauss-Hermite nodes sitting under the e^{-x^2} weight, their stem heights the quadrature weights, clustered where the weight is largest; bottom: the error on a smooth integral plunging geometrically as nodes are added")
+            + f'<div class="card">{pre(gauss_quadrature_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
