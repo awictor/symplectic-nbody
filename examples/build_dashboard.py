@@ -553,6 +553,7 @@ def main():
     import reed_muller_demo
     import remez_demo
     import christofides_demo
+    import marching_tetrahedra_demo
 
     import plot_orbits
 
@@ -1075,6 +1076,7 @@ def main():
     reed_muller_txt = run("reed_muller_demo", reed_muller_demo.main, True)
     remez_txt = run("remez_demo", remez_demo.main, True)
     christofides_txt = run("christofides_demo", christofides_demo.main, True)
+    marching_tetrahedra_txt = run("marching_tetrahedra_demo", marching_tetrahedra_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9566,6 +9568,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("christofides.svg"), "Christofides on 10 cities: the minimum spanning tree (gray dashed), a minimum-weight matching on the odd-degree vertices (orange), and the final shortcut tour (blue) -- here 1.015x the exact optimum")
             + f'<div class="card">{pre(christofides_txt)}</div>'
+            + '</div>'),
+        section(
+            "Marching tetrahedra: a 3-D isosurface without the 256-case table",
+            "The isosurface {f = c} of a scalar field is a curved 2-D sheet in 3-D -- the surface of a "
+            "blob. MARCHING CUBES meshes it via a hand-built 256-entry lookup table plus a list of "
+            "ambiguous cases that can leave holes; MARCHING TETRAHEDRA sidesteps all of it. Split "
+            "every grid cube into SIX tetrahedra sharing the main diagonal. A tetrahedron has only "
+            "four corners, so 2^4 = 16 sign patterns collapse by symmetry to three: the surface "
+            "misses the tet, cuts three edges around one lone corner (one triangle), or separates "
+            "two-and-two (a quad, two triangles). Each crossing sits where LINEAR INTERPOLATION of the "
+            "corner values equals c. Adjacent tetrahedra share whole faces and interpolate identically "
+            "on the shared edge, so the mesh is WATERTIGHT by construction -- no ambiguity, no holes. "
+            "Validated on a sphere: every vertex lies on the surface to O(dx^2), all vertices sit "
+            "inside the box, the total triangle area converges to the analytic 4*pi*r^2 (4.4% -> 0.3% "
+            "as the grid refines), and a flat plane reproduces its area exactly. The 3-D companion to "
+            "the marching-squares contour extractor.",
+            '<div class="grid">'
+            + svg_card(out("marching_tetrahedra.svg"), "A two-blob metaball isosurface meshed into thousands of depth-shaded triangles by marching tetrahedra -- the mesh is watertight because neighbouring tetrahedra share whole faces")
+            + f'<div class="card">{pre(marching_tetrahedra_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

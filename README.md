@@ -511,6 +511,7 @@ ruins a long non-symplectic integration.
 | `src/reed_muller.py` | First-order Reed-Muller code RM(1,m) with fast Hadamard-transform decoding |
 | `src/remez.py` | Remez exchange for the true minimax polynomial (equioscillation) |
 | `src/christofides.py` | Christofides 1.5-approximation for metric TSP (MST + matching + Euler) |
+| `src/marching_tetrahedra.py` | 3-D isosurface meshing via tetrahedral split (watertight, table-free) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1013,6 +1014,7 @@ ruins a long non-symplectic integration.
 | `examples/reed_muller_demo.py` | RM(1,5) Mars code correcting up to 7 errors per 32-bit word |
 | `examples/remez_demo.py` | Minimax vs Chebyshev vs least-squares error curves for e^x |
 | `examples/christofides_demo.py` | Christofides tour vs Held-Karp optimum, MST + matching drawn |
+| `examples/marching_tetrahedra_demo.py` | Metaball isosurface meshed + sphere-area convergence to 4 pi r^2 |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11548,6 +11550,29 @@ MST + OPT/2 <= 1.5 OPT. Validated against the exact Held-Karp optimum on random 
 always a valid permutation, never over 1.5x optimum (worst seen ~1.12x), the intermediate multigraph
 is Eulerian, and the matching matches brute force. The approximation-algorithm companion to exact
 Held-Karp and the nearest-neighbour / 2-opt heuristics.
+
+## Marching tetrahedra: a 3-D isosurface without the 256-case table
+
+Meshing the surface {f = c} of a scalar field into watertight triangles. `marching_tetrahedra.py`:
+
+```
+$ python examples/marching_tetrahedra_demo.py examples/output
+
+  Sphere r=1: mesh surface area -> analytic 4 pi r^2 = 12.5664
+        grid   triangles        area     error
+           8        1080     12.0185    4.36%
+          16        4224     12.4293    1.09%
+          32       17160     12.5321    0.27%
+```
+
+Marching cubes needs a hand-built 256-case lookup table with ambiguous cases that can leave holes.
+Marching tetrahedra splits every cube into six tetrahedra sharing the main diagonal; a tet has only
+four corners, so the 16 sign patterns collapse by symmetry to three (miss, one triangle, or a quad
+split into two), each vertex placed by linear interpolation. Neighbouring tetrahedra share whole
+faces and interpolate identically on the shared edge, so the mesh is watertight -- no ambiguity, no
+holes. Validated on a sphere: vertices lie on the surface to O(dx^2), the surface area converges to
+4 pi r^2, and a flat plane reproduces its area exactly. The 3-D companion to the marching-squares
+contour extractor.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

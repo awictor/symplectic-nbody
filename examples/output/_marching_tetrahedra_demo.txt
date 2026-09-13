@@ -1,0 +1,14 @@
+Marching tetrahedra: meshing a 3-D isosurface without a 256-case table
+
+  Sphere r=1: mesh surface area -> analytic 4 pi r^2 = 12.5664
+        grid   triangles        area     error
+           8        1080     12.0185    4.36%
+          16        4224     12.4293    1.09%
+          32       17160     12.5321    0.27%
+
+  Two-blob metaball union at level 2.5: 5368 triangles, area 10.420
+
+  Watertight by construction: adjacent tetrahedra share whole faces and interpolate
+  identically on shared edges, so the mesh has no holes -- no ambiguous cases.
+
+  wrote examples/output\marching_tetrahedra.svg
