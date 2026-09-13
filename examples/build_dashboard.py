@@ -547,6 +547,7 @@ def main():
     import mean_shift_demo
     import pade_demo
     import prony_demo
+    import hp_filter_demo
 
     import plot_orbits
 
@@ -1063,6 +1064,7 @@ def main():
     mean_shift_txt = run("mean_shift_demo", mean_shift_demo.main, True)
     pade_txt = run("pade_demo", pade_demo.main, True)
     prony_txt = run("prony_demo", prony_demo.main, True)
+    hp_filter_txt = run("hp_filter_demo", hp_filter_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9436,6 +9438,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("prony.svg"), "A signal that is two decaying sinusoids: Prony fits four damped-exponential modes and reconstructs the samples exactly, recovering the 18 Hz and 33 Hz frequencies and their damping rates rather than smearing them across FFT bins")
             + f'<div class="card">{pre(prony_txt)}</div>'
+            + '</div>'),
+        section(
+            "Hodrick-Prescott filter: trend versus cycle",
+            "Economists (and anyone with a noisy time series) want to separate a slowly-moving TREND "
+            "from the shorter-run CYCLE around it -- GDP's long climb versus its boom-bust wiggle. "
+            "The Hodrick-Prescott filter (1997, but Whittaker's idea from 1923) finds the trend "
+            "minimizing sum (y - tau)^2 + lambda * sum (second difference of tau)^2, trading fidelity "
+            "against the curvature of the trend. One knob: lambda = 0 lets the trend fit every point "
+            "(no cycle), lambda -> infinity forces zero curvature so the trend becomes the "
+            "least-squares straight line; in between, larger lambda gives a smoother trend and a "
+            "larger cycle. The minimizer solves (I + lambda D^T D) tau = y, a symmetric positive-"
+            "definite pentadiagonal system solved by banded elimination in O(n). Validated: trend "
+            "plus cycle reconstructs the data; lambda = 0 returns the data and lambda -> infinity the "
+            "least-squares line; the banded solve matches a dense reference; the trend minimizes the "
+            "HP objective; larger lambda gives a smoother trend; and a noisy linear series has its "
+            "noise pushed into the cycle. The trend-extraction companion to the Savitzky-Golay / "
+            "Butterworth smoothers and the total-variation denoiser.",
+            '<div class="grid">'
+            + svg_card(out("hp_filter.svg"), "A synthetic GDP-like series (gray) with its Hodrick-Prescott trend (green, the classic quarterly lambda=1600) and the extracted business-cycle component below -- the noise and short-run swings peeled cleanly off the smooth trend")
+            + f'<div class="card">{pre(hp_filter_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

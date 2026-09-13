@@ -505,6 +505,7 @@ ruins a long non-symplectic integration.
 | `src/mean_shift.py` | Mean-shift clustering: mode-seeking, no k needed (Gaussian + flat kernels) |
 | `src/pade.py` | Pade rational approximants from Taylor coefficients (outreach Taylor, capture poles) |
 | `src/prony.py` | Prony's method: fit a signal as damped sinusoids (super-resolution spectrum) |
+| `src/hp_filter.py` | Hodrick-Prescott trend/cycle filter (banded pentadiagonal solve) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1001,6 +1002,7 @@ ruins a long non-symplectic integration.
 | `examples/mean_shift_demo.py` | Four blobs auto-clustered by mode-seeking, bandwidth sweep |
 | `examples/pade_demo.py` | Pade vs Taylor for exp and a function with poles |
 | `examples/prony_demo.py` | Damped-sinusoid recovery + super-resolution beating the FFT bin |
+| `examples/hp_filter_demo.py` | Trend/cycle decomposition of a GDP-like series across lambda |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11424,6 +11426,22 @@ Fits x[n] = sum a_k z_k^n: the samples obey a linear recurrence whose characteri
 are the modes, then amplitudes solve a Vandermonde least-squares. Validated: exact frequency/damping
 recovery, machine-precision reconstruction, and sub-FFT-bin super-resolution. The parametric-spectral
 companion to the FFT, Goertzel, and Levinson-Durbin tools.
+
+## Hodrick-Prescott filter: trend versus cycle
+
+Split a time series into a smooth trend and a cycle. `hp_filter.py`:
+
+```
+$ python examples/hp_filter_demo.py examples/output
+
+  lambda 10 -> trend tracks every wiggle; lambda 1e5 -> nearly straight; lambda=1600 classic
+```
+
+Minimize sum(y-tau)^2 + lambda*sum(second-difference of tau)^2; the trend solves a symmetric
+pentadiagonal system by banded elimination in O(n). Validated: trend+cycle reconstructs the data,
+lambda=0 returns the data and lambda->infinity the least-squares line, the banded solve matches a dense
+reference, and noise is pushed into the cycle. The trend-extraction companion to the Savitzky-Golay /
+Butterworth smoothers and TV denoiser.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,16 @@
+Hodrick-Prescott filter: split a time series into a smooth trend and a cycle
+
+  Synthetic series (80 points): quadratic trend + 20-period cycle + noise.
+
+      lambda   trend roughness   cycle std
+          10            5.2327       0.820
+         100            1.3510       1.593
+        1600            0.0504       2.614  <- classic quarterly lambda
+       10000            0.0203       2.846
+      100000            0.0048       3.937
+
+  Small lambda tracks every wiggle (trend ~ data, tiny cycle); large lambda gives an
+  almost-straight trend and pushes the cycle up. Lambda=1600 is the textbook quarterly
+  choice. The trend minimizes fidelity + lambda * (second-difference)^2 exactly.
+
+  wrote examples/output\hp_filter.svg
