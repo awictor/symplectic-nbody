@@ -491,6 +491,7 @@ ruins a long non-symplectic integration.
 | `src/barycentric.py` | Barycentric Lagrange interpolation + Chebyshev nodes (cures Runge) |
 | `src/sinkhorn.py` | Sinkhorn optimal transport (entropic Wasserstein) + exact 1-D Wasserstein |
 | `src/pchip.py` | PCHIP shape-preserving monotone cubic interpolation (Fritsch-Carlson) |
+| `src/sequence_acceleration.py` | Aitken / Wynn epsilon / Euler transform series acceleration |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -973,6 +974,7 @@ ruins a long non-symplectic integration.
 | `examples/barycentric_demo.py` | Runge's phenomenon: equispaced diverges while Chebyshev converges |
 | `examples/sinkhorn_demo.py` | Two histograms + the transport plan heatmap, cost approaching Wasserstein |
 | `examples/pchip_demo.py` | Step data where a cubic spline overshoots but PCHIP stays monotone |
+| `examples/sequence_acceleration_demo.py` | pi from Leibniz: raw crawls, Wynn hits machine precision |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11166,6 +11168,22 @@ local extremum), guaranteeing monotone data yields a monotone C^1 interpolant wi
 Validated: passes through every knot, stays monotone and inside the data range where a natural spline
 overshoots, reproduces a straight line, and is C^1 at the knots. The shape-preserving companion to the
 cubic-spline and barycentric interpolation tools.
+
+## Sequence acceleration: a limit from a handful of terms
+
+Extract a limit from a slowly-converging series. `sequence_acceleration.py`:
+
+```
+$ python examples/sequence_acceleration_demo.py examples/output
+
+  Leibniz pi: 30 raw terms -> error 0.03; Wynn on the same 30 -> error 2e-13
+  ln 2 (25 terms): raw error 0.02, Wynn error 4e-15
+```
+
+Aitken's delta-squared fits a geometric tail; Wynn's epsilon algorithm computes the whole Shanks
+family by a rhombus recurrence; Euler's transform reweights alternating series. Validated against
+known limits (pi, ln 2, Basel), exact recovery of a geometric sequence, and leaving converged
+sequences unchanged. The convergence-acceleration companion to the Richardson-extrapolation tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,18 @@
+Sequence acceleration: extracting a limit from a slowly-converging series
+
+  Leibniz series 1 - 1/3 + 1/5 - ... = pi/4, accelerating pi:
+
+   terms    raw sum error    Aitken error    Wynn error
+       5         1.98e-01        5.13e-04      7.50e-04
+      10         9.98e-02        1.65e-08      6.58e-07
+      15         6.66e-02        1.51e-14      1.69e-11
+      20         5.00e-02        1.78e-15      1.64e-14
+      25         4.00e-02        1.78e-15      3.55e-15
+      30         3.33e-02        1.78e-15      2.52e-13
+
+  30 raw terms give ~2 digits of pi; Wynn's epsilon algorithm on the same 30 partial
+  sums gives full machine precision. The raw sum would need ~10^15 terms to match it.
+
+  ln 2 series (25 terms): raw error 1.96e-02, Wynn error 4.33e-15
+
+  wrote examples/output\sequence_acceleration.svg

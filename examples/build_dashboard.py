@@ -533,6 +533,7 @@ def main():
     import barycentric_demo
     import sinkhorn_demo
     import pchip_demo
+    import sequence_acceleration_demo
 
     import plot_orbits
 
@@ -1035,6 +1036,7 @@ def main():
     barycentric_txt = run("barycentric_demo", barycentric_demo.main, True)
     sinkhorn_txt = run("sinkhorn_demo", sinkhorn_demo.main, True)
     pchip_txt = run("pchip_demo", pchip_demo.main, True)
+    sequence_acceleration_txt = run("sequence_acceleration_demo", sequence_acceleration_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9127,6 +9129,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("pchip.svg"), "Monotone step data: the natural cubic spline (red) overshoots below zero and above one, inventing wiggles, while PCHIP (green) stays monotone and inside the data range")
             + f'<div class="card">{pre(pchip_txt)}</div>'
+            + '</div>'),
+        section(
+            "Sequence acceleration: a limit from a handful of terms",
+            "Many series converge so slowly that summing millions of terms gives only a few digits -- "
+            "the Leibniz series for pi/4 needs a billion terms for nine digits. But the partial sums "
+            "carry more information than their face value: the pattern of approach can be "
+            "extrapolated. AITKEN'S delta-squared fits a geometric tail to three consecutive terms "
+            "and jumps to its limit; WYNN'S EPSILON ALGORITHM computes the whole family of "
+            "higher-order Shanks transforms with a simple rhombus recurrence and is astonishingly "
+            "effective; EULER'S transform reweights alternating series by binomial coefficients. "
+            "Validated against known limits: on the Leibniz series for pi and the alternating series "
+            "for ln 2, a dozen accelerated terms reach machine precision where thousands of raw terms "
+            "give two digits; Aitken exactly recovers a geometric sequence's limit in one step; the "
+            "accelerators leave a converged sequence unchanged; and Euler's transform matches Wynn on "
+            "alternating series. The convergence-acceleration companion to the Richardson-"
+            "extrapolation and numerical-series tools.",
+            '<div class="grid">'
+            + svg_card(out("sequence_acceleration.svg"), "Error in pi versus number of Leibniz terms on a log scale: the raw sum crawls to two digits while Aitken and Wynn's epsilon algorithm plunge to machine precision from the same 30 partial sums")
+            + f'<div class="card">{pre(sequence_acceleration_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
