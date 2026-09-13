@@ -1,0 +1,23 @@
+Weisfeiler-Lehman color refinement: iterated neighbourhood hashing
+
+  Graph edges: [(0, 1), (1, 2), (2, 3), (1, 4), (3, 5)]
+
+  Refinement (colour = hash of own colour + sorted neighbour colours):
+    round 0: colours [0, 1, 2, 2, 0, 0]   (3 classes)
+    round 1: colours [0, 2, 4, 3, 0, 1]   (5 classes)
+    round 2: colours [0, 2, 4, 3, 0, 1]   (5 classes)
+    -> stable
+
+  Distinguishing two 4-node graphs with 3 edges each:
+    P4 histogram:   (2, 2)
+    K1,3 histogram: (1, 3)
+    WL possibly-isomorphic? False  (exact: False)
+
+  The 1-WL blind spot -- two 2-regular graphs:
+    6-cycle histogram:      (6,)
+    two-triangles histogram:(6,)
+    WL possibly-isomorphic? True  (exact: False)
+    Every vertex has degree 2 and stays one colour forever -- 1-WL is fooled, but the
+    exact check knows a connected 6-cycle is not two disjoint triangles.
+
+  wrote examples/output\weisfeiler_lehman.svg

@@ -466,6 +466,7 @@ ruins a long non-symplectic integration.
 | `src/min_mean_cycle.py` | Karp's minimum mean cycle in O(V*E), negative-cycle certificate |
 | `src/dominator_tree.py` | Dominator tree of a CFG (Cooper-Harvey-Kennedy iterative dataflow) |
 | `src/heavy_light.py` | Heavy-light decomposition: O(log^2 n) tree-path sum/max/update queries |
+| `src/weisfeiler_lehman.py` | Weisfeiler-Lehman color refinement: graph isomorphism test + WL kernel |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -923,6 +924,7 @@ ruins a long non-symplectic integration.
 | `examples/min_mean_cycle_demo.py` | Directed graph with the minimum mean cycle highlighted |
 | `examples/dominator_tree_demo.py` | If/else-into-loop CFG beside its dominator tree |
 | `examples/heavy_light_demo.py` | Tree coloured by heavy chain with path sum/max/update queries |
+| `examples/weisfeiler_lehman_demo.py` | Color refinement rounds + the 1-WL regular-graph blind spot |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10672,6 +10674,25 @@ from the deeper head to its parent, and the LCA falls out of the same climb. Val
 brute-force path walk for every pair before and after updates on random trees, with the chain
 positions verified contiguous and the O(log n)-light-edges property checked directly. The path-query
 companion to the binary-lifting LCA and the segment tree.
+
+## Weisfeiler-Lehman color refinement
+
+A near-complete graph isomorphism test in near-linear time. `weisfeiler_lehman.py`:
+
+```
+$ python examples/weisfeiler_lehman_demo.py examples/output
+
+  P4 histogram (2,2) vs K1,3 histogram (1,3) -> not isomorphic (certified)
+  6-cycle vs two-triangles: both (6,) -> WL fooled (exact check: not isomorphic)
+```
+
+Colour each vertex by degree, then iterate: new colour = hash of old colour plus the sorted multiset
+of neighbour colours, until the partition stabilises. Isomorphic graphs always reach the same colour
+histogram, so a differing histogram certifies non-isomorphism; the only blind spot is symmetric
+regular graphs. This same refinement is the theoretical ceiling of graph neural networks. Validated
+against an exact permutation-search check: WL never rejects a truly isomorphic pair, shares histogram
+and hash under relabelling, and handles the classic 6-cycle vs two-triangles fooling pair honestly.
+The graph-fingerprint companion to the tree-isomorphism (AHU) note.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

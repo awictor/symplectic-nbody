@@ -508,6 +508,7 @@ def main():
     import min_mean_cycle_demo
     import dominator_tree_demo
     import heavy_light_demo
+    import weisfeiler_lehman_demo
 
     import plot_orbits
 
@@ -985,6 +986,7 @@ def main():
     min_mean_cycle_txt = run("min_mean_cycle_demo", min_mean_cycle_demo.main, True)
     dominator_tree_txt = run("dominator_tree_demo", dominator_tree_demo.main, True)
     heavy_light_txt = run("heavy_light_demo", heavy_light_demo.main, True)
+    weisfeiler_lehman_txt = run("weisfeiler_lehman_demo", weisfeiler_lehman_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8570,6 +8572,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("heavy_light.svg"), "A 10-vertex tree coloured by heavy chain -- thick edges are heavy (linking a chain), thin are light. Any root path crosses at most one light edge here, so every path query touches only a couple of contiguous array segments")
             + f'<div class="card">{pre(heavy_light_txt)}</div>'
+            + '</div>'),
+        section(
+            "Weisfeiler-Lehman color refinement",
+            "Are two graphs the same graph relabelled? Exact isomorphism has no known polynomial "
+            "algorithm, but the one-dimensional Weisfeiler-Lehman test (COLOR REFINEMENT) settles "
+            "almost every case cheaply. Colour each vertex by its degree, then repeat: a vertex's "
+            "new colour is a hash of its old colour plus the SORTED MULTISET of its neighbours' "
+            "colours. The partition into colour classes gets strictly finer until it stabilises, in "
+            "at most n rounds. Isomorphic graphs always reach the same colour histogram, so a "
+            "DIFFERING histogram is a near-linear-time certificate of NON-isomorphism. The converse "
+            "fails only on symmetric fooling cases (regular graphs), and the same refinement is the "
+            "theoretical ceiling of graph neural networks -- a GNN is exactly as powerful as 1-WL at "
+            "telling graphs apart. The module computes the stable colouring, histogram, canonical "
+            "hash, and the WL subtree kernel. Validated against an exact permutation-search "
+            "isomorphism check: WL never rejects a truly isomorphic pair (soundness, 300 pairs), "
+            "isomorphic graphs share histogram and hash under relabelling, the colouring is stable "
+            "and permutation-invariant, and the classic 6-cycle vs two-triangles fooling pair is "
+            "handled honestly (WL says 'possibly', exact says no). The graph-fingerprint companion "
+            "to the tree-isomorphism (AHU) note.",
+            '<div class="grid">'
+            + svg_card(out("weisfeiler_lehman.svg"), "A graph after WL refinement stabilises into five colour classes -- vertices sharing a colour have identical iterated neighbourhood signatures. The histogram of these class sizes is an isomorphism-invariant fingerprint")
+            + f'<div class="card">{pre(weisfeiler_lehman_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
