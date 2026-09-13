@@ -1,0 +1,32 @@
+Fibonacci by fast doubling: O(log n), so million-digit terms are instant
+
+  F_10 = 55
+  F_100 = 35422484817926191507... (21 digits)
+  F_1000 = 43466557686937456435... (209 digits)
+  F_1000000 has ~208988 digits (computed via ~20 big-integer multiplies)
+
+  Cassini's identity F_(n-1)F_(n+1) - F_n^2 = (-1)^n:
+    n=5: -1
+    n=6: +1
+    n=7: -1
+    n=8: +1
+
+  GCD property gcd(F_m, F_n) = F_gcd(m,n):
+    gcd(F_12, F_18) = 8 = F_6 = 8
+    gcd(F_15, F_25) = 5 = F_5 = 5
+    gcd(F_14, F_21) = 13 = F_7 = 13
+
+  Pisano period pi(m) (period of F_n mod m) lets F_n mod m work for huge n:
+    pi(2) = 3
+    pi(3) = 8
+    pi(10) = 60
+    pi(100) = 300
+    pi(1000) = 1500
+  F_(10^100) mod 1000 = 875  (via the Pisano cycle)
+
+  Zeckendorf representations (unique non-consecutive Fibonacci sums):
+    17 = 13 + 3 + 1
+    100 = 89 + 8 + 3
+    1000 = 987 + 13
+
+  wrote examples/output\fibonacci.svg

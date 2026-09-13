@@ -578,6 +578,7 @@ def main():
     import persistent_homology_demo
     import stern_brocot_demo
     import pell_demo
+    import fibonacci_demo
 
     import plot_orbits
 
@@ -1125,6 +1126,7 @@ def main():
     persistent_homology_txt = run("persistent_homology_demo", persistent_homology_demo.main, True)
     stern_brocot_txt = run("stern_brocot_demo", stern_brocot_demo.main, True)
     pell_txt = run("pell_demo", pell_demo.main, True)
+    fibonacci_txt = run("fibonacci_demo", fibonacci_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10141,6 +10143,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("pell.svg"), "The digit-length of the fundamental solution x of x^2 - D y^2 = 1 plotted against D: it jumps chaotically, D=61 needing ten digits while its neighbours need two or three -- the erratic growth that makes Pell's equation hard")
             + f'<div class="card">{pre(pell_txt)}</div>'
+            + '</div>'),
+        section(
+            "Fibonacci by fast doubling: O(log n), and the arithmetic it hides",
+            "The Fibonacci numbers are the most famous sequence in mathematics, but the naive recurrence "
+            "is O(n) on O(n)-digit numbers -- hopeless for the millionth term. The FAST DOUBLING "
+            "identities F_2k = F_k(2 F_{k+1} - F_k) and F_{2k+1} = F_{k+1}^2 + F_k^2 compute F_n in "
+            "O(log n) big-integer multiplications, reading the bits of n from the top -- the "
+            "matrix-power speed-up with half the work. This module also carries the companion LUCAS "
+            "numbers and makes several classical facts computable: CASSINI'S IDENTITY "
+            "F_{n-1}F_{n+1} - F_n^2 = (-1)^n; the GCD PROPERTY gcd(F_m, F_n) = F_gcd(m,n) (Fibonacci is "
+            "a strong divisibility sequence); the PISANO PERIOD, the cycle length of F_n mod m that "
+            "makes F_n mod m computable for astronomical n; and ZECKENDORF'S THEOREM, the unique "
+            "non-consecutive-Fibonacci representation of every integer. Validated: fast doubling "
+            "agrees with the naive recurrence and matrix power (n=0..1000); Cassini and the GCD "
+            "property hold; F_m | F_n iff m | n; the Pisano period genuinely cycles (pi(10)=60); and "
+            "every Zeckendorf representation is non-consecutive and sums back. The fast-recurrence "
+            "companion to the Kitamasa linear-recurrence solver and the golden-ratio tools.",
+            '<div class="grid">'
+            + svg_card(out("fibonacci.svg"), "The Pisano period pi(m) -- the length of the cycle of F_n mod m -- plotted for m up to 100; the yellow bars are the maximal pi(m) = 6m cases, and the period is what lets F_n mod m be computed for astronomically large n")
+            + f'<div class="card">{pre(fibonacci_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

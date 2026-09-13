@@ -536,6 +536,7 @@ ruins a long non-symplectic integration.
 | `src/persistent_homology.py` | H_0 persistence barcode of a point cloud (Vietoris-Rips = MST edges) |
 | `src/stern_brocot.py` | Stern-Brocot tree + Farey sequences: enumerate rationals, best approximation |
 | `src/pell.py` | Pell's equation x^2 - D y^2 = 1 via periodic continued fraction of sqrt(D) |
+| `src/fibonacci.py` | Fast-doubling Fibonacci/Lucas, Pisano period, Zeckendorf, Cassini/GCD identities |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1063,6 +1064,7 @@ ruins a long non-symplectic integration.
 | `examples/persistent_homology_demo.py` | H_0 barcode of a 3-cluster cloud; long bars = clusters |
 | `examples/stern_brocot_demo.py` | Best rational approximations of pi + Farey sequence + tree |
 | `examples/pell_demo.py` | Pell fundamental solutions (incl D=61) + chaotic digit-length growth |
+| `examples/fibonacci_demo.py` | Million-digit F_n, Pisano periods, F(10^100) mod m, Zeckendorf |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12174,6 +12176,27 @@ throughout. Validated: known fundamental solutions including D=61 and D=109; x^2
 over D=2..199; the negative Pell equation is solvable exactly when the CF period is odd; and the period
 is a palindrome ending in 2*a0. The Diophantine companion to the continued-fraction and Stern-Brocot
 tools.
+
+## Fibonacci by fast doubling: O(log n), and the arithmetic it hides
+
+Compute the millionth Fibonacci number instantly, and F_n mod m for astronomical n. `fibonacci.py`:
+
+```
+$ python examples/fibonacci_demo.py examples/output
+
+  F_1000000 has ~208988 digits (computed via ~20 big-integer multiplies)
+  gcd(F_12, F_18) = 8 = F_6           (the GCD property)
+  pi(10) = 60, pi(1000) = 1500        (Pisano periods)
+  F_(10^100) mod 1000 = 875           (via the Pisano cycle)
+  17 = 13 + 3 + 1                     (Zeckendorf)
+```
+
+The fast-doubling identities F_2k = F_k(2 F_{k+1} - F_k) and F_{2k+1} = F_{k+1}^2 + F_k^2 give F_n in
+O(log n) big-integer multiplies. The module also computes Lucas numbers, F_n mod m by modular fast
+doubling, the Pisano period, and the Zeckendorf representation. Validated: fast doubling matches the
+naive recurrence and matrix power, Cassini's identity and the GCD property hold, the Pisano period
+cycles (pi(10)=60), and every Zeckendorf representation is non-consecutive. The fast-recurrence
+companion to the Kitamasa linear-recurrence solver.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
