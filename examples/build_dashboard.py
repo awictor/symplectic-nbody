@@ -529,6 +529,7 @@ def main():
     import iterative_solvers_demo
     import force_layout_demo
     import distance_transform_demo
+    import goertzel_demo
 
     import plot_orbits
 
@@ -1027,6 +1028,7 @@ def main():
     iterative_solvers_txt = run("iterative_solvers_demo", iterative_solvers_demo.main, True)
     force_layout_txt = run("force_layout_demo", force_layout_demo.main, True)
     distance_transform_txt = run("distance_transform_demo", distance_transform_demo.main, True)
+    goertzel_txt = run("goertzel_demo", goertzel_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9042,6 +9044,24 @@ def main():
             '<div class="grid">'
             + svg_card(out("distance_transform.svg"), "The distance field of a sparse binary image: each pixel coloured by its exact Euclidean distance to the nearest feature (ringed red), dark near and bright far -- computed in linear time, not by per-pair search")
             + f'<div class="card">{pre(distance_transform_txt)}</div>'
+            + '</div>'),
+        section(
+            "Goertzel algorithm: one DFT bin, and how a phone decodes a keypad",
+            "The FFT computes every frequency bin at once in O(n log n), but often only a FEW "
+            "frequencies matter -- is there a 697 Hz tone in this phone audio? a 60 Hz hum? The "
+            "Goertzel algorithm (1958) computes a single DFT bin in O(n) with a tiny second-order "
+            "recurrence s[n] = x[n] + 2cos(omega) s[n-1] - s[n-2], using only real arithmetic until "
+            "the final step and needing no buffer of the whole signal -- it can run sample by sample "
+            "as data streams in. That makes it the standard method for DTMF (touch-tone) decoding on "
+            "cheap hardware. The magnitude-squared needs no trig or complex numbers at all. "
+            "Validated against the DFT: the Goertzel complex bin matches a direct DFT bin to machine "
+            "precision for every integer k, the power matches |DFT|^2, a pure sinusoid peaks in "
+            "exactly its own bin, and the DTMF decoder recovers a dialled string from synthesized "
+            "dual-tone audio while a single tone or noise decodes to nothing. The targeted-frequency "
+            "companion to the FFT and the Levinson-Durbin / spectral tools.",
+            '<div class="grid">'
+            + svg_card(out("goertzel.svg"), "Left: a 1000 Hz tone buried in noise leaps out of a Goertzel detector bank (one O(n) recurrence per probe frequency). Right: the DTMF row x column grid where 697+1336 Hz light up keypad digit 5")
+            + f'<div class="card">{pre(goertzel_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

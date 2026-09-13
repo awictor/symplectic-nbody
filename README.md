@@ -487,6 +487,7 @@ ruins a long non-symplectic integration.
 | `src/iterative_solvers.py` | Jacobi / Gauss-Seidel / SOR stationary solvers + 2-D Poisson equation |
 | `src/force_layout.py` | Fruchterman-Reingold force-directed graph layout (springs + repulsion) |
 | `src/distance_transform.py` | Exact Euclidean distance transform in O(n) (Felzenszwalb-Huttenlocher) |
+| `src/goertzel.py` | Goertzel single-bin DFT in O(n) + DTMF touch-tone decoder |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -965,6 +966,7 @@ ruins a long non-symplectic integration.
 | `examples/iterative_solvers_demo.py` | 2-D Poisson field + iteration counts (Jacobi vs GS vs SOR) |
 | `examples/force_layout_demo.py` | A ring, a two-cluster network, and a tree laid out by force simulation |
 | `examples/distance_transform_demo.py` | Distance field of a sparse binary image as an ASCII grid + heatmap |
+| `examples/goertzel_demo.py` | A tone found in noise + a phone number decoded from DTMF audio |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11090,6 +11092,23 @@ envelope of identical-curvature parabolas (one per site), found in a single O(n)
 columns then across rows for the exact 2-D Euclidean distance in linear time. Validated against an
 exhaustive nearest-feature search at every pixel over random images, plus single-point radial
 distances and the 1-D lower-envelope. The image/geometry companion to the Voronoi and k-d tree tools.
+
+## Goertzel algorithm: one DFT bin, and decoding a keypad
+
+Single-frequency detection without the full FFT. `goertzel.py`:
+
+```
+$ python examples/goertzel_demo.py examples/output
+
+  1000 Hz tone buried in noise: Goertzel power 144558 vs ~200 elsewhere
+  DTMF: dialled 1-800-2468 -> decoded 1-800-2468
+```
+
+A tiny second-order recurrence gives one DFT bin in O(n), streaming, mostly real arithmetic -- the
+standard method for touch-tone decoding. Validated against the DFT: the complex bin matches a direct
+DFT bin to machine precision for every k, the power matches |DFT|^2, a pure sinusoid peaks in its own
+bin, and the DTMF decoder recovers dialled strings while single tones and noise decode to nothing. The
+targeted-frequency companion to the FFT and Levinson-Durbin tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,20 @@
+Goertzel algorithm: single-frequency detection without the full FFT
+
+  Tone detection: a 1000 Hz sinusoid buried in strong noise.
+   freq (Hz)   Goertzel power
+         500            208.5  
+         800            493.2  
+        1000         144558.1  ##############################
+        1200             50.2  
+        1500            168.4  
+        2000            388.9  
+    -> strongest at 1000 Hz (the hidden tone), one O(n) recurrence per probe.
+
+  DTMF touch-tone decoding: dial a number, decode from the audio.
+    dialled:  1-800-2468
+    decoded:  1-800-2468   (match: True)
+
+  Each key is a sum of a row and a column tone; two Goertzel detectors per band find
+  the strongest, and the row x column intersection names the key -- how real phones do it.
+
+  wrote examples/output\goertzel.svg

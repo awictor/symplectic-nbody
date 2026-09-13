@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="410" viewBox="0 0 760 410" font-family="monospace">
+<rect width="760" height="410" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="15">Left: Goertzel power at probe frequencies. Right: DTMF row x column grid for key 5</text>
+<line x1="50" y1="360" x2="350" y2="360" stroke="#8b949e"/>
+<rect x="54" y="360" width="40" height="0" fill="#4dabf7"/>
+<text x="75" y="376" fill="#8b949e" font-size="8" text-anchor="middle">500</text>
+<rect x="104" y="359" width="40" height="1" fill="#4dabf7"/>
+<text x="125" y="376" fill="#8b949e" font-size="8" text-anchor="middle">800</text>
+<rect x="154" y="60" width="40" height="300" fill="#06d6a0"/>
+<text x="175" y="376" fill="#8b949e" font-size="8" text-anchor="middle">1000</text>
+<rect x="204" y="360" width="40" height="0" fill="#4dabf7"/>
+<text x="225" y="376" fill="#8b949e" font-size="8" text-anchor="middle">1200</text>
+<rect x="254" y="360" width="40" height="0" fill="#4dabf7"/>
+<text x="275" y="376" fill="#8b949e" font-size="8" text-anchor="middle">1500</text>
+<rect x="304" y="359" width="40" height="1" fill="#4dabf7"/>
+<text x="325" y="376" fill="#8b949e" font-size="8" text-anchor="middle">2000</text>
+<text x="200" y="390" fill="#8b949e" font-size="9" text-anchor="middle">probe frequency (Hz)</text>
+<text x="471" y="64" fill="#ffd43b" font-size="8" text-anchor="middle">1209</text>
+<text x="533" y="64" fill="#ffd43b" font-size="8" text-anchor="middle">1336</text>
+<text x="595" y="64" fill="#ffd43b" font-size="8" text-anchor="middle">1477</text>
+<text x="432" y="101" fill="#ffd43b" font-size="8" text-anchor="end">697</text>
+<rect x="440" y="70" width="58" height="58" rx="4" fill="#161b22" stroke="#30363d"/>
+<text x="471" y="105" fill="#8b949e" font-size="16" text-anchor="middle">1</text>
+<rect x="502" y="70" width="58" height="58" rx="4" fill="#161b22" stroke="#30363d"/>
+<text x="533" y="105" fill="#8b949e" font-size="16" text-anchor="middle">2</text>
+<rect x="564" y="70" width="58" height="58" rx="4" fill="#161b22" stroke="#30363d"/>
+<text x="595" y="105" fill="#8b949e" font-size="16" text-anchor="middle">3</text>
+<text x="432" y="163" fill="#ffd43b" font-size="8" text-anchor="end">770</text>
+<rect x="440" y="132" width="58" height="58" rx="4" fill="#161b22" stroke="#30363d"/>
+<text x="471" y="167" fill="#8b949e" font-size="16" text-anchor="middle">4</text>
+<rect x="502" y="132" width="58" height="58" rx="4" fill="#06d6a0" stroke="#30363d"/>
+<text x="533" y="167" fill="#0d1117" font-size="16" text-anchor="middle">5</text>
+<rect x="564" y="132" width="58" height="58" rx="4" fill="#161b22" stroke="#30363d"/>
+<text x="595" y="167" fill="#8b949e" font-size="16" text-anchor="middle">6</text>
+<text x="432" y="225" fill="#ffd43b" font-size="8" text-anchor="end">852</text>
+<rect x="440" y="194" width="58" height="58" rx="4" fill="#161b22" stroke="#30363d"/>
+<text x="471" y="229" fill="#8b949e" font-size="16" text-anchor="middle">7</text>
+<rect x="502" y="194" width="58" height="58" rx="4" fill="#161b22" stroke="#30363d"/>
+<text x="533" y="229" fill="#8b949e" font-size="16" text-anchor="middle">8</text>
+<rect x="564" y="194" width="58" height="58" rx="4" fill="#161b22" stroke="#30363d"/>
+<text x="595" y="229" fill="#8b949e" font-size="16" text-anchor="middle">9</text>
+<text x="432" y="287" fill="#ffd43b" font-size="8" text-anchor="end">941</text>
+<rect x="440" y="256" width="58" height="58" rx="4" fill="#161b22" stroke="#30363d"/>
+<text x="471" y="291" fill="#8b949e" font-size="16" text-anchor="middle">*</text>
+<rect x="502" y="256" width="58" height="58" rx="4" fill="#161b22" stroke="#30363d"/>
+<text x="533" y="291" fill="#8b949e" font-size="16" text-anchor="middle">0</text>
+<rect x="564" y="256" width="58" height="58" rx="4" fill="#161b22" stroke="#30363d"/>
+<text x="595" y="291" fill="#8b949e" font-size="16" text-anchor="middle">#</text>
+<text x="440" y="334" fill="#8b949e" font-size="9">697+1336 Hz light up key 5</text>
+</svg>
