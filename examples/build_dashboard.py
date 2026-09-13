@@ -532,6 +532,7 @@ def main():
     import goertzel_demo
     import barycentric_demo
     import sinkhorn_demo
+    import pchip_demo
 
     import plot_orbits
 
@@ -1033,6 +1034,7 @@ def main():
     goertzel_txt = run("goertzel_demo", goertzel_demo.main, True)
     barycentric_txt = run("barycentric_demo", barycentric_demo.main, True)
     sinkhorn_txt = run("sinkhorn_demo", sinkhorn_demo.main, True)
+    pchip_txt = run("pchip_demo", pchip_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9106,6 +9108,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("sinkhorn.svg"), "A source histogram (blue) transported to a target (green): the Sinkhorn transport plan (right, bright = more mass moved) hugs the diagonal because short moves are cheap, and its total cost is the Wasserstein distance")
             + f'<div class="card">{pre(sinkhorn_txt)}</div>'
+            + '</div>'),
+        section(
+            "PCHIP: shape-preserving interpolation without overshoot",
+            "A natural cubic spline is smooth (C^2) but can OVERSHOOT -- interpolating monotone data "
+            "it may dip below or bulge above the samples, inventing wiggles that were never there. "
+            "For a cumulative distribution, a saturating dose-response, or any monotone signal that "
+            "is unacceptable. PCHIP (Fritsch-Carlson piecewise cubic Hermite) gives up one order of "
+            "smoothness (C^1, not C^2) for a guarantee: if the data are monotone, so is the "
+            "interpolant, with no overshoot. The trick is the knot slopes -- each is a weighted "
+            "HARMONIC MEAN of the two neighbouring secant slopes when they agree in sign, and zero "
+            "at a local extremum, which pins the curve so it cannot overshoot. Validated by the shape "
+            "guarantee and correctness: the interpolant passes through every knot, stays monotone on "
+            "monotone data where a natural spline dips below zero and above one, never leaves the "
+            "local data range, reproduces a straight line exactly, and is C^1 (continuous derivative "
+            "at the knots). The shape-preserving companion to the cubic-spline and barycentric "
+            "interpolation tools.",
+            '<div class="grid">'
+            + svg_card(out("pchip.svg"), "Monotone step data: the natural cubic spline (red) overshoots below zero and above one, inventing wiggles, while PCHIP (green) stays monotone and inside the data range")
+            + f'<div class="card">{pre(pchip_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

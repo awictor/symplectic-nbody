@@ -490,6 +490,7 @@ ruins a long non-symplectic integration.
 | `src/goertzel.py` | Goertzel single-bin DFT in O(n) + DTMF touch-tone decoder |
 | `src/barycentric.py` | Barycentric Lagrange interpolation + Chebyshev nodes (cures Runge) |
 | `src/sinkhorn.py` | Sinkhorn optimal transport (entropic Wasserstein) + exact 1-D Wasserstein |
+| `src/pchip.py` | PCHIP shape-preserving monotone cubic interpolation (Fritsch-Carlson) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -971,6 +972,7 @@ ruins a long non-symplectic integration.
 | `examples/goertzel_demo.py` | A tone found in noise + a phone number decoded from DTMF audio |
 | `examples/barycentric_demo.py` | Runge's phenomenon: equispaced diverges while Chebyshev converges |
 | `examples/sinkhorn_demo.py` | Two histograms + the transport plan heatmap, cost approaching Wasserstein |
+| `examples/pchip_demo.py` | Step data where a cubic spline overshoots but PCHIP stays monotone |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11147,6 +11149,23 @@ Cuturi's entropic regularization gives P = diag(u) K diag(v), found by Sinkhorn'
 row/column rescaling. Validated: plan marginals match, the cost approaches the exact 1-D Wasserstein
 as eps shrinks, self-transport is zero, cost is symmetric, and a spike costs the ground distance. The
 distribution-distance companion to the Shannon-entropy and Hungarian assignment tools.
+
+## PCHIP: shape-preserving interpolation without overshoot
+
+Monotone cubic interpolation that never invents wiggles. `pchip.py`:
+
+```
+$ python examples/pchip_demo.py examples/output
+
+  step data: cubic spline dips to -0.11 and bulges to 1.11 (overshoots)
+  PCHIP stays in [0, 1] and monotone
+```
+
+Fritsch-Carlson set each knot slope to a weighted harmonic mean of neighbouring secants (zero at a
+local extremum), guaranteeing monotone data yields a monotone C^1 interpolant with no overshoot.
+Validated: passes through every knot, stays monotone and inside the data range where a natural spline
+overshoots, reproduces a straight line, and is C^1 at the knots. The shape-preserving companion to the
+cubic-spline and barycentric interpolation tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

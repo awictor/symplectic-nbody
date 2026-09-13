@@ -1,0 +1,15 @@
+PCHIP: shape-preserving cubic interpolation (no overshoot)
+
+  Monotone step data: x=[0, 1, 2, 3, 4, 5, 6], y=[0, 0, 0, 1, 1, 1, 1]
+
+            method   min value   max value   overshoot?
+             PCHIP      0.0000      1.0000           no
+      cubic spline     -0.1094      1.1078          YES
+
+  PCHIP monotone: True    cubic spline monotone: False
+  PCHIP dips below 0 by 0.0000; spline dips below 0 by 0.1094
+
+  The cubic spline is smoother (C^2) but overshoots -- inventing wiggles the data never
+  had. PCHIP gives up one derivative (C^1) to guarantee no overshoot on monotone data.
+
+  wrote examples/output\pchip.svg
