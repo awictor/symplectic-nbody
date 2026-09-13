@@ -536,6 +536,7 @@ def main():
     import sequence_acceleration_demo
     import latin_hypercube_demo
     import hilbert_demo
+    import string_similarity_demo
 
     import plot_orbits
 
@@ -1041,6 +1042,7 @@ def main():
     sequence_acceleration_txt = run("sequence_acceleration_demo", sequence_acceleration_demo.main, True)
     latin_hypercube_txt = run("latin_hypercube_demo", latin_hypercube_demo.main, True)
     hilbert_txt = run("hilbert_demo", hilbert_demo.main, True)
+    string_similarity_txt = run("string_similarity_demo", string_similarity_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9192,6 +9194,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("hilbert.svg"), "Top: an amplitude-modulated signal (gray) with the envelope recovered by the Hilbert transform (green) tracing its outline. Bottom: a chirp's instantaneous frequency rising linearly, matching the true sweep")
             + f'<div class="card">{pre(hilbert_txt)}</div>'
+            + '</div>'),
+        section(
+            "String similarity: Jaro-Winkler, q-grams, and Soundex",
+            "Comparing strings is several problems. Edit distance counts insert/delete/substitute "
+            "operations; this collects the other workhorses of fuzzy matching. JARO similarity "
+            "counts matching characters within a sliding window and transpositions; JARO-WINKLER "
+            "boosts it for a shared prefix, since people rarely mistype the first letters -- the "
+            "classic method for record linkage and name deduplication. Q-GRAM overlap treats each "
+            "string as its bag of length-q substrings and measures set overlap by the Jaccard index "
+            "or the Sorensen-Dice coefficient, robust to reordering. SOUNDEX is a phonetic code "
+            "mapping a word to a letter plus three digits so sound-alikes collide (Robert and Rupert "
+            "both give R163). Validated against textbook values: Jaro(Martha, Marhta) = 0.944 and "
+            "Jaro-Winkler = 0.961, identical strings score 1 and disjoint 0, Winkler is at least "
+            "Jaro and boosts only on a shared prefix; Jaccard/Dice are symmetric with Dice &gt;= "
+            "Jaccard; and Soundex reproduces the standard codes including the tricky H/W cases "
+            "(Tymczak -> T522, Ashcraft -> A261) with homophones colliding. The fuzzy-matching "
+            "companion to the Levenshtein edit-distance and n-gram tools.",
+            '<div class="grid">'
+            + svg_card(out("string_similarity.svg"), "Ranking candidate names against the misspelling 'Jonathon' by Jaro-Winkler: the intended 'Jonathan' tops the list at 0.95, with the prefix bonus separating close matches from distant ones")
+            + f'<div class="card">{pre(string_similarity_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

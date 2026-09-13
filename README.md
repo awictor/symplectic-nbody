@@ -494,6 +494,7 @@ ruins a long non-symplectic integration.
 | `src/sequence_acceleration.py` | Aitken / Wynn epsilon / Euler transform series acceleration |
 | `src/latin_hypercube.py` | Latin hypercube sampling + maximin design, variance reduction vs MC |
 | `src/hilbert.py` | Hilbert transform / analytic signal: envelope + instantaneous frequency |
+| `src/string_similarity.py` | Jaro-Winkler, q-gram Jaccard/Dice, Soundex phonetic matching |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -979,6 +980,7 @@ ruins a long non-symplectic integration.
 | `examples/sequence_acceleration_demo.py` | pi from Leibniz: raw crawls, Wynn hits machine precision |
 | `examples/latin_hypercube_demo.py` | LHS vs random point sets + integration variance comparison |
 | `examples/hilbert_demo.py` | AM envelope recovery + chirp instantaneous frequency |
+| `examples/string_similarity_demo.py` | Fuzzy name ranking + Soundex phonetic grouping |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11220,6 +11222,23 @@ derivative is the instantaneous frequency, built by zeroing negative frequencies
 doubling positive ones. Validated: the Hilbert transform of cos is sin (a 90-degree shift), the
 envelope recovers an AM modulating amplitude, a chirp's instantaneous frequency rises linearly, the
 transform is linear, and H[H[x]] = -x. The demodulation companion to the FFT and Goertzel tools.
+
+## String similarity: Jaro-Winkler, q-grams, and Soundex
+
+Fuzzy string matching beyond edit distance. `string_similarity.py`:
+
+```
+$ python examples/string_similarity_demo.py examples/output
+
+  'Jonathon' -> Jonathan (Jaro-Winkler 0.95, top match)
+  Soundex: Robert/Rupert -> R163; Smith/Smyth/Schmidt -> S530
+```
+
+Jaro-Winkler scores matching characters and transpositions with a shared-prefix bonus; q-gram
+Jaccard/Dice measure substring-bag overlap; Soundex maps sound-alikes to a shared phonetic code.
+Validated against textbook values (Jaro Martha/Marhta = 0.944, Winkler 0.961), metric properties
+(Dice >= Jaccard, Winkler >= Jaro), and standard Soundex codes including the tricky H/W cases
+(Tymczak -> T522). The fuzzy-matching companion to the Levenshtein edit-distance tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

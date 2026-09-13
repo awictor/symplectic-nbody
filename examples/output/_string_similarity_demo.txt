@@ -1,0 +1,25 @@
+String similarity: fuzzy matching by Jaro-Winkler, q-grams, and Soundex
+
+  Ranking candidates against the query 'Jonathon':
+
+     candidate    Jaro  Jaro-Wink  Jaccard    Dice
+      Jonathan   0.917      0.950    0.700   0.824
+         Jonas   0.767      0.860    0.400   0.571
+           Jon   0.792      0.854    0.500   0.667
+     Johnathan   0.789      0.831    0.500   0.667
+          John   0.750      0.800    0.300   0.462
+        Nathan   0.556      0.556    0.250   0.400
+     Nathaniel   0.481      0.481    0.125   0.222
+
+  Jaro-Winkler favours a shared prefix; the top match is the true intended name.
+
+  Soundex phonetic codes (names that sound alike share a code):
+    A261: Ashcraft, Ashcroft
+    R150: Rubin
+    R163: Robert, Rupert
+    S530: Smith, Smyth, Schmidt
+
+  'Robert'/'Rupert' collide (R163), as do 'Smith'/'Smyth' and 'Ashcraft'/'Ashcroft' --
+  phonetic matching finds sound-alikes that edit distance would keep far apart.
+
+  wrote examples/output\string_similarity.svg
