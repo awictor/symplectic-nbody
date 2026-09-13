@@ -564,6 +564,7 @@ def main():
     import levenberg_marquardt_demo
     import boruvka_demo
     import qft_demo
+    import shor_demo
 
     import plot_orbits
 
@@ -1097,6 +1098,7 @@ def main():
     levenberg_marquardt_txt = run("levenberg_marquardt_demo", levenberg_marquardt_demo.main, True)
     boruvka_txt = run("boruvka_demo", boruvka_demo.main, True)
     qft_txt = run("qft_demo", qft_demo.main, True)
+    shor_txt = run("shor_demo", shor_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9818,6 +9820,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("qft.svg"), "The QFT of a state periodic with period r=4 over 32 basis states: the output probability concentrates entirely at multiples of N/r = 8, so reading the peak spacing recovers the period -- the period-finding step at the core of Shor's algorithm")
             + f'<div class="card">{pre(qft_txt)}</div>'
+            + '</div>'),
+        section(
+            "Shor's algorithm: factoring by quantum period-finding",
+            "Shor's algorithm (1994) is the reason quantum computers threaten RSA: it factors an "
+            "integer in polynomial time, an exponential speed-up over the best known classical "
+            "methods, and RSA's security rests entirely on factoring being hard. The genius is a "
+            "REDUCTION: to factor N, pick a random a coprime to N; the function a^x mod N is periodic "
+            "with period r = the multiplicative ORDER of a mod N, and if r is even with a^(r/2) not "
+            "-1 mod N then gcd(a^(r/2) +/- 1, N) is a nontrivial factor. The only hard step -- finding "
+            "r -- is where the quantum computer earns its keep: it prepares a superposition, computes "
+            "a^x mod N, applies the QFT, and reads a value close to a multiple of 2^t/r, from which "
+            "CONTINUED FRACTIONS recover r. This runs that quantum step on the repo's statevector "
+            "simulator, then does the continued-fraction and gcd wrap-up -- a faithful end-to-end "
+            "simulation. Validated: it factors 15, 21, 33, 35, 77, 91 into their correct primes (both "
+            "quantum-simulated and via the classical order oracle); the recovered order genuinely "
+            "satisfies a^r = 1 mod N and is the smallest such; primes return no factorization; perfect "
+            "powers are detected; and every returned factorization verifies. The headline application "
+            "of the quantum Fourier transform, built on the circuit simulator and the "
+            "continued-fraction tools.",
+            '<div class="grid">'
+            + svg_card(out("shor.svg"), "Shor factoring 21: the period of 2^x mod 21 is r=6, and the QFT's probability peaks near multiples of Q/r = 128/6 = 21 encode it -- continued fractions recover r, then gcd(2^3 +/- 1, 21) gives 7 and 3")
+            + f'<div class="card">{pre(shor_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

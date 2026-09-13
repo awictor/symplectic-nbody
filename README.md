@@ -522,6 +522,7 @@ ruins a long non-symplectic integration.
 | `src/levenberg_marquardt.py` | Levenberg-Marquardt nonlinear least-squares curve fitting (adaptive damping) |
 | `src/boruvka.py` | Boruvka's minimum spanning tree (round-based, parallel-friendly, 1926) |
 | `src/qft.py` | Quantum Fourier transform + phase estimation on the statevector simulator |
+| `src/shor.py` | Shor's factoring algorithm: quantum period-finding + continued fractions |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1035,6 +1036,7 @@ ruins a long non-symplectic integration.
 | `examples/levenberg_marquardt_demo.py` | Fitting a noisy Gaussian peak, SSR dropping 115 -> 0.09 |
 | `examples/boruvka_demo.py` | Boruvka MST built in rounds, edges coloured by round of addition |
 | `examples/qft_demo.py` | QFT period-finding spectrum + phase estimation (Shor's core) |
+| `examples/shor_demo.py` | Shor factoring 21 end to end: period 6 -> QFT peaks -> 7 x 3 |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11836,6 +11838,29 @@ a qubit-order reversal. Runs on the repo's statevector simulator. Validated exac
 DFT for n=1..4, the inverse undoes the forward transform, QFT|0> is uniform, QFT|k> is the expected
 phase ramp, and phase estimation recovers dyadic phases exactly. The quantum-algorithm companion to the
 gate-level circuit simulator and the classical FFT/DFT.
+
+## Shor's algorithm: factoring by quantum period-finding
+
+The algorithm that threatens RSA, simulated end to end. `shor.py`:
+
+```
+$ python examples/shor_demo.py examples/output
+
+  factor N = 21, base a = 2
+  2^x mod 21:  [1, 2, 4, 8, 16, 11, 1, 2, 4, 8, 16, 11]
+  period r = 6  (since 2^6 mod 21 = 1)
+  QFT peaks at multiples of 128/6 = 21
+  r even -> a^(r/2) = 8;  gcd(7,21)=7, gcd(9,21)=3
+  Shor's algorithm result: 21 = 7 x 3
+```
+
+Shor reduces factoring to period-finding: a^x mod N is periodic with period r = the order of a mod N,
+and if r is even with a^(r/2) != -1 mod N then gcd(a^(r/2) +/- 1, N) is a factor. The only hard step,
+finding r, is done by the QFT: this runs that quantum step on the repo's statevector simulator, then
+recovers r by continued fractions and finishes with gcd. Validated: factors 15, 21, 33, 35, 77, 91
+into their correct primes; the recovered order satisfies a^r = 1 mod N; primes return None; perfect
+powers are detected; every factorization verifies. The headline application of the quantum Fourier
+transform.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

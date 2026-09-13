@@ -1,0 +1,21 @@
+Shor's algorithm: factoring by quantum period-finding
+
+  factor N = 21, base a = 2
+  f(x) = 2^x mod 21 is periodic; its period is the order of 2 mod 21
+
+  2^x mod 21:  [1, 2, 4, 8, 16, 11, 1, 2, 4, 8, 16, 11]
+  period r = 6  (since 2^6 mod 21 = 1)
+
+  QFT over 128 states: probability peaks at multiples of 128/6 = 21:
+    peaks at [0, 21, 43, 64, 85, 107]
+
+  r is even, so compute a^(r/2) = 2^3 mod 21 = 8
+  gcd(8-1, 21) = 7,  gcd(8+1, 21) = 3
+
+  Shor's algorithm result: 21 = 7 x 3
+
+  The exponential speed-up is entirely in finding r: classically hard, but the QFT
+  reads the period off the interference pattern above in one shot. This is why a large
+  quantum computer would break RSA.
+
+  wrote examples/output\shor.svg
