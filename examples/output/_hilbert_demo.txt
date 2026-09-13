@@ -1,0 +1,17 @@
+Hilbert transform: envelope and instantaneous frequency from the analytic signal
+
+  Amplitude modulation: a 25 Hz carrier under a 2 Hz envelope.
+    recovered envelope matches the true modulating amplitude to 0.0000
+
+  Linear chirp: instantaneous frequency should rise from 5 Hz to ~42 Hz (below Nyquist).
+     time (s)   true freq   measured
+          0.3       12.50      12.64
+          0.8       25.00      25.54
+          1.2       35.00      35.53
+          1.6       45.00      45.34
+
+  The analytic signal z = x + i H[x] = A e^{i phi} hands you both: the envelope A(t)
+  and the phase phi(t) whose derivative is the instantaneous frequency. AM and FM
+  demodulation, vibration diagnostics, and empirical mode decomposition all build on it.
+
+  wrote examples/output\hilbert.svg

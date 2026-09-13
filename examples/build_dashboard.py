@@ -535,6 +535,7 @@ def main():
     import pchip_demo
     import sequence_acceleration_demo
     import latin_hypercube_demo
+    import hilbert_demo
 
     import plot_orbits
 
@@ -1039,6 +1040,7 @@ def main():
     pchip_txt = run("pchip_demo", pchip_demo.main, True)
     sequence_acceleration_txt = run("sequence_acceleration_demo", sequence_acceleration_demo.main, True)
     latin_hypercube_txt = run("latin_hypercube_demo", latin_hypercube_demo.main, True)
+    hilbert_txt = run("hilbert_demo", hilbert_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9170,6 +9172,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("latin_hypercube.svg"), "A 16-point Latin hypercube design (left, exactly one point per row and column of the stratification grid) versus 16 random Monte Carlo points (right, clumping and leaving gaps)")
             + f'<div class="card">{pre(latin_hypercube_txt)}</div>'
+            + '</div>'),
+        section(
+            "Hilbert transform: envelope and instantaneous frequency",
+            "A real signal hides two things you often want: its ENVELOPE (the slowly-varying "
+            "amplitude, the outline of an AM wave) and its INSTANTANEOUS FREQUENCY (how fast the "
+            "phase turns right now, changing over time in a chirp). Both come from the ANALYTIC "
+            "SIGNAL z = x + i H[x], where H is the Hilbert transform -- a 90-degree phase shift of "
+            "every frequency component. Written as z = A(t) e^{i phi(t)}, it hands you the envelope "
+            "A(t) = |z| and a phase whose derivative is the instantaneous frequency. The clean "
+            "construction is in the frequency domain: DFT the signal, zero the negative frequencies, "
+            "double the positive ones, inverse-transform. This is the engine behind AM/FM "
+            "demodulation, envelope detection, empirical mode decomposition, and vibration "
+            "diagnostics. Validated against theory: the Hilbert transform of cos is sin (a "
+            "90-degree shift), the envelope of an amplitude-modulated carrier recovers the "
+            "modulating amplitude, the instantaneous frequency of a linear chirp rises linearly at "
+            "the right rate, the transform is linear, and applying it twice negates the signal. The "
+            "demodulation companion to the FFT and Goertzel tools.",
+            '<div class="grid">'
+            + svg_card(out("hilbert.svg"), "Top: an amplitude-modulated signal (gray) with the envelope recovered by the Hilbert transform (green) tracing its outline. Bottom: a chirp's instantaneous frequency rising linearly, matching the true sweep")
+            + f'<div class="card">{pre(hilbert_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
