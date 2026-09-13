@@ -531,6 +531,7 @@ ruins a long non-symplectic integration.
 | `src/mcts.py` | Monte Carlo Tree Search (UCT) with a minimax solver + tic-tac-toe |
 | `src/integer_programming.py` | Integer LP by branch and bound over the simplex LP relaxation |
 | `src/cartesian_tree.py` | O(n) Cartesian tree; range-minimum-query via lowest-common-ancestor |
+| `src/smith_normal_form.py` | Smith Normal Form of an integer matrix + abelian-group / homology readout |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1053,6 +1054,7 @@ ruins a long non-symplectic integration.
 | `examples/mcts_demo.py` | MCTS visit counts concentrating on the winning tic-tac-toe move |
 | `examples/integer_programming_demo.py` | ILP: LP relaxation, integrality gap, knapsack, node pruning |
 | `examples/cartesian_tree_demo.py` | Cartesian tree structure + RMQ-as-LCA queries |
+| `examples/smith_normal_form_demo.py` | Integer matrix -> diagonal SNF + cokernel group + homology |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12056,6 +12058,26 @@ in-order traversal reproduces the sequence and the heap property holds everywher
 Cartesian tree), the O(n) build matches a naive recursive one, and RMQ via tree-LCA agrees with the
 sparse-table RMQ and brute force over every subrange. The array-to-tree companion to the sparse-table
 RMQ/LCA, the treap, and the suffix-array tools.
+
+## Smith Normal Form: integer diagonalization and the groups it reveals
+
+Diagonalize an integer matrix with unimodular operations, and read off an abelian group. `smith_normal_form.py`:
+
+```
+$ python examples/smith_normal_form_demo.py examples/output
+
+  A = [[2,4,4],[-6,6,12],[10,-4,-16]]
+  D = U A V = diag(2, 6, 12)   (each invariant factor divides the next)
+  U A V = D verified: True,  U, V unimodular: True
+  cokernel Z^3 / A Z^3 = Z/2 x Z/6 x Z/12
+```
+
+Every integer matrix reduces to a diagonal D = U A V with U, V unimodular and invariant factors
+d_1 | d_2 | ... The cokernel Z^m / A Z^n is Z/d_1 x Z/d_2 x ... -- so SNF computes finitely generated
+abelian groups from relations, which is how homology groups (torsion and Betti numbers) are computed.
+Validated: U A V = D exactly, U and V unimodular, the divisibility chain holds, the invariant factors
+match the gcd-of-minors formula, their product is |det| for square full-rank matrices, and group
+readouts are correct. The integer-linear-algebra companion to the LLL and CRT tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

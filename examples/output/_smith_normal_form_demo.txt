@@ -1,0 +1,26 @@
+Smith Normal Form: integer diagonalization D = U A V, and the group it encodes
+
+  A =
+         2    4    4
+        -6    6   12
+        10   -4  -16
+
+  D = U A V (Smith Normal Form) =
+         2    0    0
+         0    6    0
+         0    0   12
+
+  U A V = D verified: True
+  U unimodular: True,  V unimodular: True
+
+  invariant factors: [2, 6, 12]  (each divides the next: True)
+
+  cokernel Z^3 / A Z^3 = Z/2 x Z/6 x Z/12
+  (this is exactly how a homology group H = ker/im is computed: SNF of the
+  boundary matrix gives the torsion coefficients and the free rank = Betti number.)
+
+  Topology example: 1-boundary matrix of a filled triangle (3 edges, 3 vertices)
+    invariant factors [1, 1], free rank (H_0 Betti) = 1
+    -> one connected component (H_0 = Z), no 1-cycles killed incorrectly
+
+  wrote examples/output\smith_normal_form.svg

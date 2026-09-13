@@ -573,6 +573,7 @@ def main():
     import mcts_demo
     import integer_programming_demo
     import cartesian_tree_demo
+    import smith_normal_form_demo
 
     import plot_orbits
 
@@ -1115,6 +1116,7 @@ def main():
     mcts_txt = run("mcts_demo", mcts_demo.main, True)
     integer_programming_txt = run("integer_programming_demo", integer_programming_demo.main, True)
     cartesian_tree_txt = run("cartesian_tree_demo", cartesian_tree_demo.main, True)
+    smith_normal_form_txt = run("smith_normal_form_demo", smith_normal_form_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10027,6 +10029,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("cartesian_tree.svg"), "The Cartesian tree of a sequence, each node placed at its array position (x) and value (y, smaller = higher): the global minimum is the root, and the minimum of any range a[i..j] is exactly the lowest common ancestor of nodes i and j")
             + f'<div class="card">{pre(cartesian_tree_txt)}</div>'
+            + '</div>'),
+        section(
+            "Smith Normal Form: integer diagonalization and the groups it reveals",
+            "Over a field, Gaussian elimination diagonalizes any matrix. Over the INTEGERS you may only "
+            "add integer multiples of rows/columns and swap or negate them (UNIMODULAR operations, "
+            "preserving the lattice) -- yet that is still enough: every integer matrix reduces to a "
+            "diagonal SMITH NORMAL FORM D = U A V with U, V unimodular and diagonal INVARIANT FACTORS "
+            "d_1 | d_2 | ... each dividing the next. Those factors are the answer to a surprising "
+            "range of questions: the cokernel Z^m / A Z^n is Z/d_1 x Z/d_2 x ... (with free part from "
+            "zero diagonal entries), so SNF computes the structure of any finitely generated abelian "
+            "group from generators and relations -- which is exactly how HOMOLOGY groups (ranks and "
+            "torsion) are computed in topology, and how integer linear systems are decided. The "
+            "algorithm is Euclidean row/column reduction recorded in U and V. Validated by the "
+            "defining identities: U A V = D exactly over 40 random matrices, U and V unimodular "
+            "(det +/-1), D diagonal with the divisibility chain; the invariant factors match the "
+            "gcd-of-minors formula; their product equals |det| for square full-rank matrices; the rank "
+            "matches; and abelian-group readouts (Z/2 x Z/3 = Z/6, Z/2 x Z/4 staying non-cyclic) are "
+            "correct. The integer-linear-algebra companion to the LLL lattice-reduction and CRT tools.",
+            '<div class="grid">'
+            + svg_card(out("smith_normal_form.svg"), "An integer matrix A reduced to its diagonal Smith Normal Form D = U A V with invariant factors 2, 6, 12 (each dividing the next) -- the cokernel is Z/2 x Z/6 x Z/12, the same computation that extracts torsion from a homology boundary matrix")
+            + f'<div class="card">{pre(smith_normal_form_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
