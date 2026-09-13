@@ -574,6 +574,7 @@ def main():
     import integer_programming_demo
     import cartesian_tree_demo
     import smith_normal_form_demo
+    import simplicial_homology_demo
 
     import plot_orbits
 
@@ -1117,6 +1118,7 @@ def main():
     integer_programming_txt = run("integer_programming_demo", integer_programming_demo.main, True)
     cartesian_tree_txt = run("cartesian_tree_demo", cartesian_tree_demo.main, True)
     smith_normal_form_txt = run("smith_normal_form_demo", smith_normal_form_demo.main, True)
+    simplicial_homology_txt = run("simplicial_homology_demo", simplicial_homology_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10050,6 +10052,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("smith_normal_form.svg"), "An integer matrix A reduced to its diagonal Smith Normal Form D = U A V with invariant factors 2, 6, 12 (each dividing the next) -- the cokernel is Z/2 x Z/6 x Z/12, the same computation that extracts torsion from a homology boundary matrix")
             + f'<div class="card">{pre(smith_normal_form_txt)}</div>'
+            + '</div>'),
+        section(
+            "Simplicial homology: counting the holes of a triangulated space",
+            "Homology is topology's algebraic hole-counter. From a SIMPLICIAL COMPLEX (vertices, edges, "
+            "triangles, tetrahedra), the k-th homology group H_k measures k-dimensional holes: H_0 "
+            "counts connected components, H_1 loops that do not bound (the hole in a donut), H_2 "
+            "enclosed voids (the cavity in a sphere). The free rank of H_k is the BETTI NUMBER b_k, "
+            "and H_k can also carry TORSION -- finite cyclic factors that distinguish non-orientable "
+            "surfaces. The machinery is integer linear algebra: the BOUNDARY MAP d_k sends each "
+            "k-simplex to the alternating sum of its faces, the identity d d = 0 makes boundaries "
+            "cycles, and H_k = ker(d_k) / im(d_{k+1}). Computing that quotient is exactly what SMITH "
+            "NORMAL FORM does: b_k = (nullity of d_k) - (rank of d_{k+1}), and the torsion of H_k is "
+            "the invariant factors > 1 of d_{k+1}. Built on the repo's SNF. Validated against textbook "
+            "homology: the circle is (1,1), the sphere (1,0,1), the torus (1,2,1), the projective "
+            "plane (1,0,0) with a Z/2 torsion class in H_1; d d = 0 holds; and the Euler "
+            "characteristic equals both the alternating simplex count and the alternating Betti sum "
+            "(Euler-Poincare). The topology application of the Smith Normal Form.",
+            '<div class="grid">'
+            + svg_card(out("simplicial_homology.svg"), "Betti numbers of standard spaces computed from their triangulations: the circle has one loop, the sphere one void, the torus two loops and a void, and the projective plane a Z/2 torsion class -- each verified against the Euler-Poincare identity")
+            + f'<div class="card">{pre(simplicial_homology_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -532,6 +532,7 @@ ruins a long non-symplectic integration.
 | `src/integer_programming.py` | Integer LP by branch and bound over the simplex LP relaxation |
 | `src/cartesian_tree.py` | O(n) Cartesian tree; range-minimum-query via lowest-common-ancestor |
 | `src/smith_normal_form.py` | Smith Normal Form of an integer matrix + abelian-group / homology readout |
+| `src/simplicial_homology.py` | Betti numbers + torsion of triangulated spaces via boundary matrices + SNF |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1055,6 +1056,7 @@ ruins a long non-symplectic integration.
 | `examples/integer_programming_demo.py` | ILP: LP relaxation, integrality gap, knapsack, node pruning |
 | `examples/cartesian_tree_demo.py` | Cartesian tree structure + RMQ-as-LCA queries |
 | `examples/smith_normal_form_demo.py` | Integer matrix -> diagonal SNF + cokernel group + homology |
+| `examples/simplicial_homology_demo.py` | Betti-number table for circle/sphere/torus/RP^2 |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12078,6 +12080,27 @@ abelian groups from relations, which is how homology groups (torsion and Betti n
 Validated: U A V = D exactly, U and V unimodular, the divisibility chain holds, the invariant factors
 match the gcd-of-minors formula, their product is |det| for square full-rank matrices, and group
 readouts are correct. The integer-linear-algebra companion to the LLL and CRT tools.
+
+## Simplicial homology: counting the holes of a triangulated space
+
+Count the components, loops, and voids of a space from its triangulation. `simplicial_homology.py`:
+
+```
+$ python examples/simplicial_homology_demo.py examples/output
+
+    space             V   E   F   Betti (b0,b1,b2)  torsion    chi
+    circle S^1        3   3   0   (1, 1)            -            0
+    sphere S^2        4   6   4   (1, 0, 1)         -            2
+    torus T^2         7  21  14   (1, 2, 1)         -            0
+    proj plane RP^2   6  15  10   (1, 0, 0)         H1:Z/2       1
+```
+
+The boundary map d_k sends each k-simplex to the alternating sum of its faces; H_k = ker(d_k) /
+im(d_{k+1}), and Smith Normal Form reads off the Betti number b_k = nullity(d_k) - rank(d_{k+1}) and
+the torsion (invariant factors > 1 of d_{k+1}). Built on the repo's SNF. Validated against textbook
+homology of the circle, sphere, torus, and projective plane (the last with a Z/2 torsion class), with
+d d = 0 and the Euler-Poincare identity chi = sum (-1)^k b_k holding throughout. The topology
+application of the Smith Normal Form.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
