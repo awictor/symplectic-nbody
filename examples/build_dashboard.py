@@ -555,6 +555,7 @@ def main():
     import christofides_demo
     import marching_tetrahedra_demo
     import cmaes_demo
+    import fm_index_demo
 
     import plot_orbits
 
@@ -1079,6 +1080,7 @@ def main():
     christofides_txt = run("christofides_demo", christofides_demo.main, True)
     marching_tetrahedra_txt = run("marching_tetrahedra_demo", marching_tetrahedra_demo.main, True)
     cmaes_txt = run("cmaes_demo", cmaes_demo.main, True)
+    fm_index_txt = run("fm_index_demo", fm_index_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9609,6 +9611,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("cmaes.svg"), "CMA-ES tracking the curved floor of the Rosenbrock banana: the distribution mean walks from the start (yellow) to the global optimum (1, 1) (red), the covariance ellipse elongating along the valley as it goes")
             + f'<div class="card">{pre(cmaes_txt)}</div>'
+            + '</div>'),
+        section(
+            "FM-index: substring search from the compressed BWT",
+            "How do you count every occurrence of a pattern in a huge text in time proportional to the "
+            "PATTERN, not the text -- storing essentially just a compressible permutation of it? The "
+            "FM-INDEX (Ferragina & Manzini, 2000) is the answer, and it powers the DNA read aligners "
+            "(Bowtie, BWA) that map billions of fragments to the genome. It is built entirely on the "
+            "BURROWS-WHEELER TRANSFORM plus two tiny primitives: C[c], where character c's block "
+            "begins in the sorted first column, and Occ(c, i), the number of c's in the first i BWT "
+            "characters (a RANK query). BACKWARD SEARCH counts a pattern without decompressing: keep a "
+            "range [lo, hi) of BWT rows whose rotations start with the current suffix of P, and for "
+            "each character right-to-left shrink it by lo <- C[c] + Occ(c, lo), hi <- C[c] + "
+            "Occ(c, hi). After the whole pattern, hi - lo is the occurrence count -- in O(|P|) rank "
+            "queries, independent of text length. A sampled suffix array turns rows into positions via "
+            "LF-mapping. Validated against brute-force scans on random, DNA, and repetitive texts: "
+            "count and locate are exact for every substring tested, LF-mapping inverts the BWT back to "
+            "the original text, and empty / absent / whole-text patterns behave. The compressed-index "
+            "companion to the suffix array, the Burrows-Wheeler transform, and the wavelet tree.",
+            '<div class="grid">'
+            + svg_card(out("fm_index.svg"), "Backward search for a 3-mer in a DNA text: the BWT-row range starts as the whole text and narrows one character at a time, right to left, until its width is exactly the number of occurrences")
+            + f'<div class="card">{pre(fm_index_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

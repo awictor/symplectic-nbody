@@ -513,6 +513,7 @@ ruins a long non-symplectic integration.
 | `src/christofides.py` | Christofides 1.5-approximation for metric TSP (MST + matching + Euler) |
 | `src/marching_tetrahedra.py` | 3-D isosurface meshing via tetrahedral split (watertight, table-free) |
 | `src/cmaes.py` | CMA-ES: covariance-matrix-adaptation evolution strategy (variable-metric, derivative-free) |
+| `src/fm_index.py` | FM-index: BWT backward-search full-text index (count/locate in O(pattern)) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1017,6 +1018,7 @@ ruins a long non-symplectic integration.
 | `examples/christofides_demo.py` | Christofides tour vs Held-Karp optimum, MST + matching drawn |
 | `examples/marching_tetrahedra_demo.py` | Metaball isosurface meshed + sphere-area convergence to 4 pi r^2 |
 | `examples/cmaes_demo.py` | CMA-ES tracking the Rosenbrock banana to the (1,1) optimum |
+| `examples/fm_index_demo.py` | Backward-search range narrowing to a DNA pattern's occurrence count |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11599,6 +11601,33 @@ variable-metric method, like BFGS, with no derivative. The covariance factorizat
 Jacobi eigensolver. Validated on sphere, the cond-1e6 ellipsoid, Rosenbrock, and Rastrigin, all
 driven to their global optima. The derivative-free companion to differential evolution, particle
 swarm, and Nelder-Mead.
+
+## FM-index: substring search from the compressed BWT
+
+Count and locate a pattern in time proportional to the pattern, not the text. `fm_index.py`:
+
+```
+$ python examples/fm_index_demo.py examples/output
+
+  Backward search for 'TTA' -- range [lo, hi) shrinks right-to-left:
+    step  char      lo    hi   width
+    init             0   121     121
+    1     A          1    28      27
+    2     T         88    98      10
+    3     T        114   117       3
+
+  'TTA' occurs 3 times (brute force: 3)
+  positions: [83, 104, 117]
+```
+
+The FM-index (the engine inside Bowtie and BWA) is built entirely on the Burrows-Wheeler transform
+plus two primitives: C[c] (where character c's block begins in the sorted first column) and Occ(c, i)
+(a rank query -- the number of c's in the first i BWT characters). Backward search keeps a range of
+BWT rows and shrinks it one pattern character at a time, right to left; the final width is the
+occurrence count, found in O(pattern) time regardless of text length. A sampled suffix array maps rows
+to positions by LF-mapping. Validated against brute force on random, DNA, and repetitive texts, with
+LF-mapping inverting the BWT back to the original. The compressed-index companion to the suffix array,
+the Burrows-Wheeler transform, and the wavelet tree.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
