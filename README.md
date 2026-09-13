@@ -502,6 +502,7 @@ ruins a long non-symplectic integration.
 | `src/affine_alignment.py` | Gotoh affine-gap sequence alignment (global + local) |
 | `src/adams.py` | Adams-Bashforth / Moulton predictor-corrector multistep ODE integrator |
 | `src/bfgs.py` | BFGS quasi-Newton optimization (inverse-Hessian approximation + line search) |
+| `src/mean_shift.py` | Mean-shift clustering: mode-seeking, no k needed (Gaussian + flat kernels) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -995,6 +996,7 @@ ruins a long non-symplectic integration.
 | `examples/affine_alignment_demo.py` | Linear vs affine gap alignment of an inserted block |
 | `examples/adams_demo.py` | ODE error-vs-steps convergence: Adams-Bashforth, PECE, RK4 |
 | `examples/bfgs_demo.py` | BFGS path down the Rosenbrock valley vs crawling gradient descent |
+| `examples/mean_shift_demo.py` | Four blobs auto-clustered by mode-seeking, bandwidth sweep |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11370,6 +11372,22 @@ gradient (the secant condition) via a rank-2 formula that stays positive definit
 line search. Validated: solves a quadratic in a few steps and Rosenbrock to 1e-25, gradient vanishes at
 the optimum, monotone decrease, and works with a finite-difference gradient. The full-matrix
 quasi-Newton companion to L-BFGS and Nelder-Mead.
+
+## Mean shift: clustering by seeking density modes
+
+Discover the number of clusters instead of presetting it. `mean_shift.py`:
+
+```
+$ python examples/mean_shift_demo.py examples/output
+
+  4 blobs -> 4 clusters found automatically at bandwidth 0.6-2.0; modes at the true centres
+```
+
+Slide every point uphill along the kernel-density gradient to the nearest peak; points reaching the
+same peak are one cluster, so the cluster count follows from the bandwidth, not a preset k. Validated:
+recovers the right blob count and mode locations, smaller bandwidth finds more clusters, points label
+by nearest mode, the mode-climb monotonically increases the density, and both kernels work. The
+mode-seeking companion to k-means/DBSCAN/GMM and the KDE density tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

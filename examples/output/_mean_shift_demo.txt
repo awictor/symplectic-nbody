@@ -1,0 +1,21 @@
+Mean-shift clustering: no k needed -- it finds the modes of the density itself
+
+  100 points drawn from 4 true blobs (not told to the algorithm).
+
+   bandwidth   clusters found
+         0.6                4  <- matches truth
+         1.0                4  <- matches truth
+         2.0                4  <- matches truth
+         4.0                1
+         8.0                1
+
+  At bandwidth 2.0: 4 clusters, modes at:
+    (0.00, 0.05)
+    (8.79, 0.98)
+    (3.99, 7.99)
+    (9.92, 8.81)
+
+  Each point slides uphill along the density gradient to the nearest peak; points that
+  reach the same peak are one cluster. The bandwidth is the only knob -- no preset k.
+
+  wrote examples/output\mean_shift.svg

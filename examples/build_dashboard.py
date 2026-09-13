@@ -544,6 +544,7 @@ def main():
     import affine_alignment_demo
     import adams_demo
     import bfgs_demo
+    import mean_shift_demo
 
     import plot_orbits
 
@@ -1057,6 +1058,7 @@ def main():
     affine_alignment_txt = run("affine_alignment_demo", affine_alignment_demo.main, True)
     adams_txt = run("adams_demo", adams_demo.main, True)
     bfgs_txt = run("bfgs_demo", bfgs_demo.main, True)
+    mean_shift_txt = run("mean_shift_demo", mean_shift_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9369,6 +9371,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("bfgs.svg"), "The BFGS optimization path descending the Rosenbrock banana valley (log-shaded contours) to the minimum at (1,1) in 37 steps -- learning the valley's curvature from the gradient history rather than crawling straight downhill")
             + f'<div class="card">{pre(bfgs_txt)}</div>'
+            + '</div>'),
+        section(
+            "Mean shift: clustering by seeking density modes",
+            "K-means and Gaussian mixtures need you to say how many clusters there are; MEAN SHIFT "
+            "discovers that number itself. It treats the data as samples from a density and slides "
+            "every point UPHILL along the density gradient to the nearest PEAK; points that flow to "
+            "the same peak form a cluster, so the cluster count is however many modes the data has -- "
+            "decided by one parameter, the kernel BANDWIDTH, not a preset k. The update replaces each "
+            "point with the kernel-weighted average of its neighbours, which is provably gradient "
+            "ascent on the kernel-density estimate; nearby converged modes are then merged. "
+            "Validated: on well-separated Gaussian blobs it recovers the right number of clusters "
+            "automatically and places each mode near the true blob centre; a smaller bandwidth finds "
+            "more clusters and a larger one fewer; every point is assigned to its nearest mode; the "
+            "mode-climb monotonically increases the density (a genuine ascent to a local maximum); "
+            "and both flat and Gaussian kernels work. The mode-seeking companion to the k-means / "
+            "DBSCAN / GMM clustering and the KDE density tools.",
+            '<div class="grid">'
+            + svg_card(out("mean_shift.svg"), "Points from four blobs, coloured by the mode each one climbs to: mean shift finds all four clusters and their centres automatically, with a couple of mode-climb trajectories (dashed) tracing the ascent to the density peaks (white rings)")
+            + f'<div class="card">{pre(mean_shift_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
