@@ -1,0 +1,19 @@
+Johnson-Lindenstrauss: project to O(log n / eps^2) dims, distances survive
+
+  60 points in 500 dimensions.
+
+  target dim   gaussian distortion   achlioptas
+          10                 0.782        0.628
+          25                 0.461        0.482
+          50                 0.294        0.401
+         100                 0.204        0.289
+         200                 0.173        0.161
+         400                 0.133        0.103
+
+  Worst-case pairwise distance distortion shrinks like 1/sqrt(target_dim).
+  The JL bound for n=60, eps=0.25 says target dim >= 629 suffices
+  for (1 +/- eps) distortion on ALL pairs -- independent of the original 500 dimensions.
+
+  At target dim 100: mean squared-distance ratio 1.0072 (unbiased, ~1).
+
+  wrote examples/output\johnson_lindenstrauss.svg

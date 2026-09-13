@@ -520,6 +520,7 @@ def main():
     import dfa_minimization_demo
     import cyk_demo
     import nmf_demo
+    import johnson_lindenstrauss_demo
 
     import plot_orbits
 
@@ -1009,6 +1010,7 @@ def main():
     dfa_minimization_txt = run("dfa_minimization_demo", dfa_minimization_demo.main, True)
     cyk_txt = run("cyk_demo", cyk_demo.main, True)
     nmf_txt = run("nmf_demo", nmf_demo.main, True)
+    johnson_lindenstrauss_txt = run("johnson_lindenstrauss_demo", johnson_lindenstrauss_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8843,6 +8845,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("nmf.svg"), "A term-document count matrix V factored as W H at rank 2: NMF recovers the two hidden topics (space words and cooking words) as separate additive components, with the reconstruction error decaying monotonically")
             + f'<div class="card">{pre(nmf_txt)}</div>'
+            + '</div>'),
+        section(
+            "Johnson-Lindenstrauss: dimension without distance loss",
+            "A stunning fact: any n points, in a space of ANY dimension, can be projected into just "
+            "O(log n / eps^2) dimensions -- independent of the original dimension -- so that every "
+            "pairwise distance is preserved to within a factor (1 +/- eps). The Johnson-Lindenstrauss "
+            "lemma (1984) makes the curse of dimensionality negotiable: nearest-neighbour search, "
+            "clustering, and similarity all depend on distances, so if distances survive, the answers "
+            "do too, in a fraction of the space. The construction is almost absurdly simple: multiply "
+            "each vector by a random matrix (Gaussian entries, or the sparse Achlioptas +/-sqrt(3)/0 "
+            "with two-thirds zeros) scaled by 1/sqrt(target_dim); concentration of measure makes the "
+            "squared projected norm cluster tightly around the true one for all pairs at once. "
+            "Validated empirically: after projecting, the worst-case pairwise distortion stays within "
+            "the eps bound and shrinks as the target dimension grows; the mean squared-distance ratio "
+            "is ~1 (unbiased); both Gaussian and Achlioptas variants satisfy the bound; and the "
+            "min-dimension formula grows like log n / eps^2. The distance-preserving companion to "
+            "PCA/SVD and the t-SNE embedding.",
+            '<div class="grid">'
+            + svg_card(out("johnson_lindenstrauss.svg"), "Left: worst-case distance distortion falling as the target dimension grows (60 points from 500 dimensions). Right: projected-to-50-dimensions distances scatter tightly along the y=x line against the originals")
+            + f'<div class="card">{pre(johnson_lindenstrauss_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

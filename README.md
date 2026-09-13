@@ -478,6 +478,7 @@ ruins a long non-symplectic integration.
 | `src/dfa_minimization.py` | DFA minimization (Hopcroft) + language equivalence via canonical form |
 | `src/cyk.py` | CYK context-free parsing: membership, parse-tree count, one parse tree |
 | `src/nmf.py` | Non-negative matrix factorization (Lee-Seung multiplicative updates) + KL variant |
+| `src/johnson_lindenstrauss.py` | JL random projection: distance-preserving dimension reduction (Gaussian + Achlioptas) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -947,6 +948,7 @@ ruins a long non-symplectic integration.
 | `examples/dfa_minimization_demo.py` | A 6-state DFA collapsing to its 2-state canonical form |
 | `examples/cyk_demo.py` | CYK triangular chart + Catalan-number parse counts of an ambiguous grammar |
 | `examples/nmf_demo.py` | Term-document matrix factored into two recovered topics |
+| `examples/johnson_lindenstrauss_demo.py` | Distortion-vs-dimension curve + projected-distance scatter |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10916,6 +10918,23 @@ Non-negativity forces interpretable additive parts (topics, features) unlike PCA
 Validated by recovering planted factors to near-zero error, monotone error decrease, non-negativity,
 exact rank-1 factoring, and the KL-divergence topic-model variant. The parts-based companion to the
 SVD and clustering tools.
+
+## Johnson-Lindenstrauss: dimension without distance loss
+
+Project n points to O(log n / eps^2) dimensions, distances intact. `johnson_lindenstrauss.py`:
+
+```
+$ python examples/johnson_lindenstrauss_demo.py examples/output
+
+  60 points, 500 dims -> distortion: 0.78 (dim 10), 0.29 (dim 50), 0.13 (dim 400)
+  mean squared-distance ratio ~ 1 (unbiased)
+```
+
+Multiply each vector by a random matrix (Gaussian, or sparse Achlioptas +/-sqrt(3)/0) scaled by
+1/sqrt(target_dim); concentration of measure preserves all pairwise distances at once. The target
+dimension is independent of the original. Validated empirically: worst-case distortion stays within
+the eps bound and shrinks with dimension, the mean squared-distance ratio is unbiased, and both
+matrix variants satisfy the bound. The distance-preserving companion to PCA/SVD and t-SNE.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
