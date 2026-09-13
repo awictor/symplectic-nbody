@@ -1,0 +1,26 @@
+Quantum circuit simulator: Grover's search by amplitude amplification
+
+  Bell pair (|00> + |11>)/sqrt(2):
+    P(00)=0.500  P(01)=0.000  P(10)=0.000  P(11)=0.500
+    -> perfectly correlated: only 00 or 11, never 01 or 10 (entanglement)
+
+  Grover search: N = 2^6 = 64 items, marked item = 42
+  classical search needs ~32 queries; Grover needs ~6 ((pi/4)sqrt(N))
+
+     iteration   P(marked)
+             0      0.0156
+             1      0.1348
+             2      0.3439
+             3      0.5914
+             4      0.8164
+             5      0.9635
+             6      0.9966  <- optimal
+             7      0.9074  (overshoot)
+             8      0.7180  (overshoot)
+            14      0.2239
+
+  Peak P(marked) = 0.9966 at iteration 6 (starting from a uniform 1/64 = 0.0156)
+  Beyond the optimum the probability falls again -- amplitude amplification
+  is a rotation, so too many steps rotate past the target.
+
+  wrote examples/output\quantum_circuit.svg

@@ -518,6 +518,7 @@ ruins a long non-symplectic integration.
 | `src/wang_landau.py` | Wang-Landau flat-histogram sampling: density of states, all-temperature thermodynamics |
 | `src/svm_smo.py` | Support vector machine trained by SMO (linear / polynomial / RBF kernels) |
 | `src/mfcc.py` | Mel-frequency cepstral coefficients: mel filterbank + log + DCT audio features |
+| `src/quantum_circuit.py` | Statevector quantum circuit simulator: gates, entanglement, Deutsch-Jozsa, Grover |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1027,6 +1028,7 @@ ruins a long non-symplectic integration.
 | `examples/wang_landau_demo.py` | Specific-heat curve from one Wang-Landau run vs exact density of states |
 | `examples/svm_smo_demo.py` | RBF-SVM decision regions separating two interleaving half-moons |
 | `examples/mfcc_demo.py` | Mel filterbank + MFCC heatmap of a rising chirp |
+| `examples/quantum_circuit_demo.py` | Grover's search amplifying a marked state + Bell entanglement |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11735,6 +11737,31 @@ first dozen coefficients. Reuses the repo's FFT and DCT. Validated: mel<->hz rou
 filterbank is triangular and overlapping, a tone's FFT power matches a brute-force DFT, the log-mel/DCT
 stage matches a direct DCT, and distinct tones give distinct MFCCs. The audio-feature companion to the
 FFT, the DCT, and the spectrogram.
+
+## Quantum circuit simulator: Grover's search and entanglement
+
+Statevector simulation of qubits, gates, and quantum algorithms. `quantum_circuit.py`:
+
+```
+$ python examples/quantum_circuit_demo.py examples/output
+
+  Grover search: N = 2^6 = 64 items, marked item = 42
+  classical search needs ~32 queries; Grover needs ~6 ((pi/4)sqrt(N))
+     iteration   P(marked)
+             0      0.0156
+             3      0.5914
+             6      0.9966  <- optimal
+             7      0.9074  (overshoot)
+```
+
+n qubits live in a 2^n statevector; gates are unitary rotations, measurement draws a basis string by
+squared amplitude. Single-qubit gates pair amplitudes differing in one bit; controlled gates (CNOT,
+Toffoli) act only where controls are 1, creating entanglement (a Bell pair is only ever 00 or 11).
+Deutsch-Jozsa decides constant-vs-balanced in one query; Grover finds a marked item in ~(pi/4)sqrt(N)
+steps instead of N/2. Validated exactly: gates preserve the norm, HH = I, Bell gives the 00/11
+correlations, the CNOT/Toffoli truth tables hold, Deutsch-Jozsa is correct, and Grover drives the
+marked probability above 0.99 in the predicted number of steps. The gate-level companion to the
+quantum-statistics and quantum-Hall notes.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

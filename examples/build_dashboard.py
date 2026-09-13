@@ -560,6 +560,7 @@ def main():
     import wang_landau_demo
     import svm_smo_demo
     import mfcc_demo
+    import quantum_circuit_demo
 
     import plot_orbits
 
@@ -1089,6 +1090,7 @@ def main():
     wang_landau_txt = run("wang_landau_demo", wang_landau_demo.main, True)
     svm_smo_txt = run("svm_smo_demo", svm_smo_demo.main, True)
     mfcc_txt = run("mfcc_demo", mfcc_demo.main, True)
+    quantum_circuit_txt = run("quantum_circuit_demo", quantum_circuit_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9724,6 +9726,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("mfcc.svg"), "The triangular mel filterbank (top, evenly spaced on the perceptual mel scale so low frequencies get finer resolution) and the 13 MFCC coefficients of a rising chirp over time (bottom) -- the cepstral pattern shifts as the pitch sweeps up")
             + f'<div class="card">{pre(mfcc_txt)}</div>'
+            + '</div>'),
+        section(
+            "Quantum circuit simulator: Grover's search and entanglement",
+            "A quantum computer holds n qubits in a STATEVECTOR of 2^n complex amplitudes, and gates "
+            "are unitary rotations of that vector; measurement draws a basis string with probability "
+            "equal to its squared amplitude. This simulates that exactly (feasible to ~20 qubits) -- "
+            "how quantum algorithms are prototyped before touching hardware. Single-qubit gates (X, "
+            "Y, Z, Hadamard, phase, rotations) pair up the amplitudes differing in one bit; CONTROLLED "
+            "gates (CNOT, Toffoli) act only where the control bits are 1, creating ENTANGLEMENT -- a "
+            "Bell pair measures as 00 or 11, never 01 or 10. Two landmark algorithms ride on top: "
+            "DEUTSCH-JOZSA decides constant-vs-balanced in one query where classical needs 2^(n-1)+1, "
+            "and GROVER'S SEARCH finds a marked item among N = 2^n in ~(pi/4)sqrt(N) queries instead "
+            "of N/2 -- a quadratic speed-up by reflecting the statevector about the marked state and "
+            "then the mean. Validated exactly: every gate preserves the norm, HH = I, a Bell circuit "
+            "gives the 00/11 correlations, the CNOT and Toffoli truth tables hold, Deutsch-Jozsa "
+            "labels constant and balanced oracles correctly, and Grover drives the marked probability "
+            "above 0.99 in the predicted number of steps (matching a brute-force amplitude "
+            "calculation). The gate-level companion to the quantum-statistics and quantum-Hall notes.",
+            '<div class="grid">'
+            + svg_card(out("quantum_circuit.svg"), "Grover's search over 64 items: the marked state's probability climbs from the uniform 1/64 to 0.997 at the optimal ~6 iterations, then falls again -- amplitude amplification is a rotation, so overshooting rotates past the target")
+            + f'<div class="card">{pre(quantum_circuit_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
