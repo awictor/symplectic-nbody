@@ -509,6 +509,7 @@ def main():
     import dominator_tree_demo
     import heavy_light_demo
     import weisfeiler_lehman_demo
+    import sos_dp_demo
 
     import plot_orbits
 
@@ -987,6 +988,7 @@ def main():
     dominator_tree_txt = run("dominator_tree_demo", dominator_tree_demo.main, True)
     heavy_light_txt = run("heavy_light_demo", heavy_light_demo.main, True)
     weisfeiler_lehman_txt = run("weisfeiler_lehman_demo", weisfeiler_lehman_demo.main, True)
+    sos_dp_txt = run("sos_dp_demo", sos_dp_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8594,6 +8596,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("weisfeiler_lehman.svg"), "A graph after WL refinement stabilises into five colour classes -- vertices sharing a colour have identical iterated neighbourhood signatures. The histogram of these class sizes is an isomorphism-invariant fingerprint")
             + f'<div class="card">{pre(weisfeiler_lehman_txt)}</div>'
+            + '</div>'),
+        section(
+            "Sum over subsets: zeta and Moebius on the boolean lattice",
+            "Given a function on all 2^n subsets of a universe (an array indexed by bitmask), the "
+            "subset-sum transform F(S) = sum over T subset of S of f(T) is a cumulative sum "
+            "generalised from a line to the boolean hypercube. The naive computation is O(3^n); the "
+            "SOS dynamic program does it in O(n 2^n) by adding one bit at a time -- every mask with "
+            "bit i absorbs the value of the mask with bit i cleared. This is the ZETA transform of "
+            "the subset lattice; subtracting instead of adding gives its inverse, the MOEBIUS "
+            "transform. Together they turn subset-indexed convolutions into pointwise products: "
+            "OR-convolution is moebius(zeta(f).zeta(g)), AND-convolution its superset dual, and the "
+            "disjoint SUBSET-SUM convolution comes from a ranked-by-popcount zeta so the "
+            "disjointness constraint becomes an ordinary product in the rank dimension. Validated "
+            "against brute force: the transform matches the O(3^n) definition for every mask, zeta "
+            "and moebius are exact inverses, and all three convolutions match their defining O(4^n) "
+            "sums across 200 random arrays each. The lattice-transform companion to the FFT and the "
+            "Walsh-Hadamard (XOR) convolution.",
+            '<div class="grid">'
+            + svg_card(out("sos_dp.svg"), "The boolean lattice on three elements as a Hasse diagram; each node holds F(S), the sum of f over all subsets of S -- a cumulative sum flowing upward from the empty set to the full universe")
+            + f'<div class="card">{pre(sos_dp_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

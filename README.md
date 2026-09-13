@@ -467,6 +467,7 @@ ruins a long non-symplectic integration.
 | `src/dominator_tree.py` | Dominator tree of a CFG (Cooper-Harvey-Kennedy iterative dataflow) |
 | `src/heavy_light.py` | Heavy-light decomposition: O(log^2 n) tree-path sum/max/update queries |
 | `src/weisfeiler_lehman.py` | Weisfeiler-Lehman color refinement: graph isomorphism test + WL kernel |
+| `src/sos_dp.py` | Sum over subsets: zeta/Moebius transforms + OR/AND/subset-sum convolutions |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -925,6 +926,7 @@ ruins a long non-symplectic integration.
 | `examples/dominator_tree_demo.py` | If/else-into-loop CFG beside its dominator tree |
 | `examples/heavy_light_demo.py` | Tree coloured by heavy chain with path sum/max/update queries |
 | `examples/weisfeiler_lehman_demo.py` | Color refinement rounds + the 1-WL regular-graph blind spot |
+| `examples/sos_dp_demo.py` | Boolean-lattice Hasse diagram of the subset-sum transform |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10693,6 +10695,25 @@ regular graphs. This same refinement is the theoretical ceiling of graph neural 
 against an exact permutation-search check: WL never rejects a truly isomorphic pair, shares histogram
 and hash under relabelling, and handles the classic 6-cycle vs two-triangles fooling pair honestly.
 The graph-fingerprint companion to the tree-isomorphism (AHU) note.
+
+## Sum over subsets: zeta and Moebius on the boolean lattice
+
+Cumulative sums on the boolean hypercube in O(n 2^n). `sos_dp.py`:
+
+```
+$ python examples/sos_dp_demo.py examples/output
+
+  F({0,1,2}) = 12   (sum of |T| over all subsets T of {0,1,2})
+  Moebius inverse recovers f exactly: True
+```
+
+The subset-sum (zeta) transform F(S) = sum over T subset of S of f(T) is a line's prefix-sum lifted
+to the hypercube, computed one bit at a time: every mask with bit i absorbs the mask with bit i
+cleared. Subtracting instead inverts it (Moebius). These turn subset convolutions into pointwise
+products -- OR-convolution is moebius(zeta(f).zeta(g)), and the disjoint subset-sum convolution comes
+from a ranked-by-popcount zeta. Validated against brute force: the transform matches the O(3^n)
+definition, zeta/moebius are exact inverses, and OR/AND/subset-sum convolutions match their defining
+sums. The lattice-transform companion to the FFT and the Walsh-Hadamard (XOR) convolution.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

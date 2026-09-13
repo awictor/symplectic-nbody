@@ -1,0 +1,35 @@
+Sum over subsets (SOS DP): cumulative sums on the boolean hypercube in O(n 2^n)
+
+  Universe of 3 elements, f(S) = |S|:
+
+         S  f(S)     F(S)=sum_{T<=S} f(T)
+        {}     0                        0
+       {0}     1                        1
+       {1}     1                        1
+     {0,1}     2                        4
+       {2}     1                        1
+     {0,2}     2                        4
+     {1,2}     2                        4
+   {0,1,2}     3                       12
+
+  Moebius inverse recovers f exactly: True
+
+  OR-convolution of the singleton indicator with itself (ordered pairs of singletons
+  whose UNION is S):
+    {0}: 1
+    {1}: 1
+    {0,1}: 2
+    {2}: 1
+    {0,2}: 2
+    {1,2}: 2
+
+  Subset-sum convolution (DISJOINT pairs of singletons; union is S, no shared element):
+    {0,1}: 2
+    {0,2}: 2
+    {1,2}: 2
+
+  Note the difference: OR-conv counts {0}|{0}={0}; subset-sum conv forbids reusing 0,
+  so only 2-element sets get a count (2, the two orderings). Disjointness for free via
+  the ranked-by-popcount zeta trick.
+
+  wrote examples/output\sos_dp.svg
