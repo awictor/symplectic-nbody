@@ -1,0 +1,30 @@
+Heavy-light decomposition: path queries in O(log^2 n)
+
+  10-vertex rooted tree, values [5, 3, 8, 2, 7, 1, 4, 6, 9, 10]
+
+  Decomposition (vertex: heavy-child, chain-head, array-pos):
+    v0: heavy=v1  head=v0  pos=0
+    v1: heavy=v4  head=v0  pos=1
+    v2: heavy=-  head=v2  pos=9
+    v3: heavy=v6  head=v3  pos=6
+    v4: heavy=v7  head=v0  pos=2
+    v5: heavy=-  head=v5  pos=5
+    v6: heavy=v8  head=v3  pos=7
+    v7: heavy=v9  head=v0  pos=3
+    v8: heavy=-  head=v3  pos=8
+    v9: heavy=-  head=v0  pos=4
+
+  Max light edges (chain switches) on any root path: 1  (the O(log n) bound in action)
+
+        path     sum    max   LCA
+  v 9 -> v8       46     10   v0
+  v 7 -> v5       17      7   v1
+  v 9 -> v2       39     10   v0
+  v 4 -> v6       21      7   v0
+
+  Update v7 from 6 to 50, then re-query the v9->v8 path:
+    sum = 90, max = 50
+
+  Each path splits into O(log n) chain pieces, each a contiguous segment-tree range.
+
+  wrote examples/output\heavy_light.svg

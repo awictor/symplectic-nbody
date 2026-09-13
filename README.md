@@ -465,6 +465,7 @@ ruins a long non-symplectic integration.
 | `src/lca.py` | Lowest common ancestor by binary lifting: O(log n) LCA / distance / k-th ancestor |
 | `src/min_mean_cycle.py` | Karp's minimum mean cycle in O(V*E), negative-cycle certificate |
 | `src/dominator_tree.py` | Dominator tree of a CFG (Cooper-Harvey-Kennedy iterative dataflow) |
+| `src/heavy_light.py` | Heavy-light decomposition: O(log^2 n) tree-path sum/max/update queries |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -921,6 +922,7 @@ ruins a long non-symplectic integration.
 | `examples/lca_demo.py` | Org-tree LCA / distance / k-th-ancestor queries, path highlighted |
 | `examples/min_mean_cycle_demo.py` | Directed graph with the minimum mean cycle highlighted |
 | `examples/dominator_tree_demo.py` | If/else-into-loop CFG beside its dominator tree |
+| `examples/heavy_light_demo.py` | Tree coloured by heavy chain with path sum/max/update queries |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10650,6 +10652,26 @@ the running nearest-common-ancestor of its predecessors. This is exactly what SS
 to place phi-functions and to find natural loops. Validated against the definition itself: the tree's
 verdict matches a brute-force "does deleting d disconnect n from the entry?" check for every reachable
 pair across 200 random CFGs. The control-flow companion to the SCC and topological-sort tools.
+
+## Heavy-light decomposition: tree paths as array ranges
+
+Path sum/max/update on a tree in O(log^2 n). `heavy_light.py`:
+
+```
+$ python examples/heavy_light_demo.py examples/output
+
+        path     sum    max   LCA
+  v9 -> v8        46     10   v0
+  update v7 -> 50, re-query v9->v8: sum = 90, max = 50
+```
+
+Each vertex's largest-subtree child is heavy; heavy edges link into chains laid out contiguously in
+one array. A light edge at least halves the remaining subtree, so any root path crosses O(log n)
+chains -- each a contiguous segment a segment tree answers in O(log n). A path query climbs chains
+from the deeper head to its parent, and the LCA falls out of the same climb. Validated against a
+brute-force path walk for every pair before and after updates on random trees, with the chain
+positions verified contiguous and the O(log n)-light-edges property checked directly. The path-query
+companion to the binary-lifting LCA and the segment tree.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

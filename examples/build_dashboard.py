@@ -507,6 +507,7 @@ def main():
     import lca_demo
     import min_mean_cycle_demo
     import dominator_tree_demo
+    import heavy_light_demo
 
     import plot_orbits
 
@@ -983,6 +984,7 @@ def main():
     lca_txt = run("lca_demo", lca_demo.main, True)
     min_mean_cycle_txt = run("min_mean_cycle_demo", min_mean_cycle_demo.main, True)
     dominator_tree_txt = run("dominator_tree_demo", dominator_tree_demo.main, True)
+    heavy_light_txt = run("heavy_light_demo", heavy_light_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8548,6 +8550,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("dominator_tree.svg"), "An if/else-into-a-loop CFG and its dominator tree: the join block is dominated only by entry and test (neither branch dominates it), while the loop body and exit hang below the join")
             + f'<div class="card">{pre(dominator_tree_txt)}</div>'
+            + '</div>'),
+        section(
+            "Heavy-light decomposition: tree paths as array ranges",
+            "A tree has no linear order, so a query on the path between two vertices -- its value "
+            "sum, its maximum, or adding to every vertex on it -- looks like an O(path length) walk. "
+            "Heavy-light decomposition (Sleator and Tarjan, 1983) makes it O(log^2 n) by cutting the "
+            "tree into vertex-disjoint CHAINS laid out contiguously in one array. For each vertex "
+            "the child with the largest subtree is HEAVY; heavy edges link into chains, and stepping "
+            "down a LIGHT edge at least halves the remaining subtree, so any root-to-node path "
+            "crosses only O(log n) light edges and thus O(log n) chains -- each a single contiguous "
+            "segment a range structure answers in O(log n). A path query climbs chains from the "
+            "deeper head to its parent, and the LCA falls out of the same climb. Validated against "
+            "naive references on random trees: path sum and max match a brute-force walk of the "
+            "actual tree path for every pair (before and after point updates), the HLD-derived LCA "
+            "matches an independent computation, the chain positions form a valid permutation with "
+            "each chain contiguous, and the O(log n)-light-edges property holds directly. The "
+            "path-query companion to the binary-lifting LCA and the segment tree.",
+            '<div class="grid">'
+            + svg_card(out("heavy_light.svg"), "A 10-vertex tree coloured by heavy chain -- thick edges are heavy (linking a chain), thin are light. Any root path crosses at most one light edge here, so every path query touches only a couple of contiguous array segments")
+            + f'<div class="card">{pre(heavy_light_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
