@@ -550,6 +550,7 @@ def main():
     import hp_filter_demo
     import holt_winters_demo
     import lasso_demo
+    import reed_muller_demo
 
     import plot_orbits
 
@@ -1069,6 +1070,7 @@ def main():
     hp_filter_txt = run("hp_filter_demo", hp_filter_demo.main, True)
     holt_winters_txt = run("holt_winters_demo", holt_winters_demo.main, True)
     lasso_txt = run("lasso_demo", lasso_demo.main, True)
+    reed_muller_txt = run("reed_muller_demo", reed_muller_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9502,6 +9504,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("lasso.svg"), "Lasso coefficient paths as the L1 penalty grows: the three true features (green) stay nonzero while the nine noise features (gray) are shrunk to exactly zero -- automatic feature selection that ridge cannot do")
             + f'<div class="card">{pre(lasso_txt)}</div>'
+            + '</div>'),
+        section(
+            "Reed-Muller code: the code that phoned home from Mars",
+            "Reed-Muller codes are among the oldest and most beautiful error-correcting codes; the "
+            "first-order code RM(1,5) flew on the 1971 Mariner 9 mission, protecting the first close-up "
+            "photographs of Mars against the noise of interplanetary space. RM(1,m) encodes m+1 "
+            "message bits into a codeword of length 2^m with minimum distance 2^(m-1), so RM(1,5) uses "
+            "32 bits to carry 6 and corrects up to 7 flips per word. The 2^(m+1) codewords are the "
+            "values of all affine boolean functions, which map to the rows of a HADAMARD matrix -- so "
+            "decoding is fast and exact: transform the received word by the FAST WALSH-HADAMARD "
+            "TRANSFORM and its largest-magnitude coefficient names the closest codeword, "
+            "maximum-likelihood decoding in O(n log n) instead of comparing against every codeword. "
+            "Validated: encode-then-decode round-trips every message; any error pattern up to the "
+            "correction radius is corrected exactly (checked exhaustively for small m); the minimum "
+            "distance is 2^(m-1); the transform decoder agrees with brute-force nearest-codeword "
+            "decoding; and beyond the radius success degrades gracefully. The coding-theory companion "
+            "to the Hamming, Golay, and Reed-Solomon codes and the Walsh-Hadamard transform.",
+            '<div class="grid">'
+            + svg_card(out("reed_muller.svg"), "RM(1,5) decoding success versus bit errors per 32-bit word: perfect correction up to 7 errors (the shaded radius), then a graceful decline -- exactly the distance-16 guarantee that let Mariner 9's images survive the trip from Mars")
+            + f'<div class="card">{pre(reed_muller_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -1,0 +1,29 @@
+Reed-Muller RM(1,5): the code that protected Mariner 9's photos of Mars
+
+  RM(1,5): 6 message bits -> 32-bit codeword, min distance 16, corrects 7 errors.
+
+  message  [1, 0, 1, 1, 0, 1]
+  codeword 11000011110000110011110000111100
+  5 bit errors flipped at positions [0, 9, 18, 21, 27]:
+  received 01000011100000110001100000101100
+  decoded  [1, 0, 1, 1, 0, 1]  (correct: True)
+
+  Decoding success rate over 500 random words per error count:
+     errors   success rate
+          0          1.000  <- within correction radius
+          1          1.000  <- within correction radius
+          2          1.000  <- within correction radius
+          3          1.000  <- within correction radius
+          4          1.000  <- within correction radius
+          5          1.000  <- within correction radius
+          6          1.000  <- within correction radius
+          7          1.000  <- within correction radius
+          8          0.936
+          9          0.688
+         10          0.174
+         11          0.002
+
+  Up to 7 errors: always corrected. Beyond that, success degrades gracefully --
+  exactly as the distance-16 code guarantees.
+
+  wrote examples/output\reed_muller.svg

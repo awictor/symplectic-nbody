@@ -508,6 +508,7 @@ ruins a long non-symplectic integration.
 | `src/hp_filter.py` | Hodrick-Prescott trend/cycle filter (banded pentadiagonal solve) |
 | `src/holt_winters.py` | Exponential smoothing: SES / Holt / Holt-Winters forecasting |
 | `src/lasso.py` | Lasso regression by coordinate descent (L1 feature selection) + ridge |
+| `src/reed_muller.py` | First-order Reed-Muller code RM(1,m) with fast Hadamard-transform decoding |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1007,6 +1008,7 @@ ruins a long non-symplectic integration.
 | `examples/hp_filter_demo.py` | Trend/cycle decomposition of a GDP-like series across lambda |
 | `examples/holt_winters_demo.py` | Seasonal monthly series forecast a year ahead vs SES/Holt |
 | `examples/lasso_demo.py` | Feature selection: Lasso zeros noise features where ridge keeps all |
+| `examples/reed_muller_demo.py` | RM(1,5) Mars code correcting up to 7 errors per 32-bit word |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11477,6 +11479,23 @@ Coordinate descent with soft-thresholding drives most coefficients to exactly ze
 automatic feature selection. Validated: recovers the true sparse support and coefficient values, zeros
 irrelevant features, gets sparser as the penalty grows, reduces to OLS at lambda=0, and is far sparser
 than ridge. The sparse-regression companion to the ordinary/ridge regression and OMP tools.
+
+## Reed-Muller code: the code that phoned home from Mars
+
+The RM(1,5) code that protected Mariner 9's photographs of Mars. `reed_muller.py`:
+
+```
+$ python examples/reed_muller_demo.py examples/output
+
+  RM(1,5): 6 message bits -> 32-bit codeword, corrects up to 7 errors
+  100% decoding up to 7 flips, then graceful decline
+```
+
+The 2^(m+1) codewords are affine boolean functions -- rows of a Hadamard matrix -- so decoding is a
+fast Walsh-Hadamard transform whose peak coefficient names the closest codeword in O(n log n).
+Validated: round-trips every message, corrects all error patterns up to the radius (exhaustively for
+small m), has minimum distance 2^(m-1), and the transform decoder matches brute-force nearest-codeword
+decoding. The coding-theory companion to the Hamming, Golay, and Reed-Solomon codes.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

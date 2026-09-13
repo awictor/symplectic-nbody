@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="380" viewBox="0 0 760 380" font-family="monospace">
+<rect width="760" height="380" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="15">RM(1,5) decoding success vs bit errors (100% up to t=7)</text>
+<rect x="55" y="55" width="660" height="280" fill="none" stroke="#30363d"/>
+<rect x="55" y="55" width="420.0" height="280" fill="#06d6a0" fill-opacity="0.1"/>
+<line x1="475.0" y1="55" x2="475.0" y2="335" stroke="#06d6a0" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="479" y="69" fill="#06d6a0" font-size="10">t=7</text>
+<polyline points="55.0,55.0 115.0,55.0 175.0,55.0 235.0,55.0 295.0,55.0 355.0,55.0 415.0,55.0 475.0,55.0 535.0,72.9 595.0,142.4 655.0,286.3 715.0,334.4" fill="none" stroke="#4dabf7" stroke-width="2"/>
+<circle cx="55.0" cy="55.0" r="3" fill="#ffd43b"/>
+<circle cx="115.0" cy="55.0" r="3" fill="#ffd43b"/>
+<circle cx="175.0" cy="55.0" r="3" fill="#ffd43b"/>
+<circle cx="235.0" cy="55.0" r="3" fill="#ffd43b"/>
+<circle cx="295.0" cy="55.0" r="3" fill="#ffd43b"/>
+<circle cx="355.0" cy="55.0" r="3" fill="#ffd43b"/>
+<circle cx="415.0" cy="55.0" r="3" fill="#ffd43b"/>
+<circle cx="475.0" cy="55.0" r="3" fill="#ffd43b"/>
+<circle cx="535.0" cy="72.9" r="3" fill="#ffd43b"/>
+<circle cx="595.0" cy="142.4" r="3" fill="#ffd43b"/>
+<circle cx="655.0" cy="286.3" r="3" fill="#ffd43b"/>
+<circle cx="715.0" cy="334.4" r="3" fill="#ffd43b"/>
+<text x="385" y="357" fill="#8b949e" font-size="10" text-anchor="middle">number of bit errors per 32-bit word</text>
+<text x="49" y="51" fill="#8b949e" font-size="10" text-anchor="end">success rate</text>
+</svg>
