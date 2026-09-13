@@ -1,0 +1,35 @@
+Dominator tree: who must you pass through to reach each block
+
+  Control-flow graph (if/else joining into a loop):
+    entry -> test
+     test -> then
+     test -> else
+     then -> join
+     else -> join
+     join -> body
+     body -> join
+     join -> exit
+
+  Immediate dominators:
+    entry: (entry)
+     test: idom = entry
+     then: idom = test
+     else: idom = test
+     join: idom = test
+     body: idom = join
+     exit: idom = join
+
+  Full dominators of each block (every entry path passes through these):
+    entry: entry
+     test: entry, test
+     then: entry, test, then
+     else: entry, test, else
+     join: entry, test, join
+     body: entry, test, join, body
+     exit: entry, test, join, exit
+
+  Note: 'join' is dominated only by entry/test -- neither branch dominates it (both
+  reach it). 'body' and 'exit' are dominated by 'join'. This is exactly the structure
+  SSA construction uses to place phi-functions and to find the natural loop 4<->5.
+
+  wrote examples/output\dominator_tree.svg

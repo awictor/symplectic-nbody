@@ -506,6 +506,7 @@ def main():
     import hopcroft_karp_demo
     import lca_demo
     import min_mean_cycle_demo
+    import dominator_tree_demo
 
     import plot_orbits
 
@@ -981,6 +982,7 @@ def main():
     hopcroft_karp_txt = run("hopcroft_karp_demo", hopcroft_karp_demo.main, True)
     lca_txt = run("lca_demo", lca_demo.main, True)
     min_mean_cycle_txt = run("min_mean_cycle_demo", min_mean_cycle_demo.main, True)
+    dominator_tree_txt = run("dominator_tree_demo", dominator_tree_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8525,6 +8527,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("min_mean_cycle.svg"), "A directed graph with three competing cycles; the minimum mean cycle C-D-E (red, mean -0.667) wins over the weight-2 triangle and the expensive B-D 2-cycle -- and its negative mean certifies a negative cycle")
             + f'<div class="card">{pre(min_mean_cycle_txt)}</div>'
+            + '</div>'),
+        section(
+            "Dominator tree of a control-flow graph",
+            "In a directed graph with an entry, node d DOMINATES node n if every path from the entry "
+            "to n passes through d. Dominance is the backbone of compiler analysis: it defines where "
+            "a definition is guaranteed live, where SSA construction places phi-functions, and which "
+            "loops are natural (a back edge to a header dominating its tail). Every node but the "
+            "entry has a unique IMMEDIATE dominator, and those edges form a tree in which d dominates "
+            "n exactly when d is an ancestor of n. The definitional test -- does deleting d "
+            "disconnect n from the entry? -- is a reachability computation per pair; instead this "
+            "builds the whole tree with the iterative data-flow algorithm of Cooper, Harvey and "
+            "Kennedy (2001): number nodes in reverse postorder, then repeatedly set each node's idom "
+            "to the running nearest-common-ancestor of its processed predecessors until a fixed "
+            "point. Unreachable nodes are dropped. Validated against the definition itself: for "
+            "every reachable node and every candidate, the tree's dominance verdict matches a "
+            "brute-force check that removing the candidate makes the node unreachable, across 200 "
+            "random control-flow graphs. The control-flow companion to the SCC and topological-sort "
+            "tools.",
+            '<div class="grid">'
+            + svg_card(out("dominator_tree.svg"), "An if/else-into-a-loop CFG and its dominator tree: the join block is dominated only by entry and test (neither branch dominates it), while the loop body and exit hang below the join")
+            + f'<div class="card">{pre(dominator_tree_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

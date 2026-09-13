@@ -464,6 +464,7 @@ ruins a long non-symplectic integration.
 | `src/hopcroft_karp.py` | Maximum bipartite matching in O(E sqrt(V)) + Koenig min vertex cover |
 | `src/lca.py` | Lowest common ancestor by binary lifting: O(log n) LCA / distance / k-th ancestor |
 | `src/min_mean_cycle.py` | Karp's minimum mean cycle in O(V*E), negative-cycle certificate |
+| `src/dominator_tree.py` | Dominator tree of a CFG (Cooper-Harvey-Kennedy iterative dataflow) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -919,6 +920,7 @@ ruins a long non-symplectic integration.
 | `examples/hopcroft_karp_demo.py` | Applicant-to-job matching with Koenig minimum vertex cover |
 | `examples/lca_demo.py` | Org-tree LCA / distance / k-th-ancestor queries, path highlighted |
 | `examples/min_mean_cycle_demo.py` | Directed graph with the minimum mean cycle highlighted |
+| `examples/dominator_tree_demo.py` | If/else-into-loop CFG beside its dominator tree |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10629,6 +10631,25 @@ enumeration. A virtual zero-weight source makes it work on graphs that aren't st
 optimal walk is reconstructed by backpointers to recover the cycle. Validated against brute-force
 enumeration on 300 random graphs and against Bellman-Ford (minimum mean < 0 iff a negative cycle
 exists). The cyclic-optimum companion to Floyd-Warshall and the min-cost-flow cancelling rule.
+
+## Dominator tree of a control-flow graph
+
+Which blocks must you pass through to reach a block? `dominator_tree.py`:
+
+```
+$ python examples/dominator_tree_demo.py examples/output
+
+     join: idom = test    (neither branch dominates the join)
+     body: idom = join    exit: idom = join
+```
+
+Node d dominates n if every entry-to-n path goes through d; the immediate-dominator edges form a
+tree where d dominates n iff it's an ancestor. Built with the Cooper-Harvey-Kennedy (2001) iterative
+dataflow algorithm -- reverse-postorder numbering, then a fixed-point that sets each node's idom to
+the running nearest-common-ancestor of its predecessors. This is exactly what SSA construction uses
+to place phi-functions and to find natural loops. Validated against the definition itself: the tree's
+verdict matches a brute-force "does deleting d disconnect n from the entry?" check for every reachable
+pair across 200 random CFGs. The control-flow companion to the SCC and topological-sort tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
