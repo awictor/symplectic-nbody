@@ -499,6 +499,7 @@ def main():
     import bankers_demo
     import page_replacement_demo
     import rt_scheduling_demo
+    import shunting_yard_demo
 
     import plot_orbits
 
@@ -967,6 +968,7 @@ def main():
     bankers_txt = run("bankers_demo", bankers_demo.main, True)
     page_replacement_txt = run("page_replacement_demo", page_replacement_demo.main, True)
     rt_scheduling_txt = run("rt_scheduling_demo", rt_scheduling_demo.main, True)
+    shunting_yard_txt = run("shunting_yard_demo", shunting_yard_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8361,6 +8363,31 @@ def main():
             '<div class="grid">'
             + svg_card(out("rt_scheduling.svg"), "the RM and EDF schedules over one hyperperiod, each tick coloured by the task that runs and the carets marking job releases -- the two policies interleave the same tasks differently to hit every deadline")
             + f'<div class="card">{pre(rt_scheduling_txt)}</div>'
+            + '</div>'),
+        section(
+            "The shunting-yard algorithm: parsing arithmetic like a calculator",
+            "Type 3 + 4 * 2 into a calculator and it answers 11, not 14 -- it knows multiplication binds "
+            "tighter than addition. But a machine reads left to right; how does it defer the +, do the *, "
+            "then come back? Dijkstra's SHUNTING-YARD ALGORITHM (1961), named for a railway siding, reads "
+            "the infix tokens once and shunts them via an OPERATOR STACK into REVERSE POLISH NOTATION "
+            "(postfix) -- 3 4 2 * + -- in which precedence and parentheses are already resolved into pure "
+            "left-to-right order, then evaluated in one trivial stack pass. This is how compilers parse "
+            "expressions and how RPN calculators, Forth, and PostScript work. The rule: send numbers "
+            "straight to the output; for an operator, first pop any stacked operators of higher "
+            "precedence (or equal precedence when left-associative), then push it; parentheses push and "
+            "pop a marker. This module implements the full pipeline -- a tokenizer (numbers, + - * / ^ %, "
+            "parentheses, functions, and unary minus disambiguated from binary), the shunting-yard "
+            "conversion, and an RPN evaluator -- honouring left-associativity for + - * / % and "
+            "RIGHT-associativity for ^ (so 2^3^2 = 512), unary minus, nested parentheses, the functions "
+            "sqrt/sin/cos/abs/exp/log, and the constants pi and e. Validated against Python's own "
+            "arithmetic as an oracle: over 500 randomly generated expression trees ``evaluate`` matches "
+            "Python's value to floating tolerance; precedence and associativity are pinned by hand "
+            "(3+4*2=11, (3+4)*2=14, 2^3^2=512, unary minus); the RPN output matches known postfix forms; "
+            "functions and constants evaluate correctly; and malformed input (unbalanced parentheses, "
+            "dangling operators, empty) raises cleanly rather than returning a wrong number.",
+            '<div class="grid">'
+            + svg_card(out("shunting_yard.svg"), "shunting '3 + 4 * 2 + 1' to RPN: each row shows the token consumed, the growing output queue, and the operator stack -- the higher-precedence * is held on the stack and emitted before the +s")
+            + f'<div class="card">{pre(shunting_yard_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

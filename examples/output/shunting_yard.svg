@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="380" viewBox="0 0 760 380" font-family="monospace">
+<rect width="760" height="380" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="16">Shunting '3 + 4 * 2 + 1' to RPN: output queue and operator stack per token</text>
+<text x="30" y="58" fill="#8b949e" font-size="12">token</text>
+<text x="150" y="58" fill="#06d6a0" font-size="12">output (RPN so far)</text>
+<text x="480" y="58" fill="#ffd43b" font-size="12">operator stack</text>
+<text x="30" y="80" fill="#4dabf7" font-size="13">3</text>
+<text x="150" y="80" fill="#06d6a0" font-size="13">3</text>
+<text x="480" y="80" fill="#ffd43b" font-size="13"></text>
+<text x="30" y="106" fill="#4dabf7" font-size="13">+</text>
+<text x="150" y="106" fill="#06d6a0" font-size="13">3</text>
+<text x="480" y="106" fill="#ffd43b" font-size="13">+</text>
+<text x="30" y="132" fill="#4dabf7" font-size="13">4</text>
+<text x="150" y="132" fill="#06d6a0" font-size="13">3 4</text>
+<text x="480" y="132" fill="#ffd43b" font-size="13">+</text>
+<text x="30" y="158" fill="#4dabf7" font-size="13">*</text>
+<text x="150" y="158" fill="#06d6a0" font-size="13">3 4</text>
+<text x="480" y="158" fill="#ffd43b" font-size="13">+ *</text>
+<text x="30" y="184" fill="#4dabf7" font-size="13">2</text>
+<text x="150" y="184" fill="#06d6a0" font-size="13">3 4 2</text>
+<text x="480" y="184" fill="#ffd43b" font-size="13">+ *</text>
+<text x="30" y="210" fill="#4dabf7" font-size="13">+</text>
+<text x="150" y="210" fill="#06d6a0" font-size="13">3 4 2 * +</text>
+<text x="480" y="210" fill="#ffd43b" font-size="13">+</text>
+<text x="30" y="236" fill="#4dabf7" font-size="13">1</text>
+<text x="150" y="236" fill="#06d6a0" font-size="13">3 4 2 * + 1</text>
+<text x="480" y="236" fill="#ffd43b" font-size="13">+</text>
+<text x="30" y="262" fill="#4dabf7" font-size="13">(drain)</text>
+<text x="150" y="262" fill="#06d6a0" font-size="13">3 4 2 * + 1 +</text>
+<text x="480" y="262" fill="#ffd43b" font-size="13"></text>
+<text x="30" y="298" fill="#8b949e" font-size="12">final RPN = 3 4 2 * + 1 +  ->  evaluates to 12</text>
+</svg>

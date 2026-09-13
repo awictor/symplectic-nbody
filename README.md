@@ -457,6 +457,7 @@ ruins a long non-symplectic integration.
 | `src/bankers.py` | Banker's algorithm: deadlock avoidance, safety check, deadlock detection |
 | `src/page_replacement.py` | Page-replacement policies (FIFO/LRU/Clock/LFU/optimal) + Belady's anomaly |
 | `src/rt_scheduling.py` | Real-time scheduling: RM/EDF schedulability tests + hyperperiod simulation |
+| `src/shunting_yard.py` | Shunting-yard expression evaluator: infix -> RPN -> value with precedence |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -905,6 +906,7 @@ ruins a long non-symplectic integration.
 | `examples/bankers_demo.py` | Safe-sequence check, a granted vs refused request, and a deadlock |
 | `examples/page_replacement_demo.py` | Fault counts by policy and Belady's anomaly under FIFO |
 | `examples/rt_scheduling_demo.py` | RM/EDF tests, an EDF-only-schedulable set, and the two timelines |
+| `examples/shunting_yard_demo.py` | Expressions to RPN with the token-by-token shunt shown |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10487,6 +10489,23 @@ first) is exactly schedulable iff U <= 1. Both are checked against a hyperperiod
 periods). Validated: the EDF test is exact vs simulation over 400 sets, the RM test is sufficient but
 non-necessary, EDF dominates RM (including a U=0.97 set RM misses), overload fails both, and the
 hyperperiod is the LCM.
+
+## The shunting-yard algorithm: parsing arithmetic like a calculator
+
+Turn infix expressions into RPN and evaluate them, precedence and all. `shunting_yard.py`:
+
+```
+$ python examples/shunting_yard_demo.py examples/output
+
+  3 + 4 * 2  -> RPN 3 4 2 * +  = 11
+  2 ^ 3 ^ 2  -> 512 (^ is right-associative)
+```
+
+Dijkstra's shunting-yard reads infix once and shunts operators through a stack into RPN, resolving
+precedence and parentheses into left-to-right order for a trivial stack evaluation. Handles + - * / ^ %,
+unary minus, parentheses, functions (sqrt/sin/cos/abs/exp/log), and constants (pi, e), with
+right-associative exponentiation. Validated against Python's eval over 500 random expression trees,
+hand-checked precedence/associativity, known RPN forms, and clean errors on malformed input.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

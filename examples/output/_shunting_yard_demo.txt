@@ -1,0 +1,20 @@
+Shunting-yard: read infix once, shunt to RPN, evaluate in one pass
+
+  infix                RPN (postfix)                 value   Python
+  3 + 4 * 2            3 4 2 * +                        11   True
+  (3 + 4) * 2          3 4 + 2 *                        14   True
+  2 ^ 3 ^ 2            2 3 2 ^ ^                       512   True
+  10 - 3 - 2           10 3 - 2 -                        5   True
+  sqrt(3^2 + 4^2)      3 2 ^ 4 2 ^ + sqrt                5   True
+  -5 * (2 + 3)         5 u- 2 3 + *                    -25   True
+  100 / 10 / 2         100 10 / 2 /                      5   True
+
+  Note 2^3^2 = 512, not 64: exponentiation is RIGHT-associative, so it groups as 2^(3^2).
+  And 3+4*2 = 11, not 14: the * is popped before the + because it binds tighter.
+
+  Each operator waits on a stack until an operator of equal-or-lower precedence arrives,
+  then it is shunted to the output -- so the RPN comes out with precedence and parentheses
+  already baked into left-to-right order, ready for a trivial stack evaluation. This is how
+  calculators, compilers, and RPN languages like Forth and PostScript parse arithmetic.
+
+  wrote examples/output\shunting_yard.svg
