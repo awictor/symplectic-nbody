@@ -546,6 +546,7 @@ def main():
     import bfgs_demo
     import mean_shift_demo
     import pade_demo
+    import prony_demo
 
     import plot_orbits
 
@@ -1061,6 +1062,7 @@ def main():
     bfgs_txt = run("bfgs_demo", bfgs_demo.main, True)
     mean_shift_txt = run("mean_shift_demo", mean_shift_demo.main, True)
     pade_txt = run("pade_demo", pade_demo.main, True)
+    prony_txt = run("prony_demo", prony_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9413,6 +9415,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("pade.svg"), "Approximating exp(x) from nine Taylor coefficients: the degree-8 Taylor polynomial (red) peels away from the truth (gray dashed) as x grows, while the [4/4] Pade approximant (green) stays glued to it")
             + f'<div class="card">{pre(pade_txt)}</div>'
+            + '</div>'),
+        section(
+            "Prony's method: decomposing a signal into damped sinusoids",
+            "The Fourier transform describes a signal by its content on a fixed grid of bins, but a "
+            "signal that is genuinely a sum of a FEW damped sinusoids -- a ringing bell, a decaying "
+            "transient, two close spectral lines -- is captured far more compactly by their exact "
+            "frequencies, damping rates, amplitudes, and phases. PRONY'S METHOD (1795, older than "
+            "Fourier's paper) fits exactly that model x[n] = sum a_k z_k^n and recovers the complex "
+            "modes z_k directly. It is the parametric, SUPER-RESOLUTION cousin of the FFT: it "
+            "separates frequencies closer than the FFT's bin spacing because it does not bin at all "
+            "-- it solves for the poles. Three linear steps: the samples obey a linear recurrence "
+            "whose characteristic-polynomial roots are the modes; find those roots; then the "
+            "amplitudes solve a Vandermonde least-squares fit. Validated: on a sum of known damped "
+            "sinusoids Prony recovers the exact frequencies and damping and reconstructs the samples "
+            "to machine precision (3e-14); a pure tone gives zero damping and the right frequency; an "
+            "exponential sum recovers its decay modes; and two tones 0.55 Hz apart are resolved "
+            "inside a 1.56 Hz FFT bin. The parametric-spectral companion to the FFT, Goertzel, and "
+            "Levinson-Durbin tools.",
+            '<div class="grid">'
+            + svg_card(out("prony.svg"), "A signal that is two decaying sinusoids: Prony fits four damped-exponential modes and reconstructs the samples exactly, recovering the 18 Hz and 33 Hz frequencies and their damping rates rather than smearing them across FFT bins")
+            + f'<div class="card">{pre(prony_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

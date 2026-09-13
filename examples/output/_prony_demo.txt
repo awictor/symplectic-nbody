@@ -1,0 +1,17 @@
+Prony's method: fit a signal as a sum of damped sinusoids (parametric spectrum)
+
+  Signal: 18 Hz (damping 2/s) + 33 Hz (damping 6/s), 100 samples.
+
+  Recovered modes:
+     freq (Hz)   damping (1/s)   amplitude
+         33.00            6.00       0.600
+         18.00            2.00       1.000
+
+  Reconstruction error: 3.29e-14 (Prony fits the exact modes, not FFT bins).
+
+  Super-resolution: two tones closer than one FFT bin.
+    FFT bin width 1.56 Hz; the tones are only 0.55 Hz apart.
+    Prony recovers: [12.0, 12.547] Hz (both resolved).
+    An FFT would show one merged peak; Prony solves for the poles directly.
+
+  wrote examples/output\prony.svg

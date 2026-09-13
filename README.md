@@ -504,6 +504,7 @@ ruins a long non-symplectic integration.
 | `src/bfgs.py` | BFGS quasi-Newton optimization (inverse-Hessian approximation + line search) |
 | `src/mean_shift.py` | Mean-shift clustering: mode-seeking, no k needed (Gaussian + flat kernels) |
 | `src/pade.py` | Pade rational approximants from Taylor coefficients (outreach Taylor, capture poles) |
+| `src/prony.py` | Prony's method: fit a signal as damped sinusoids (super-resolution spectrum) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -999,6 +1000,7 @@ ruins a long non-symplectic integration.
 | `examples/bfgs_demo.py` | BFGS path down the Rosenbrock valley vs crawling gradient descent |
 | `examples/mean_shift_demo.py` | Four blobs auto-clustered by mode-seeking, bandwidth sweep |
 | `examples/pade_demo.py` | Pade vs Taylor for exp and a function with poles |
+| `examples/prony_demo.py` | Damped-sinusoid recovery + super-resolution beating the FFT bin |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11406,6 +11408,22 @@ A single linear system matches f(x)Q(x) = P(x) through order m+n. Validated: the
 matches the input Taylor coefficients, [1/1] of 1/(1-x) is exact, and Pade beats same-order Taylor for
 exp/log/arctan and tracks a function with poles past its Taylor radius. The rational-approximation
 companion to the barycentric/Chebyshev interpolation and sequence-acceleration tools.
+
+## Prony's method: decomposing a signal into damped sinusoids
+
+The parametric, super-resolution cousin of the FFT. `prony.py`:
+
+```
+$ python examples/prony_demo.py examples/output
+
+  recovers 18 Hz (damping 2) + 33 Hz (damping 6) exactly; reconstruction error 3e-14
+  two tones 0.55 Hz apart resolved inside a 1.56 Hz FFT bin
+```
+
+Fits x[n] = sum a_k z_k^n: the samples obey a linear recurrence whose characteristic-polynomial roots
+are the modes, then amplitudes solve a Vandermonde least-squares. Validated: exact frequency/damping
+recovery, machine-precision reconstruction, and sub-FFT-bin super-resolution. The parametric-spectral
+companion to the FFT, Goertzel, and Levinson-Durbin tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
