@@ -1,0 +1,27 @@
+Monte Carlo Tree Search: self-play rollouts guided by the UCT bandit rule
+
+  Position 1 (X to move, X = player 1):
+      X X .
+      O O .
+      . . .
+  minimax-optimal move(s): [2]  (cell 2 completes the top row)
+
+  MCTS root visit counts after 2000 iterations:
+     cell   visits  win rate
+        2     1843     1.000  <- chosen
+        5       51     0.539
+        6       46     0.511
+        7       29     0.362
+        8       31     0.387
+
+  Fraction of correct moves vs search budget (random midgame positions):
+      iterations   agreement
+              50        73%
+             200        77%
+            1000        80%
+            5000        90%
+
+  More rollouts -> more agreement with perfect play. The visit count, not the raw
+  win rate, is the output: a good move is explored both often AND deeply.
+
+  wrote examples/output\mcts.svg

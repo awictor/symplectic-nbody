@@ -528,6 +528,7 @@ ruins a long non-symplectic integration.
 | `src/universal_codes.py` | Universal integer codes: Elias gamma/delta/omega + Golomb-Rice |
 | `src/finite_volume.py` | Godunov + MUSCL finite-volume shock capturing for conservation laws |
 | `src/kaplan_meier.py` | Kaplan-Meier survival estimator + Greenwood variance + log-rank test |
+| `src/mcts.py` | Monte Carlo Tree Search (UCT) with a minimax solver + tic-tac-toe |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1047,6 +1048,7 @@ ruins a long non-symplectic integration.
 | `examples/universal_codes_demo.py` | Bits/value coding inverted-index gaps vs the entropy floor |
 | `examples/finite_volume_demo.py` | Burgers shock: Godunov vs MUSCL sharpness, mass conserved |
 | `examples/kaplan_meier_demo.py` | Treatment vs control survival curves + log-rank test |
+| `examples/mcts_demo.py` | MCTS visit counts concentrating on the winning tic-tac-toe move |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11986,6 +11988,29 @@ Validated: with no censoring the curve is exactly 1 minus the empirical CDF, a t
 reproduces the published probabilities, Greenwood's variance matches a direct computation, and the
 log-rank statistic is small for identical groups and large for separated ones. The censored-data
 companion to the empirical-CDF, bootstrap, and Kolmogorov-Smirnov tools.
+
+## Monte Carlo Tree Search: the search behind AlphaGo
+
+Choose game moves by self-play rollouts, no evaluation function. `mcts.py`:
+
+```
+$ python examples/mcts_demo.py examples/output
+
+  Position 1 (X to move): X X . / O O . / . . .
+  MCTS root visit counts after 2000 iterations:
+     cell   visits  win rate
+        2     1843     1.000  <- chosen (completes the row)
+        5       51     0.539
+  agreement with minimax: 73% at 50 rollouts -> 90% at 5000
+```
+
+Each iteration selects a path by the UCT rule (average reward plus an exploration bonus), expands a
+leaf, plays a random game to the end, and backpropagates the result. The most-visited root move is
+chosen. This -- no handcrafted evaluation, just rollouts guided by a bandit rule -- cracked computer Go
+and became AlphaGo with a value network in place of the random rollout. Validated against an exact
+minimax solver on tic-tac-toe: MCTS never loses from the empty board, takes immediate wins, blocks
+immediate losses, and its agreement with optimal play grows with the budget. The self-play search
+companion to the minimax idea, the UCB bandit, and the Sprague-Grundy tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

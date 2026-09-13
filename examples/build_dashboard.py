@@ -570,6 +570,7 @@ def main():
     import universal_codes_demo
     import finite_volume_demo
     import kaplan_meier_demo
+    import mcts_demo
 
     import plot_orbits
 
@@ -1109,6 +1110,7 @@ def main():
     universal_codes_txt = run("universal_codes_demo", universal_codes_demo.main, True)
     finite_volume_txt = run("finite_volume_demo", finite_volume_demo.main, True)
     kaplan_meier_txt = run("kaplan_meier_demo", kaplan_meier_demo.main, True)
+    mcts_txt = run("mcts_demo", mcts_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9959,6 +9961,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("kaplan_meier.svg"), "Kaplan-Meier curves for a treatment and control arm with right-censoring (ticks): the treatment survives markedly longer (median 10.2 vs 3.9), and the log-rank test rejects the null at p = 0.0015")
             + f'<div class="card">{pre(kaplan_meier_txt)}</div>'
+            + '</div>'),
+        section(
+            "Monte Carlo Tree Search: the search behind AlphaGo",
+            "Game trees are exponential -- chess ~35 moves per position, Go ~250 -- too large to search "
+            "exhaustively. Classical MINIMAX prunes but needs a handcrafted evaluation of non-terminal "
+            "positions. MONTE CARLO TREE SEARCH needs none: it estimates a move's value by playing "
+            "RANDOM GAMES to the end and averaging, spending simulations where they matter by treating "
+            "the choice of child as a MULTI-ARMED BANDIT. Each iteration walks four phases: SELECTION "
+            "(descend by the UCT rule Q/N + c*sqrt(ln N_parent/N_child), balancing exploit vs "
+            "explore), EXPANSION (add one child), SIMULATION (random rollout to a terminal state), and "
+            "BACKPROPAGATION (push the result up the path). The most-VISITED root child is chosen. "
+            "This -- no evaluation function, just self-play rollouts guided by a bandit rule -- cracked "
+            "computer Go and, with a value network replacing the random rollout, became AlphaGo. "
+            "Validated on tic-tac-toe against an exact minimax solver: MCTS never loses from the empty "
+            "board across many seeds, takes immediate wins and blocks immediate losses, and its "
+            "agreement with the minimax-optimal move climbs with the budget (73% at 50 rollouts to "
+            "90% at 5000); the tree statistics stay consistent. The self-play search companion to the "
+            "minimax idea, the UCB bandit, and the Sprague-Grundy game tools.",
+            '<div class="grid">'
+            + svg_card(out("mcts.svg"), "MCTS root visit counts on a tic-tac-toe position with an immediate win at cell 2: after 2000 iterations the search has poured 1843 of them into the winning move (win rate 1.0) and only a handful into each alternative -- the visit count, not the raw win rate, is the decision")
+            + f'<div class="card">{pre(mcts_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
