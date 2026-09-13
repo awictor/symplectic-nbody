@@ -1,0 +1,17 @@
+Christofides: the 1.5-approximation for metric TSP
+
+  10 cities, Euclidean (metric) distances.
+
+  MST edges: 9,  odd-degree vertices: 4  [0, 5, 7, 8]
+  min-weight matching on the odds: cost 103.18
+
+    method                       tour length    vs optimum
+    Held-Karp (exact optimum)         276.50        1.000x
+    Christofides (<=1.5x)             280.77        1.015x
+    nearest neighbour                 287.39        1.039x
+
+  Christofides tour: [0, 7, 4, 5, 8, 6, 9, 1, 3, 2]
+  Guaranteed <= 1.5x optimum; here 1.015x. The guarantee comes from
+  MST (<= OPT) plus a min matching on the odd vertices (<= OPT/2).
+
+  wrote examples/output\christofides.svg

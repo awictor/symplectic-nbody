@@ -552,6 +552,7 @@ def main():
     import lasso_demo
     import reed_muller_demo
     import remez_demo
+    import christofides_demo
 
     import plot_orbits
 
@@ -1073,6 +1074,7 @@ def main():
     lasso_txt = run("lasso_demo", lasso_demo.main, True)
     reed_muller_txt = run("reed_muller_demo", reed_muller_demo.main, True)
     remez_txt = run("remez_demo", remez_demo.main, True)
+    christofides_txt = run("christofides_demo", christofides_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9545,6 +9547,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("remez.svg"), "Approximation error e^x - p(x) for three degree-4 fits: the minimax (Remez) error rides evenly between +E and -E, touching the level six times (n+2), while Chebyshev interpolation and least squares peak roughly twice as high")
             + f'<div class="card">{pre(remez_txt)}</div>'
+            + '</div>'),
+        section(
+            "Christofides: the 1.5-approximation for metric TSP",
+            "The travelling salesman problem is NP-hard, so on large METRIC instances (distances obey "
+            "the triangle inequality) we settle for a tour provably close to optimal. Christofides' "
+            "1976 algorithm returns a tour at most 1.5x the optimum -- a guarantee unbeaten for over "
+            "forty years -- by assembling exact subroutines: (1) a MINIMUM SPANNING TREE, itself a "
+            "lower bound on the optimum; (2) the ODD-DEGREE vertices of that tree, always even in "
+            "number; (3) a MINIMUM-WEIGHT PERFECT MATCHING on just those odd vertices, which costs "
+            "<= OPT/2 and makes every degree even; (4) an EULERIAN CIRCUIT of tree+matching "
+            "(<= MST + OPT/2 <= 1.5 OPT), SHORTCUT past repeats -- and by the triangle inequality "
+            "shortcutting never lengthens it. Validated against the exact HELD-KARP optimum on random "
+            "Euclidean instances: the tour is always a valid permutation, never exceeds 1.5x the "
+            "optimum (worst seen ~1.12x), the intermediate multigraph is Eulerian, and the matching "
+            "is genuinely minimum (checked against brute force). The approximation-algorithm companion "
+            "to exact Held-Karp and the nearest-neighbour / 2-opt heuristics.",
+            '<div class="grid">'
+            + svg_card(out("christofides.svg"), "Christofides on 10 cities: the minimum spanning tree (gray dashed), a minimum-weight matching on the odd-degree vertices (orange), and the final shortcut tour (blue) -- here 1.015x the exact optimum")
+            + f'<div class="card">{pre(christofides_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

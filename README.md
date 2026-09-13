@@ -510,6 +510,7 @@ ruins a long non-symplectic integration.
 | `src/lasso.py` | Lasso regression by coordinate descent (L1 feature selection) + ridge |
 | `src/reed_muller.py` | First-order Reed-Muller code RM(1,m) with fast Hadamard-transform decoding |
 | `src/remez.py` | Remez exchange for the true minimax polynomial (equioscillation) |
+| `src/christofides.py` | Christofides 1.5-approximation for metric TSP (MST + matching + Euler) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1011,6 +1012,7 @@ ruins a long non-symplectic integration.
 | `examples/lasso_demo.py` | Feature selection: Lasso zeros noise features where ridge keeps all |
 | `examples/reed_muller_demo.py` | RM(1,5) Mars code correcting up to 7 errors per 32-bit word |
 | `examples/remez_demo.py` | Minimax vs Chebyshev vs least-squares error curves for e^x |
+| `examples/christofides_demo.py` | Christofides tour vs Held-Karp optimum, MST + matching drawn |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11522,6 +11524,30 @@ re-solve until the references are the extrema. Validated: the degree-0 minimax i
 the error equioscillates n+2 times, no coefficient perturbation lowers the sup error, and it beats
 Chebyshev interpolation and least squares on sup norm. The best-approximation companion to the
 Chebyshev-interpolation and least-squares tools.
+
+## Christofides: the 1.5-approximation for metric TSP
+
+The tour guaranteed within 1.5x of the shortest possible. `christofides.py`:
+
+```
+$ python examples/christofides_demo.py examples/output
+
+  10 cities, Euclidean (metric) distances.
+  MST edges: 9,  odd-degree vertices: 4
+    method                       tour length    vs optimum
+    Held-Karp (exact optimum)         276.50        1.000x
+    Christofides (<=1.5x)             280.77        1.015x
+    nearest neighbour                 287.39        1.039x
+```
+
+Build the minimum spanning tree (a lower bound on the optimum), take a minimum-weight perfect
+matching on its odd-degree vertices (which are always even in number, and cost at most OPT/2), add the
+matching to the tree so every vertex has even degree, walk an Eulerian circuit, and shortcut past
+repeats -- by the triangle inequality that never lengthens the walk, so the tour costs at most
+MST + OPT/2 <= 1.5 OPT. Validated against the exact Held-Karp optimum on random Euclidean instances:
+always a valid permutation, never over 1.5x optimum (worst seen ~1.12x), the intermediate multigraph
+is Eulerian, and the matching matches brute force. The approximation-algorithm companion to exact
+Held-Karp and the nearest-neighbour / 2-opt heuristics.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
