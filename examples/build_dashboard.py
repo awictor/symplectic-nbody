@@ -500,6 +500,7 @@ def main():
     import page_replacement_demo
     import rt_scheduling_demo
     import shunting_yard_demo
+    import suurballe_demo
 
     import plot_orbits
 
@@ -969,6 +970,7 @@ def main():
     page_replacement_txt = run("page_replacement_demo", page_replacement_demo.main, True)
     rt_scheduling_txt = run("rt_scheduling_demo", rt_scheduling_demo.main, True)
     shunting_yard_txt = run("shunting_yard_demo", shunting_yard_demo.main, True)
+    suurballe_txt = run("suurballe_demo", suurballe_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8388,6 +8390,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("shunting_yard.svg"), "shunting '3 + 4 * 2 + 1' to RPN: each row shows the token consumed, the growing output queue, and the operator stack -- the higher-precedence * is held on the stack and emitted before the +s")
             + f'<div class="card">{pre(shunting_yard_txt)}</div>'
+            + '</div>'),
+        section(
+            "Suurballe's algorithm: the cheapest fault-tolerant path pair",
+            "A single shortest path is fragile: cut one link and the connection dies. Backbone networks, "
+            "undersea cables, and mission-critical routes want TWO paths from source to target that share "
+            "NO edge, so any single failure leaves one intact -- and the pair whose TOTAL cost is "
+            "minimum. The naive greedy approach (shortest path, delete its edges, shortest again) can "
+            "FAIL to find a disjoint pair that exists, or find a costlier one. Suurballe's 1974 algorithm "
+            "finds the minimum-cost edge-disjoint pair EXACTLY in two shortest-path computations, via a "
+            "beautiful use of REDUCED COSTS: run Dijkstra to get distances d(v), retransform every edge "
+            "(u,v) of cost w to w + d(u) - d(v) (always >= 0 by the triangle inequality, zero along "
+            "shortest-path edges), REVERSE the first path's edges at zero cost, and a second Dijkstra "
+            "finds an augmenting path that cancels first-path edges where it retreats along them. XOR-ing "
+            "the two edge sets splits the union into two edge-disjoint paths of provably minimum combined "
+            "cost. This module returns the two paths and their total cost (or reports no disjoint pair), "
+            "on a simple directed graph. Validated: the two paths are genuinely edge-disjoint, both run "
+            "source to target, and their combined cost equals the minimum over ALL disjoint pairs found "
+            "by brute force -- over 400 random graphs; when only one path exists (a bridge) Suurballe "
+            "correctly reports no pair, agreeing with brute force; the single shortest path matches a "
+            "reference Dijkstra; reduced costs are confirmed non-negative; and diamond instances match.",
+            '<div class="grid">'
+            + svg_card(out("suurballe.svg"), "a backbone routed 0 to 5 by two edge-disjoint paths (blue and green) that share no link, so either one alone survives any single cable cut -- and their combined cost is the provable minimum")
+            + f'<div class="card">{pre(suurballe_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

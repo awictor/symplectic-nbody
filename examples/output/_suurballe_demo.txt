@@ -1,0 +1,19 @@
+Suurballe: two edge-disjoint paths so one link failure never cuts the connection
+
+  network: 9 links, routing 0 -> 5
+    single shortest path: [0, 1, 3, 5]  (cost 5)
+    ...but if any of its links fails, the connection is lost.
+
+  Suurballe's minimum-cost edge-disjoint PAIR:
+    path 1: [0, 2, 4, 5]  (cost 6)
+    path 2: [0, 1, 3, 5]  (cost 5)
+    total cost 11, edge-disjoint: True
+    brute-force optimum: 11  (matches)
+
+  Greedy (shortest path, delete its edges, shortest again) is tempting but can pick a first
+  path that leaves no room for a second, or a costlier pair. Suurballe instead reverses the
+  first path's edges at zero reduced cost and runs a second Dijkstra: where the augmenting
+  path retreats along a reversed edge it cancels it, and the XOR of the two edge-sets splits
+  cleanly into the optimal disjoint pair -- two shortest-path computations, provably minimum.
+
+  wrote examples/output\suurballe.svg

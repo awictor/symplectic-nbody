@@ -458,6 +458,7 @@ ruins a long non-symplectic integration.
 | `src/page_replacement.py` | Page-replacement policies (FIFO/LRU/Clock/LFU/optimal) + Belady's anomaly |
 | `src/rt_scheduling.py` | Real-time scheduling: RM/EDF schedulability tests + hyperperiod simulation |
 | `src/shunting_yard.py` | Shunting-yard expression evaluator: infix -> RPN -> value with precedence |
+| `src/suurballe.py` | Suurballe's algorithm: minimum-cost pair of edge-disjoint paths |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -907,6 +908,7 @@ ruins a long non-symplectic integration.
 | `examples/page_replacement_demo.py` | Fault counts by policy and Belady's anomaly under FIFO |
 | `examples/rt_scheduling_demo.py` | RM/EDF tests, an EDF-only-schedulable set, and the two timelines |
 | `examples/shunting_yard_demo.py` | Expressions to RPN with the token-by-token shunt shown |
+| `examples/suurballe_demo.py` | Two edge-disjoint backbone routes drawn in different colours |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10506,6 +10508,24 @@ precedence and parentheses into left-to-right order for a trivial stack evaluati
 unary minus, parentheses, functions (sqrt/sin/cos/abs/exp/log), and constants (pi, e), with
 right-associative exponentiation. Validated against Python's eval over 500 random expression trees,
 hand-checked precedence/associativity, known RPN forms, and clean errors on malformed input.
+
+## Suurballe's algorithm: the cheapest fault-tolerant path pair
+
+Two edge-disjoint shortest paths so one link failure never cuts the connection. `suurballe.py`:
+
+```
+$ python examples/suurballe_demo.py examples/output
+
+  single shortest path cost 5 (fragile); disjoint pair [0,2,4,5]+[0,1,3,5] total 11
+  edge-disjoint True, matches brute-force optimum
+```
+
+Suurballe (1974) finds the minimum-cost pair of edge-disjoint paths in two Dijkstra runs: reduce edge
+costs by the shortest-path potential (all non-negative, zero on shortest-path edges), reverse the first
+path's edges at zero cost, run a second Dijkstra, and XOR the two edge sets into two disjoint paths.
+Unlike greedy delete-and-retry it is exact and never misses a feasible pair. Validated against brute
+force over 400 random graphs (disjoint, minimum-cost), bridge detection, reference Dijkstra, and
+non-negative reduced costs. (Simple graphs -- one edge per ordered pair.)
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
