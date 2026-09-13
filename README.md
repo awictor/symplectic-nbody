@@ -475,6 +475,7 @@ ruins a long non-symplectic integration.
 | `src/lomb_scargle.py` | Lomb-Scargle periodogram: periods in unevenly-sampled data + false-alarm prob |
 | `src/isotonic.py` | Isotonic regression (PAVA): optimal monotone fit + probability calibration |
 | `src/partitions.py` | Integer partitions: Euler pentagonal p(n), generation, Euler's theorem, conjugate |
+| `src/dfa_minimization.py` | DFA minimization (Hopcroft) + language equivalence via canonical form |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -941,6 +942,7 @@ ruins a long non-symplectic integration.
 | `examples/lomb_scargle_demo.py` | Variable-star light curve and its period recovered from irregular nights |
 | `examples/isotonic_demo.py` | Monotone step fit to a noisy curve + isotonic probability calibration |
 | `examples/partitions_demo.py` | p(n) growth on log scale, Ferrers diagrams, Euler's identity |
+| `examples/dfa_minimization_demo.py` | A 6-state DFA collapsing to its 2-state canonical form |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10856,6 +10858,24 @@ p(n), generates partitions, counts restricted variants, and conjugates (Ferrers 
 against brute enumeration and a knapsack DP, plus three identities: Euler's distinct-equals-odd,
 self-conjugate-equals-distinct-odd, and the conjugate involution. The combinatorial-counting
 companion to the ranking and enumeration notes.
+
+## DFA minimization: the unique smallest automaton
+
+The canonical minimal automaton for a regular language, by Hopcroft's algorithm. `dfa_minimization.py`:
+
+```
+$ python examples/dfa_minimization_demo.py examples/output
+
+  "even number of 1s": 6 redundant states -> 2 canonical states
+  a separately built 2-state DFA is detected as equivalent
+```
+
+Two states are equivalent if no string distinguishes them; Hopcroft refines the partition
+{accepting, non-accepting} by splitting on transitions and enqueuing only the smaller half, giving
+O(n log n). By Myhill-Nerode the minimal DFA is a canonical form, so language equivalence reduces to
+minimizing both and checking isomorphism. Validated by exhaustive short-string language preservation
+and against an independent Moore partition-refinement minimizer across 200 random automata. The
+automata-theory companion to the Thompson NFA regex engine and the suffix automaton.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

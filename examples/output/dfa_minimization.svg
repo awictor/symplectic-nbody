@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="430" viewBox="0 0 760 430" font-family="monospace">
+<rect width="760" height="430" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="15">Original 6-state DFA (left) collapses to 2 states (right)</text>
+<defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8b949e"/></marker></defs>
+<path d="M158,114 Q187,188 237,251" fill="none" stroke="#30363d" stroke-width="1" marker-end="url(#a)"/>
+<path d="M164,108 Q192,138 231,147" fill="none" stroke="#30363d" stroke-width="1" marker-end="url(#a)"/>
+<path d="M237,169 Q187,232 158,306" fill="none" stroke="#30363d" stroke-width="1" marker-end="url(#a)"/>
+<path d="M245,171 Q233,210 245,249" fill="none" stroke="#30363d" stroke-width="1" marker-end="url(#a)"/>
+<path d="M229,265 Q150,253 71,265" fill="none" stroke="#30363d" stroke-width="1" marker-end="url(#a)"/>
+<path d="M231,273 Q192,282 164,312" fill="none" stroke="#30363d" stroke-width="1" marker-end="url(#a)"/>
+<path d="M142,306 Q113,232 63,169" fill="none" stroke="#30363d" stroke-width="1" marker-end="url(#a)"/>
+<path d="M136,312 Q108,282 69,273" fill="none" stroke="#30363d" stroke-width="1" marker-end="url(#a)"/>
+<path d="M63,251 Q113,189 142,114" fill="none" stroke="#30363d" stroke-width="1" marker-end="url(#a)"/>
+<path d="M55,249 Q67,210 55,171" fill="none" stroke="#30363d" stroke-width="1" marker-end="url(#a)"/>
+<path d="M71,155 Q150,167 229,155" fill="none" stroke="#30363d" stroke-width="1" marker-end="url(#a)"/>
+<path d="M69,147 Q108,138 136,108" fill="none" stroke="#30363d" stroke-width="1" marker-end="url(#a)"/>
+<circle cx="150" cy="100" r="16" fill="none" stroke="#06d6a0" stroke-width="1"/>
+<circle cx="150" cy="100" r="13" fill="#161b22" stroke="#06d6a0" stroke-width="2"/>
+<text x="150" y="103" fill="#06d6a0" font-size="8" text-anchor="middle">0</text>
+<circle cx="245" cy="155" r="13" fill="#161b22" stroke="#4dabf7" stroke-width="2"/>
+<text x="245" y="158" fill="#4dabf7" font-size="8" text-anchor="middle">1</text>
+<circle cx="245" cy="265" r="16" fill="none" stroke="#06d6a0" stroke-width="1"/>
+<circle cx="245" cy="265" r="13" fill="#161b22" stroke="#06d6a0" stroke-width="2"/>
+<text x="245" y="268" fill="#06d6a0" font-size="8" text-anchor="middle">2</text>
+<circle cx="150" cy="320" r="13" fill="#161b22" stroke="#4dabf7" stroke-width="2"/>
+<text x="150" y="323" fill="#4dabf7" font-size="8" text-anchor="middle">3</text>
+<circle cx="55" cy="265" r="16" fill="none" stroke="#06d6a0" stroke-width="1"/>
+<circle cx="55" cy="265" r="13" fill="#161b22" stroke="#06d6a0" stroke-width="2"/>
+<text x="55" y="268" fill="#06d6a0" font-size="8" text-anchor="middle">4</text>
+<circle cx="55" cy="155" r="13" fill="#161b22" stroke="#4dabf7" stroke-width="2"/>
+<text x="55" y="158" fill="#4dabf7" font-size="8" text-anchor="middle">5</text>
+<text x="150" y="355" fill="#8b949e" font-size="10" text-anchor="middle">6 states</text>
+<circle cx="550" cy="98" r="10" fill="none" stroke="#30363d" stroke-width="1"/>
+<path d="M550,136 Q538,210 550,284" fill="none" stroke="#30363d" stroke-width="1" marker-end="url(#a)"/>
+<circle cx="550" cy="278" r="10" fill="none" stroke="#30363d" stroke-width="1"/>
+<path d="M550,284 Q562,210 550,136" fill="none" stroke="#30363d" stroke-width="1" marker-end="url(#a)"/>
+<circle cx="550" cy="120" r="16" fill="none" stroke="#06d6a0" stroke-width="1"/>
+<circle cx="550" cy="120" r="13" fill="#161b22" stroke="#06d6a0" stroke-width="2"/>
+<text x="550" y="123" fill="#06d6a0" font-size="8" text-anchor="middle">024</text>
+<circle cx="550" cy="300" r="13" fill="#161b22" stroke="#4dabf7" stroke-width="2"/>
+<text x="550" y="303" fill="#4dabf7" font-size="8" text-anchor="middle">135</text>
+<text x="550" y="335" fill="#8b949e" font-size="10" text-anchor="middle">2 states (minimal)</text>
+<text x="380" y="410" fill="#8b949e" font-size="10" text-anchor="middle">green ring = accepting</text>
+</svg>

@@ -517,6 +517,7 @@ def main():
     import lomb_scargle_demo
     import isotonic_demo
     import partitions_demo
+    import dfa_minimization_demo
 
     import plot_orbits
 
@@ -1003,6 +1004,7 @@ def main():
     lomb_scargle_txt = run("lomb_scargle_demo", lomb_scargle_demo.main, True)
     isotonic_txt = run("isotonic_demo", isotonic_demo.main, True)
     partitions_txt = run("partitions_demo", partitions_demo.main, True)
+    dfa_minimization_txt = run("dfa_minimization_demo", dfa_minimization_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8775,6 +8777,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("partitions.svg"), "Left: p(n) on a log scale, growing sub-exponentially as Euler's recurrence tracks it exactly. Right: the Ferrers diagram of 5+3+3+1, whose column counts give the conjugate partition")
             + f'<div class="card">{pre(partitions_txt)}</div>'
+            + '</div>'),
+        section(
+            "DFA minimization: the unique smallest automaton",
+            "Many deterministic finite automata recognise the SAME language, differing only in "
+            "redundant states. The Myhill-Nerode theorem says each regular language has a UNIQUE "
+            "minimal DFA (up to renaming) -- the number of states equals the number of equivalence "
+            "classes of strings under 'leads to the same future' -- so the minimal DFA is a CANONICAL "
+            "FORM, and two automata recognise the same language exactly when their minimal DFAs are "
+            "isomorphic. Hopcroft's algorithm (1971) minimizes in O(n log n * |alphabet|) by "
+            "partition refinement: start with {accepting, non-accepting}, repeatedly split every "
+            "block by which states transition on a symbol into a chosen splitter, and -- the trick "
+            "that gives the log factor -- enqueue only the smaller half each time. Validated by "
+            "language preservation and minimality: the minimized DFA accepts exactly the same strings "
+            "as the original over an exhaustive short-string set, its state count matches an "
+            "independent partition-refinement (Moore) minimizer across 200 random automata, "
+            "minimizing is idempotent, and differently-built DFAs for the same language minimize to "
+            "isomorphic machines. The automata-theory companion to the Thompson NFA regex engine and "
+            "the suffix automaton.",
+            '<div class="grid">'
+            + svg_card(out("dfa_minimization.svg"), "A redundant 6-state DFA for 'even number of 1s' -- three interchangeable copies of each parity -- collapses to the canonical 2-state minimal automaton, accepting exactly the same language")
+            + f'<div class="card">{pre(dfa_minimization_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

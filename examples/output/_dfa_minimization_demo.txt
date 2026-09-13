@@ -1,0 +1,21 @@
+DFA minimization (Hopcroft): the unique smallest automaton for a language
+
+  Language: binary strings with an even number of 1s.
+  Original DFA: 6 states (three redundant copies of each parity).
+  Minimized DFA: 2 states.
+
+    string   orig    min
+   (empty)   True   True
+         1  False  False
+        11   True   True
+       101   True   True
+      1101  False  False
+     10101  False  False
+
+  Language identical over all strings up to length 7: True
+  A separate 2-state DFA for the same language is equivalent: True
+
+  Myhill-Nerode: the minimal DFA is a canonical form, so language equivalence reduces
+  to minimizing both machines and checking they are isomorphic.
+
+  wrote examples/output\dfa_minimization.svg
