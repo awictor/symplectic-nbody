@@ -543,6 +543,7 @@ def main():
     import convex_hull_3d_demo
     import affine_alignment_demo
     import adams_demo
+    import bfgs_demo
 
     import plot_orbits
 
@@ -1055,6 +1056,7 @@ def main():
     convex_hull_3d_txt = run("convex_hull_3d_demo", convex_hull_3d_demo.main, True)
     affine_alignment_txt = run("affine_alignment_demo", affine_alignment_demo.main, True)
     adams_txt = run("adams_demo", adams_demo.main, True)
+    bfgs_txt = run("bfgs_demo", bfgs_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9346,6 +9348,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("adams.svg"), "Error versus number of steps on a log-log plot: Adams-Bashforth, the predictor-corrector, and RK4 all fall as the fourth power of the step size (slope -4), but the multistep methods reach it with fewer f-evaluations")
             + f'<div class="card">{pre(adams_txt)}</div>'
+            + '</div>'),
+        section(
+            "BFGS: quasi-Newton optimization",
+            "To minimize a smooth function, gradient descent crawls through narrow valleys; Newton's "
+            "method rescales the step by the inverse HESSIAN to account for curvature, converging "
+            "superlinearly, but needs second derivatives and O(n^3) work. BFGS (Broyden-Fletcher-"
+            "Goldfarb-Shanno) is the celebrated quasi-Newton method: it maintains an APPROXIMATION to "
+            "the inverse Hessian, updated at each step from only the change in position and gradient "
+            "(the secant condition), so it needs no second derivatives yet still converges "
+            "superlinearly. A symmetric rank-2 update keeps the approximation positive definite, so "
+            "the direction is always downhill, and a backtracking line search picks the step length. "
+            "Validated against analytic optima and convergence theory: BFGS finds a quadratic's "
+            "minimum in a few steps and the Rosenbrock banana valley to 1e-25 in 37 steps (where "
+            "gradient descent needs 20000 to reach only 1e-12); the gradient vanishes at the "
+            "solution; the objective decreases monotonically; a 6-D quadratic and several test "
+            "functions hit their known minima; and it works with a finite-difference gradient. The "
+            "full-matrix quasi-Newton companion to the limited-memory L-BFGS and Nelder-Mead "
+            "optimizers.",
+            '<div class="grid">'
+            + svg_card(out("bfgs.svg"), "The BFGS optimization path descending the Rosenbrock banana valley (log-shaded contours) to the minimum at (1,1) in 37 steps -- learning the valley's curvature from the gradient history rather than crawling straight downhill")
+            + f'<div class="card">{pre(bfgs_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

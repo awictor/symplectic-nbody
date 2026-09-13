@@ -1,0 +1,12 @@
+BFGS: quasi-Newton optimization (learns curvature from gradients)
+
+  Minimizing the Rosenbrock function from [-1.2, 1.0] (true min (1, 1), value 0).
+
+              method   iterations    final value   distance to min
+                BFGS           37       6.59e-25          1.68e-12
+    gradient descent        20000       6.49e-12          5.70e-06
+
+  BFGS reaches the minimum in 37 steps by approximating the inverse
+  Hessian; gradient descent takes ~20000 tiny steps to crawl the curved valley floor.
+
+  wrote examples/output\bfgs.svg

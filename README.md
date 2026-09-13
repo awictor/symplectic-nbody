@@ -501,6 +501,7 @@ ruins a long non-symplectic integration.
 | `src/convex_hull_3d.py` | 3-D convex hull by the incremental algorithm + volume/area/containment |
 | `src/affine_alignment.py` | Gotoh affine-gap sequence alignment (global + local) |
 | `src/adams.py` | Adams-Bashforth / Moulton predictor-corrector multistep ODE integrator |
+| `src/bfgs.py` | BFGS quasi-Newton optimization (inverse-Hessian approximation + line search) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -993,6 +994,7 @@ ruins a long non-symplectic integration.
 | `examples/convex_hull_3d_demo.py` | 3-D hull of a point cloud drawn in oblique projection |
 | `examples/affine_alignment_demo.py` | Linear vs affine gap alignment of an inserted block |
 | `examples/adams_demo.py` | ODE error-vs-steps convergence: Adams-Bashforth, PECE, RK4 |
+| `examples/bfgs_demo.py` | BFGS path down the Rosenbrock valley vs crawling gradient descent |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11352,6 +11354,22 @@ derivatives; the predictor-corrector combines them (PECE), bootstrapping with RK
 exact solutions (decay, oscillator, logistic), measured convergence orders 2/3/4 matching theory, PECE
 beating plain AB, and energy conservation. The multistep companion to the RK45 and symplectic
 integrators.
+
+## BFGS: quasi-Newton optimization
+
+Superlinear minimization that learns curvature from gradients alone. `bfgs.py`:
+
+```
+$ python examples/bfgs_demo.py examples/output
+
+  Rosenbrock: BFGS reaches 1e-25 in 37 steps; gradient descent 1e-12 in 20000
+```
+
+BFGS maintains an approximation to the inverse Hessian, updated from the change in position and
+gradient (the secant condition) via a rank-2 formula that stays positive definite, with a backtracking
+line search. Validated: solves a quadratic in a few steps and Rosenbrock to 1e-25, gradient vanishes at
+the optimum, monotone decrease, and works with a finite-difference gradient. The full-matrix
+quasi-Newton companion to L-BFGS and Nelder-Mead.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
