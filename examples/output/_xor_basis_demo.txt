@@ -1,0 +1,24 @@
+XOR linear basis: 'largest XOR of a subset?' as linear algebra over GF(2)
+
+  bag: [26, 15, 10, 6, 21]  (binary: ['11010', '01111', '01010', '00110', '10101'])
+    rank (span dimension): 4
+    distinct reachable XOR values: 16 = 2^4
+    maximum subset XOR: 31  (11111)   [brute force: 31]
+    minimum nonempty subset XOR: 0
+    is 31 reachable? True    is 1 reachable? False
+
+  all 16 reachable values in order:
+    0, 3, 5, 6, 9, 10, 12, 15, 16, 19, 21, 22, 25, 26, 28, 31
+    (matches brute-force reachable set: True)
+
+  operation count for maximum subset XOR of n numbers, b bits:
+    n= 20: brute force 2^20 = 1,048,576   basis ~ n*b = 1,280
+    n= 40: brute force 2^40 = 1,099,511,627,776   basis ~ n*b = 2,560
+    n= 60: brute force 2^60 = 1,152,921,504,606,846,976   basis ~ n*b = 3,840
+    n=100: brute force 2^100 = 1,267,650,600,228,229,401,496,703,205,376   basis ~ n*b = 6,400
+
+  Each number is a bit-vector; XOR is vector addition in GF(2). The reachable values are the
+  linear span, so the basis is Gaussian elimination in binary: keep one pivot per bit,
+  reduce each new number, and every query -- max, membership, count, k-th -- is O(bits).
+
+  wrote examples/output\xor_basis.svg

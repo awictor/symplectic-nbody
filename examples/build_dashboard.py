@@ -492,6 +492,7 @@ def main():
     import blossom_demo
     import red_black_tree_demo
     import top_trading_cycles_demo
+    import xor_basis_demo
 
     import plot_orbits
 
@@ -953,6 +954,7 @@ def main():
     blossom_txt = run("blossom_demo", blossom_demo.main, True)
     red_black_tree_txt = run("red_black_tree_demo", red_black_tree_demo.main, True)
     top_trading_cycles_txt = run("top_trading_cycles_demo", top_trading_cycles_demo.main, True)
+    xor_basis_txt = run("xor_basis_demo", xor_basis_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8177,6 +8179,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("top_trading_cycles.svg"), "the first-round pointing graph: each person points to the owner of their favourite room, and because every node points somewhere a trading cycle (green) must form -- its members swap and leave, the rest repeat")
             + f'<div class="card">{pre(top_trading_cycles_txt)}</div>'
+            + '</div>'),
+        section(
+            "The XOR linear basis: subset-XOR questions as GF(2) linear algebra",
+            "Give me a bag of integers and ask: what is the LARGEST value I can make by XOR-ing some "
+            "subset? Can I make x at all? How many distinct values are reachable? Brute force tries all "
+            "2^n subsets -- hopeless past 30 numbers. But XOR is addition in the vector space GF(2)^b "
+            "(each integer a bit-vector, XOR the vector sum), so the reachable values are exactly the "
+            "LINEAR SPAN of the inputs and every question becomes linear algebra. The XOR LINEAR BASIS "
+            "is Gaussian elimination in binary: keep at most one basis vector per bit position, and to "
+            "insert x, XOR out every pivot below its high bit -- if something remains it becomes a new "
+            "pivot (the span grew), else x was already representable. The number of pivots is the RANK, "
+            "so the span holds exactly 2^rank distinct values; MAXIMUM XOR greedily adds each pivot from "
+            "the top whenever it helps; MEMBERSHIP reduces x and checks it vanishes; and with the basis "
+            "in reduced echelon form the reachable values can be RANKED, reading the k-th smallest off "
+            "the bits of k. Every query is O(bits). This module implements insert, rank, max/min XOR, "
+            "membership, the distinct-value count, and the k-th smallest, with a brute-force reference. "
+            "Validated against brute force over all 2^n subsets on small bags -- max and min subset-XOR, "
+            "the reachable set equalling the span, the count equalling 2^rank, membership for every "
+            "candidate, and the k-th-smallest enumeration reproducing the sorted reachable list -- plus "
+            "rank behaviour (dependent inserts never grow it), arbitrary bit-widths (200-bit values), "
+            "and a 200-number bag whose max-XOR beats 2000 sampled subsets.",
+            '<div class="grid">'
+            + svg_card(out("xor_basis.svg"), "the input numbers as bit-rows reduced to a binary echelon basis with one pivot per bit (yellow): the span of these few vectors is every value a subset XOR can reach")
+            + f'<div class="card">{pre(xor_basis_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

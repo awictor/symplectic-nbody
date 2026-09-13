@@ -450,6 +450,7 @@ ruins a long non-symplectic integration.
 | `src/blossom.py` | Edmonds' blossom: maximum matching in general graphs (odd cycles) |
 | `src/red_black_tree.py` | Red-black tree: self-balancing ordered map + order statistics (select/rank) |
 | `src/top_trading_cycles.py` | Top Trading Cycles: strategy-proof core allocation of indivisible goods |
+| `src/xor_basis.py` | XOR linear basis over GF(2): max/min subset XOR, membership, rank, k-th value |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -891,6 +892,7 @@ ruins a long non-symplectic integration.
 | `examples/blossom_demo.py` | Matching odd cycles and a Petersen-graph perfect matching |
 | `examples/red_black_tree_demo.py` | Balance under sorted insertion and order-statistic queries |
 | `examples/top_trading_cycles_demo.py` | Room reallocation with the trading cycles and pointing graph |
+| `examples/xor_basis_demo.py` | Max subset XOR, the reachable set, and the binary echelon basis |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10349,6 +10351,24 @@ n rounds with the unique core allocation (Gale, via Shapley & Scarf 1974). Strat
 efficient, individually rational -- the basis of kidney-exchange and school-choice mechanisms. Validated:
 always a valid permutation, individually rational, Pareto efficient and in the core (brute-forced over
 permutations and coalitions), strategy-proof on sampled misreports, and cycles partition the population.
+
+## The XOR linear basis: subset-XOR questions as GF(2) linear algebra
+
+Answer "largest XOR of a subset?" and friends instantly. `xor_basis.py`:
+
+```
+$ python examples/xor_basis_demo.py examples/output
+
+  bag [26,15,10,6,21]: max subset XOR 31, 16 reachable values = 2^rank
+  n=100 numbers: brute force 2^100 subsets vs basis ~6400 ops
+```
+
+XOR is addition in GF(2)^b, so subset-XORs form a linear span; the basis keeps one pivot vector per bit
+(Gaussian elimination in binary). Insert reduces each number against the pivots; max-XOR greedily adds
+pivots; membership reduces and checks zero; the count is 2^rank; and the reduced basis ranks the
+reachable values for k-th-smallest. Every query is O(bits). Validated against brute force over all 2^n
+subsets (max, min, reachable set, count, membership, k-th enumeration), plus rank behaviour, 200-bit
+values, and a 200-number bag beating 2000 sampled subsets.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
