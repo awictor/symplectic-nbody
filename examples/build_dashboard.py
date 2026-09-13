@@ -515,6 +515,7 @@ def main():
     import huffman_demo
     import ransac_demo
     import lomb_scargle_demo
+    import isotonic_demo
 
     import plot_orbits
 
@@ -999,6 +1000,7 @@ def main():
     huffman_txt = run("huffman_demo", huffman_demo.main, True)
     ransac_txt = run("ransac_demo", ransac_demo.main, True)
     lomb_scargle_txt = run("lomb_scargle_demo", lomb_scargle_demo.main, True)
+    isotonic_txt = run("isotonic_demo", isotonic_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8729,6 +8731,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("lomb_scargle.svg"), "A simulated variable star observed on irregular nights (top, note the gaps) and its Lomb-Scargle power spectrum (bottom) -- the sharp peak recovers the 8.4-day period the FFT could not reach on this uneven sampling")
             + f'<div class="card">{pre(lomb_scargle_txt)}</div>'
+            + '</div>'),
+        section(
+            "Isotonic regression: the best monotone fit",
+            "Sometimes a relationship must be monotone -- a dose-response only rises, a calibration "
+            "map only increases, a cumulative count never falls -- but noisy measurements wobble. "
+            "Isotonic regression finds the non-decreasing sequence closest to the data in "
+            "least-squares sense, nonparametrically (no assumed form, just monotonicity), and the "
+            "exact solution is found in a single linear-time sweep. The POOL ADJACENT VIOLATORS "
+            "algorithm walks left to right keeping a stack of blocks; when a new point violates "
+            "monotonicity it merges the offending blocks into one with their pooled weighted mean, "
+            "cascading leftward. The result is the unique optimum -- the greatest convex minorant of "
+            "the cumulative-sum diagram. Validated against ground truth: the fit is monotone and, for "
+            "small n, matches the exact O(n^3) min-max formula (and its weighted form) to tolerance; "
+            "each block value is the weighted mean of its members (the KKT condition); a monotone "
+            "signal is recovered from noise with far lower error; and already-monotone data is "
+            "returned unchanged. The showcase is probability calibration -- turning a classifier's "
+            "wobbly scores into monotone, well-calibrated probabilities. The shape-constrained "
+            "companion to the least-squares and smoothing tools.",
+            '<div class="grid">'
+            + svg_card(out("isotonic.svg"), "Noisy samples of a monotone curve (orange), the true curve (gray dashed), and the isotonic fit (green step function) -- a staircase of pooled-violator blocks that never decreases, cutting the error to the truth by about 80 percent")
+            + f'<div class="card">{pre(isotonic_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -473,6 +473,7 @@ ruins a long non-symplectic integration.
 | `src/huffman.py` | Huffman coding: optimal prefix code + canonical form, entropy bracket |
 | `src/ransac.py` | RANSAC robust fitting: line/circle through heavy outliers + adaptive iterations |
 | `src/lomb_scargle.py` | Lomb-Scargle periodogram: periods in unevenly-sampled data + false-alarm prob |
+| `src/isotonic.py` | Isotonic regression (PAVA): optimal monotone fit + probability calibration |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -937,6 +938,7 @@ ruins a long non-symplectic integration.
 | `examples/huffman_demo.py` | Huffman code tree for a sentence with entropy comparison |
 | `examples/ransac_demo.py` | Line and circle recovered from 40% outliers vs least squares |
 | `examples/lomb_scargle_demo.py` | Variable-star light curve and its period recovered from irregular nights |
+| `examples/isotonic_demo.py` | Monotone step fit to a noisy curve + isotonic probability calibration |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10817,6 +10819,23 @@ probability) is computable. Validated against ground truth and the FFT: the peri
 injected frequency for even and random-uneven sampling, matches a direct FFT power spectrum on even
 data, resolves two tones, and recovers the injected amplitude and phase. The uneven-sampling
 companion to the FFT.
+
+## Isotonic regression: the best monotone fit
+
+The optimal non-decreasing least-squares fit to noisy data, in O(n). `isotonic.py`:
+
+```
+$ python examples/isotonic_demo.py examples/output
+
+  classic [1,2,0,3] -> [1,1,1,3]
+  noisy logistic ramp: SSE to truth cut 81% by the isotonic fit
+```
+
+Pool-adjacent-violators walks left to right merging any block that breaks monotonicity into its
+pooled weighted mean -- the unique optimum, the greatest convex minorant of the cumulative sum.
+Validated against the exact O(n^3) min-max formula (weighted too), the KKT block-mean condition, and
+noise recovery. The showcase application is isotonic probability calibration. The shape-constrained
+companion to the least-squares and smoothing tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420" font-family="monospace">
+<rect width="760" height="420" fill="#0d1117"/>
+<text x="20" y="28" fill="#e6edf3" font-size="15">Noisy data (dots), true curve (gray), isotonic fit (green step)</text>
+<polyline points="50.0,306.4 67.2,306.2 84.4,306.0 101.5,305.6 118.7,305.2 135.9,304.6 153.1,303.8 170.3,302.7 187.4,301.3 204.6,299.5 221.8,297.0 239.0,293.7 256.2,289.5 273.3,284.0 290.5,277.2 307.7,268.7 324.9,258.4 342.1,246.3 359.2,232.6 376.4,217.7 393.6,202.1 410.8,186.5 427.9,171.6 445.1,157.9 462.3,145.8 479.5,135.5 496.7,127.0 513.8,120.2 531.0,114.7 548.2,110.5 565.4,107.2 582.6,104.7 599.7,102.9 616.9,101.4 634.1,100.4 651.3,99.6 668.5,99.0 685.6,98.6 702.8,98.2 720.0,98.0" fill="none" stroke="#8b949e" stroke-width="1.5" stroke-dasharray="4 3"/>
+<circle cx="50.0" cy="360.0" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="67.2" cy="265.6" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="84.4" cy="287.1" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="101.5" cy="295.7" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="118.7" cy="326.2" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="135.9" cy="250.0" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="153.1" cy="274.4" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="170.3" cy="254.3" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="187.4" cy="340.8" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="204.6" cy="259.5" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="221.8" cy="337.5" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="239.0" cy="260.5" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="256.2" cy="258.1" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="273.3" cy="299.2" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="290.5" cy="317.4" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="307.7" cy="224.9" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="324.9" cy="236.9" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="342.1" cy="293.6" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="359.2" cy="208.2" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="376.4" cy="218.9" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="393.6" cy="226.1" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="410.8" cy="163.3" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="427.9" cy="121.1" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="445.1" cy="170.5" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="462.3" cy="131.8" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="479.5" cy="136.5" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="496.7" cy="180.5" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="513.8" cy="156.8" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="531.0" cy="104.0" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="548.2" cy="102.3" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="565.4" cy="90.1" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="582.6" cy="50.0" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="599.7" cy="145.9" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="616.9" cy="77.4" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="634.1" cy="125.4" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="651.3" cy="125.4" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="668.5" cy="119.6" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="685.6" cy="53.5" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="702.8" cy="105.7" r="2.5" fill="#ff922b" opacity="0.8"/>
+<circle cx="720.0" cy="140.9" r="2.5" fill="#ff922b" opacity="0.8"/>
+<polyline points="50.0,360.0 67.2,360.0 67.2,293.7 84.4,293.7 84.4,293.7 101.5,293.7 101.5,293.7 118.7,293.7 118.7,293.7 135.9,293.7 135.9,286.1 153.1,286.1 153.1,286.1 170.3,286.1 170.3,286.1 187.4,286.1 187.4,286.1 204.6,286.1 204.6,286.1 221.8,286.1 221.8,286.1 239.0,286.1 239.0,283.8 256.2,283.8 256.2,283.8 273.3,283.8 273.3,283.8 290.5,283.8 290.5,283.8 307.7,283.8 307.7,251.8 324.9,251.8 324.9,251.8 342.1,251.8 342.1,251.8 359.2,251.8 359.2,217.8 376.4,217.8 376.4,217.8 393.6,217.8 393.6,217.8 410.8,217.8 410.8,163.3 427.9,163.3 427.9,149.5 445.1,149.5 445.1,149.5 462.3,149.5 462.3,149.5 479.5,149.5 479.5,149.5 496.7,149.5 496.7,149.5 513.8,149.5 513.8,149.5 531.0,149.5 531.0,104.5 548.2,104.5 548.2,104.5 565.4,104.5 565.4,104.5 582.6,104.5 582.6,104.5 599.7,104.5 599.7,104.5 616.9,104.5 616.9,104.5 634.1,104.5 634.1,104.5 651.3,104.5 651.3,104.5 668.5,104.5 668.5,104.5 685.6,104.5 685.6,100.0 702.8,100.0 702.8,100.0 720.0,100.0 720.0,100.0" fill="none" stroke="#06d6a0" stroke-width="2.5"/>
+<text x="50" y="405" fill="#8b949e" font-size="10">the fit never decreases; flat runs are pooled-violator blocks</text>
+</svg>

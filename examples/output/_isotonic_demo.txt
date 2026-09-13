@@ -1,0 +1,32 @@
+Isotonic regression (PAVA): the best monotone fit to noisy data
+
+  40 noisy samples of a monotone (logistic) curve.
+  Isotonic fit has 10 blocks (constant runs):
+    indices  0..0   value -0.760  (1 pts)
+    indices  1..4   value  0.190  (4 pts)
+    indices  5..10  value  0.298  (6 pts)
+    indices 11..14  value  0.331  (4 pts)
+    indices 15..17  value  0.789  (3 pts)
+    indices 18..20  value  1.276  (3 pts)
+    indices 21..21  value  2.055  (1 pts)
+    indices 22..27  value  2.252  (6 pts)
+    ... and 2 more blocks
+
+  SSE to the true curve: raw noisy 9.29 -> isotonic fit 1.81 (81% lower)
+  Fit is monotone by construction: True
+
+  Probability calibration (isotonic): raw classifier scores -> monotone probabilities
+     score  outcome  calibrated p
+      0.05        0         0.000
+      0.12        0         0.000
+      0.20        0         0.000
+      0.31        1         0.500
+      0.44        0         0.500
+      0.50        1         1.000
+      0.62        1         1.000
+      0.71        1         1.000
+      0.83        1         1.000
+      0.95        1         1.000
+    -> calibrated probabilities are monotone in the score, as a valid probability must be.
+
+  wrote examples/output\isotonic.svg
