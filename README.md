@@ -515,6 +515,7 @@ ruins a long non-symplectic integration.
 | `src/cmaes.py` | CMA-ES: covariance-matrix-adaptation evolution strategy (variable-metric, derivative-free) |
 | `src/fm_index.py` | FM-index: BWT backward-search full-text index (count/locate in O(pattern)) |
 | `src/ldpc.py` | LDPC codes: sparse parity checks + bit-flipping / sum-product decoders |
+| `src/wang_landau.py` | Wang-Landau flat-histogram sampling: density of states, all-temperature thermodynamics |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1021,6 +1022,7 @@ ruins a long non-symplectic integration.
 | `examples/cmaes_demo.py` | CMA-ES tracking the Rosenbrock banana to the (1,1) optimum |
 | `examples/fm_index_demo.py` | Backward-search range narrowing to a DNA pattern's occurrence count |
 | `examples/ldpc_demo.py` | LDPC word-error rate: sum-product vs bit-flipping over a noisy channel |
+| `examples/wang_landau_demo.py` | Specific-heat curve from one Wang-Landau run vs exact density of states |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11656,6 +11658,31 @@ log-likelihood messages via the tanh rule and decodes near capacity. Validated e
 satisfies H c = 0, both decoders correct all single-bit errors on a good-distance code, and
 sum-product beats bit-flipping at every noise level. The modern, graph-based coding companion to the
 algebraic Hamming, Reed-Muller, Reed-Solomon, and convolutional codes.
+
+## Wang-Landau: one run, every temperature
+
+Measure the density of states once; get the thermodynamics at all temperatures. `wang_landau.py`:
+
+```
+$ python examples/wang_landau_demo.py examples/output
+
+  4x4 Ising ferromagnet (16 spins, 2^16 = 65536 configurations)
+  Recovered ln g(E) vs exact enumeration:
+         E   exact count   exact ln g    WL ln g
+       -32             2        0.693      0.693
+       -16           424        6.050      5.987
+         0         20524        9.929      9.797
+  Specific heat per spin peaks near T = 2.50
+```
+
+Metropolis samples at one fixed temperature; Wang-Landau instead estimates the density of states
+g(E) -- the number of configurations at each energy -- via a self-adjusting random walk that flattens
+its own energy histogram (accept a flip with probability min(1, g(E1)/g(E2)), multiply g(E) by a
+shrinking factor at each visit). From g(E) the partition function, energy, entropy, and specific heat
+follow at every temperature from a single run. Validated against the exact g(E) from brute-force
+enumeration of all 2^N configurations of a small Ising lattice: recovered ln g matches, the total sums
+to 2^N, and the thermodynamic curves agree. The flat-histogram, all-temperatures companion to the
+fixed-temperature Metropolis Ising sampler.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

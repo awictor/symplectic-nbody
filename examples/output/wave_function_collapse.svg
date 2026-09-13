@@ -2,9 +2,9 @@
 <rect width="760" height="470" fill="#0d1117"/>
 <text x="20" y="28" fill="#e6edf3" font-size="18">Wave function collapse: a coastline map from adjacency rules</text>
 <text x="20" y="47" fill="#8b949e" font-size="12">green = land, sand = coast, blue = sea; land and sea never touch (coast always between)</text>
-<rect x="47.5" y="70.0" width="24.2" height="24.2" fill="#2d6fa8"/>
-<rect x="71.2" y="70.0" width="24.2" height="24.2" fill="#2d6fa8"/>
-<rect x="95.0" y="70.0" width="24.2" height="24.2" fill="#2d6fa8"/>
+<rect x="47.5" y="70.0" width="24.2" height="24.2" fill="#d9c48a"/>
+<rect x="71.2" y="70.0" width="24.2" height="24.2" fill="#5c8a3a"/>
+<rect x="95.0" y="70.0" width="24.2" height="24.2" fill="#5c8a3a"/>
 <rect x="118.8" y="70.0" width="24.2" height="24.2" fill="#d9c48a"/>
 <rect x="142.5" y="70.0" width="24.2" height="24.2" fill="#5c8a3a"/>
 <rect x="166.2" y="70.0" width="24.2" height="24.2" fill="#5c8a3a"/>
@@ -18,7 +18,7 @@
 <rect x="356.2" y="70.0" width="24.2" height="24.2" fill="#d9c48a"/>
 <rect x="380.0" y="70.0" width="24.2" height="24.2" fill="#5c8a3a"/>
 <rect x="403.8" y="70.0" width="24.2" height="24.2" fill="#5c8a3a"/>
-<rect x="427.5" y="70.0" width="24.2" height="24.2" fill="#5c8a3a"/>
+<rect x="427.5" y="70.0" width="24.2" height="24.2" fill="#d9c48a"/>
 <rect x="451.2" y="70.0" width="24.2" height="24.2" fill="#d9c48a"/>
 <rect x="475.0" y="70.0" width="24.2" height="24.2" fill="#5c8a3a"/>
 <rect x="498.8" y="70.0" width="24.2" height="24.2" fill="#5c8a3a"/>
@@ -30,9 +30,9 @@
 <rect x="641.2" y="70.0" width="24.2" height="24.2" fill="#5c8a3a"/>
 <rect x="665.0" y="70.0" width="24.2" height="24.2" fill="#5c8a3a"/>
 <rect x="688.8" y="70.0" width="24.2" height="24.2" fill="#5c8a3a"/>
-<rect x="47.5" y="93.8" width="24.2" height="24.2" fill="#2d6fa8"/>
-<rect x="71.2" y="93.8" width="24.2" height="24.2" fill="#2d6fa8"/>
-<rect x="95.0" y="93.8" width="24.2" height="24.2" fill="#2d6fa8"/>
+<rect x="47.5" y="93.8" width="24.2" height="24.2" fill="#5c8a3a"/>
+<rect x="71.2" y="93.8" width="24.2" height="24.2" fill="#d9c48a"/>
+<rect x="95.0" y="93.8" width="24.2" height="24.2" fill="#5c8a3a"/>
 <rect x="118.8" y="93.8" width="24.2" height="24.2" fill="#d9c48a"/>
 <rect x="142.5" y="93.8" width="24.2" height="24.2" fill="#5c8a3a"/>
 <rect x="166.2" y="93.8" width="24.2" height="24.2" fill="#d9c48a"/>
@@ -46,7 +46,7 @@
 <rect x="356.2" y="93.8" width="24.2" height="24.2" fill="#5c8a3a"/>
 <rect x="380.0" y="93.8" width="24.2" height="24.2" fill="#d9c48a"/>
 <rect x="403.8" y="93.8" width="24.2" height="24.2" fill="#d9c48a"/>
-<rect x="427.5" y="93.8" width="24.2" height="24.2" fill="#5c8a3a"/>
+<rect x="427.5" y="93.8" width="24.2" height="24.2" fill="#d9c48a"/>
 <rect x="451.2" y="93.8" width="24.2" height="24.2" fill="#5c8a3a"/>
 <rect x="475.0" y="93.8" width="24.2" height="24.2" fill="#d9c48a"/>
 <rect x="498.8" y="93.8" width="24.2" height="24.2" fill="#5c8a3a"/>
@@ -195,9 +195,9 @@
 <rect x="570.0" y="212.5" width="24.2" height="24.2" fill="#5c8a3a"/>
 <rect x="593.8" y="212.5" width="24.2" height="24.2" fill="#5c8a3a"/>
 <rect x="617.5" y="212.5" width="24.2" height="24.2" fill="#d9c48a"/>
-<rect x="641.2" y="212.5" width="24.2" height="24.2" fill="#d9c48a"/>
+<rect x="641.2" y="212.5" width="24.2" height="24.2" fill="#2d6fa8"/>
 <rect x="665.0" y="212.5" width="24.2" height="24.2" fill="#d9c48a"/>
-<rect x="688.8" y="212.5" width="24.2" height="24.2" fill="#5c8a3a"/>
+<rect x="688.8" y="212.5" width="24.2" height="24.2" fill="#2d6fa8"/>
 <rect x="47.5" y="236.2" width="24.2" height="24.2" fill="#5c8a3a"/>
 <rect x="71.2" y="236.2" width="24.2" height="24.2" fill="#d9c48a"/>
 <rect x="95.0" y="236.2" width="24.2" height="24.2" fill="#5c8a3a"/>

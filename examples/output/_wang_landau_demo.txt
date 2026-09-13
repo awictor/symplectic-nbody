@@ -1,0 +1,27 @@
+Wang-Landau: measure the density of states once, get all temperatures
+
+  4x4 Ising ferromagnet (16 spins, 2^16 = 65536 configurations)
+
+  Recovered ln g(E) vs exact enumeration:
+         E   exact count   exact ln g    WL ln g
+       -32             2        0.693      0.693
+       -24            32        3.466      3.426
+       -20            64        4.159      4.159
+       -16           424        6.050      5.987
+       -12          1728        7.455      7.414
+        -8          6688        8.808      8.711
+        -4         13568        9.515      9.396
+         0         20524        9.929      9.797
+         4         13568        9.515      9.412
+         8          6688        8.808      8.666
+        12          1728        7.455      7.318
+        16           424        6.050      5.931
+        20            64        4.159      4.060
+        24            32        3.466      3.362
+        32             2        0.693      0.560
+
+  Specific heat per spin peaks near T = 2.50
+  (2D Ising T_c -> 2.269 in the thermodynamic limit; small lattices peak a bit high).
+  All of this thermodynamics came from ONE Wang-Landau run -- no re-simulation per T.
+
+  wrote examples/output\wang_landau.svg

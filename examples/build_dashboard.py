@@ -557,6 +557,7 @@ def main():
     import cmaes_demo
     import fm_index_demo
     import ldpc_demo
+    import wang_landau_demo
 
     import plot_orbits
 
@@ -1083,6 +1084,7 @@ def main():
     cmaes_txt = run("cmaes_demo", cmaes_demo.main, True)
     fm_index_txt = run("fm_index_demo", fm_index_demo.main, True)
     ldpc_txt = run("ldpc_demo", ldpc_demo.main, True)
+    wang_landau_txt = run("wang_landau_demo", wang_landau_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9655,6 +9657,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("ldpc.svg"), "Word-error rate of a rate-0.35 LDPC code over a binary symmetric channel: the soft-decision sum-product decoder (blue) beats hard-decision bit-flipping (orange) at every noise level, because it uses the channel's confidence, not just the received bits")
             + f'<div class="card">{pre(ldpc_txt)}</div>'
+            + '</div>'),
+        section(
+            "Wang-Landau: one run, every temperature",
+            "Ordinary Monte Carlo (Metropolis) samples at ONE fixed temperature -- to map a phase "
+            "transition you re-run at many, and near the critical point the sampler suffers critical "
+            "slowing down. WANG-LANDAU sampling (2001) instead estimates the temperature-independent "
+            "DENSITY OF STATES g(E), the number of configurations at each energy. Once you know g(E) "
+            "you know everything: Z(T) = sum_E g(E) exp(-E/kT), and hence the energy, entropy, and "
+            "specific heat at EVERY temperature from a SINGLE run. The trick is a self-adjusting "
+            "random walk that flattens its own histogram: propose a spin flip and accept it with "
+            "probability min(1, g(E1)/g(E2)) -- pushing the walker toward energies it has seen less "
+            "often -- while multiplying g(E) by a factor f at each visit and shrinking f toward 1 as "
+            "the histogram flattens. Validated the only honest way: against the EXACT density of "
+            "states from brute-force enumeration of all 2^N spin configurations of a small Ising "
+            "lattice -- the recovered ln g matches to within a small absolute error, the total sums "
+            "to 2^N, and the energy and specific-heat curves it produces agree with those from the "
+            "exact g(E). The flat-histogram, all-temperatures companion to the fixed-temperature "
+            "Metropolis Ising sampler.",
+            '<div class="grid">'
+            + svg_card(out("wang_landau.svg"), "Specific heat per spin of a 4x4 Ising lattice computed from a single Wang-Landau run (dots) against the exact density of states (line): both peak near the finite-size critical temperature, and the whole curve came from one simulation")
+            + f'<div class="card">{pre(wang_landau_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
