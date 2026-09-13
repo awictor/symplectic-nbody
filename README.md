@@ -481,6 +481,7 @@ ruins a long non-symplectic integration.
 | `src/johnson_lindenstrauss.py` | JL random projection: distance-preserving dimension reduction (Gaussian + Achlioptas) |
 | `src/stirling.py` | Stirling numbers (both kinds), Bell numbers, set partitions and cycles |
 | `src/belief_propagation.py` | Sum-product / max-product on tree factor graphs: exact marginals, MAP, Z |
+| `src/randomized_svd.py` | Randomized SVD (Halko-Martinsson-Tropp): fast near-optimal top-k factorization |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -953,6 +954,7 @@ ruins a long non-symplectic integration.
 | `examples/johnson_lindenstrauss_demo.py` | Distortion-vs-dimension curve + projected-distance scatter |
 | `examples/stirling_demo.py` | Stirling triangles, set partitions, Bell numbers three ways |
 | `examples/belief_propagation_demo.py` | Spin chain marginals by message passing, bias decay down the chain |
+| `examples/randomized_svd_demo.py` | Randomized vs exact singular-value spectrum + error-vs-rank curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10975,6 +10977,23 @@ the engine behind LDPC/turbo decoding and the HMM forward-backward algorithm; ma
 MAP. Validated against brute enumeration of the joint (marginals, partition function, and MAP) on
 random tree factor graphs, with cyclic graphs correctly rejected. The graphical-model companion to
 the HMM and Gibbs-sampling notes.
+
+## Randomized SVD: low-rank factorization by random projection
+
+Top-k singular vectors in O(m n k), not O(m n min(m,n)). `randomized_svd.py`:
+
+```
+$ python examples/randomized_svd_demo.py examples/output
+
+  randomized singular values match exact to 4+ digits
+  rank-5 reconstruction within 1.000x of the optimal error; q=2 power iters -> machine precision
+```
+
+Multiply A by a random Gaussian matrix so random directions span its dominant range, orthonormalize
+to a small basis Q, SVD the small Q^T A, and lift back (Halko-Martinsson-Tropp 2011); power iterations
+sharpen slow spectra. Validated against the exact Jacobi SVD: top-k singular values and reconstruction
+error match to tolerance, singular vectors are orthonormal, and an exactly rank-r matrix is recovered
+essentially exactly. The fast-approximate companion to the exact SVD.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

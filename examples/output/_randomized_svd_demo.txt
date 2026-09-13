@@ -1,0 +1,24 @@
+Randomized SVD: top-k singular vectors by random projection (Halko-Martinsson-Tropp)
+
+  40x30 matrix: rank-5 signal + small noise.
+
+    i   exact sigma_i   randomized
+    0         14.5943      14.5943
+    1         12.2985      12.2985
+    2         10.4277      10.4277
+    3          7.6419       7.6419
+    4          7.2157       7.2157
+
+  Rank-5 reconstruction error: randomized 0.8309, optimal (exact) 0.8309
+  Randomized is within 1.000x of the best possible.
+
+  Effect of power iterations on top singular value accuracy:
+    q=0: |sigma_0 - exact| = 4.18e-03
+    q=1: |sigma_0 - exact| = 2.74e-10
+    q=2: |sigma_0 - exact| = 0.00e+00
+    q=4: |sigma_0 - exact| = 0.00e+00
+
+  Random directions projected through A span its dominant range; a small exact SVD in
+  that subspace recovers the top-k factors in O(m n k) instead of O(m n min(m,n)).
+
+  wrote examples/output\randomized_svd.svg

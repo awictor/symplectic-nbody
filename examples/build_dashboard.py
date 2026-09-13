@@ -523,6 +523,7 @@ def main():
     import johnson_lindenstrauss_demo
     import stirling_demo
     import belief_propagation_demo
+    import randomized_svd_demo
 
     import plot_orbits
 
@@ -1015,6 +1016,7 @@ def main():
     johnson_lindenstrauss_txt = run("johnson_lindenstrauss_demo", johnson_lindenstrauss_demo.main, True)
     stirling_txt = run("stirling_demo", stirling_demo.main, True)
     belief_propagation_txt = run("belief_propagation_demo", belief_propagation_demo.main, True)
+    randomized_svd_txt = run("randomized_svd_demo", randomized_svd_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8909,6 +8911,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("belief_propagation.svg"), "A chain of binary spins whose neighbours prefer to agree, with one biased end: belief propagation computes each spin's marginal exactly, and the bias decays smoothly down the chain (0.80, 0.65, 0.58, 0.54, 0.52)")
             + f'<div class="card">{pre(belief_propagation_txt)}</div>'
+            + '</div>'),
+        section(
+            "Randomized SVD: low-rank factorization by random projection",
+            "The SVD is the gold standard for low-rank approximation, PCA, and matrix compression, "
+            "but the full decomposition costs O(m n min(m,n)) -- wasteful when only the top k "
+            "singular vectors are wanted. The randomized SVD of Halko, Martinsson and Tropp (2011) "
+            "gets those in roughly O(m n k) in two stages: multiply A by a random Gaussian matrix so "
+            "random directions, projected through A, span its dominant range, orthonormalize to a "
+            "small basis Q, then take an exact SVD of the small matrix Q^T A and lift it back. A few "
+            "power iterations sharpen the fit when singular values decay slowly. The remarkable "
+            "guarantee is that the expected error is within a small factor of the best possible "
+            "rank-k error. Validated against the repo's exact Jacobi SVD: the recovered singular "
+            "values match the true top-k to tolerance, the reconstruction error is within a few "
+            "percent of the optimal (k+1)-th-singular-value bound, the singular vectors are "
+            "orthonormal, power iteration reduces error toward machine precision on slow spectra, and "
+            "an exactly rank-r matrix is recovered essentially exactly. The fast-approximate "
+            "companion to the exact SVD and the PCA/low-rank tools.",
+            '<div class="grid">'
+            + svg_card(out("randomized_svd.svg"), "Left: the singular-value spectrum -- randomized top-k values (yellow dots) land exactly on the exact ones (gray bars). Right: rank-k reconstruction error tracking the optimal bound as rank grows")
+            + f'<div class="card">{pre(randomized_svd_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
