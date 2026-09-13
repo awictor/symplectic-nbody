@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="380" viewBox="0 0 760 380" font-family="monospace">
+<rect width="760" height="380" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="15">QR iteration: max subdiagonal magnitude -&gt; 0 (matrix converging to triangular)</text>
+<rect x="60" y="55" width="660" height="270" fill="none" stroke="#30363d"/>
+<line x1="60" y1="327.6" x2="720" y2="327.6" stroke="#161b22"/>
+<text x="54" y="330.6" fill="#8b949e" font-size="9" text-anchor="end">1e-12</text>
+<line x1="60" y1="305.6" x2="720" y2="305.6" stroke="#161b22"/>
+<text x="54" y="308.6" fill="#8b949e" font-size="9" text-anchor="end">1e-11</text>
+<line x1="60" y1="283.5" x2="720" y2="283.5" stroke="#161b22"/>
+<text x="54" y="286.5" fill="#8b949e" font-size="9" text-anchor="end">1e-10</text>
+<line x1="60" y1="261.4" x2="720" y2="261.4" stroke="#161b22"/>
+<text x="54" y="264.4" fill="#8b949e" font-size="9" text-anchor="end">1e-9</text>
+<line x1="60" y1="239.3" x2="720" y2="239.3" stroke="#161b22"/>
+<text x="54" y="242.3" fill="#8b949e" font-size="9" text-anchor="end">1e-8</text>
+<line x1="60" y1="217.2" x2="720" y2="217.2" stroke="#161b22"/>
+<text x="54" y="220.2" fill="#8b949e" font-size="9" text-anchor="end">1e-7</text>
+<line x1="60" y1="195.2" x2="720" y2="195.2" stroke="#161b22"/>
+<text x="54" y="198.2" fill="#8b949e" font-size="9" text-anchor="end">1e-6</text>
+<line x1="60" y1="173.1" x2="720" y2="173.1" stroke="#161b22"/>
+<text x="54" y="176.1" fill="#8b949e" font-size="9" text-anchor="end">1e-5</text>
+<line x1="60" y1="151.0" x2="720" y2="151.0" stroke="#161b22"/>
+<text x="54" y="154.0" fill="#8b949e" font-size="9" text-anchor="end">1e-4</text>
+<line x1="60" y1="128.9" x2="720" y2="128.9" stroke="#161b22"/>
+<text x="54" y="131.9" fill="#8b949e" font-size="9" text-anchor="end">1e-3</text>
+<line x1="60" y1="106.9" x2="720" y2="106.9" stroke="#161b22"/>
+<text x="54" y="109.9" fill="#8b949e" font-size="9" text-anchor="end">1e-2</text>
+<line x1="60" y1="84.8" x2="720" y2="84.8" stroke="#161b22"/>
+<text x="54" y="87.8" fill="#8b949e" font-size="9" text-anchor="end">1e-1</text>
+<line x1="60" y1="62.7" x2="720" y2="62.7" stroke="#161b22"/>
+<text x="54" y="65.7" fill="#8b949e" font-size="9" text-anchor="end">1e0</text>
+<polyline points="60.0,55.0 76.9,60.8 93.8,67.4 110.8,74.3 127.7,81.2 144.6,88.2 161.5,95.2 178.5,102.1 195.4,109.1 212.3,116.0 229.2,123.0 246.2,130.0 263.1,136.9 280.0,143.9 296.9,150.9 313.8,157.8 330.8,164.8 347.7,171.8 364.6,178.7 381.5,185.7 398.5,192.7 415.4,199.6 432.3,206.6 449.2,213.6 466.2,220.5 483.1,227.5 500.0,234.5 516.9,241.4 533.8,248.4 550.8,255.3 567.7,262.3 584.6,269.3 601.5,276.2 618.5,283.2 635.4,290.2 652.3,297.1 669.2,304.1 686.2,311.1 703.1,318.0 720.0,325.0" fill="none" stroke="#4dabf7" stroke-width="2"/>
+<circle cx="60.0" cy="55.0" r="2" fill="#ffd43b"/>
+<circle cx="76.9" cy="60.8" r="2" fill="#ffd43b"/>
+<circle cx="93.8" cy="67.4" r="2" fill="#ffd43b"/>
+<circle cx="110.8" cy="74.3" r="2" fill="#ffd43b"/>
+<circle cx="127.7" cy="81.2" r="2" fill="#ffd43b"/>
+<circle cx="144.6" cy="88.2" r="2" fill="#ffd43b"/>
+<circle cx="161.5" cy="95.2" r="2" fill="#ffd43b"/>
+<circle cx="178.5" cy="102.1" r="2" fill="#ffd43b"/>
+<circle cx="195.4" cy="109.1" r="2" fill="#ffd43b"/>
+<circle cx="212.3" cy="116.0" r="2" fill="#ffd43b"/>
+<circle cx="229.2" cy="123.0" r="2" fill="#ffd43b"/>
+<circle cx="246.2" cy="130.0" r="2" fill="#ffd43b"/>
+<circle cx="263.1" cy="136.9" r="2" fill="#ffd43b"/>
+<circle cx="280.0" cy="143.9" r="2" fill="#ffd43b"/>
+<circle cx="296.9" cy="150.9" r="2" fill="#ffd43b"/>
+<circle cx="313.8" cy="157.8" r="2" fill="#ffd43b"/>
+<circle cx="330.8" cy="164.8" r="2" fill="#ffd43b"/>
+<circle cx="347.7" cy="171.8" r="2" fill="#ffd43b"/>
+<circle cx="364.6" cy="178.7" r="2" fill="#ffd43b"/>
+<circle cx="381.5" cy="185.7" r="2" fill="#ffd43b"/>
+<circle cx="398.5" cy="192.7" r="2" fill="#ffd43b"/>
+<circle cx="415.4" cy="199.6" r="2" fill="#ffd43b"/>
+<circle cx="432.3" cy="206.6" r="2" fill="#ffd43b"/>
+<circle cx="449.2" cy="213.6" r="2" fill="#ffd43b"/>
+<circle cx="466.2" cy="220.5" r="2" fill="#ffd43b"/>
+<circle cx="483.1" cy="227.5" r="2" fill="#ffd43b"/>
+<circle cx="500.0" cy="234.5" r="2" fill="#ffd43b"/>
+<circle cx="516.9" cy="241.4" r="2" fill="#ffd43b"/>
+<circle cx="533.8" cy="248.4" r="2" fill="#ffd43b"/>
+<circle cx="550.8" cy="255.3" r="2" fill="#ffd43b"/>
+<circle cx="567.7" cy="262.3" r="2" fill="#ffd43b"/>
+<circle cx="584.6" cy="269.3" r="2" fill="#ffd43b"/>
+<circle cx="601.5" cy="276.2" r="2" fill="#ffd43b"/>
+<circle cx="618.5" cy="283.2" r="2" fill="#ffd43b"/>
+<circle cx="635.4" cy="290.2" r="2" fill="#ffd43b"/>
+<circle cx="652.3" cy="297.1" r="2" fill="#ffd43b"/>
+<circle cx="669.2" cy="304.1" r="2" fill="#ffd43b"/>
+<circle cx="686.2" cy="311.1" r="2" fill="#ffd43b"/>
+<circle cx="703.1" cy="318.0" r="2" fill="#ffd43b"/>
+<circle cx="720.0" cy="325.0" r="2" fill="#ffd43b"/>
+<text x="390" y="349" fill="#8b949e" font-size="10" text-anchor="middle">QR iteration (log-scale subdiagonal magnitude)</text>
+</svg>

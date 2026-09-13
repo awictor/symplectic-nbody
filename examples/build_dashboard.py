@@ -566,6 +566,7 @@ def main():
     import qft_demo
     import shor_demo
     import kosaraju_demo
+    import qr_algorithm_demo
 
     import plot_orbits
 
@@ -1101,6 +1102,7 @@ def main():
     qft_txt = run("qft_demo", qft_demo.main, True)
     shor_txt = run("shor_demo", shor_demo.main, True)
     kosaraju_txt = run("kosaraju_demo", kosaraju_demo.main, True)
+    qr_algorithm_txt = run("qr_algorithm_demo", qr_algorithm_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9865,6 +9867,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("kosaraju.svg"), "Kosaraju's two-pass DFS on an 11-vertex graph: four strongly connected components (coloured), and the condensation below contracting each to a super-node -- always a DAG, since collapsing the cycles removes them")
             + f'<div class="card">{pre(kosaraju_txt)}</div>'
+            + '</div>'),
+        section(
+            "The QR algorithm: every eigenvalue by iterating a factorization",
+            "The QR algorithm (Francis & Kublanovskaya, ~1961) is how essentially every numerical "
+            "library actually finds eigenvalues -- one of the most important algorithms of the 20th "
+            "century. The idea is almost unreasonably simple: factor A = QR (orthogonal times "
+            "upper-triangular), then MULTIPLY THE FACTORS BACK IN THE OPPOSITE ORDER, A' = RQ, and "
+            "repeat. The sequence is a chain of SIMILAR matrices (same eigenvalues) that converges to "
+            "upper quasi-triangular form, its diagonal revealing the eigenvalues. Two refinements make "
+            "it practical: HESSENBERG REDUCTION first (zeros below the subdiagonal, so each step is "
+            "O(n^2) not O(n^3)), and WILKINSON SHIFTS with DEFLATION (subtract a shift before "
+            "factoring to accelerate convergence to cubic, read off eigenvalues as subdiagonals "
+            "vanish, and solve trailing 2x2 blocks directly so real matrices with COMPLEX-CONJUGATE "
+            "pairs are handled without leaving real arithmetic). Validated: eigenvalues of symmetric "
+            "matrices match the repo's Jacobi solver; a triangular matrix's eigenvalues are its "
+            "diagonal; sum = trace and product = determinant; a rotation matrix's complex-conjugate "
+            "pair is found exactly; and the eigenvalues equal the characteristic-polynomial roots from "
+            "the repo's Durand-Kerner solver. The general-eigenvalue companion to the Jacobi, Lanczos, "
+            "and power-iteration methods.",
+            '<div class="grid">'
+            + svg_card(out("qr_algorithm.svg"), "The QR iteration driving a matrix to triangular form: the largest subdiagonal magnitude decays from 2.2 to 1e-12 over 40 steps (log scale), the eigenvalues settling onto the diagonal as the off-diagonal structure dissolves")
+            + f'<div class="card">{pre(qr_algorithm_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

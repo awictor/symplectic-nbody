@@ -1,0 +1,24 @@
+The QR algorithm: factor A = QR, reform RQ, repeat -> eigenvalues on the diagonal
+
+  4x4 symmetric matrix, trace = 20.0
+
+  max |subdiagonal| entry as the iteration proceeds (convergence to triangular):
+    iter   0: 2.24e+00  ##################################################
+    iter   2: 6.14e-01  #############
+    iter   5: 7.02e-02  #
+    iter  10: 1.86e-03  
+    iter  20: 1.30e-06  
+    iter  39: 1.32e-12  
+
+  eigenvalues (shifted QR with deflation):
+    +0.92073
+    +2.68832
+    +5.34296
+    +11.04798
+
+  sum of eigenvalues = 20.00000  (matches trace 20.0)
+
+  nonsymmetric example (rotation + scale): eigenvalues ['2.00', '0.00+1.00i', '0.00-1.00i']
+  characteristic-poly roots cross-check:      ['0.00-1.00i', '2.00', '-0.00+1.00i']
+
+  wrote examples/output\qr_algorithm.svg

@@ -524,6 +524,7 @@ ruins a long non-symplectic integration.
 | `src/qft.py` | Quantum Fourier transform + phase estimation on the statevector simulator |
 | `src/shor.py` | Shor's factoring algorithm: quantum period-finding + continued fractions |
 | `src/kosaraju.py` | Kosaraju's two-pass DFS strongly-connected-components + condensation |
+| `src/qr_algorithm.py` | QR eigenvalue algorithm: Hessenberg + shifted QR with complex-pair deflation |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1039,6 +1040,7 @@ ruins a long non-symplectic integration.
 | `examples/qft_demo.py` | QFT period-finding spectrum + phase estimation (Shor's core) |
 | `examples/shor_demo.py` | Shor factoring 21 end to end: period 6 -> QFT peaks -> 7 x 3 |
 | `examples/kosaraju_demo.py` | SCC decomposition coloured by component + condensation DAG |
+| `examples/qr_algorithm_demo.py` | QR iteration subdiagonal decaying to 1e-12 as eigenvalues emerge |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11887,6 +11889,30 @@ the second pass is one SCC. Validated against the repo's Tarjan implementation: 
 40 random graphs, every component genuinely strongly connected, cycles collapse to one component, DAGs
 give singletons, and the condensation is acyclic. The two-pass DFS companion to Tarjan's SCC, the
 topological sort, and the 2-SAT solver.
+
+## The QR algorithm: every eigenvalue by iterating a factorization
+
+How numerical libraries actually find eigenvalues. `qr_algorithm.py`:
+
+```
+$ python examples/qr_algorithm_demo.py examples/output
+
+  max |subdiagonal| entry as the iteration proceeds:
+    iter   0: 2.24e+00
+    iter   5: 7.02e-02
+    iter  20: 1.30e-06
+    iter  39: 1.32e-12
+  eigenvalues: +0.92073  +2.68832  +5.34296  +11.04798
+  sum of eigenvalues = 20.00000  (matches trace 20.0)
+```
+
+Factor A = QR, reform RQ, repeat: the similar matrices converge to triangular form with eigenvalues on
+the diagonal. Hessenberg reduction makes each step O(n^2); Wilkinson shifts plus deflation give cubic
+convergence and handle complex-conjugate pairs (via direct 2x2 blocks) without leaving real
+arithmetic. Validated: matches Jacobi on symmetric matrices, triangular eigenvalues are the diagonal,
+sum = trace and product = determinant, rotation matrices give exact complex pairs, and the eigenvalues
+equal the characteristic-polynomial roots from Durand-Kerner. The general-eigenvalue companion to the
+Jacobi, Lanczos, and power-iteration methods.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
