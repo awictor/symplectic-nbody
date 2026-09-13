@@ -1,0 +1,17 @@
+Latin hypercube sampling: even coverage that beats random Monte Carlo
+
+  16-point 2-D LHS design: valid stratification = True
+  minimum inter-point distance 0.1006 (spread out, no clumps)
+
+  Integrating sum sin(pi x_i) over [0,1]^4 (true value 2.5465):
+
+      n       LHS MSE   Monte Carlo MSE  variance ratio
+     20     2.074e-04         1.621e-02           78.2x
+     40     2.815e-05         7.291e-03          259.0x
+     80     3.344e-06         4.774e-03         1427.7x
+    160     4.017e-07         2.398e-03         5969.0x
+
+  LHS forces every variable's range to be covered uniformly, so for near-additive
+  functions its error variance is many times smaller than random sampling at equal cost.
+
+  wrote examples/output\latin_hypercube.svg

@@ -534,6 +534,7 @@ def main():
     import sinkhorn_demo
     import pchip_demo
     import sequence_acceleration_demo
+    import latin_hypercube_demo
 
     import plot_orbits
 
@@ -1037,6 +1038,7 @@ def main():
     sinkhorn_txt = run("sinkhorn_demo", sinkhorn_demo.main, True)
     pchip_txt = run("pchip_demo", pchip_demo.main, True)
     sequence_acceleration_txt = run("sequence_acceleration_demo", sequence_acceleration_demo.main, True)
+    latin_hypercube_txt = run("latin_hypercube_demo", latin_hypercube_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9148,6 +9150,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("sequence_acceleration.svg"), "Error in pi versus number of Leibniz terms on a log scale: the raw sum crawls to two digits while Aitken and Wynn's epsilon algorithm plunge to machine precision from the same 30 partial sums")
             + f'<div class="card">{pre(sequence_acceleration_txt)}</div>'
+            + '</div>'),
+        section(
+            "Latin hypercube sampling: even coverage that beats Monte Carlo",
+            "To explore or integrate over a d-dimensional space you need sample points. Plain random "
+            "Monte Carlo points clump and leave gaps by chance, so a small sample covers the space "
+            "poorly and integral estimates have high variance; a grid covers evenly but needs k^d "
+            "points. LATIN HYPERCUBE SAMPLING divides each axis into n equal-probability strata and "
+            "places exactly ONE sample in each stratum of each axis, paired by a random permutation "
+            "per dimension -- so every 1-D projection is perfectly stratified regardless of "
+            "dimension, slashing the variance of any near-additive function. The MAXIMIN variant "
+            "additionally maximizes the minimum inter-point distance for better space-filling. "
+            "Validated: every axis has exactly one point per stratum (the defining property); LHS "
+            "integration of an additive test function has MANY times lower error variance than plain "
+            "Monte Carlo at the same sample count (78x to nearly 6000x here as n grows); samples lie "
+            "in the unit cube; maximin has a larger minimum pairwise distance; and centered LHS points "
+            "sit at stratum midpoints. The experimental-design companion to the low-discrepancy "
+            "(Halton/Hammersley) QMC tools.",
+            '<div class="grid">'
+            + svg_card(out("latin_hypercube.svg"), "A 16-point Latin hypercube design (left, exactly one point per row and column of the stratification grid) versus 16 random Monte Carlo points (right, clumping and leaving gaps)")
+            + f'<div class="card">{pre(latin_hypercube_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -492,6 +492,7 @@ ruins a long non-symplectic integration.
 | `src/sinkhorn.py` | Sinkhorn optimal transport (entropic Wasserstein) + exact 1-D Wasserstein |
 | `src/pchip.py` | PCHIP shape-preserving monotone cubic interpolation (Fritsch-Carlson) |
 | `src/sequence_acceleration.py` | Aitken / Wynn epsilon / Euler transform series acceleration |
+| `src/latin_hypercube.py` | Latin hypercube sampling + maximin design, variance reduction vs MC |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -975,6 +976,7 @@ ruins a long non-symplectic integration.
 | `examples/sinkhorn_demo.py` | Two histograms + the transport plan heatmap, cost approaching Wasserstein |
 | `examples/pchip_demo.py` | Step data where a cubic spline overshoots but PCHIP stays monotone |
 | `examples/sequence_acceleration_demo.py` | pi from Leibniz: raw crawls, Wynn hits machine precision |
+| `examples/latin_hypercube_demo.py` | LHS vs random point sets + integration variance comparison |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11184,6 +11186,22 @@ Aitken's delta-squared fits a geometric tail; Wynn's epsilon algorithm computes 
 family by a rhombus recurrence; Euler's transform reweights alternating series. Validated against
 known limits (pi, ln 2, Basel), exact recovery of a geometric sequence, and leaving converged
 sequences unchanged. The convergence-acceleration companion to the Richardson-extrapolation tools.
+
+## Latin hypercube sampling: even coverage that beats Monte Carlo
+
+Space-filling experimental design with stratified marginals. `latin_hypercube.py`:
+
+```
+$ python examples/latin_hypercube_demo.py examples/output
+
+  integrating an additive function: LHS error variance 78x (n=20) to 6000x (n=160) below Monte Carlo
+```
+
+Divide each axis into n strata and place exactly one sample per stratum per axis, so every 1-D
+projection is perfectly stratified regardless of dimension. Validated: the one-point-per-stratum
+property holds on every axis, LHS integration has far lower error variance than plain Monte Carlo on
+near-additive functions, maximin gives a larger minimum inter-point distance, and centered LHS sits at
+stratum midpoints. The experimental-design companion to the low-discrepancy QMC tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
