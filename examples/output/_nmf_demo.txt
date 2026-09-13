@@ -1,0 +1,24 @@
+Non-negative matrix factorization: parts-based decomposition (Lee-Seung)
+
+  Term-document count matrix: 6 words x 8 documents.
+
+  Factored V ~ W H with k=2 topics. Final error 4.116 (from 12.909).
+
+  Recovered topics (top words by weight in each column of W):
+    topic 0: oven(1.1), recipe(1.1), flour(1.0)
+    topic 1: star(1.5), orbit(1.5), galaxy(1.4)
+
+  Document-topic weights (columns of H, which topic each doc leans on):
+    doc 0: topic0  0.29  topic1  2.67  -> topic 1
+    doc 1: topic0  0.32  topic1  2.67  -> topic 1
+    doc 2: topic0  0.32  topic1  2.64  -> topic 1
+    doc 3: topic0  0.00  topic1  2.43  -> topic 1
+    doc 4: topic0  3.85  topic1  0.20  -> topic 0
+    doc 5: topic0  3.85  topic1  0.22  -> topic 0
+    doc 6: topic0  3.80  topic1  0.22  -> topic 0
+    doc 7: topic0  3.50  topic1  0.00  -> topic 0
+
+  Because everything is non-negative, topics ADD rather than cancel -- the columns of W
+  are interpretable word groups, exactly what PCA's signed components cannot give.
+
+  wrote examples/output\nmf.svg

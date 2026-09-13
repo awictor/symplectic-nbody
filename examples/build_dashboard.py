@@ -519,6 +519,7 @@ def main():
     import partitions_demo
     import dfa_minimization_demo
     import cyk_demo
+    import nmf_demo
 
     import plot_orbits
 
@@ -1007,6 +1008,7 @@ def main():
     partitions_txt = run("partitions_demo", partitions_demo.main, True)
     dfa_minimization_txt = run("dfa_minimization_demo", dfa_minimization_demo.main, True)
     cyk_txt = run("cyk_demo", cyk_demo.main, True)
+    nmf_txt = run("nmf_demo", nmf_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -8821,6 +8823,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("cyk.svg"), "The CYK triangular chart for '(()())': each cell lists the nonterminals deriving that substring, filled bottom-up from the input row until the start symbol S reaches the apex and the string is accepted")
             + f'<div class="card">{pre(cyk_txt)}</div>'
+            + '</div>'),
+        section(
+            "Non-negative matrix factorization: parts, not cancellations",
+            "Given a non-negative data matrix V (pixel intensities, word counts, spectra), NMF finds "
+            "non-negative W and H with V ~ W H at a small inner rank k. Because nothing may be "
+            "negative, the factorization is purely ADDITIVE -- features pile on, never cancel -- and "
+            "Lee and Seung showed this forces a PARTS-BASED representation: the columns of W become "
+            "interpretable pieces (facial features, document topics, spectral components) and each "
+            "data point is a non-negative mix of them, which PCA's signed components cannot give. The "
+            "workhorse is the multiplicative update H <- H (W^T V)/(W^T W H), W <- W (V H^T)/(W H "
+            "H^T), which keeps every entry non-negative automatically and provably does not increase "
+            "the error each step -- monotone convergence, no step size to tune. Validated by recovery "
+            "and monotonicity: on a matrix built from known non-negative factors the reconstruction "
+            "error falls to near zero and W H reproduces V; the Frobenius error decreases every "
+            "iteration; factors stay non-negative; a rank-1 outer product factors near-exactly; and "
+            "the KL-divergence variant used in topic models likewise decreases. The parts-based "
+            "companion to the SVD and the clustering tools.",
+            '<div class="grid">'
+            + svg_card(out("nmf.svg"), "A term-document count matrix V factored as W H at rank 2: NMF recovers the two hidden topics (space words and cooking words) as separate additive components, with the reconstruction error decaying monotonically")
+            + f'<div class="card">{pre(nmf_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -477,6 +477,7 @@ ruins a long non-symplectic integration.
 | `src/partitions.py` | Integer partitions: Euler pentagonal p(n), generation, Euler's theorem, conjugate |
 | `src/dfa_minimization.py` | DFA minimization (Hopcroft) + language equivalence via canonical form |
 | `src/cyk.py` | CYK context-free parsing: membership, parse-tree count, one parse tree |
+| `src/nmf.py` | Non-negative matrix factorization (Lee-Seung multiplicative updates) + KL variant |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -945,6 +946,7 @@ ruins a long non-symplectic integration.
 | `examples/partitions_demo.py` | p(n) growth on log scale, Ferrers diagrams, Euler's identity |
 | `examples/dfa_minimization_demo.py` | A 6-state DFA collapsing to its 2-state canonical form |
 | `examples/cyk_demo.py` | CYK triangular chart + Catalan-number parse counts of an ambiguous grammar |
+| `examples/nmf_demo.py` | Term-document matrix factored into two recovered topics |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -10896,6 +10898,24 @@ apex, and the same recurrence counts parse trees. Works for ambiguous grammars, 
 Validated against an exhaustive recursive-derivation search (membership and parse count) plus classic
 grammars and Catalan-number ambiguity. The context-free companion to the Thompson NFA and
 shunting-yard tools.
+
+## Non-negative matrix factorization: parts, not cancellations
+
+Additive parts-based decomposition V ~ W H, all non-negative. `nmf.py`:
+
+```
+$ python examples/nmf_demo.py examples/output
+
+  term-document matrix -> 2 topics
+  topic 0: oven, recipe, flour   topic 1: star, orbit, galaxy
+```
+
+Lee-Seung multiplicative updates H <- H(W^T V)/(W^T W H), W <- W(V H^T)/(W H H^T) keep every entry
+non-negative and provably never increase the error, so it converges monotonically with no step size.
+Non-negativity forces interpretable additive parts (topics, features) unlike PCA's signed components.
+Validated by recovering planted factors to near-zero error, monotone error decrease, non-negativity,
+exact rank-1 factoring, and the KL-divergence topic-model variant. The parts-based companion to the
+SVD and clustering tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
