@@ -1,0 +1,32 @@
+Lasso regression: L1 penalty selects a sparse subset of features
+
+  12 features, only 3 relevant (indices [1, 4, 9]), 100 samples.
+
+   feature    true     Lasso     ridge
+         0     0.0     0.000    -0.009
+         1     4.0     3.967     3.925
+         2     0.0     0.000     0.010
+         3     0.0     0.000    -0.001
+         4    -3.0    -2.948    -2.936
+         5     0.0     0.000    -0.017
+         6     0.0     0.000    -0.029
+         7     0.0     0.000     0.024
+         8     0.0     0.000    -0.004
+         9     2.0     1.908     1.939
+        10     0.0     0.000    -0.004
+        11     0.0     0.000    -0.015
+
+  Nonzero coefficients: Lasso 3, ridge 12 (all).
+  Lasso zeros every irrelevant feature and keeps only the true three; ridge shrinks
+  everything but leaves it all nonzero -- no selection.
+
+  Coefficient path (nonzero count shrinks as the L1 penalty grows):
+      lambda   nonzero
+       0.005         8
+       0.020         3
+       0.050         3
+       0.150         3
+       0.400         3
+       1.000         3
+
+  wrote examples/output\lasso.svg

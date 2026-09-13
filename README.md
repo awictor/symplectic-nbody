@@ -507,6 +507,7 @@ ruins a long non-symplectic integration.
 | `src/prony.py` | Prony's method: fit a signal as damped sinusoids (super-resolution spectrum) |
 | `src/hp_filter.py` | Hodrick-Prescott trend/cycle filter (banded pentadiagonal solve) |
 | `src/holt_winters.py` | Exponential smoothing: SES / Holt / Holt-Winters forecasting |
+| `src/lasso.py` | Lasso regression by coordinate descent (L1 feature selection) + ridge |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1005,6 +1006,7 @@ ruins a long non-symplectic integration.
 | `examples/prony_demo.py` | Damped-sinusoid recovery + super-resolution beating the FFT bin |
 | `examples/hp_filter_demo.py` | Trend/cycle decomposition of a GDP-like series across lambda |
 | `examples/holt_winters_demo.py` | Seasonal monthly series forecast a year ahead vs SES/Holt |
+| `examples/lasso_demo.py` | Feature selection: Lasso zeros noise features where ridge keeps all |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11460,6 +11462,21 @@ cycle -- each a simple online recurrence. Validated: SES tracks a noisy constant
 line, Holt-Winters forecasts a trending-seasonal series a year ahead accurately, and a higher
 smoothing factor reacts faster to a level shift. The forecasting companion to the Kalman filter and
 autocorrelation tools.
+
+## Lasso regression: least squares that selects its own features
+
+L1-penalized regression that zeros irrelevant features. `lasso.py`:
+
+```
+$ python examples/lasso_demo.py examples/output
+
+  12 features, 3 relevant: Lasso keeps exactly 3 nonzero; ridge keeps all 12
+```
+
+Coordinate descent with soft-thresholding drives most coefficients to exactly zero, performing
+automatic feature selection. Validated: recovers the true sparse support and coefficient values, zeros
+irrelevant features, gets sparser as the penalty grows, reduces to OLS at lambda=0, and is far sparser
+than ridge. The sparse-regression companion to the ordinary/ridge regression and OMP tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

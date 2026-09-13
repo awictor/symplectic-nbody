@@ -549,6 +549,7 @@ def main():
     import prony_demo
     import hp_filter_demo
     import holt_winters_demo
+    import lasso_demo
 
     import plot_orbits
 
@@ -1067,6 +1068,7 @@ def main():
     prony_txt = run("prony_demo", prony_demo.main, True)
     hp_filter_txt = run("hp_filter_demo", hp_filter_demo.main, True)
     holt_winters_txt = run("holt_winters_demo", holt_winters_demo.main, True)
+    lasso_txt = run("lasso_demo", lasso_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9480,6 +9482,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("holt_winters.svg"), "A monthly series with trend and seasonality: Holt-Winters tracks the level (blue), then forecasts a year ahead (green) that lands almost exactly on the true future (red dashed), reinstating both the slope and the seasonal swing")
             + f'<div class="card">{pre(holt_winters_txt)}</div>'
+            + '</div>'),
+        section(
+            "Lasso regression: least squares that selects its own features",
+            "Ordinary least squares fits every feature; with many features and few that matter, it "
+            "overfits into dense, uninterpretable coefficients. RIDGE adds an L2 penalty that shrinks "
+            "coefficients toward zero but never exactly to zero. The LASSO uses an L1 penalty "
+            "instead, and that one change is transformative: it drives most coefficients to EXACTLY "
+            "zero, performing automatic FEATURE SELECTION -- picking a sparse subset of predictors "
+            "and discarding the rest. The objective is convex but non-differentiable at zero, so "
+            "COORDINATE DESCENT solves it: cycle through coefficients, and each optimal update is the "
+            "SOFT-THRESHOLD of its least-squares value, pulling it toward zero and clamping it there "
+            "once it is small enough. Validated: on data from a known sparse coefficient vector Lasso "
+            "recovers the exact active set and estimates the nonzero values closely; irrelevant "
+            "features are driven to exactly zero; a larger penalty yields a sparser model; lambda = 0 "
+            "reduces to ordinary least squares; and where Lasso keeps 3 of 12 features, ridge leaves "
+            "all 12 nonzero. The sparse-regression companion to the ordinary/ridge regression and the "
+            "orthogonal-matching-pursuit tools.",
+            '<div class="grid">'
+            + svg_card(out("lasso.svg"), "Lasso coefficient paths as the L1 penalty grows: the three true features (green) stay nonzero while the nine noise features (gray) are shrunk to exactly zero -- automatic feature selection that ridge cannot do")
+            + f'<div class="card">{pre(lasso_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
