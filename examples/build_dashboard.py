@@ -551,6 +551,7 @@ def main():
     import holt_winters_demo
     import lasso_demo
     import reed_muller_demo
+    import remez_demo
 
     import plot_orbits
 
@@ -1071,6 +1072,7 @@ def main():
     holt_winters_txt = run("holt_winters_demo", holt_winters_demo.main, True)
     lasso_txt = run("lasso_demo", lasso_demo.main, True)
     reed_muller_txt = run("reed_muller_demo", reed_muller_demo.main, True)
+    remez_txt = run("remez_demo", remez_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -9524,6 +9526,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("reed_muller.svg"), "RM(1,5) decoding success versus bit errors per 32-bit word: perfect correction up to 7 errors (the shaded radius), then a graceful decline -- exactly the distance-16 guarantee that let Mariner 9's images survive the trip from Mars")
             + f'<div class="card">{pre(reed_muller_txt)}</div>'
+            + '</div>'),
+        section(
+            "Remez exchange: the minimax polynomial no other polynomial beats",
+            "For a function f on an interval and a fixed degree, exactly one polynomial minimizes the "
+            "WORST-CASE error max|f - p| -- a different object from the interpolant (exact at nodes, "
+            "wild between them) or the least-squares fit (small on average, spiky at the ends). "
+            "CHEBYSHEV'S EQUIOSCILLATION THEOREM pins it down: p is minimax if and only if the error "
+            "rides up to +E, down to -E, up to +E ... at n+2 alternating points, no slack left to "
+            "shrink any peak. The REMEZ EXCHANGE algorithm iterates the theorem: demand alternating "
+            "+/-E at n+2 reference points (a square linear system for the coefficients and the level "
+            "E), then scan a fine grid for the true error extrema, swap them in, and re-solve until "
+            "the references ARE the extrema. Validated: the degree-0 minimax constant is the exact "
+            "midrange (max+min)/2; the error equioscillates the required n+2 times at a single level "
+            "E; no local coefficient perturbation lowers the sup error; and the minimax sup error is "
+            "never larger than Chebyshev interpolation or least squares. The best-approximation "
+            "companion to the Chebyshev and least-squares notes.",
+            '<div class="grid">'
+            + svg_card(out("remez.svg"), "Approximation error e^x - p(x) for three degree-4 fits: the minimax (Remez) error rides evenly between +E and -E, touching the level six times (n+2), while Chebyshev interpolation and least squares peak roughly twice as high")
+            + f'<div class="card">{pre(remez_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

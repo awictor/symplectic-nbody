@@ -1,0 +1,20 @@
+Remez minimax: the best polynomial approximation of e^x on [0, 2]
+
+  degree-4 fits, worst-case error max|e^x - p(x)|:
+    method                       sup error
+    minimax (Remez)              1.486e-03
+    Chebyshev interpolation      2.898e-03   (1.95x worse)
+    least squares                3.113e-03   (2.09x worse)
+
+  minimax error equioscillates at 6 points (need 6):
+    x = 0.000   error = -1.485993e-03
+    x = 0.203   error = +1.485996e-03
+    x = 0.721   error = -1.485993e-03
+    x = 1.339   error = +1.485993e-03
+    x = 1.821   error = -1.486006e-03
+    x = 2.000   error = +1.485993e-03
+
+  Every peak reaches +/- 1.486e-03, alternating sign -- Chebyshev's
+  equioscillation theorem: no degree-4 polynomial does better.
+
+  wrote examples/output\remez.svg

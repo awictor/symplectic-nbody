@@ -509,6 +509,7 @@ ruins a long non-symplectic integration.
 | `src/holt_winters.py` | Exponential smoothing: SES / Holt / Holt-Winters forecasting |
 | `src/lasso.py` | Lasso regression by coordinate descent (L1 feature selection) + ridge |
 | `src/reed_muller.py` | First-order Reed-Muller code RM(1,m) with fast Hadamard-transform decoding |
+| `src/remez.py` | Remez exchange for the true minimax polynomial (equioscillation) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1009,6 +1010,7 @@ ruins a long non-symplectic integration.
 | `examples/holt_winters_demo.py` | Seasonal monthly series forecast a year ahead vs SES/Holt |
 | `examples/lasso_demo.py` | Feature selection: Lasso zeros noise features where ridge keeps all |
 | `examples/reed_muller_demo.py` | RM(1,5) Mars code correcting up to 7 errors per 32-bit word |
+| `examples/remez_demo.py` | Minimax vs Chebyshev vs least-squares error curves for e^x |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -11496,6 +11498,30 @@ fast Walsh-Hadamard transform whose peak coefficient names the closest codeword 
 Validated: round-trips every message, corrects all error patterns up to the radius (exhaustively for
 small m), has minimum distance 2^(m-1), and the transform decoder matches brute-force nearest-codeword
 decoding. The coding-theory companion to the Hamming, Golay, and Reed-Solomon codes.
+
+## Remez exchange: the minimax polynomial no other polynomial beats
+
+The one polynomial that minimizes the worst-case error, not the average. `remez.py`:
+
+```
+$ python examples/remez_demo.py examples/output
+
+  degree-4 fits of e^x on [0, 2], worst-case error max|e^x - p(x)|:
+    minimax (Remez)            1.486e-03
+    Chebyshev interpolation    2.898e-03   (1.95x worse)
+    least squares              3.113e-03   (2.09x worse)
+
+  minimax error equioscillates at 6 points (need n+2 = 6), every peak +/- 1.486e-03
+```
+
+Chebyshev's equioscillation theorem says a degree-n polynomial is minimax if and only if its error
+rides up to +E, down to -E, ... at n+2 alternating points. The Remez exchange turns that into an
+iteration: demand alternating +/-E at n+2 reference points (a square linear system for the
+coefficients and the level E), scan a fine grid for the true error extrema, swap them in, and
+re-solve until the references are the extrema. Validated: the degree-0 minimax is the exact midrange,
+the error equioscillates n+2 times, no coefficient perturbation lowers the sup error, and it beats
+Chebyshev interpolation and least squares on sup norm. The best-approximation companion to the
+Chebyshev-interpolation and least-squares tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
