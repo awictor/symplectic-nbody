@@ -1,0 +1,22 @@
+Control variates: variance reduction for free
+====================================================
+estimate E[e^U], U ~ Uniform(0,1);  true value = e - 1 = 1.718282
+control g = U (known mean 0.5), correlated with f = e^U
+
+correlation rho(f, g):      0.9918
+optimal coefficient c*:     1.6882
+plain MC estimate:          1.715673
+control-variate estimate:   1.718884
+variance reduction (emp):   0.01625
+theoretical (1 - rho^2):    0.01625
+-> effective sample multiplier: 62x
+
+variance reduction as the control's correlation varies:
+       control      rho   reduction   1-rho^2
+    U (linear)   0.9918     0.01625   0.01625
+           U^2   0.9921     0.01579   0.01579
+       sqrt(U)   0.9497     0.09811   0.09811
+           U^5   0.8831     0.22005   0.22005
+
+Any control with a known mean works and stays unbiased; the closer its
+correlation to f, the more variance vanishes -- the reduction is exactly 1 - rho^2.

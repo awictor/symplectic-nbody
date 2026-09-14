@@ -614,6 +614,7 @@ def main():
     import lof_demo
     import slice_sampling_demo
     import importance_sampling_demo
+    import control_variates_demo
 
     import plot_orbits
 
@@ -1197,6 +1198,7 @@ def main():
     lof_txt = run("lof_demo", lof_demo.main, True)
     slice_sampling_txt = run("slice_sampling_demo", slice_sampling_demo.main, True)
     importance_sampling_txt = run("importance_sampling_demo", importance_sampling_demo.main, True)
+    control_variates_txt = run("control_variates_demo", control_variates_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10941,6 +10943,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("importance_sampling.svg"), "The target N(0,1) (blue) puts almost no samples past t=4, so naive Monte Carlo never sees the rare tail. Shifting the proposal to N(t,1) (green) lands about half its samples past t; reweighting by p/q recovers the true tail probability with tiny variance")
             + f'<div class="card">{pre(importance_sampling_txt)}</div>'
+            + '</div>'),
+        section(
+            "Control variates: cutting Monte Carlo variance for free",
+            "If you know the exact mean of some quantity g(X) correlated with your target f(X), you can "
+            "subtract off its fluctuations and slash the estimator's variance without adding a single "
+            "sample. The controlled estimator f - c(g - E[g]) is unbiased for ANY constant c, and its "
+            "variance is a quadratic in c minimized at the optimal coefficient c* = Cov(f,g)/Var(g). "
+            "Plug c* in and the variance drops by exactly 1 - rho^2, where rho is the correlation "
+            "between f and g -- a control correlated 0.99 with f cuts the variance by 98%, worth a "
+            "50x-larger sample for one extra evaluation per draw. Validated: the controlled estimate is "
+            "unbiased (matches the true e - 1), the empirical reduction matches the theoretical "
+            "1 - rho^2 exactly across several controls, the optimal coefficient equals Cov/Var and "
+            "minimizes the controlled variance, an uncorrelated control gives no reduction while a "
+            "highly correlated one gives a large one, and multiple control variates by least squares "
+            "reduce variance at least as much as the best single one. The variance-reduction companion "
+            "to the importance-sampling, antithetic, and Sobol tools.",
+            '<div class="grid">'
+            + svg_card(out("control_variates.svg"), "The estimator's spread over 400 runs: plain Monte Carlo (red) is wide, the control-variate estimator (green) is tightly concentrated on the true value -- same samples, a fraction of the variance, because the correlated control absorbs most of the noise")
+            + f'<div class="card">{pre(control_variates_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

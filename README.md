@@ -572,6 +572,7 @@ ruins a long non-symplectic integration.
 | `src/lof.py` | Local Outlier Factor: density-relative anomaly scores that catch local outliers |
 | `src/slice_sampling.py` | Slice sampling MCMC: stepping-out + shrinkage, self-tuning step size, 1-D & multivariate |
 | `src/importance_sampling.py` | Importance sampling: rare-event tail estimation, self-normalized IS, effective sample size |
+| `src/control_variates.py` | Control variates: optimal coefficient, 1-rho^2 variance reduction, multi-CV least squares |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1135,6 +1136,7 @@ ruins a long non-symplectic integration.
 | `examples/lof_demo.py` | Dense + sparse clusters with a local outlier a global test would miss |
 | `examples/slice_sampling_demo.py` | Bimodal density with the sampled histogram overlaid on the true curve |
 | `examples/importance_sampling_demo.py` | Rare-tail estimation table + the proposal shift into the tail |
+| `examples/control_variates_demo.py` | Reduction-vs-correlation table + tight vs wide estimator spread |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13036,6 +13038,26 @@ Validated: P(Z > t) is recovered down to ~1e-9 where naive MC returns 0, with 20
 reduction; ESS is exactly n when q = p and collapses as the proposal mismatches; the self-normalized
 estimator recovers a mean without the normalizer; and the estimator is unbiased across seeds. The
 variance-reduction companion to the rejection-sampling, Metropolis, and Sobol tools.
+
+## Control variates: cutting Monte Carlo variance for free
+
+Variance reduction from a correlated quantity whose mean you know. `control_variates.py`:
+
+```
+$ python examples/control_variates_demo.py examples/output
+
+  estimate E[e^U], true = e - 1 = 1.718282
+  correlation rho(f, g=U): 0.9918   optimal c*: 1.688
+  variance reduction (emp): 0.01625   theory (1-rho^2): 0.01625
+  -> effective sample multiplier: 62x
+```
+
+The controlled estimator f - c(g - E[g]) is unbiased for any c, and c* = Cov(f,g)/Var(g) minimizes its
+variance, dropping it by exactly 1 - rho^2. Validated: the estimate is unbiased, the empirical reduction
+matches 1 - rho^2 across several controls, c* equals Cov/Var and minimizes the controlled variance, an
+uncorrelated control gives no reduction while a correlated one gives a large one, and multiple control
+variates reduce variance at least as much as the best single one. The variance-reduction companion to
+the importance-sampling, antithetic, and Sobol tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
