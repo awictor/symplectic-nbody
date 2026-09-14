@@ -555,6 +555,7 @@ ruins a long non-symplectic integration.
 | `src/newton_cotes.py` | Closed Newton-Cotes quadrature (trapezoid..Weddle): weights, degree of exactness, composite order |
 | `src/voronoi.py` | Voronoi cells by half-plane intersection: clipped cell polygons, nearest-site, Lloyd relaxation |
 | `src/spectral_partition.py` | Spectral graph bisection via the Fiedler vector: Laplacian, ratio/normalized cut, components |
+| `src/pca_whitening.py` | PCA + PCA/ZCA whitening: covariance eigendecomp, explained variance, identity-covariance transform |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1101,6 +1102,7 @@ ruins a long non-symplectic integration.
 | `examples/newton_cotes_demo.py` | Degree-of-exactness table + composite convergence order on log-log axes |
 | `examples/voronoi_demo.py` | Colored Voronoi cells + Lloyd relaxation into a centroidal honeycomb |
 | `examples/spectral_partition_demo.py` | Two-community graph cut along its bridges by Fiedler-vector sign |
+| `examples/pca_whitening_demo.py` | Anisotropic cloud with principal axes, PCA-whitened and ZCA-whitened side by side |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12625,6 +12627,30 @@ independent ground truth: the zero-eigenvalue count matches a BFS component coun
 is positive iff the graph is connected, the sign partition recovers planted communities, and on small
 graphs the spectral cut equals a brute-force minimum bisection. The graph-spectral companion to the
 Jacobi eigensolver, Lanczos, and union-find tools.
+
+## PCA and whitening: rotating data onto its principal axes
+
+Find the directions a data cloud varies most, then rescale to a unit sphere. `pca_whitening.py`:
+
+```
+$ python examples/pca_whitening_demo.py examples/output
+
+  planted: std 3.0 along a 30-degree axis, std 0.8 across
+  principal axis 1: (+0.863, +0.505)   variance 8.527   (angle 30.4 deg)
+  explained variance: 93.2%, 6.8%
+  PCA-white covariance: [[1.000, -0.000], [-0.000, 1.000]]
+  ZCA-white covariance: [[1.000, +0.000], [+0.000, 1.000]]
+  distance from data:  PCA 1899   ZCA 1492   (ZCA distorts least)
+```
+
+The eigenvectors of the covariance matrix are the principal axes, its eigenvalues the variances. The
+top-k axes give the optimal rank-k compression (Eckart-Young). Whitening rescales each principal
+component to unit variance so the covariance becomes the identity; PCA-whitening leaves the cloud on
+the principal axes, while ZCA-whitening rotates back onto the original axes -- the unique
+minimal-distortion whitening, used in image preprocessing. Validated: whitened covariance is the
+identity, the top axis recovers a planted major axis, explained variance sums to one, rank-k
+reconstruction error equals the discarded eigenvalue sum, and ZCA provably stays closer to the
+original than PCA. The dimensionality-reduction companion to the SVD, MDS, and k-means tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

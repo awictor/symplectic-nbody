@@ -1,0 +1,16 @@
+PCA and whitening of an anisotropic 2D cloud
+====================================================
+planted: std 3.0 along a 30-degree axis, std 0.8 across (400 points)
+
+principal axis 1: (+0.863, +0.505)   variance 8.527
+principal axis 2: (-0.505, +0.863)   variance 0.625
+explained variance: 93.2%, 6.8%
+axis angle: 30.4 degrees (planted 30)
+
+raw        covariance: [[6.508, +3.446], [+3.446, 2.643]]
+PCA-white  covariance: [[1.000, -0.000], [-0.000, 1.000]]
+ZCA-white  covariance: [[1.000, +0.000], [+0.000, 1.000]]
+Both whitenings drive the covariance to the identity (unit, uncorrelated variance).
+
+distance from centered data:  PCA 1899.2   ZCA 1492.2
+ZCA is the minimal-distortion whitening: it rotates back onto the original axes.

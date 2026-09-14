@@ -597,6 +597,7 @@ def main():
     import newton_cotes_demo
     import voronoi_demo
     import spectral_partition_demo
+    import pca_whitening_demo
 
     import plot_orbits
 
@@ -1163,6 +1164,7 @@ def main():
     newton_cotes_txt = run("newton_cotes_demo", newton_cotes_demo.main, True)
     voronoi_txt = run("voronoi_demo", voronoi_demo.main, True)
     spectral_partition_txt = run("spectral_partition_demo", spectral_partition_demo.main, True)
+    pca_whitening_txt = run("pca_whitening_demo", pca_whitening_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10564,6 +10566,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("spectral_partition.svg"), "A 12-vertex graph with two dense communities joined by two bridges. The sign of each vertex's Fiedler-vector entry (blue = negative, red = positive) assigns it to a side, and the cut (dashed yellow) lands precisely on the two bridge edges -- the spectral relaxation finds the intuitively-right split")
             + f'<div class="card">{pre(spectral_partition_txt)}</div>'
+            + '</div>'),
+        section(
+            "PCA and whitening: rotating data onto its principal axes",
+            "Principal Component Analysis finds the orthogonal directions along which a data cloud "
+            "varies most: the eigenvectors of the covariance matrix are the principal axes and its "
+            "eigenvalues are the variances along them. Projecting onto the top-k axes is the optimal "
+            "rank-k linear compression (Eckart-Young), and the eigenvalue sequence says exactly how "
+            "much variance each component keeps. WHITENING goes further -- after rotating onto the "
+            "principal axes, divide each component by its standard deviation so the cloud becomes a "
+            "unit sphere with identity covariance. The rotation is arbitrary, though: PCA-whitening "
+            "leaves the data on the principal axes, while ZCA-whitening (the symmetric, zero-phase "
+            "transform used in image preprocessing) rotates back onto the original axes, the unique "
+            "whitening that distorts the data least. Validated: whitened covariance is the identity to "
+            "machine precision, the top axis recovers a planted anisotropic Gaussian's major axis, "
+            "explained-variance ratios sum to one, rank-k reconstruction error equals the discarded "
+            "eigenvalue sum (Eckart-Young), and ZCA provably stays closer to the original than PCA. "
+            "The dimensionality-reduction companion to the SVD, MDS, and k-means tools.",
+            '<div class="grid">'
+            + svg_card(out("pca_whitening.svg"), "Left: an anisotropic cloud with its two principal axes (yellow = high variance, red = low). Middle: PCA-whitening rotates it onto those axes and rescales to a unit sphere. Right: ZCA-whitening also gives a unit sphere but rotates back so the cloud stays aligned with the original data -- the minimal-distortion whitening")
+            + f'<div class="card">{pre(pca_whitening_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
