@@ -592,6 +592,7 @@ ruins a long non-symplectic integration.
 | `src/fbm.py` | Fractional Brownian motion: octave-summed Perlin, turbulence, ridged, terrain heightmaps |
 | `src/domain_warping.py` | Domain warping: fBm sampled at noise-displaced coordinates, multi-level swirls |
 | `src/biconnected.py` | Biconnected components: Hopcroft-Tarjan block decomposition + block-cut tree |
+| `src/euler_tour.py` | Euler tour of a tree: tin/tout flattening, ancestor test, subtree ranges & sums |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1175,6 +1176,7 @@ ruins a long non-symplectic integration.
 | `examples/fbm_demo.py` | fBm terrain, turbulence clouds, and ridged mountains rendered side by side |
 | `examples/domain_warping_demo.py` | Noise at 0, 1, 2 warp levels folding into marbled swirls |
 | `examples/biconnected_demo.py` | A graph's biconnected blocks colored + cut vertices ringed |
+| `examples/euler_tour_demo.py` | A tree and its tour timeline with a subtree shown as one contiguous span |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13470,6 +13472,24 @@ vertex and the edges since (u,v) form a block. Validated: blocks partition the e
 is an articulation point iff it lies in two or more blocks (vs a brute deletion test, across 80 random
 graphs), a cycle is one block, a tree has every edge its own block, K4 is a single block, and the
 block-cut tree is acyclic. The connectivity companion to the bridges, SCC, and union-find tools.
+
+## Euler tour: flattening a tree into ranges
+
+Subtree and ancestor queries as array ranges. `euler_tour.py`:
+
+```
+$ python examples/euler_tour_demo.py examples/output
+
+  node 1: tin=1 tout=4 -> subtree = tour[1..4] = {1,3,4,7}
+  is 1 an ancestor of 7?  True   is 2 an ancestor of 7?  False
+  subtree_sum(1) with values 1..8 = 19
+```
+
+One DFS records entry/exit times; a node's subtree is the contiguous interval [tin, tout], so ancestor
+tests are interval containment and subtree sums are range sums. Validated: every subtree is a
+contiguous interval of its size, the ancestor test matches a brute path-to-root check for all pairs
+across 60 random trees, entry times are a permutation, and subtree sums match brute force. The
+tree-flattening companion to the LCA, Fenwick-tree, and sparse-table tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

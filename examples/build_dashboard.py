@@ -634,6 +634,7 @@ def main():
     import fbm_demo
     import domain_warping_demo
     import biconnected_demo
+    import euler_tour_demo
 
     import plot_orbits
 
@@ -1237,6 +1238,7 @@ def main():
     fbm_txt = run("fbm_demo", fbm_demo.main, True)
     domain_warping_txt = run("domain_warping_demo", domain_warping_demo.main, True)
     biconnected_txt = run("biconnected_demo", biconnected_demo.main, True)
+    euler_tour_txt = run("euler_tour_demo", euler_tour_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11384,6 +11386,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("biconnected.svg"), "A graph decomposed into biconnected blocks (edge colors): three triangles are 2-connected blocks, joined by bridge edges. The red-ringed cut vertices are the fragile joints where removing one node would split the network")
             + f'<div class="card">{pre(biconnected_txt)}</div>'
+            + '</div>'),
+        section(
+            "Euler tour: flattening a tree into ranges",
+            "A rooted tree has no natural linear order, which makes 'sum over this subtree' or 'is u an "
+            "ancestor of v?' awkward. The Euler tour technique fixes that with a single DFS recording, "
+            "for each node, its first ENTRY time (tin) and final EXIT time (tout). The magic: a node's "
+            "entire subtree occupies a CONTIGUOUS interval [tin, tout] of tour time, because DFS fully "
+            "explores a subtree before backing out. So a family of tree questions collapses to array "
+            "questions -- u is an ancestor of v iff u's interval contains v's; a subtree sum or update "
+            "becomes a range operation on the flattened array (O(log n) with a Fenwick tree). It is the "
+            "workhorse behind subtree updates and the tin/tout ordering many tree algorithms rely on. "
+            "Validated: the subtree of every node is a contiguous tour interval of exactly its size, "
+            "the ancestor test agrees with a brute-force path-to-root check for all pairs (across 60 "
+            "random trees), entry times are a permutation of 0..n-1, subtree sums match a brute sum "
+            "over the actual descendants, and it works on paths, stars, and random trees. The "
+            "tree-flattening companion to the LCA, Fenwick-tree, and sparse-table tools.",
+            '<div class="grid">'
+            + svg_card(out("euler_tour.svg"), "The tree (top) and its Euler-tour timeline (bottom): the subtree of node 1 (green) is exactly the contiguous span tour[1..4], so a subtree query becomes a range query on the flattened array")
+            + f'<div class="card">{pre(euler_tour_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
