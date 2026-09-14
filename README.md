@@ -563,6 +563,7 @@ ruins a long non-symplectic integration.
 | `src/rbf_interpolation.py` | Radial basis function interpolation: gaussian/multiquadric/thin-plate, any dimension |
 | `src/sobol.py` | Sobol low-discrepancy sequence: direction numbers, Gray-code recursion, quasi-Monte Carlo |
 | `src/johnson.py` | Johnson's all-pairs shortest paths: Bellman-Ford reweighting + per-source Dijkstra |
+| `src/suffix_tree.py` | Ukkonen's linear-time suffix tree: substring search, distinct-substring & LRS queries |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1117,6 +1118,7 @@ ruins a long non-symplectic integration.
 | `examples/rbf_interpolation_demo.py` | Two-bump surface reconstructed from 45 scattered samples (heatmap) |
 | `examples/sobol_demo.py` | Sobol vs random point clouds + QMC vs Monte Carlo convergence on log-log axes |
 | `examples/johnson_demo.py` | Reweighting a negative-edge graph to non-negative + all-pairs distance matrix |
+| `examples/suffix_tree_demo.py` | The suffix tree of 'banana' drawn out, with substring/repeat queries |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12824,6 +12826,30 @@ makes w' >= 0, and telescoping potentials keep every shortest path unchanged. Va
 edges are non-negative, all-pairs distances match an independent Floyd-Warshall (including 20 random
 graphs), negative cycles are detected, and reconstructed paths have the reported length. The
 sparse-graph companion to the Dijkstra, Bellman-Ford, and Floyd-Warshall tools.
+
+## Ukkonen's suffix tree: every substring in linear time
+
+A compressed trie of all suffixes, built online in O(n). `suffix_tree.py`:
+
+```
+$ python examples/suffix_tree_demo.py examples/output
+
+  text: "banana"
+     pattern  in text?  occurrences
+         ana      True            2
+         xyz     False            0
+  distinct substrings:     15
+  longest repeated substr: 'ana'
+  cross-check via suffix array + LCP: 15  (matches: True)
+```
+
+Every substring is a root-to-leaf path prefix, so one tree answers substring search in O(m), longest
+repeated substring, distinct-substring counts, and more. Ukkonen builds it online in O(n) via three
+tricks: edges store (start, end) index ranges (O(n) space), a global end pointer grows every leaf edge
+for free, and suffix links hop from c*X to X in O(1). Validated against brute force and the repo's
+suffix array: containment and occurrence counts match a naive scan, the distinct-substring count
+matches n(n+1)/2 - sum(lcp) across 40 random strings, and the longest repeated substring matches the
+max-LCP answer. The linear-time companion to the suffix-array, suffix-automaton, and Aho-Corasick tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

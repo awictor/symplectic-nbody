@@ -605,6 +605,7 @@ def main():
     import rbf_interpolation_demo
     import sobol_demo
     import johnson_demo
+    import suffix_tree_demo
 
     import plot_orbits
 
@@ -1179,6 +1180,7 @@ def main():
     rbf_interpolation_txt = run("rbf_interpolation_demo", rbf_interpolation_demo.main, True)
     sobol_txt = run("sobol_demo", sobol_demo.main, True)
     johnson_txt = run("johnson_demo", johnson_demo.main, True)
+    suffix_tree_txt = run("suffix_tree_demo", suffix_tree_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10741,6 +10743,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("johnson.svg"), "The CLRS example graph: two negative edges (red) on the left. Johnson's potentials shift every edge to a non-negative weight (right) without changing any shortest path, so Dijkstra can safely run from every source")
             + f'<div class="card">{pre(johnson_txt)}</div>'
+            + '</div>'),
+        section(
+            "Ukkonen's suffix tree: every substring in linear time",
+            "A suffix tree is a compressed trie of all suffixes of a string, and because every substring "
+            "is the prefix of some suffix, it answers a whole family of string questions from one "
+            "structure: substring search in O(m), longest repeated substring, number of distinct "
+            "substrings, longest common substring of several strings. The hard part is building it -- "
+            "naively O(n^2) -- and Ukkonen's 1995 algorithm does it ONLINE, one character at a time, in "
+            "O(n). Three ideas make it linear: edges store (start, end) INDEX RANGES instead of copied "
+            "characters, so the tree is O(n) space; a global END pointer grows every leaf edge for free "
+            "as characters arrive; and SUFFIX LINKS let the builder hop from the node for c*X to the "
+            "node for X in O(1) instead of re-descending from the root. Validated against independent "
+            "brute force and the repo's suffix array: substring containment and occurrence counts match "
+            "a naive scan, the distinct-substring count matches the suffix-array + LCP formula "
+            "n(n+1)/2 - sum(lcp) across 40 random strings, and the longest repeated substring matches "
+            "the max-LCP answer. The linear-time companion to the suffix-array, suffix-automaton, and "
+            "Aho-Corasick tools.",
+            '<div class="grid">'
+            + svg_card(out("suffix_tree.svg"), "The suffix tree of 'banana$'. Each root-to-leaf path spells a suffix (green leaves); internal branch nodes (blue) mark repeated substrings -- the node above 'na' and 'ana' is why those are the repeats. Edges are labelled by the substring they carry")
+            + f'<div class="card">{pre(suffix_tree_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

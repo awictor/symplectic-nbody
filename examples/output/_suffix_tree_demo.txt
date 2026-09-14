@@ -1,0 +1,20 @@
+Ukkonen suffix tree
+==================================================
+text: "banana"  (built online in O(n) with suffix links)
+
+substring queries:
+   pattern  in text?  occurrences
+       ana      True            2
+       nan      True            1
+       ban      True            1
+        na      True            2
+       xyz     False            0
+    banana      True            1
+
+distinct substrings:      15
+longest repeated substr:  'ana'
+
+cross-check distinct via suffix array + LCP: 15  (matches: True)
+
+suffixes (leaves), in tree order:
+  a, ana, anana, banana, na, nana
