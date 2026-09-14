@@ -605,6 +605,7 @@ ruins a long non-symplectic integration.
 | `src/gauss_kronrod.py` | Gauss-Kronrod quadrature: integration with a built-in error estimate and global adaptive subdivision |
 | `src/aberth.py` | Aberth-Ehrlich method: all polynomial roots simultaneously, with cubic convergence |
 | `src/l1_trend_filter.py` | L1 trend filtering: piecewise-linear trend with automatically-placed kinks, via ADMM |
+| `src/aaa_approx.py` | The AAA algorithm: near-optimal rational approximation, greedy support points, pole recovery |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1201,6 +1202,7 @@ ruins a long non-symplectic integration.
 | `examples/gauss_kronrod_demo.py` | Adaptive Gauss-Kronrod panels swarming a narrow spike, with the polynomial-exactness ladder |
 | `examples/aberth_demo.py` | Seven root estimates spiralling in from a circle to the true roots, with the cubic-convergence table |
 | `examples/l1_trend_filter_demo.py` | L1 piecewise-linear fit with auto-placed kinks vs the smooth Hodrick-Prescott trend |
+| `examples/aaa_approx_demo.py` | AAA rational fit of a near-singular function beating an equal-order polynomial, with pole recovery |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13761,6 +13763,35 @@ by ADMM (soft-threshold on Dx, banded pentadiagonal x-update). Validated: recove
 signal and its breakpoints, huge lambda gives the least-squares line, larger lambda yields fewer kinks,
 denoises 3x better than the raw noise, and its second difference is far sparser than Hodrick-Prescott's.
 The sparse-trend companion to the Hodrick-Prescott, total-variation, and ADMM/LASSO tools.
+
+## The AAA algorithm: rational approximation robust to poles
+
+The modern workhorse of rational fitting. `aaa_approx.py`:
+
+```
+$ python examples/aaa_approx_demo.py examples/output
+
+Root-exponential convergence (terms to reach 1e-12):
+   exp(x)        [-1,1]    6    5.50e-13
+   1/(x-1.5)     [-1,1]    2    3.33e-16
+   tan(x)      [-1.2,1.2]  8    3.73e-14
+
+tan(x) poles recovered near +-pi/2 = +-1.57080:
+   pole at -1.570796
+   pole at +1.570796
+
+Near-singular 1/(x-1.05): AAA (2 terms) max err 3.55e-15
+  -> AAA is 3e+15x more accurate than an equal-order polynomial.
+```
+
+Represent the approximant in barycentric form over support points drawn from the data, choose those
+points greedily at the current worst-fit sample, and solve for the weights as the minimal singular vector
+of a small Loewner matrix (one-sided Jacobi SVD, never forming A^T A). Converges root-exponentially, needs
+no degree fixed in advance, and its poles -- the zeros of the barycentric denominator -- locate the true
+singularities. Validated: interpolates the data exactly, fits exp and a Gaussian to machine precision in
+~6-9 terms, recovers tan's poles at +-pi/2 to six digits, and beats an equal-order least-squares
+polynomial by 15 orders of magnitude on a near-singular function. The rational-approximation companion to
+the Pade, Remez, barycentric, and Chebyshev tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

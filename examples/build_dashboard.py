@@ -647,6 +647,7 @@ def main():
     import gauss_kronrod_demo
     import aberth_demo
     import l1_trend_filter_demo
+    import aaa_approx_demo
 
     import plot_orbits
 
@@ -1263,6 +1264,7 @@ def main():
     gauss_kronrod_txt = run("gauss_kronrod_demo", gauss_kronrod_demo.main, True)
     aberth_txt = run("aberth_demo", aberth_demo.main, True)
     l1_trend_filter_txt = run("l1_trend_filter_demo", l1_trend_filter_demo.main, True)
+    aaa_approx_txt = run("aaa_approx_demo", aaa_approx_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11664,6 +11666,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("l1_trend_filter.svg"), "The same noisy data (gray dots) fit two ways: L1 trend filtering (yellow) produces a piecewise-linear trend with sharp corners at the red kink markers, while Hodrick-Prescott (purple) rounds those corners into a smooth curve. L1's second difference is zero everywhere except the handful of detected knots; HP's is nonzero everywhere")
             + f'<div class="card">{pre(l1_trend_filter_txt)}</div>'
+            + '</div>'),
+        section(
+            "The AAA algorithm: rational approximation robust to poles",
+            "Polynomials fail on functions with poles or sharp peaks -- Runge's phenomenon makes them "
+            "oscillate, and no polynomial can reproduce a singularity. Rational functions p/q can, but "
+            "classical rational fitting is badly ill-conditioned. The AAA algorithm (Nakatsukasa, Sete, "
+            "Trefethen 2018) fixes it with three ideas: represent the approximant in barycentric form "
+            "over support points drawn from the data (immune to monomial overflow, interpolates exactly "
+            "at each support point); choose those support points GREEDILY at the current worst-fit sample; "
+            "and solve for the weights as the minimal singular vector of a small Loewner matrix (done here "
+            "by a one-sided Jacobi SVD, never forming A^T A). It converges root-exponentially, needs no "
+            "degree fixed in advance, and its poles -- recovered as the zeros of the barycentric "
+            "denominator -- locate the true singularities. Validated: it interpolates the data exactly, "
+            "fits exp and a Gaussian to machine precision in ~6-9 terms, fits functions with poles and "
+            "RECOVERS the pole locations (tan's poles at +-pi/2 to six digits), beats an equal-order "
+            "least-squares polynomial by 15 orders of magnitude on a near-singular function, and is "
+            "deterministic. The rational-approximation companion to the Pade, Remez, barycentric, and "
+            "Chebyshev tools.",
+            '<div class="grid">'
+            + svg_card(out("aaa_approx.svg"), "Fitting 1/(x-1.1), whose pole sits just past the right edge. The AAA rational fit (yellow, 2 terms) lies exactly on the true function (gray) and tracks the steep rise toward the pole, while an equal-order least-squares polynomial (red dashed) oscillates helplessly -- polynomials cannot represent a pole. Green dots mark the greedily-chosen support points")
+            + f'<div class="card">{pre(aaa_approx_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
