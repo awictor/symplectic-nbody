@@ -1,0 +1,27 @@
+NURBS: the curves that draw exact circles
+==================================================
+standard circle: degree 2, 9 control points
+corner weights = cos(45 deg) = sqrt(2)/2 = 0.707107
+
+radius error around the NURBS circle (should be ~0):
+       u         x         y      radius       |r-1|
+   0.000   1.00000   0.00000 1.000000000    0.00e+00
+   0.125   0.70711   0.70711 1.000000000    1.11e-16
+   0.250   0.00000   1.00000 1.000000000    0.00e+00
+   0.375  -0.70711   0.70711 1.000000000    1.11e-16
+   0.500  -1.00000   0.00000 1.000000000    0.00e+00
+   0.625  -0.70711  -0.70711 1.000000000    1.11e-16
+   0.750   0.00000  -1.00000 1.000000000    0.00e+00
+A polynomial curve of any degree CANNOT satisfy r=1 exactly; the rational
+weights are exactly the missing degree of freedom.
+
+sampled arc length: 6.283183   2*pi = 6.283185   diff 2.60e-06
+
+Weight knob: distance from curve midpoint to control point 2 as its weight rises:
+  weight    dist to P2
+       1        1.2374
+       2        0.9000
+       5        0.4950
+      15        0.1980
+      50        0.0639
+Higher weight => the curve is pulled toward that control point.

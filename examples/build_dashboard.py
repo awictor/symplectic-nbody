@@ -601,6 +601,7 @@ def main():
     import bch_demo
     import b_spline_demo
     import catmull_rom_demo
+    import nurbs_demo
 
     import plot_orbits
 
@@ -1171,6 +1172,7 @@ def main():
     bch_txt = run("bch_demo", bch_demo.main, True)
     b_spline_txt = run("b_spline_demo", b_spline_demo.main, True)
     catmull_rom_txt = run("catmull_rom_demo", catmull_rom_demo.main, True)
+    nurbs_txt = run("nurbs_demo", nurbs_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10653,6 +10655,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("catmull_rom.svg"), "Three Catmull-Rom curves through the same yellow points. Near the tight corner the uniform curve (red) bulges past the control polygon and can loop; the centripetal curve (green) stays inside -- provably free of cusps and self-intersections")
             + f'<div class="card">{pre(catmull_rom_txt)}</div>'
+            + '</div>'),
+        section(
+            "NURBS: the rational curves that draw exact circles",
+            "A polynomial B-spline can only approximate a circle -- no polynomial parameterizes a "
+            "circular arc. NURBS (Non-Uniform Rational B-Splines) fix this by going rational: attach a "
+            "positive weight to each control point and divide the weighted B-spline by the sum of the "
+            "weights, C(u) = (sum N_i w_i P_i) / (sum N_i w_i). That is a B-spline in homogeneous "
+            "coordinates projected back down, and the one extra degree of freedom per point is exactly "
+            "what polynomials lack: with corner weights of cos(45 deg) a quadratic NURBS represents a "
+            "circle, ellipse, or any conic EXACTLY. This is why NURBS are the geometry standard for "
+            "CAD and 3D modeling -- one representation for freeform surfaces and precise analytic shapes "
+            "alike. The rational basis is still non-negative and a partition of unity, so the curve "
+            "stays in its control hull, and equal weights collapse a NURBS back to an ordinary "
+            "B-spline. Validated: the standard NURBS circle lies on the unit circle to machine "
+            "precision at every parameter (2e-16), the ellipse satisfies its implicit equation, unit "
+            "weights reproduce the B-spline evaluator, raising a weight provably pulls the curve toward "
+            "that point, and the circle's arc length matches 2*pi. The rational companion to the "
+            "B-spline and Bezier tools.",
+            '<div class="grid">'
+            + svg_card(out("nurbs.svg"), "Left: a degree-2 NURBS (green) is an exact circle, while a polynomial B-spline through the same axis points (red dashed) cannot be; the corner weights sqrt(2)/2 do the bending. Right: raising one control point's weight (blue to red) pulls the curve steadily toward it")
+            + f'<div class="card">{pre(nurbs_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

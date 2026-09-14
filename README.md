@@ -559,6 +559,7 @@ ruins a long non-symplectic integration.
 | `src/bch.py` | Binary BCH codes over GF(2^m): generator construction, syndrome/Berlekamp-Massey/Chien decoding |
 | `src/b_spline.py` | B-spline curves via Cox-de Boor: clamped/uniform knots, de Boor evaluation, local control |
 | `src/catmull_rom.py` | Interpolating Catmull-Rom splines: uniform/centripetal/chordal, provably no overshoot |
+| `src/nurbs.py` | Non-Uniform Rational B-Splines: exact circles/conics via control-point weights |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1109,6 +1110,7 @@ ruins a long non-symplectic integration.
 | `examples/bch_demo.py` | BCH(15,7) codeword corrupted by 2 bit flips and decoded back, shown as a bit strip |
 | `examples/b_spline_demo.py` | Cubic B-spline over a control polygon + its Cox-de Boor basis functions |
 | `examples/catmull_rom_demo.py` | Uniform vs centripetal vs chordal through the same points, showing overshoot |
+| `examples/nurbs_demo.py` | Exact NURBS circle vs a polynomial B-spline + the weight knob pulling a curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12727,6 +12729,28 @@ provably free of cusps and self-intersections. Validated: all three parameteriza
 point, C^1 continuity at joins, uniform reduces to the classic (P_{i+1}-P_{i-1})/2 tangent, collinear
 points stay straight, and centripetal avoids the overshoot the uniform form shows on a sharp corner.
 The interpolating-curve companion to the B-spline and Bezier tools.
+
+## NURBS: the rational curves that draw exact circles
+
+The geometry standard for CAD, able to represent conics exactly. `nurbs.py`:
+
+```
+$ python examples/nurbs_demo.py examples/output
+
+  standard circle: degree 2, 9 control points, corner weights sqrt(2)/2
+       u        x        y      radius     |r-1|
+   0.125  0.70711  0.70711  1.00000000  1.1e-16   (exact -- no polynomial can)
+  sampled arc length: 6.283183   2*pi = 6.283185
+  weight knob (dist from midpoint to P2): w=1 -> 1.24,  w=50 -> 0.06
+```
+
+NURBS divide a weighted B-spline by the sum of the weights: C(u) = (sum N_i w_i P_i)/(sum N_i w_i), a
+B-spline in homogeneous coordinates projected back down. The extra weight per point is what polynomials
+lack -- with corner weights cos(45 deg) a quadratic NURBS is an exact circle or conic. The rational
+basis is still a non-negative partition of unity, and equal weights collapse it back to a B-spline.
+Validated: the NURBS circle lies on r=1 to machine precision, the ellipse satisfies its implicit
+equation, unit weights reproduce the B-spline evaluator, raising a weight pulls the curve toward that
+point, and the arc length matches 2*pi. The rational companion to the B-spline and Bezier tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
