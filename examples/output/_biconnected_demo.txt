@@ -1,0 +1,19 @@
+Biconnected components: a graph's blocks and cut vertices
+==========================================================
+10 vertices, 12 edges
+biconnected blocks: 6
+articulation points (cut vertices): [1, 2, 3, 5, 6]
+
+blocks (each survives any single-vertex failure internally):
+  block 0: vertices [6, 7]  (1 edges, bridge edge)
+  block 1: vertices [5, 6]  (1 edges, bridge edge)
+  block 2: vertices [3, 4, 5]  (3 edges, cycle/2-connected)
+  block 3: vertices [2, 3]  (1 edges, bridge edge)
+  block 4: vertices [1, 8, 9]  (3 edges, cycle/2-connected)
+  block 5: vertices [0, 1, 2]  (3 edges, cycle/2-connected)
+
+edges partitioned: 12 == 12? True
+articulation matches brute-force deletion test: True
+
+A cut vertex belongs to several blocks -- it is the fragile joint where the graph
+would split. Everything inside a block is robust to any single node loss.

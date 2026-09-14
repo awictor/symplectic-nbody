@@ -633,6 +633,7 @@ def main():
     import worley_noise_demo
     import fbm_demo
     import domain_warping_demo
+    import biconnected_demo
 
     import plot_orbits
 
@@ -1235,6 +1236,7 @@ def main():
     worley_noise_txt = run("worley_noise_demo", worley_noise_demo.main, True)
     fbm_txt = run("fbm_demo", fbm_demo.main, True)
     domain_warping_txt = run("domain_warping_demo", domain_warping_demo.main, True)
+    biconnected_txt = run("biconnected_demo", biconnected_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11362,6 +11364,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("domain_warping.svg"), "The same fBm at zero, one, and two warp levels: the unwarped field (left) is smooth and directionless, while each level of feeding noise into the sampling coordinates (middle, right) folds it into the swirling, marbled flow of natural materials")
             + f'<div class="card">{pre(domain_warping_txt)}</div>'
+            + '</div>'),
+        section(
+            "Biconnected components: a network's blocks and single points of failure",
+            "A graph is biconnected if it survives the removal of any one vertex -- there are two "
+            "vertex-disjoint paths between every pair, so no single point of failure. Most graphs are "
+            "not biconnected whole, but they decompose uniquely into maximal biconnected BLOCKS glued "
+            "at the ARTICULATION POINTS (cut vertices) -- the structural map of a network's robustness. "
+            "Hopcroft and Tarjan find the blocks in one DFS: push each visited edge on a stack and "
+            "track disc[v] and low[v]; when the search retreats over a tree edge (u, v) with "
+            "low[v] >= disc[u], u is a cut vertex and the edges pushed since (u, v) form one complete "
+            "block, popped off as a biconnected component. Because the partition is by EDGES, a cut "
+            "vertex belongs to several blocks at once. Validated: the blocks partition the edges "
+            "exactly, a vertex is an articulation point if and only if it lies in two or more blocks "
+            "(cross-checked against a brute-force deletion test and across 80 random graphs), a cycle "
+            "is one block, a tree has every edge as its own block, K4 is a single block, and the "
+            "block-cut tree is acyclic with the right node count. The connectivity companion to the "
+            "bridges, SCC, and union-find tools.",
+            '<div class="grid">'
+            + svg_card(out("biconnected.svg"), "A graph decomposed into biconnected blocks (edge colors): three triangles are 2-connected blocks, joined by bridge edges. The red-ringed cut vertices are the fragile joints where removing one node would split the network")
+            + f'<div class="card">{pre(biconnected_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -591,6 +591,7 @@ ruins a long non-symplectic integration.
 | `src/worley_noise.py` | Worley cellular/Voronoi noise: hashed feature points, F1/F2 distances, 3 metrics |
 | `src/fbm.py` | Fractional Brownian motion: octave-summed Perlin, turbulence, ridged, terrain heightmaps |
 | `src/domain_warping.py` | Domain warping: fBm sampled at noise-displaced coordinates, multi-level swirls |
+| `src/biconnected.py` | Biconnected components: Hopcroft-Tarjan block decomposition + block-cut tree |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1173,6 +1174,7 @@ ruins a long non-symplectic integration.
 | `examples/worley_noise_demo.py` | F1/F2-F1 cellular textures rendered under Euclidean/Manhattan/Chebyshev |
 | `examples/fbm_demo.py` | fBm terrain, turbulence clouds, and ridged mountains rendered side by side |
 | `examples/domain_warping_demo.py` | Noise at 0, 1, 2 warp levels folding into marbled swirls |
+| `examples/biconnected_demo.py` | A graph's biconnected blocks colored + cut vertices ringed |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13450,6 +13452,24 @@ warp amplitude reduces to plain fBm, the displacement is bounded by amplitude ti
 field is deterministic and continuous, warping increases total variation (more structure) with each
 level, and the output stays bounded. Reuses the repo's fBm noise. The procedural-texture companion to
 the fBm, Perlin-noise, and Worley-noise tools.
+
+## Biconnected components: a network's blocks and single points of failure
+
+Block decomposition and cut vertices in one DFS. `biconnected.py`:
+
+```
+$ python examples/biconnected_demo.py examples/output
+
+  10 vertices, 12 edges -> 6 biconnected blocks
+  articulation points (cut vertices): [1, 2, 3, 5, 6]
+  edges partitioned: 12 == 12; matches brute-force deletion test
+```
+
+Hopcroft-Tarjan pushes edges on a stack during DFS; when low[v] >= disc[u] on a tree edge, u is a cut
+vertex and the edges since (u,v) form a block. Validated: blocks partition the edges exactly, a vertex
+is an articulation point iff it lies in two or more blocks (vs a brute deletion test, across 80 random
+graphs), a cycle is one block, a tree has every edge its own block, K4 is a single block, and the
+block-cut tree is acyclic. The connectivity companion to the bridges, SCC, and union-find tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
