@@ -580,6 +580,7 @@ ruins a long non-symplectic integration.
 | `src/schur_decomposition.py` | Real Schur form A=QTQ^T by shifted QR iteration; eigenvalues from diagonal blocks |
 | `src/luby_transform.py` | Luby Transform fountain codes: robust soliton, XOR encoding, peeling erasure decoder |
 | `src/hadamard_code.py` | Hadamard code: distance-n/2 coding, FWHT maximum-likelihood decode (Mariner 9) |
+| `src/polygon_clipping.py` | Sutherland-Hodgman polygon clipping against a convex window, shoelace area |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1151,6 +1152,7 @@ ruins a long non-symplectic integration.
 | `examples/schur_decomposition_demo.py` | Matrix reduced to real Schur form with a highlighted 2x2 complex block |
 | `examples/luby_transform_demo.py` | Decoding-success-vs-overhead curve for a fountain-coded message |
 | `examples/hadamard_code_demo.py` | Walsh-Hadamard spectrum of a corrupted word with the message spike |
+| `examples/polygon_clipping_demo.py` | A convex polygon clipped against a rectangle window, before/after |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13219,6 +13221,25 @@ message. Validated: every pair of codewords is at distance exactly n/2, clean co
 the code corrects every error pattern below n/4 (exhaustively for small m), the FWHT decoder matches a
 brute-force decoder, and the peak drops as n - 2*errors. This is the code that returned the Mariner 9
 Mars photographs. The high-distance companion to the Reed-Muller, BCH, and Reed-Solomon tools.
+
+## Polygon clipping: intersecting a shape with a window
+
+Sutherland-Hodgman clipping against a convex window. `polygon_clipping.py`:
+
+```
+$ python examples/polygon_clipping_demo.py examples/output
+
+  subject: 5-vertex convex polygon, area 41.4
+  clip window: rectangle [4,8]x[3,7], area 16
+  clipped: 6-vertex polygon, area 15.98  (all vertices inside the window)
+```
+
+Process the window one edge at a time, keeping the part of the polygon on that edge's inside
+half-plane; four edges later, what remains is the polygon-window intersection. Validated: an inside
+polygon is unchanged, an outside one clips to nothing, a big square clipped to a small window becomes
+that window exactly, the clipped area never exceeds subject or window, clipping is idempotent, every
+clipped vertex lies inside the window, and triangle/rectangle intersections match hand-computed areas.
+The geometry companion to the convex-hull, Voronoi, and line-intersection tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

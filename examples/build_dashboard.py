@@ -622,6 +622,7 @@ def main():
     import schur_decomposition_demo
     import luby_transform_demo
     import hadamard_code_demo
+    import polygon_clipping_demo
 
     import plot_orbits
 
@@ -1213,6 +1214,7 @@ def main():
     schur_decomposition_txt = run("schur_decomposition_demo", schur_decomposition_demo.main, True)
     luby_transform_txt = run("luby_transform_demo", luby_transform_demo.main, True)
     hadamard_code_txt = run("hadamard_code_demo", hadamard_code_demo.main, True)
+    polygon_clipping_txt = run("polygon_clipping_demo", polygon_clipping_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11118,6 +11120,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("hadamard_code.svg"), "The Walsh-Hadamard spectrum of a word corrupted by 15 of 64 bits: every coefficient is small noise except one towering spike (red) at the sent message. Decoding is just argmax -- the transform correlated against all 64 codewords simultaneously")
             + f'<div class="card">{pre(hadamard_code_txt)}</div>'
+            + '</div>'),
+        section(
+            "Polygon clipping: intersecting a shape with a window",
+            "Clipping one polygon against another is the workhorse of computer graphics (what is visible "
+            "in this viewport?), GIS (overlaying map layers), and collision geometry. The "
+            "Sutherland-Hodgman algorithm clips a SUBJECT polygon against a CONVEX window by a simple "
+            "pipeline: process the window one edge at a time, keeping only the part of the current "
+            "polygon on that edge's inside half-plane. Edge after edge, the polygon is whittled down to "
+            "exactly its intersection with the window. The per-edge step walks the vertices and, for "
+            "each segment, emits output by four cases -- both in, in-to-out, out-to-in, both out -- "
+            "with a single linear interpolation at each crossing. The window must be convex for the "
+            "result to stay one polygon. Validated: a polygon inside the window is returned unchanged, "
+            "one outside clips to nothing, a big square clipped to a small window becomes the small "
+            "window exactly, the clipped area never exceeds the subject or the window, clipping is "
+            "idempotent, every clipped vertex lies inside the window, and triangle/rectangle "
+            "intersections match hand-computed areas. The geometry companion to the convex-hull, "
+            "Voronoi, and line-intersection tools.",
+            '<div class="grid">'
+            + svg_card(out("polygon_clipping.svg"), "A convex subject polygon (blue) clipped against a rectangular window (yellow dashed): the green intersection is what Sutherland-Hodgman produces after whittling the polygon against each of the four window edges in turn")
+            + f'<div class="card">{pre(polygon_clipping_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

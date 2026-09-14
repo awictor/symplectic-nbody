@@ -1,0 +1,17 @@
+Sutherland-Hodgman polygon clipping
+==================================================
+subject polygon: 5 vertices, area 41.375
+clip window (rectangle): x in [4.0,8.0], y in [3.0,7.0], area 16.0
+
+clipped polygon: 6 vertices, area 15.975
+
+clipped vertices (all inside the window):
+  (+4.000, +3.000)   inside: True
+  (+7.700, +3.000)   inside: True
+  (+8.000, +3.167)   inside: True
+  (+8.000, +7.000)   inside: True
+  (+8.000, +7.000)   inside: True
+  (+4.000, +7.000)   inside: True
+
+Each rectangle edge whittles the polygon down to its inside half-plane;
+four edges later, what remains is exactly the polygon-window intersection.
