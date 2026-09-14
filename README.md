@@ -606,6 +606,7 @@ ruins a long non-symplectic integration.
 | `src/aberth.py` | Aberth-Ehrlich method: all polynomial roots simultaneously, with cubic convergence |
 | `src/l1_trend_filter.py` | L1 trend filtering: piecewise-linear trend with automatically-placed kinks, via ADMM |
 | `src/aaa_approx.py` | The AAA algorithm: near-optimal rational approximation, greedy support points, pole recovery |
+| `src/esprit_method.py` | ESPRIT: noise-robust subspace frequency estimation, super-resolving tones below the FFT bin |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1203,6 +1204,7 @@ ruins a long non-symplectic integration.
 | `examples/aberth_demo.py` | Seven root estimates spiralling in from a circle to the true roots, with the cubic-convergence table |
 | `examples/l1_trend_filter_demo.py` | L1 piecewise-linear fit with auto-placed kinks vs the smooth Hodrick-Prescott trend |
 | `examples/aaa_approx_demo.py` | AAA rational fit of a near-singular function beating an equal-order polynomial, with pole recovery |
+| `examples/esprit_method_demo.py` | ESPRIT resolving two tones 0.3 of an FFT bin apart, with the noise-robustness table vs Prony |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13792,6 +13794,31 @@ singularities. Validated: interpolates the data exactly, fits exp and a Gaussian
 ~6-9 terms, recovers tan's poles at +-pi/2 to six digits, and beats an equal-order least-squares
 polynomial by 15 orders of magnitude on a near-singular function. The rational-approximation companion to
 the Pade, Remez, barycentric, and Chebyshev tools.
+
+## ESPRIT: super-resolution frequency estimation
+
+The noise-robust subspace method. `esprit_method.py`:
+
+```
+$ python examples/esprit_method_demo.py examples/output
+
+Two tones at 20.00 and 20.30 Hz (0.3 of a bin apart):
+  FFT periodogram: 1 peak (they merge into one blob)
+  ESPRIT resolves: [20.0, 20.3] Hz
+
+Noise robustness (2 tones at 8 and 19 Hz):
+   noise-amp    ESPRIT max-err   Prony max-err
+        0.05      0.0030         0.4618
+        0.20      0.0173         8.0000
+```
+
+A time-shifted window into a sum of exponentials is the same window scaled mode-by-mode by the phase
+factors, so the signal subspace is rotationally invariant under a shift and the rotation's eigenvalues
+are the modes. Build a Hankel matrix, SVD it, keep the p signal-subspace vectors (discarding the noise
+subspace), and solve the least-squares rotation between the basis's first and last rows. Validated:
+recovers exact frequencies and damping on clean signals, resolves tones 0.3 of an FFT bin apart, and
+estimates frequencies under noise far more accurately than Prony. The subspace-spectral companion to the
+Prony, FFT, Goertzel, and Welch-PSD tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

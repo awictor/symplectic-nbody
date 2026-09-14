@@ -648,6 +648,7 @@ def main():
     import aberth_demo
     import l1_trend_filter_demo
     import aaa_approx_demo
+    import esprit_method_demo
 
     import plot_orbits
 
@@ -1265,6 +1266,7 @@ def main():
     aberth_txt = run("aberth_demo", aberth_demo.main, True)
     l1_trend_filter_txt = run("l1_trend_filter_demo", l1_trend_filter_demo.main, True)
     aaa_approx_txt = run("aaa_approx_demo", aaa_approx_demo.main, True)
+    esprit_method_txt = run("esprit_method_demo", esprit_method_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11687,6 +11689,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("aaa_approx.svg"), "Fitting 1/(x-1.1), whose pole sits just past the right edge. The AAA rational fit (yellow, 2 terms) lies exactly on the true function (gray) and tracks the steep rise toward the pole, while an equal-order least-squares polynomial (red dashed) oscillates helplessly -- polynomials cannot represent a pole. Green dots mark the greedily-chosen support points")
             + f'<div class="card">{pre(aaa_approx_txt)}</div>'
+            + '</div>'),
+        section(
+            "ESPRIT: super-resolution frequency estimation",
+            "The FFT reports energy in fixed bins, so two tones closer than one bin blur into a single "
+            "lump and noise smears every peak. Prony's method resolves exact frequencies but shatters "
+            "under noise. ESPRIT (Roy & Kailath 1989) is the noise-robust subspace method, built on one "
+            "observation: if a signal is a sum of p complex exponentials, a time-shifted window into it "
+            "is the same window multiplied mode-by-mode by the per-sample phase factors -- the signal "
+            "subspace is ROTATIONALLY INVARIANT under a shift, and the rotation's eigenvalues are exactly "
+            "the modes. Build a Hankel matrix, take its SVD, keep the p signal-subspace singular vectors "
+            "(discarding the noise subspace -- the source of the robustness), split that basis into its "
+            "first and last rows, and the least-squares rotation between them has the modes as its "
+            "eigenvalues. Validated: recovers exact frequencies and damping on a clean signal, resolves "
+            "two tones 0.3 of an FFT bin apart where the periodogram shows one peak, and estimates "
+            "frequencies under noise to error 0.003 where Prony's is 0.46 (and 0.017 vs 8.0 at heavy "
+            "noise) -- its defining advantage. The subspace-spectral companion to the Prony, FFT, "
+            "Goertzel, and Welch-PSD tools.",
+            '<div class="grid">'
+            + svg_card(out("esprit_method.svg"), "Two tones at 20.00 and 20.30 Hz, only 0.3 of an FFT bin apart. The gray FFT periodogram is a single smooth blob -- it cannot tell there are two frequencies. ESPRIT places two sharp yellow lines exactly on the true tones (green dashed), resolving what the FFT fundamentally cannot")
+            + f'<div class="card">{pre(esprit_method_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
