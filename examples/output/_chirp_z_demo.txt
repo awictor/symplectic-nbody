@@ -1,0 +1,13 @@
+Chirp Z-transform: zoom-FFT spectral analysis
+==================================================
+signal: two tones at 5.1 and 5.4 Hz, fs=32.0, N=256
+FFT bin width fs/N = 0.1250 Hz
+
+CZT samples the z-transform along any spiral z_k = A * W^-k, so choosing A, W
+on a narrow arc gives a fine-resolution DFT of just that band -- zoom-FFT.
+
+zoom over 4.8-5.8 Hz with 400 points finds peaks at: [5.098, 5.402]
+  (true tones 5.1, 5.4 -- recovered to sub-bin accuracy)
+
+with A=1, W=exp(-2i*pi/N), M=N the CZT is exactly the ordinary DFT:
+  max|CZT - DFT| on [1,2,3,4] = 5.22e-15

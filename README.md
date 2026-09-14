@@ -594,6 +594,7 @@ ruins a long non-symplectic integration.
 | `src/biconnected.py` | Biconnected components: Hopcroft-Tarjan block decomposition + block-cut tree |
 | `src/euler_tour.py` | Euler tour of a tree: tin/tout flattening, ancestor test, subtree ranges & sums |
 | `src/sqrt_decomposition.py` | Square-root decomposition: O(sqrt n) range sum/min/max queries + point update |
+| `src/chirp_z.py` | Chirp Z-transform: z-transform on any spiral, zoom-FFT spectral analysis |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1179,6 +1180,7 @@ ruins a long non-symplectic integration.
 | `examples/biconnected_demo.py` | A graph's biconnected blocks colored + cut vertices ringed |
 | `examples/euler_tour_demo.py` | A tree and its tour timeline with a subtree shown as one contiguous span |
 | `examples/sqrt_decomposition_demo.py` | A range query split into partial-end and whole-block coverage |
+| `examples/chirp_z_demo.py` | Coarse FFT vs zoom-FFT resolving two close tones |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13510,6 +13512,24 @@ the whole middle blocks from the table, O(sqrt n). Validated against brute force
 updates and queries agree for sum/min/max, block aggregates stay consistent after every update,
 edge/cross-boundary ranges are correct, and the block size is Theta(sqrt n). The range-query companion
 to the segment-tree, Fenwick-tree, and sparse-table tools.
+
+## Chirp Z-transform: zoom-FFT along any spiral
+
+Fine-resolution spectral analysis of a frequency band. `chirp_z.py`:
+
+```
+$ python examples/chirp_z_demo.py examples/output
+
+  two tones at 5.1 and 5.4 Hz, fs=32, N=256, FFT bin width 0.125 Hz
+  zoom over 4.8-5.8 Hz (400 pts) -> peaks at 5.098, 5.402
+  CZT with A=1, W=exp(-2i*pi/N), M=N: max|CZT-DFT| = 5e-15
+```
+
+The CZT evaluates the z-transform at M points on an arbitrary spiral z_k = A*W^-k, computed by Bluestein
+in O((N+M) log(N+M)). Validated: with DFT parameters it reduces exactly to the DFT, a tone peaks at the
+right bin, zoom-FFT recovers two close tones between coarse FFT bins and locates an off-grid tone to
+sub-bin accuracy, a constant gives a DC spike, and linearity holds. Reuses the repo's Bluestein
+convolution. The spectral-analysis companion to the FFT, Bluestein, and Goertzel tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

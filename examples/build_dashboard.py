@@ -636,6 +636,7 @@ def main():
     import biconnected_demo
     import euler_tour_demo
     import sqrt_decomposition_demo
+    import chirp_z_demo
 
     import plot_orbits
 
@@ -1241,6 +1242,7 @@ def main():
     biconnected_txt = run("biconnected_demo", biconnected_demo.main, True)
     euler_tour_txt = run("euler_tour_demo", euler_tour_demo.main, True)
     sqrt_decomposition_txt = run("sqrt_decomposition_demo", sqrt_decomposition_demo.main, True)
+    chirp_z_txt = run("chirp_z_demo", chirp_z_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11427,6 +11429,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("sqrt_decomposition.svg"), "A range query sum[2..13]: the two partial end blocks (green) are summed element by element, while the whole blocks in the middle (yellow) are read from the precomputed block-sum table -- only about 2*sqrt(n) elements and sqrt(n) blocks are ever touched")
             + f'<div class="card">{pre(sqrt_decomposition_txt)}</div>'
+            + '</div>'),
+        section(
+            "Chirp Z-transform: zoom-FFT along any spiral",
+            "The DFT evaluates a signal's z-transform at N points equally spaced on the whole unit "
+            "circle -- fixed count, fixed spacing. The chirp Z-transform frees all three knobs: it "
+            "evaluates at M points along an arbitrary logarithmic spiral z_k = A * W^{-k}, where A sets "
+            "the start and W the ratio between points. Pick A and W on a narrow arc of the unit circle "
+            "and you get ZOOM-FFT -- a fine-resolution DFT of just a slice of the spectrum, resolving "
+            "closely-spaced tones that a same-length ordinary FFT smears into one bin. The trick is "
+            "Bluestein's identity: rewrite n*k in the exponent so the transform becomes a chirp "
+            "premultiply, a convolution against a chirp kernel (done by FFT), and a chirp postmultiply, "
+            "giving O((N+M) log(N+M)) regardless of the output count or spacing. Validated: with A=1, "
+            "W=exp(-2i*pi/N), M=N the CZT reduces exactly to the ordinary DFT; a pure tone peaks at the "
+            "correct bin; a zoom over the full band reproduces the DFT; zoom-FFT recovers two tones "
+            "0.3 Hz apart that fall between the coarse FFT bins and locates an off-grid tone to sub-bin "
+            "accuracy; a constant transforms to a DC spike; and linearity holds. Reuses the repo's "
+            "Bluestein convolution. The spectral-analysis companion to the FFT, Bluestein, and Goertzel "
+            "tools.",
+            '<div class="grid">'
+            + svg_card(out("chirp_z.svg"), "Two tones at 5.1 and 5.4 Hz: the coarse FFT (top) puts its energy in bins that straddle both, but the zoom-FFT (bottom, a fine CZT grid over one hertz) resolves them into two clean peaks at the true frequencies")
+            + f'<div class="card">{pre(chirp_z_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
