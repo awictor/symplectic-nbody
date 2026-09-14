@@ -608,6 +608,7 @@ def main():
     import suffix_tree_demo
     import fista_demo
     import admm_demo
+    import matrix_profile_demo
 
     import plot_orbits
 
@@ -1185,6 +1186,7 @@ def main():
     suffix_tree_txt = run("suffix_tree_demo", suffix_tree_demo.main, True)
     fista_txt = run("fista_demo", fista_demo.main, True)
     admm_txt = run("admm_demo", admm_demo.main, True)
+    matrix_profile_txt = run("matrix_profile_demo", matrix_profile_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10808,6 +10810,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("admm.svg"), "Left: ADMM's LASSO estimate (green) recovers the planted sparse spikes (yellow). Right: the primal residual ||x - z|| (blue) and dual residual (red) both fall to zero on a log-log plot -- the split variables reach consensus and the constraint is satisfied")
             + f'<div class="card">{pre(admm_txt)}</div>'
+            + '</div>'),
+        section(
+            "Matrix profile: motifs and anomalies in a time series",
+            "Slide a window of length m over a time series and, for each position, record the "
+            "z-normalized distance to its nearest neighbour elsewhere in the series. That vector -- the "
+            "MATRIX PROFILE -- is astonishingly informative: its lowest values mark MOTIFS (the most "
+            "similar pair of subsequences, a repeated pattern) and its highest values mark DISCORDS "
+            "(the most unusual subsequence, the best parameter-free anomaly detector known for time "
+            "series). Because the windows are z-normalized before comparison, the profile matches "
+            "SHAPES regardless of offset or scale. Computed naively this is O(n^2 m), but the MASS "
+            "trick writes the z-normalized distance in terms of a sliding dot product and does all n of "
+            "them as one FFT convolution, so each query-to-all profile costs O(n log n). Validated: the "
+            "FFT-accelerated matrix profile matches a transparent brute-force computation to machine "
+            "precision, a planted repeated pattern is recovered as the motif and a planted anomaly as "
+            "the discord, and z-normalization makes the profile invariant to adding a constant or "
+            "scaling the series. Reuses the repo's FFT. The time-series companion to the DTW, FFT, and "
+            "cross-correlation tools.",
+            '<div class="grid">'
+            + svg_card(out("matrix_profile.svg"), "Top: a noisy series with a pattern planted twice (green bands) and an anomaly (red band). Bottom: the matrix profile dips to near zero at the two motif windows (green dot) and spikes at the anomaly (red dot) -- motif and discord read straight off the curve")
+            + f'<div class="card">{pre(matrix_profile_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

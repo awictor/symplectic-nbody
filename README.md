@@ -566,6 +566,7 @@ ruins a long non-symplectic integration.
 | `src/suffix_tree.py` | Ukkonen's linear-time suffix tree: substring search, distinct-substring & LRS queries |
 | `src/fista.py` | FISTA accelerated proximal gradient: Lasso/NNLS, soft-threshold prox, O(1/k^2) momentum |
 | `src/admm.py` | ADMM operator splitting: Lasso/NNLS/consensus via prox steps, primal-dual residuals |
+| `src/matrix_profile.py` | Time-series matrix profile via MASS/FFT: motif and discord (anomaly) discovery |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1123,6 +1124,7 @@ ruins a long non-symplectic integration.
 | `examples/suffix_tree_demo.py` | The suffix tree of 'banana' drawn out, with substring/repeat queries |
 | `examples/fista_demo.py` | Lasso sparse recovery + ISTA vs FISTA convergence on log-log axes |
 | `examples/admm_demo.py` | ADMM Lasso sparse recovery + primal/dual residuals decaying to zero |
+| `examples/matrix_profile_demo.py` | Series with a planted motif and anomaly, both read off the profile curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12898,6 +12900,26 @@ and NNLS solutions match the repo's FISTA solver, NNLS satisfies its KKT conditi
 residuals decay to zero, a generic two-prox consensus problem hits its analytic optimum, and rho
 adaptation still converges. The operator-splitting companion to the FISTA, Lasso, and
 conjugate-gradient tools.
+
+## Matrix profile: motifs and anomalies in a time series
+
+Parameter-free motif and anomaly discovery. `matrix_profile.py`:
+
+```
+$ python examples/matrix_profile_demo.py examples/output
+
+  series length 200, window m = 16
+  MOTIF   (most similar pair): windows 40 and 130, distance 0.0000
+  DISCORD (most unusual window): starts at 95, distance 5.6569
+```
+
+For each length-m window, the matrix profile stores the z-normalized distance to its nearest
+neighbour. Its lowest values are motifs (repeated patterns), its highest are discords (anomalies). The
+MASS trick writes the z-normalized distance via a sliding dot product and does all n of them as one FFT
+convolution, so each profile costs O(n log n). Validated: the FFT matrix profile matches brute force to
+machine precision, a planted repeat is recovered as the motif and a planted spike as the discord, and
+z-normalization makes it invariant to offset and scale. The time-series companion to the DTW, FFT, and
+cross-correlation tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

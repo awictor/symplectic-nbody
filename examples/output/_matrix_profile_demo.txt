@@ -1,0 +1,17 @@
+Matrix profile: motif and discord discovery
+====================================================
+series length 200, window m = 16
+z-normalized distance to nearest neighbour, computed by MASS (FFT)
+
+MOTIF   (most similar pair):  windows 40 and 130, distance 0.0000
+        planted repeats at 40 and 130 -> recovered
+DISCORD (most unusual window): starts at 95, distance 5.6569
+        planted anomaly at 95 -> recovered
+
+profile statistics:
+  min (motif)  = 0.0000
+  max (discord)= 5.6569
+  mean         = 2.8816
+
+Low profile = repeated pattern (motif); high profile = anomaly (discord).
+The whole thing is parameter-free beyond the window length m.
