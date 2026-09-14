@@ -616,6 +616,7 @@ def main():
     import importance_sampling_demo
     import control_variates_demo
     import antithetic_variates_demo
+    import sherman_morrison_demo
 
     import plot_orbits
 
@@ -1201,6 +1202,7 @@ def main():
     importance_sampling_txt = run("importance_sampling_demo", importance_sampling_demo.main, True)
     control_variates_txt = run("control_variates_demo", control_variates_demo.main, True)
     antithetic_variates_txt = run("antithetic_variates_demo", antithetic_variates_demo.main, True)
+    sherman_morrison_txt = run("sherman_morrison_demo", sherman_morrison_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10985,6 +10987,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("antithetic_variates.svg"), "Left: antithetic pairs on f(u)=e^u -- each green sample is linked to its low-valued red mirror, so their average hugs the mean. Right: over 400 runs the antithetic estimator (green) is far tighter around the true value than plain Monte Carlo (red)")
             + f'<div class="card">{pre(antithetic_variates_txt)}</div>'
+            + '</div>'),
+        section(
+            "Sherman-Morrison-Woodbury: updating an inverse without re-inverting",
+            "Inverting an n x n matrix costs O(n^3), but in Kalman filters, recursive least squares, "
+            "Gaussian-process updates, and quasi-Newton optimization the matrix changes only by a "
+            "LOW-RANK amount between steps -- re-inverting from scratch is wasteful. The Sherman-Morrison "
+            "formula updates the inverse after a rank-one change A -> A + u v^T in O(n^2): the new "
+            "inverse is A^-1 minus a scaled outer product of A^-1 u and v^T A^-1, divided by "
+            "1 + v^T A^-1 u (nonzero exactly when the update stays invertible). The Woodbury identity "
+            "generalizes it to a rank-k update, turning an n x n re-inversion into a k x k one, and the "
+            "matching determinant lemma updates a determinant just as cheaply. Validated against "
+            "brute-force re-inversion: the rank-1 and rank-k updated inverses match the true inverse of "
+            "the modified matrix to machine precision, the determinant lemma matches a direct "
+            "determinant, the solve update matches solving the modified system, chaining several rank-1 "
+            "updates matches one big re-inversion, and a singular update is flagged. The low-rank-update "
+            "companion to the LU, Cholesky, and Kalman-filter tools.",
+            '<div class="grid">'
+            + svg_card(out("sherman_morrison.svg"), "Operation count vs matrix size on log-log axes: a full re-inversion grows as O(n^3) (yellow) while a rank-1 inverse update grows as O(n^2) (green). The gap is the per-step speedup -- one factor of n that widens with size, for the exact same answer (error ~1e-16)")
+            + f'<div class="card">{pre(sherman_morrison_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

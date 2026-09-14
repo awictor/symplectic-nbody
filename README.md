@@ -574,6 +574,7 @@ ruins a long non-symplectic integration.
 | `src/importance_sampling.py` | Importance sampling: rare-event tail estimation, self-normalized IS, effective sample size |
 | `src/control_variates.py` | Control variates: optimal coefficient, 1-rho^2 variance reduction, multi-CV least squares |
 | `src/antithetic_variates.py` | Antithetic variates: mirror-paired sampling, monotone variance reduction, Gaussian reflection |
+| `src/sherman_morrison.py` | Sherman-Morrison-Woodbury low-rank inverse/solve/determinant updates in O(n^2) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1139,6 +1140,7 @@ ruins a long non-symplectic integration.
 | `examples/importance_sampling_demo.py` | Rare-tail estimation table + the proposal shift into the tail |
 | `examples/control_variates_demo.py` | Reduction-vs-correlation table + tight vs wide estimator spread |
 | `examples/antithetic_variates_demo.py` | Mirror pairs on a curve + reduction-by-integrand-shape table |
+| `examples/sherman_morrison_demo.py` | O(n^2) update vs O(n^3) re-inversion op-count curves + accuracy |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13083,6 +13085,27 @@ linear integrand cancels to ~0 variance, a monotone integrand gets a large reduc
 covariance, a symmetric integrand shows no benefit, an odd function of Z cancels exactly, and it works
 in several dimensions. The variance-reduction companion to the control-variate, importance-sampling,
 and Sobol tools.
+
+## Sherman-Morrison-Woodbury: updating an inverse without re-inverting
+
+Low-rank inverse updates in O(n^2). `sherman_morrison.py`:
+
+```
+$ python examples/sherman_morrison_demo.py examples/output
+
+  (A + uv^T)^-1 = A^-1 - (A^-1 u v^T A^-1) / (1 + v^T A^-1 u)
+  max error vs full re-inversion: 5.55e-17
+  rank-1 update O(n^2) vs full re-inversion O(n^3): n-fold speedup, exact answer
+  Woodbury rank-3: inverts a 3x3 instead of an 8x8
+```
+
+When a matrix changes by a low-rank amount, Sherman-Morrison updates its inverse after a rank-1 change
+in O(n^2), Woodbury generalizes to rank-k (an n x n re-inversion becomes k x k), and the determinant
+lemma updates a determinant just as cheaply. Validated against brute force: the rank-1 and rank-k
+updated inverses match the true inverse to machine precision, the determinant lemma matches a direct
+determinant, the solve update matches a direct solve, chained rank-1 updates match one re-inversion,
+and a singular update is flagged. The low-rank-update companion to the LU, Cholesky, and Kalman-filter
+tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

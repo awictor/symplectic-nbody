@@ -1,0 +1,18 @@
+Sherman-Morrison-Woodbury: low-rank inverse updates
+======================================================
+n = 8; update A -> A + u v^T (rank 1)
+
+(A + u v^T)^-1 = A^-1 - (A^-1 u v^T A^-1) / (1 + v^T A^-1 u)
+  max error vs full re-inversion: 5.55e-17
+
+cost of a rank-1 inverse update: O(n^2) = ~64 flops
+cost of a full re-inversion:     O(n^3) = ~512 flops
+  speedup factor at n=8: 8x  (grows with n)
+
+determinant lemma: det(A+uv^T) = 302961.5820, direct = 302961.5820
+
+Woodbury rank-k: (A + U C V^T)^-1 turns an n x n re-inversion into a k x k one.
+  rank-3 Woodbury error vs full: 8.33e-17  (inverts a 3x3 instead of an 8x8)
+
+These updates power Kalman filters, recursive least squares, and quasi-Newton
+optimizers, where the matrix changes by a low-rank amount every step.
