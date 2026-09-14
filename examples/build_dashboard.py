@@ -657,6 +657,7 @@ def main():
     import self_organizing_map_demo
     import fuzzy_cmeans_demo
     import lloyd_max_demo
+    import linde_buzo_gray_demo
 
     import plot_orbits
 
@@ -1283,6 +1284,7 @@ def main():
     self_organizing_map_txt = run("self_organizing_map_demo", self_organizing_map_demo.main, True)
     fuzzy_cmeans_txt = run("fuzzy_cmeans_demo", fuzzy_cmeans_demo.main, True)
     lloyd_max_txt = run("lloyd_max_demo", lloyd_max_demo.main, True)
+    linde_buzo_gray_txt = run("linde_buzo_gray_demo", linde_buzo_gray_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11881,6 +11883,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("lloyd_max.svg"), "A Gaussian source (blue density) quantized to 8 levels. Lloyd-Max levels (yellow) drop from the curve and crowd under the peak where samples are common, spreading out in the rare tails; the evenly-spaced uniform levels (red ticks) waste resolution in the tails. The result is 5-9 dB more SNR at the same level count")
             + f'<div class="card">{pre(lloyd_max_txt)}</div>'
+            + '</div>'),
+        section(
+            "Linde-Buzo-Gray: vector quantization by splitting",
+            "Lloyd-Max quantizes single numbers; vector quantization quantizes whole vectors -- a block of "
+            "pixels, a speech frame, an embedding -- to N codebook vectors, capturing correlations a "
+            "scalar quantizer misses. The Linde-Buzo-Gray algorithm (1980) designs the codebook, and its "
+            "cleverness is the initialization: rather than guess N starting vectors (k-means' weak spot), "
+            "it GROWS the codebook by splitting -- start with one codeword (the data mean), perturb it "
+            "into two, run Lloyd's algorithm to settle them, split each into two, refine again, doubling "
+            "1 -> 2 -> 4 -> 8 -> ... to the target size. Each split lands the new codewords near a good "
+            "local optimum, so LBG reliably finds low-distortion codebooks. Validated: on separated "
+            "clusters it places one codeword per cluster, the distortion falls monotonically within Lloyd "
+            "refinement and as the codebook doubles, each codeword is the centroid of its assigned points, "
+            "encode/decode round-trips to the nearest codeword, and a 1-D data set matches a scalar "
+            "Lloyd-Max quantizer. The vector-quantization companion to the Lloyd-Max, k-means, and "
+            "PCA-whitening tools.",
+            '<div class="grid">'
+            + svg_card(out("linde_buzo_gray.svg"), "400 points along a spiral, quantized to 16 codebook vectors. Each point is colored by its nearest codeword (ringed markers), so the colors trace out the Voronoi cells -- the codebook adapts to the curved manifold, packing codewords along the arm rather than on a fixed grid")
+            + f'<div class="card">{pre(linde_buzo_gray_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

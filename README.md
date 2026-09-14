@@ -615,6 +615,7 @@ ruins a long non-symplectic integration.
 | `src/self_organizing_map.py` | Self-organizing (Kohonen) map: topology-preserving neural grid for high-dimensional data |
 | `src/fuzzy_cmeans.py` | Fuzzy c-means: soft clustering with graded per-cluster memberships |
 | `src/lloyd_max.py` | Lloyd-Max quantizer: minimum-distortion scalar quantization for a known source |
+| `src/linde_buzo_gray.py` | Linde-Buzo-Gray: vector-quantization codebook design by splitting and Lloyd refinement |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1221,6 +1222,7 @@ ruins a long non-symplectic integration.
 | `examples/self_organizing_map_demo.py` | A 10x10 SOM learning four color clusters into a smooth grid, with the quantization-error curve |
 | `examples/fuzzy_cmeans_demo.py` | Soft memberships blended as point colors on overlapping blobs, with a fuzzifier sweep |
 | `examples/lloyd_max_demo.py` | Lloyd-Max levels crowding under a Gaussian peak vs uniform, with an SNR-gain table |
+| `examples/linde_buzo_gray_demo.py` | LBG codebook tiling a spiral manifold, with the rate-distortion table as it doubles |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14017,6 +14019,28 @@ of k-means). Levels pack where the mass is. Validated: uniform source gives even
 distortion Delta^2/12, Gaussian source beats uniform by several dB, distortion falls ~1/N^2, the optimality
 conditions hold at convergence, and the sample-based version reduces to k-means on a line. The
 optimal-quantization companion to the k-means, PCA-whitening, and Huffman-coding tools.
+
+## Linde-Buzo-Gray: vector quantization by splitting
+
+Codebook design for vector quantization. `linde_buzo_gray.py`:
+
+```
+$ python examples/linde_buzo_gray_demo.py examples/output
+
+400 points on a spiral, codebook grown 1 -> 2 -> 4 -> 8 -> 16.
+   size   distortion
+      2   0.40608
+      4   0.19058
+      8   0.05424
+     16   0.01865
+```
+
+Grow the codebook by splitting: start with the data mean, perturb into two, run Lloyd's algorithm, split
+each into two, refine, doubling to the target size -- each split lands the new codewords near a good local
+optimum. Validated: places one codeword per cluster on separated data, distortion falls monotonically
+within Lloyd refinement and as the codebook doubles, each codeword is the centroid of its cell,
+encode/decode round-trips to the nearest codeword, and a 1-D set matches a scalar Lloyd-Max quantizer. The
+vector-quantization companion to the Lloyd-Max, k-means, and PCA-whitening tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

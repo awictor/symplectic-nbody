@@ -1,0 +1,23 @@
+Linde-Buzo-Gray -- vector-quantization codebook by splitting + refining
+========================================================================
+
+400 points on a spiral, codebook grown 1 -> 2 -> 4 -> 8 -> 16.
+
+Distortion as the codebook doubles:
+   size   distortion
+   ----------------------
+      2   0.40608
+      4   0.19058
+      8   0.05424
+     16   0.01865
+
+Rate-distortion (bits per vector = log2 size):
+   bits   size   distortion
+   ------------------------------
+      1      2   0.40608
+      2      4   0.19058
+      3      8   0.05424
+      4     16   0.01865
+      5     32   0.00929
+
+Each extra bit halves the codebook spacing -> ~4x lower distortion (1/N per dim).
