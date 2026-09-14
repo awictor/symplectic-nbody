@@ -1,0 +1,23 @@
+Hessenberg reduction: the eigensolver's first move
+====================================================
+dense 7x7 matrix -> upper Hessenberg by Householder similarity (A = Q H Q^T)
+
+H (zeros below the subdiagonal):
+   -0.20  +0.15  -0.63  +0.95  -0.05  -0.04  -0.59
+   +1.50  +0.98  -0.46  +0.27  -0.38  -0.49  -0.75
+     .    -1.60  -0.82  +0.38  +0.56  -0.24  -0.18
+     .      .    +1.25  +0.71  +0.33  +0.10  -0.02
+     .      .      .    +1.53  +0.38  +0.69  -0.36
+     .      .      .      .    +0.37  -0.06  +0.37
+     .      .      .      .      .    +0.53  -0.63
+
+zeroed 15 of 49 entries (everything below the first subdiagonal)
+
+upper Hessenberg?   True
+Q H Q^T == A?       max error 1.33e-15
+trace preserved?    A +0.36881  H +0.36881
+
+a symmetric matrix reduces further, to TRIDIAGONAL: True
+
+The QR algorithm preserves Hessenberg form, so each of its iterations then costs
+O(n^2) instead of O(n^3) -- this one-time reduction is why eigensolvers are fast.

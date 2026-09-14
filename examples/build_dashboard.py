@@ -618,6 +618,7 @@ def main():
     import antithetic_variates_demo
     import sherman_morrison_demo
     import polar_decomposition_demo
+    import hessenberg_demo
 
     import plot_orbits
 
@@ -1205,6 +1206,7 @@ def main():
     antithetic_variates_txt = run("antithetic_variates_demo", antithetic_variates_demo.main, True)
     sherman_morrison_txt = run("sherman_morrison_demo", sherman_morrison_demo.main, True)
     polar_decomposition_txt = run("polar_decomposition_demo", polar_decomposition_demo.main, True)
+    hessenberg_txt = run("hessenberg_demo", hessenberg_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11028,6 +11030,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("polar_decomposition.svg"), "A general 2-D transform decomposed: the unit circle (left) is first stretched by the symmetric factor P into an ellipse aligned to P's eigenvectors (middle), then rotated rigidly by the orthogonal factor U (right) -- together they reproduce A exactly")
             + f'<div class="card">{pre(polar_decomposition_txt)}</div>'
+            + '</div>'),
+        section(
+            "Hessenberg reduction: the eigensolver's first move",
+            "Running the QR algorithm on a full dense matrix would cost O(n^3) per iteration -- ruinous "
+            "over the dozens of iterations eigenvalues need. Every serious eigensolver first reduces the "
+            "matrix by an orthogonal SIMILARITY to UPPER HESSENBERG form: zero everywhere below the "
+            "first subdiagonal. A Hessenberg matrix is one step from triangular, and the QR algorithm "
+            "PRESERVES the form, so each subsequent step drops to O(n^2); the one-time reduction is "
+            "O(n^3) but happens once. The tool is the Householder reflector, the same as in QR, but "
+            "applied on BOTH sides (A -> Q^T A Q) so the transform is a similarity and the eigenvalues "
+            "are untouched. When the matrix is symmetric the two-sided reflectors keep it symmetric, so "
+            "Hessenberg collapses all the way to TRIDIAGONAL -- the form the symmetric QR algorithm and "
+            "Lanczos target. Validated: H is upper Hessenberg, Q is orthogonal, Q H Q^T reconstructs A "
+            "to machine precision, trace and determinant (hence the eigenvalues) are preserved, a "
+            "symmetric matrix reduces to a symmetric tridiagonal, and an already-Hessenberg matrix is "
+            "left unchanged. The eigenvalue-preprocessing companion to the QR-algorithm, Householder-QR, "
+            "and Lanczos tools.",
+            '<div class="grid">'
+            + svg_card(out("hessenberg.svg"), "A dense 7x7 matrix (left) reduced to upper-Hessenberg form (right): every entry below the first subdiagonal is zeroed (dark), by reflectors applied on both sides so the eigenvalues survive. The QR algorithm then iterates on this cheap almost-triangular shape")
+            + f'<div class="card">{pre(hessenberg_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -576,6 +576,7 @@ ruins a long non-symplectic integration.
 | `src/antithetic_variates.py` | Antithetic variates: mirror-paired sampling, monotone variance reduction, Gaussian reflection |
 | `src/sherman_morrison.py` | Sherman-Morrison-Woodbury low-rank inverse/solve/determinant updates in O(n^2) |
 | `src/polar_decomposition.py` | Polar decomposition A=UP via SVD and Newton iteration; closest-rotation projection |
+| `src/hessenberg.py` | Hessenberg/tridiagonal reduction by Householder similarity (A=QHQ^T), eigenvalue-preserving |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1143,6 +1144,7 @@ ruins a long non-symplectic integration.
 | `examples/antithetic_variates_demo.py` | Mirror pairs on a curve + reduction-by-integrand-shape table |
 | `examples/sherman_morrison_demo.py` | O(n^2) update vs O(n^3) re-inversion op-count curves + accuracy |
 | `examples/polar_decomposition_demo.py` | Unit circle stretched by P then rotated by U to reproduce A |
+| `examples/hessenberg_demo.py` | Dense matrix reduced to upper-Hessenberg form, shown as sparsity heatmaps |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13129,6 +13131,26 @@ P's eigenvalues are A's singular values. Computed via the SVD and via Newton's i
 two routes agree, P's eigenvalues equal the singular values, an orthogonal input gives P=I, a
 reflection yields det(U)<0, and U is provably the closest orthogonal matrix. The matrix-factorization
 companion to the SVD, QR, and Sherman-Morrison tools.
+
+## Hessenberg reduction: the eigensolver's first move
+
+Orthogonal similarity to almost-triangular form. `hessenberg.py`:
+
+```
+$ python examples/hessenberg_demo.py examples/output
+
+  dense 7x7 -> upper Hessenberg (A = Q H Q^T)
+  zeroed 15 of 49 entries (below the first subdiagonal)
+  Q H Q^T == A? max error 1.3e-15   trace preserved
+  a symmetric matrix reduces further to TRIDIAGONAL: True
+```
+
+Householder reflectors applied on both sides (A -> Q^T A Q) zero everything below the first
+subdiagonal while preserving eigenvalues. The QR algorithm preserves the form, so its iterations then
+cost O(n^2) instead of O(n^3). Validated: H is upper Hessenberg, Q orthogonal, Q H Q^T reconstructs A
+to machine precision, trace/determinant/eigenvalues preserved, a symmetric matrix reduces to symmetric
+tridiagonal, and an already-Hessenberg matrix is unchanged. The eigenvalue-preprocessing companion to
+the QR-algorithm, Householder-QR, and Lanczos tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
