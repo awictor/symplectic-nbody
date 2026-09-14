@@ -575,6 +575,7 @@ ruins a long non-symplectic integration.
 | `src/control_variates.py` | Control variates: optimal coefficient, 1-rho^2 variance reduction, multi-CV least squares |
 | `src/antithetic_variates.py` | Antithetic variates: mirror-paired sampling, monotone variance reduction, Gaussian reflection |
 | `src/sherman_morrison.py` | Sherman-Morrison-Woodbury low-rank inverse/solve/determinant updates in O(n^2) |
+| `src/polar_decomposition.py` | Polar decomposition A=UP via SVD and Newton iteration; closest-rotation projection |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1141,6 +1142,7 @@ ruins a long non-symplectic integration.
 | `examples/control_variates_demo.py` | Reduction-vs-correlation table + tight vs wide estimator spread |
 | `examples/antithetic_variates_demo.py` | Mirror pairs on a curve + reduction-by-integrand-shape table |
 | `examples/sherman_morrison_demo.py` | O(n^2) update vs O(n^3) re-inversion op-count curves + accuracy |
+| `examples/polar_decomposition_demo.py` | Unit circle stretched by P then rotated by U to reproduce A |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13106,6 +13108,27 @@ updated inverses match the true inverse to machine precision, the determinant le
 determinant, the solve update matches a direct solve, chained rank-1 updates match one re-inversion,
 and a singular update is flagged. The low-rank-update companion to the LU, Cholesky, and Kalman-filter
 tools.
+
+## Polar decomposition: splitting a matrix into rotation and stretch
+
+A = U P with U orthogonal and P symmetric positive-semidefinite. `polar_decomposition.py`:
+
+```
+$ python examples/polar_decomposition_demo.py examples/output
+
+  A = [[1.4, 0.6], [-0.3, 0.9]]
+  U (rotation, -21.4 deg) orthogonal;  P (stretch) symmetric PD
+  stretch factors (eigenvalues of P) = singular values of A: 1.527, 0.943
+  U P reconstructs A: max error 1.1e-16
+```
+
+The matrix analogue of z = e^{i theta} r: U is the rigid part, P the shape-changing part. U is the
+closest orthogonal matrix to A, so it re-orthogonalizes a drifted rotation without losing information;
+P's eigenvalues are A's singular values. Computed via the SVD and via Newton's iteration X <-
+(X + X^{-T})/2. Validated: U orthogonal, P symmetric PSD, U P reconstructs A to machine precision, the
+two routes agree, P's eigenvalues equal the singular values, an orthogonal input gives P=I, a
+reflection yields det(U)<0, and U is provably the closest orthogonal matrix. The matrix-factorization
+companion to the SVD, QR, and Sherman-Morrison tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

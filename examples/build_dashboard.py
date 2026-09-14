@@ -617,6 +617,7 @@ def main():
     import control_variates_demo
     import antithetic_variates_demo
     import sherman_morrison_demo
+    import polar_decomposition_demo
 
     import plot_orbits
 
@@ -1203,6 +1204,7 @@ def main():
     control_variates_txt = run("control_variates_demo", control_variates_demo.main, True)
     antithetic_variates_txt = run("antithetic_variates_demo", antithetic_variates_demo.main, True)
     sherman_morrison_txt = run("sherman_morrison_demo", sherman_morrison_demo.main, True)
+    polar_decomposition_txt = run("polar_decomposition_demo", polar_decomposition_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11006,6 +11008,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("sherman_morrison.svg"), "Operation count vs matrix size on log-log axes: a full re-inversion grows as O(n^3) (yellow) while a rank-1 inverse update grows as O(n^2) (green). The gap is the per-step speedup -- one factor of n that widens with size, for the exact same answer (error ~1e-16)")
             + f'<div class="card">{pre(sherman_morrison_txt)}</div>'
+            + '</div>'),
+        section(
+            "Polar decomposition: splitting a matrix into rotation and stretch",
+            "Every real square matrix factors as A = U P, where U is orthogonal (a pure "
+            "rotation/reflection) and P is symmetric positive-semidefinite (a pure stretch along "
+            "orthogonal axes) -- the matrix analogue of writing a complex number as e^{i theta} times "
+            "r. Two facts make it a workhorse. First, U is the CLOSEST orthogonal matrix to A in the "
+            "Frobenius norm, so the polar factor is exactly how you re-orthogonalize a drifted rotation "
+            "(a camera pose, a molecular frame, a degraded basis) without discarding information. "
+            "Second, it links the SVD to the eigendecomposition: from A = W S V^T you read off U = W "
+            "V^T and P = V S V^T, and P's eigenvalues are exactly A's singular values -- the principal "
+            "stretch amounts. Beyond the SVD there is Newton's iteration X <- (X + X^{-T})/2, which "
+            "converges quadratically to U with no SVD at all. Validated: U is orthogonal and P is "
+            "symmetric PSD, U P reconstructs A to machine precision, the SVD and Newton routes agree, "
+            "P's eigenvalues equal A's singular values, an orthogonal input gives P = I, a reflection "
+            "yields det(U) < 0, and U is provably the closest orthogonal matrix. The "
+            "matrix-factorization companion to the SVD, QR, and Sherman-Morrison tools.",
+            '<div class="grid">'
+            + svg_card(out("polar_decomposition.svg"), "A general 2-D transform decomposed: the unit circle (left) is first stretched by the symmetric factor P into an ellipse aligned to P's eigenvectors (middle), then rotated rigidly by the orthogonal factor U (right) -- together they reproduce A exactly")
+            + f'<div class="card">{pre(polar_decomposition_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

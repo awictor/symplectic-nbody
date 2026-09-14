@@ -1,0 +1,19 @@
+Polar decomposition: A = U P (rotation x stretch)
+====================================================
+A = [[1.4, 0.6], [-0.3, 0.9]]
+
+orthogonal factor U (pure rotation/reflection):
+  [[+0.9312, +0.3644],
+   [-0.3644, +0.9312]]   rotation angle -21.4 deg
+symmetric positive-definite factor P (pure stretch):
+  [[+1.4131, +0.2308],
+   [+0.2308, +1.0568]]
+
+stretch factors (eigenvalues of P): 1.5265, 0.9434
+(these are exactly the singular values of A -- the principal stretch amounts)
+
+U P reconstructs A?  max error 1.11e-16
+U orthogonal?        True
+
+U is the closest rotation to A -- the right way to re-orthogonalize a drifted
+rotation matrix (camera pose, molecular frame) without discarding information.
