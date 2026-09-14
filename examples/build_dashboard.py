@@ -644,6 +644,7 @@ def main():
     import cross_entropy_method_demo
     import spsa_demo
     import arnoldi_demo
+    import gauss_kronrod_demo
 
     import plot_orbits
 
@@ -1257,6 +1258,7 @@ def main():
     cross_entropy_method_txt = run("cross_entropy_method_demo", cross_entropy_method_demo.main, True)
     spsa_txt = run("spsa_demo", spsa_demo.main, True)
     arnoldi_txt = run("arnoldi_demo", arnoldi_demo.main, True)
+    gauss_kronrod_txt = run("gauss_kronrod_demo", gauss_kronrod_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11602,6 +11604,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("arnoldi.svg"), "Left: the dominant Ritz value's error falls roughly exponentially as the Krylov subspace grows (5.9 at m=2 down to 1e-14 by m=18). Right: the complex-plane spectrum -- hollow gray are the true eigenvalues, filled green/purple the Ritz values; the extremal ones lock on first while interior modes lag")
             + f'<div class="card">{pre(arnoldi_txt)}</div>'
+            + '</div>'),
+        section(
+            "Gauss-Kronrod: quadrature that estimates its own error",
+            "Gauss-Legendre quadrature is optimal -- exact for polynomials up to degree 2n-1 -- but gives "
+            "a number with no error bar. Kronrod's trick (1965): extend an n-point Gauss rule with n+1 "
+            "more points into a (2n+1)-point rule that REUSES every original node, so one batch of "
+            "evaluations yields two estimates, Gauss G and Kronrod K, and |K-G| is a cheap error "
+            "estimate. This module implements the classic G7-K15 pair (Gauss exact to degree 13, Kronrod "
+            "to degree 22) and wraps it in a globally-adaptive driver: a heap of subintervals, always "
+            "split the worst, stop when the summed error falls below tolerance -- so points swarm a sharp "
+            "peak and ignore the flat stretches. It is the engine inside QUADPACK, SciPy's quad, and the "
+            "GSL. Validated: exact to degree 13 (Gauss) and 22 (Kronrod), smooth integrals to machine "
+            "precision, resolves a narrow Gaussian spike and an endpoint square-root singularity a fixed "
+            "grid botches, the error estimate bounds the true error, and it cross-checks against the "
+            "repo's Romberg and adaptive-Simpson integrators. The self-verifying-quadrature companion to "
+            "the Romberg, adaptive-Simpson, and Gauss-Legendre tools.",
+            '<div class="grid">'
+            + svg_card(out("gauss_kronrod.svg"), "Adaptive Gauss-Kronrod on a spike of width 0.004. The blue integrand is a tall narrow bump; yellow ticks mark the subinterval edges and green dots the panel centers. The driver splits the worst-error panel first, so the panels pack densely under the peak and stay sparse over the flat tails -- reaching 3e-11 accuracy on a function a fixed grid would miss entirely")
+            + f'<div class="card">{pre(gauss_kronrod_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -602,6 +602,7 @@ ruins a long non-symplectic integration.
 | `src/cross_entropy_method.py` | Cross-entropy method: derivative-free optimization by elite-sample distribution fitting |
 | `src/spsa.py` | SPSA: gradient-free stochastic optimization estimating the full gradient from two measurements per step |
 | `src/arnoldi.py` | Arnoldi iteration: dominant eigenvalues of a large non-symmetric matrix from a Krylov subspace |
+| `src/gauss_kronrod.py` | Gauss-Kronrod quadrature: integration with a built-in error estimate and global adaptive subdivision |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1195,6 +1196,7 @@ ruins a long non-symplectic integration.
 | `examples/cross_entropy_method_demo.py` | The CEM Gaussian mean marching down the Rastrigin landscape |
 | `examples/spsa_demo.py` | SPSA descending a 2-D bowl on two evals per step, with the eval-count win over finite differences |
 | `examples/arnoldi_demo.py` | Ritz values converging to a 40x40 matrix's dominant eigenvalue, with the complex-plane spectrum |
+| `examples/gauss_kronrod_demo.py` | Adaptive Gauss-Kronrod panels swarming a narrow spike, with the polynomial-exactness ladder |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13681,6 +13683,30 @@ machine precision, Q is orthonormal, H is Hessenberg, the Ritz values match the 
 of a non-symmetric matrix (vs the QR-algorithm) and a symmetric one (vs Lanczos), a rank-deficient Krylov
 space triggers a clean happy breakdown, and results are reproducible per seed. The Krylov-subspace
 companion to the Lanczos, GMRES, and QR-algorithm tools.
+
+## Gauss-Kronrod: quadrature that estimates its own error
+
+The engine inside QUADPACK and SciPy's `quad`. `gauss_kronrod.py`:
+
+```
+$ python examples/gauss_kronrod_demo.py examples/output
+
+Single panel on [0, pi], integrand sin(x)  (true = 2):
+  Gauss (7 pt)   = 2.000000000002   true error 1.79e-12
+  Kronrod (15pt) = 2.000000000000   true error 5.77e-15
+  estimate |K-G| = 1.80e-12  (no extra evaluations)
+
+Adaptive on a spike (width 0.004 at x=0.3):
+  |error| = 3.28e-11   using 7 subintervals clustered at the peak
+```
+
+Extend a 7-point Gauss rule with 8 more points into a 15-point Kronrod rule that reuses every Gauss node,
+so one batch of evaluations gives both estimates and |K-G| is the error. Wrap it in a globally-adaptive
+heap of subintervals -- always split the worst -- and points swarm sharp features while ignoring flat
+stretches. Validated: exact to degree 13 (Gauss) and 22 (Kronrod), smooth integrals to machine precision,
+resolves a narrow spike and an endpoint square-root singularity, the error estimate bounds the true error,
+and cross-checks against the repo's Romberg and adaptive-Simpson integrators. The self-verifying-quadrature
+companion to the Romberg, adaptive-Simpson, and Gauss-Legendre tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,29 @@
+Gauss-Kronrod quadrature -- integrate and estimate your own error
+==================================================================
+
+G7-K15: a 7-point Gauss rule embedded in a 15-point Kronrod rule.
+One batch of 15 evaluations gives TWO estimates; |K - G| is the error.
+
+Single panel on [0, pi], integrand sin(x)  (true = 2):
+  Gauss (7 pt)   = 2.000000000002   true error 1.79e-12
+  Kronrod (15pt) = 2.000000000000   true error 5.77e-15
+  estimate |K-G| = 1.80e-12  (no extra evaluations)
+
+Polynomial exactness (integral of x^p on [-1,1]):
+    p    Gauss err     Kronrod err
+   ----------------------------------
+    12    1.14e-15     3.89e-16
+    13    0.00e+00     0.00e+00
+    14    1.85e-04     5.55e-16
+    16    6.92e-04     5.55e-16
+    20    2.72e-03     6.25e-16
+    22    4.11e-03     5.97e-16
+    24    5.64e-03     5.73e-09
+  (Gauss exact to deg 13, Kronrod to deg 22)
+
+Adaptive on a spike (width 0.004 at x=0.3), true = 0.0070898154:
+  result = 0.0070898154   |error| = 3.28e-11
+  used 7 subintervals, clustered at the peak.
+
+Adaptive on 1/sqrt(x) singularity on [0,1] (true = 2):
+  result = 1.99998423   |error| = 1.58e-05   (24 subintervals)
