@@ -595,6 +595,7 @@ def main():
     import icp_demo
     import cross_correlation_demo
     import newton_cotes_demo
+    import voronoi_demo
 
     import plot_orbits
 
@@ -1159,6 +1160,7 @@ def main():
     icp_txt = run("icp_demo", icp_demo.main, True)
     cross_correlation_txt = run("cross_correlation_demo", cross_correlation_demo.main, True)
     newton_cotes_txt = run("newton_cotes_demo", newton_cotes_demo.main, True)
+    voronoi_txt = run("voronoi_demo", voronoi_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10521,6 +10523,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("newton_cotes_convergence.svg"), "Composite error vs panel count on log-log axes: each rule falls along a straight line whose slope is its convergence order -- trapezoid O(h^2), Simpson O(h^4), Boole O(h^6). Higher-order rules reach machine precision with an order of magnitude fewer panels")
             + f'<div class="card">{pre(newton_cotes_txt)}</div>'
+            + '</div>'),
+        section(
+            "Voronoi cells: the nearest-site partition by half-plane intersection",
+            "The Voronoi diagram splits the plane into one cell per site -- every point in a cell is "
+            "closer to that site than to any other. The delaunay module already gives the finite "
+            "Voronoi EDGES as the dual of a triangulation, but drops the unbounded rays of the "
+            "boundary cells, so it can't hand you a closed polygon per site. This builds the actual "
+            "CELLS, directly: a site's cell is the intersection of half-planes, one per other site, "
+            "each the side of a perpendicular bisector nearer to us. Intersect them all (plus a "
+            "bounding box to close the unbounded cells) by Sutherland-Hodgman clipping and the convex "
+            "cell falls out. Validated independently of the Delaunay dual: every cell is convex and "
+            "holds its own site; a raster of query points always lands in the cell of its true nearest "
+            "site (brute force); the cells tile the box with zero overlap; and the finite cell edges "
+            "reproduce the delaunay module's Voronoi edges. Lloyd relaxation -- move each site to its "
+            "cell centroid and repeat -- drives the diagram toward a uniform centroidal tessellation, "
+            "the honeycomb below. The cell-polygon companion to the Delaunay and convex-hull tools.",
+            '<div class="grid">'
+            + svg_card(out("voronoi_cells.svg"), "Left: Voronoi cells of a random point cloud, each the region closest to its site. Right: after 12 Lloyd relaxation steps the sites spread out and the cells even up into a honeycomb -- a centroidal Voronoi tessellation, the basis of stippling and mesh generation")
+            + f'<div class="card">{pre(voronoi_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

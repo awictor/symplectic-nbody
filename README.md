@@ -553,6 +553,7 @@ ruins a long non-symplectic integration.
 | `src/icp.py` | Iterative Closest Point registration (nearest-neighbour + Kabsch, unknown correspondence) |
 | `src/cross_correlation.py` | Cross/auto-correlation + matched filter (delay estimation, detection in noise) |
 | `src/newton_cotes.py` | Closed Newton-Cotes quadrature (trapezoid..Weddle): weights, degree of exactness, composite order |
+| `src/voronoi.py` | Voronoi cells by half-plane intersection: clipped cell polygons, nearest-site, Lloyd relaxation |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1097,6 +1098,7 @@ ruins a long non-symplectic integration.
 | `examples/icp_demo.py` | Registering a shuffled rotated/translated L-shape, RMSD 0.35 -> 1e-5 |
 | `examples/cross_correlation_demo.py` | Matched filter finding a chirp in noise + echo delay estimation |
 | `examples/newton_cotes_demo.py` | Degree-of-exactness table + composite convergence order on log-log axes |
+| `examples/voronoi_demo.py` | Colored Voronoi cells + Lloyd relaxation into a centroidal honeycomb |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12570,6 +12572,33 @@ is why composite low-order rules -- and eventually Gauss and Clenshaw-Curtis -- 
 Newton-Cotes. Validated: each rule is exact to its degree (and even-point rules one beyond), weights
 sum to the interval, composite orders match theory, and results agree with the repo's own trapezoid
 and Simpson. The equispaced companion to the Gauss, Romberg, and Clenshaw-Curtis integrators.
+
+## Voronoi cells: the nearest-site partition by half-plane intersection
+
+The Voronoi diagram splits the plane into one cell per site, each the region closest to that site.
+`voronoi.py`:
+
+```
+$ python examples/voronoi_demo.py examples/output
+
+  12 random sites in an 11.1 x 11.6 box
+  sum of cell areas   128.477
+  box area            128.477   (cells tile the box exactly)
+
+  Lloyd relaxation (site -> cell centroid):
+  step   cell-area variance
+     0              30.6489
+    12               1.0131   (cells even up into a honeycomb)
+```
+
+`delaunay.py` gives the finite Voronoi edges as the dual of a triangulation but drops the unbounded
+boundary rays; this builds the closed CELL polygons directly. A site's cell is the intersection of
+half-planes -- one per other site, the side of the perpendicular bisector nearer to us -- computed by
+Sutherland-Hodgman clipping against each bisector and a bounding box. Validated independently of the
+dual: every cell is convex and holds its site, a brute-force raster always lands in its nearest site's
+cell, the cells tile the box with no overlap, and the finite edges reproduce `delaunay.py`'s Voronoi
+edges. Lloyd relaxation (move each site to its cell centroid, repeat) drives the diagram toward a
+uniform centroidal tessellation -- the basis of stippling, mesh generation, and k-means in the plane.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
