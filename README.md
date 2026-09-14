@@ -596,6 +596,7 @@ ruins a long non-symplectic integration.
 | `src/sqrt_decomposition.py` | Square-root decomposition: O(sqrt n) range sum/min/max queries + point update |
 | `src/chirp_z.py` | Chirp Z-transform: z-transform on any spiral, zoom-FFT spectral analysis |
 | `src/cepstrum.py` | Cepstrum: log-spectrum FFT for pitch tracking and echo detection (quefrency peaks) |
+| `src/wiener_filter.py` | Wiener filtering: minimum-MSE denoising H=S/(S+N) and regularized deconvolution |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1183,6 +1184,7 @@ ruins a long non-symplectic integration.
 | `examples/sqrt_decomposition_demo.py` | A range query split into partial-end and whole-block coverage |
 | `examples/chirp_z_demo.py` | Coarse FFT vs zoom-FFT resolving two close tones |
 | `examples/cepstrum_demo.py` | Cepstral pitch peak and echo peak read off the quefrency axis |
+| `examples/wiener_filter_demo.py` | Noisy vs recovered vs clean signal + the per-frequency Wiener gain |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13550,6 +13552,24 @@ period T peaks at a multiple of T, a voiced signal recovers its fundamental with
 peaks at its delay, a periodic signal has a sharper peak than noise, and the real cepstrum is real and
 symmetric. Reuses the repo's Bluestein DFT. The spectral-analysis companion to the FFT, chirp-Z, and
 Goertzel tools.
+
+## Wiener filtering: the minimum-error way to pull signal from noise
+
+Optimal linear denoising and deconvolution. `wiener_filter.py`:
+
+```
+$ python examples/wiener_filter_demo.py examples/output
+
+  two tones + noise: SNR 1.2 dB -> 19.2 dB (+18 dB) after Wiener denoise
+  gain at signal bins ~0.98, at noise bins ~0.00
+```
+
+H(f) = S(f)/(S(f)+N(f)) is a per-frequency trust weight -- keep where signal dominates, kill where
+noise does -- optimal among all LTI filters for stationary signals. Validated: gain in [0,1], 1 with no
+noise and 0 where signal vanishes, monotone in local SNR; denoising raises SNR ~18 dB and lowers MSE; a
+clean signal passes unchanged; and regularized deconvolution recovers a strongly blurred signal far
+better than naive inverse filtering. Reuses the repo's Bluestein DFT. The signal-restoration companion
+to the FFT, cepstrum, and Savitzky-Golay tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

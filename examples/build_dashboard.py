@@ -638,6 +638,7 @@ def main():
     import sqrt_decomposition_demo
     import chirp_z_demo
     import cepstrum_demo
+    import wiener_filter_demo
 
     import plot_orbits
 
@@ -1245,6 +1246,7 @@ def main():
     sqrt_decomposition_txt = run("sqrt_decomposition_demo", sqrt_decomposition_demo.main, True)
     chirp_z_txt = run("chirp_z_demo", chirp_z_demo.main, True)
     cepstrum_txt = run("cepstrum_demo", cepstrum_demo.main, True)
+    wiener_filter_txt = run("wiener_filter_demo", wiener_filter_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11473,6 +11475,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("cepstrum.svg"), "Two cepstra: a voiced signal's peak sits at quefrency 64 samples (recovering the 125 Hz pitch), and an echoed signal's peak sits at quefrency 35 (recovering the echo delay) -- periodicity read straight off the quefrency axis")
             + f'<div class="card">{pre(cepstrum_txt)}</div>'
+            + '</div>'),
+        section(
+            "Wiener filtering: the minimum-error way to pull signal from noise",
+            "Given y = x + n, what linear filter recovers x with the smallest mean-squared error? Wiener "
+            "answered it in the 1940s, and in the frequency domain the answer is beautifully simple: "
+            "multiply each frequency by H(f) = S(f) / (S(f) + N(f)), where S and N are the signal and "
+            "noise power spectra. Where the signal dominates the gain approaches 1 (keep the bin); where "
+            "noise dominates it approaches 0 (kill it) -- a per-frequency trust weight, optimal among "
+            "ALL linear time-invariant filters for stationary signals and the ancestor of spectral "
+            "subtraction and image restoration. The same idea DECONVOLVES a blurred signal, dividing by "
+            "the blur's transfer function but tempering the division where noise would blow up. "
+            "Validated: the gain lies in [0,1], equals 1 with no noise and 0 where the signal vanishes, "
+            "and is monotone in the local SNR; denoising a noisy sinusoid raises the SNR by ~18 dB and "
+            "lowers the MSE; a clean signal passes unchanged; the stationary denoiser (unknown signal "
+            "spectrum) still improves the SNR; and regularized deconvolution recovers a strongly blurred "
+            "signal far better than naive inverse filtering. Reuses the repo's Bluestein DFT. The "
+            "signal-restoration companion to the FFT, cepstrum, and Savitzky-Golay tools.",
+            '<div class="grid">'
+            + svg_card(out("wiener_filter.svg"), "A noisy two-tone signal (red) cleaned by the Wiener filter: the recovered signal (green) tracks the true clean signal (yellow), because the frequency gain (bottom) spikes to ~1 at exactly the two signal bins and stays near 0 on the noise")
+            + f'<div class="card">{pre(wiener_filter_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

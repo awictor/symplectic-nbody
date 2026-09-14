@@ -1,0 +1,17 @@
+Wiener filtering: minimum-MSE denoising
+==================================================
+optimal linear filter: H(f) = S(f) / (S(f) + N(f)), a per-bin trust weight
+
+signal: two tones (5 & 12 cyc), additive noise amplitude 0.7
+  SNR noisy:       1.21 dB
+  SNR recovered:  19.20 dB  (+18.0 dB)
+  MSE noisy:     0.5148
+  MSE recovered: 0.0082
+
+the gain passes the signal bins (near 1) and crushes the noise-only bins (near 0):
+  gain at bin 5 (tone):  0.985
+  gain at bin 12 (tone): 0.959
+  gain at bin 40 (noise):0.000
+
+Wiener's filter is optimal among ALL linear time-invariant filters for stationary
+signals -- the ancestor of spectral subtraction, deconvolution, and image restoration.
