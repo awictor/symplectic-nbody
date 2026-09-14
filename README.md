@@ -600,6 +600,7 @@ ruins a long non-symplectic integration.
 | `src/spectrogram.py` | Short-time Fourier transform: windowed frames, magnitude spectrogram, ridge track |
 | `src/welch_psd.py` | Welch power spectral density: averaged overlapping periodograms, low variance |
 | `src/cross_entropy_method.py` | Cross-entropy method: derivative-free optimization by elite-sample distribution fitting |
+| `src/spsa.py` | SPSA: gradient-free stochastic optimization estimating the full gradient from two measurements per step |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1191,6 +1192,7 @@ ruins a long non-symplectic integration.
 | `examples/spectrogram_demo.py` | Time-frequency heatmap of a chirp + steady tone + late burst |
 | `examples/welch_psd_demo.py` | Jagged periodogram vs smooth Welch PSD on two tones in noise |
 | `examples/cross_entropy_method_demo.py` | The CEM Gaussian mean marching down the Rastrigin landscape |
+| `examples/spsa_demo.py` | SPSA descending a 2-D bowl on two evals per step, with the eval-count win over finite differences |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13630,6 +13632,30 @@ marches to the optimum. Validated: it minimizes a quadratic bowl, solves Rosenbr
 Rastrigin, the variance collapses toward the optimum, the best value improves monotonically, and it
 works in 1 through several dimensions. The derivative-free-optimization companion to the CMA-ES,
 differential-evolution, and particle-swarm tools.
+
+## SPSA: the full gradient from two measurements
+
+Simultaneous Perturbation Stochastic Approximation. `spsa.py`:
+
+```
+$ python examples/spsa_demo.py examples/output
+
+2-D bowl min at (1.2, -0.8), start (-1.8, 1.9)
+  after 400 iters (800 evals): (+1.2000, -0.8000)  f=1.57e-10
+
+Evals to run 100 optimization steps:
+   dim   finite-diff   SPSA   speedup
+     50        10000     200     50x
+    200        40000     200    200x
+```
+
+Perturb every coordinate at once by a random +/-1 vector, measure f at theta+cDelta and theta-cDelta,
+and read the whole gradient from that single pair -- two evaluations per step in any dimension, versus
+2p for finite differences. Decaying gains a_k and c_k (Spall's alpha=0.602, gamma=0.101) guarantee
+convergence even under noise. Validated: it drives a bowl to 1e-10, finds a shifted optimum, converges
+under additive noise that would thrash finite differences, uses exactly two evals per iteration in every
+dimension, and is reproducible per seed. The stochastic-optimization companion to the cross-entropy-method
+and CMA-ES tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

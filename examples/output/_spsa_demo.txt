@@ -1,0 +1,27 @@
+SPSA -- Simultaneous Perturbation Stochastic Approximation
+==============================================================
+
+Gradient-free descent: 2 function evaluations per step, ANY dimension.
+
+2-D bowl min at (1.2, -0.8), start (-1.8, 1.9)
+  after 400 iters (800 evals): (+1.2000, -0.8000)  f=1.57e-10
+
+  iter        f(theta)
+  --------------------------
+     0    1.627754e+01
+    25    8.187897e-01
+    50    9.499714e-02
+   100    9.390518e-04
+   200    6.159109e-07
+   399    1.573076e-10
+
+Evals to run 100 optimization steps:
+   dim   finite-diff   SPSA   speedup
+   ------------------------------------
+     2          400     200      2x
+    10         2000     200     10x
+    50        10000     200     50x
+   200        40000     200    200x
+
+Noisy sphere (amp 0.05), 3-D: final |theta| = 0.0055
+  -> converges despite noise that would thrash finite differences.

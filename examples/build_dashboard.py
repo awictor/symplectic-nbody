@@ -642,6 +642,7 @@ def main():
     import spectrogram_demo
     import welch_psd_demo
     import cross_entropy_method_demo
+    import spsa_demo
 
     import plot_orbits
 
@@ -1253,6 +1254,7 @@ def main():
     spectrogram_txt = run("spectrogram_demo", spectrogram_demo.main, True)
     welch_psd_txt = run("welch_psd_demo", welch_psd_demo.main, True)
     cross_entropy_method_txt = run("cross_entropy_method_demo", cross_entropy_method_demo.main, True)
+    spsa_txt = run("spsa_demo", spsa_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11562,6 +11564,23 @@ def main():
             '<div class="grid">'
             + svg_card(out("cross_entropy_method.svg"), "CEM optimizing the Rastrigin function, a field of local minima. The Gaussian mean (yellow path) starts at the red dot and steps over the ripples straight to the global optimum at the origin (green ring) -- the population sampling walks past the traps that stop gradient descent")
             + f'<div class="card">{pre(cross_entropy_method_txt)}</div>'
+            + '</div>'),
+        section(
+            "SPSA: gradient-free descent in two measurements",
+            "Simultaneous Perturbation Stochastic Approximation (Spall 1992) estimates a full gradient "
+            "from just TWO function evaluations per step -- no matter how many parameters -- by "
+            "perturbing every coordinate at once with a random +/-1 vector and reading the difference. "
+            "Finite differences need 2p evaluations in p dimensions; SPSA needs 2, a 200x saving at "
+            "p=200. Decaying gain sequences a_k and c_k (Spall's alpha=0.602, gamma=0.101) guarantee "
+            "convergence even when the objective is corrupted by noise -- its signature strength, making "
+            "it a staple of hyperparameter tuning, control, and simulation optimization. Validated: it "
+            "drives a quadratic bowl to 1e-10, locates a shifted optimum, still converges under additive "
+            "noise that would thrash finite differences, uses exactly two evaluations per iteration in "
+            "every dimension from 1 to 50, its gains decay at the specified rates, and it is reproducible "
+            "per seed. The stochastic-optimization companion to the cross-entropy-method and CMA-ES tools.",
+            '<div class="grid">'
+            + svg_card(out("spsa.svg"), "SPSA descending a 2-D bowl. From the red start the mean (yellow) jitters -- each kink is a simultaneous perturbation of both coordinates -- yet marches straight to the optimum (green ring), reaching f=1e-10 in 400 steps on just 800 evaluations")
+            + f'<div class="card">{pre(spsa_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
