@@ -1,0 +1,30 @@
+Pratt certificate: a short, checkable proof of primality
+==========================================================
+Lucas test: n is prime iff some witness a has a^(n-1)=1 and
+a^((n-1)/q)!=1 for every prime q | n-1 -- and each such q is itself certified.
+
+certificate for 997 (10 nodes):
+  997: witness a=7, 997-1 factors into [2, 3, 83]
+    2  (base case)
+    3: witness a=2, 3-1 factors into [2]
+      2  (base case)
+    83: witness a=2, 83-1 factors into [2, 41]
+      2  (base case)
+      41: witness a=6, 41-1 factors into [2, 5]
+        2  (base case)
+        5: witness a=2, 5-1 factors into [2]
+          2  (base case)
+
+verifies? True
+
+certificate sizes (nodes) grow polynomially in the number of digits:
+     prime   nodes  witness
+         7       4        3
+       101       4        2
+       997      10        7
+      7919      14        7
+    104729      16       12
+   1299709      20        6
+
+This is why PRIMES is in NP: the certificate is short and anyone can re-check it
+with a handful of modular exponentiations -- no need to redo the primality search.

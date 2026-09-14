@@ -587,6 +587,7 @@ ruins a long non-symplectic integration.
 | `src/baillie_psw.py` | Baillie-PSW primality: strong Miller-Rabin base 2 + strong Lucas, Jacobi symbol |
 | `src/lenstra_ecm.py` | Lenstra elliptic-curve factorization: random curves mod N, factor from failed inversion |
 | `src/aks_primality.py` | AKS deterministic polynomial-time primality: (x+a)^n == x^n+a mod (x^r-1, n) |
+| `src/pratt_certificate.py` | Pratt primality certificates: recursive Lucas-test proof, independently verifiable |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1165,6 +1166,7 @@ ruins a long non-symplectic integration.
 | `examples/baillie_psw_demo.py` | How the Lucas half catches base-2 pseudoprimes Miller-Rabin misses |
 | `examples/lenstra_ecm_demo.py` | Factorizations of several numbers + an elliptic curve over a prime field |
 | `examples/aks_primality_demo.py` | The AKS polynomial identity coefficient grids, prime vs composite |
+| `examples/pratt_certificate_demo.py` | The recursive Pratt proof tree for 997 drawn as a node-link diagram |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13368,6 +13370,26 @@ deterministic trial division and Baillie-PSW for every n in a range (no errors),
 numbers and strong pseudoprimes; the polynomial identity holds for primes and fails for composites; and
 pi(500)=95. The deterministic-primality companion to the Baillie-PSW, Lucas-Lehmer, and Lenstra-ECM
 tools.
+
+## Pratt certificates: a short, checkable proof of primality
+
+The recursive proof that put PRIMES in NP. `pratt_certificate.py`:
+
+```
+$ python examples/pratt_certificate_demo.py examples/output
+
+  certificate for 997 (10 nodes):
+    997: witness a=7, 997-1 factors into [2, 3, 83]
+      83: witness a=2, 83-1 factors into [2, 41] ...
+  verifies? True
+```
+
+By the Lucas test, n is prime iff a witness a has order exactly n-1; to trust it you need n-1's prime
+factors certified, so the certificate recurses down to 2, with O((log n)^2) nodes. Validated: a
+certificate exists for every prime and no composite, the verifier rejects tampered ones (bad witness,
+missing factor, forged composite), the witness is a genuine primitive root, and build-then-verify
+round-trips. Reuses the Lenstra-ECM factorizer and Baillie-PSW test. The primality-proof companion to
+the AKS, Baillie-PSW, and Lucas-Lehmer tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

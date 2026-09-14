@@ -629,6 +629,7 @@ def main():
     import baillie_psw_demo
     import lenstra_ecm_demo
     import aks_primality_demo
+    import pratt_certificate_demo
 
     import plot_orbits
 
@@ -1227,6 +1228,7 @@ def main():
     baillie_psw_txt = run("baillie_psw_demo", baillie_psw_demo.main, True)
     lenstra_ecm_txt = run("lenstra_ecm_demo", lenstra_ecm_demo.main, True)
     aks_primality_txt = run("aks_primality_demo", aks_primality_demo.main, True)
+    pratt_certificate_txt = run("pratt_certificate_demo", pratt_certificate_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11274,6 +11276,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("aks_primality.svg"), "The AKS polynomial identity mod (x^7-1, n): for the prime n=11 the coefficient vectors of (x+1)^n and x^n+1 are identical (consistent with prime), while for the composite n=15 they differ -- the theorem AKS turned into a polynomial-time algorithm")
             + f'<div class="card">{pre(aks_primality_txt)}</div>'
+            + '</div>'),
+        section(
+            "Pratt certificates: a short, checkable proof of primality",
+            "Testing primality is one thing; PROVING it to a skeptic without redoing the work is "
+            "another. Pratt's 1975 certificate -- which put PRIMES in the complexity class NP -- is a "
+            "recursive proof small enough to write down and fast to verify. It rests on the Lucas test, "
+            "a converse of Fermat's little theorem: n is prime if and only if there is a witness a with "
+            "a^(n-1) = 1 (mod n) and a^((n-1)/q) != 1 for every prime q dividing n-1, so a has order "
+            "exactly n-1. The catch is 'every prime q dividing n-1' -- to trust the proof you must know "
+            "those q are prime, so the certificate RECURSES: it lists the factorization of n-1 and "
+            "attaches each prime factor's own Pratt certificate, all the way down to 2. The whole tree "
+            "has only O((log n)^2) nodes. Validated: a certificate is produced for every prime and no "
+            "composite; the verifier accepts genuine certificates and rejects tampered ones (wrong "
+            "witness, missing factor, forged composite); the witness is a genuine primitive root; the "
+            "tree bottoms out at 2; and build-then-verify round-trips for many primes. Reuses the "
+            "repo's Lenstra-ECM factorizer and Baillie-PSW test. The primality-proof companion to the "
+            "AKS, Baillie-PSW, and Lucas-Lehmer tools.",
+            '<div class="grid">'
+            + svg_card(out("pratt_certificate.svg"), "The Pratt certificate tree for 997: each node carries a witness and the prime factors of n-1, and its children recursively prove those factors prime, bottoming out at 2 (yellow). Ten nodes prove 997 prime, re-checkable with a handful of modular exponentiations")
+            + f'<div class="card">{pre(pratt_certificate_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
