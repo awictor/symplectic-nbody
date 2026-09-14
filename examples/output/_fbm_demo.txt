@@ -1,0 +1,19 @@
+Fractional Brownian motion: layered noise octaves
+====================================================
+fBm(x) = sum gain^i * noise(lacunarity^i * x); each octave doubles the
+frequency and halves the amplitude -- self-similar detail across scales.
+
+octaves=6, lacunarity=2.0, gain=0.5
+max amplitude (geometric sum): 1.9688
+
+total variation of a 1-D slice grows as octaves are added (more detail):
+  octaves   total variation
+        1            34.101
+        2            44.682
+        3            52.876
+        4            57.572
+        6            60.556
+        8            60.917
+
+variants: fBm = signed sum (terrain), turbulence = sum|noise| (clouds),
+ridged = sum(1-|noise|)^2 (sharp mountain ridges).

@@ -589,6 +589,7 @@ ruins a long non-symplectic integration.
 | `src/aks_primality.py` | AKS deterministic polynomial-time primality: (x+a)^n == x^n+a mod (x^r-1, n) |
 | `src/pratt_certificate.py` | Pratt primality certificates: recursive Lucas-test proof, independently verifiable |
 | `src/worley_noise.py` | Worley cellular/Voronoi noise: hashed feature points, F1/F2 distances, 3 metrics |
+| `src/fbm.py` | Fractional Brownian motion: octave-summed Perlin, turbulence, ridged, terrain heightmaps |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1169,6 +1170,7 @@ ruins a long non-symplectic integration.
 | `examples/aks_primality_demo.py` | The AKS polynomial identity coefficient grids, prime vs composite |
 | `examples/pratt_certificate_demo.py` | The recursive Pratt proof tree for 997 drawn as a node-link diagram |
 | `examples/worley_noise_demo.py` | F1/F2-F1 cellular textures rendered under Euclidean/Manhattan/Chebyshev |
+| `examples/fbm_demo.py` | fBm terrain, turbulence clouds, and ridged mountains rendered side by side |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13411,6 +13413,24 @@ F1 is the nearest-point distance, F2-F1 traces cell edges. Validated: hashed poi
 yet vary across cells, F1<=F2<=F3, F1=0 at a feature point, the 3x3 computation provably matches a wide
 brute-force search, F2-F1 is non-negative, and the metrics bound each other. The procedural-texture
 companion to the Perlin-noise, Voronoi, and Poisson-disk tools.
+
+## Fractional Brownian motion: layered noise for terrain and clouds
+
+Self-similar detail by summing noise octaves. `fbm.py`:
+
+```
+$ python examples/fbm_demo.py examples/output
+
+  fBm(x) = sum gain^i * noise(lacunarity^i * x)  (octaves=6, lac=2, gain=0.5)
+  total variation grows with octaves: 1 -> 34.1, 6 -> 60.6 (self-similar detail)
+  variants: fBm (terrain), turbulence sum|noise| (clouds), ridged (mountains)
+```
+
+Each octave doubles the frequency and scales the amplitude by the gain. Validated: one octave equals
+the base Perlin noise exactly, the output respects the geometric-series amplitude bound, turbulence and
+ridged are non-negative, adding octaves increases the total variation, lower gain is smoother, and fBm
+is continuous. Reuses the repo's Perlin noise. The multifractal companion to the Perlin-noise,
+Worley-noise, and Voronoi tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

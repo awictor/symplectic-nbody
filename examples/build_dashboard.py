@@ -631,6 +631,7 @@ def main():
     import aks_primality_demo
     import pratt_certificate_demo
     import worley_noise_demo
+    import fbm_demo
 
     import plot_orbits
 
@@ -1231,6 +1232,7 @@ def main():
     aks_primality_txt = run("aks_primality_demo", aks_primality_demo.main, True)
     pratt_certificate_txt = run("pratt_certificate_demo", pratt_certificate_demo.main, True)
     worley_noise_txt = run("worley_noise_demo", worley_noise_demo.main, True)
+    fbm_txt = run("fbm_demo", fbm_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11318,6 +11320,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("worley_noise.svg"), "Four Worley fields: F1 (Euclidean) shows round cells darkening toward their centres; F2-F1 lights up the cell boundaries (cobblestone); and the Manhattan and Chebyshev metrics reshape the cells into diamonds and squares")
             + f'<div class="card">{pre(worley_noise_txt)}</div>'
+            + '</div>'),
+        section(
+            "Fractional Brownian motion: layered noise for terrain and clouds",
+            "A single octave of Perlin noise has one characteristic bump size; real natural detail is "
+            "self-similar across scales -- big ridges, smaller ridges on those, pebbles on those. "
+            "Fractional Brownian motion builds that fractal richness by summing octaves of a base "
+            "noise, each at double the frequency (LACUNARITY) and a fraction of the amplitude (GAIN) of "
+            "the last: fBm(x) = sum gain^i * noise(lacunarity^i * x). High gain is rough and detailed, "
+            "low gain is smooth. The same sum reshaped gives the classic texture families: TURBULENCE "
+            "takes |noise| per octave for billowy clouds, and RIDGED multifractal uses (1 - |noise|)^2 "
+            "to carve sharp mountain ridges. Validated: with one octave fBm reduces exactly to the base "
+            "Perlin noise; the output respects the geometric-series amplitude bound; turbulence and "
+            "ridged fields are non-negative; adding octaves strictly increases the total variation "
+            "(more detail); lowering the gain makes the field smoother; the same seed is reproducible; "
+            "and fBm is continuous. Reuses the repo's Perlin noise. The multifractal companion to the "
+            "Perlin-noise, Worley-noise, and Voronoi tools.",
+            '<div class="grid">'
+            + svg_card(out("fbm.svg"), "The same six-octave noise sum in three guises: signed fBm shaded as a terrain heightmap (water through snow), turbulence giving billowy cloud structure, and ridged multifractal carving the sharp creases of mountain ranges")
+            + f'<div class="card">{pre(fbm_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
