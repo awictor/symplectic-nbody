@@ -610,6 +610,7 @@ def main():
     import admm_demo
     import matrix_profile_demo
     import soft_dtw_demo
+    import isolation_forest_demo
 
     import plot_orbits
 
@@ -1189,6 +1190,7 @@ def main():
     admm_txt = run("admm_demo", admm_demo.main, True)
     matrix_profile_txt = run("matrix_profile_demo", matrix_profile_demo.main, True)
     soft_dtw_txt = run("soft_dtw_demo", soft_dtw_demo.main, True)
+    isolation_forest_txt = run("isolation_forest_demo", isolation_forest_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10853,6 +10855,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("soft_dtw.svg"), "The soft alignment matrix between two series where one has a time-stretched plateau. At large gamma (left) the alignment mass is diffuse, averaging over many warping paths; at small gamma (right) it collapses onto the single optimal DTW path -- the bright ridge tracing the correspondence")
             + f'<div class="card">{pre(soft_dtw_txt)}</div>'
+            + '</div>'),
+        section(
+            "Isolation Forest: anomalies are the points easiest to isolate",
+            "Most anomaly detectors model what normal looks like; Isolation Forest inverts the idea. "
+            "Anomalies are few and different, so they are EASY TO ISOLATE. Build a random binary tree "
+            "by repeatedly picking a random feature and a random split between its min and max; points "
+            "in dense regions need many cuts to be separated from their neighbours, while an outlier "
+            "alone in empty space gets cut off after just a few. The PATH LENGTH to isolate a point is "
+            "therefore short for anomalies and long for normal points. Average it over a forest of "
+            "random trees, each grown on a small subsample, normalize by the expected binary-search "
+            "path length c(n) = 2H(n-1) - 2(n-1)/n, and the score 2^(-E[path]/c(n)) lands near 1 for "
+            "anomalies and below 0.5 for normal points -- no distance metric, no density estimate, "
+            "linear scaling. Validated: planted outliers score strictly above the inlier mean and rank "
+            "as the top anomalies, a point far from all data scores higher than a central one, scores "
+            "lie in (0,1), the c(n) normalization matches its closed form, results are reproducible for "
+            "a fixed seed, and it works from 1-D to higher dimensions. The unsupervised-anomaly "
+            "companion to the k-means, matrix-profile, and random-forest tools.",
+            '<div class="grid">'
+            + svg_card(out("isolation_forest.svg"), "Two dense gaussian blobs and five scattered outliers, colored by anomaly score. Points buried in a blob are blue (long isolation path, normal); the isolated outliers glow red (short path) and are the five highest-scored points -- recovered exactly")
+            + f'<div class="card">{pre(isolation_forest_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

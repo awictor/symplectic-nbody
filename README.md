@@ -568,6 +568,7 @@ ruins a long non-symplectic integration.
 | `src/admm.py` | ADMM operator splitting: Lasso/NNLS/consensus via prox steps, primal-dual residuals |
 | `src/matrix_profile.py` | Time-series matrix profile via MASS/FFT: motif and discord (anomaly) discovery |
 | `src/soft_dtw.py` | Differentiable soft-DTW: softmin recurrence, gamma->0 = hard DTW, soft alignment matrix |
+| `src/isolation_forest.py` | Isolation Forest anomaly detection: random-cut path length, normalized anomaly score |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1127,6 +1128,7 @@ ruins a long non-symplectic integration.
 | `examples/admm_demo.py` | ADMM Lasso sparse recovery + primal/dual residuals decaying to zero |
 | `examples/matrix_profile_demo.py` | Series with a planted motif and anomaly, both read off the profile curve |
 | `examples/soft_dtw_demo.py` | Soft alignment matrix (diffuse vs sharp) + the gamma->hard-DTW limit |
+| `examples/isolation_forest_demo.py` | Two blobs + scattered outliers, points colored by anomaly score |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12943,6 +12945,27 @@ self-minimized, converges to an independent hard-DTW computation as gamma -> 0, 
 between min and min - gamma*log(k), the alignment matrix is non-negative and concentrates on the
 optimal path as gamma -> 0, and it is smooth under small perturbations. The differentiable companion to
 the DTW and matrix-profile tools.
+
+## Isolation Forest: anomalies are the points easiest to isolate
+
+Unsupervised anomaly detection by random-cut path length. `isolation_forest.py`:
+
+```
+$ python examples/isolation_forest_demo.py examples/output
+
+  240 clustered points + 5 planted outliers
+  mean anomaly score, inliers:  0.4577
+  planted outliers score 0.69-0.76
+  top-5 most anomalous: 242, 241, 244, 243, 240   (the planted outliers)
+```
+
+Build random binary trees by picking a random feature and split; points in dense regions need many
+cuts to isolate, outliers only a few. Average the isolation path length over a forest, normalize by
+c(n) = 2H(n-1) - 2(n-1)/n, and score 2^(-E[path]/c(n)) is near 1 for anomalies, below 0.5 for normal
+points. Validated: planted outliers score above the inlier mean and rank as the top anomalies, a far
+point scores higher than a central one, scores lie in (0,1), c(n) matches its closed form, and results
+are reproducible per seed and work in 1-D through higher dimensions. The unsupervised-anomaly companion
+to the k-means, matrix-profile, and random-forest tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

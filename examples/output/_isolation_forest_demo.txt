@@ -1,0 +1,18 @@
+Isolation Forest: unsupervised anomaly detection
+======================================================
+240 clustered points (2 blobs) + 5 planted outliers
+forest: 150 trees, subsample 128, score = 2^(-E[path]/c(psi))
+
+mean anomaly score, inliers:  0.4577
+anomaly scores, planted outliers:
+  (  0.0,  5.0) -> 0.6946
+  ( -6.0,  4.0) -> 0.7573
+  (  6.0, -4.0) -> 0.7607
+  (  0.0, -5.0) -> 0.7213
+  ( -5.0, -4.0) -> 0.7479
+
+top-10 most anomalous point indices (planted outliers are 240-244):
+  242, 241, 244, 243, 240, 214, 216, 167, 86, 40
+
+Anomalies isolate in a few random cuts -> short path -> score near 1.
+Points buried in a dense blob need many cuts -> long path -> score below 0.5.
