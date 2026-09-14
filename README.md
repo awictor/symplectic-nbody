@@ -571,6 +571,7 @@ ruins a long non-symplectic integration.
 | `src/isolation_forest.py` | Isolation Forest anomaly detection: random-cut path length, normalized anomaly score |
 | `src/lof.py` | Local Outlier Factor: density-relative anomaly scores that catch local outliers |
 | `src/slice_sampling.py` | Slice sampling MCMC: stepping-out + shrinkage, self-tuning step size, 1-D & multivariate |
+| `src/importance_sampling.py` | Importance sampling: rare-event tail estimation, self-normalized IS, effective sample size |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1133,6 +1134,7 @@ ruins a long non-symplectic integration.
 | `examples/isolation_forest_demo.py` | Two blobs + scattered outliers, points colored by anomaly score |
 | `examples/lof_demo.py` | Dense + sparse clusters with a local outlier a global test would miss |
 | `examples/slice_sampling_demo.py` | Bimodal density with the sampled histogram overlaid on the true curve |
+| `examples/importance_sampling_demo.py` | Rare-tail estimation table + the proposal shift into the tail |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13014,6 +13016,26 @@ Validated: a standard normal recovers mean 0/variance 1, a shifted normal and an
 their moments, the empirical CDF matches the analytic one, a bimodal mixture is explored with the right
 mass in each mode, and results are reproducible per seed. The self-tuning-MCMC companion to the
 Metropolis, Gibbs, and HMC samplers.
+
+## Importance sampling: estimating events too rare to ever sample
+
+Variance reduction for rare-event and hard expectations. `importance_sampling.py`:
+
+```
+$ python examples/importance_sampling_demo.py examples/output
+
+    t        exact     naive MC           IS
+  4.0    3.169e-05    0.000e+00    3.180e-05
+  6.0    9.901e-10    0.000e+00    9.953e-10
+  50 repeats at t=3: variance reduction factor 263x
+```
+
+Draw from a proposal q that puts mass where it counts and correct with weights w = p/q:
+E_p[f] = E_q[f p/q]. The effective sample size ESS = (sum w)^2 / sum w^2 diagnoses the reweighting.
+Validated: P(Z > t) is recovered down to ~1e-9 where naive MC returns 0, with 200x-plus variance
+reduction; ESS is exactly n when q = p and collapses as the proposal mismatches; the self-normalized
+estimator recovers a mean without the normalizer; and the estimator is unbiased across seeds. The
+variance-reduction companion to the rejection-sampling, Metropolis, and Sobol tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

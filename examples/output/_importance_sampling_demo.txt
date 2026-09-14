@@ -1,0 +1,20 @@
+Importance sampling: estimating rare-event probabilities
+==========================================================
+target P(Z > t) for a standard normal, n = 20000 samples
+
+    t        exact     naive MC           IS   IS ESS
+  2.0    2.275e-02    2.510e-02    2.270e-02      591
+  3.0    1.350e-03    1.650e-03    1.351e-03       63
+  4.0    3.169e-05    0.000e+00    3.180e-05       17
+  5.0    2.871e-07    0.000e+00    2.885e-07        8
+  6.0    9.901e-10    0.000e+00    9.953e-10        6
+
+Naive Monte Carlo returns exactly 0 once the event is rarer than ~1/n:
+no sample ever lands in the tail. Importance sampling shifts the proposal
+to N(t, 1) so half the samples DO land past t, then reweights by p/q -- and
+stays accurate to many significant figures even at P ~ 1e-9.
+
+50 repeats at t=3, n=2000 each (exact 1.350e-03):
+  naive MC:  mean 1.310e-03  std 8.360e-04
+  IS:        mean 1.355e-03  std 5.157e-05
+  variance reduction factor: 263x

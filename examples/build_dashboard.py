@@ -613,6 +613,7 @@ def main():
     import isolation_forest_demo
     import lof_demo
     import slice_sampling_demo
+    import importance_sampling_demo
 
     import plot_orbits
 
@@ -1195,6 +1196,7 @@ def main():
     isolation_forest_txt = run("isolation_forest_demo", isolation_forest_demo.main, True)
     lof_txt = run("lof_demo", lof_demo.main, True)
     slice_sampling_txt = run("slice_sampling_demo", slice_sampling_demo.main, True)
+    importance_sampling_txt = run("importance_sampling_demo", importance_sampling_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10919,6 +10921,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("slice_sampling.svg"), "20000 slice samples of a bimodal mixture, with no proposal-width tuning. The histogram (blue) tracks the true density (yellow) across both modes and matches their relative weights -- the slice width adapts to the local shape on its own")
             + f'<div class="card">{pre(slice_sampling_txt)}</div>'
+            + '</div>'),
+        section(
+            "Importance sampling: estimating events too rare to ever sample",
+            "To estimate E_p[f(X)] by Monte Carlo you draw from p and average f -- but if f matters only "
+            "where p rarely puts samples, like a rare-event tail probability P(Z > 5), almost every "
+            "sample contributes nothing and the estimate is hopeless (naive MC simply returns 0). "
+            "Importance sampling draws instead from a PROPOSAL q that puts mass where it counts, and "
+            "corrects the bias with weights w = p/q: E_p[f] = E_q[f * p/q]. With a good proposal the "
+            "variance collapses -- the optimal q is proportional to |f|p -- and even a rough match cuts "
+            "the samples needed by orders of magnitude. The effective sample size ESS = (sum w)^2 / sum "
+            "w^2 diagnoses the reweighting: near n means healthy, near 1 means one sample dominates. "
+            "Validated: the tail probability P(Z > t) is recovered accurately down to ~1e-9 where naive "
+            "Monte Carlo returns exactly 0, with a 200x-plus variance reduction; ESS is exactly n when "
+            "q = p and collapses gracefully as the proposal mismatches; the self-normalized estimator "
+            "recovers a known mean without the normalizing constant; and the estimator is unbiased "
+            "across seeds. The variance-reduction companion to the rejection-sampling, Metropolis, and "
+            "Sobol tools.",
+            '<div class="grid">'
+            + svg_card(out("importance_sampling.svg"), "The target N(0,1) (blue) puts almost no samples past t=4, so naive Monte Carlo never sees the rare tail. Shifting the proposal to N(t,1) (green) lands about half its samples past t; reweighting by p/q recovers the true tail probability with tiny variance")
+            + f'<div class="card">{pre(importance_sampling_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
