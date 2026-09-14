@@ -1,0 +1,13 @@
+Cross-entropy method: derivative-free optimization
+====================================================
+loop: sample a Gaussian, keep the best (elite) points, re-fit the Gaussian
+to them, repeat -- the distribution marches to the optimum and tightens.
+
+benchmark results (all minima are 0):
+      function     start f     final f   minimizer
+        sphere      75.000     0.00000   [0.0, 0.0, -0.0]
+     Rastrigin      13.000     0.00000   [0.0, -0.0]
+    Rosenbrock       4.000     0.03320   [0.822, 0.672]
+
+Rastrigin is a field of local minima that traps gradient methods; CEM's
+population sampling walks past them to the global optimum at the origin.

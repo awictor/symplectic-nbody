@@ -599,6 +599,7 @@ ruins a long non-symplectic integration.
 | `src/wiener_filter.py` | Wiener filtering: minimum-MSE denoising H=S/(S+N) and regularized deconvolution |
 | `src/spectrogram.py` | Short-time Fourier transform: windowed frames, magnitude spectrogram, ridge track |
 | `src/welch_psd.py` | Welch power spectral density: averaged overlapping periodograms, low variance |
+| `src/cross_entropy_method.py` | Cross-entropy method: derivative-free optimization by elite-sample distribution fitting |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1189,6 +1190,7 @@ ruins a long non-symplectic integration.
 | `examples/wiener_filter_demo.py` | Noisy vs recovered vs clean signal + the per-frequency Wiener gain |
 | `examples/spectrogram_demo.py` | Time-frequency heatmap of a chirp + steady tone + late burst |
 | `examples/welch_psd_demo.py` | Jagged periodogram vs smooth Welch PSD on two tones in noise |
+| `examples/cross_entropy_method_demo.py` | The CEM Gaussian mean marching down the Rastrigin landscape |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13610,6 +13612,24 @@ segments. Validated: a tone gives a sharp peak, Welch has far lower coefficient 
 raw periodogram, more segments reduce it further, white noise is roughly flat, the PSD integrates to
 the signal power, and two buried tones are resolved. Reuses the repo's Bluestein DFT. The
 spectral-estimation companion to the spectrogram, FFT, and Wiener-filter tools.
+
+## Cross-entropy method: optimization by fitting the best samples
+
+Derivative-free optimization via elite-sample distribution fitting. `cross_entropy_method.py`:
+
+```
+$ python examples/cross_entropy_method_demo.py examples/output
+
+  function     start f     final f    minimizer
+    sphere      75.000     0.00000   [0, 0, 0]
+  Rastrigin     13.000     0.00000   [0, 0]   (escaped the multimodal trap)
+```
+
+Sample a Gaussian, keep the elite fraction, re-fit the Gaussian to them, repeat -- the distribution
+marches to the optimum. Validated: it minimizes a quadratic bowl, solves Rosenbrock and multimodal
+Rastrigin, the variance collapses toward the optimum, the best value improves monotonically, and it
+works in 1 through several dimensions. The derivative-free-optimization companion to the CMA-ES,
+differential-evolution, and particle-swarm tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

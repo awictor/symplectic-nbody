@@ -641,6 +641,7 @@ def main():
     import wiener_filter_demo
     import spectrogram_demo
     import welch_psd_demo
+    import cross_entropy_method_demo
 
     import plot_orbits
 
@@ -1251,6 +1252,7 @@ def main():
     wiener_filter_txt = run("wiener_filter_demo", wiener_filter_demo.main, True)
     spectrogram_txt = run("spectrogram_demo", spectrogram_demo.main, True)
     welch_psd_txt = run("welch_psd_demo", welch_psd_demo.main, True)
+    cross_entropy_method_txt = run("cross_entropy_method_demo", cross_entropy_method_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11540,6 +11542,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("welch_psd.svg"), "Two tones (25 and 60 Hz) buried in white noise: the raw periodogram (top) is a hairy mess that never smooths out, while Welch's averaged estimate (bottom) is clean and the two tones stand clearly above the noise floor -- a ~16x variance reduction")
             + f'<div class="card">{pre(welch_psd_txt)}</div>'
+            + '</div>'),
+        section(
+            "Cross-entropy method: optimization by fitting the best samples",
+            "The cross-entropy method optimizes a function you can only EVALUATE, not differentiate, "
+            "with a simple feedback loop over a sampling distribution. Draw a population of candidates "
+            "from a Gaussian, keep the top fraction (the ELITE set), and re-fit the Gaussian's mean and "
+            "variance to those elites; repeat, and because the elites cluster where the objective is "
+            "good, the distribution marches toward the optimum and tightens around it. It is called the "
+            "cross-entropy method because re-fitting to the elites is exactly minimizing the KL "
+            "distance to the ideal distribution concentrated on the best points. It needs no gradients, "
+            "tolerates noise and rugged landscapes, and is the core of the CEM planner in "
+            "model-predictive control and reinforcement learning. Validated: it minimizes a quadratic "
+            "bowl to high accuracy, solves the Rosenbrock and multimodal Rastrigin benchmarks (the "
+            "latter a trap that defeats naive local methods), the sampling variance collapses toward "
+            "the optimum, the best value improves monotonically, it works in 1 through several "
+            "dimensions, and it is reproducible per seed. The derivative-free-optimization companion to "
+            "the CMA-ES, differential-evolution, and particle-swarm tools.",
+            '<div class="grid">'
+            + svg_card(out("cross_entropy_method.svg"), "CEM optimizing the Rastrigin function, a field of local minima. The Gaussian mean (yellow path) starts at the red dot and steps over the ripples straight to the global optimum at the origin (green ring) -- the population sampling walks past the traps that stop gradient descent")
+            + f'<div class="card">{pre(cross_entropy_method_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
