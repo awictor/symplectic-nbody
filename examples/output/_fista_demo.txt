@@ -1,0 +1,21 @@
+FISTA: accelerated proximal gradient (Lasso)
+====================================================
+design matrix 60x16, lambda = 0.4, Lipschitz L = 41.78
+
+sparse recovery (nonzero true coefficients):
+  index     true    Lasso
+      1     1.89    1.858
+      5    -0.21   -0.192
+      9     1.73    1.702
+     13    -0.25   -0.233
+recovered 4 nonzeros (true: 4)
+
+iterations to reach objective error:
+   tolerance    ISTA   FISTA   speedup
+       1e-02      16      10      1.6x
+       1e-04      21      16      1.3x
+       1e-06      27      17      1.6x
+       1e-08      33      33      1.0x
+
+Nesterov momentum turns the O(1/k) ISTA rate into O(1/k^2) for free -- same
+gradient and soft-threshold per step, just evaluated at an extrapolated point.

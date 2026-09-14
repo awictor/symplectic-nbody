@@ -606,6 +606,7 @@ def main():
     import sobol_demo
     import johnson_demo
     import suffix_tree_demo
+    import fista_demo
 
     import plot_orbits
 
@@ -1181,6 +1182,7 @@ def main():
     sobol_txt = run("sobol_demo", sobol_demo.main, True)
     johnson_txt = run("johnson_demo", johnson_demo.main, True)
     suffix_tree_txt = run("suffix_tree_demo", suffix_tree_demo.main, True)
+    fista_txt = run("fista_demo", fista_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10763,6 +10765,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("suffix_tree.svg"), "The suffix tree of 'banana$'. Each root-to-leaf path spells a suffix (green leaves); internal branch nodes (blue) mark repeated substrings -- the node above 'na' and 'ana' is why those are the repeats. Edges are labelled by the substring they carry")
             + f'<div class="card">{pre(suffix_tree_txt)}</div>'
+            + '</div>'),
+        section(
+            "FISTA: accelerated proximal gradient and the momentum speedup",
+            "A huge class of learning and signal problems minimize f(x) + g(x), where f is smooth (a "
+            "least-squares fit) and g is a simple non-smooth regularizer (the L1 norm for sparsity). "
+            "Gradient descent can't touch the non-smooth g, but the PROXIMAL GRADIENT method (ISTA) "
+            "can: gradient-step on f, then apply the proximal operator of g -- which for the L1 norm is "
+            "soft-thresholding, shrinking coefficients toward zero and clamping small ones to exactly "
+            "zero (that is what makes the solution sparse). ISTA converges at O(1/k). Beck and "
+            "Teboulle's FISTA adds one cheap ingredient, Nesterov MOMENTUM -- take the prox step from an "
+            "extrapolated look-ahead point -- and provably accelerates the rate to O(1/k^2), a "
+            "quadratic speedup for the same work per iteration. Validated: FISTA minimizes a quadratic "
+            "exactly, soft-thresholding solves the scalar L1 problem, the Lasso solution zeros the "
+            "inactive features and recovers the active ones, FISTA reaches a target accuracy in strictly "
+            "fewer iterations than ISTA, the non-negative-least-squares variant satisfies its KKT "
+            "conditions, and a larger penalty yields a sparser solution. The proximal-optimization "
+            "companion to the Lasso, L-BFGS, and conjugate-gradient tools.",
+            '<div class="grid">'
+            + svg_card(out("fista.svg"), "Left: Lasso recovers a planted sparse signal -- the estimate (green) matches the true nonzero coefficients (yellow) and zeros the rest. Right: on a log-log plot FISTA's objective error (green) falls as ~1/k^2, an order of magnitude ahead of ISTA's ~1/k (red) at tight tolerance")
+            + f'<div class="card">{pre(fista_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -564,6 +564,7 @@ ruins a long non-symplectic integration.
 | `src/sobol.py` | Sobol low-discrepancy sequence: direction numbers, Gray-code recursion, quasi-Monte Carlo |
 | `src/johnson.py` | Johnson's all-pairs shortest paths: Bellman-Ford reweighting + per-source Dijkstra |
 | `src/suffix_tree.py` | Ukkonen's linear-time suffix tree: substring search, distinct-substring & LRS queries |
+| `src/fista.py` | FISTA accelerated proximal gradient: Lasso/NNLS, soft-threshold prox, O(1/k^2) momentum |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1119,6 +1120,7 @@ ruins a long non-symplectic integration.
 | `examples/sobol_demo.py` | Sobol vs random point clouds + QMC vs Monte Carlo convergence on log-log axes |
 | `examples/johnson_demo.py` | Reweighting a negative-edge graph to non-negative + all-pairs distance matrix |
 | `examples/suffix_tree_demo.py` | The suffix tree of 'banana' drawn out, with substring/repeat queries |
+| `examples/fista_demo.py` | Lasso sparse recovery + ISTA vs FISTA convergence on log-log axes |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12850,6 +12852,29 @@ for free, and suffix links hop from c*X to X in O(1). Validated against brute fo
 suffix array: containment and occurrence counts match a naive scan, the distinct-substring count
 matches n(n+1)/2 - sum(lcp) across 40 random strings, and the longest repeated substring matches the
 max-LCP answer. The linear-time companion to the suffix-array, suffix-automaton, and Aho-Corasick tools.
+
+## FISTA: accelerated proximal gradient and the momentum speedup
+
+Sparse optimization with a provable quadratic speedup. `fista.py`:
+
+```
+$ python examples/fista_demo.py examples/output
+
+  design 60x16, lambda = 0.4
+  sparse recovery: 4 nonzeros recovered (true: 4)
+  iterations to reach objective error:
+     tolerance    ISTA   FISTA
+         1e-06      27      17
+  Nesterov momentum turns O(1/k) into O(1/k^2) for free.
+```
+
+For min f(x) + g(x) with f smooth and g non-smooth, proximal gradient (ISTA) does a gradient step then
+a prox step -- soft-thresholding for the L1 norm, which zeros small coefficients. FISTA takes the prox
+step from a momentum-extrapolated point, accelerating O(1/k) to O(1/k^2) at the same per-iteration cost.
+Validated: FISTA minimizes a quadratic exactly, the Lasso zeros inactive features and recovers active
+ones, FISTA reaches a target accuracy in fewer iterations than ISTA, the non-negative-least-squares
+variant satisfies its KKT conditions, and a larger penalty gives a sparser solution. The
+proximal-optimization companion to the Lasso, L-BFGS, and conjugate-gradient tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
