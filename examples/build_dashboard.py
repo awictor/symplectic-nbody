@@ -625,6 +625,7 @@ def main():
     import polygon_clipping_demo
     import minkowski_sum_demo
     import chakravala_demo
+    import cipolla_demo
 
     import plot_orbits
 
@@ -1219,6 +1220,7 @@ def main():
     polygon_clipping_txt = run("polygon_clipping_demo", polygon_clipping_demo.main, True)
     minkowski_sum_txt = run("minkowski_sum_demo", minkowski_sum_demo.main, True)
     chakravala_txt = run("chakravala_demo", chakravala_demo.main, True)
+    cipolla_txt = run("cipolla_demo", cipolla_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11185,6 +11187,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("chakravala.svg"), "The auxiliary |k| across the cyclic steps for D=61: it bounces among small values as the method composes triples, then snaps to 1 (green) at step 14, where the triple (a, b) is exactly the fundamental solution x=1766319049, y=226153980")
             + f'<div class="card">{pre(chakravala_txt)}</div>'
+            + '</div>'),
+        section(
+            "Cipolla's algorithm: modular square roots through an imaginary field",
+            "Solving x^2 = n (mod p) is the modular square root. Where Tonelli-Shanks chases the 2-adic "
+            "structure of p - 1, Cipolla's algorithm (1907) takes an elegant detour through a QUADRATIC "
+            "FIELD EXTENSION. Pick any a for which a^2 - n is a non-residue, so its square root does not "
+            "exist mod p; adjoin it, working in GF(p^2) = { u + v*w } with w^2 = a^2 - n a formal "
+            "'imaginary' element. Then the single field power x = (a + w)^((p+1)/2) is guaranteed to "
+            "land back in GF(p) (its imaginary part vanishes) and to square to n. One exponentiation in "
+            "a two-dimensional field, with no case analysis on the powers of two dividing p - 1 -- which "
+            "makes Cipolla especially clean exactly where Tonelli-Shanks works hardest. Validated "
+            "against the repo's Tonelli-Shanks solver: both agree on the roots for every n across "
+            "several full primes, every returned root squares to n, non-residues correctly report no "
+            "root, the two roots are negatives mod p, it handles n = 0 and p = 2, and it recovers "
+            "sqrt(2) modulo a billion-scale prime exactly. The modular-arithmetic companion to the "
+            "Tonelli-Shanks, quadratic-residue, and discrete-log tools.",
+            '<div class="grid">'
+            + svg_card(out("cipolla.svg"), "The map x -> x^2 mod 37: squaring is two-to-one on the residues, and the two red points on the dashed line (n=10) are the square roots Cipolla recovers with a single exponentiation in GF(p^2)")
+            + f'<div class="card">{pre(cipolla_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

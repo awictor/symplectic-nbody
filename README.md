@@ -583,6 +583,7 @@ ruins a long non-symplectic integration.
 | `src/polygon_clipping.py` | Sutherland-Hodgman polygon clipping against a convex window, shoelace area |
 | `src/minkowski_sum.py` | Minkowski sum of convex polygons (O(n+m) edge merge) + collision via the difference |
 | `src/chakravala.py` | Chakravala cyclic method for Pell's equation x^2-Dy^2=1, exact integer, Brahmagupta composition |
+| `src/cipolla.py` | Cipolla's modular square root via GF(p^2) field exponentiation, both roots |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1157,6 +1158,7 @@ ruins a long non-symplectic integration.
 | `examples/polygon_clipping_demo.py` | A convex polygon clipped against a rectangle window, before/after |
 | `examples/minkowski_sum_demo.py` | A(+)B of two convex polygons + collision via the Minkowski difference |
 | `examples/chakravala_demo.py` | Cyclic steps solving D=61's Pell equation, |k| homing in on 1 |
+| `examples/cipolla_demo.py` | The map x->x^2 mod p with the two square roots highlighted |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13284,6 +13286,25 @@ D=61 and D=109), the solution satisfies x^2 - D y^2 = 1 exactly in big integers,
 rejected, Brahmagupta composition generates valid higher solutions, and every intermediate triple
 satisfies its own a^2 - D b^2 = k invariant. The number-theory companion to the Pell,
 continued-fraction, and Tonelli-Shanks tools.
+
+## Cipolla's algorithm: modular square roots through an imaginary field
+
+Modular sqrt via a quadratic field extension. `cipolla.py`:
+
+```
+$ python examples/cipolla_demo.py examples/output
+
+  solve x^2 = n (mod 37) in GF(37^2): x = (a + w)^((p+1)/2), w^2 = a^2 - n
+  n=10 -> roots (11, 26);  n=2 -> none (non-residue)
+  sqrt(2) mod 1000000007 recovered exactly
+```
+
+Pick a with a^2 - n a non-residue, adjoin w = sqrt(a^2 - n), and one power (a + w)^((p+1)/2) in GF(p^2)
+lands back in GF(p) as a root of n -- no case analysis on the 2-adic structure of p-1. Validated against
+the repo's Tonelli-Shanks: both agree for every n across several full primes, every root squares to n,
+non-residues report no root, the two roots are negatives mod p, and it handles n=0, p=2, and
+billion-scale primes. The modular-arithmetic companion to the Tonelli-Shanks, quadratic-residue, and
+discrete-log tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
