@@ -1,0 +1,18 @@
+Thiele's continued-fraction interpolation: rational functions, poles, no Runge blow-up
+
+  Runge function 1/(1+25x^2), 11 equispaced nodes on [-1, 1]:
+    max error, Thiele (rational):   2.44e-15
+    max error, Lagrange (polynomial): 1.916
+    Thiele is 784299029740208x more accurate -- the Runge
+    function IS rational, so Thiele reproduces it while the polynomial oscillates.
+
+  a function with a pole at x = 0.35: 1/(x - 0.35)
+         x        Thiele          true
+       0.7      2.857143      2.857143
+       1.2      1.176471      1.176471
+      -0.5     -1.176471     -1.176471
+       2.5      0.465116      0.465116
+  a polynomial can never reproduce that blow-up; the rational interpolant places the
+  pole exactly where it belongs.
+
+  wrote examples/output\thiele.svg

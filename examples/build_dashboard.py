@@ -587,6 +587,7 @@ def main():
     import sturm_demo
     import resultant_demo
     import pohlig_hellman_demo
+    import thiele_demo
 
     import plot_orbits
 
@@ -1143,6 +1144,7 @@ def main():
     sturm_txt = run("sturm_demo", sturm_demo.main, True)
     resultant_txt = run("resultant_demo", resultant_demo.main, True)
     pohlig_hellman_txt = run("pohlig_hellman_demo", pohlig_hellman_demo.main, True)
+    thiele_txt = run("thiele_demo", thiele_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10343,6 +10345,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("pohlig_hellman.svg"), "Pohlig-Hellman splitting one discrete log modulo 2028 = 2^2 * 3 * 13^2 into three small prime-power-subgroup logs, each cracked by baby-step giant-step and recombined by the Chinese Remainder Theorem")
             + f'<div class="card">{pre(pohlig_hellman_txt)}</div>'
+            + '</div>'),
+        section(
+            "Thiele interpolation: fitting a rational function by continued fractions",
+            "Polynomial interpolation is the reflex, but polynomials are wrong for data with POLES or "
+            "asymptotes -- forced through such points they oscillate wildly (Runge's phenomenon) and "
+            "can never reproduce a 1/(x-a) blow-up. RATIONAL interpolation p(x)/q(x) captures poles "
+            "naturally, and THIELE'S formula (1909) builds it as a CONTINUED FRACTION whose "
+            "coefficients are the diagonal of an INVERSE-DIFFERENCE table -- the rational analogue of "
+            "Newton's divided differences, computed once and evaluated anywhere in O(n). Where the "
+            "polynomial interpolant of the Runge function 1/(1+25x^2) on equispaced nodes diverges, "
+            "Thiele reproduces it to machine precision, because that function IS rational. Validated: "
+            "the interpolant passes through every node; it recovers a known rational (x+1)/(x^2+1) "
+            "off-node to 1e-9; it reconstructs a function with a genuine pole 1/(x-0.5); it recovers a "
+            "polynomial exactly given more nodes than its degree; and on Runge it is fifteen orders of "
+            "magnitude more accurate than the equispaced polynomial. The rational-interpolation "
+            "companion to the barycentric-Lagrange, Pade, and spline tools.",
+            '<div class="grid">'
+            + svg_card(out("thiele.svg"), "The Runge function (green) with Thiele's rational interpolant (blue) lying exactly on it while the equispaced polynomial interpolant (orange) oscillates violently near the edges -- rational interpolation beats polynomial when the target has the right shape")
+            + f'<div class="card">{pre(thiele_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

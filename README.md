@@ -545,6 +545,7 @@ ruins a long non-symplectic integration.
 | `src/sturm.py` | Sturm's theorem: exact real-root counting + isolation via Sturm sequences |
 | `src/resultant.py` | Resultant + discriminant via the Sylvester matrix (common/repeated roots, elimination) |
 | `src/pohlig_hellman.py` | Pohlig-Hellman discrete log on smooth-order groups (subgroups + CRT) |
+| `src/thiele.py` | Thiele rational interpolation by continued fractions (poles, no Runge blow-up) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1081,6 +1082,7 @@ ruins a long non-symplectic integration.
 | `examples/sturm_demo.py` | Isolating a degree-5 polynomial's real roots + V(x) dropping past each |
 | `examples/resultant_demo.py` | Common-root detection, discriminant classification, circle-line elimination |
 | `examples/pohlig_hellman_demo.py` | Cracking a smooth-order discrete log via subgroups + CRT vs a safe prime |
+| `examples/thiele_demo.py` | Thiele vs polynomial on the Runge function + pole reconstruction |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12380,6 +12382,26 @@ CRT -- which is why real cryptographic groups use an order divisible by a large 
 BSGS, CRT, and factorization. Validated: recovers x for random exponents, agrees with brute force,
 solves composite-order subgroups, and returns None when no log exists. The smooth-order discrete-log
 companion to the baby-step-giant-step, CRT, and Diffie-Hellman tools.
+
+## Thiele interpolation: fitting a rational function by continued fractions
+
+Interpolate data with poles or asymptotes, where polynomials fail. `thiele.py`:
+
+```
+$ python examples/thiele_demo.py examples/output
+
+  Runge function 1/(1+25x^2), 11 equispaced nodes on [-1, 1]:
+    max error, Thiele (rational):     2.44e-15
+    max error, Lagrange (polynomial): 1.916
+  pole 1/(x-0.35): Thiele reproduces it exactly where a polynomial cannot
+```
+
+Thiele's formula builds a rational interpolant as a continued fraction whose coefficients are the
+diagonal of an inverse-difference table -- the rational analogue of Newton's divided differences.
+Because the Runge function is itself rational, Thiele reproduces it to machine precision while the
+equispaced polynomial oscillates. Validated: passes through every node, recovers (x+1)/(x^2+1)
+off-node, reconstructs a genuine pole, and recovers polynomials exactly given enough nodes. The
+rational-interpolation companion to the barycentric-Lagrange, Pade, and spline tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
