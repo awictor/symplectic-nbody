@@ -579,6 +579,7 @@ ruins a long non-symplectic integration.
 | `src/hessenberg.py` | Hessenberg/tridiagonal reduction by Householder similarity (A=QHQ^T), eigenvalue-preserving |
 | `src/schur_decomposition.py` | Real Schur form A=QTQ^T by shifted QR iteration; eigenvalues from diagonal blocks |
 | `src/luby_transform.py` | Luby Transform fountain codes: robust soliton, XOR encoding, peeling erasure decoder |
+| `src/hadamard_code.py` | Hadamard code: distance-n/2 coding, FWHT maximum-likelihood decode (Mariner 9) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1149,6 +1150,7 @@ ruins a long non-symplectic integration.
 | `examples/hessenberg_demo.py` | Dense matrix reduced to upper-Hessenberg form, shown as sparsity heatmaps |
 | `examples/schur_decomposition_demo.py` | Matrix reduced to real Schur form with a highlighted 2x2 complex block |
 | `examples/luby_transform_demo.py` | Decoding-success-vs-overhead curve for a fountain-coded message |
+| `examples/hadamard_code_demo.py` | Walsh-Hadamard spectrum of a corrupted word with the message spike |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13197,6 +13199,26 @@ degree-one symbol decodes directly, a message is recovered once enough symbols a
 random subset works (arbitrary erasures), re-encoding a decoded message reproduces the symbols, and
 decoding fails gracefully when too few arrive. The erasure-coding companion to the Reed-Solomon, BCH,
 and LDPC tools.
+
+## Hadamard codes: maximum distance, decoded by one transform
+
+Distance-n/2 coding decoded by a single Walsh-Hadamard transform. `hadamard_code.py`:
+
+```
+$ python examples/hadamard_code_demo.py examples/output
+
+  m=6, codeword length 64, minimum distance 32, corrects 15 errors
+  sent message 42, injected 15 errors -> decoded 42 (correct)
+  correlation peak 34 of 64 (= n - 2*errors)
+```
+
+Codewords are the rows of the Hadamard matrix (bit i = parity of message AND i), mutually orthogonal
++/-1 vectors at distance n/2. Decoding maps the received word to +/-1 and applies the fast
+Walsh-Hadamard transform, correlating against all 2^m codewords at once; the tallest spike is the
+message. Validated: every pair of codewords is at distance exactly n/2, clean codewords self-decode,
+the code corrects every error pattern below n/4 (exhaustively for small m), the FWHT decoder matches a
+brute-force decoder, and the peak drops as n - 2*errors. This is the code that returned the Mariner 9
+Mars photographs. The high-distance companion to the Reed-Muller, BCH, and Reed-Solomon tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

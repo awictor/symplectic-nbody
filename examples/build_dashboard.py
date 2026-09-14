@@ -621,6 +621,7 @@ def main():
     import hessenberg_demo
     import schur_decomposition_demo
     import luby_transform_demo
+    import hadamard_code_demo
 
     import plot_orbits
 
@@ -1211,6 +1212,7 @@ def main():
     hessenberg_txt = run("hessenberg_demo", hessenberg_demo.main, True)
     schur_decomposition_txt = run("schur_decomposition_demo", schur_decomposition_demo.main, True)
     luby_transform_txt = run("luby_transform_demo", luby_transform_demo.main, True)
+    hadamard_code_txt = run("hadamard_code_demo", hadamard_code_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11095,6 +11097,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("luby_transform.svg"), "Decoding success against the number of symbols collected: near zero until about k symbols, then it climbs sharply so a small constant overhead makes recovery near-certain -- regardless of which symbols the lossy channel actually delivered")
             + f'<div class="card">{pre(luby_transform_txt)}</div>'
+            + '</div>'),
+        section(
+            "Hadamard codes: maximum distance, decoded by one transform",
+            "The Hadamard code trades rate for extraordinary robustness: it encodes an m-bit message as "
+            "a length-2^m codeword -- only m+1 information bits in 2^m transmitted bits -- but any two "
+            "distinct codewords differ in exactly n/2 positions, so it corrects nearly n/4 errors. It "
+            "famously carried the Mariner 9 photographs back from Mars over a brutally noisy channel. "
+            "The codewords are the rows of the Hadamard matrix -- mutually orthogonal +/-1 sign vectors "
+            "whose i-th bit is the parity of the message AND i. That orthogonality makes decoding a "
+            "single transform: map the received word to +/-1, apply the fast Walsh-Hadamard transform "
+            "(which correlates against all 2^m codewords at once in O(n log n)), and the "
+            "largest-magnitude coefficient names the message -- maximum-likelihood decoding for the "
+            "price of one FFT-like pass. Validated: every pair of distinct codewords is at distance "
+            "exactly n/2, a clean codeword decodes to itself, the code corrects every error pattern "
+            "below n/4 (exhaustively for small m), the FWHT decoder agrees with a brute-force "
+            "max-correlation decoder, and the correlation peak drops as n - 2*errors exactly as "
+            "predicted. Reuses the repo's Walsh-Hadamard transform. The high-distance companion to the "
+            "Reed-Muller, BCH, and Reed-Solomon tools.",
+            '<div class="grid">'
+            + svg_card(out("hadamard_code.svg"), "The Walsh-Hadamard spectrum of a word corrupted by 15 of 64 bits: every coefficient is small noise except one towering spike (red) at the sent message. Decoding is just argmax -- the transform correlated against all 64 codewords simultaneously")
+            + f'<div class="card">{pre(hadamard_code_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

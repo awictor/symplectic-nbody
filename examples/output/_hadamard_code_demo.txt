@@ -1,0 +1,14 @@
+Hadamard code: max-distance coding, decoded by one transform
+============================================================
+parameters: m=6, codeword length n=2^6=64, minimum distance n/2=32
+correction radius: 15 errors (nearly n/4)
+rate: 7/64 info bits per transmitted bit (very low -- pays for robustness)
+
+sent message:      42
+errors injected:   15 (of 64 bits flipped)
+decoded message:   42  (correct)
+correlation peak:  34 of 64  (= n - 2*errors = 34)
+
+Decoding is a single fast Walsh-Hadamard transform: it correlates the received
+word against ALL 2^m codewords at once, and the tallest spike names the message.
+This is the code that returned the Mariner 9 photographs from Mars.
