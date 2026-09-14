@@ -656,6 +656,7 @@ def main():
     import affinity_propagation_demo
     import self_organizing_map_demo
     import fuzzy_cmeans_demo
+    import lloyd_max_demo
 
     import plot_orbits
 
@@ -1281,6 +1282,7 @@ def main():
     affinity_propagation_txt = run("affinity_propagation_demo", affinity_propagation_demo.main, True)
     self_organizing_map_txt = run("self_organizing_map_demo", self_organizing_map_demo.main, True)
     fuzzy_cmeans_txt = run("fuzzy_cmeans_demo", fuzzy_cmeans_demo.main, True)
+    lloyd_max_txt = run("lloyd_max_demo", lloyd_max_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11859,6 +11861,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("fuzzy_cmeans.svg"), "90 points from three overlapping blobs, each dot colored by BLENDING the three cluster colors in proportion to its memberships. Points deep in a cluster are pure blue/red/green; ambiguous points in the overlaps are blended and drawn larger. White crosses are the centers -- hard clustering would erase this membership gradient")
             + f'<div class="card">{pre(fuzzy_cmeans_txt)}</div>'
+            + '</div>'),
+        section(
+            "Lloyd-Max: the minimum-distortion quantizer",
+            "Every analog-to-digital conversion and lossy codec must replace a continuous value with one "
+            "of N discrete levels while losing as little as possible. A uniform quantizer spaces levels "
+            "evenly -- wasteful when the signal spends most of its time near zero, since rare large values "
+            "get as many levels as common small ones. The Lloyd-Max quantizer (Lloyd 1957, Max 1960) is "
+            "optimal for a known source distribution: it alternates two conditions until convergence -- "
+            "each decision boundary sits halfway between its neighboring reconstruction levels, and each "
+            "level is the probability-weighted centroid of the values in its cell. This is Lloyd's "
+            "algorithm, the 1-D ancestor of k-means, and it packs levels where the probability mass is. "
+            "Validated: for a uniform source the optimal levels ARE evenly spaced and the distortion "
+            "equals the theoretical Delta^2/12; for a Gaussian source it beats a uniform quantizer by "
+            "several dB of SNR at the same bit rate; the distortion falls roughly as 1/N^2; the "
+            "optimality conditions (midpoint boundaries, centroid levels) hold at convergence; and an "
+            "empirical-sample version reduces to k-means on a line. The optimal-quantization companion to "
+            "the k-means, PCA-whitening, and Huffman-coding tools.",
+            '<div class="grid">'
+            + svg_card(out("lloyd_max.svg"), "A Gaussian source (blue density) quantized to 8 levels. Lloyd-Max levels (yellow) drop from the curve and crowd under the peak where samples are common, spreading out in the rare tails; the evenly-spaced uniform levels (red ticks) waste resolution in the tails. The result is 5-9 dB more SNR at the same level count")
+            + f'<div class="card">{pre(lloyd_max_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

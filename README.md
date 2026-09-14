@@ -614,6 +614,7 @@ ruins a long non-symplectic integration.
 | `src/affinity_propagation.py` | Affinity propagation: exemplar clustering by message passing, no preset cluster count |
 | `src/self_organizing_map.py` | Self-organizing (Kohonen) map: topology-preserving neural grid for high-dimensional data |
 | `src/fuzzy_cmeans.py` | Fuzzy c-means: soft clustering with graded per-cluster memberships |
+| `src/lloyd_max.py` | Lloyd-Max quantizer: minimum-distortion scalar quantization for a known source |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1219,6 +1220,7 @@ ruins a long non-symplectic integration.
 | `examples/affinity_propagation_demo.py` | Four blobs clustered with no k, exemplars elected by message passing, with a preference sweep |
 | `examples/self_organizing_map_demo.py` | A 10x10 SOM learning four color clusters into a smooth grid, with the quantization-error curve |
 | `examples/fuzzy_cmeans_demo.py` | Soft memberships blended as point colors on overlapping blobs, with a fuzzifier sweep |
+| `examples/lloyd_max_demo.py` | Lloyd-Max levels crowding under a Gaussian peak vs uniform, with an SNR-gain table |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13992,6 +13994,29 @@ sets softness (m -> 1 is hard k-means). Validated: recovers centers with near-cr
 between two centers gets ~50/50, memberships sum to 1, the objective decreases monotonically, the partition
 coefficient tracks crispness, and as m -> 1 the partition matches k-means exactly. The soft-clustering
 companion to the k-means, GMM, affinity-propagation, and DBSCAN tools.
+
+## Lloyd-Max: the minimum-distortion quantizer
+
+Optimal scalar quantization for a known source. `lloyd_max.py`:
+
+```
+$ python examples/lloyd_max_demo.py examples/output
+
+SNR vs number of levels (Lloyd-Max minus uniform):
+   levels   uniform SNR   Lloyd-Max SNR   gain
+      8         8.85          14.62     +5.76 dB
+     16        14.87          20.22     +5.34 dB
+
+Lloyd-Max levels (N=8): -2.15 -1.34 -0.76 -0.25 +0.25 +0.76 +1.34 +2.15
+  smallest gap 0.49 near center, largest 0.81 in the tails
+```
+
+Alternate two optimality conditions to convergence: each boundary is the midpoint of its neighboring
+levels, each level is the probability-weighted centroid of its cell (Lloyd's algorithm, the 1-D ancestor
+of k-means). Levels pack where the mass is. Validated: uniform source gives evenly-spaced levels and
+distortion Delta^2/12, Gaussian source beats uniform by several dB, distortion falls ~1/N^2, the optimality
+conditions hold at convergence, and the sample-based version reduces to k-means on a line. The
+optimal-quantization companion to the k-means, PCA-whitening, and Huffman-coding tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
