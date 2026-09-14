@@ -562,6 +562,7 @@ ruins a long non-symplectic integration.
 | `src/nurbs.py` | Non-Uniform Rational B-Splines: exact circles/conics via control-point weights |
 | `src/rbf_interpolation.py` | Radial basis function interpolation: gaussian/multiquadric/thin-plate, any dimension |
 | `src/sobol.py` | Sobol low-discrepancy sequence: direction numbers, Gray-code recursion, quasi-Monte Carlo |
+| `src/johnson.py` | Johnson's all-pairs shortest paths: Bellman-Ford reweighting + per-source Dijkstra |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1115,6 +1116,7 @@ ruins a long non-symplectic integration.
 | `examples/nurbs_demo.py` | Exact NURBS circle vs a polynomial B-spline + the weight knob pulling a curve |
 | `examples/rbf_interpolation_demo.py` | Two-bump surface reconstructed from 45 scattered samples (heatmap) |
 | `examples/sobol_demo.py` | Sobol vs random point clouds + QMC vs Monte Carlo convergence on log-log axes |
+| `examples/johnson_demo.py` | Reweighting a negative-edge graph to non-negative + all-pairs distance matrix |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12801,6 +12803,27 @@ dyadic point set, power-of-two prefixes are stratified (a genuine (0,2)-sequence
 discrepancy beats Halton and random, and quasi-Monte Carlo converges as ~1/N versus random MC's
 ~1/sqrt(N) -- a 50x-plus error advantage by N=16384. The quasi-random companion to the Halton and
 Hammersley sequences.
+
+## Johnson's algorithm: all-pairs shortest paths on sparse graphs
+
+Every-pair shortest paths in O(V E log V), even with negative edges. `johnson.py`:
+
+```
+$ python examples/johnson_demo.py examples/output
+
+  5 nodes, 9 directed edges, 2 negative
+  potentials h: h[0]=0 h[1]=-1 h[2]=-5 h[3]=0 h[4]=-4
+  reweighted:  0->4: -4 -> 0,   3->2: -5 -> 0   (all edges now >= 0)
+  shortest path 0 -> 2: 0 -> 4 -> 3 -> 2  (length -3)
+```
+
+Floyd-Warshall is O(V^3) regardless of edge count; Johnson runs Dijkstra from every source instead,
+which wins on sparse graphs -- but first it must remove negative edges. It adds a virtual source, runs
+Bellman-Ford for potentials h(v), and reweights w'(u,v) = w(u,v) + h(u) - h(v). The triangle inequality
+makes w' >= 0, and telescoping potentials keep every shortest path unchanged. Validated: reweighted
+edges are non-negative, all-pairs distances match an independent Floyd-Warshall (including 20 random
+graphs), negative cycles are detected, and reconstructed paths have the reported length. The
+sparse-graph companion to the Dijkstra, Bellman-Ford, and Floyd-Warshall tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

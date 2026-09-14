@@ -604,6 +604,7 @@ def main():
     import nurbs_demo
     import rbf_interpolation_demo
     import sobol_demo
+    import johnson_demo
 
     import plot_orbits
 
@@ -1177,6 +1178,7 @@ def main():
     nurbs_txt = run("nurbs_demo", nurbs_demo.main, True)
     rbf_interpolation_txt = run("rbf_interpolation_demo", rbf_interpolation_demo.main, True)
     sobol_txt = run("sobol_demo", sobol_demo.main, True)
+    johnson_txt = run("johnson_demo", johnson_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10720,6 +10722,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("sobol.svg"), "Left and middle: the same number of Sobol vs random points -- the random cloud clusters and leaves holes while Sobol drops exactly one point per dyadic cell. Right: the payoff, quasi-Monte Carlo error decaying as ~1/N against random Monte Carlo's ~1/sqrt(N)")
             + f'<div class="card">{pre(sobol_txt)}</div>'
+            + '</div>'),
+        section(
+            "Johnson's algorithm: all-pairs shortest paths on sparse graphs",
+            "Finding the shortest path between every pair of nodes takes Floyd-Warshall O(V^3) no matter "
+            "how few edges there are. On a sparse graph, running Dijkstra from every source is far "
+            "cheaper -- but Dijkstra breaks on negative edge weights. Johnson's algorithm reconciles the "
+            "two by REWEIGHTING the graph so all edges become non-negative while keeping every shortest "
+            "path the same, then running Dijkstra from each node. The reweighting is the elegant part: "
+            "add a virtual source joined to every node with zero-weight edges, run Bellman-Ford to get "
+            "a potential h(v), and set w'(u,v) = w(u,v) + h(u) - h(v). The triangle inequality forces "
+            "w' >= 0, and because the potentials telescope along any path, every route between the same "
+            "endpoints shifts by the same constant -- so the shortest one is unchanged. Validated: the "
+            "reweighted edges are all non-negative, the all-pairs distances agree exactly with an "
+            "independent Floyd-Warshall on graphs with and without negative edges (and across 20 random "
+            "graphs), a negative cycle is detected, and reconstructed paths have the reported length. "
+            "The sparse-graph companion to the Dijkstra, Bellman-Ford, and Floyd-Warshall tools.",
+            '<div class="grid">'
+            + svg_card(out("johnson.svg"), "The CLRS example graph: two negative edges (red) on the left. Johnson's potentials shift every edge to a non-negative weight (right) without changing any shortest path, so Dijkstra can safely run from every source")
+            + f'<div class="card">{pre(johnson_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
