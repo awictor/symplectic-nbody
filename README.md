@@ -554,6 +554,7 @@ ruins a long non-symplectic integration.
 | `src/cross_correlation.py` | Cross/auto-correlation + matched filter (delay estimation, detection in noise) |
 | `src/newton_cotes.py` | Closed Newton-Cotes quadrature (trapezoid..Weddle): weights, degree of exactness, composite order |
 | `src/voronoi.py` | Voronoi cells by half-plane intersection: clipped cell polygons, nearest-site, Lloyd relaxation |
+| `src/spectral_partition.py` | Spectral graph bisection via the Fiedler vector: Laplacian, ratio/normalized cut, components |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1099,6 +1100,7 @@ ruins a long non-symplectic integration.
 | `examples/cross_correlation_demo.py` | Matched filter finding a chirp in noise + echo delay estimation |
 | `examples/newton_cotes_demo.py` | Degree-of-exactness table + composite convergence order on log-log axes |
 | `examples/voronoi_demo.py` | Colored Voronoi cells + Lloyd relaxation into a centroidal honeycomb |
+| `examples/spectral_partition_demo.py` | Two-community graph cut along its bridges by Fiedler-vector sign |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12599,6 +12601,30 @@ dual: every cell is convex and holds its site, a brute-force raster always lands
 cell, the cells tile the box with no overlap, and the finite edges reproduce `delaunay.py`'s Voronoi
 edges. Lloyd relaxation (move each site to its cell centroid, repeat) drives the diagram toward a
 uniform centroidal tessellation -- the basis of stippling, mesh generation, and k-means in the plane.
+
+## Spectral graph partitioning: cutting a graph by its Fiedler vector
+
+Split a graph into two well-connected halves while cutting few edges. `spectral_partition.py`:
+
+```
+$ python examples/spectral_partition_demo.py examples/output
+
+  graph: 12 vertices, 22 edges, two communities + 2 bridges
+  connected components (BFS):      1
+  near-zero Laplacian eigenvalues: 1   (= components)
+  Fiedler value:                   0.48499   (> 0 => connected)
+  cut size (edges crossing):       2   (both bridges, communities recovered)
+```
+
+Form the Laplacian L = D - A. It is symmetric PSD; its smallest eigenvalue is 0 with the constant
+eigenvector, and the number of zero eigenvalues equals the number of connected components. The
+second-smallest eigenvalue (the algebraic connectivity, or Fiedler value) and its eigenvector -- the
+Fiedler vector -- encode the graph's global shape, and the sign of each vertex's entry gives a
+near-optimal bisection: the relaxed solution to the NP-hard ratio-cut objective. Validated against
+independent ground truth: the zero-eigenvalue count matches a BFS component count, the Fiedler value
+is positive iff the graph is connected, the sign partition recovers planted communities, and on small
+graphs the spectral cut equals a brute-force minimum bisection. The graph-spectral companion to the
+Jacobi eigensolver, Lanczos, and union-find tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

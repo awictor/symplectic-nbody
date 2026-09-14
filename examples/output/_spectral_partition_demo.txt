@@ -1,0 +1,27 @@
+Spectral graph partitioning via the Fiedler vector
+========================================================
+graph: 12 vertices, 22 edges, two planted communities + 2 bridges
+
+connected components (BFS):      1
+near-zero Laplacian eigenvalues: 1  (= components)
+Fiedler value (algebraic conn.): 0.48499  (> 0 => connected)
+
+ vertex   Fiedler entry   side
+      0         0.31038      B
+      1         0.33792      B
+      2         0.23260      B
+      3         0.30687      B
+      4         0.29804      B
+      5         0.21010      B
+      6        -0.17679      A
+      7        -0.28479      A
+      8        -0.20301      A
+      9        -0.33646      A
+     10        -0.35116      A
+     11        -0.34370      A
+
+cut size (edges crossing):  2
+ratio cut:                  0.66667
+normalized cut:             0.18182
+The sign of each Fiedler entry assigns the vertex to a side; the cut lands on the
+bridge edges, recovering the two communities.

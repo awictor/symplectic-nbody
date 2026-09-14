@@ -596,6 +596,7 @@ def main():
     import cross_correlation_demo
     import newton_cotes_demo
     import voronoi_demo
+    import spectral_partition_demo
 
     import plot_orbits
 
@@ -1161,6 +1162,7 @@ def main():
     cross_correlation_txt = run("cross_correlation_demo", cross_correlation_demo.main, True)
     newton_cotes_txt = run("newton_cotes_demo", newton_cotes_demo.main, True)
     voronoi_txt = run("voronoi_demo", voronoi_demo.main, True)
+    spectral_partition_txt = run("spectral_partition_demo", spectral_partition_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10542,6 +10544,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("voronoi_cells.svg"), "Left: Voronoi cells of a random point cloud, each the region closest to its site. Right: after 12 Lloyd relaxation steps the sites spread out and the cells even up into a honeycomb -- a centroidal Voronoi tessellation, the basis of stippling and mesh generation")
             + f'<div class="card">{pre(voronoi_txt)}</div>'
+            + '</div>'),
+        section(
+            "Spectral graph partitioning: cutting a graph by its Fiedler vector",
+            "How do you split a graph into two well-connected halves while cutting as few edges as "
+            "possible? Exact minimum bisection is NP-hard, but there is a gorgeous continuous "
+            "relaxation. Form the Laplacian L = D - A; it is symmetric positive-semidefinite, its "
+            "smallest eigenvalue is always 0 with the constant eigenvector, and the NUMBER of zero "
+            "eigenvalues equals the number of connected components. The second-smallest eigenvalue -- "
+            "the algebraic connectivity, or Fiedler value -- and its eigenvector, the FIEDLER VECTOR, "
+            "encode the graph's global shape: tightly-connected vertices get similar values, and the "
+            "SIGN of each vertex's entry gives a near-optimal bisection. It is exactly the relaxed "
+            "solution to the ratio-cut objective, a Rayleigh-quotient minimization. Validated against "
+            "independent ground truth: the Laplacian's zero-eigenvalue count matches a union-find/BFS "
+            "component count, the Fiedler value is positive iff the graph is connected, the sign "
+            "partition recovers planted communities, and on small graphs the spectral cut equals a "
+            "brute-force minimum bisection. The graph-spectral companion to the Jacobi eigensolver, "
+            "Lanczos, and union-find tools.",
+            '<div class="grid">'
+            + svg_card(out("spectral_partition.svg"), "A 12-vertex graph with two dense communities joined by two bridges. The sign of each vertex's Fiedler-vector entry (blue = negative, red = positive) assigns it to a side, and the cut (dashed yellow) lands precisely on the two bridge edges -- the spectral relaxation finds the intuitively-right split")
+            + f'<div class="card">{pre(spectral_partition_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
