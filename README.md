@@ -618,6 +618,7 @@ ruins a long non-symplectic integration.
 | `src/linde_buzo_gray.py` | Linde-Buzo-Gray: vector-quantization codebook design by splitting and Lloyd refinement |
 | `src/tunstall_coding.py` | Tunstall coding: variable-to-fixed-length lossless compression, the dual of Huffman |
 | `src/golomb_coding.py` | Golomb/Rice coding: optimal prefix codes for geometrically-distributed integers |
+| `src/fibonacci_coding.py` | Fibonacci coding: error-resilient universal integer codes via Zeckendorf, self-synchronizing |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1227,6 +1228,7 @@ ruins a long non-symplectic integration.
 | `examples/linde_buzo_gray_demo.py` | LBG codebook tiling a spiral manifold, with the rate-distortion table as it doubles |
 | `examples/tunstall_coding_demo.py` | Tunstall dictionary and its rate converging to the entropy as codeword width grows |
 | `examples/golomb_coding_demo.py` | Golomb code length as a U-curve in m, bottoming at the entropy near the optimal parameter |
+| `examples/fibonacci_coding_demo.py` | Fibonacci vs Elias code lengths and a bitstream resynchronizing after a flipped bit |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14089,6 +14091,28 @@ round-trips for every m and value, prefix-free streams, minimal-bit truncated-bi
 optimal-m rate lands within a fraction of a bit of the entropy and beats a fixed-length code, Rice agrees
 with Golomb, and larger m trades small-value length for big-value length. The geometric-source companion
 to the Huffman, Tunstall, arithmetic-coding, and Elias tools.
+
+## Fibonacci coding: error-resilient universal integer codes
+
+Self-synchronizing codes from Zeckendorf's theorem. `fibonacci_coding.py`:
+
+```
+$ python examples/fibonacci_coding_demo.py examples/output
+
+Codewords: 1->'11'  2->'011'  3->'0011'  4->'1011'  5->'00011'
+
+Code length vs Elias (bits):  n=4096 -> Fibonacci 18, gamma 25, delta 19
+
+Self-synchronization: flip 1 bit in a 146-bit stream -> only 2 codewords
+corrupted; every value after the next '11' decodes correctly.
+```
+
+Every integer is a unique sum of non-consecutive Fibonacci numbers, so its bit representation never
+contains '11'; appending a '1' makes each codeword end in a unique '11' delimiter. A flipped bit corrupts
+only its neighborhood before the next '11' resynchronizes the decoder -- where Huffman/Elias cascade.
+Validated: round-trips, unique '11' terminators, prefix-free streams, length ~1.44 log2 n, and single-bit
+resynchronization with an intact tail. The error-resilient universal-code companion to the Elias,
+Golomb-Rice, Huffman, and Tunstall tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

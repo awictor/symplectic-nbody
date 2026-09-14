@@ -660,6 +660,7 @@ def main():
     import linde_buzo_gray_demo
     import tunstall_coding_demo
     import golomb_coding_demo
+    import fibonacci_coding_demo
 
     import plot_orbits
 
@@ -1289,6 +1290,7 @@ def main():
     linde_buzo_gray_txt = run("linde_buzo_gray_demo", linde_buzo_gray_demo.main, True)
     tunstall_coding_txt = run("tunstall_coding_demo", tunstall_coding_demo.main, True)
     golomb_coding_txt = run("golomb_coding_demo", golomb_coding_demo.main, True)
+    fibonacci_coding_txt = run("fibonacci_coding_demo", fibonacci_coding_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11944,6 +11946,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("golomb_coding.svg"), "Mean Golomb code length (yellow) as a U-shaped function of the parameter m for a geometric source, bottoming out near the entropy floor (green dashed) at the formula-predicted optimum (red dot). Too small an m pays long unary prefixes; too large wastes remainder bits -- the sweet spot lands within 0.02 bits of the entropy")
             + f'<div class="card">{pre(golomb_coding_txt)}</div>'
+            + '</div>'),
+        section(
+            "Fibonacci coding: error-resilient universal integer codes",
+            "Fibonacci coding writes positive integers to a bitstream using Zeckendorf's theorem -- every "
+            "integer is a unique sum of non-consecutive Fibonacci numbers -- so its bit representation "
+            "never contains '11', and appending a single terminating '1' makes each codeword end in "
+            "exactly one '11' with no other. That is a self-delimiting, prefix-free code, and the '11' "
+            "terminator gives it a property Elias and Huffman lack: ERROR RESILIENCE. A flipped bit "
+            "corrupts only the codewords around it before the next '11' resynchronizes the stream, "
+            "whereas a flip in a Huffman stream can cascade and garble everything after. Lengths run about "
+            "1.44 log2 n -- competitive with Elias gamma for small values, near Elias delta for large. "
+            "Validated: encode/decode round-trips, every codeword ends in a unique '11', streams decode "
+            "without delimiters, codes are prefix-free, length matches ~1.44 log2 n, and a single bit "
+            "flip damages only a couple of codewords before the stream resynchronizes and the tail "
+            "decodes intact. The error-resilient universal-code companion to the Elias, Golomb-Rice, "
+            "Huffman, and Tunstall tools.",
+            '<div class="grid">'
+            + svg_card(out("fibonacci_coding.svg"), "Top: Fibonacci code length (yellow) against Elias gamma (gray) and delta (purple) as n grows -- Fibonacci beats gamma beyond small n and tracks delta. Bottom: a 146-bit stream with one flipped bit (red); the green '11' terminators are resynchronization points, so only two codewords are damaged and everything after the next green marker decodes correctly")
+            + f'<div class="card">{pre(fibonacci_coding_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

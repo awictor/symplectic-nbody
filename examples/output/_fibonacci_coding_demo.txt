@@ -1,0 +1,35 @@
+Fibonacci coding -- universal, error-resilient integer codes via Zeckendorf
+============================================================================
+
+Codewords (Zeckendorf bits, LSB-first, + '11' terminator):
+   n    Fibonacci code   ends-in-11
+   ------------------------------------
+     1   11                 yes
+     2   011                yes
+     3   0011               yes
+     4   1011               yes
+     5   00011              yes
+     8   000011             yes
+    12   101011             yes
+    20   0101011            yes
+    50   001001011          yes
+   100   00101000011        yes
+
+Code length vs Elias (bits):
+   n        Fibonacci   Elias-gamma   Elias-delta
+   ------------------------------------------------
+       1           2             1             1
+       4           4             5             5
+      16           7             9             9
+      64          10            13            11
+     256          13            17            15
+    1024          16            21            17
+    4096          18            25            19
+
+Fibonacci ~ 1.44 log2 n: competitive with gamma for small n, near delta for large.
+
+Self-synchronization: encode 24 values (146 bits), flip bit 7.
+  Corrupted codewords (indices): [2, 3]
+  Values after the damage decode correctly again -- the '11' terminator resynchronizes.
+  Last 8 decoded: [17, 18, 19, 20, 21, 22, 23, 24]
+  Last 8 truth:   [17, 18, 19, 20, 21, 22, 23, 24]
