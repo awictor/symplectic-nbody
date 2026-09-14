@@ -1,0 +1,17 @@
+Iterative Closest Point: registering clouds with no known correspondence
+
+  source: 10-point L-shape
+  target: same shape rotated 0.35 rad, translated [4.0, -2.0], point order SHUFFLED
+
+  ICP iterations: 2
+     iter          RMSD
+        1      0.350493
+        2      0.000009
+
+  recovered rotation angle: 0.3500 rad (true 0.35)
+  final alignment RMSD: 1.46e-05  ->  clouds registered
+
+  ICP alternates: match each point to its nearest neighbour, solve the optimal rigid
+  transform (Kabsch), repeat. Each round can only lower the error, so it converges.
+
+  wrote examples/output\icp.svg

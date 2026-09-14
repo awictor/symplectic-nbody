@@ -550,6 +550,7 @@ ruins a long non-symplectic integration.
 | `src/richardson_extrapolation.py` | Richardson extrapolation: high-order derivatives/limits from low-order formulas |
 | `src/bulirsch_stoer.py` | Bulirsch-Stoer ODE: modified midpoint + Richardson extrapolation |
 | `src/gram_schmidt.py` | Classical vs modified Gram-Schmidt orthogonalization + orthogonal polynomials |
+| `src/icp.py` | Iterative Closest Point registration (nearest-neighbour + Kabsch, unknown correspondence) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1091,6 +1092,7 @@ ruins a long non-symplectic integration.
 | `examples/richardson_extrapolation_demo.py` | Derivative tableau error 1e-2 -> 1e-16 + (1+h)^(1/h) -> e |
 | `examples/bulirsch_stoer_demo.py` | Kepler orbit + one-step error 1e-1 -> 1e-14 across extrapolation levels |
 | `examples/gram_schmidt_demo.py` | Classical collapse vs modified stability on Hilbert basis + Legendre |
+| `examples/icp_demo.py` | Registering a shuffled rotated/translated L-shape, RMSD 0.35 -> 1e-5 |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12495,6 +12497,27 @@ precision -- the same formula, a different operation order. Validated: both reco
 modified beats classical by orders of magnitude on a Hilbert basis, and Gram-Schmidt on the monomials
 reproduces the normalized Legendre polynomials. The orthogonalization companion to the Householder-QR,
 LLL, and Lanczos tools.
+
+## Iterative Closest Point: registering clouds with unknown correspondence
+
+Align two point clouds when you don't know which point matches which. `icp.py`:
+
+```
+$ python examples/icp_demo.py examples/output
+
+  target: L-shape rotated 0.35 rad, translated [4, -2], point order SHUFFLED
+     iter          RMSD
+        1      0.350493
+        2      0.000009
+  recovered rotation: 0.3500 rad (true 0.35)
+```
+
+ICP alternates matching each source point to its nearest target neighbour and solving the optimal
+rigid transform (Kabsch/Umeyama) for those pairs; each round lowers the error, converging to a local
+optimum. A centroid pre-alignment seeds it into the right basin. Validated: recovers a known
+rotation + translation from shuffled clouds in 2-D and 3-D, handles a scale change (Umeyama), and is
+exact on pure translations and identical clouds. The correspondence-free registration companion to the
+Kabsch, Umeyama, and affine-alignment tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

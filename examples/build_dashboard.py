@@ -592,6 +592,7 @@ def main():
     import richardson_extrapolation_demo
     import bulirsch_stoer_demo
     import gram_schmidt_demo
+    import icp_demo
 
     import plot_orbits
 
@@ -1153,6 +1154,7 @@ def main():
     richardson_extrapolation_txt = run("richardson_extrapolation_demo", richardson_extrapolation_demo.main, True)
     bulirsch_stoer_txt = run("bulirsch_stoer_demo", bulirsch_stoer_demo.main, True)
     gram_schmidt_txt = run("gram_schmidt_demo", gram_schmidt_demo.main, True)
+    icp_txt = run("icp_demo", icp_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10455,6 +10457,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("gram_schmidt.svg"), "Loss of orthogonality vs basis size on an ill-conditioned Hilbert basis: classical Gram-Schmidt (red) collapses to error ~1 by size 8 while modified Gram-Schmidt (green) holds near machine precision -- the same formula, a different operation order")
             + f'<div class="card">{pre(gram_schmidt_txt)}</div>'
+            + '</div>'),
+        section(
+            "Iterative Closest Point: registering clouds with unknown correspondence",
+            "The Kabsch algorithm finds the optimal rotation aligning two point sets -- but only when "
+            "you already know which point maps to which. In the real problem (registering two 3-D "
+            "scans, matching a laser sweep to a map) you have two unordered clouds and no "
+            "correspondence. ITERATIVE CLOSEST POINT (Besl-McKay, 1992) alternates two steps: MATCH "
+            "each source point to its nearest neighbour in the target, then ALIGN with Kabsch/Umeyama "
+            "using those tentative pairs; apply, re-match, repeat. Each iteration cannot increase the "
+            "error, so it converges monotonically -- to a LOCAL optimum, its known limitation: a large "
+            "unknown rotation locks matching onto wrong correspondences, so it needs a reasonable "
+            "start (here a centroid pre-alignment removes the translation up front). Built on the "
+            "repo's Kabsch/Umeyama. Validated: on a cloud transformed by a known rotation + "
+            "translation with SHUFFLED point order, ICP recovers the transform and drives the RMSD to "
+            "zero in 2-D and 3-D; the alignment error collapses; a scale change is handled with the "
+            "Umeyama option; a pure translation and identical clouds are exact; and an asymmetric "
+            "small cloud registers. The correspondence-free registration companion to the Kabsch, "
+            "Umeyama, and affine-alignment tools.",
+            '<div class="grid">'
+            + svg_card(out("icp.svg"), "ICP registering a shuffled, rotated, translated L-shape: the source (gray) and the ICP-aligned source (blue) land exactly on the target (orange) -- the rotation and translation recovered from unordered points in two iterations")
+            + f'<div class="card">{pre(icp_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="400" viewBox="0 0 760 400" font-family="monospace">
+<rect width="760" height="400" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="15">ICP: source (gray), target (orange), ICP-aligned source (blue, snapped onto target)</text>
+<circle cx="79.6" cy="229.1" r="4" fill="#8b949e" fill-opacity="0.8"/>
+<circle cx="111.5" cy="230.0" r="4" fill="#8b949e" fill-opacity="0.8"/>
+<circle cx="140.4" cy="228.8" r="4" fill="#8b949e" fill-opacity="0.8"/>
+<circle cx="171.7" cy="228.9" r="4" fill="#8b949e" fill-opacity="0.8"/>
+<circle cx="199.9" cy="229.2" r="4" fill="#8b949e" fill-opacity="0.8"/>
+<circle cx="229.8" cy="229.3" r="4" fill="#8b949e" fill-opacity="0.8"/>
+<circle cx="81.8" cy="200.7" r="4" fill="#8b949e" fill-opacity="0.8"/>
+<circle cx="79.9" cy="169.1" r="4" fill="#8b949e" fill-opacity="0.8"/>
+<circle cx="81.6" cy="141.5" r="4" fill="#8b949e" fill-opacity="0.8"/>
+<circle cx="81.7" cy="110.3" r="4" fill="#8b949e" fill-opacity="0.8"/>
+<circle cx="312.2" cy="248.4" r="6" fill="#ff922b" fill-opacity="0.8"/>
+<circle cx="229.5" cy="279.5" r="6" fill="#ff922b" fill-opacity="0.8"/>
+<circle cx="340.4" cy="238.3" r="6" fill="#ff922b" fill-opacity="0.8"/>
+<circle cx="199.2" cy="289.7" r="6" fill="#ff922b" fill-opacity="0.8"/>
+<circle cx="171.1" cy="206.7" r="6" fill="#ff922b" fill-opacity="0.8"/>
+<circle cx="285.7" cy="257.9" r="6" fill="#ff922b" fill-opacity="0.8"/>
+<circle cx="160.4" cy="177.3" r="6" fill="#ff922b" fill-opacity="0.8"/>
+<circle cx="179.0" cy="233.1" r="6" fill="#ff922b" fill-opacity="0.8"/>
+<circle cx="191.6" cy="262.1" r="6" fill="#ff922b" fill-opacity="0.8"/>
+<circle cx="256.2" cy="268.5" r="6" fill="#ff922b" fill-opacity="0.8"/>
+<circle cx="199.2" cy="289.7" r="3" fill="#4dabf7" fill-opacity="0.8"/>
+<circle cx="229.5" cy="279.5" r="3" fill="#4dabf7" fill-opacity="0.8"/>
+<circle cx="256.2" cy="268.5" r="3" fill="#4dabf7" fill-opacity="0.8"/>
+<circle cx="285.7" cy="257.9" r="3" fill="#4dabf7" fill-opacity="0.8"/>
+<circle cx="312.2" cy="248.4" r="3" fill="#4dabf7" fill-opacity="0.8"/>
+<circle cx="340.4" cy="238.3" r="3" fill="#4dabf7" fill-opacity="0.8"/>
+<circle cx="191.6" cy="262.1" r="3" fill="#4dabf7" fill-opacity="0.8"/>
+<circle cx="179.0" cy="233.1" r="3" fill="#4dabf7" fill-opacity="0.8"/>
+<circle cx="171.1" cy="206.7" r="3" fill="#4dabf7" fill-opacity="0.8"/>
+<circle cx="160.4" cy="177.3" r="3" fill="#4dabf7" fill-opacity="0.8"/>
+<text x="60" y="384" fill="#8b949e" font-size="10">blue lands on orange = ICP recovered the unknown rotation + translation from shuffled points</text>
+</svg>
