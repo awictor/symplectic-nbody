@@ -565,6 +565,7 @@ ruins a long non-symplectic integration.
 | `src/johnson.py` | Johnson's all-pairs shortest paths: Bellman-Ford reweighting + per-source Dijkstra |
 | `src/suffix_tree.py` | Ukkonen's linear-time suffix tree: substring search, distinct-substring & LRS queries |
 | `src/fista.py` | FISTA accelerated proximal gradient: Lasso/NNLS, soft-threshold prox, O(1/k^2) momentum |
+| `src/admm.py` | ADMM operator splitting: Lasso/NNLS/consensus via prox steps, primal-dual residuals |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1121,6 +1122,7 @@ ruins a long non-symplectic integration.
 | `examples/johnson_demo.py` | Reweighting a negative-edge graph to non-negative + all-pairs distance matrix |
 | `examples/suffix_tree_demo.py` | The suffix tree of 'banana' drawn out, with substring/repeat queries |
 | `examples/fista_demo.py` | Lasso sparse recovery + ISTA vs FISTA convergence on log-log axes |
+| `examples/admm_demo.py` | ADMM Lasso sparse recovery + primal/dual residuals decaying to zero |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12875,6 +12877,27 @@ Validated: FISTA minimizes a quadratic exactly, the Lasso zeros inactive feature
 ones, FISTA reaches a target accuracy in fewer iterations than ISTA, the non-negative-least-squares
 variant satisfies its KKT conditions, and a larger penalty gives a sparser solution. The
 proximal-optimization companion to the Lasso, L-BFGS, and conjugate-gradient tools.
+
+## ADMM: splitting hard problems into easy prox steps
+
+Operator splitting for constrained and composite optimization. `admm.py`:
+
+```
+$ python examples/admm_demo.py examples/output
+
+  design 70x16, lambda = 0.5, rho = 1.0
+  split: f = (1/2)||Ax-b||^2 (linear solve),  g = lam||x||_1 (soft-threshold)
+  cross-check vs FISTA: max diff = 8.2e-10
+  residuals: primal 9.8e-11, dual 5.1e-13   (converged in 689 iters)
+```
+
+ADMM solves min f(x) + g(z) s.t. Ax + Bz = c by cycling an x-update, a z-update, and a dual ascent
+step -- each usually a closed-form prox. For LASSO the x-update solves one cached linear system and the
+z-update is soft-thresholding, linked by a dual variable accumulating x - z. Validated: the ADMM LASSO
+and NNLS solutions match the repo's FISTA solver, NNLS satisfies its KKT conditions, primal and dual
+residuals decay to zero, a generic two-prox consensus problem hits its analytic optimum, and rho
+adaptation still converges. The operator-splitting companion to the FISTA, Lasso, and
+conjugate-gradient tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,24 @@
+ADMM: LASSO by operator splitting
+==================================================
+design 70x16, lambda = 0.5, penalty rho = 1.0
+split: f = (1/2)||Ax-b||^2 (linear solve),  g = lam||x||_1 (soft-threshold)
+
+sparse recovery:
+  index     true     ADMM    FISTA
+      2     1.91    1.891    1.891
+      6     0.94    0.917    0.917
+     10    -0.91   -0.888   -0.888
+     14     1.43    1.409    1.409
+cross-check vs FISTA: max diff = 8.17e-10
+
+residual history (converges when both -> 0):
+  iter    primal ||x-z||    dual rho||dz||
+     0          1.00e+00          1.67e+00
+     4          7.71e-03          2.56e-04
+     9          5.61e-03          1.16e-04
+    19          3.35e-03          5.26e-05
+   688          9.78e-11          5.05e-13
+converged in 689 iterations
+
+ADMM decouples the smooth fit (one cached matrix factorization) from the
+non-smooth L1 penalty (element-wise soft-threshold), linked by the dual variable.

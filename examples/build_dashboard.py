@@ -607,6 +607,7 @@ def main():
     import johnson_demo
     import suffix_tree_demo
     import fista_demo
+    import admm_demo
 
     import plot_orbits
 
@@ -1183,6 +1184,7 @@ def main():
     johnson_txt = run("johnson_demo", johnson_demo.main, True)
     suffix_tree_txt = run("suffix_tree_demo", suffix_tree_demo.main, True)
     fista_txt = run("fista_demo", fista_demo.main, True)
+    admm_txt = run("admm_demo", admm_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10785,6 +10787,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("fista.svg"), "Left: Lasso recovers a planted sparse signal -- the estimate (green) matches the true nonzero coefficients (yellow) and zeros the rest. Right: on a log-log plot FISTA's objective error (green) falls as ~1/k^2, an order of magnitude ahead of ISTA's ~1/k (red) at tight tolerance")
             + f'<div class="card">{pre(fista_txt)}</div>'
+            + '</div>'),
+        section(
+            "ADMM: splitting hard problems into easy prox steps",
+            "Many problems that look monolithic are two easy problems chained by a constraint: "
+            "min f(x) + g(z) subject to Ax + Bz = c. ADMM (the Alternating Direction Method of "
+            "Multipliers) never touches f and g together -- it cycles an x-minimization, a "
+            "z-minimization, and a dual ascent step that enforces the coupling. Each minimization is "
+            "usually a proximal operator, a small closed-form subproblem, so a big coupled problem "
+            "decomposes into a sequence of tiny ones. That is why ADMM underlies consensus optimization "
+            "across machines, total-variation denoising, and sparse regression. For LASSO the split is "
+            "clean: the x-update solves one linear system (A^T A + rho I, factored once), and the "
+            "z-update is just soft-thresholding; the dual variable accumulates the running mismatch "
+            "x - z. Convergence is tracked by two residuals -- primal ||x - z|| and dual rho||z - "
+            "z_old|| -- both driven to zero. Validated: the ADMM LASSO and NNLS solutions match the "
+            "repo's independent FISTA solver, the non-negative solver satisfies its KKT conditions, "
+            "both residuals decay to zero, a generic two-prox consensus problem hits its analytic "
+            "optimum, and residual-balancing rho adaptation still converges. The operator-splitting "
+            "companion to the FISTA, Lasso, and conjugate-gradient tools.",
+            '<div class="grid">'
+            + svg_card(out("admm.svg"), "Left: ADMM's LASSO estimate (green) recovers the planted sparse spikes (yellow). Right: the primal residual ||x - z|| (blue) and dual residual (red) both fall to zero on a log-log plot -- the split variables reach consensus and the constraint is satisfied")
+            + f'<div class="card">{pre(admm_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
