@@ -569,6 +569,7 @@ ruins a long non-symplectic integration.
 | `src/matrix_profile.py` | Time-series matrix profile via MASS/FFT: motif and discord (anomaly) discovery |
 | `src/soft_dtw.py` | Differentiable soft-DTW: softmin recurrence, gamma->0 = hard DTW, soft alignment matrix |
 | `src/isolation_forest.py` | Isolation Forest anomaly detection: random-cut path length, normalized anomaly score |
+| `src/lof.py` | Local Outlier Factor: density-relative anomaly scores that catch local outliers |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1129,6 +1130,7 @@ ruins a long non-symplectic integration.
 | `examples/matrix_profile_demo.py` | Series with a planted motif and anomaly, both read off the profile curve |
 | `examples/soft_dtw_demo.py` | Soft alignment matrix (diffuse vs sharp) + the gamma->hard-DTW limit |
 | `examples/isolation_forest_demo.py` | Two blobs + scattered outliers, points colored by anomaly score |
+| `examples/lof_demo.py` | Dense + sparse clusters with a local outlier a global test would miss |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12966,6 +12968,28 @@ points. Validated: planted outliers score above the inlier mean and rank as the 
 point scores higher than a central one, scores lie in (0,1), c(n) matches its closed form, and results
 are reproducible per seed and work in 1-D through higher dimensions. The unsupervised-anomaly companion
 to the k-means, matrix-profile, and random-forest tools.
+
+## Local Outlier Factor: catching the anomalies global methods miss
+
+Density-relative anomaly detection. `lof.py`:
+
+```
+$ python examples/lof_demo.py examples/output
+
+  mean LOF, dense cluster:   1.107
+  mean LOF, sparse cluster:  1.213
+  LOF, local outlier:        5.443
+  local outlier's distance to dense cluster: 2.42
+  a typical spacing INSIDE the sparse cluster: 2.04   (so a global test misses it)
+```
+
+LOF compares each point's density to its neighbours': k-distance, reachability distance
+max(k-dist(B), d(A,B)), local reachability density (inverse mean reachability), and LOF = average ratio
+of neighbours' density to the point's own. Near 1 means normal; well above 1 means the neighbours are
+much denser -- a local outlier. Validated: uniform-cloud inliers score near 1, a far global outlier
+scores well above 1, and on the two-density example a point whose distance is normal by the sparse
+cluster's standard is still flagged, the property that distinguishes LOF from global detectors. The
+density-based-anomaly companion to the Isolation-Forest, DBSCAN, and k-NN tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -1,0 +1,17 @@
+Local Outlier Factor: density-relative anomaly detection
+==========================================================
+90 dense-cluster + 45 sparse-cluster points, k = 15
+
+mean LOF, dense cluster:   1.107
+mean LOF, sparse cluster:  1.213
+LOF, local outlier [2.6, 2.6]:  5.443
+LOF, global outlier [6.0, -6.0]: 4.183
+
+local outlier's distance to the dense cluster: 2.42
+a typical spacing INSIDE the sparse cluster:   2.04
+-> the local outlier's distance is normal by sparse-cluster standards,
+   so a global distance/isolation test would MISS it -- but LOF flags it,
+   because it compares each point's density to its neighbours' densities.
+
+top-5 most anomalous indices (135=local, 136=global outlier):
+  122, 135, 136, 97, 40

@@ -611,6 +611,7 @@ def main():
     import matrix_profile_demo
     import soft_dtw_demo
     import isolation_forest_demo
+    import lof_demo
 
     import plot_orbits
 
@@ -1191,6 +1192,7 @@ def main():
     matrix_profile_txt = run("matrix_profile_demo", matrix_profile_demo.main, True)
     soft_dtw_txt = run("soft_dtw_demo", soft_dtw_demo.main, True)
     isolation_forest_txt = run("isolation_forest_demo", isolation_forest_demo.main, True)
+    lof_txt = run("lof_demo", lof_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10875,6 +10877,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("isolation_forest.svg"), "Two dense gaussian blobs and five scattered outliers, colored by anomaly score. Points buried in a blob are blue (long isolation path, normal); the isolated outliers glow red (short path) and are the five highest-scored points -- recovered exactly")
             + f'<div class="card">{pre(isolation_forest_txt)}</div>'
+            + '</div>'),
+        section(
+            "Local Outlier Factor: catching the anomalies global methods miss",
+            "Real data has clusters of very different densities, and a point can be perfectly normal by "
+            "GLOBAL standards yet clearly wrong in its local neighbourhood -- a point just outside a "
+            "tight dense cluster, at a distance that would be completely ordinary inside a loose sparse "
+            "cluster. Distance- and isolation-based detectors miss these; LOF catches them by comparing "
+            "each point's density to its neighbours'. The chain of definitions is short: k-distance is "
+            "the distance to the k-th neighbour; reachability distance of A from B is max(k-distance(B), "
+            "d(A,B)); the local reachability density is the inverse average reachability distance to "
+            "the neighbours; and the LOF is the average ratio of the neighbours' density to the point's "
+            "own. In a region as dense as its neighbours the ratio is about 1; where the neighbours are "
+            "much denser -- the signature of a local outlier -- the LOF climbs well above 1. Validated: "
+            "inliers in a uniform cloud score near 1, a far global outlier scores well above 1, and on "
+            "the canonical two-density example a point whose distance is 'normal' by the sparse "
+            "cluster's standard is still flagged -- the exact property that distinguishes LOF from "
+            "global detectors. The density-based-anomaly companion to the Isolation-Forest, DBSCAN, and "
+            "k-NN tools.",
+            '<div class="grid">'
+            + svg_card(out("lof.svg"), "A dense blob and a loose blob, both scoring normal. The local outlier beside the dense cluster (labelled) is flagged red even though its distance to that cluster is perfectly ordinary by the sparse cluster's standards -- LOF sees it is far less dense than its neighbours")
+            + f'<div class="card">{pre(lof_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
