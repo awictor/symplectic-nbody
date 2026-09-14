@@ -541,6 +541,7 @@ ruins a long non-symplectic integration.
 | `src/dixon.py` | Dixon's random-squares factorization: smooth relations + GF(2) linear algebra |
 | `src/sum_of_squares.py` | Sums of two/four squares: Fermat, Cornacchia, Lagrange (Gaussian integers) |
 | `src/dirichlet.py` | Dirichlet convolution + Mobius inversion; phi, mu, d, sigma identities |
+| `src/egyptian_fraction.py` | Greedy Fibonacci-Sylvester unit fractions + Engel expansion + Sylvester sequence |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1073,6 +1074,7 @@ ruins a long non-symplectic integration.
 | `examples/dixon_demo.py` | Dixon factoring 8051 via smooth-relation exponent vectors over GF(2) |
 | `examples/sum_of_squares_demo.py` | Fermat two-square, Cornacchia, Lagrange four-square + min-squares grid |
 | `examples/dirichlet_demo.py` | The convolution identities + Mobius inversion recovering f from divisor sums |
+| `examples/egyptian_fraction_demo.py` | Greedy unit-fraction decompositions + Sylvester reciprocal race to 1 |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12291,6 +12293,26 @@ inverse mu, so divisor-summing and Mobius-inverting undo each other. Built on th
 Validated: all five classical identities on 1..500, commutativity and associativity, epsilon the
 identity, the Dirichlet inverse of 1 is mu, and Mobius inversion round-trips. The
 arithmetic-function-algebra companion to the linear sieve.
+
+## Egyptian fractions: every rational as distinct unit fractions
+
+Write any fraction as a sum of distinct reciprocals, the way the Egyptians did. `egyptian_fraction.py`:
+
+```
+$ python examples/egyptian_fraction_demo.py examples/output
+
+  2/3 = 1/2 + 1/6
+  3/7 = 1/3 + 1/11 + 1/231
+  Engel(3/7): a = [3, 4, 7]
+  Sylvester 2,3,7,43,1807,...  reciprocal sums: 1/2, 5/6, 41/42, 1805/1806 -> 1
+```
+
+The greedy Fibonacci-Sylvester algorithm subtracts the largest fitting unit fraction each step; the
+numerator strictly decreases (Fibonacci's 1202 proof), so it terminates with distinct denominators.
+The Engel expansion gives an ascending form, and Sylvester's sequence is the fastest-converging greedy
+expansion of 1. Validated with exact rational arithmetic: every decomposition sums back with strictly
+increasing denominators, the Engel expansion reconstructs the fraction, and Sylvester's reciprocals
+approach 1. The unit-fraction companion to the continued-fraction and Stern-Brocot tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -583,6 +583,7 @@ def main():
     import dixon_demo
     import sum_of_squares_demo
     import dirichlet_demo
+    import egyptian_fraction_demo
 
     import plot_orbits
 
@@ -1135,6 +1136,7 @@ def main():
     dixon_txt = run("dixon_demo", dixon_demo.main, True)
     sum_of_squares_txt = run("sum_of_squares_demo", sum_of_squares_demo.main, True)
     dirichlet_txt = run("dirichlet_demo", dirichlet_demo.main, True)
+    egyptian_fraction_txt = run("egyptian_fraction_demo", egyptian_fraction_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10252,6 +10254,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("dirichlet.svg"), "The arithmetic functions phi, sigma, and d on 1..40 (each a Dirichlet convolution of 1 and id), with the Mobius function shown below as +1/0/-1 markers -- the building blocks of the convolution ring")
             + f'<div class="card">{pre(dirichlet_txt)}</div>'
+            + '</div>'),
+        section(
+            "Egyptian fractions: every rational as distinct unit fractions",
+            "The ancient Egyptians wrote every fraction as a sum of DISTINCT UNIT FRACTIONS -- "
+            "reciprocals like 2/3 = 1/2 + 1/6. That this always works for any rational in (0,1) is not "
+            "obvious, and the FIBONACCI-SYLVESTER GREEDY algorithm proves it constructively: repeatedly "
+            "subtract the largest unit fraction 1/ceil(1/x) not exceeding the remainder. Fibonacci's "
+            "1202 insight is that the NUMERATOR STRICTLY DECREASES every step, so the process must "
+            "terminate with all denominators distinct. Two companions: the ENGEL EXPANSION writes x as "
+            "1/a1 + 1/(a1 a2) + ... with non-decreasing integers, and SYLVESTER'S SEQUENCE 2,3,7,43,"
+            "1807,... (each term one plus the product of all previous) is the fastest-converging "
+            "greedy expansion of 1, its reciprocals telescoping toward 1 double-exponentially. "
+            "Validated exactly with rational arithmetic: every greedy decomposition sums back to the "
+            "input with strictly increasing denominators and terminates; the numerator provably "
+            "shrinks; the Engel expansion sums back and is non-decreasing; Sylvester's sequence "
+            "satisfies its recurrence and its reciprocals approach 1; and known cases (2/3 = 1/2+1/6, "
+            "3/7 = 1/3+1/11+1/231) match. The unit-fraction companion to the continued-fraction and "
+            "Stern-Brocot rational tools.",
+            '<div class="grid">'
+            + svg_card(out("egyptian_fraction.svg"), "The greedy Egyptian decomposition of 4/13 into distinct unit fractions as shrinking coloured bars, plus Sylvester's reciprocal sums racing toward 1 (gap 1/2, 1/6, 1/42, 1/1806, ...) -- the fastest possible unit-fraction convergence")
+            + f'<div class="card">{pre(egyptian_fraction_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

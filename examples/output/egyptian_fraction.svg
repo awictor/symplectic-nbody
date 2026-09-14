@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="360" viewBox="0 0 760 360" font-family="monospace">
+<rect width="760" height="360" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="15">4/13 = 1/4 + 1/18 + 1/468 (unit fractions, distinct)</text>
+<rect x="50.0" y="70" width="536.2" height="60" fill="#4dabf7" stroke="#0d1117"/>
+<text x="318.1" y="104.0" fill="#0d1117" font-size="12" text-anchor="middle">1/4</text>
+<rect x="586.2" y="70" width="119.2" height="60" fill="#06d6a0" stroke="#0d1117"/>
+<text x="645.8" y="104.0" fill="#0d1117" font-size="12" text-anchor="middle">1/18</text>
+<rect x="705.4" y="70" width="4.6" height="60" fill="#ffd43b" stroke="#0d1117"/>
+<text x="707.7" y="64.0" fill="#ffd43b" font-size="9" text-anchor="middle">1/468</text>
+<rect x="50" y="70" width="660" height="60" fill="none" stroke="#30363d"/>
+<text x="50" y="154" fill="#8b949e" font-size="10">the full bar is 4/13; each coloured segment is one distinct unit fraction, shrinking left to right</text>
+<text x="50" y="182" fill="#8b949e" font-size="11">Sylvester reciprocal sums approaching 1:</text>
+<line x1="50" y1="208" x2="380.0" y2="208" stroke="#06d6a0" stroke-width="6"/>
+<text x="386.0" y="212" fill="#8b949e" font-size="9">1 terms</text>
+<line x1="50" y1="226" x2="600.0" y2="226" stroke="#06d6a0" stroke-width="6"/>
+<text x="606.0" y="230" fill="#8b949e" font-size="9">2 terms</text>
+<line x1="50" y1="244" x2="694.3" y2="244" stroke="#06d6a0" stroke-width="6"/>
+<text x="700.3" y="248" fill="#8b949e" font-size="9">3 terms</text>
+<line x1="50" y1="262" x2="709.6" y2="262" stroke="#06d6a0" stroke-width="6"/>
+<text x="715.6" y="266" fill="#8b949e" font-size="9">4 terms</text>
+<line x1="50" y1="280" x2="710.0" y2="280" stroke="#06d6a0" stroke-width="6"/>
+<text x="716.0" y="284" fill="#8b949e" font-size="9">5 terms</text>
+<line x1="50" y1="298" x2="710.0" y2="298" stroke="#06d6a0" stroke-width="6"/>
+<text x="716.0" y="302" fill="#8b949e" font-size="9">6 terms</text>
+<line x1="710" y1="190" x2="710" y2="316" stroke="#ff6b6b" stroke-dasharray="3 3"/>
+<text x="706" y="182" fill="#ff6b6b" font-size="9" text-anchor="end">1</text>
+</svg>
