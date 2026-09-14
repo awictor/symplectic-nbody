@@ -630,6 +630,7 @@ def main():
     import lenstra_ecm_demo
     import aks_primality_demo
     import pratt_certificate_demo
+    import worley_noise_demo
 
     import plot_orbits
 
@@ -1229,6 +1230,7 @@ def main():
     lenstra_ecm_txt = run("lenstra_ecm_demo", lenstra_ecm_demo.main, True)
     aks_primality_txt = run("aks_primality_demo", aks_primality_demo.main, True)
     pratt_certificate_txt = run("pratt_certificate_demo", pratt_certificate_demo.main, True)
+    worley_noise_txt = run("worley_noise_demo", worley_noise_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11296,6 +11298,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("pratt_certificate.svg"), "The Pratt certificate tree for 997: each node carries a witness and the prime factors of n-1, and its children recursively prove those factors prime, bottoming out at 2 (yellow). Ten nodes prove 997 prime, re-checkable with a handful of modular exponentiations")
             + f'<div class="card">{pre(pratt_certificate_txt)}</div>'
+            + '</div>'),
+        section(
+            "Worley noise: cellular texture from nearest feature points",
+            "Worley's 1996 cellular (or Voronoi) noise makes the organic, crinkly patterns of cell "
+            "walls, cracked mud, scales, and water caustics. Scatter feature points pseudo-randomly "
+            "through space and, at any query point, take the distance to the nearest (F1), "
+            "second-nearest (F2), and so on. F1 is small near a feature point and grows toward the "
+            "boundaries between points -- the ridged Voronoi look -- while F2 - F1 vanishes on cell "
+            "boundaries and traces the cobblestone edges. The trick that makes it fast and tileable is "
+            "hashing: each integer grid cell deterministically generates its own feature points from a "
+            "hash of its coordinates, so a query only inspects its own cell and the eight neighbours. "
+            "Different distance metrics give different cells -- Euclidean round, Manhattan diamond, "
+            "Chebyshev square. Validated: hashed points are deterministic yet vary across cells, "
+            "F1 <= F2 <= F3 always, F1 is exactly zero at a feature point, the 3x3-neighbour "
+            "computation provably matches a wide brute-force search (no nearer point missed), F2 - F1 "
+            "is non-negative, and the metrics bound each other as expected. The procedural-texture "
+            "companion to the Perlin-noise, Voronoi, and Poisson-disk tools.",
+            '<div class="grid">'
+            + svg_card(out("worley_noise.svg"), "Four Worley fields: F1 (Euclidean) shows round cells darkening toward their centres; F2-F1 lights up the cell boundaries (cobblestone); and the Manhattan and Chebyshev metrics reshape the cells into diamonds and squares")
+            + f'<div class="card">{pre(worley_noise_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

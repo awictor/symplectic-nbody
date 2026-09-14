@@ -1,0 +1,17 @@
+Worley (cellular / Voronoi) noise
+==================================================
+scatter feature points per grid cell; the field is the distance to the
+nearest (F1), second-nearest (F2), ... -- cell walls, cracked mud, scales.
+
+sample distances at a few points (seed=1, 1 point/cell):
+        (x, y)      F1      F2    F2-F1
+( 2.3, 4.7)   0.055   0.393    0.338
+( 5.0, 5.0)   0.028   0.489    0.461
+( 8.1, 1.2)   0.320   0.524    0.204
+( 0.5, 9.9)   0.890   1.000    0.110
+
+the 3x3 neighbour computation provably misses no nearer point (== brute force),
+and F1 = 0 exactly at a feature point, growing toward the cell boundaries.
+
+distance metrics change the cell shape:
+  euclidean -> round cells, manhattan -> diamonds, chebyshev -> squares

@@ -588,6 +588,7 @@ ruins a long non-symplectic integration.
 | `src/lenstra_ecm.py` | Lenstra elliptic-curve factorization: random curves mod N, factor from failed inversion |
 | `src/aks_primality.py` | AKS deterministic polynomial-time primality: (x+a)^n == x^n+a mod (x^r-1, n) |
 | `src/pratt_certificate.py` | Pratt primality certificates: recursive Lucas-test proof, independently verifiable |
+| `src/worley_noise.py` | Worley cellular/Voronoi noise: hashed feature points, F1/F2 distances, 3 metrics |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1167,6 +1168,7 @@ ruins a long non-symplectic integration.
 | `examples/lenstra_ecm_demo.py` | Factorizations of several numbers + an elliptic curve over a prime field |
 | `examples/aks_primality_demo.py` | The AKS polynomial identity coefficient grids, prime vs composite |
 | `examples/pratt_certificate_demo.py` | The recursive Pratt proof tree for 997 drawn as a node-link diagram |
+| `examples/worley_noise_demo.py` | F1/F2-F1 cellular textures rendered under Euclidean/Manhattan/Chebyshev |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13390,6 +13392,25 @@ certificate exists for every prime and no composite, the verifier rejects tamper
 missing factor, forged composite), the witness is a genuine primitive root, and build-then-verify
 round-trips. Reuses the Lenstra-ECM factorizer and Baillie-PSW test. The primality-proof companion to
 the AKS, Baillie-PSW, and Lucas-Lehmer tools.
+
+## Worley noise: cellular texture from nearest feature points
+
+Voronoi-style procedural texture. `worley_noise.py`:
+
+```
+$ python examples/worley_noise_demo.py examples/output
+
+        (x, y)      F1      F2    F2-F1
+  ( 5.0, 5.0)   0.028   0.489    0.461
+  F1 = 0 at a feature point; F2-F1 lights up cell boundaries
+  metrics: euclidean=round, manhattan=diamond, chebyshev=square cells
+```
+
+Each integer grid cell hashes its own feature points, so a query inspects only the 3x3 neighbourhood;
+F1 is the nearest-point distance, F2-F1 traces cell edges. Validated: hashed points are deterministic
+yet vary across cells, F1<=F2<=F3, F1=0 at a feature point, the 3x3 computation provably matches a wide
+brute-force search, F2-F1 is non-negative, and the metrics bound each other. The procedural-texture
+companion to the Perlin-noise, Voronoi, and Poisson-disk tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
