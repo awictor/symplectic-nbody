@@ -617,6 +617,7 @@ ruins a long non-symplectic integration.
 | `src/lloyd_max.py` | Lloyd-Max quantizer: minimum-distortion scalar quantization for a known source |
 | `src/linde_buzo_gray.py` | Linde-Buzo-Gray: vector-quantization codebook design by splitting and Lloyd refinement |
 | `src/tunstall_coding.py` | Tunstall coding: variable-to-fixed-length lossless compression, the dual of Huffman |
+| `src/golomb_coding.py` | Golomb/Rice coding: optimal prefix codes for geometrically-distributed integers |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1225,6 +1226,7 @@ ruins a long non-symplectic integration.
 | `examples/lloyd_max_demo.py` | Lloyd-Max levels crowding under a Gaussian peak vs uniform, with an SNR-gain table |
 | `examples/linde_buzo_gray_demo.py` | LBG codebook tiling a spiral manifold, with the rate-distortion table as it doubles |
 | `examples/tunstall_coding_demo.py` | Tunstall dictionary and its rate converging to the entropy as codeword width grows |
+| `examples/golomb_coding_demo.py` | Golomb code length as a U-curve in m, bottoming at the entropy near the optimal parameter |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14066,6 +14068,27 @@ tree until the leaf count would exceed 2^k. Validated: encode/decode round-trips
 codewords, bits-per-symbol between entropy and entropy+1 and tightening toward the entropy as k grows, a
 uniform source gives equal-length strings, and the leaf-probability spread is bounded by 1/p_min. The
 variable-to-fixed-length companion to the Huffman, arithmetic-coding, and Shannon-entropy tools.
+
+## Golomb coding: optimal codes for geometric integers
+
+The provably optimal code for geometric sources. `golomb_coding.py`:
+
+```
+$ python examples/golomb_coding_demo.py examples/output
+
+Geometric source P(n)=(1-p)p^n, p=0.8. Entropy H=3.6096 bits/symbol.
+Optimal m = ceil(-1/log2 p) = 4.
+
+Mean code length vs m:  m=1 -> 4.96   m=3 -> 3.63   m=8 -> 4.19
+Best rate 3.6300 vs entropy 3.6096 (within 0.020 bit).
+```
+
+Split each value into a quotient (unary) and remainder (truncated binary) by m; small values get short
+codes, and m tunes to the decay rate. Power-of-two m gives Rice coding (FLAC, JPEG-LS). Validated:
+round-trips for every m and value, prefix-free streams, minimal-bit truncated-binary remainders, the
+optimal-m rate lands within a fraction of a bit of the entropy and beats a fixed-length code, Rice agrees
+with Golomb, and larger m trades small-value length for big-value length. The geometric-source companion
+to the Huffman, Tunstall, arithmetic-coding, and Elias tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

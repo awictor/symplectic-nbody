@@ -659,6 +659,7 @@ def main():
     import lloyd_max_demo
     import linde_buzo_gray_demo
     import tunstall_coding_demo
+    import golomb_coding_demo
 
     import plot_orbits
 
@@ -1287,6 +1288,7 @@ def main():
     lloyd_max_txt = run("lloyd_max_demo", lloyd_max_demo.main, True)
     linde_buzo_gray_txt = run("linde_buzo_gray_demo", linde_buzo_gray_demo.main, True)
     tunstall_coding_txt = run("tunstall_coding_demo", tunstall_coding_demo.main, True)
+    golomb_coding_txt = run("golomb_coding_demo", golomb_coding_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11923,6 +11925,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("tunstall_coding.svg"), "Compression rate (yellow) falling toward the source entropy (green dashed floor) as the codeword width k grows from 2 to 14 bits. Larger dictionaries swallow more source symbols per fixed codeword -- 2.0 bits/symbol at k=2 down to 1.18 at k=14, closing on the 1.157-bit entropy limit")
             + f'<div class="card">{pre(tunstall_coding_txt)}</div>'
+            + '</div>'),
+        section(
+            "Golomb coding: optimal codes for geometric integers",
+            "For nonnegative integers whose probability decays geometrically -- run lengths, gaps between "
+            "set bits, prediction residuals -- Golomb coding (1966) is the provably optimal prefix code, "
+            "needing just one parameter m. It splits each value n into a quotient n//m coded in unary and "
+            "a remainder n%m coded in truncated binary, so common small values get short codes and rare "
+            "large ones pay a long unary prefix. The parameter tunes to the decay rate: for a geometric "
+            "P(n)=(1-p)p^n the optimal m is about ceil(-1/log2 p). When m is a power of two the remainder "
+            "is plain binary and it becomes Rice coding -- the fast special case in FLAC and JPEG-LS. "
+            "Validated: encode/decode round-trips for every m and value, the codes are prefix-free "
+            "(streams decode without delimiters), the truncated-binary remainder uses minimal bits, the "
+            "optimal-m rate lands within a fraction of a bit of the source entropy and beats a "
+            "fixed-length code, Rice coding agrees with Golomb, and larger m trades short small-value "
+            "codes for short big-value codes. The geometric-source companion to the Huffman, Tunstall, "
+            "arithmetic-coding, and Elias tools.",
+            '<div class="grid">'
+            + svg_card(out("golomb_coding.svg"), "Mean Golomb code length (yellow) as a U-shaped function of the parameter m for a geometric source, bottoming out near the entropy floor (green dashed) at the formula-predicted optimum (red dot). Too small an m pays long unary prefixes; too large wastes remainder bits -- the sweet spot lands within 0.02 bits of the entropy")
+            + f'<div class="card">{pre(golomb_coding_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
