@@ -619,6 +619,7 @@ ruins a long non-symplectic integration.
 | `src/tunstall_coding.py` | Tunstall coding: variable-to-fixed-length lossless compression, the dual of Huffman |
 | `src/golomb_coding.py` | Golomb/Rice coding: optimal prefix codes for geometrically-distributed integers |
 | `src/fibonacci_coding.py` | Fibonacci coding: error-resilient universal integer codes via Zeckendorf, self-synchronizing |
+| `src/mann_whitney.py` | Mann-Whitney U / Wilcoxon rank-sum test: nonparametric two-sample test with exact and normal p-values |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1229,6 +1230,7 @@ ruins a long non-symplectic integration.
 | `examples/tunstall_coding_demo.py` | Tunstall dictionary and its rate converging to the entropy as codeword width grows |
 | `examples/golomb_coding_demo.py` | Golomb code length as a U-curve in m, bottoming at the entropy near the optimal parameter |
 | `examples/fibonacci_coding_demo.py` | Fibonacci vs Elias code lengths and a bitstream resynchronizing after a flipped bit |
+| `examples/mann_whitney_demo.py` | Mann-Whitney holding significance where an outlier fools the t-test, with the exact U null |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14113,6 +14115,29 @@ only its neighborhood before the next '11' resynchronizes the decoder -- where H
 Validated: round-trips, unique '11' terminators, prefix-free streams, length ~1.44 log2 n, and single-bit
 resynchronization with an intact tail. The error-resilient universal-code companion to the Elias,
 Golomb-Rice, Huffman, and Tunstall tools.
+
+## Mann-Whitney U: the outlier-robust two-sample test
+
+Nonparametric rank-sum testing. `mann_whitney.py`:
+
+```
+$ python examples/mann_whitney_demo.py examples/output
+
+Group A ~5.4, Group B ~6.6 (clear shift):
+  Mann-Whitney p = 0.00001    t-test p = 0.00000   (both detect it)
+
+Add one wild outlier (50.0) to group A:
+  Mann-Whitney p = 0.00055   -- still sees B > A
+  t-test        p = 0.48324  -- outlier masks the shift
+```
+
+Uses only the ranks of the pooled data, so it needs no normality and shrugs off outliers. The statistic
+counts how often group 1 exceeds group 2 over all cross-pairs; its null is computed exactly by DP for
+small samples or by a tie-corrected normal approximation for large. Validated: identical groups give
+U=n1n2/2 and p~1, separated groups give U=0 and tiny p, exact and normal p-values agree, effect size
+matches the brute-force cross-pair fraction, monotone-transform invariant, ties handled via average ranks,
+and the exact null sums to C(n1+n2,n1) and is symmetric. The nonparametric-testing companion to the
+KS-test, permutation-test, and t-test tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

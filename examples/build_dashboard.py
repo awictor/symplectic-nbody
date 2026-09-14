@@ -661,6 +661,7 @@ def main():
     import tunstall_coding_demo
     import golomb_coding_demo
     import fibonacci_coding_demo
+    import mann_whitney_demo
 
     import plot_orbits
 
@@ -1291,6 +1292,7 @@ def main():
     tunstall_coding_txt = run("tunstall_coding_demo", tunstall_coding_demo.main, True)
     golomb_coding_txt = run("golomb_coding_demo", golomb_coding_demo.main, True)
     fibonacci_coding_txt = run("fibonacci_coding_demo", fibonacci_coding_demo.main, True)
+    mann_whitney_txt = run("mann_whitney_demo", mann_whitney_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11965,6 +11967,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("fibonacci_coding.svg"), "Top: Fibonacci code length (yellow) against Elias gamma (gray) and delta (purple) as n grows -- Fibonacci beats gamma beyond small n and tracks delta. Bottom: a 146-bit stream with one flipped bit (red); the green '11' terminators are resynchronization points, so only two codewords are damaged and everything after the next green marker decodes correctly")
             + f'<div class="card">{pre(fibonacci_coding_txt)}</div>'
+            + '</div>'),
+        section(
+            "Mann-Whitney U: the outlier-robust two-sample test",
+            "The t-test asks whether two groups have different means, assuming roughly normal data -- and "
+            "a single outlier can wreck it. The Mann-Whitney U test (Wilcoxon rank-sum) asks the more "
+            "robust question: is one group stochastically larger than the other? It uses only the RANKS "
+            "of the pooled data, so it needs no normality and shrugs off outliers. The statistic counts, "
+            "over all cross-pairs, how often group 1 exceeds group 2; under the null its distribution is "
+            "combinatorial -- computed exactly for small samples by dynamic programming, or by a "
+            "tie-corrected normal approximation for large ones. The effect size U1/(n1 n2) is simply "
+            "P(random group-1 value > random group-2 value). Validated: identical groups give "
+            "U1=U2=n1n2/2 and p~1, separated groups give U=0 and a tiny p, exact and normal p-values "
+            "agree, the effect size matches the brute-force cross-pair fraction, the test is invariant "
+            "under any monotonic transform, ties are handled via average ranks, and the exact null sums "
+            "to the binomial coefficient and is symmetric. The nonparametric-testing companion to the "
+            "KS-test, permutation-test, and t-test tools.",
+            '<div class="grid">'
+            + svg_card(out("mann_whitney.svg"), "Top: two samples on a shared number line -- group B (red) sits to the right of group A (blue), so P(A>B) is small and U is significant. Bottom: the exact combinatorial null distribution of U for n1=5, n2=6, symmetric about its mean (yellow dashed); a test measures how far the observed U lands in this distribution's tail")
+            + f'<div class="card">{pre(mann_whitney_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

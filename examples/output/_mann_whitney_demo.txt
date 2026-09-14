@@ -1,0 +1,21 @@
+Mann-Whitney U test -- nonparametric, rank-based, outlier-robust
+================================================================
+
+Group A ~5.4, Group B ~6.6 (clear shift):
+  U = 0.0, effect size P(A>B) = 0.000, p = 0.00001 (exact)
+  t-test p = 0.00000  (both detect the shift)
+
+Add one wild outlier (50.0) to group A:
+  Mann-Whitney p = 0.00055 (exact) -- still sees B > A
+  t-test        p = 0.48324 -- outlier inflates A's mean, masks the shift
+  The rank test uses only order, so one outlier moves it by a single rank.
+
+Exact null distribution of U1 for n1=5, n2=6 (462 rank arrangements):
+  U ranges 0..30, symmetric about 15.0, mean = 15.0
+  peak count 32 at U=14
+
+Common-language effect size = P(random A beats random B):
+  B shifted by +0.0: P(A>B) = 0.500
+  B shifted by +0.5: P(A>B) = 0.200
+  B shifted by +1.0: P(A>B) = 0.040
+  B shifted by +2.0: P(A>B) = 0.000
