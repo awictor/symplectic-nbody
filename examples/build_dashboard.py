@@ -666,6 +666,7 @@ def main():
     import kendall_tau_demo
     import benjamini_hochberg_demo
     import cusum_change_demo
+    import pelt_changepoint_demo
 
     import plot_orbits
 
@@ -1301,6 +1302,7 @@ def main():
     kendall_tau_txt = run("kendall_tau_demo", kendall_tau_demo.main, True)
     benjamini_hochberg_txt = run("benjamini_hochberg_demo", benjamini_hochberg_demo.main, True)
     cusum_change_txt = run("cusum_change_demo", cusum_change_demo.main, True)
+    pelt_changepoint_txt = run("pelt_changepoint_demo", pelt_changepoint_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12068,6 +12070,24 @@ def main():
             '<div class="grid">'
             + svg_card(out("cusum_change.svg"), "Top: a raw stream whose mean shifts up by just 1 sigma at the dashed line -- barely visible by eye, and a per-point 3-sigma rule flags nothing. Bottom: the CUSUM S_hi sum (yellow) accumulates the small persistent bias and crosses the decision interval (red dashed) 17 steps after the change, firing the alarm (red dot) where a control chart stays silent")
             + f'<div class="card">{pre(cusum_change_txt)}</div>'
+            + '</div>'),
+        section(
+            "PELT: optimal multiple change-point detection in linear time",
+            "CUSUM watches a stream and flags the first shift; but given a whole recorded series you often "
+            "want ALL the change points, and the globally BEST set, not a greedy approximation. Segmenting "
+            "optimally is an exponential search; the classic exact dynamic program is O(n^2). PELT (Pruned "
+            "Exact Linear Time; Killick, Fearnhead, Eckley 2012) keeps the exactness but prunes candidate "
+            "change points that can never be optimal, dropping the cost to roughly O(n). It minimizes "
+            "total segment cost plus a penalty beta per change point; beta = 2 log n (BIC-type) balances "
+            "fit against parsimony -- too small over-segments, too large misses real shifts. Validated: it "
+            "recovers the known change points of a piecewise-constant signal, a larger penalty yields "
+            "fewer change points, the pruned result exactly matches the unpruned O(n^2) DP across seeds "
+            "and penalties, the segment means reconstruct the true levels, and pure noise yields few or no "
+            "change points. The offline optimal-segmentation companion to the CUSUM, Page-Hinkley, and "
+            "hypothesis-testing tools.",
+            '<div class="grid">'
+            + svg_card(out("pelt_changepoint.svg"), "A noisy four-level step signal (blue) segmented by PELT: the fitted segment means (yellow) snap to the true levels and the red change-point lines land exactly on the true boundaries [50, 90, 150], recovered as the globally optimal segmentation -- identical to the O(n^2) dynamic program but in near-linear time")
+            + f'<div class="card">{pre(pelt_changepoint_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -1,0 +1,24 @@
+PELT -- Pruned Exact Linear Time optimal change-point detection
+================================================================
+
+Signal of 200 points, 4 true levels, noise sd 0.8.
+True change points: [50, 90, 150]
+PELT change points: [50, 90, 150]  (penalty = 10.60 = 2 log n)
+Segments found: 4
+Segment means: [1.74, 6.87, 3.1, 8.96]
+True levels:   [2.0, 7.0, 3.0, 9.0]
+
+Exact O(n^2) DP change points: [50, 90, 150]
+  PELT (pruned, ~O(n)) gives the SAME optimum: True
+
+Penalty controls the fit-vs-parsimony tradeoff:
+   penalty   #change points   segments
+   --------------------------------------
+       0.50         91       92
+       2.00          7       8
+      10.60          3       4  <- 2 log n
+      20.00          3       4
+     100.00          3       4
+   1000000.00          0       1
+
+Too small over-segments (change point at every wiggle); too large misses real shifts.

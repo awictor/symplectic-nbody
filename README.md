@@ -624,6 +624,7 @@ ruins a long non-symplectic integration.
 | `src/kendall_tau.py` | Kendall's tau (a and b): rank correlation from concordant/discordant pairs, tie-corrected |
 | `src/benjamini_hochberg.py` | Multiple-testing corrections: Benjamini-Hochberg FDR, Bonferroni, and Holm |
 | `src/cusum_change.py` | CUSUM & Page-Hinkley sequential change detection: spot a mean shift in a stream |
+| `src/pelt_changepoint.py` | PELT: exact optimal multiple change-point detection in near-linear time via pruned DP |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1239,6 +1240,7 @@ ruins a long non-symplectic integration.
 | `examples/kendall_tau_demo.py` | Concordant/discordant pair links on a curved cloud, and tau beating Pearson under an outlier |
 | `examples/benjamini_hochberg_demo.py` | Sorted p-values against the BH step-up line vs the Bonferroni cutoff, with an FDR table |
 | `examples/cusum_change_demo.py` | CUSUM sums crossing threshold shortly after a 1-sigma shift, with a delay-vs-shift table |
+| `examples/pelt_changepoint_demo.py` | PELT segmenting a noisy 4-level step signal, matching the exact DP, with a penalty sweep |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14229,6 +14231,26 @@ false alarm ~370, a mean shift caught within a few steps of the true change, lar
 the slack returns the sums to zero under the null, a bigger h lengthens the false-alarm run, and
 Page-Hinkley detects a shift with no preset target. The sequential-change-detection companion to the
 Welch-PSD, Kalman, and hypothesis-testing tools.
+
+## PELT: optimal multiple change-point detection in linear time
+
+Exact offline segmentation. `pelt_changepoint.py`:
+
+```
+$ python examples/pelt_changepoint_demo.py examples/output
+
+Signal of 200 points, 4 true levels.
+True change points: [50, 90, 150]
+PELT change points: [50, 90, 150]  (penalty = 10.60 = 2 log n)
+  PELT (pruned, ~O(n)) gives the SAME optimum as the O(n^2) DP: True
+```
+
+Minimize total segment cost plus a penalty per change point; PELT prunes candidates that can never be
+optimal, so the exact dynamic program runs in ~O(n) instead of O(n^2). beta = 2 log n balances fit against
+parsimony. Validated: recovers known change points, larger penalty gives fewer, the pruned result exactly
+matches the unpruned DP across seeds and penalties, segment means reconstruct the levels, and pure noise
+yields few change points. The offline optimal-segmentation companion to the CUSUM, Page-Hinkley, and
+hypothesis-testing tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
