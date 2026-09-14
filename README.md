@@ -607,6 +607,7 @@ ruins a long non-symplectic integration.
 | `src/l1_trend_filter.py` | L1 trend filtering: piecewise-linear trend with automatically-placed kinks, via ADMM |
 | `src/aaa_approx.py` | The AAA algorithm: near-optimal rational approximation, greedy support points, pole recovery |
 | `src/esprit_method.py` | ESPRIT: noise-robust subspace frequency estimation, super-resolving tones below the FFT bin |
+| `src/theil_sen.py` | Theil-Sen & Siegel robust regression: line fit by median of pairwise slopes, ~29-50% breakdown |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1205,6 +1206,7 @@ ruins a long non-symplectic integration.
 | `examples/l1_trend_filter_demo.py` | L1 piecewise-linear fit with auto-placed kinks vs the smooth Hodrick-Prescott trend |
 | `examples/aaa_approx_demo.py` | AAA rational fit of a near-singular function beating an equal-order polynomial, with pole recovery |
 | `examples/esprit_method_demo.py` | ESPRIT resolving two tones 0.3 of an FFT bin apart, with the noise-robustness table vs Prony |
+| `examples/theil_sen_demo.py` | Theil-Sen line shrugging off 25% outliers next to OLS being dragged off, with a breakdown sweep |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13819,6 +13821,28 @@ subspace), and solve the least-squares rotation between the basis's first and la
 recovers exact frequencies and damping on clean signals, resolves tones 0.3 of an FFT bin apart, and
 estimates frequencies under noise far more accurately than Prony. The subspace-spectral companion to the
 Prony, FFT, Goertzel, and Welch-PSD tools.
+
+## Theil-Sen: robust regression by median of slopes
+
+The outlier-proof line fit. `theil_sen.py`:
+
+```
+$ python examples/theil_sen_demo.py examples/output
+
+True line: y = 2.0 x + 3.0.  60 points, 15 (25%) gross outliers.
+   method                 slope     intercept   |slope error|
+   OLS (least squares)     2.023     24.620     0.023
+   Theil-Sen               2.003      4.310     0.003
+   Siegel repeated-med     2.002      4.316     0.002
+```
+
+Compute the slope between every pair of points and take the median; the intercept is the median of
+y_i - slope*x_i. The median ignores extremes, so the fit tolerates ~29% arbitrarily-corrupted data (50%
+for the Siegel repeated-median variant) while staying nearly as efficient as OLS on clean data. Validated:
+exact recovery on a clean line, matches the analytic median of pairwise slopes, stays within 0.003 of the
+true slope under 25% gross outliers (where OLS's intercept is dragged from 3 to 25), Siegel survives 40%,
+and the distribution-free slope confidence interval brackets the truth. The robust-regression companion to
+the RANSAC, ordinary-least-squares, and quantile tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

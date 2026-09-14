@@ -649,6 +649,7 @@ def main():
     import l1_trend_filter_demo
     import aaa_approx_demo
     import esprit_method_demo
+    import theil_sen_demo
 
     import plot_orbits
 
@@ -1267,6 +1268,7 @@ def main():
     l1_trend_filter_txt = run("l1_trend_filter_demo", l1_trend_filter_demo.main, True)
     aaa_approx_txt = run("aaa_approx_demo", aaa_approx_demo.main, True)
     esprit_method_txt = run("esprit_method_demo", esprit_method_demo.main, True)
+    theil_sen_txt = run("theil_sen_demo", theil_sen_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11709,6 +11711,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("esprit_method.svg"), "Two tones at 20.00 and 20.30 Hz, only 0.3 of an FFT bin apart. The gray FFT periodogram is a single smooth blob -- it cannot tell there are two frequencies. ESPRIT places two sharp yellow lines exactly on the true tones (green dashed), resolving what the FFT fundamentally cannot")
             + f'<div class="card">{pre(esprit_method_txt)}</div>'
+            + '</div>'),
+        section(
+            "Theil-Sen: robust regression by median of slopes",
+            "Least squares minimizes squared residuals, so a single wild point can swing the fitted line "
+            "arbitrarily far -- its breakdown point is zero. The Theil-Sen estimator (Theil 1950, Sen "
+            "1968) is the robust alternative with a beautifully simple recipe: compute the slope between "
+            "every pair of points and take the MEDIAN. Because the median ignores extremes, the fit "
+            "tolerates almost 29% of the data being arbitrarily corrupted, while staying nearly as "
+            "efficient as OLS on clean data; the intercept is the median of y_i - slope*x_i. Its cousin, "
+            "the Siegel repeated-median estimator, takes a median of per-point median slopes and reaches "
+            "a 50% breakdown point. Both underlie robust trend estimation in climatology and the "
+            "Passing-Bablok method in lab calibration. Validated: exact recovery on a clean line, the "
+            "slope equals the analytic median of pairwise slopes on hand-checkable cases, it stays within "
+            "0.003 of the true slope with 25% gross outliers where OLS's intercept is dragged from 3 to "
+            "25, Siegel survives 40% outliers, and the distribution-free confidence interval brackets the "
+            "true slope. The robust-regression companion to the RANSAC, ordinary-least-squares, and "
+            "quantile tools.",
+            '<div class="grid">'
+            + svg_card(out("theil_sen.svg"), "60 points on y=2x+3 with 25% gross outliers (red dots, flung far above). The Theil-Sen line (yellow) sits exactly on the true line (green); ordinary least squares (red dashed) is dragged upward by the outliers, its intercept pulled from 3 to 25. The median of pairwise slopes simply ignores the bad points")
+            + f'<div class="card">{pre(theil_sen_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
