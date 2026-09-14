@@ -620,6 +620,7 @@ ruins a long non-symplectic integration.
 | `src/golomb_coding.py` | Golomb/Rice coding: optimal prefix codes for geometrically-distributed integers |
 | `src/fibonacci_coding.py` | Fibonacci coding: error-resilient universal integer codes via Zeckendorf, self-synchronizing |
 | `src/mann_whitney.py` | Mann-Whitney U / Wilcoxon rank-sum test: nonparametric two-sample test with exact and normal p-values |
+| `src/kruskal_wallis.py` | Kruskal-Wallis H test: nonparametric one-way ANOVA with a from-scratch chi-squared p-value |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1231,6 +1232,7 @@ ruins a long non-symplectic integration.
 | `examples/golomb_coding_demo.py` | Golomb code length as a U-curve in m, bottoming at the entropy near the optimal parameter |
 | `examples/fibonacci_coding_demo.py` | Fibonacci vs Elias code lengths and a bitstream resynchronizing after a flipped bit |
 | `examples/mann_whitney_demo.py` | Mann-Whitney holding significance where an outlier fools the t-test, with the exact U null |
+| `examples/kruskal_wallis_demo.py` | Three groups' pooled ranks and mean-rank spread, with a power sweep and the chi-squared null |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14138,6 +14140,27 @@ U=n1n2/2 and p~1, separated groups give U=0 and tiny p, exact and normal p-value
 matches the brute-force cross-pair fraction, monotone-transform invariant, ties handled via average ranks,
 and the exact null sums to C(n1+n2,n1) and is symmetric. The nonparametric-testing companion to the
 KS-test, permutation-test, and t-test tools.
+
+## Kruskal-Wallis: nonparametric one-way ANOVA
+
+The rank-based multi-group test. `kruskal_wallis.py`:
+
+```
+$ python examples/kruskal_wallis_demo.py examples/output
+
+Three skewed groups (18 each), control has an outlier of 40:
+  control: mean rank 15.7   drug-lo: 23.2   drug-hi: 43.6
+  H = 30.332 (df=2)   p = 2.591e-07   epsilon^2 = 0.556
+
+Chi-squared survival (df=2):  P(X>5.991)=0.0500   P(X>9.210)=0.0100
+```
+
+Pool the observations, rank them, and measure how far the group mean ranks spread from the grand mean;
+under the null H is chi-squared with k-1 df. Validated: null gives small H/large p, shifted groups give
+large H/tiny p, for k=2 H matches the Mann-Whitney z-squared exactly, monotone-transform invariant, tie
+correction raises H, the from-scratch chi-squared survival function hits textbook critical values, and the
+effect size rises with separation. The nonparametric-ANOVA companion to the Mann-Whitney, KS-test, and
+permutation-test tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

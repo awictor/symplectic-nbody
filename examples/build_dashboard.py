@@ -662,6 +662,7 @@ def main():
     import golomb_coding_demo
     import fibonacci_coding_demo
     import mann_whitney_demo
+    import kruskal_wallis_demo
 
     import plot_orbits
 
@@ -1293,6 +1294,7 @@ def main():
     golomb_coding_txt = run("golomb_coding_demo", golomb_coding_demo.main, True)
     fibonacci_coding_txt = run("fibonacci_coding_demo", fibonacci_coding_demo.main, True)
     mann_whitney_txt = run("mann_whitney_demo", mann_whitney_demo.main, True)
+    kruskal_wallis_txt = run("kruskal_wallis_demo", kruskal_wallis_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11986,6 +11988,24 @@ def main():
             '<div class="grid">'
             + svg_card(out("mann_whitney.svg"), "Top: two samples on a shared number line -- group B (red) sits to the right of group A (blue), so P(A>B) is small and U is significant. Bottom: the exact combinatorial null distribution of U for n1=5, n2=6, symmetric about its mean (yellow dashed); a test measures how far the observed U lands in this distribution's tail")
             + f'<div class="card">{pre(mann_whitney_txt)}</div>'
+            + '</div>'),
+        section(
+            "Kruskal-Wallis: nonparametric one-way ANOVA",
+            "One-way ANOVA tests whether several groups share a mean but assumes normal, equal-variance "
+            "data and breaks on outliers. The Kruskal-Wallis test (1952) is its rank-based, "
+            "distribution-free generalization -- the multi-group extension of Mann-Whitney. It pools all "
+            "observations, replaces them by ranks, and measures how far the groups' mean ranks spread "
+            "from the grand mean: H = 12/(N(N+1)) * sum n_g (Rbar_g - (N+1)/2)^2. Under the null H is "
+            "approximately chi-squared with k-1 degrees of freedom, and ties are handled by average ranks "
+            "plus a divisor correction. Validated: groups from one distribution give small H and large p, "
+            "shifted groups give large H and tiny p, for two groups H matches the Mann-Whitney "
+            "z-squared exactly, H is invariant under any monotonic transform, the tie correction raises "
+            "H, the from-scratch chi-squared survival function hits the textbook critical values, and the "
+            "effect size rises with separation. The nonparametric-ANOVA companion to the Mann-Whitney, "
+            "KS-test, and permutation-test tools.",
+            '<div class="grid">'
+            + svg_card(out("kruskal_wallis.svg"), "Three groups' observations plotted at their pooled ranks (one row each), with white bars marking group mean ranks against the grand mean (gray dashed). The groups' mean ranks spread far apart -- control low, drug-hi high -- which is exactly what H measures; here a 40-value outlier in control barely moves it, since the test counts rank positions not magnitudes")
+            + f'<div class="card">{pre(kruskal_wallis_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

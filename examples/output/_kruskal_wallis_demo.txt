@@ -1,0 +1,30 @@
+Kruskal-Wallis H test -- nonparametric one-way ANOVA
+======================================================
+
+Three skewed groups (18 each), control has an outlier of 40:
+  control : median 4.75, mean rank 15.7
+  drug-lo : median 5.57, mean rank 23.2
+  drug-hi : median 8.75, mean rank 43.6
+
+H = 30.332  (df=2)
+p-value = 2.591e-07  (chi-squared approximation)
+epsilon-squared effect size = 0.556
+
+The rank-based test ignores the outlier's magnitude -- it counts only positions.
+
+H and p as the groups separate (shift applied to drug-hi):
+   shift    H        p-value
+   ------------------------------
+     0.0     21.42   2.228e-05
+     1.0     21.54   2.097e-05
+     2.0     30.50   2.382e-07
+     4.0     44.69   1.972e-10
+     8.0     46.53   7.889e-11
+
+Chi-squared survival function (the null for H), df=2:
+   P(chi2_2 > 1.000) = 0.6065
+   P(chi2_2 > 2.000) = 0.3679
+   P(chi2_2 > 4.000) = 0.1353
+   P(chi2_2 > 5.991) = 0.0500
+   P(chi2_2 > 9.210) = 0.0100
+   (5.991 is the 0.05 critical value, 9.21 the 0.01)
