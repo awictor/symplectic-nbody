@@ -1,0 +1,14 @@
+Cross-correlation & matched filter: finding a signal, and where it hides, in noise
+
+  a length-12 chirp buried at index 70 in noise (amp 1.5)
+  the pulse peak (0.98) is comparable to the noise std (0.43) --
+  invisible to a raw threshold.
+
+  raw signal argmax:       index 78  (a noise spike, wrong)
+  matched-filter detection: index 70  (true start 70)
+  the matched filter is the maximum-SNR detector -- it integrates the whole template.
+
+  delay estimation (sonar-style): a pulse and its echo delayed by 17 samples
+  cross-correlation peak gives delay = 17  (true 17)
+
+  wrote examples/output\cross_correlation.svg

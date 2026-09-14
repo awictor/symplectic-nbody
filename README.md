@@ -551,6 +551,7 @@ ruins a long non-symplectic integration.
 | `src/bulirsch_stoer.py` | Bulirsch-Stoer ODE: modified midpoint + Richardson extrapolation |
 | `src/gram_schmidt.py` | Classical vs modified Gram-Schmidt orthogonalization + orthogonal polynomials |
 | `src/icp.py` | Iterative Closest Point registration (nearest-neighbour + Kabsch, unknown correspondence) |
+| `src/cross_correlation.py` | Cross/auto-correlation + matched filter (delay estimation, detection in noise) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1093,6 +1094,7 @@ ruins a long non-symplectic integration.
 | `examples/bulirsch_stoer_demo.py` | Kepler orbit + one-step error 1e-1 -> 1e-14 across extrapolation levels |
 | `examples/gram_schmidt_demo.py` | Classical collapse vs modified stability on Hilbert basis + Legendre |
 | `examples/icp_demo.py` | Registering a shuffled rotated/translated L-shape, RMSD 0.35 -> 1e-5 |
+| `examples/cross_correlation_demo.py` | Matched filter finding a chirp in noise + echo delay estimation |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12518,6 +12520,27 @@ optimum. A centroid pre-alignment seeds it into the right basin. Validated: reco
 rotation + translation from shuffled clouds in 2-D and 3-D, handles a scale change (Umeyama), and is
 exact on pure translations and identical clouds. The correspondence-free registration companion to the
 Kabsch, Umeyama, and affine-alignment tools.
+
+## Cross-correlation and the matched filter: finding a signal in noise
+
+Locate a known signal buried in noise, or the delay between two signals. `cross_correlation.py`:
+
+```
+$ python examples/cross_correlation_demo.py examples/output
+
+  a length-12 chirp buried at index 70 in noise (pulse peak ~ noise std)
+  raw signal argmax:        index 78  (a noise spike, wrong)
+  matched-filter detection: index 70  (correct)
+  echo delayed by 17 samples -> correlation peak gives 17
+```
+
+Cross-correlation's peak gives the lag where two signals align; autocorrelation peaks at lag 0 and
+reveals periodicity; the matched filter (correlation against a time-reversed template) is the
+maximum-SNR detector for a known signal in white noise. All are convolution with a reversed kernel,
+computed by the repo's FFT in O(n log n). Validated: autocorrelation peaks at lag 0 equalling the
+energy, delays and periods are recovered exactly, FFT and direct methods agree, and the matched filter
+finds a pulse where a raw threshold fails. The detection-and-alignment companion to the FFT, Goertzel,
+and convolution tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

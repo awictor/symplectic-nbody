@@ -593,6 +593,7 @@ def main():
     import bulirsch_stoer_demo
     import gram_schmidt_demo
     import icp_demo
+    import cross_correlation_demo
 
     import plot_orbits
 
@@ -1155,6 +1156,7 @@ def main():
     bulirsch_stoer_txt = run("bulirsch_stoer_demo", bulirsch_stoer_demo.main, True)
     gram_schmidt_txt = run("gram_schmidt_demo", gram_schmidt_demo.main, True)
     icp_txt = run("icp_demo", icp_demo.main, True)
+    cross_correlation_txt = run("cross_correlation_demo", cross_correlation_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10478,6 +10480,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("icp.svg"), "ICP registering a shuffled, rotated, translated L-shape: the source (gray) and the ICP-aligned source (blue) land exactly on the target (orange) -- the rotation and translation recovered from unordered points in two iterations")
             + f'<div class="card">{pre(icp_txt)}</div>'
+            + '</div>'),
+        section(
+            "Cross-correlation and the matched filter: finding a signal in noise",
+            "CROSS-CORRELATION slides one signal past another and measures overlap at each lag; its "
+            "peak gives the LAG where they align -- the basis of radar/sonar ranging, GPS acquisition, "
+            "and time-delay estimation. AUTOCORRELATION (a signal against itself) peaks at lag 0 and "
+            "its secondary peaks reveal PERIODICITY, powering pitch detection. The MATCHED FILTER is "
+            "the optimal detector for a known signal in white noise: correlate against a time-reversed "
+            "template, which MAXIMIZES the signal-to-noise ratio at detection -- every radar and "
+            "communications receiver is built on one. All of it is convolution with a reversed kernel, "
+            "so the repo's FFT convolution computes it in O(n log n). Validated: the autocorrelation "
+            "peaks at lag 0 and equals the signal energy there and is symmetric; cross-correlating a "
+            "delayed copy recovers the delay exactly; autocorrelation of a periodic signal peaks at "
+            "the period; the FFT and direct methods agree; normalized correlation is 1 at lag 0; and "
+            "the matched filter locates a pulse hidden in noise where a raw threshold picks a noise "
+            "spike. The detection-and-alignment companion to the FFT, Goertzel, and convolution tools.",
+            '<div class="grid">'
+            + svg_card(out("cross_correlation.svg"), "A chirp buried in noise (top) is invisible to a raw threshold -- its argmax is a noise spike -- but the matched-filter response (bottom) integrates the whole template into a sharp peak at the true pulse location")
+            + f'<div class="card">{pre(cross_correlation_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
