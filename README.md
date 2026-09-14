@@ -613,6 +613,7 @@ ruins a long non-symplectic integration.
 | `src/music_spectrum.py` | MUSIC: super-resolution frequency estimation from noise-subspace orthogonality |
 | `src/affinity_propagation.py` | Affinity propagation: exemplar clustering by message passing, no preset cluster count |
 | `src/self_organizing_map.py` | Self-organizing (Kohonen) map: topology-preserving neural grid for high-dimensional data |
+| `src/fuzzy_cmeans.py` | Fuzzy c-means: soft clustering with graded per-cluster memberships |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1217,6 +1218,7 @@ ruins a long non-symplectic integration.
 | `examples/music_spectrum_demo.py` | MUSIC pseudospectrum resolving two tones half an FFT bin apart, with the eigenvalue split |
 | `examples/affinity_propagation_demo.py` | Four blobs clustered with no k, exemplars elected by message passing, with a preference sweep |
 | `examples/self_organizing_map_demo.py` | A 10x10 SOM learning four color clusters into a smooth grid, with the quantization-error curve |
+| `examples/fuzzy_cmeans_demo.py` | Soft memberships blended as point colors on overlapping blobs, with a fuzzifier sweep |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13968,6 +13970,28 @@ distance and time. Neighboring points end up in neighboring cells. Validated: qu
 steadily, each cluster maps to a contiguous grid region, topographic error is low, 1-D data maps in
 monotone order, the decay schedules are monotone, and results are reproducible per seed. The
 topology-preserving companion to the t-SNE, PCA-whitening, k-means, and spectral-clustering tools.
+
+## Fuzzy c-means: soft clustering by graded membership
+
+Clustering where every point belongs to every cluster, by degree. `fuzzy_cmeans.py`:
+
+```
+$ python examples/fuzzy_cmeans_demo.py examples/output
+
+90 points, 3 overlapping blobs, fuzzifier m=2.0.
+Partition coefficient: 0.770  (1=crisp, 1/3=maximally fuzzy)
+Ambiguous points (no cluster > 60% membership): 6/90
+
+Fuzzifier m controls softness:
+   m=1.1 -> PC 0.998    m=2.0 -> PC 0.770    m=5.0 -> PC 0.390
+```
+
+Give every point a membership degree in each cluster (summing to 1) by minimizing sum u_ij^m ||x_i - c_j||^2:
+alternate a closed-form membership update with a membership-weighted center update. The fuzzifier m > 1
+sets softness (m -> 1 is hard k-means). Validated: recovers centers with near-crisp memberships, a point
+between two centers gets ~50/50, memberships sum to 1, the objective decreases monotonically, the partition
+coefficient tracks crispness, and as m -> 1 the partition matches k-means exactly. The soft-clustering
+companion to the k-means, GMM, affinity-propagation, and DBSCAN tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

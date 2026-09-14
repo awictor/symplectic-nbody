@@ -1,0 +1,24 @@
+Fuzzy c-means -- soft clustering by graded membership
+======================================================
+
+90 points, 3 overlapping blobs, fuzzifier m=2.0.
+Converged in 12 iterations, objective 220.2.
+Partition coefficient: 0.770  (1=crisp, 1/3=maximally fuzzy)
+
+Recovered centers:
+  cluster 0: (+6.11, +0.31)
+  cluster 1: (-0.34, -0.43)
+  cluster 2: (+3.37, +4.95)
+
+Ambiguous points (no cluster > 60% membership): 6/90
+  -- these sit in the overlaps; hard k-means would force an arbitrary choice.
+
+Fuzzifier m controls softness (partition coefficient):
+   m       partition coeff   mean max-membership
+   ------------------------------------------
+    1.1    0.998             0.999
+    1.5    0.942             0.965
+    2.0    0.770             0.860
+    3.0    0.528             0.671
+    5.0    0.390             0.509
+  (larger m -> softer memberships -> lower partition coefficient)

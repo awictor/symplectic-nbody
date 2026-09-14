@@ -655,6 +655,7 @@ def main():
     import music_spectrum_demo
     import affinity_propagation_demo
     import self_organizing_map_demo
+    import fuzzy_cmeans_demo
 
     import plot_orbits
 
@@ -1279,6 +1280,7 @@ def main():
     music_spectrum_txt = run("music_spectrum_demo", music_spectrum_demo.main, True)
     affinity_propagation_txt = run("affinity_propagation_demo", affinity_propagation_demo.main, True)
     self_organizing_map_txt = run("self_organizing_map_demo", self_organizing_map_demo.main, True)
+    fuzzy_cmeans_txt = run("fuzzy_cmeans_demo", fuzzy_cmeans_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11839,6 +11841,24 @@ def main():
             '<div class="grid">'
             + svg_card(out("self_organizing_map.svg"), "Left: a 10x10 SOM trained on four color clusters, each node painted by its learned RGB weight -- the colors form a smooth gradient because neighboring nodes hold similar weights, and white rings mark where each color cluster settles (the four corners). Right: quantization error falling from 0.59 to 0.025 as the sheet unfolds to fit the data")
             + f'<div class="card">{pre(self_organizing_map_txt)}</div>'
+            + '</div>'),
+        section(
+            "Fuzzy c-means: soft clustering by graded membership",
+            "Hard clustering forces each point into one cluster, discarding what we know about points on a "
+            "boundary or in an overlap. Fuzzy c-means (Dunn 1973, Bezdek 1981) instead gives every point a "
+            "membership degree in each cluster, weights that sum to 1 -- a point deep inside is ~100% one "
+            "cluster, one halfway between two centers is ~50/50. It minimizes sum_i sum_j u_ij^m ||x_i - "
+            "c_j||^2 by alternating a closed-form membership update with a membership-weighted center "
+            "update; the fuzzifier m > 1 controls softness (m -> 1 recovers hard k-means). The membership "
+            "vector also flags ambiguous points and outliers. Validated: recovers centers on separated "
+            "blobs with near-crisp memberships, a point between two centers gets ~50/50, memberships sum "
+            "to 1, the objective decreases monotonically, the partition coefficient is near 1 for crisp "
+            "data and lower for fuzzy, as m -> 1 the partition matches the repo's k-means exactly, and "
+            "results are reproducible per seed. The soft-clustering companion to the k-means, GMM, "
+            "affinity-propagation, and DBSCAN tools.",
+            '<div class="grid">'
+            + svg_card(out("fuzzy_cmeans.svg"), "90 points from three overlapping blobs, each dot colored by BLENDING the three cluster colors in proportion to its memberships. Points deep in a cluster are pure blue/red/green; ambiguous points in the overlaps are blended and drawn larger. White crosses are the centers -- hard clustering would erase this membership gradient")
+            + f'<div class="card">{pre(fuzzy_cmeans_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
