@@ -1,0 +1,24 @@
+Dixon's factorization: a congruence of squares x^2 = y^2 (mod N) gives a factor
+
+  N = 8051 = 83 x 97, factor base = [2, 3, 5, 7]
+
+  smooth relations x^2 mod N that factor over the base:
+        x   x^2 mod N   exponent vector over base
+       90          49   [0, 0, 0, 2]
+       99        1750   [1, 0, 3, 1]
+      127          27   [0, 3, 0, 0]
+      165        3072   [10, 1, 0, 0]
+      180         196   [2, 0, 0, 2]
+      198        7000   [3, 0, 3, 1]
+      254         108   [2, 3, 0, 0]
+      270         441   [0, 2, 0, 2]
+
+  a GF(2) combination of these relations gives X^2 = Y^2 (mod N),
+  and gcd(X - Y, N) = 83  ->  N = 83 x 97
+
+  full factorization: [83, 97]
+
+  This is the quadratic sieve's engine: find smooth squares, combine their exponent
+  parities to zero via linear algebra over GF(2), read off a factor by gcd.
+
+  wrote examples/output\dixon.svg

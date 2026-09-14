@@ -580,6 +580,7 @@ def main():
     import pell_demo
     import fibonacci_demo
     import lucas_lehmer_demo
+    import dixon_demo
 
     import plot_orbits
 
@@ -1129,6 +1130,7 @@ def main():
     pell_txt = run("pell_demo", pell_demo.main, True)
     fibonacci_txt = run("fibonacci_demo", fibonacci_demo.main, True)
     lucas_lehmer_txt = run("lucas_lehmer_demo", lucas_lehmer_demo.main, True)
+    dixon_txt = run("dixon_demo", dixon_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10185,6 +10187,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("lucas_lehmer.svg"), "Which prime exponents p yield a Mersenne prime M_p = 2^p - 1: only 12 of the primes up to 150 (green) do, and they thin out fast -- the rarity that makes each newly found Mersenne prime a record")
             + f'<div class="card">{pre(lucas_lehmer_txt)}</div>'
+            + '</div>'),
+        section(
+            "Dixon's factorization: a congruence of squares from smooth relations",
+            "Fermat's insight: if x^2 = y^2 (mod N) but x != +/-y, then gcd(x-y, N) is a nontrivial "
+            "factor. The whole family of modern factoring algorithms -- Dixon, the quadratic sieve, "
+            "the number field sieve -- is about MANUFACTURING such a congruence of squares. DIXON'S "
+            "METHOD (1981), the first provably subexponential factoring algorithm, does it directly: "
+            "pick a FACTOR BASE of small primes, draw random x, and keep the x^2 mod N that are SMOOTH "
+            "(factor completely over the base), recording each factorization's exponent vector mod 2. "
+            "Collect more relations than base primes, then GAUSSIAN-ELIMINATE over GF(2) to find a "
+            "subset whose exponent vectors sum to zero -- that subset multiplies to a perfect square "
+            "on both sides, giving X^2 = Y^2 (mod N) and a factor by gcd. This is the quadratic "
+            "sieve's engine minus the clever sieving. Validated: it factors semiprimes and general "
+            "composites into correct prime factorizations whose product is N, agrees with trial "
+            "division on random N, returns primes unchanged, handles prime powers and even numbers, "
+            "and every GF(2) dependency really yields a congruence of squares. The "
+            "subexponential-factoring companion to the Pollard-rho, trial-division, and Lucas-Lehmer "
+            "tools.",
+            '<div class="grid">'
+            + svg_card(out("dixon.svg"), "Dixon factoring 8051 = 83 x 97: the smooth relations x^2 mod N as exponent vectors mod 2 over the factor base {2,3,5,7} -- a subset XORing to all-zero is a perfect square, and its gcd reveals the factor 83")
+            + f'<div class="card">{pre(dixon_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

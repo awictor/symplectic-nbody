@@ -538,6 +538,7 @@ ruins a long non-symplectic integration.
 | `src/pell.py` | Pell's equation x^2 - D y^2 = 1 via periodic continued fraction of sqrt(D) |
 | `src/fibonacci.py` | Fast-doubling Fibonacci/Lucas, Pisano period, Zeckendorf, Cassini/GCD identities |
 | `src/lucas_lehmer.py` | Lucas-Lehmer Mersenne-prime test + general Lucas sequences + Baillie-PSW half |
+| `src/dixon.py` | Dixon's random-squares factorization: smooth relations + GF(2) linear algebra |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1067,6 +1068,7 @@ ruins a long non-symplectic integration.
 | `examples/pell_demo.py` | Pell fundamental solutions (incl D=61) + chaotic digit-length growth |
 | `examples/fibonacci_demo.py` | Million-digit F_n, Pisano periods, F(10^100) mod m, Zeckendorf |
 | `examples/lucas_lehmer_demo.py` | Mersenne primes found by Lucas-Lehmer + the s_k recurrence |
+| `examples/dixon_demo.py` | Dixon factoring 8051 via smooth-relation exponent vectors over GF(2) |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12219,6 +12221,28 @@ a Lucas probable-prime test (half of Baillie-PSW). Validated: it finds the Merse
 {2,3,5,7,13,17,19,31,61,89,107,127} and rejects composites, agreeing with a real primality check; the
 Lucas sequences satisfy V_n^2 - D U_n^2 = 4 Q^n and reproduce Fibonacci and Lucas numbers. The
 Mersenne-prime companion to the Fibonacci fast-doubling and Miller-Rabin tools.
+
+## Dixon's factorization: a congruence of squares from smooth relations
+
+Factor a composite by manufacturing x^2 = y^2 (mod N). `dixon.py`:
+
+```
+$ python examples/dixon_demo.py examples/output
+
+  N = 8051 = 83 x 97, factor base = [2, 3, 5, 7]
+  smooth relations x^2 mod N:
+       90^2 mod N = 49    exponent vector [0, 0, 0, 2]
+      127^2 mod N = 27    exponent vector [0, 3, 0, 0]
+  a GF(2) combination gives X^2 = Y^2 (mod N), gcd(X-Y, N) = 83
+```
+
+Dixon (the first provably subexponential factoring algorithm) picks a factor base, collects smooth
+x^2 mod N whose exponent-vectors-mod-2 are then combined via Gaussian elimination over GF(2) into a
+subset summing to zero -- a perfect square on both sides, giving a factor by gcd. This is the quadratic
+sieve's engine. Validated: correct prime factorizations whose product is N, agreement with trial
+division on random N, primes and prime powers handled, and every GF(2) dependency yields a genuine
+congruence of squares. The subexponential-factoring companion to the Pollard-rho and Lucas-Lehmer
+tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
