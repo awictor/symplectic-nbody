@@ -1,0 +1,14 @@
+Self-organizing map -- a Kohonen grid that preserves neighborhoods
+==================================================================
+
+100 points (4 color clusters) mapped to a 10x10 grid.
+Quantization error: 0.5937 -> 0.0252
+Topographic error:  0.030  (fraction with non-adjacent top-2 BMUs)
+
+Each color cluster occupies its own grid region:
+  red    : grid centroid (1.3, 1.9)
+  green  : grid centroid (7.2, 7.2)
+  blue   : grid centroid (7.1, 1.7)
+  yellow : grid centroid (1.4, 7.6)
+
+Neighboring colors land in neighboring cells -- the map is topology-preserving.

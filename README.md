@@ -612,6 +612,7 @@ ruins a long non-symplectic integration.
 | `src/burg_method.py` | Burg's method: maximum-entropy AR spectral estimation from short records, always stable |
 | `src/music_spectrum.py` | MUSIC: super-resolution frequency estimation from noise-subspace orthogonality |
 | `src/affinity_propagation.py` | Affinity propagation: exemplar clustering by message passing, no preset cluster count |
+| `src/self_organizing_map.py` | Self-organizing (Kohonen) map: topology-preserving neural grid for high-dimensional data |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1215,6 +1216,7 @@ ruins a long non-symplectic integration.
 | `examples/burg_method_demo.py` | Burg maximum-entropy spectrum resolving two close tones the FFT periodogram smears |
 | `examples/music_spectrum_demo.py` | MUSIC pseudospectrum resolving two tones half an FFT bin apart, with the eigenvalue split |
 | `examples/affinity_propagation_demo.py` | Four blobs clustered with no k, exemplars elected by message passing, with a preference sweep |
+| `examples/self_organizing_map_demo.py` | A 10x10 SOM learning four color clusters into a smooth grid, with the quantization-error curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13944,6 +13946,28 @@ r(k,k)+a(k,k) > 0, and the cluster count is set indirectly by the preference (se
 recovers the correct count on well-separated blobs, each exemplar is a real data point, each point joins
 its most-similar exemplar, a less-negative preference yields more clusters, and results are deterministic.
 The exemplar-based-clustering companion to the k-means, DBSCAN, mean-shift, and spectral-clustering tools.
+
+## Self-organizing map: a neural grid that preserves neighborhoods
+
+Kohonen's topology-preserving network. `self_organizing_map.py`:
+
+```
+$ python examples/self_organizing_map_demo.py examples/output
+
+100 points (4 color clusters) mapped to a 10x10 grid.
+Quantization error: 0.5937 -> 0.0252
+Topographic error:  0.030
+
+Each color cluster occupies its own grid region:
+  red   : (1.3, 1.9)   green : (7.2, 7.2)   blue : (7.1, 1.7)   yellow: (1.4, 7.6)
+```
+
+Drape a 2-D grid of prototype vectors over the data by competitive learning: present a point, find the
+best-matching node, pull it and its grid neighbors toward the point by an amount decaying with grid
+distance and time. Neighboring points end up in neighboring cells. Validated: quantization error falls
+steadily, each cluster maps to a contiguous grid region, topographic error is low, 1-D data maps in
+monotone order, the decay schedules are monotone, and results are reproducible per seed. The
+topology-preserving companion to the t-SNE, PCA-whitening, k-means, and spectral-clustering tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

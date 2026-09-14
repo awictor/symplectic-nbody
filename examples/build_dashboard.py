@@ -654,6 +654,7 @@ def main():
     import burg_method_demo
     import music_spectrum_demo
     import affinity_propagation_demo
+    import self_organizing_map_demo
 
     import plot_orbits
 
@@ -1277,6 +1278,7 @@ def main():
     burg_method_txt = run("burg_method_demo", burg_method_demo.main, True)
     music_spectrum_txt = run("music_spectrum_demo", music_spectrum_demo.main, True)
     affinity_propagation_txt = run("affinity_propagation_demo", affinity_propagation_demo.main, True)
+    self_organizing_map_txt = run("self_organizing_map_demo", self_organizing_map_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11818,6 +11820,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("affinity_propagation.svg"), "56 points from four blobs, clustered with no k specified. Message passing elects four exemplars (ringed points, real data points), and thin links connect every point to the exemplar it chose. The colors are the discovered clusters -- affinity propagation found the count itself from the preference")
             + f'<div class="card">{pre(affinity_propagation_txt)}</div>'
+            + '</div>'),
+        section(
+            "Self-organizing map: a neural grid that preserves neighborhoods",
+            "A self-organizing map (Kohonen 1982) is an unsupervised neural network that drapes a "
+            "low-dimensional grid of prototype vectors over high-dimensional data so that NEIGHBORING "
+            "points stay close on the grid. Training is competitive learning: present a point, find the "
+            "best-matching grid node, then pull that node AND its grid neighbors toward the point by an "
+            "amount that decays with grid distance (a Gaussian neighborhood) and with time. Early on a "
+            "wide neighborhood unfolds the whole sheet; as it shrinks, nodes fine-tune locally. The "
+            "trained lattice is a topology-preserving chart of the data -- unlike PCA it is nonlinear, and "
+            "unlike t-SNE it gives a fixed indexable grid. Validated: training drives quantization error "
+            "steadily down, points from one cluster map to a contiguous grid region, the topographic error "
+            "is low (neighborhoods preserved), 1-D data maps in monotone grid order, the learning rate and "
+            "neighborhood radius decay monotonically, and results are reproducible per seed. The "
+            "topology-preserving companion to the t-SNE, PCA-whitening, k-means, and spectral-clustering "
+            "tools.",
+            '<div class="grid">'
+            + svg_card(out("self_organizing_map.svg"), "Left: a 10x10 SOM trained on four color clusters, each node painted by its learned RGB weight -- the colors form a smooth gradient because neighboring nodes hold similar weights, and white rings mark where each color cluster settles (the four corners). Right: quantization error falling from 0.59 to 0.025 as the sheet unfolds to fit the data")
+            + f'<div class="card">{pre(self_organizing_map_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
