@@ -645,6 +645,7 @@ def main():
     import spsa_demo
     import arnoldi_demo
     import gauss_kronrod_demo
+    import aberth_demo
 
     import plot_orbits
 
@@ -1259,6 +1260,7 @@ def main():
     spsa_txt = run("spsa_demo", spsa_demo.main, True)
     arnoldi_txt = run("arnoldi_demo", arnoldi_demo.main, True)
     gauss_kronrod_txt = run("gauss_kronrod_demo", gauss_kronrod_demo.main, True)
+    aberth_txt = run("aberth_demo", aberth_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11623,6 +11625,24 @@ def main():
             '<div class="grid">'
             + svg_card(out("gauss_kronrod.svg"), "Adaptive Gauss-Kronrod on a spike of width 0.004. The blue integrand is a tall narrow bump; yellow ticks mark the subinterval edges and green dots the panel centers. The driver splits the worst-error panel first, so the panels pack densely under the peak and stay sparse over the flat tails -- reaching 3e-11 accuracy on a function a fixed grid would miss entirely")
             + f'<div class="card">{pre(gauss_kronrod_txt)}</div>'
+            + '</div>'),
+        section(
+            "Aberth-Ehrlich: every polynomial root at once",
+            "Newton's method chases one root and needs a good guess; deflation (dividing out each root as "
+            "you find it) lets error accumulate into the later roots. Aberth-Ehrlich refines ALL n roots "
+            "SIMULTANEOUSLY, coupling them so they repel one another and never collapse together: each "
+            "update is a Newton step corrected by the field of the other current estimates -- implicit "
+            "deflation with no polynomial division, so no error builds up. It converges CUBICALLY (each "
+            "sweep roughly triples the correct digits), faster than Durand-Kerner's quadratic rate, and "
+            "is the algorithm behind MPSolve. Robust seeding puts the initial guesses on a circle sized "
+            "by the Cauchy bound on the root moduli, and p/p' comes from a single Horner pass. Validated: "
+            "it recovers real, complex-conjugate, repeated, and clustered roots to machine precision, "
+            "satisfies Vieta's sum and product relations, matches the repo's Durand-Kerner solver, and "
+            "reaches tolerance in markedly fewer sweeps (20 vs 37 on a degree-7 test with identical "
+            "seeding). The polynomial-root companion to the Durand-Kerner and QR-algorithm tools.",
+            '<div class="grid">'
+            + svg_card(out("aberth.svg"), "Seven root estimates (colored trails) spiralling in from hollow circles on the Cauchy-bound circle to the true roots (white X's) of a degree-7 polynomial. The estimates repel each other so they never collide, locking onto all seven roots -- three real, two complex-conjugate pairs -- in 20 simultaneous sweeps")
+            + f'<div class="card">{pre(aberth_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

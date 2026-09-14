@@ -1,0 +1,29 @@
+Aberth-Ehrlich -- all polynomial roots at once, cubic convergence
+==================================================================
+
+Degree-7 polynomial, roots refined simultaneously from a circle.
+Converged in 20 sweeps.
+
+   found root                 |p(root)|
+  --------------------------------------------
+  -3.00000 +0.00000i     0.00e+00
+  -1.00000 -1.00000i     0.00e+00
+  -1.00000 +1.00000i     0.00e+00
+  +1.00000 -2.00000i     0.00e+00
+  +1.00000 +2.00000i     0.00e+00
+  +2.00000 +0.00000i     0.00e+00
+  +4.00000 +0.00000i     0.00e+00
+
+Max root-residual per sweep (cubic: digits roughly triple):
+   sweep   max |p(z_i)|
+   --------------------------
+      0    4.722e+16
+      5    4.042e+11
+     10    1.309e+07
+     17    1.297e-01
+     18    7.972e-10
+     19    0.000e+00
+     20    0.000e+00
+
+Sweeps to 1e-12 (same seeding): Aberth 20  vs  Durand-Kerner 37
+  -> cubic convergence reaches tolerance in fewer sweeps.

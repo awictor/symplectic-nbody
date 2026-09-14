@@ -603,6 +603,7 @@ ruins a long non-symplectic integration.
 | `src/spsa.py` | SPSA: gradient-free stochastic optimization estimating the full gradient from two measurements per step |
 | `src/arnoldi.py` | Arnoldi iteration: dominant eigenvalues of a large non-symmetric matrix from a Krylov subspace |
 | `src/gauss_kronrod.py` | Gauss-Kronrod quadrature: integration with a built-in error estimate and global adaptive subdivision |
+| `src/aberth.py` | Aberth-Ehrlich method: all polynomial roots simultaneously, with cubic convergence |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1197,6 +1198,7 @@ ruins a long non-symplectic integration.
 | `examples/spsa_demo.py` | SPSA descending a 2-D bowl on two evals per step, with the eval-count win over finite differences |
 | `examples/arnoldi_demo.py` | Ritz values converging to a 40x40 matrix's dominant eigenvalue, with the complex-plane spectrum |
 | `examples/gauss_kronrod_demo.py` | Adaptive Gauss-Kronrod panels swarming a narrow spike, with the polynomial-exactness ladder |
+| `examples/aberth_demo.py` | Seven root estimates spiralling in from a circle to the true roots, with the cubic-convergence table |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13707,6 +13709,32 @@ stretches. Validated: exact to degree 13 (Gauss) and 22 (Kronrod), smooth integr
 resolves a narrow spike and an endpoint square-root singularity, the error estimate bounds the true error,
 and cross-checks against the repo's Romberg and adaptive-Simpson integrators. The self-verifying-quadrature
 companion to the Romberg, adaptive-Simpson, and Gauss-Legendre tools.
+
+## Aberth-Ehrlich: every polynomial root at once
+
+The algorithm behind MPSolve. `aberth.py`:
+
+```
+$ python examples/aberth_demo.py examples/output
+
+Degree-7 polynomial, roots refined simultaneously from a circle.
+Converged in 20 sweeps.
+
+Max root-residual per sweep (cubic: digits roughly triple):
+     10    1.309e+07
+     17    1.297e-01
+     18    7.972e-10
+     19    0.000e+00
+
+Sweeps to 1e-12 (same seeding): Aberth 20  vs  Durand-Kerner 37
+```
+
+Refine all n root-approximations at once, each a Newton step corrected by the field of the other estimates
+so they repel and never collapse together -- implicit deflation with no polynomial division, so no error
+accumulates. Converges cubically (each sweep roughly triples the correct digits). Validated: recovers
+real, complex-conjugate, repeated, and clustered roots to machine precision, satisfies Vieta's sum and
+product relations, matches the repo's Durand-Kerner solver, and reaches tolerance in far fewer sweeps. The
+polynomial-root companion to the Durand-Kerner and QR-algorithm tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
