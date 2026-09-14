@@ -599,6 +599,7 @@ def main():
     import spectral_partition_demo
     import pca_whitening_demo
     import bch_demo
+    import b_spline_demo
 
     import plot_orbits
 
@@ -1167,6 +1168,7 @@ def main():
     spectral_partition_txt = run("spectral_partition_demo", spectral_partition_demo.main, True)
     pca_whitening_txt = run("pca_whitening_demo", pca_whitening_demo.main, True)
     bch_txt = run("bch_demo", bch_demo.main, True)
+    b_spline_txt = run("b_spline_demo", b_spline_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10608,6 +10610,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("bch.svg"), "A BCH(15,7) codeword, corrupted by two bit flips (red), and decoded back to the original (green marks the exact bits the syndrome-and-locator machinery repaired). The parity bits occupy the low positions, the message the high ones")
             + f'<div class="card">{pre(bch_txt)}</div>'
+            + '</div>'),
+        section(
+            "B-splines: piecewise polynomial curves with local control",
+            "A single Bezier curve has global control -- move one point and the whole curve shifts -- "
+            "and its degree grows with the number of control points. B-SPLINES stitch many low-degree "
+            "polynomial pieces into one smooth curve governed by a KNOT VECTOR, so each control point "
+            "influences only a local window and the pieces meet with C^{p-1} continuity automatically. "
+            "They are the foundation of NURBS, the geometry standard behind CAD systems and font "
+            "outlines. The basis functions come from the elegant Cox-de Boor recursion: degree-0 "
+            "indicators of the knot spans, blended upward by knot-weighted averages. Two properties "
+            "make them well-behaved: the basis is a partition of unity (non-negative and summing to "
+            "one, so the curve stays in the convex hull), and a CLAMPED knot vector makes the curve "
+            "interpolate its first and last control points -- with no interior knots it is exactly a "
+            "Bezier curve. Validated: the basis sums to one and is non-negative everywhere, each "
+            "function has local support on p+1 spans, the de Boor algorithm agrees with direct basis "
+            "summation to machine precision, clamped curves hit their endpoints, and a clamped "
+            "no-interior-knot spline reproduces the repo's Bezier evaluator exactly. The "
+            "piecewise-curve companion to the Bezier and low-discrepancy tools.",
+            '<div class="grid">'
+            + svg_card(out("b_spline.svg"), "Left: a cubic B-spline (blue) over its control polygon (yellow); the clamped ends (green rings) are interpolated while interior points only bend the nearby curve. Right: the Cox-de Boor basis functions, colored by control index -- at most four overlap anywhere and they sum to one at every parameter")
+            + f'<div class="card">{pre(b_spline_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

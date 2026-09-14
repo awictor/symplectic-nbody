@@ -557,6 +557,7 @@ ruins a long non-symplectic integration.
 | `src/spectral_partition.py` | Spectral graph bisection via the Fiedler vector: Laplacian, ratio/normalized cut, components |
 | `src/pca_whitening.py` | PCA + PCA/ZCA whitening: covariance eigendecomp, explained variance, identity-covariance transform |
 | `src/bch.py` | Binary BCH codes over GF(2^m): generator construction, syndrome/Berlekamp-Massey/Chien decoding |
+| `src/b_spline.py` | B-spline curves via Cox-de Boor: clamped/uniform knots, de Boor evaluation, local control |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1105,6 +1106,7 @@ ruins a long non-symplectic integration.
 | `examples/spectral_partition_demo.py` | Two-community graph cut along its bridges by Fiedler-vector sign |
 | `examples/pca_whitening_demo.py` | Anisotropic cloud with principal axes, PCA-whitened and ZCA-whitened side by side |
 | `examples/bch_demo.py` | BCH(15,7) codeword corrupted by 2 bit flips and decoded back, shown as a bit strip |
+| `examples/b_spline_demo.py` | Cubic B-spline over a control polygon + its Cox-de Boor basis functions |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12678,6 +12680,29 @@ Chien-searches its roots to find the flipped bits (binary, so locating = correct
 generator matches the textbook BCH(15,7,2) polynomial, codewords have zero syndromes, and the code
 corrects EVERY error pattern up to weight t (checked exhaustively). The binary-cyclic companion to the
 Reed-Solomon, Golay, and Berlekamp-Massey tools.
+
+## B-splines: piecewise polynomial curves with local control
+
+Smooth curves where each control point acts only locally. `b_spline.py`:
+
+```
+$ python examples/b_spline_demo.py examples/output
+
+  control points: 7   degree: 3   pieces: 4
+  clamped knots: [0,0,0,0, 0.25, 0.5, 0.75, 1,1,1,1]
+        u    sum N_i(u)   #active
+    0.400   1.000000000        4    (<= p+1 = 4 basis funcs overlap -> local control)
+  endpoints: C(0)=[0,0]==P0,  C(1)=[9,0]==P_last  (clamped => interpolated)
+  de Boor vs basis summation: 3.6e-15   (agree to machine precision)
+```
+
+B-splines stitch low-degree polynomial pieces into one C^{p-1} curve governed by a knot vector, so
+each control point influences only p+1 spans. The Cox-de Boor recursion builds the basis from knot-span
+indicators; the basis is a partition of unity (non-negative, sums to one), so the curve stays in its
+control hull, and a clamped knot vector makes it interpolate its endpoints -- with no interior knots it
+is exactly a Bezier curve. Validated: partition of unity and non-negativity everywhere, local support
+on p+1 spans, de Boor == direct basis summation, endpoint interpolation, and exact reduction to the
+repo's Bezier evaluator. The piecewise-curve companion to the Bezier and low-discrepancy tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
