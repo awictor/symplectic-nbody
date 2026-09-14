@@ -1,0 +1,16 @@
+MUSIC -- MUltiple SIgnal Classification, subspace super-resolution
+==================================================================
+
+100 samples, two tones at 0.2000 and 0.2050 cyc/sample
+(0.5 of an FFT bin apart -- unresolvable by the FFT).
+
+MUSIC peaks: [0.1995, 0.2046]
+  true:      [0.2000, 0.2050]
+  errors:    [0.00054, 0.00041]
+
+Covariance eigenvalues (signal subspace = the few large ones):
+   20.667  19.322  0.176  0.148  0.009  0.007  0.007  0.007  ...
+  4 signal eigenvalues then a flat noise floor at ~0.007
+
+Peak-to-median-floor ratio:  MUSIC 6888x   periodogram 1684x
+  -> MUSIC's peaks come from a projection going to zero, so they are razor-sharp.

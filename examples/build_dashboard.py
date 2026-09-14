@@ -652,6 +652,7 @@ def main():
     import theil_sen_demo
     import total_least_squares_demo
     import burg_method_demo
+    import music_spectrum_demo
 
     import plot_orbits
 
@@ -1273,6 +1274,7 @@ def main():
     theil_sen_txt = run("theil_sen_demo", theil_sen_demo.main, True)
     total_least_squares_txt = run("total_least_squares_demo", total_least_squares_demo.main, True)
     burg_method_txt = run("burg_method_demo", burg_method_demo.main, True)
+    music_spectrum_txt = run("music_spectrum_demo", music_spectrum_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11774,6 +11776,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("burg_method.svg"), "Two tones 2.2 FFT bins apart in a 96-sample record. On a log-power axis the FFT periodogram (gray) is a ragged blob with spurious noise peaks, unable to commit to two frequencies; the Burg maximum-entropy spectrum (yellow) resolves exactly two sharp peaks sitting on the true tones (green dashed)")
             + f'<div class="card">{pre(burg_method_txt)}</div>'
+            + '</div>'),
+        section(
+            "MUSIC: super-resolution from noise-subspace orthogonality",
+            "MUSIC (MUltiple SIgnal Classification, Schmidt 1979) is the eigenvector method of "
+            "super-resolution. Form the signal's covariance; if it holds p sinusoids in white noise, its "
+            "eigenvectors split cleanly into a SIGNAL subspace (the p largest eigenvalues) and a NOISE "
+            "subspace (the rest). Each true sinusoid's steering vector lies entirely in the signal "
+            "subspace, so it is exactly ORTHOGONAL to every noise-subspace eigenvector -- and the "
+            "pseudospectrum P(f) = 1 / (a(f)^H E_n E_n^H a(f)) explodes toward infinity at the true "
+            "frequencies where that projection vanishes. The peaks are razor-sharp, far below the FFT bin "
+            "width, because they come from a projection going to zero, not from energy in a bin. MUSIC is "
+            "the backbone of radar direction-of-arrival estimation and sensor arrays. Validated: the "
+            "pseudospectrum peaks at the exact frequencies of a multi-tone signal, resolves two tones half "
+            "an FFT bin apart (errors ~5e-4) where the periodogram shows one blob, the eigenvalues split "
+            "cleanly into signal and noise, its peaks are ~4x sharper than the periodogram's, and it "
+            "cross-checks against the repo's ESPRIT. The subspace-spectral companion to the ESPRIT, Prony, "
+            "Burg, and FFT tools.",
+            '<div class="grid">'
+            + svg_card(out("music_spectrum.svg"), "Top: two tones half an FFT bin apart. The gray FFT periodogram is a single blob; the yellow MUSIC pseudospectrum spikes into two razor peaks exactly on the true tones (green dashed), a 6888x vs 1684x peak-to-floor ratio. Bottom: the covariance eigenvalues -- four signal eigenvalues (green) tower over a flat noise floor (gray), the split MUSIC exploits")
+            + f'<div class="card">{pre(music_spectrum_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -610,6 +610,7 @@ ruins a long non-symplectic integration.
 | `src/theil_sen.py` | Theil-Sen & Siegel robust regression: line fit by median of pairwise slopes, ~29-50% breakdown |
 | `src/total_least_squares.py` | Total least squares: orthogonal / errors-in-variables regression via the covariance eigenproblem |
 | `src/burg_method.py` | Burg's method: maximum-entropy AR spectral estimation from short records, always stable |
+| `src/music_spectrum.py` | MUSIC: super-resolution frequency estimation from noise-subspace orthogonality |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1211,6 +1212,7 @@ ruins a long non-symplectic integration.
 | `examples/theil_sen_demo.py` | Theil-Sen line shrugging off 25% outliers next to OLS being dragged off, with a breakdown sweep |
 | `examples/total_least_squares_demo.py` | TLS holding the true slope vs OLS attenuating under errors in both axes, with an attenuation sweep |
 | `examples/burg_method_demo.py` | Burg maximum-entropy spectrum resolving two close tones the FFT periodogram smears |
+| `examples/music_spectrum_demo.py` | MUSIC pseudospectrum resolving two tones half an FFT bin apart, with the eigenvalue split |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13896,6 +13898,27 @@ recovers a known AR process's coefficients (beating Yule-Walker on short records
 all reflection coefficients |k| < 1, PSD peaks at the true frequency, resolves two close tones as two
 clean peaks, error variance falls monotonically with order, and agrees with Levinson-Durbin on long
 records. The maximum-entropy spectral companion to the Levinson-Durbin, Welch-PSD, and FFT tools.
+
+## MUSIC: super-resolution from noise-subspace orthogonality
+
+The eigenvector method of spectral estimation. `music_spectrum.py`:
+
+```
+$ python examples/music_spectrum_demo.py examples/output
+
+100 samples, two tones at 0.2000 and 0.2050 cyc/sample (0.5 of an FFT bin apart).
+MUSIC peaks: [0.1995, 0.2046]   errors: [0.00054, 0.00041]
+
+Covariance eigenvalues: 20.667 19.322 | 0.176 0.148 0.009 ...
+Peak-to-floor ratio:  MUSIC 6888x   periodogram 1684x
+```
+
+Form the covariance, split its eigenvectors into a signal subspace (largest eigenvalues) and a noise
+subspace. Each true sinusoid's steering vector is orthogonal to the noise subspace, so P(f) = 1 /
+(a(f)^H E_n E_n^H a(f)) spikes to infinity at the true frequencies. Validated: peaks at exact frequencies,
+resolves tones half an FFT bin apart (errors ~5e-4), the eigenvalues split cleanly into signal and noise,
+peaks ~4x sharper than the periodogram, and cross-checks against ESPRIT. The subspace-spectral companion
+to the ESPRIT, Prony, Burg, and FFT tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
