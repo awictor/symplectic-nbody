@@ -625,6 +625,7 @@ ruins a long non-symplectic integration.
 | `src/benjamini_hochberg.py` | Multiple-testing corrections: Benjamini-Hochberg FDR, Bonferroni, and Holm |
 | `src/cusum_change.py` | CUSUM & Page-Hinkley sequential change detection: spot a mean shift in a stream |
 | `src/pelt_changepoint.py` | PELT: exact optimal multiple change-point detection in near-linear time via pruned DP |
+| `src/mann_kendall_trend.py` | Mann-Kendall trend test with Sen slope: nonparametric monotonic-trend detection |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1241,6 +1242,7 @@ ruins a long non-symplectic integration.
 | `examples/benjamini_hochberg_demo.py` | Sorted p-values against the BH step-up line vs the Bonferroni cutoff, with an FDR table |
 | `examples/cusum_change_demo.py` | CUSUM sums crossing threshold shortly after a 1-sigma shift, with a delay-vs-shift table |
 | `examples/pelt_changepoint_demo.py` | PELT segmenting a noisy 4-level step signal, matching the exact DP, with a penalty sweep |
+| `examples/mann_kendall_trend_demo.py` | Mann-Kendall flagging a trend in skewed noisy data, Sen slope beating OLS under an outlier |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14251,6 +14253,25 @@ parsimony. Validated: recovers known change points, larger penalty gives fewer, 
 matches the unpruned DP across seeds and penalties, segment means reconstruct the levels, and pure noise
 yields few change points. The offline optimal-segmentation companion to the CUSUM, Page-Hinkley, and
 hypothesis-testing tools.
+
+## Mann-Kendall: nonparametric monotonic-trend detection
+
+The climate/hydrology trend-test standard. `mann_kendall_trend.py`:
+
+```
+$ python examples/mann_kendall_trend_demo.py examples/output
+
+50 points, upward trend + skewed noise + one outlier:
+  Mann-Kendall S=977, z=8.16, p=4.44e-16, tau=0.798, trend: increasing
+  Sen slope = 0.295/step (robust)   OLS slope = 0.211/step (pulled by outlier)
+```
+
+Sum the sign of x_j - x_i over every pair i<j; a monotonic trend drives S away from zero. Under the null S
+is approximately normal with a tie-corrected variance, giving a continuity-corrected p-value; the Sen slope
+(median of pairwise slopes) gives the robust magnitude. Validated: increasing/decreasing/no-trend all
+correctly labelled, monotone-transform invariant, ties invent no trend, a nonlinear monotone trend is
+detected, and the Sen slope recovers the true rate and matches Theil-Sen. The trend-detection companion to
+the Theil-Sen, Kendall-tau, CUSUM, and PELT tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

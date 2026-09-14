@@ -667,6 +667,7 @@ def main():
     import benjamini_hochberg_demo
     import cusum_change_demo
     import pelt_changepoint_demo
+    import mann_kendall_trend_demo
 
     import plot_orbits
 
@@ -1303,6 +1304,7 @@ def main():
     benjamini_hochberg_txt = run("benjamini_hochberg_demo", benjamini_hochberg_demo.main, True)
     cusum_change_txt = run("cusum_change_demo", cusum_change_demo.main, True)
     pelt_changepoint_txt = run("pelt_changepoint_demo", pelt_changepoint_demo.main, True)
+    mann_kendall_trend_txt = run("mann_kendall_trend_demo", mann_kendall_trend_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12088,6 +12090,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("pelt_changepoint.svg"), "A noisy four-level step signal (blue) segmented by PELT: the fitted segment means (yellow) snap to the true levels and the red change-point lines land exactly on the true boundaries [50, 90, 150], recovered as the globally optimal segmentation -- identical to the O(n^2) dynamic program but in near-linear time")
             + f'<div class="card">{pre(pelt_changepoint_txt)}</div>'
+            + '</div>'),
+        section(
+            "Mann-Kendall: nonparametric monotonic-trend detection",
+            "Fitting a line and testing its slope assumes a LINEAR trend and normal noise -- assumptions "
+            "that fail for skewed environmental data, where a few outliers can invent or hide a trend. The "
+            "Mann-Kendall test (Mann 1945, Kendall 1975) is the nonparametric standard for detecting a "
+            "monotonic trend of ANY shape, used throughout hydrology and climatology. It sums the sign of "
+            "x_j - x_i over every pair i<j: a strong upward trend drives S positive, a downward one "
+            "negative, no trend leaves S near zero. Under the null S is approximately normal with a "
+            "tie-corrected variance, giving a continuity-corrected z and p-value; the trend MAGNITUDE is "
+            "the Sen slope (median of pairwise slopes), robust to outliers. Validated: a clean increasing "
+            "series gives large positive S and a tiny p, a decreasing one large negative S, a trendless "
+            "series S near zero, the test is invariant under any monotonic transform, ties invent no false "
+            "trend, a nonlinear-but-monotone trend is still detected, and the Sen slope recovers the true "
+            "rate and matches Theil-Sen. The trend-detection companion to the Theil-Sen, Kendall-tau, "
+            "CUSUM, and PELT tools.",
+            '<div class="grid">'
+            + svg_card(out("mann_kendall_trend.svg"), "50 points with a real upward trend buried in skewed noise plus an outlier. The Sen slope (yellow, median of pairwise slopes) tracks the true rate 0.30/step, while ordinary least squares (red dashed) is dragged to 0.21 by the outlier and skew. Mann-Kendall flags the trend at p=4e-16 by counting pairwise up/down signs, immune to the shape of the noise")
+            + f'<div class="card">{pre(mann_kendall_trend_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

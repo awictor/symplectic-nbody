@@ -1,0 +1,20 @@
+Mann-Kendall trend test -- nonparametric monotonic-trend detection
+==================================================================
+
+50 points, upward trend + skewed noise + one outlier at t=10:
+  Mann-Kendall S = 977, z = 8.16, p = 4.44e-16
+  tau (effect size) = 0.798
+  trend: increasing
+  Sen slope = 0.295 / step  (robust)
+  OLS slope = 0.211 / step  (pulled by the outlier + skew)
+
+Detection vs true slope (fixed noise):
+   slope    S       p-value      Sen slope
+   ------------------------------------------
+    0.00    -122   1.586e-01   -0.026
+    0.05     116   1.803e-01   0.024
+    0.10     326   1.527e-04   0.074
+    0.30     612   1.089e-12   0.274
+    0.60     710   0.000e+00   0.574
+
+The test flags a trend only when S clears the noise band; Sen slope estimates its rate.
