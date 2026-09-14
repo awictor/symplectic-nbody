@@ -570,6 +570,7 @@ ruins a long non-symplectic integration.
 | `src/soft_dtw.py` | Differentiable soft-DTW: softmin recurrence, gamma->0 = hard DTW, soft alignment matrix |
 | `src/isolation_forest.py` | Isolation Forest anomaly detection: random-cut path length, normalized anomaly score |
 | `src/lof.py` | Local Outlier Factor: density-relative anomaly scores that catch local outliers |
+| `src/slice_sampling.py` | Slice sampling MCMC: stepping-out + shrinkage, self-tuning step size, 1-D & multivariate |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1131,6 +1132,7 @@ ruins a long non-symplectic integration.
 | `examples/soft_dtw_demo.py` | Soft alignment matrix (diffuse vs sharp) + the gamma->hard-DTW limit |
 | `examples/isolation_forest_demo.py` | Two blobs + scattered outliers, points colored by anomaly score |
 | `examples/lof_demo.py` | Dense + sparse clusters with a local outlier a global test would miss |
+| `examples/slice_sampling_demo.py` | Bimodal density with the sampled histogram overlaid on the true curve |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12990,6 +12992,28 @@ much denser -- a local outlier. Validated: uniform-cloud inliers score near 1, a
 scores well above 1, and on the two-density example a point whose distance is normal by the sparse
 cluster's standard is still flagged, the property that distinguishes LOF from global detectors. The
 density-based-anomaly companion to the Isolation-Forest, DBSCAN, and k-NN tools.
+
+## Slice sampling: MCMC that tunes its own step size
+
+Self-tuning MCMC with no proposal width to guess. `slice_sampling.py`:
+
+```
+$ python examples/slice_sampling_demo.py examples/output
+
+  target: 0.6*N(-2, 0.6) + 0.4*N(2.5, 1.0)
+      quantity   empirical    analytic
+          mean      -0.170      -0.200
+      variance       5.549       5.476
+        P(x<0)       0.596       0.600
+```
+
+To draw from p(x), slice sampling samples uniformly under the curve: pick a height y in (0, p(x)), then
+a new x uniformly from {x : p(x) > y}. Neal's stepping-out finds the slice interval and shrinkage
+samples inside it, so the step scales to the local density width with no accept/reject tuning.
+Validated: a standard normal recovers mean 0/variance 1, a shifted normal and an exponential recover
+their moments, the empirical CDF matches the analytic one, a bimodal mixture is explored with the right
+mass in each mode, and results are reproducible per seed. The self-tuning-MCMC companion to the
+Metropolis, Gibbs, and HMC samplers.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

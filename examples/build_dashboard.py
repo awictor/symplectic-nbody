@@ -612,6 +612,7 @@ def main():
     import soft_dtw_demo
     import isolation_forest_demo
     import lof_demo
+    import slice_sampling_demo
 
     import plot_orbits
 
@@ -1193,6 +1194,7 @@ def main():
     soft_dtw_txt = run("soft_dtw_demo", soft_dtw_demo.main, True)
     isolation_forest_txt = run("isolation_forest_demo", isolation_forest_demo.main, True)
     lof_txt = run("lof_demo", lof_demo.main, True)
+    slice_sampling_txt = run("slice_sampling_demo", slice_sampling_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10898,6 +10900,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("lof.svg"), "A dense blob and a loose blob, both scoring normal. The local outlier beside the dense cluster (labelled) is flagged red even though its distance to that cluster is perfectly ordinary by the sparse cluster's standards -- LOF sees it is far less dense than its neighbours")
             + f'<div class="card">{pre(lof_txt)}</div>'
+            + '</div>'),
+        section(
+            "Slice sampling: MCMC that tunes its own step size",
+            "Metropolis-Hastings works only as well as its proposal width -- too small and the chain "
+            "crawls, too large and everything is rejected, and the sweet spot differs for every "
+            "distribution. Slice sampling removes the knob. To draw from a density p(x) known only up "
+            "to a constant, it samples uniformly from the region UNDER the curve: given x pick a height "
+            "y uniformly in (0, p(x)), then given y pick a new x uniformly from the slice {x : p(x) > "
+            "y}. The slice is found adaptively -- Neal's stepping-out grows an interval outward until "
+            "both ends drop below y, and shrinkage samples inside it, contracting toward x on misses -- "
+            "so the effective step scales itself to the local width of the distribution, with no "
+            "accept/reject tuning. Validated: samples from a standard normal recover mean 0 and "
+            "variance 1, a shifted/scaled normal and an exponential recover their moments, the "
+            "empirical CDF matches the analytic one to a small KS gap, a bimodal mixture is explored "
+            "with the right mass in each mode, and results are reproducible per seed. The "
+            "self-tuning-MCMC companion to the Metropolis, Gibbs, and HMC samplers.",
+            '<div class="grid">'
+            + svg_card(out("slice_sampling.svg"), "20000 slice samples of a bimodal mixture, with no proposal-width tuning. The histogram (blue) tracks the true density (yellow) across both modes and matches their relative weights -- the slice width adapts to the local shape on its own")
+            + f'<div class="card">{pre(slice_sampling_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

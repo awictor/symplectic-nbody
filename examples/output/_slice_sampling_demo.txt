@@ -1,0 +1,12 @@
+Slice sampling: self-tuning MCMC for a bimodal density
+========================================================
+target: 0.6*N(-2, 0.6) + 0.4*N(2.5, 1.0)
+drew 20000 samples, no proposal-width tuning (stepping-out + shrinkage)
+
+    quantity   empirical    analytic
+        mean      -0.170      -0.200
+    variance       5.549       5.476
+      P(x<0)       0.596       0.600
+
+Both modes are explored with the right relative mass, with no accept/reject tuning:
+the slice width adapts to the local shape of the distribution.
