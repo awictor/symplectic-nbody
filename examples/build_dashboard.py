@@ -623,6 +623,7 @@ def main():
     import luby_transform_demo
     import hadamard_code_demo
     import polygon_clipping_demo
+    import minkowski_sum_demo
 
     import plot_orbits
 
@@ -1215,6 +1216,7 @@ def main():
     luby_transform_txt = run("luby_transform_demo", luby_transform_demo.main, True)
     hadamard_code_txt = run("hadamard_code_demo", hadamard_code_demo.main, True)
     polygon_clipping_txt = run("polygon_clipping_demo", polygon_clipping_demo.main, True)
+    minkowski_sum_txt = run("minkowski_sum_demo", minkowski_sum_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11140,6 +11142,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("polygon_clipping.svg"), "A convex subject polygon (blue) clipped against a rectangular window (yellow dashed): the green intersection is what Sutherland-Hodgman produces after whittling the polygon against each of the four window edges in turn")
             + f'<div class="card">{pre(polygon_clipping_txt)}</div>'
+            + '</div>'),
+        section(
+            "Minkowski sum: the geometry of sweeping and collision",
+            "The Minkowski sum A (+) B = { a + b } is every point of A added to every point of B -- the "
+            "region swept when B slides around while its reference point traces A. It is the heart of "
+            "motion planning (grow an obstacle by the robot's shape and the robot shrinks to a point) "
+            "and collision detection (two convex shapes overlap if and only if the origin lies in their "
+            "Minkowski DIFFERENCE A (+) (-B), the fact GJK exploits). For two convex polygons the sum is "
+            "convex and has a linear-time construction: both polygons' edges, walked counterclockwise, "
+            "already come in angular order, so MERGING the two edge sequences by direction -- like "
+            "merging two sorted lists -- traces the boundary of the sum in O(n + m). Validated: the "
+            "edge-merge sum matches a brute-force all-pairs-plus-hull sum on known and random inputs; "
+            "square (+) square is the expected larger square; summing with a point is a pure "
+            "translation; the sum's area is at least area(A) + area(B); translating an input translates "
+            "the sum; and two polygons intersect exactly when the origin lies in their Minkowski "
+            "difference (overlapping, touching, and disjoint cases all correct). The "
+            "computational-geometry companion to the convex-hull, GJK, and polygon-clipping tools.",
+            '<div class="grid">'
+            + svg_card(out("minkowski_sum.svg"), "Left: a pentagon A (blue) and a square B (green) and their Minkowski sum A(+)B (purple), the shape swept as B slides around A. Right: collision by the Minkowski difference -- the origin (red) falling inside A(+)(-B) means the two shapes overlap")
+            + f'<div class="card">{pre(minkowski_sum_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -1,0 +1,18 @@
+Minkowski sum: A (+) B = { a + b }
+==================================================
+A: convex 5-gon, area 9.000
+B: convex 4-gon, area 2.250
+A (+) B: 7-gon, area 21.750
+  (area >= area(A)+area(B) = 11.250; the difference is the mixed 'sweep' region)
+
+edge-merge O(n+m) matches the brute-force all-pairs-plus-hull sum:
+  edge-merge area 21.7500  brute area 21.7500  match: True
+
+Collision detection via the Minkowski difference (two shapes overlap iff
+the origin lies in A (+) (-B)):
+  overlapping: intersect = True
+  touching   : intersect = True
+  disjoint   : intersect = False
+
+This is the geometry behind robot motion planning (grow obstacles by the robot
+shape, shrink the robot to a point) and GJK collision detection.

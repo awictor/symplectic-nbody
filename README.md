@@ -581,6 +581,7 @@ ruins a long non-symplectic integration.
 | `src/luby_transform.py` | Luby Transform fountain codes: robust soliton, XOR encoding, peeling erasure decoder |
 | `src/hadamard_code.py` | Hadamard code: distance-n/2 coding, FWHT maximum-likelihood decode (Mariner 9) |
 | `src/polygon_clipping.py` | Sutherland-Hodgman polygon clipping against a convex window, shoelace area |
+| `src/minkowski_sum.py` | Minkowski sum of convex polygons (O(n+m) edge merge) + collision via the difference |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1153,6 +1154,7 @@ ruins a long non-symplectic integration.
 | `examples/luby_transform_demo.py` | Decoding-success-vs-overhead curve for a fountain-coded message |
 | `examples/hadamard_code_demo.py` | Walsh-Hadamard spectrum of a corrupted word with the message spike |
 | `examples/polygon_clipping_demo.py` | A convex polygon clipped against a rectangle window, before/after |
+| `examples/minkowski_sum_demo.py` | A(+)B of two convex polygons + collision via the Minkowski difference |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13240,6 +13242,26 @@ polygon is unchanged, an outside one clips to nothing, a big square clipped to a
 that window exactly, the clipped area never exceeds subject or window, clipping is idempotent, every
 clipped vertex lies inside the window, and triangle/rectangle intersections match hand-computed areas.
 The geometry companion to the convex-hull, Voronoi, and line-intersection tools.
+
+## Minkowski sum: the geometry of sweeping and collision
+
+Sweep one convex polygon around another, and detect collisions. `minkowski_sum.py`:
+
+```
+$ python examples/minkowski_sum_demo.py examples/output
+
+  A: pentagon area 9.0, B: square area 2.25
+  A (+) B: 7-gon area 21.75  (edge-merge O(n+m) == brute)
+  collision via A(+)(-B): overlapping=True, touching=True, disjoint=False
+```
+
+A (+) B = { a + b } is the region swept as B slides around A. For convex polygons the edges come in
+angular order, so merging the two edge sequences by direction traces the sum's boundary in O(n+m). Two
+convex shapes overlap iff the origin lies in their Minkowski difference A (+) (-B). Validated: edge-merge
+matches a brute-force sum on known and random inputs, square(+)square is the larger square, summing with
+a point is a translation, the sum's area is at least area(A)+area(B), and collision cases (overlapping,
+touching, disjoint) are all correct. The computational-geometry companion to the convex-hull, GJK, and
+polygon-clipping tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
