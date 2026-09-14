@@ -582,6 +582,7 @@ def main():
     import lucas_lehmer_demo
     import dixon_demo
     import sum_of_squares_demo
+    import dirichlet_demo
 
     import plot_orbits
 
@@ -1133,6 +1134,7 @@ def main():
     lucas_lehmer_txt = run("lucas_lehmer_demo", lucas_lehmer_demo.main, True)
     dixon_txt = run("dixon_demo", dixon_demo.main, True)
     sum_of_squares_txt = run("sum_of_squares_demo", sum_of_squares_demo.main, True)
+    dirichlet_txt = run("dirichlet_demo", dirichlet_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10231,6 +10233,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("sum_of_squares.svg"), "The minimum number of squares summing to each n from 1 to 100: perfect squares (green), two squares (blue), three (yellow), and the 4^a(8b+7) numbers that need all four (red) -- Lagrange's theorem caps it at four for every integer")
             + f'<div class="card">{pre(sum_of_squares_txt)}</div>'
+            + '</div>'),
+        section(
+            "Dirichlet convolution: the multiplication that turns number theory into algebra",
+            "Number theory is full of functions on the integers -- the totient phi, the Mobius mu, the "
+            "divisor-count d and divisor-sum sigma, the constant 1, the identity id(n)=n. They seem "
+            "unrelated until you equip them with the DIRICHLET CONVOLUTION (f*g)(n) = sum over d|n of "
+            "f(d) g(n/d). Under this product the arithmetic functions form a commutative ring with "
+            "identity epsilon(n) = [n==1], and the classical identities become one-line algebra: "
+            "mu*1 = epsilon, phi*1 = id, 1*1 = d, id*1 = sigma, mu*id = phi. MOBIUS INVERSION is just "
+            "the statement that 1 is invertible with inverse mu: if F = f*1 (the divisor sums of f), "
+            "then f = F*mu -- the discrete analogue of the fundamental theorem of calculus, recovering "
+            "a function from its cumulative divisor sums. Built on the repo's linear sieve. Validated "
+            "exactly: all five classical identities hold on 1..500, convolution is commutative and "
+            "associative with epsilon the identity, the Dirichlet inverse of 1 is mu, f*f^{-1} = "
+            "epsilon, and Mobius inversion round-trips (f*1)*mu = f. The arithmetic-function-algebra "
+            "companion to the linear sieve and the multiplicative-function tools.",
+            '<div class="grid">'
+            + svg_card(out("dirichlet.svg"), "The arithmetic functions phi, sigma, and d on 1..40 (each a Dirichlet convolution of 1 and id), with the Mobius function shown below as +1/0/-1 markers -- the building blocks of the convolution ring")
+            + f'<div class="card">{pre(dirichlet_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

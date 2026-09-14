@@ -540,6 +540,7 @@ ruins a long non-symplectic integration.
 | `src/lucas_lehmer.py` | Lucas-Lehmer Mersenne-prime test + general Lucas sequences + Baillie-PSW half |
 | `src/dixon.py` | Dixon's random-squares factorization: smooth relations + GF(2) linear algebra |
 | `src/sum_of_squares.py` | Sums of two/four squares: Fermat, Cornacchia, Lagrange (Gaussian integers) |
+| `src/dirichlet.py` | Dirichlet convolution + Mobius inversion; phi, mu, d, sigma identities |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1071,6 +1072,7 @@ ruins a long non-symplectic integration.
 | `examples/lucas_lehmer_demo.py` | Mersenne primes found by Lucas-Lehmer + the s_k recurrence |
 | `examples/dixon_demo.py` | Dixon factoring 8051 via smooth-relation exponent vectors over GF(2) |
 | `examples/sum_of_squares_demo.py` | Fermat two-square, Cornacchia, Lagrange four-square + min-squares grid |
+| `examples/dirichlet_demo.py` | The convolution identities + Mobius inversion recovering f from divisor sums |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12267,6 +12269,28 @@ the two-square test matches brute force over 0..3000, every representation is co
 criterion holds over the primes, and the four-square decomposition is exact including the 4^a(8b+7)
 numbers that need all four. The additive-number-theory companion to the tonelli-shanks and Pollard-rho
 tools.
+
+## Dirichlet convolution: the multiplication that turns number theory into algebra
+
+Make the arithmetic functions a ring, and the classical identities become one line. `dirichlet.py`:
+
+```
+$ python examples/dirichlet_demo.py examples/output
+
+  mu * 1  = epsilon   :  True
+  phi * 1 = id        :  True
+  1 * 1   = d         :  True
+  id * 1  = sigma     :  True
+  mu * id = phi       :  True
+  Mobius inversion recovers f(n)=n^2 from its divisor sums: True
+```
+
+The Dirichlet convolution (f*g)(n) = sum over d|n of f(d) g(n/d) makes arithmetic functions a
+commutative ring with identity epsilon(n) = [n==1]. Mobius inversion is that 1 is invertible with
+inverse mu, so divisor-summing and Mobius-inverting undo each other. Built on the repo's linear sieve.
+Validated: all five classical identities on 1..500, commutativity and associativity, epsilon the
+identity, the Dirichlet inverse of 1 is mu, and Mobius inversion round-trips. The
+arithmetic-function-algebra companion to the linear sieve.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
