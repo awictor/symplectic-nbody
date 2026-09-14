@@ -1,0 +1,25 @@
+Baillie-PSW primality test (no known counterexample)
+======================================================
+declares prime only if BOTH pass: strong Miller-Rabin base 2 AND strong Lucas
+the two tests' pseudoprimes appear disjoint -- so the combination is bulletproof
+
+strong base-2 pseudoprimes (fool Miller-Rabin, caught by Lucas):
+      n   MR base-2  strong Lucas  Baillie-PSW     truth
+   2047        pass          fail    composite COMPOSITE
+   3277        pass          fail    composite COMPOSITE
+   4033        pass          fail    composite COMPOSITE
+   4681        pass          fail    composite COMPOSITE
+   8321        pass          fail    composite COMPOSITE
+  15841        pass          fail    composite COMPOSITE
+
+Miller-Rabin base 2 is fooled (says 'pass'), but the Lucas test fails them,
+so Baillie-PSW correctly reports composite. That is the whole idea.
+
+a few genuine primes (both halves pass):
+  97 -> PRIME
+  1000003 -> PRIME
+  2147483647 -> PRIME
+  1000000007 -> PRIME
+  999999937 -> PRIME
+
+prime count check: pi(10000) = 1229 (known: 1229)

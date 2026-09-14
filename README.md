@@ -584,6 +584,7 @@ ruins a long non-symplectic integration.
 | `src/minkowski_sum.py` | Minkowski sum of convex polygons (O(n+m) edge merge) + collision via the difference |
 | `src/chakravala.py` | Chakravala cyclic method for Pell's equation x^2-Dy^2=1, exact integer, Brahmagupta composition |
 | `src/cipolla.py` | Cipolla's modular square root via GF(p^2) field exponentiation, both roots |
+| `src/baillie_psw.py` | Baillie-PSW primality: strong Miller-Rabin base 2 + strong Lucas, Jacobi symbol |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1159,6 +1160,7 @@ ruins a long non-symplectic integration.
 | `examples/minkowski_sum_demo.py` | A(+)B of two convex polygons + collision via the Minkowski difference |
 | `examples/chakravala_demo.py` | Cyclic steps solving D=61's Pell equation, |k| homing in on 1 |
 | `examples/cipolla_demo.py` | The map x->x^2 mod p with the two square roots highlighted |
+| `examples/baillie_psw_demo.py` | How the Lucas half catches base-2 pseudoprimes Miller-Rabin misses |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13305,6 +13307,25 @@ the repo's Tonelli-Shanks: both agree for every n across several full primes, ev
 non-residues report no root, the two roots are negatives mod p, and it handles n=0, p=2, and
 billion-scale primes. The modular-arithmetic companion to the Tonelli-Shanks, quadratic-residue, and
 discrete-log tools.
+
+## Baillie-PSW: the primality test with no known counterexample
+
+Miller-Rabin base 2 AND strong Lucas, combined. `baillie_psw.py`:
+
+```
+$ python examples/baillie_psw_demo.py examples/output
+
+  strong base-2 pseudoprimes (fool Miller-Rabin, caught by Lucas):
+        n   MR base-2  strong Lucas  Baillie-PSW
+     2047        pass          fail    composite
+  pi(10000) = 1229 (matches known)
+```
+
+The two tests' pseudoprimes appear disjoint, so requiring BOTH to pass yields a test no composite is
+known to fool (proven correct below 2^64). Validated: it matches deterministic trial division for every
+n up to 20000, rejects the strong base-2 pseudoprimes and Carmichael numbers that fool naive tests, the
+Jacobi symbol matches the Legendre symbol and is multiplicative, and pi(10000)=1229. The primality
+companion to the Tonelli-Shanks, Cipolla, and Lucas-Lehmer tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

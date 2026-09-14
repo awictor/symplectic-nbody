@@ -626,6 +626,7 @@ def main():
     import minkowski_sum_demo
     import chakravala_demo
     import cipolla_demo
+    import baillie_psw_demo
 
     import plot_orbits
 
@@ -1221,6 +1222,7 @@ def main():
     minkowski_sum_txt = run("minkowski_sum_demo", minkowski_sum_demo.main, True)
     chakravala_txt = run("chakravala_demo", chakravala_demo.main, True)
     cipolla_txt = run("cipolla_demo", cipolla_demo.main, True)
+    baillie_psw_txt = run("baillie_psw_demo", baillie_psw_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11206,6 +11208,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("cipolla.svg"), "The map x -> x^2 mod 37: squaring is two-to-one on the residues, and the two red points on the dashed line (n=10) are the square roots Cipolla recovers with a single exponentiation in GF(p^2)")
             + f'<div class="card">{pre(cipolla_txt)}</div>'
+            + '</div>'),
+        section(
+            "Baillie-PSW: the primality test with no known counterexample",
+            "Fast primality testing is probabilistic -- a single Miller-Rabin round can be fooled by a "
+            "strong pseudoprime to that base, and Lucas tests have their own pseudoprimes. The insight "
+            "of Baillie, Pomerance, Selfridge, and Wagstaff is that the two families appear DISJOINT: a "
+            "number that fools one almost never fools the other. Baillie-PSW runs a strong Miller-Rabin "
+            "test to base 2 AND a strong Lucas probable-prime test with Selfridge's parameters, and "
+            "declares primality only if both pass. Despite decades of searching NO composite is known "
+            "to pass it, and it is proven correct below 2^64 -- it is the default primality test in "
+            "Sympy, PARI/GP, and many crypto libraries. The Miller-Rabin half refines Fermat's "
+            "congruence to catch square roots of unity; the Lucas half picks D by Selfridge's method "
+            "(first D in 5, -7, 9, ... with Jacobi (D/n) = -1) and checks the Lucas sequences. "
+            "Validated: it matches deterministic trial division for every integer up to 20000; it "
+            "rejects the strong base-2 pseudoprimes (2047, 3277, ...) that fool a naive Fermat test but "
+            "are caught by the Lucas half; it rejects Carmichael numbers; the Jacobi symbol matches the "
+            "Legendre symbol for primes and is multiplicative; and pi(10000) comes out to the known "
+            "1229. The primality companion to the Tonelli-Shanks, Cipolla, and Lucas-Lehmer tools.",
+            '<div class="grid">'
+            + svg_card(out("baillie_psw.svg"), "Baillie-PSW's verdict for every n up to 1000 against deterministic trial division: primes (green) and composites (blue) are classified exactly right, and the disagreement row (red) stays empty -- the combined test never errs here")
+            + f'<div class="card">{pre(baillie_psw_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
