@@ -663,6 +663,7 @@ def main():
     import fibonacci_coding_demo
     import mann_whitney_demo
     import kruskal_wallis_demo
+    import kendall_tau_demo
 
     import plot_orbits
 
@@ -1295,6 +1296,7 @@ def main():
     fibonacci_coding_txt = run("fibonacci_coding_demo", fibonacci_coding_demo.main, True)
     mann_whitney_txt = run("mann_whitney_demo", mann_whitney_demo.main, True)
     kruskal_wallis_txt = run("kruskal_wallis_demo", kruskal_wallis_demo.main, True)
+    kendall_tau_txt = run("kendall_tau_demo", kendall_tau_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12006,6 +12008,24 @@ def main():
             '<div class="grid">'
             + svg_card(out("kruskal_wallis.svg"), "Three groups' observations plotted at their pooled ranks (one row each), with white bars marking group mean ranks against the grand mean (gray dashed). The groups' mean ranks spread far apart -- control low, drug-hi high -- which is exactly what H measures; here a 40-value outlier in control barely moves it, since the test counts rank positions not magnitudes")
             + f'<div class="card">{pre(kruskal_wallis_txt)}</div>'
+            + '</div>'),
+        section(
+            "Kendall's tau: rank correlation from pair ordering",
+            "Pearson's r measures LINEAR association and is thrown off by curvature and outliers. Kendall's "
+            "tau (1938) measures MONOTONIC association from order alone: over every pair of points it "
+            "counts concordant (both variables order the pair the same way) versus discordant pairs, and "
+            "tau = (C - D) / pairs runs from +1 (perfectly increasing) through 0 to -1. It is invariant "
+            "under any monotonic transform, robust to outliers, and has a direct meaning -- tau = "
+            "P(concordant) - P(discordant) for a random pair. Tau-b corrects for ties by dividing by the "
+            "geometric mean of untied-pair counts, so tied data still reaches +/-1; a normal approximation "
+            "gives the p-value. Validated: perfectly increasing/decreasing data give tau = +/-1, "
+            "independent data gives tau near 0 with a large p, strong association gives a tiny p, tau is "
+            "monotone-transform invariant, tau-b reaches 1 on a perfect monotone-with-ties relationship, "
+            "the concordant and discordant counts sum to the untied pairs, and tau matches a brute-force "
+            "enumeration. The rank-correlation companion to the Spearman, Pearson, and Mann-Whitney tools.",
+            '<div class="grid">'
+            + svg_card(out("kendall_tau.svg"), "A monotone but curved point cloud, with a subsample of pairs drawn as links: green joins concordant pairs (ordered the same way in both variables), red joins discordant pairs. The cloud is almost all green -- tau-b = 0.99 -- capturing the full monotone association a linear Pearson r (0.95) underrates, and where one outlier would crash r from 0.99 to 0.08, tau barely moves")
+            + f'<div class="card">{pre(kendall_tau_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

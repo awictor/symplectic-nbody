@@ -621,6 +621,7 @@ ruins a long non-symplectic integration.
 | `src/fibonacci_coding.py` | Fibonacci coding: error-resilient universal integer codes via Zeckendorf, self-synchronizing |
 | `src/mann_whitney.py` | Mann-Whitney U / Wilcoxon rank-sum test: nonparametric two-sample test with exact and normal p-values |
 | `src/kruskal_wallis.py` | Kruskal-Wallis H test: nonparametric one-way ANOVA with a from-scratch chi-squared p-value |
+| `src/kendall_tau.py` | Kendall's tau (a and b): rank correlation from concordant/discordant pairs, tie-corrected |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1233,6 +1234,7 @@ ruins a long non-symplectic integration.
 | `examples/fibonacci_coding_demo.py` | Fibonacci vs Elias code lengths and a bitstream resynchronizing after a flipped bit |
 | `examples/mann_whitney_demo.py` | Mann-Whitney holding significance where an outlier fools the t-test, with the exact U null |
 | `examples/kruskal_wallis_demo.py` | Three groups' pooled ranks and mean-rank spread, with a power sweep and the chi-squared null |
+| `examples/kendall_tau_demo.py` | Concordant/discordant pair links on a curved cloud, and tau beating Pearson under an outlier |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14161,6 +14163,28 @@ large H/tiny p, for k=2 H matches the Mann-Whitney z-squared exactly, monotone-t
 correction raises H, the from-scratch chi-squared survival function hits textbook critical values, and the
 effect size rises with separation. The nonparametric-ANOVA companion to the Mann-Whitney, KS-test, and
 permutation-test tools.
+
+## Kendall's tau: rank correlation from pair ordering
+
+Monotonic association from concordant vs discordant pairs. `kendall_tau.py`:
+
+```
+$ python examples/kendall_tau_demo.py examples/output
+
+Monotone but CURVED relationship (y ~ exp):
+  Kendall tau-b = 0.993    Pearson r = 0.946 (underrates the monotone link)
+
+Outlier robustness (add one wild point):
+  Pearson r : 0.988 -> 0.075  (crashes)
+  Kendall t : 0.947 -> 0.864  (barely moves)
+```
+
+Over every pair, count concordant (both variables order it the same) vs discordant; tau = (C-D)/pairs runs
++1..-1. Invariant under monotonic transforms, robust to outliers, tau = P(concordant) - P(discordant).
+Tau-b corrects for ties. Validated: +/-1 on perfect monotone data, ~0 for independence, tiny p for strong
+association, monotone-transform invariant, tau-b reaches 1 with ties, C+D equals the untied pairs, and tau
+matches brute-force enumeration. The rank-correlation companion to the Spearman, Pearson, and Mann-Whitney
+tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
