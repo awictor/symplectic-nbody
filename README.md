@@ -616,6 +616,7 @@ ruins a long non-symplectic integration.
 | `src/fuzzy_cmeans.py` | Fuzzy c-means: soft clustering with graded per-cluster memberships |
 | `src/lloyd_max.py` | Lloyd-Max quantizer: minimum-distortion scalar quantization for a known source |
 | `src/linde_buzo_gray.py` | Linde-Buzo-Gray: vector-quantization codebook design by splitting and Lloyd refinement |
+| `src/tunstall_coding.py` | Tunstall coding: variable-to-fixed-length lossless compression, the dual of Huffman |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1223,6 +1224,7 @@ ruins a long non-symplectic integration.
 | `examples/fuzzy_cmeans_demo.py` | Soft memberships blended as point colors on overlapping blobs, with a fuzzifier sweep |
 | `examples/lloyd_max_demo.py` | Lloyd-Max levels crowding under a Gaussian peak vs uniform, with an SNR-gain table |
 | `examples/linde_buzo_gray_demo.py` | LBG codebook tiling a spiral manifold, with the rate-distortion table as it doubles |
+| `examples/tunstall_coding_demo.py` | Tunstall dictionary and its rate converging to the entropy as codeword width grows |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14041,6 +14043,29 @@ optimum. Validated: places one codeword per cluster on separated data, distortio
 within Lloyd refinement and as the codebook doubles, each codeword is the centroid of its cell,
 encode/decode round-trips to the nearest codeword, and a 1-D set matches a scalar Lloyd-Max quantizer. The
 vector-quantization companion to the Lloyd-Max, k-means, and PCA-whitening tools.
+
+## Tunstall coding: variable-to-fixed-length compression
+
+The dual of Huffman. `tunstall_coding.py`:
+
+```
+$ python examples/tunstall_coding_demo.py examples/output
+
+Source: a=0.7, b=0.2, c=0.1.  Entropy H = 1.1568 bits/symbol.
+
+Compression rate approaches the entropy as k grows:
+   k    dict size   bits/symbol   gap to H
+    2         3      2.0000       +0.8432
+    8       255      1.2031       +0.0464
+   14     16383      1.1818       +0.0251
+```
+
+Read a variable number of source symbols, emit a fixed number of bits. Build a dictionary of
+variable-length strings sharing equal-width codewords by repeatedly expanding the most probable leaf of a
+tree until the leaf count would exceed 2^k. Validated: encode/decode round-trips, distinct k-bit
+codewords, bits-per-symbol between entropy and entropy+1 and tightening toward the entropy as k grows, a
+uniform source gives equal-length strings, and the leaf-probability spread is bounded by 1/p_min. The
+variable-to-fixed-length companion to the Huffman, arithmetic-coding, and Shannon-entropy tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

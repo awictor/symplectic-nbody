@@ -658,6 +658,7 @@ def main():
     import fuzzy_cmeans_demo
     import lloyd_max_demo
     import linde_buzo_gray_demo
+    import tunstall_coding_demo
 
     import plot_orbits
 
@@ -1285,6 +1286,7 @@ def main():
     fuzzy_cmeans_txt = run("fuzzy_cmeans_demo", fuzzy_cmeans_demo.main, True)
     lloyd_max_txt = run("lloyd_max_demo", lloyd_max_demo.main, True)
     linde_buzo_gray_txt = run("linde_buzo_gray_demo", linde_buzo_gray_demo.main, True)
+    tunstall_coding_txt = run("tunstall_coding_demo", tunstall_coding_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11902,6 +11904,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("linde_buzo_gray.svg"), "400 points along a spiral, quantized to 16 codebook vectors. Each point is colored by its nearest codeword (ringed markers), so the colors trace out the Voronoi cells -- the codebook adapts to the curved manifold, packing codewords along the arm rather than on a fixed grid")
             + f'<div class="card">{pre(linde_buzo_gray_txt)}</div>'
+            + '</div>'),
+        section(
+            "Tunstall coding: variable-to-fixed-length compression",
+            "Huffman reads one symbol and emits a variable number of bits; Tunstall coding (1967) is its "
+            "exact dual -- it reads a VARIABLE number of source symbols and emits a FIXED number of bits, "
+            "prized where a constant output rate or byte alignment matters. It builds a dictionary of "
+            "variable-length source strings, all sharing equal-width codewords, by a greedy tree: start "
+            "with the alphabet as leaves, then repeatedly expand the MOST PROBABLE leaf into its children "
+            "until the leaf count would exceed 2^k. Expanding the most probable leaf equalizes leaf "
+            "probabilities, which maximizes the source symbols consumed per codeword -- so the rate "
+            "approaches the entropy from above as k grows. Validated: encode/decode round-trips exactly, "
+            "every dictionary string gets a distinct k-bit codeword, the bits-per-symbol lies between the "
+            "entropy and entropy+1 and tightens toward the entropy as k grows, a uniform source gives a "
+            "balanced dictionary of equal-length strings, and the leaf-probability spread is bounded by "
+            "1/p_min. The variable-to-fixed-length companion to the Huffman, arithmetic-coding, and "
+            "Shannon-entropy tools.",
+            '<div class="grid">'
+            + svg_card(out("tunstall_coding.svg"), "Compression rate (yellow) falling toward the source entropy (green dashed floor) as the codeword width k grows from 2 to 14 bits. Larger dictionaries swallow more source symbols per fixed codeword -- 2.0 bits/symbol at k=2 down to 1.18 at k=14, closing on the 1.157-bit entropy limit")
+            + f'<div class="card">{pre(tunstall_coding_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
