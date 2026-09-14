@@ -582,6 +582,7 @@ ruins a long non-symplectic integration.
 | `src/hadamard_code.py` | Hadamard code: distance-n/2 coding, FWHT maximum-likelihood decode (Mariner 9) |
 | `src/polygon_clipping.py` | Sutherland-Hodgman polygon clipping against a convex window, shoelace area |
 | `src/minkowski_sum.py` | Minkowski sum of convex polygons (O(n+m) edge merge) + collision via the difference |
+| `src/chakravala.py` | Chakravala cyclic method for Pell's equation x^2-Dy^2=1, exact integer, Brahmagupta composition |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1155,6 +1156,7 @@ ruins a long non-symplectic integration.
 | `examples/hadamard_code_demo.py` | Walsh-Hadamard spectrum of a corrupted word with the message spike |
 | `examples/polygon_clipping_demo.py` | A convex polygon clipped against a rectangle window, before/after |
 | `examples/minkowski_sum_demo.py` | A(+)B of two convex polygons + collision via the Minkowski difference |
+| `examples/chakravala_demo.py` | Cyclic steps solving D=61's Pell equation, |k| homing in on 1 |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13262,6 +13264,26 @@ matches a brute-force sum on known and random inputs, square(+)square is the lar
 a point is a translation, the sum's area is at least area(A)+area(B), and collision cases (overlapping,
 touching, disjoint) are all correct. The computational-geometry companion to the convex-hull, GJK, and
 polygon-clipping tools.
+
+## Chakravala: Bhaskara II's cyclic algorithm for Pell's equation
+
+An exact integer solver from ~1150 CE. `chakravala.py`:
+
+```
+$ python examples/chakravala_demo.py examples/output
+
+  D=61 (hard case) solved in 14 cyclic steps
+  fundamental solution: x = 1766319049, y = 226153980
+  x^2 - 61 y^2 = 1   (exact)
+```
+
+Chakravala keeps a triple (a, b, k) with a^2 - D b^2 = k and composes it (Brahmagupta's identity) with
+an auxiliary chosen to shrink |k|, cycling until k = 1 -- the fundamental solution. Validated against
+the repo's continued-fraction Pell solver: the two agree for every non-square D up to 150 (including
+D=61 and D=109), the solution satisfies x^2 - D y^2 = 1 exactly in big integers, perfect squares are
+rejected, Brahmagupta composition generates valid higher solutions, and every intermediate triple
+satisfies its own a^2 - D b^2 = k invariant. The number-theory companion to the Pell,
+continued-fraction, and Tonelli-Shanks tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

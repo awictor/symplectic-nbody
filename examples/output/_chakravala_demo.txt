@@ -1,0 +1,38 @@
+Chakravala: Bhaskara II's cyclic method for x^2 - D y^2 = 1
+============================================================
+engine: Brahmagupta's identity (bhavana) -- compose triples, divide by k,
+pick the auxiliary m minimizing |m^2 - D|. All exact integer arithmetic.
+
+D = 61 (a famously hard case; smallest solution found in 14 steps):
+ step               a             b       k
+    0               7             1     -12
+    1               8             1       3
+    2              39             5      -4
+    3             164            21      -5
+    4             453            58       5
+    5            1523           195       4
+    6            5639           722      -3
+    7           29718          3805      -1
+    8          469849         60158      -3
+    9         2319527        296985       4
+   10         9747957       1248098       5
+   11        26924344       3447309      -5
+   12        90520989      11590025      -4
+   13       335159612      42912791       3
+   14      1766319049     226153980       1
+
+fundamental solution: x = 1766319049, y = 226153980
+check x^2 - 61 y^2 = 1 (== 1)
+
+fundamental solutions for a range of D:
+    D                 x               y   steps
+    2                 3               2       1
+   13               649             180       6
+   29              9801            1820       7
+   46             24335            3588       8
+   61        1766319049       226153980      14
+   94           2143295          221064      10
+  109   158070671986249  15140424455100      21
+
+Chakravala predates the European (continued-fraction) solution by ~600 years
+and reaches even D=61's ten-digit answer in only a handful of cyclic steps.

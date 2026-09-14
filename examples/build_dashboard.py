@@ -624,6 +624,7 @@ def main():
     import hadamard_code_demo
     import polygon_clipping_demo
     import minkowski_sum_demo
+    import chakravala_demo
 
     import plot_orbits
 
@@ -1217,6 +1218,7 @@ def main():
     hadamard_code_txt = run("hadamard_code_demo", hadamard_code_demo.main, True)
     polygon_clipping_txt = run("polygon_clipping_demo", polygon_clipping_demo.main, True)
     minkowski_sum_txt = run("minkowski_sum_demo", minkowski_sum_demo.main, True)
+    chakravala_txt = run("chakravala_demo", chakravala_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11162,6 +11164,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("minkowski_sum.svg"), "Left: a pentagon A (blue) and a square B (green) and their Minkowski sum A(+)B (purple), the shape swept as B slides around A. Right: collision by the Minkowski difference -- the origin (red) falling inside A(+)(-B) means the two shapes overlap")
             + f'<div class="card">{pre(minkowski_sum_txt)}</div>'
+            + '</div>'),
+        section(
+            "Chakravala: Bhaskara II's cyclic algorithm for Pell's equation",
+            "Around 1150 CE the Indian mathematician Bhaskara II perfected the chakravala ('cyclic') "
+            "method for solving Pell's equation x^2 - D y^2 = 1 in integers -- six centuries before "
+            "Fermat posed it to Europe and Lagrange proved the continued-fraction method terminates. "
+            "Instead of expanding sqrt(D), chakravala starts from a trivial triple (a, b, k) with "
+            "a^2 - D b^2 = k and repeatedly COMPOSES it, via Brahmagupta's identity (the bhavana), with "
+            "an auxiliary (m, 1, m^2 - D) chosen to keep m + b divisible by k and |m^2 - D| smallest; "
+            "dividing through by k cycles to a new triple with a bounded |k|, and the process provably "
+            "lands on k = 1 -- the fundamental solution. On the notorious D = 61, whose smallest "
+            "solution is x = 1766319049, it arrives in only fourteen cyclic steps. Validated against "
+            "the repo's continued-fraction Pell solver: the two agree on the fundamental solution for "
+            "every non-square D up to 150 (including D = 61 and D = 109), the solution satisfies "
+            "x^2 - D y^2 = 1 exactly in arbitrary-precision integers, perfect squares are rejected, "
+            "Brahmagupta composition generates valid higher solutions, and every intermediate triple "
+            "satisfies its own a^2 - D b^2 = k invariant. The number-theory companion to the Pell, "
+            "continued-fraction, and Tonelli-Shanks tools.",
+            '<div class="grid">'
+            + svg_card(out("chakravala.svg"), "The auxiliary |k| across the cyclic steps for D=61: it bounces among small values as the method composes triples, then snaps to 1 (green) at step 14, where the triple (a, b) is exactly the fundamental solution x=1766319049, y=226153980")
+            + f'<div class="card">{pre(chakravala_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
