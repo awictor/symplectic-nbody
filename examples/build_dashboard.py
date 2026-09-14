@@ -668,6 +668,7 @@ def main():
     import cusum_change_demo
     import pelt_changepoint_demo
     import mann_kendall_trend_demo
+    import ljung_box_demo
 
     import plot_orbits
 
@@ -1305,6 +1306,7 @@ def main():
     cusum_change_txt = run("cusum_change_demo", cusum_change_demo.main, True)
     pelt_changepoint_txt = run("pelt_changepoint_demo", pelt_changepoint_demo.main, True)
     mann_kendall_trend_txt = run("mann_kendall_trend_demo", mann_kendall_trend_demo.main, True)
+    ljung_box_txt = run("ljung_box_demo", ljung_box_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12109,6 +12111,24 @@ def main():
             '<div class="grid">'
             + svg_card(out("mann_kendall_trend.svg"), "50 points with a real upward trend buried in skewed noise plus an outlier. The Sen slope (yellow, median of pairwise slopes) tracks the true rate 0.30/step, while ordinary least squares (red dashed) is dragged to 0.21 by the outlier and skew. Mann-Kendall flags the trend at p=4e-16 by counting pairwise up/down signs, immune to the shape of the noise")
             + f'<div class="card">{pre(mann_kendall_trend_txt)}</div>'
+            + '</div>'),
+        section(
+            "Ljung-Box: is it white noise, or leftover autocorrelation?",
+            "After fitting a time-series model you must check the residuals: if they still carry "
+            "autocorrelation, the model missed structure and its forecasts are unreliable. The Ljung-Box "
+            "test (1978) is the standard portmanteau check -- it pools the first h autocorrelations into "
+            "one statistic, Q = n(n+2) sum rho_k^2/(n-k), which under the null of white noise is "
+            "chi-squared with h (minus fitted parameters) degrees of freedom. A large Q, small p, says "
+            "structure remains. The (n+2)/(n-k) weighting is a small-sample correction over the older "
+            "Box-Pierce statistic. Validated: white noise gives small Q and large p (fails to reject), a "
+            "strongly autocorrelated AR(1) series gives huge Q and tiny p, a seasonal signal is flagged "
+            "at its lag, Ljung-Box exceeds Box-Pierce, Q grows with the lags tested when autocorrelation "
+            "is real, and the degrees-of-freedom adjustment for fitted parameters tightens the p-value. "
+            "The time-series-diagnostic companion to the Levinson-Durbin, Burg, CUSUM, and Mann-Kendall "
+            "tools.",
+            '<div class="grid">'
+            + svg_card(out("ljung_box.svg"), "Two autocorrelation functions with the 95% white-noise band (gray). Top: white-noise residuals -- every stem stays inside the band, so Ljung-Box fails to reject (Q=12, p=0.67). Bottom: an AR(1) series -- the stems decay slowly well outside the band, and Ljung-Box rejects white noise emphatically (Q=540, p=0)")
+            + f'<div class="card">{pre(ljung_box_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

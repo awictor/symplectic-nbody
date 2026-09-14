@@ -626,6 +626,7 @@ ruins a long non-symplectic integration.
 | `src/cusum_change.py` | CUSUM & Page-Hinkley sequential change detection: spot a mean shift in a stream |
 | `src/pelt_changepoint.py` | PELT: exact optimal multiple change-point detection in near-linear time via pruned DP |
 | `src/mann_kendall_trend.py` | Mann-Kendall trend test with Sen slope: nonparametric monotonic-trend detection |
+| `src/ljung_box.py` | Ljung-Box & Box-Pierce portmanteau tests: is a series white noise or autocorrelated? |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1243,6 +1244,7 @@ ruins a long non-symplectic integration.
 | `examples/cusum_change_demo.py` | CUSUM sums crossing threshold shortly after a 1-sigma shift, with a delay-vs-shift table |
 | `examples/pelt_changepoint_demo.py` | PELT segmenting a noisy 4-level step signal, matching the exact DP, with a penalty sweep |
 | `examples/mann_kendall_trend_demo.py` | Mann-Kendall flagging a trend in skewed noisy data, Sen slope beating OLS under an outlier |
+| `examples/ljung_box_demo.py` | ACF stems with white-noise bands for a clean vs autocorrelated series, and Q vs lags |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14272,6 +14274,23 @@ is approximately normal with a tie-corrected variance, giving a continuity-corre
 correctly labelled, monotone-transform invariant, ties invent no trend, a nonlinear monotone trend is
 detected, and the Sen slope recovers the true rate and matches Theil-Sen. The trend-detection companion to
 the Theil-Sen, Kendall-tau, CUSUM, and PELT tools.
+
+## Ljung-Box: is it white noise, or leftover autocorrelation?
+
+The residual-diagnostic portmanteau test. `ljung_box.py`:
+
+```
+$ python examples/ljung_box_demo.py examples/output
+
+white noise:      Q=12.18 (df=15), p=0.67 -> WHITE NOISE (fail to reject)
+AR(1), phi=0.7:   Q=540.64 (df=15), p=0    -> AUTOCORRELATED (reject)
+```
+
+Pool the first h autocorrelations into Q = n(n+2) sum rho_k^2/(n-k), chi-squared with h (minus fitted
+parameters) df under white noise. Validated: white noise gives small Q/large p, AR(1) gives huge Q/tiny p,
+a seasonal signal is flagged at its lag, Ljung-Box exceeds Box-Pierce, Q grows with lags when
+autocorrelation is real, and the df adjustment for fitted parameters tightens the p-value. The
+time-series-diagnostic companion to the Levinson-Durbin, Burg, CUSUM, and Mann-Kendall tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
