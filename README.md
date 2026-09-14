@@ -590,6 +590,7 @@ ruins a long non-symplectic integration.
 | `src/pratt_certificate.py` | Pratt primality certificates: recursive Lucas-test proof, independently verifiable |
 | `src/worley_noise.py` | Worley cellular/Voronoi noise: hashed feature points, F1/F2 distances, 3 metrics |
 | `src/fbm.py` | Fractional Brownian motion: octave-summed Perlin, turbulence, ridged, terrain heightmaps |
+| `src/domain_warping.py` | Domain warping: fBm sampled at noise-displaced coordinates, multi-level swirls |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1171,6 +1172,7 @@ ruins a long non-symplectic integration.
 | `examples/pratt_certificate_demo.py` | The recursive Pratt proof tree for 997 drawn as a node-link diagram |
 | `examples/worley_noise_demo.py` | F1/F2-F1 cellular textures rendered under Euclidean/Manhattan/Chebyshev |
 | `examples/fbm_demo.py` | fBm terrain, turbulence clouds, and ridged mountains rendered side by side |
+| `examples/domain_warping_demo.py` | Noise at 0, 1, 2 warp levels folding into marbled swirls |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13431,6 +13433,23 @@ the base Perlin noise exactly, the output respects the geometric-series amplitud
 ridged are non-negative, adding octaves increases the total variation, lower gain is smoother, and fBm
 is continuous. Reuses the repo's Perlin noise. The multifractal companion to the Perlin-noise,
 Worley-noise, and Voronoi tools.
+
+## Domain warping: noise fed into its own coordinates
+
+The swirling flow of marble and smoke, from recursive noise. `domain_warping.py`:
+
+```
+$ python examples/domain_warping_demo.py examples/output
+
+  warp(x) = fbm(x + amplitude * fbm(x + offset))
+  total variation grows with warp levels: 0 -> 24.0, 1 -> 61.3, 2 -> 133.5
+```
+
+Sample the noise at a point displaced by more noise; each level folds the plane again. Validated: zero
+warp amplitude reduces to plain fBm, the displacement is bounded by amplitude times fBm's bound, the
+field is deterministic and continuous, warping increases total variation (more structure) with each
+level, and the output stays bounded. Reuses the repo's fBm noise. The procedural-texture companion to
+the fBm, Perlin-noise, and Worley-noise tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

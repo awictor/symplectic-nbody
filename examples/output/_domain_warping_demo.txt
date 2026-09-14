@@ -1,0 +1,17 @@
+Domain warping: feeding noise into its own coordinates
+========================================================
+warp(x) = fbm(x + amplitude * fbm(x + offset)); each level folds the plane again
+
+total variation of a 1-D slice grows with each warp level (more swirl):
+  warp levels   total variation
+            0            24.016
+            1            61.259
+            2           133.542
+
+warp displacement vectors (level 1) at sample points:
+  (1.0, 1.0) -> displaced by (+0.000, -0.125)
+  (3.0, 2.0) -> displaced by (+0.000, -0.072)
+  (5.5, 4.5) -> displaced by (-0.110, +0.103)
+
+The inner noise drags the sampling point sideways, turning smooth ridges into
+the whorls and filaments of marble, wood grain, smoke, and magma.

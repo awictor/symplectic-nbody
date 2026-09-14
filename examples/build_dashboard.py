@@ -632,6 +632,7 @@ def main():
     import pratt_certificate_demo
     import worley_noise_demo
     import fbm_demo
+    import domain_warping_demo
 
     import plot_orbits
 
@@ -1233,6 +1234,7 @@ def main():
     pratt_certificate_txt = run("pratt_certificate_demo", pratt_certificate_demo.main, True)
     worley_noise_txt = run("worley_noise_demo", worley_noise_demo.main, True)
     fbm_txt = run("fbm_demo", fbm_demo.main, True)
+    domain_warping_txt = run("domain_warping_demo", domain_warping_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11339,6 +11341,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("fbm.svg"), "The same six-octave noise sum in three guises: signed fBm shaded as a terrain heightmap (water through snow), turbulence giving billowy cloud structure, and ridged multifractal carving the sharp creases of mountain ranges")
             + f'<div class="card">{pre(fbm_txt)}</div>'
+            + '</div>'),
+        section(
+            "Domain warping: noise fed into its own coordinates",
+            "Fractal noise is isotropic -- the same in every direction -- but real materials FLOW: wood "
+            "grain bends around knots, marble veins swirl, smoke curls. Inigo Quilez's domain warping "
+            "produces that look with a recursive twist: instead of sampling the noise at the query "
+            "point, sample it at a point that has itself been displaced by more noise, "
+            "warp(x) = fbm(x + amplitude * fbm(x + offset)). The inner fBm perturbs WHERE you look, so "
+            "smooth ridges get dragged into whorls and filaments, and each nested level adds another "
+            "fold. The displacement is a vector field -- one fBm per coordinate -- pushing the whole "
+            "plane around before the final value is read off. It needs no new math beyond the fBm it "
+            "wraps, yet transforms the visual character completely. Validated: with zero warp amplitude "
+            "the result reduces exactly to plain fBm; the displacement is bounded by the amplitude "
+            "times fBm's own bound; the field is deterministic and continuous; warping strictly "
+            "increases the pattern's total variation (more structure), and each extra level adds more; "
+            "and the output stays finite and bounded across warp levels. Reuses the repo's fBm (and "
+            "thus Perlin) noise. The procedural-texture companion to the fBm, Perlin-noise, and "
+            "Worley-noise tools.",
+            '<div class="grid">'
+            + svg_card(out("domain_warping.svg"), "The same fBm at zero, one, and two warp levels: the unwarped field (left) is smooth and directionless, while each level of feeding noise into the sampling coordinates (middle, right) folds it into the swirling, marbled flow of natural materials")
+            + f'<div class="card">{pre(domain_warping_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
