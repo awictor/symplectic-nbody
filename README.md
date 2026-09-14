@@ -567,6 +567,7 @@ ruins a long non-symplectic integration.
 | `src/fista.py` | FISTA accelerated proximal gradient: Lasso/NNLS, soft-threshold prox, O(1/k^2) momentum |
 | `src/admm.py` | ADMM operator splitting: Lasso/NNLS/consensus via prox steps, primal-dual residuals |
 | `src/matrix_profile.py` | Time-series matrix profile via MASS/FFT: motif and discord (anomaly) discovery |
+| `src/soft_dtw.py` | Differentiable soft-DTW: softmin recurrence, gamma->0 = hard DTW, soft alignment matrix |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1125,6 +1126,7 @@ ruins a long non-symplectic integration.
 | `examples/fista_demo.py` | Lasso sparse recovery + ISTA vs FISTA convergence on log-log axes |
 | `examples/admm_demo.py` | ADMM Lasso sparse recovery + primal/dual residuals decaying to zero |
 | `examples/matrix_profile_demo.py` | Series with a planted motif and anomaly, both read off the profile curve |
+| `examples/soft_dtw_demo.py` | Soft alignment matrix (diffuse vs sharp) + the gamma->hard-DTW limit |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12920,6 +12922,27 @@ convolution, so each profile costs O(n log n). Validated: the FFT matrix profile
 machine precision, a planted repeat is recovered as the motif and a planted spike as the discord, and
 z-normalization makes it invariant to offset and scale. The time-series companion to the DTW, FFT, and
 cross-correlation tools.
+
+## Soft-DTW: a differentiable dynamic time warping
+
+Smooth, differentiable alignment for use as a loss or for averaging series. `soft_dtw.py`:
+
+```
+$ python examples/soft_dtw_demo.py examples/output
+
+  soft-DTW -> hard DTW as gamma -> 0:
+       gamma      soft-DTW   |soft - hard|
+        0.10      -2.20686        2.21e+00
+        0.001     -0.00072        7.17e-04
+```
+
+Soft-DTW replaces DTW's hard minimum with a softmin (log-sum-exp at temperature gamma). As gamma -> 0
+it recovers classic DTW; larger gamma averages over all alignment paths, giving a smooth,
+differentiable discrepancy usable as a loss or for barycenters. Validated: soft-DTW is symmetric and
+self-minimized, converges to an independent hard-DTW computation as gamma -> 0, the softmin is bounded
+between min and min - gamma*log(k), the alignment matrix is non-negative and concentrates on the
+optimal path as gamma -> 0, and it is smooth under small perturbations. The differentiable companion to
+the DTW and matrix-profile tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

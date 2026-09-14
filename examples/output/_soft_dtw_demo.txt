@@ -1,0 +1,19 @@
+Soft-DTW: differentiable dynamic time warping
+====================================================
+series lengths: 20 and 24 (y has a time-stretched plateau)
+
+hard DTW cost: 0.00000
+
+soft-DTW converges to hard DTW as the temperature gamma -> 0:
+     gamma      soft-DTW   |soft - hard|
+       1.0     -31.45446        3.15e+01
+       0.3      -8.39049        8.39e+00
+       0.1      -2.20686        2.21e+00
+      0.03      -0.36215        3.62e-01
+      0.01      -0.05901        5.90e-02
+     0.001      -0.00072        7.17e-04
+
+Large gamma averages over ALL alignment paths (smooth, differentiable);
+small gamma concentrates on the single optimal path (classic DTW).
+The soft alignment matrix is the gradient of soft-DTW w.r.t. the cost matrix,
+which is what lets soft-DTW be used as a loss and to average series under warping.

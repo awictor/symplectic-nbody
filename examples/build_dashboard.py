@@ -609,6 +609,7 @@ def main():
     import fista_demo
     import admm_demo
     import matrix_profile_demo
+    import soft_dtw_demo
 
     import plot_orbits
 
@@ -1187,6 +1188,7 @@ def main():
     fista_txt = run("fista_demo", fista_demo.main, True)
     admm_txt = run("admm_demo", admm_demo.main, True)
     matrix_profile_txt = run("matrix_profile_demo", matrix_profile_demo.main, True)
+    soft_dtw_txt = run("soft_dtw_demo", soft_dtw_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10830,6 +10832,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("matrix_profile.svg"), "Top: a noisy series with a pattern planted twice (green bands) and an anomaly (red band). Bottom: the matrix profile dips to near zero at the two motif windows (green dot) and spikes at the anomaly (red dot) -- motif and discord read straight off the curve")
             + f'<div class="card">{pre(matrix_profile_txt)}</div>'
+            + '</div>'),
+        section(
+            "Soft-DTW: a differentiable dynamic time warping",
+            "Dynamic time warping aligns two time series by the lowest-cost monotonic correspondence, "
+            "absorbing shifts and speed differences. But its cost is a MINIMUM over alignment paths, "
+            "which makes it non-differentiable and jagged -- an infinitesimal change to a series can "
+            "flip the optimal path, so DTW cannot be a smooth loss or be used to AVERAGE a set of "
+            "series. Cuturi and Blondel's soft-DTW replaces the hard minimum with a softmin, a "
+            "log-sum-exp with a temperature gamma. As gamma -> 0 the softmin becomes the ordinary "
+            "minimum and soft-DTW recovers classic DTW; as gamma grows it averages over ALL alignment "
+            "paths, weighting each by exp(-cost/gamma), and the result is smooth and differentiable "
+            "everywhere. That is exactly what is needed to use alignment as a differentiable loss, to "
+            "compute soft-DTW barycenters, and to backpropagate through time-series matching. "
+            "Validated: soft-DTW is symmetric and minimized by a series against itself, it converges to "
+            "an independent hard-DTW computation as gamma -> 0, the softmin is bounded between the true "
+            "min and min - gamma*log(k), the alignment matrix is non-negative and concentrates on the "
+            "optimal path as gamma -> 0, and a small perturbation changes it only slightly (smoothness). "
+            "The differentiable companion to the DTW and matrix-profile tools.",
+            '<div class="grid">'
+            + svg_card(out("soft_dtw.svg"), "The soft alignment matrix between two series where one has a time-stretched plateau. At large gamma (left) the alignment mass is diffuse, averaging over many warping paths; at small gamma (right) it collapses onto the single optimal DTW path -- the bright ridge tracing the correspondence")
+            + f'<div class="card">{pre(soft_dtw_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
