@@ -598,6 +598,7 @@ def main():
     import voronoi_demo
     import spectral_partition_demo
     import pca_whitening_demo
+    import bch_demo
 
     import plot_orbits
 
@@ -1165,6 +1166,7 @@ def main():
     voronoi_txt = run("voronoi_demo", voronoi_demo.main, True)
     spectral_partition_txt = run("spectral_partition_demo", spectral_partition_demo.main, True)
     pca_whitening_txt = run("pca_whitening_demo", pca_whitening_demo.main, True)
+    bch_txt = run("bch_demo", bch_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10586,6 +10588,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("pca_whitening.svg"), "Left: an anisotropic cloud with its two principal axes (yellow = high variance, red = low). Middle: PCA-whitening rotates it onto those axes and rescales to a unit sphere. Right: ZCA-whitening also gives a unit sphere but rotates back so the cloud stays aligned with the original data -- the minimal-distortion whitening")
             + f'<div class="card">{pre(pca_whitening_txt)}</div>'
+            + '</div>'),
+        section(
+            "Binary BCH codes: multiple-error correction from a spectral condition",
+            "BCH codes are the algebraic backbone of error correction -- in CDs, DVDs, QR codes, "
+            "satellite links, and flash memory. A binary BCH code of length n = 2^m - 1 that corrects "
+            "t errors is defined by a gorgeous spectral condition: its codewords, as polynomials over "
+            "GF(2), are exactly the multiples of a generator whose roots include 2t consecutive powers "
+            "of a primitive element of GF(2^m). So every codeword vanishes at those 2t points, and any "
+            "nonzero evaluation of a received word -- a SYNDROME -- is caused purely by the error "
+            "pattern, whatever codeword was sent. Decoding is the classic dance over GF(2^m): compute "
+            "the 2t syndromes, run Berlekamp-Massey to find the shortest error-locator polynomial, then "
+            "Chien-search its roots to locate the flipped bits -- and because the code is binary, "
+            "locating an error is correcting it. Validated: the generator's roots are the required "
+            "consecutive powers, codewords have zero syndromes, the code corrects EVERY error pattern "
+            "up to weight t (checked exhaustively for BCH(15,7,2) and BCH(15,5,3)), and the dimension "
+            "matches n minus the generator degree. The binary-cyclic companion to the Reed-Solomon, "
+            "Golay, and Berlekamp-Massey tools.",
+            '<div class="grid">'
+            + svg_card(out("bch.svg"), "A BCH(15,7) codeword, corrupted by two bit flips (red), and decoded back to the original (green marks the exact bits the syndrome-and-locator machinery repaired). The parity bits occupy the low positions, the message the high ones")
+            + f'<div class="card">{pre(bch_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

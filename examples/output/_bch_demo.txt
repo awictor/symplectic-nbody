@@ -1,0 +1,18 @@
+Binary BCH error correction
+====================================================
+code:            BCH(n=15, k=7), corrects t=2 errors
+generator g(x):  111010001 (degree 8)
+field:           GF(2^4), n = 2^4 - 1 = 15
+
+message  (7 bits): 0010000
+codeword (15 bits): 011001110010000
+errors at positions:  [1, 8]
+received:             001001111010000
+
+syndromes S1..S4 (in GF(2^4)): [7, 6, 2, 7]
+  (nonzero => errors detected; Berlekamp-Massey + Chien search locate them)
+
+corrected:            011001110010000
+errors repaired:      2
+decoded message:      0010000
+match original?       True

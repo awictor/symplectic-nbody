@@ -556,6 +556,7 @@ ruins a long non-symplectic integration.
 | `src/voronoi.py` | Voronoi cells by half-plane intersection: clipped cell polygons, nearest-site, Lloyd relaxation |
 | `src/spectral_partition.py` | Spectral graph bisection via the Fiedler vector: Laplacian, ratio/normalized cut, components |
 | `src/pca_whitening.py` | PCA + PCA/ZCA whitening: covariance eigendecomp, explained variance, identity-covariance transform |
+| `src/bch.py` | Binary BCH codes over GF(2^m): generator construction, syndrome/Berlekamp-Massey/Chien decoding |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1103,6 +1104,7 @@ ruins a long non-symplectic integration.
 | `examples/voronoi_demo.py` | Colored Voronoi cells + Lloyd relaxation into a centroidal honeycomb |
 | `examples/spectral_partition_demo.py` | Two-community graph cut along its bridges by Fiedler-vector sign |
 | `examples/pca_whitening_demo.py` | Anisotropic cloud with principal axes, PCA-whitened and ZCA-whitened side by side |
+| `examples/bch_demo.py` | BCH(15,7) codeword corrupted by 2 bit flips and decoded back, shown as a bit strip |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12651,6 +12653,31 @@ minimal-distortion whitening, used in image preprocessing. Validated: whitened c
 identity, the top axis recovers a planted major axis, explained variance sums to one, rank-k
 reconstruction error equals the discarded eigenvalue sum, and ZCA provably stays closer to the
 original than PCA. The dimensionality-reduction companion to the SVD, MDS, and k-means tools.
+
+## Binary BCH codes: multiple-error correction from a spectral condition
+
+The algebraic backbone of error correction in CDs, QR codes, and flash memory. `bch.py`:
+
+```
+$ python examples/bch_demo.py examples/output
+
+  code:           BCH(n=15, k=7), corrects t=2 errors
+  generator g(x): 111010001 (degree 8)   field GF(2^4)
+  codeword:  011001110010000
+  errors at positions: [1, 8]
+  received:  001001111010000
+  syndromes S1..S4: [7, 6, 2, 7]   (nonzero => errors detected)
+  corrected: 011001110010000   (2 bits repaired, message recovered)
+```
+
+A binary BCH code of length n = 2^m - 1 correcting t errors has codewords that are the multiples of a
+generator whose roots are 2t consecutive powers of a primitive element of GF(2^m). Every codeword
+vanishes at those powers, so a received word's evaluations there -- the syndromes -- depend only on the
+errors. Decoding computes the 2t syndromes, runs Berlekamp-Massey for the error-locator polynomial, and
+Chien-searches its roots to find the flipped bits (binary, so locating = correcting). Validated: the
+generator matches the textbook BCH(15,7,2) polynomial, codewords have zero syndromes, and the code
+corrects EVERY error pattern up to weight t (checked exhaustively). The binary-cyclic companion to the
+Reed-Solomon, Golay, and Berlekamp-Massey tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
