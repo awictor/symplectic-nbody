@@ -637,6 +637,7 @@ def main():
     import euler_tour_demo
     import sqrt_decomposition_demo
     import chirp_z_demo
+    import cepstrum_demo
 
     import plot_orbits
 
@@ -1243,6 +1244,7 @@ def main():
     euler_tour_txt = run("euler_tour_demo", euler_tour_demo.main, True)
     sqrt_decomposition_txt = run("sqrt_decomposition_demo", sqrt_decomposition_demo.main, True)
     chirp_z_txt = run("chirp_z_demo", chirp_z_demo.main, True)
+    cepstrum_txt = run("cepstrum_demo", cepstrum_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11450,6 +11452,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("chirp_z.svg"), "Two tones at 5.1 and 5.4 Hz: the coarse FFT (top) puts its energy in bins that straddle both, but the zoom-FFT (bottom, a fine CZT grid over one hertz) resolves them into two clean peaks at the true frequencies")
             + f'<div class="card">{pre(chirp_z_txt)}</div>'
+            + '</div>'),
+        section(
+            "Cepstrum: the spectrum of a log-spectrum",
+            "The cepstrum -- an anagram of 'spectrum' -- is the Fourier transform of the LOG magnitude "
+            "spectrum, and its axis is the 'quefrency' (an anagram of 'frequency'). Its power comes from "
+            "a simple observation: many signals are a slowly-varying envelope CONVOLVED with a "
+            "rapidly-varying excitation (voiced speech = vocal-tract filter * glottal pulse train; a "
+            "signal with an echo = original * a two-spike response). Convolution multiplies spectra, "
+            "and the logarithm turns that product into a SUM, so envelope and excitation land in "
+            "different quefrency ranges and separate linearly. Two classic payoffs: pitch detection -- "
+            "a periodic signal's evenly-spaced harmonics make a spectral ripple that shows up as a "
+            "sharp cepstral peak at the pitch period, robust even when the fundamental is weak or "
+            "missing; and echo detection -- a delayed copy modulates the spectrum, giving a cepstral "
+            "peak at the delay. Validated: an impulse train of period T peaks at a multiple of T, a "
+            "voiced-speech-like signal recovers its fundamental within a few Hz, an echo at delay d "
+            "shows a peak at d, a periodic signal has a sharper cepstral peak than white noise, and the "
+            "real cepstrum is real and symmetric. Reuses the repo's Bluestein DFT. The spectral-analysis "
+            "companion to the FFT, chirp-Z, and Goertzel tools.",
+            '<div class="grid">'
+            + svg_card(out("cepstrum.svg"), "Two cepstra: a voiced signal's peak sits at quefrency 64 samples (recovering the 125 Hz pitch), and an echoed signal's peak sits at quefrency 35 (recovering the echo delay) -- periodicity read straight off the quefrency axis")
+            + f'<div class="card">{pre(cepstrum_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

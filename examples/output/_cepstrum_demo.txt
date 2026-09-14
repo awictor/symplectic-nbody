@@ -1,0 +1,15 @@
+Cepstrum: the spectrum of a log-spectrum
+==================================================
+cepstrum(x) = IDFT( log|DFT(x)| ); its axis is 'quefrency' (time-like)
+a convolution (envelope * excitation) becomes a SUM after the log, so the
+two separate cleanly in the cepstral domain.
+
+pitch detection: voiced signal, f0 = 125 Hz, fs = 8000
+  true pitch period: 64.0 samples (125 Hz)
+  cepstral peak at quefrency 64 samples -> 125.0 Hz
+
+echo detection: signal + a copy delayed by 35 samples
+  cepstral peak at quefrency 35 samples (true delay 35)
+
+Cepstral pitch tracking finds the fundamental even when it is weak or missing,
+because it keys on the harmonic SPACING, not the fundamental's own energy.

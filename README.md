@@ -595,6 +595,7 @@ ruins a long non-symplectic integration.
 | `src/euler_tour.py` | Euler tour of a tree: tin/tout flattening, ancestor test, subtree ranges & sums |
 | `src/sqrt_decomposition.py` | Square-root decomposition: O(sqrt n) range sum/min/max queries + point update |
 | `src/chirp_z.py` | Chirp Z-transform: z-transform on any spiral, zoom-FFT spectral analysis |
+| `src/cepstrum.py` | Cepstrum: log-spectrum FFT for pitch tracking and echo detection (quefrency peaks) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1181,6 +1182,7 @@ ruins a long non-symplectic integration.
 | `examples/euler_tour_demo.py` | A tree and its tour timeline with a subtree shown as one contiguous span |
 | `examples/sqrt_decomposition_demo.py` | A range query split into partial-end and whole-block coverage |
 | `examples/chirp_z_demo.py` | Coarse FFT vs zoom-FFT resolving two close tones |
+| `examples/cepstrum_demo.py` | Cepstral pitch peak and echo peak read off the quefrency axis |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13530,6 +13532,24 @@ in O((N+M) log(N+M)). Validated: with DFT parameters it reduces exactly to the D
 right bin, zoom-FFT recovers two close tones between coarse FFT bins and locates an off-grid tone to
 sub-bin accuracy, a constant gives a DC spike, and linearity holds. Reuses the repo's Bluestein
 convolution. The spectral-analysis companion to the FFT, Bluestein, and Goertzel tools.
+
+## Cepstrum: the spectrum of a log-spectrum
+
+Pitch tracking and echo detection by quefrency peaks. `cepstrum.py`:
+
+```
+$ python examples/cepstrum_demo.py examples/output
+
+  voiced f0=125 Hz, fs=8000 -> cepstral peak at quefrency 64 = 125.0 Hz
+  echo delayed by 35 samples -> cepstral peak at quefrency 35
+```
+
+cepstrum(x) = IDFT(log|DFT(x)|); the log turns a convolution (envelope * excitation) into a sum, so
+periodicity shows as a sharp peak at the pitch period or echo delay. Validated: an impulse train of
+period T peaks at a multiple of T, a voiced signal recovers its fundamental within a few Hz, an echo
+peaks at its delay, a periodic signal has a sharper peak than noise, and the real cepstrum is real and
+symmetric. Reuses the repo's Bluestein DFT. The spectral-analysis companion to the FFT, chirp-Z, and
+Goertzel tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
