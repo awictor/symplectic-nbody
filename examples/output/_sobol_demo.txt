@@ -1,0 +1,16 @@
+Sobol low-discrepancy sequence
+==================================================
+star discrepancy at N=256 (lower = more uniform):
+  Sobol   0.01167
+  Halton  0.01491
+  random  0.06104
+
+quasi-Monte Carlo vs Monte Carlo: integral of exp(x+y) on [0,1]^2
+  true value = (e-1)^2 = 2.95249244
+       N   Sobol QMC err   random MC err   speedup
+     256        8.93e-03        3.44e-02      3.9x
+    1024        2.43e-03        3.41e-02     14.0x
+    4096        5.63e-04        7.52e-03     13.4x
+   16384        1.39e-04        7.81e-03     56.2x
+
+Sobol error falls ~1/N; random ~1/sqrt(N). The gap widens with N.

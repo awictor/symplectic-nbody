@@ -561,6 +561,7 @@ ruins a long non-symplectic integration.
 | `src/catmull_rom.py` | Interpolating Catmull-Rom splines: uniform/centripetal/chordal, provably no overshoot |
 | `src/nurbs.py` | Non-Uniform Rational B-Splines: exact circles/conics via control-point weights |
 | `src/rbf_interpolation.py` | Radial basis function interpolation: gaussian/multiquadric/thin-plate, any dimension |
+| `src/sobol.py` | Sobol low-discrepancy sequence: direction numbers, Gray-code recursion, quasi-Monte Carlo |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1113,6 +1114,7 @@ ruins a long non-symplectic integration.
 | `examples/catmull_rom_demo.py` | Uniform vs centripetal vs chordal through the same points, showing overshoot |
 | `examples/nurbs_demo.py` | Exact NURBS circle vs a polynomial B-spline + the weight knob pulling a curve |
 | `examples/rbf_interpolation_demo.py` | Two-bump surface reconstructed from 45 scattered samples (heatmap) |
+| `examples/sobol_demo.py` | Sobol vs random point clouds + QMC vs Monte Carlo convergence on log-log axes |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12777,6 +12779,28 @@ reproduces its node values to machine precision, smooth test functions are recov
 thin-plate reproduces linear functions exactly, it works in 1-D/2-D/3-D unchanged, and refining the
 sampling drives the error to zero. The scattered-data companion to the Gaussian-process, kriging, and
 spline tools.
+
+## Sobol sequences: quasi-random points that beat Monte Carlo
+
+Low-discrepancy points that fill space evenly for fast integration. `sobol.py`:
+
+```
+$ python examples/sobol_demo.py examples/output
+
+  star discrepancy at N=256:  Sobol 0.0117   Halton 0.0149   random 0.0610
+  integral of exp(x+y) on [0,1]^2, true = (e-1)^2:
+         N   Sobol QMC err   random MC err   speedup
+      1024        2.4e-03        3.4e-02        14x
+     16384        1.4e-04        7.8e-03        56x
+```
+
+Each dimension has direction numbers from a primitive polynomial over GF(2); the n-th point is the XOR
+of the direction numbers selected by the bits of n, incremental in Gray-code order (one XOR per point).
+Every 2^k-prefix is stratified -- exactly one point per dyadic box. Validated: the 1-D sequence is the
+dyadic point set, power-of-two prefixes are stratified (a genuine (0,2)-sequence in 2-D), the star
+discrepancy beats Halton and random, and quasi-Monte Carlo converges as ~1/N versus random MC's
+~1/sqrt(N) -- a 50x-plus error advantage by N=16384. The quasi-random companion to the Halton and
+Hammersley sequences.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

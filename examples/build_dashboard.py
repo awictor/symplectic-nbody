@@ -603,6 +603,7 @@ def main():
     import catmull_rom_demo
     import nurbs_demo
     import rbf_interpolation_demo
+    import sobol_demo
 
     import plot_orbits
 
@@ -1175,6 +1176,7 @@ def main():
     catmull_rom_txt = run("catmull_rom_demo", catmull_rom_demo.main, True)
     nurbs_txt = run("nurbs_demo", nurbs_demo.main, True)
     rbf_interpolation_txt = run("rbf_interpolation_demo", rbf_interpolation_demo.main, True)
+    sobol_txt = run("sobol_demo", sobol_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10698,6 +10700,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("rbf_interpolation.svg"), "Left: a true two-bump surface. Right: the RBF reconstruction from only the 45 white-ringed scattered samples -- everywhere between them is interpolated purely from radial distances, with no grid and no dimension-specific code")
             + f'<div class="card">{pre(rbf_interpolation_txt)}</div>'
+            + '</div>'),
+        section(
+            "Sobol sequences: quasi-random points that beat Monte Carlo",
+            "Random Monte Carlo integration converges as O(1/sqrt(N)) -- slow, because random points "
+            "clump and leave gaps. Low-discrepancy (quasi-random) sequences place points to avoid "
+            "clustering and reach nearly O(1/N). The Sobol sequence is the most widely used: it drives "
+            "quasi-Monte Carlo pricing in finance, sampling in rendering, and high-dimensional "
+            "integration in physics. Its construction is elegant bit arithmetic -- each dimension has "
+            "direction numbers from a primitive polynomial over GF(2), and the n-th point is the XOR "
+            "of the direction numbers selected by the bits of n. In Gray-code order it is incremental: "
+            "one XOR per point per dimension, and every 2^k-length prefix is stratified with exactly "
+            "one point per dyadic box. Validated: the 1-D sequence is exactly the dyadic point set, "
+            "every power-of-two prefix is stratified (a genuine (0,2)-sequence in 2-D), the star "
+            "discrepancy is well below random and beats Halton, and quasi-Monte Carlo integration of "
+            "smooth functions converges markedly faster than random Monte Carlo -- a 50x-plus error "
+            "advantage by N=16384. Reuses the repo's discrepancy and QMC tools. The quasi-random "
+            "companion to the Halton and Hammersley sequences.",
+            '<div class="grid">'
+            + svg_card(out("sobol.svg"), "Left and middle: the same number of Sobol vs random points -- the random cloud clusters and leaves holes while Sobol drops exactly one point per dyadic cell. Right: the payoff, quasi-Monte Carlo error decaying as ~1/N against random Monte Carlo's ~1/sqrt(N)")
+            + f'<div class="card">{pre(sobol_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
