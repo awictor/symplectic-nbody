@@ -601,6 +601,7 @@ ruins a long non-symplectic integration.
 | `src/welch_psd.py` | Welch power spectral density: averaged overlapping periodograms, low variance |
 | `src/cross_entropy_method.py` | Cross-entropy method: derivative-free optimization by elite-sample distribution fitting |
 | `src/spsa.py` | SPSA: gradient-free stochastic optimization estimating the full gradient from two measurements per step |
+| `src/arnoldi.py` | Arnoldi iteration: dominant eigenvalues of a large non-symmetric matrix from a Krylov subspace |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1193,6 +1194,7 @@ ruins a long non-symplectic integration.
 | `examples/welch_psd_demo.py` | Jagged periodogram vs smooth Welch PSD on two tones in noise |
 | `examples/cross_entropy_method_demo.py` | The CEM Gaussian mean marching down the Rastrigin landscape |
 | `examples/spsa_demo.py` | SPSA descending a 2-D bowl on two evals per step, with the eval-count win over finite differences |
+| `examples/arnoldi_demo.py` | Ritz values converging to a 40x40 matrix's dominant eigenvalue, with the complex-plane spectrum |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13656,6 +13658,29 @@ convergence even under noise. Validated: it drives a bowl to 1e-10, finds a shif
 under additive noise that would thrash finite differences, uses exactly two evals per iteration in every
 dimension, and is reproducible per seed. The stochastic-optimization companion to the cross-entropy-method
 and CMA-ES tools.
+
+## Arnoldi iteration: dominant eigenvalues from a Krylov subspace
+
+The non-symmetric cousin of Lanczos. `arnoldi.py`:
+
+```
+$ python examples/arnoldi_demo.py examples/output
+
+40x40 non-symmetric matrix. True dominant eigenvalue: 21.613668
+
+   m    dominant Ritz value      |error|      matvecs
+    2        15.703918397     5.91e+00        2
+    6        21.613560075     1.08e-04        6
+   14        21.613667784     5.63e-11       14
+```
+
+Build an orthonormal Krylov basis by modified Gram-Schmidt, project A onto it as a small upper-Hessenberg
+matrix H, and the eigenvalues of H (the Ritz values) converge to the extremal eigenvalues of A in m << n
+steps -- from matrix-vector products alone. Validated: the factorization A Q_m = Q_{m+1} H holds to
+machine precision, Q is orthonormal, H is Hessenberg, the Ritz values match the true dominant eigenvalues
+of a non-symmetric matrix (vs the QR-algorithm) and a symmetric one (vs Lanczos), a rank-deficient Krylov
+space triggers a clean happy breakdown, and results are reproducible per seed. The Krylov-subspace
+companion to the Lanczos, GMRES, and QR-algorithm tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

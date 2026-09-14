@@ -643,6 +643,7 @@ def main():
     import welch_psd_demo
     import cross_entropy_method_demo
     import spsa_demo
+    import arnoldi_demo
 
     import plot_orbits
 
@@ -1255,6 +1256,7 @@ def main():
     welch_psd_txt = run("welch_psd_demo", welch_psd_demo.main, True)
     cross_entropy_method_txt = run("cross_entropy_method_demo", cross_entropy_method_demo.main, True)
     spsa_txt = run("spsa_demo", spsa_demo.main, True)
+    arnoldi_txt = run("arnoldi_demo", arnoldi_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11581,6 +11583,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("spsa.svg"), "SPSA descending a 2-D bowl. From the red start the mean (yellow) jitters -- each kink is a simultaneous perturbation of both coordinates -- yet marches straight to the optimum (green ring), reaching f=1e-10 in 400 steps on just 800 evaluations")
             + f'<div class="card">{pre(spsa_txt)}</div>'
+            + '</div>'),
+        section(
+            "Arnoldi iteration: dominant eigenvalues from a Krylov subspace",
+            "The full eigenvalue problem for an n-by-n matrix costs O(n^3) and needs the whole matrix; "
+            "but you usually want only the few eigenvalues of largest magnitude -- the dominant modes of "
+            "a dynamical system, the slowest states of a Markov chain. Arnoldi (1951) delivers exactly "
+            "those from matrix-vector products alone: it builds an orthonormal Krylov basis by modified "
+            "Gram-Schmidt, projects A onto it as a small upper-Hessenberg matrix H, and the eigenvalues "
+            "of H -- the Ritz values -- converge to the extremal eigenvalues of A in m << n steps. It is "
+            "the non-symmetric cousin of Lanczos and the engine under ARPACK / MATLAB's eigs / GMRES. "
+            "Validated: the Arnoldi factorization A Q_m = Q_{m+1} H holds to machine precision, Q is "
+            "orthonormal, H is Hessenberg, the Ritz values match the true dominant eigenvalues of a "
+            "non-symmetric matrix (cross-checked against the QR-algorithm) and a symmetric one (against "
+            "Lanczos), a rank-deficient Krylov space triggers a clean happy breakdown, and results are "
+            "reproducible per seed. The Krylov-subspace companion to the Lanczos, GMRES, and "
+            "QR-algorithm tools.",
+            '<div class="grid">'
+            + svg_card(out("arnoldi.svg"), "Left: the dominant Ritz value's error falls roughly exponentially as the Krylov subspace grows (5.9 at m=2 down to 1e-14 by m=18). Right: the complex-plane spectrum -- hollow gray are the true eigenvalues, filled green/purple the Ritz values; the extremal ones lock on first while interior modes lag")
+            + f'<div class="card">{pre(arnoldi_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

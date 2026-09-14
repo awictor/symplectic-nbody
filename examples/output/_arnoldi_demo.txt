@@ -1,0 +1,23 @@
+Arnoldi iteration -- dominant eigenvalues from a Krylov subspace
+================================================================
+
+40x40 non-symmetric matrix. True dominant eigenvalue: 21.613668
+(computed by full O(n^3) QR-algorithm on all 40 rows)
+
+Arnoldi from a random start vector, matrix-vector products only:
+   m    dominant Ritz value      |error|      matvecs
+  ----------------------------------------------------
+    2        15.703918397     5.91e+00        2
+    4        21.600459141     1.32e-02        4
+    6        21.613560075     1.08e-04        6
+    8        21.613671266     3.48e-06        8
+   10        21.613667640     1.44e-07       10
+   14        21.613667784     5.63e-11       14
+   18        21.613667784     1.42e-14       18
+
+Full solve touches all 40 rows; Arnoldi nails the dominant mode in
+~10 matvecs -- 1600 multiplies vs 400, the Krylov advantage.
+
+Arnoldi m=12: the dominant mode is locked, interior Ritz values still
+drift (extremal eigenvalues converge first -- that's the whole point):
+  dominant Ritz  +21.613668   true  +21.613668   (|err| 6.4e-10)
