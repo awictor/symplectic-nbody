@@ -1,0 +1,22 @@
+CUSUM change detection -- catch a small sustained mean shift
+============================================================
+
+Stream of 240 values, mean shifts by 1.0 sigma at t=120.
+A single value rarely leaves +/-3 sigma, so a Shewhart chart would miss it.
+
+CUSUM alarm at t = 137 (side: high)
+  detection delay = 17 steps after the true change
+  decision interval H = 5.0
+
+Shewhart 3-sigma rule: only 3 point(s) flagged before CUSUM alarmed.
+
+Detection delay vs shift size (sigma):
+   shift   delay (steps)
+   ------------------------
+     0.5   36
+     1.0   12
+     1.5   6
+     2.0   3
+     3.0   1
+
+Bigger shifts trip the accumulating sum faster -- the sequential-detection tradeoff.

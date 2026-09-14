@@ -623,6 +623,7 @@ ruins a long non-symplectic integration.
 | `src/kruskal_wallis.py` | Kruskal-Wallis H test: nonparametric one-way ANOVA with a from-scratch chi-squared p-value |
 | `src/kendall_tau.py` | Kendall's tau (a and b): rank correlation from concordant/discordant pairs, tie-corrected |
 | `src/benjamini_hochberg.py` | Multiple-testing corrections: Benjamini-Hochberg FDR, Bonferroni, and Holm |
+| `src/cusum_change.py` | CUSUM & Page-Hinkley sequential change detection: spot a mean shift in a stream |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1237,6 +1238,7 @@ ruins a long non-symplectic integration.
 | `examples/kruskal_wallis_demo.py` | Three groups' pooled ranks and mean-rank spread, with a power sweep and the chi-squared null |
 | `examples/kendall_tau_demo.py` | Concordant/discordant pair links on a curved cloud, and tau beating Pearson under an outlier |
 | `examples/benjamini_hochberg_demo.py` | Sorted p-values against the BH step-up line vs the Bonferroni cutoff, with an FDR table |
+| `examples/cusum_change_demo.py` | CUSUM sums crossing threshold shortly after a 1-sigma shift, with a delay-vs-shift table |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14207,6 +14209,26 @@ powerful when many effects are real. Validated: Bonferroni rejects exactly p<=al
 BH >= Holm; on mixed data BH recovers the signals while holding FDR near alpha; adjusted p-values monotone
 and in [0,1]. The multiple-comparisons companion to the Mann-Whitney, Kruskal-Wallis, KS-test, and
 permutation-test tools.
+
+## CUSUM: sequential detection of a mean shift
+
+Streaming change detection. `cusum_change.py`:
+
+```
+$ python examples/cusum_change_demo.py examples/output
+
+Stream of 240 values, mean shifts by 1.0 sigma at t=120.
+CUSUM alarm at t = 137 (delay 17); a 3-sigma rule flagged 0 real points.
+
+Detection delay vs shift: 0.5->36  1.0->12  2.0->3  3.0->1 steps
+```
+
+Accumulate running deviations from target with a slack k, so a persistent small bias adds up and crosses a
+decision interval h long before any single point looks anomalous. Validated: stationary run length to
+false alarm ~370, a mean shift caught within a few steps of the true change, larger shifts detected sooner,
+the slack returns the sums to zero under the null, a bigger h lengthens the false-alarm run, and
+Page-Hinkley detects a shift with no preset target. The sequential-change-detection companion to the
+Welch-PSD, Kalman, and hypothesis-testing tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -665,6 +665,7 @@ def main():
     import kruskal_wallis_demo
     import kendall_tau_demo
     import benjamini_hochberg_demo
+    import cusum_change_demo
 
     import plot_orbits
 
@@ -1299,6 +1300,7 @@ def main():
     kruskal_wallis_txt = run("kruskal_wallis_demo", kruskal_wallis_demo.main, True)
     kendall_tau_txt = run("kendall_tau_demo", kendall_tau_demo.main, True)
     benjamini_hochberg_txt = run("benjamini_hochberg_demo", benjamini_hochberg_demo.main, True)
+    cusum_change_txt = run("cusum_change_demo", cusum_change_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12047,6 +12049,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("benjamini_hochberg.svg"), "100 sorted p-values (yellow = true effect, gray = null). The sloped green BH line (k/m)*alpha climbs with rank, so BH rejects every point below it -- catching 15 real effects. The flat red Bonferroni cutoff alpha/m sits far lower and finds only 3. BH controls the fraction of false discoveries rather than forbidding any, trading a little error for much more power")
             + f'<div class="card">{pre(benjamini_hochberg_txt)}</div>'
+            + '</div>'),
+        section(
+            "CUSUM: sequential detection of a mean shift",
+            "A control chart that flags out-of-range points is slow to notice a small, sustained shift in "
+            "the mean -- a drifting sensor, a degrading process. The cumulative-sum (CUSUM) chart (Page "
+            "1954) accumulates running deviations from target, so a persistent small bias adds up and "
+            "crosses a threshold long before any single point looks anomalous. The two-sided tabular "
+            "CUSUM keeps S_hi = max(0, S_hi + (x-target) - k) and its mirror, where the slack k makes the "
+            "sums drift to zero under the null and grow only on a real shift; an alarm fires when either "
+            "exceeds the decision interval h. Tuning (k,h) trades the run length to false alarm against "
+            "detection delay. The related Page-Hinkley test needs no preset target. Validated: on a "
+            "stationary stream CUSUM rarely alarms (run length to false alarm ~370), a mean shift is "
+            "caught within a handful of steps near the true change, a larger shift is detected sooner, "
+            "the slack suppresses drift so the sums return to zero, a bigger h lengthens the run to false "
+            "alarm, and Page-Hinkley detects a shift with no target. The sequential-change-detection "
+            "companion to the Welch-PSD, Kalman, and hypothesis-testing tools.",
+            '<div class="grid">'
+            + svg_card(out("cusum_change.svg"), "Top: a raw stream whose mean shifts up by just 1 sigma at the dashed line -- barely visible by eye, and a per-point 3-sigma rule flags nothing. Bottom: the CUSUM S_hi sum (yellow) accumulates the small persistent bias and crosses the decision interval (red dashed) 17 steps after the change, firing the alarm (red dot) where a control chart stays silent")
+            + f'<div class="card">{pre(cusum_change_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
