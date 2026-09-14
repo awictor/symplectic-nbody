@@ -620,6 +620,7 @@ def main():
     import polar_decomposition_demo
     import hessenberg_demo
     import schur_decomposition_demo
+    import luby_transform_demo
 
     import plot_orbits
 
@@ -1209,6 +1210,7 @@ def main():
     polar_decomposition_txt = run("polar_decomposition_demo", polar_decomposition_demo.main, True)
     hessenberg_txt = run("hessenberg_demo", hessenberg_demo.main, True)
     schur_decomposition_txt = run("schur_decomposition_demo", schur_decomposition_demo.main, True)
+    luby_transform_txt = run("luby_transform_demo", luby_transform_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11073,6 +11075,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("schur_decomposition.svg"), "A dense 6x6 matrix (left) reduced by shifted QR iteration to real Schur form (right): upper triangular apart from a 2x2 block (red) holding a complex-conjugate eigenvalue pair. The real eigenvalues sit on the 1x1 diagonal entries")
             + f'<div class="card">{pre(schur_decomposition_txt)}</div>'
+            + '</div>'),
+        section(
+            "Luby Transform codes: a fountain you drink from until you have enough",
+            "Sending a file over a lossy channel where packets vanish unpredictably and you do not know "
+            "the loss rate: fixed-rate codes force you to guess the redundancy up front. LT codes, the "
+            "first practical FOUNTAIN codes, sidestep the guess -- from k source blocks the encoder "
+            "generates an ENDLESS stream of symbols, each an XOR of a random subset of blocks, and the "
+            "decoder recovers all k originals from ANY k(1+epsilon) symbols that happen to arrive. The "
+            "trick is the degree distribution: the robust soliton is tuned so there is almost always "
+            "exactly one degree-one symbol to release. Decoding is PEELING (belief propagation): find a "
+            "symbol touching a single unknown block -- it IS that block -- XOR it out of every other "
+            "symbol, which lowers their degrees and exposes new degree-one symbols, and repeat. "
+            "Validated: the soliton distributions are valid probability distributions, a degree-one "
+            "symbol decodes directly, a message is recovered exactly once enough symbols arrive, any "
+            "sufficient RANDOM subset works (arbitrary erasures), re-encoding a decoded message "
+            "reproduces the symbols, and decoding fails gracefully when too few arrive. The "
+            "erasure-coding companion to the Reed-Solomon, BCH, and LDPC tools.",
+            '<div class="grid">'
+            + svg_card(out("luby_transform.svg"), "Decoding success against the number of symbols collected: near zero until about k symbols, then it climbs sharply so a small constant overhead makes recovery near-certain -- regardless of which symbols the lossy channel actually delivered")
+            + f'<div class="card">{pre(luby_transform_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

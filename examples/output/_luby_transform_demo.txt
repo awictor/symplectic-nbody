@@ -1,0 +1,27 @@
+Luby Transform codes: rateless erasure coding
+====================================================
+message: 426 bytes -> 22 source blocks of 20 bytes
+encoder emits an endless stream of XOR symbols (robust soliton degrees)
+
+first 8 encoded symbols (degree = #source blocks XORed):
+  symbol 0: degree  2, touches blocks [2, 17]
+  symbol 1: degree 12, touches blocks [0, 1, 2, 5, 11, 12]...
+  symbol 2: degree  2, touches blocks [6, 11]
+  symbol 3: degree  5, touches blocks [0, 4, 9, 10, 15]
+  symbol 4: degree  2, touches blocks [11, 18]
+  symbol 5: degree  2, touches blocks [3, 20]
+  symbol 6: degree  1, touches blocks [10]
+  symbol 7: degree 12, touches blocks [0, 1, 5, 6, 8, 10]...
+
+decoding success vs symbols collected:
+  symbols  overhead  decoded?
+       22       1.0        no
+       24       1.1        no
+       26       1.2        no
+       30       1.4        no
+       35       1.6       yes
+       44       2.0       yes
+
+Any k(1+epsilon) symbols suffice, whichever arrive -- the channel can drop
+whatever it likes. Decoding is peeling: release a degree-1 symbol, XOR it out,
+repeat. This is the coding behind reliable multicast and distributed storage.

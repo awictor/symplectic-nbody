@@ -578,6 +578,7 @@ ruins a long non-symplectic integration.
 | `src/polar_decomposition.py` | Polar decomposition A=UP via SVD and Newton iteration; closest-rotation projection |
 | `src/hessenberg.py` | Hessenberg/tridiagonal reduction by Householder similarity (A=QHQ^T), eigenvalue-preserving |
 | `src/schur_decomposition.py` | Real Schur form A=QTQ^T by shifted QR iteration; eigenvalues from diagonal blocks |
+| `src/luby_transform.py` | Luby Transform fountain codes: robust soliton, XOR encoding, peeling erasure decoder |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1147,6 +1148,7 @@ ruins a long non-symplectic integration.
 | `examples/polar_decomposition_demo.py` | Unit circle stretched by P then rotated by U to reproduce A |
 | `examples/hessenberg_demo.py` | Dense matrix reduced to upper-Hessenberg form, shown as sparsity heatmaps |
 | `examples/schur_decomposition_demo.py` | Matrix reduced to real Schur form with a highlighted 2x2 complex block |
+| `examples/luby_transform_demo.py` | Decoding-success-vs-overhead curve for a fountain-coded message |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13173,6 +13175,28 @@ Validated: Q orthogonal, T quasi-triangular, Q T Q^T reconstructs A to machine p
 from the diagonal blocks match an independent solver (with sum/product against trace/determinant), a
 symmetric matrix gives a diagonal T, and a complex pair keeps its 2x2 block. The
 eigenvalue-decomposition companion to the QR-algorithm, Hessenberg, and SVD tools.
+
+## Luby Transform codes: a fountain you drink from until you have enough
+
+Rateless erasure coding that recovers from almost any k packets. `luby_transform.py`:
+
+```
+$ python examples/luby_transform_demo.py examples/output
+
+  426 bytes -> 22 source blocks; encoder emits an endless XOR stream
+  symbols  overhead  decoded?
+       30       1.4       no
+       35       1.6       yes
+  Any k(1+epsilon) symbols suffice, whichever arrive.
+```
+
+Each symbol is an XOR of a random subset of blocks, with degree drawn from the robust soliton
+distribution so there is almost always a degree-one symbol to release. Peeling decodes: release a
+degree-one symbol, XOR it out of the rest, repeat. Validated: the soliton distributions are valid, a
+degree-one symbol decodes directly, a message is recovered once enough symbols arrive, any sufficient
+random subset works (arbitrary erasures), re-encoding a decoded message reproduces the symbols, and
+decoding fails gracefully when too few arrive. The erasure-coding companion to the Reed-Solomon, BCH,
+and LDPC tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
