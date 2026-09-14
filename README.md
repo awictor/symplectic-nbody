@@ -549,6 +549,7 @@ ruins a long non-symplectic integration.
 | `src/clenshaw_curtis.py` | Clenshaw-Curtis quadrature: spectral integration at Chebyshev nodes |
 | `src/richardson_extrapolation.py` | Richardson extrapolation: high-order derivatives/limits from low-order formulas |
 | `src/bulirsch_stoer.py` | Bulirsch-Stoer ODE: modified midpoint + Richardson extrapolation |
+| `src/gram_schmidt.py` | Classical vs modified Gram-Schmidt orthogonalization + orthogonal polynomials |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1089,6 +1090,7 @@ ruins a long non-symplectic integration.
 | `examples/clenshaw_curtis_demo.py` | Spectral error cliff vs trapezoid + Chebyshev node clustering |
 | `examples/richardson_extrapolation_demo.py` | Derivative tableau error 1e-2 -> 1e-16 + (1+h)^(1/h) -> e |
 | `examples/bulirsch_stoer_demo.py` | Kepler orbit + one-step error 1e-1 -> 1e-14 across extrapolation levels |
+| `examples/gram_schmidt_demo.py` | Classical collapse vs modified stability on Hilbert basis + Legendre |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12472,6 +12474,27 @@ column, reaching machine precision in one step. Built on the repo's Richardson e
 Validated: exponential/harmonic/Kepler solutions to far higher accuracy than a comparable RK step,
 energy conserved to ~1e-13 with no secular drift, and agreement with RK45. The high-accuracy ODE
 companion to the RK45, Adams, and symplectic integrators.
+
+## Gram-Schmidt: orthonormalizing a basis, and why the operation order matters
+
+Turn any basis into an orthonormal one -- and see why the classical algorithm fails. `gram_schmidt.py`:
+
+```
+$ python examples/gram_schmidt_demo.py examples/output
+
+  orthogonality error on the ill-conditioned Hilbert basis:
+    size   classical (CGS)    modified (MGS)
+       8          1.00e+00          3.05e-07
+      10          1.00e+00          6.25e-05
+  Gram-Schmidt on the monomials -> Legendre polynomials
+```
+
+Classical Gram-Schmidt subtracts all projections at once and accumulates roundoff to total collapse on
+ill-conditioned bases; modified Gram-Schmidt subtracts them sequentially and stays near machine
+precision -- the same formula, a different operation order. Validated: both reconstruct A = QR,
+modified beats classical by orders of magnitude on a Hilbert basis, and Gram-Schmidt on the monomials
+reproduces the normalized Legendre polynomials. The orthogonalization companion to the Householder-QR,
+LLL, and Lanczos tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

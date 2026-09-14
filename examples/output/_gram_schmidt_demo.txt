@@ -1,0 +1,24 @@
+Gram-Schmidt: classical vs modified, and the order of operations that decides stability
+
+  orthogonality error ||Q^T Q - I|| on the ill-conditioned Hilbert basis:
+      size   classical (CGS)    modified (MGS)
+         4          3.64e-11          2.82e-13
+         6          7.87e-06          2.05e-10
+         8          1.00e+00          3.05e-07
+        10          1.00e+00          6.25e-05
+        12          1.00e+00          1.49e-01
+  Classical Gram-Schmidt collapses (error near 1 -- the vectors are not orthogonal at all)
+  while modified stays near machine precision. Same formula, different operation order.
+
+  Gram-Schmidt on the monomials 1, x, x^2, ... under the L2 inner product on [-1,1]
+  produces the (normalized) Legendre polynomials:
+    P0: +0.707 x^0
+    P1: +1.225 x^1
+    P2: -0.791 x^0 + +2.372 x^2
+    P3: -2.806 x^1 + +4.677 x^3
+    P4: +0.795 x^0 + -7.954 x^2 + +9.279 x^4
+
+  These orthonormal polynomials are exactly what Gaussian quadrature and Chebyshev/
+  Legendre spectral methods are built on -- Gram-Schmidt manufactures them from scratch.
+
+  wrote examples/output\gram_schmidt.svg

@@ -591,6 +591,7 @@ def main():
     import clenshaw_curtis_demo
     import richardson_extrapolation_demo
     import bulirsch_stoer_demo
+    import gram_schmidt_demo
 
     import plot_orbits
 
@@ -1151,6 +1152,7 @@ def main():
     clenshaw_curtis_txt = run("clenshaw_curtis_demo", clenshaw_curtis_demo.main, True)
     richardson_extrapolation_txt = run("richardson_extrapolation_demo", richardson_extrapolation_demo.main, True)
     bulirsch_stoer_txt = run("bulirsch_stoer_demo", bulirsch_stoer_demo.main, True)
+    gram_schmidt_txt = run("gram_schmidt_demo", gram_schmidt_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10432,6 +10434,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("bulirsch_stoer.svg"), "A Kepler orbit integrated by Bulirsch-Stoer with energy conserved to 1e-13 (left), and the one-step error of y'=y falling from 1e-1 to 1e-14 as extrapolation levels are added (right) -- two error orders killed per level")
             + f'<div class="card">{pre(bulirsch_stoer_txt)}</div>'
+            + '</div>'),
+        section(
+            "Gram-Schmidt: orthonormalizing a basis, and why the operation order matters",
+            "Gram-Schmidt turns any independent set of vectors into an orthonormal one spanning the "
+            "same space -- the workhorse behind QR, least squares, Krylov methods, and orthogonal "
+            "polynomials. The CLASSICAL algorithm subtracts v_k's projection onto every earlier q_i "
+            "all at once; it is mathematically exact but a numerical trap -- on a nearly dependent "
+            "basis, roundoff accumulates and the computed vectors drift far from orthogonal. The "
+            "MODIFIED algorithm changes only the ORDER: subtract each projection SEQUENTIALLY, "
+            "updating the working vector so the next projection sees the already-reduced remainder. "
+            "Algebraically identical, dramatically more stable in floating point -- a classic lesson "
+            "that operation order, not just the formula, decides accuracy. Validated: both produce "
+            "orthonormal vectors and reconstruct A = QR exactly; on an ill-conditioned Hilbert basis "
+            "the classical version's loss of orthogonality reaches ~1 (total collapse) while the "
+            "modified version stays near machine precision; R is upper-triangular with positive "
+            "diagonal; and Gram-Schmidt on the monomials under the L2 inner product reproduces the "
+            "normalized Legendre polynomials. The orthogonalization companion to the Householder-QR, "
+            "LLL, and Lanczos tools.",
+            '<div class="grid">'
+            + svg_card(out("gram_schmidt.svg"), "Loss of orthogonality vs basis size on an ill-conditioned Hilbert basis: classical Gram-Schmidt (red) collapses to error ~1 by size 8 while modified Gram-Schmidt (green) holds near machine precision -- the same formula, a different operation order")
+            + f'<div class="card">{pre(gram_schmidt_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
