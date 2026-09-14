@@ -1,0 +1,23 @@
+Bulirsch-Stoer: modified midpoint + Richardson extrapolation for extreme ODE accuracy
+
+  one Bulirsch-Stoer step of y'=y over H=1 (true answer e = 2.718281828459045):
+      levels            estimate       error
+           1   2.625000000000000     9.3e-02
+           2   2.713541666666667     4.7e-03
+           3   2.718171296296297     1.1e-04
+           4   2.718280319940475     1.5e-06
+           5   2.718281814925045     1.4e-08
+           6   2.718281828373154     8.6e-11
+           7   2.718281828458633     4.1e-13
+           8   2.718281828459064     1.9e-14
+  each added midpoint sweep jumps TWO error orders -- machine precision in one step.
+
+  Kepler orbit (eccentric), two revolutions, 400 steps:
+    energy drift: 2.21e-13  (near machine precision -- no secular growth)
+    harmonic oscillator, 25 periods: energy drift 1.78e-13
+
+  Bulirsch-Stoer is the method of choice for smooth, high-precision trajectory problems
+  -- ephemerides, celestial mechanics -- where a few big extrapolated steps beat many
+  small Runge-Kutta ones.
+
+  wrote examples/output\bulirsch_stoer.svg

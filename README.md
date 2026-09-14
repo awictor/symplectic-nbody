@@ -548,6 +548,7 @@ ruins a long non-symplectic integration.
 | `src/thiele.py` | Thiele rational interpolation by continued fractions (poles, no Runge blow-up) |
 | `src/clenshaw_curtis.py` | Clenshaw-Curtis quadrature: spectral integration at Chebyshev nodes |
 | `src/richardson_extrapolation.py` | Richardson extrapolation: high-order derivatives/limits from low-order formulas |
+| `src/bulirsch_stoer.py` | Bulirsch-Stoer ODE: modified midpoint + Richardson extrapolation |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1087,6 +1088,7 @@ ruins a long non-symplectic integration.
 | `examples/thiele_demo.py` | Thiele vs polynomial on the Runge function + pole reconstruction |
 | `examples/clenshaw_curtis_demo.py` | Spectral error cliff vs trapezoid + Chebyshev node clustering |
 | `examples/richardson_extrapolation_demo.py` | Derivative tableau error 1e-2 -> 1e-16 + (1+h)^(1/h) -> e |
+| `examples/bulirsch_stoer_demo.py` | Kepler orbit + one-step error 1e-1 -> 1e-14 across extrapolation levels |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12449,6 +12451,27 @@ precision from the same evaluations. Validated: derivatives of sin/exp/polynomia
 epsilon, limits like (1+h)^(1/h) -> e recovered, the tableau reproduces Romberg on a trapezoid ladder,
 and the diagonal converges at order 2, 4, 6. The error-cancellation companion to the Romberg quadrature
 and finite-difference tools.
+
+## Bulirsch-Stoer: extreme-accuracy ODE integration by extrapolation
+
+Solve smooth ODEs to machine precision with a few big steps. `bulirsch_stoer.py`:
+
+```
+$ python examples/bulirsch_stoer_demo.py examples/output
+
+  one step of y'=y over H=1 (true e = 2.718281828459045):
+    levels 1: error 9.3e-02
+    levels 4: error 1.5e-06
+    levels 8: error 1.9e-14
+  Kepler orbit, two revolutions: energy drift 2.2e-13
+```
+
+The modified midpoint rule crosses a big step in n substeps with an even-power error series; taking it
+for n = 2, 4, 6, ... and Richardson-extrapolating to zero substep size jumps two error orders per
+column, reaching machine precision in one step. Built on the repo's Richardson extrapolation.
+Validated: exponential/harmonic/Kepler solutions to far higher accuracy than a comparable RK step,
+energy conserved to ~1e-13 with no secular drift, and agreement with RK45. The high-accuracy ODE
+companion to the RK45, Adams, and symplectic integrators.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

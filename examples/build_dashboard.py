@@ -590,6 +590,7 @@ def main():
     import thiele_demo
     import clenshaw_curtis_demo
     import richardson_extrapolation_demo
+    import bulirsch_stoer_demo
 
     import plot_orbits
 
@@ -1149,6 +1150,7 @@ def main():
     thiele_txt = run("thiele_demo", thiele_demo.main, True)
     clenshaw_curtis_txt = run("clenshaw_curtis_demo", clenshaw_curtis_demo.main, True)
     richardson_extrapolation_txt = run("richardson_extrapolation_demo", richardson_extrapolation_demo.main, True)
+    bulirsch_stoer_txt = run("bulirsch_stoer_demo", bulirsch_stoer_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10409,6 +10411,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("richardson_extrapolation.svg"), "The Richardson tableau for d/dx sin at x=1: the raw central-difference column (gray) has error ~1e-2, but each extrapolation column cancels the next error order until the diagonal reaches ~1e-16 -- machine precision from a second-order formula")
             + f'<div class="card">{pre(richardson_extrapolation_txt)}</div>'
+            + '</div>'),
+        section(
+            "Bulirsch-Stoer: extreme-accuracy ODE integration by extrapolation",
+            "For a smooth ODE y' = f(t, y), BULIRSCH-STOER delivers accuracy Runge-Kutta cannot touch. "
+            "It combines two classical tools: the MODIFIED MIDPOINT rule crosses a big step H in n "
+            "substeps with an error that is a power series in the substep size containing only EVEN "
+            "powers; take that step for n = 2, 4, 6, 8, ... and RICHARDSON-EXTRAPOLATE the estimates "
+            "to zero substep size. Because only even powers appear, each extrapolation column jumps "
+            "TWO orders, so a handful of midpoint sweeps reach the accuracy of a very high-order "
+            "method -- often 1e-13 in a single step. It is the method of choice for smooth, "
+            "high-precision trajectory problems (ephemerides, celestial mechanics), a direct "
+            "application of the repo's Richardson extrapolation to differential equations. Validated "
+            "against exact solutions: it integrates y'=y (exponential), the harmonic oscillator "
+            "(cos/sin), and a Kepler orbit to far higher accuracy than a comparable RK step; the "
+            "extrapolation genuinely raises the order (error plummets with more midpoint levels); the "
+            "harmonic and Kepler energies are conserved to ~1e-13 with no secular drift; and it agrees "
+            "with the repo's RK45. The high-accuracy ODE companion to the RK45, Adams, and symplectic "
+            "integrators.",
+            '<div class="grid">'
+            + svg_card(out("bulirsch_stoer.svg"), "A Kepler orbit integrated by Bulirsch-Stoer with energy conserved to 1e-13 (left), and the one-step error of y'=y falling from 1e-1 to 1e-14 as extrapolation levels are added (right) -- two error orders killed per level")
+            + f'<div class="card">{pre(bulirsch_stoer_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
