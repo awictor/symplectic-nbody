@@ -1,0 +1,20 @@
+Pohlig-Hellman: discrete log is easy when the group order is smooth
+
+  group: (Z/2029)^*, generator g = 2, order = 2028
+  order factorization: 2028 = 2^2 * 3^1 * 13^2
+  2028-smooth to bound 13: True
+
+  Alice's secret x = 1500,  public h = g^x mod p = 624
+  Pohlig-Hellman reduces one log mod 2028 into logs in each subgroup:
+    subgroup order 4:  x mod 4 = 0
+    subgroup order 3:  x mod 3 = 0
+    subgroup order 169:  x mod 169 = 148
+
+  CRT recombines the residues -> x = 1500  (correct: True)
+
+  Contrast -- a safe group: order with a large prime factor resists Pohlig-Hellman.
+    p = 2039,  p-1 = 2038 = 2^1 * 1019^1
+    largest prime factor 1019 -- the log there is as hard as the
+    whole problem, so a large prime order is what keeps Diffie-Hellman secure.
+
+  wrote examples/output\pohlig_hellman.svg

@@ -586,6 +586,7 @@ def main():
     import egyptian_fraction_demo
     import sturm_demo
     import resultant_demo
+    import pohlig_hellman_demo
 
     import plot_orbits
 
@@ -1141,6 +1142,7 @@ def main():
     egyptian_fraction_txt = run("egyptian_fraction_demo", egyptian_fraction_demo.main, True)
     sturm_txt = run("sturm_demo", sturm_demo.main, True)
     resultant_txt = run("resultant_demo", resultant_demo.main, True)
+    pohlig_hellman_txt = run("pohlig_hellman_demo", pohlig_hellman_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10321,6 +10323,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("resultant.svg"), "The Sylvester matrix of (x-1)(x-2) and (x-2)(x-3): its determinant, the resultant, is zero -- certifying that the two polynomials share the root x = 2 without ever solving them")
             + f'<div class="card">{pre(resultant_txt)}</div>'
+            + '</div>'),
+        section(
+            "Pohlig-Hellman: the discrete logarithm made easy on a smooth-order group",
+            "The DISCRETE LOGARITHM (given g, h find x with g^x = h) is the security foundation of "
+            "Diffie-Hellman, ElGamal, and DSA, and its hardness depends entirely on the group ORDER. "
+            "POHLIG-HELLMAN (1978) shows that if the order n factors into only SMALL primes (n is "
+            "SMOOTH), the problem collapses: reduce it to a discrete log in each small prime-power "
+            "subgroup, solve those by baby-step giant-step, and reassemble by the CHINESE REMAINDER "
+            "THEOREM. For n = prod p_i^{e_i}, project into each order-p^e subgroup by raising to n/p^e, "
+            "solve x mod p^e digit-by-digit in base p, and CRT the residues into x mod n. This is "
+            "exactly why cryptographic groups are chosen with order divisible by a LARGE prime -- to "
+            "deny Pohlig-Hellman its factors. Reuses the repo's baby-step giant-step, CRT, and "
+            "factorization. Validated exactly: it recovers x for random exponents in prime fields, is "
+            "always a valid logarithm agreeing with brute force and BSGS, solves subgroup logs of "
+            "composite order, correctly returns None when no logarithm exists (element outside the "
+            "subgroup), and handles large exponents. The smooth-order discrete-log companion to the "
+            "baby-step-giant-step, CRT, and Diffie-Hellman tools.",
+            '<div class="grid">'
+            + svg_card(out("pohlig_hellman.svg"), "Pohlig-Hellman splitting one discrete log modulo 2028 = 2^2 * 3 * 13^2 into three small prime-power-subgroup logs, each cracked by baby-step giant-step and recombined by the Chinese Remainder Theorem")
+            + f'<div class="card">{pre(pohlig_hellman_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

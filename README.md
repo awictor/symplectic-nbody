@@ -544,6 +544,7 @@ ruins a long non-symplectic integration.
 | `src/egyptian_fraction.py` | Greedy Fibonacci-Sylvester unit fractions + Engel expansion + Sylvester sequence |
 | `src/sturm.py` | Sturm's theorem: exact real-root counting + isolation via Sturm sequences |
 | `src/resultant.py` | Resultant + discriminant via the Sylvester matrix (common/repeated roots, elimination) |
+| `src/pohlig_hellman.py` | Pohlig-Hellman discrete log on smooth-order groups (subgroups + CRT) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1079,6 +1080,7 @@ ruins a long non-symplectic integration.
 | `examples/egyptian_fraction_demo.py` | Greedy unit-fraction decompositions + Sylvester reciprocal race to 1 |
 | `examples/sturm_demo.py` | Isolating a degree-5 polynomial's real roots + V(x) dropping past each |
 | `examples/resultant_demo.py` | Common-root detection, discriminant classification, circle-line elimination |
+| `examples/pohlig_hellman_demo.py` | Cracking a smooth-order discrete log via subgroups + CRT vs a safe prime |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12357,6 +12359,27 @@ b^2-4ac. Taking the resultant of two bivariate equations eliminates a variable. 
 rational arithmetic: common-root detection, the root-difference product, the cubic discriminant
 -4p^3-27q^2, sign-based real-root counting, and elimination on a circle-line system. The
 elimination-theory companion to the Sturm and Durand-Kerner tools.
+
+## Pohlig-Hellman: the discrete logarithm made easy on a smooth-order group
+
+Crack a discrete log when the group order factors into small primes. `pohlig_hellman.py`:
+
+```
+$ python examples/pohlig_hellman_demo.py examples/output
+
+  (Z/2029)^*, g=2, order 2028 = 2^2 * 3 * 13^2 (smooth)
+  secret x = 1500,  h = g^x = 624
+  subgroup residues: x mod 4 = 0, x mod 3 = 0, x mod 169 = 148
+  CRT recombines -> x = 1500  (correct)
+  contrast: p=2039, p-1 = 2*1019 -- the large prime factor resists the attack
+```
+
+If the group order n = prod p_i^{e_i} is smooth, Pohlig-Hellman reduces the discrete log to one in each
+small prime-power subgroup (solved by baby-step giant-step, digit by digit in base p) and recombines by
+CRT -- which is why real cryptographic groups use an order divisible by a large prime. Reuses the repo's
+BSGS, CRT, and factorization. Validated: recovers x for random exponents, agrees with brute force,
+solves composite-order subgroups, and returns None when no log exists. The smooth-order discrete-log
+companion to the baby-step-giant-step, CRT, and Diffie-Hellman tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
