@@ -1,0 +1,22 @@
+Affinity propagation -- clustering that elects its own exemplars, no k
+======================================================================
+
+56 points from 4 true blobs, k NOT specified.
+Affinity propagation found 4 clusters in 31 iterations.
+Exemplars (elected cluster centers): points [9, 24, 41, 47]
+
+Exemplar coordinates:
+  cluster 0: (-0.10, +0.06)
+  cluster 1: (+9.04, +1.29)
+  cluster 2: (+3.77, +7.51)
+  cluster 3: (+11.26, +8.95)
+
+Preference (self-similarity) tunes the cluster count -- the only knob:
+   preference       #clusters
+   ------------------------------
+        -329.7       4
+        -131.9       4
+         -65.9       4
+         -19.8       4
+          -3.3       8
+  (less-negative preference makes each point cheaper to elect -> more clusters)

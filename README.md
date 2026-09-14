@@ -611,6 +611,7 @@ ruins a long non-symplectic integration.
 | `src/total_least_squares.py` | Total least squares: orthogonal / errors-in-variables regression via the covariance eigenproblem |
 | `src/burg_method.py` | Burg's method: maximum-entropy AR spectral estimation from short records, always stable |
 | `src/music_spectrum.py` | MUSIC: super-resolution frequency estimation from noise-subspace orthogonality |
+| `src/affinity_propagation.py` | Affinity propagation: exemplar clustering by message passing, no preset cluster count |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1213,6 +1214,7 @@ ruins a long non-symplectic integration.
 | `examples/total_least_squares_demo.py` | TLS holding the true slope vs OLS attenuating under errors in both axes, with an attenuation sweep |
 | `examples/burg_method_demo.py` | Burg maximum-entropy spectrum resolving two close tones the FFT periodogram smears |
 | `examples/music_spectrum_demo.py` | MUSIC pseudospectrum resolving two tones half an FFT bin apart, with the eigenvalue split |
+| `examples/affinity_propagation_demo.py` | Four blobs clustered with no k, exemplars elected by message passing, with a preference sweep |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13919,6 +13921,29 @@ subspace. Each true sinusoid's steering vector is orthogonal to the noise subspa
 resolves tones half an FFT bin apart (errors ~5e-4), the eigenvalues split cleanly into signal and noise,
 peaks ~4x sharper than the periodogram, and cross-checks against ESPRIT. The subspace-spectral companion
 to the ESPRIT, Prony, Burg, and FFT tools.
+
+## Affinity propagation: clustering that elects its own exemplars
+
+Message-passing clustering with no preset k. `affinity_propagation.py`:
+
+```
+$ python examples/affinity_propagation_demo.py examples/output
+
+56 points from 4 true blobs, k NOT specified.
+Affinity propagation found 4 clusters in 31 iterations.
+Exemplars (elected cluster centers): points [9, 24, 41, 47]
+
+Preference tunes the cluster count -- the only knob:
+   -65.9  -> 4 clusters
+    -3.3  -> 8 clusters
+```
+
+Every point is at once a candidate exemplar and a member seeking one; they exchange responsibility and
+availability messages until a consensus set of exemplars emerges. A point is an exemplar when
+r(k,k)+a(k,k) > 0, and the cluster count is set indirectly by the preference (self-similarity). Validated:
+recovers the correct count on well-separated blobs, each exemplar is a real data point, each point joins
+its most-similar exemplar, a less-negative preference yields more clusters, and results are deterministic.
+The exemplar-based-clustering companion to the k-means, DBSCAN, mean-shift, and spectral-clustering tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

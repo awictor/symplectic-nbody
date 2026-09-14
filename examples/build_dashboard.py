@@ -653,6 +653,7 @@ def main():
     import total_least_squares_demo
     import burg_method_demo
     import music_spectrum_demo
+    import affinity_propagation_demo
 
     import plot_orbits
 
@@ -1275,6 +1276,7 @@ def main():
     total_least_squares_txt = run("total_least_squares_demo", total_least_squares_demo.main, True)
     burg_method_txt = run("burg_method_demo", burg_method_demo.main, True)
     music_spectrum_txt = run("music_spectrum_demo", music_spectrum_demo.main, True)
+    affinity_propagation_txt = run("affinity_propagation_demo", affinity_propagation_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11796,6 +11798,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("music_spectrum.svg"), "Top: two tones half an FFT bin apart. The gray FFT periodogram is a single blob; the yellow MUSIC pseudospectrum spikes into two razor peaks exactly on the true tones (green dashed), a 6888x vs 1684x peak-to-floor ratio. Bottom: the covariance eigenvalues -- four signal eigenvalues (green) tower over a flat noise floor (gray), the split MUSIC exploits")
             + f'<div class="card">{pre(music_spectrum_txt)}</div>'
+            + '</div>'),
+        section(
+            "Affinity propagation: clustering that elects its own exemplars",
+            "Most clustering demands you choose the number of clusters (k-means) or tune a radius (DBSCAN, "
+            "mean-shift). Affinity propagation (Frey & Dueck, Science 2007) does neither. Every point is at "
+            "once a candidate cluster center (an exemplar) and a member seeking one, and they converge on a "
+            "good set of exemplars by exchanging two real-valued messages: RESPONSIBILITY r(i,k), how well "
+            "point k suits point i as its exemplar versus competitors, and AVAILABILITY a(i,k), how "
+            "appropriate it is for i to pick k given the support k has gathered. The damped messages "
+            "iterate to consensus; a point is an exemplar when r(k,k)+a(k,k) > 0, and the cluster count is "
+            "set indirectly by the PREFERENCE (self-similarity) -- the median input similarity is the "
+            "standard default and usually finds the natural count on its own. Validated: recovers the "
+            "correct cluster count on well-separated blobs and assigns every point to its blob, each "
+            "exemplar is a real data point and each point joins its most-similar exemplar, a less-negative "
+            "preference yields more clusters, the net-similarity objective behaves monotonically, and "
+            "results are deterministic. The exemplar-based-clustering companion to the k-means, DBSCAN, "
+            "mean-shift, and spectral-clustering tools.",
+            '<div class="grid">'
+            + svg_card(out("affinity_propagation.svg"), "56 points from four blobs, clustered with no k specified. Message passing elects four exemplars (ringed points, real data points), and thin links connect every point to the exemplar it chose. The colors are the discovered clusters -- affinity propagation found the count itself from the preference")
+            + f'<div class="card">{pre(affinity_propagation_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
