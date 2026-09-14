@@ -1,0 +1,16 @@
+Burg's method -- maximum-entropy AR spectrum from short records
+==================================================================
+
+96 samples, two tones at 0.2 and 0.223 cyc/sample (2.2 FFT bins apart).
+
+Burg AR(24) fit: error variance 0.0603
+  all |reflection| < 1 (stable): True
+
+Peaks in [0.17, 0.26]:
+  Periodogram (FFT): 7 peak(s) [0.1753, 0.1855, 0.1992, 0.2231, 0.2373, 0.2485, 0.2583]
+    -> leakage + noise scatter spurious peaks; the two tones are ambiguous.
+  Burg MEM spectrum: 2 peak(s) [0.1997, 0.2222]
+    -> exactly two clean peaks, on the true frequencies.
+
+AR coefficient recovery on a known AR(2) process x_t = 0.75 x_{t-1} - 0.5 x_{t-2}:
+  recovered: x_t = 0.748 x_(t-1) + -0.541 x_(t-2)  (true 0.75, -0.5)

@@ -609,6 +609,7 @@ ruins a long non-symplectic integration.
 | `src/esprit_method.py` | ESPRIT: noise-robust subspace frequency estimation, super-resolving tones below the FFT bin |
 | `src/theil_sen.py` | Theil-Sen & Siegel robust regression: line fit by median of pairwise slopes, ~29-50% breakdown |
 | `src/total_least_squares.py` | Total least squares: orthogonal / errors-in-variables regression via the covariance eigenproblem |
+| `src/burg_method.py` | Burg's method: maximum-entropy AR spectral estimation from short records, always stable |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1209,6 +1210,7 @@ ruins a long non-symplectic integration.
 | `examples/esprit_method_demo.py` | ESPRIT resolving two tones 0.3 of an FFT bin apart, with the noise-robustness table vs Prony |
 | `examples/theil_sen_demo.py` | Theil-Sen line shrugging off 25% outliers next to OLS being dragged off, with a breakdown sweep |
 | `examples/total_least_squares_demo.py` | TLS holding the true slope vs OLS attenuating under errors in both axes, with an attenuation sweep |
+| `examples/burg_method_demo.py` | Burg maximum-entropy spectrum resolving two close tones the FFT periodogram smears |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13871,6 +13873,29 @@ regression. Validated: exact recovery on a clean line, swap-invariance (where OL
 true slope when both axes are noisy (OLS attenuates), fitted normal orthogonal to the max-variance
 direction, and recovers a known 3-D plane. The errors-in-variables companion to the ordinary-least-squares,
 Theil-Sen, PCA-whitening, and SVD tools.
+
+## Burg's method: maximum-entropy spectra from short records
+
+High-resolution AR spectral estimation. `burg_method.py`:
+
+```
+$ python examples/burg_method_demo.py examples/output
+
+96 samples, two tones at 0.2 and 0.223 cyc/sample (2.2 FFT bins apart).
+Burg AR(24) fit: error variance 0.0603; all |reflection| < 1 (stable): True
+
+Peaks in [0.17, 0.26]:
+  Periodogram (FFT): 7 peak(s)   -> leakage scatters spurious peaks
+  Burg MEM spectrum: 2 peak(s) [0.1997, 0.2222]  -> clean, on the true tones
+```
+
+Fit AR coefficients by minimizing the sum of forward and backward prediction-error powers directly on the
+samples -- no autocorrelation estimate -- via the Levinson recursion. Guarantees |reflection| < 1 (always
+stable) and gives a maximum-entropy spectrum far sharper than the periodogram on short records. Validated:
+recovers a known AR process's coefficients (beating Yule-Walker on short records averaged over trials),
+all reflection coefficients |k| < 1, PSD peaks at the true frequency, resolves two close tones as two
+clean peaks, error variance falls monotonically with order, and agrees with Levinson-Durbin on long
+records. The maximum-entropy spectral companion to the Levinson-Durbin, Welch-PSD, and FFT tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

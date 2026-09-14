@@ -651,6 +651,7 @@ def main():
     import esprit_method_demo
     import theil_sen_demo
     import total_least_squares_demo
+    import burg_method_demo
 
     import plot_orbits
 
@@ -1271,6 +1272,7 @@ def main():
     esprit_method_txt = run("esprit_method_demo", esprit_method_demo.main, True)
     theil_sen_txt = run("theil_sen_demo", theil_sen_demo.main, True)
     total_least_squares_txt = run("total_least_squares_demo", total_least_squares_demo.main, True)
+    burg_method_txt = run("burg_method_demo", burg_method_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11752,6 +11754,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("total_least_squares.svg"), "120 points scattered around y=2x+1 with heavy error in BOTH axes. Total least squares (yellow) recovers the true line (green) by minimizing perpendicular distance, while ordinary least squares (red dashed) is flattened by regression dilution -- its slope attenuated toward zero because it only accounts for vertical error")
             + f'<div class="card">{pre(total_least_squares_txt)}</div>'
+            + '</div>'),
+        section(
+            "Burg's method: maximum-entropy spectra from short records",
+            "To spectrum-analyze a short signal, the classic route estimates the autocorrelation then "
+            "solves Yule-Walker for autoregressive coefficients -- but autocorrelation from few samples is "
+            "poor, smearing the spectrum. Burg's method (1967) skips it entirely: it fits the AR "
+            "coefficients by minimizing the sum of forward AND backward prediction-error powers directly "
+            "on the samples, order by order via the Levinson recursion. This guarantees two prized "
+            "properties -- every reflection coefficient satisfies |k| < 1, so the model is ALWAYS stable, "
+            "and the resulting maximum-entropy spectrum has far higher resolution on short records than the "
+            "periodogram. It is the workhorse of maximum-entropy spectral analysis in geophysics, radar, "
+            "and speech. Validated: recovers the coefficients of a known AR process (and beats Yule-Walker "
+            "on short records, averaged over many trials), every reflection coefficient has |k| < 1, the "
+            "PSD peaks at the true resonant frequency, two close sinusoids are resolved as two clean peaks "
+            "where the periodogram scatters spurious ones, the error variance falls monotonically with "
+            "order, and it agrees with Levinson-Durbin on long stationary records. The maximum-entropy "
+            "spectral companion to the Levinson-Durbin, Welch-PSD, and FFT tools.",
+            '<div class="grid">'
+            + svg_card(out("burg_method.svg"), "Two tones 2.2 FFT bins apart in a 96-sample record. On a log-power axis the FFT periodogram (gray) is a ragged blob with spurious noise peaks, unable to commit to two frequencies; the Burg maximum-entropy spectrum (yellow) resolves exactly two sharp peaks sitting on the true tones (green dashed)")
+            + f'<div class="card">{pre(burg_method_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
