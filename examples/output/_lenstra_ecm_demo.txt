@@ -1,0 +1,17 @@
+Lenstra's elliptic-curve method (ECM)
+==================================================
+factor N by running k*P on a random curve mod N until an inversion fails --
+the failed gcd hands you a factor. Fresh curve = fresh dice, so no single
+unlucky factorization defeats it (unlike Pollard p-1).
+
+                      case                     N   factorization
+           small semiprime                  1073   29 * 37
+          Project Euler #3          600851475143   71 * 839 * 1471 * 6857
+  10-digit-prime semiprime   1000000016000000063   1000000007 * 1000000009
+             mixed factors                 36360   2 * 2 * 2 * 3 * 3 * 5 * 101
+               prime power                 16807   7 * 7 * 7 * 7 * 7
+                   a prime            9999999967   9999999967
+
+Each factorization is verified: the primes multiply back to N and each passes
+the Baillie-PSW primality test. ECM is the method of choice for pulling out
+medium (up to ~40-digit) factors before a heavier sieve finishes the job.

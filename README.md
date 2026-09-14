@@ -585,6 +585,7 @@ ruins a long non-symplectic integration.
 | `src/chakravala.py` | Chakravala cyclic method for Pell's equation x^2-Dy^2=1, exact integer, Brahmagupta composition |
 | `src/cipolla.py` | Cipolla's modular square root via GF(p^2) field exponentiation, both roots |
 | `src/baillie_psw.py` | Baillie-PSW primality: strong Miller-Rabin base 2 + strong Lucas, Jacobi symbol |
+| `src/lenstra_ecm.py` | Lenstra elliptic-curve factorization: random curves mod N, factor from failed inversion |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1161,6 +1162,7 @@ ruins a long non-symplectic integration.
 | `examples/chakravala_demo.py` | Cyclic steps solving D=61's Pell equation, |k| homing in on 1 |
 | `examples/cipolla_demo.py` | The map x->x^2 mod p with the two square roots highlighted |
 | `examples/baillie_psw_demo.py` | How the Lucas half catches base-2 pseudoprimes Miller-Rabin misses |
+| `examples/lenstra_ecm_demo.py` | Factorizations of several numbers + an elliptic curve over a prime field |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13326,6 +13328,25 @@ known to fool (proven correct below 2^64). Validated: it matches deterministic t
 n up to 20000, rejects the strong base-2 pseudoprimes and Carmichael numbers that fool naive tests, the
 Jacobi symbol matches the Legendre symbol and is multiplicative, and pi(10000)=1229. The primality
 companion to the Tonelli-Shanks, Cipolla, and Lucas-Lehmer tools.
+
+## Lenstra ECM: factoring on a random elliptic curve
+
+Elliptic-curve factorization, strong for medium factors. `lenstra_ecm.py`:
+
+```
+$ python examples/lenstra_ecm_demo.py examples/output
+
+  600851475143      -> 71 * 839 * 1471 * 6857
+  1000000016000000063 -> 1000000007 * 1000000009
+  7^5 -> 7*7*7*7*7;   9999999967 -> prime
+```
+
+Run k*P on a random curve mod the composite N; a failed modular inversion (a gcd with N that is neither
+1 nor N) hands you a factor, and a fresh curve varies the group order near p, so no unlucky
+factorization defeats it -- unlike Pollard p-1. Validated: every factor divides N and is prime by
+Baillie-PSW, the factors multiply back to N, it handles semiprimes, prime powers, and multi-factor
+numbers, it cracks a semiprime with non-smooth p-1, and the largest prime factor of 600851475143 is
+6857. The factorization companion to the Pollard-rho, Dixon, and Baillie-PSW tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

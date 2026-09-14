@@ -627,6 +627,7 @@ def main():
     import chakravala_demo
     import cipolla_demo
     import baillie_psw_demo
+    import lenstra_ecm_demo
 
     import plot_orbits
 
@@ -1223,6 +1224,7 @@ def main():
     chakravala_txt = run("chakravala_demo", chakravala_demo.main, True)
     cipolla_txt = run("cipolla_demo", cipolla_demo.main, True)
     baillie_psw_txt = run("baillie_psw_demo", baillie_psw_demo.main, True)
+    lenstra_ecm_txt = run("lenstra_ecm_demo", lenstra_ecm_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11229,6 +11231,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("baillie_psw.svg"), "Baillie-PSW's verdict for every n up to 1000 against deterministic trial division: primes (green) and composites (blue) are classified exactly right, and the disagreement row (red) stays empty -- the combined test never errs here")
             + f'<div class="card">{pre(baillie_psw_txt)}</div>'
+            + '</div>'),
+        section(
+            "Lenstra ECM: factoring on a random elliptic curve",
+            "Pollard's p-1 method factors N only when some prime factor p has p-1 smooth -- and fails "
+            "silently otherwise. Lenstra's 1985 elliptic-curve method is the brilliant generalization: "
+            "instead of the fixed group of order p-1, it works on a RANDOM elliptic curve mod N whose "
+            "order near p VARIES with the curve, so if one curve's order is not smooth, just roll fresh "
+            "dice with another. It is the best known algorithm for pulling out medium (up to ~40-digit) "
+            "factors. The mechanism is elegant: compute k*P on a curve mod the COMPOSITE N for a highly "
+            "composite k; elliptic-curve addition needs a modular inverse, and when we try to invert a "
+            "quantity that is zero mod one factor p but nonzero mod another, the gcd with N returns p "
+            "-- the factorization falls out of the failed inversion. Validated: every returned factor "
+            "divides N and is prime by Baillie-PSW, the factors multiply back to N, it handles "
+            "semiprimes, prime powers, and multi-factor numbers, it cracks a semiprime whose p-1 is "
+            "non-smooth (where Pollard p-1 struggles), and it reports the largest prime factor of "
+            "600851475143 as 6857. Reuses the repo's Baillie-PSW test. The factorization companion to "
+            "the Pollard-rho, Dixon, and Baillie-PSW tools.",
+            '<div class="grid">'
+            + svg_card(out("lenstra_ecm.svg"), "The points of an elliptic curve over a small prime field form a finite group; ECM runs this same group arithmetic modulo a composite N, and a failed slope inversion -- a gcd that is neither 1 nor N -- reveals a prime factor")
+            + f'<div class="card">{pre(lenstra_ecm_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
