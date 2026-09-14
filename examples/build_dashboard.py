@@ -664,6 +664,7 @@ def main():
     import mann_whitney_demo
     import kruskal_wallis_demo
     import kendall_tau_demo
+    import benjamini_hochberg_demo
 
     import plot_orbits
 
@@ -1297,6 +1298,7 @@ def main():
     mann_whitney_txt = run("mann_whitney_demo", mann_whitney_demo.main, True)
     kruskal_wallis_txt = run("kruskal_wallis_demo", kruskal_wallis_demo.main, True)
     kendall_tau_txt = run("kendall_tau_demo", kendall_tau_demo.main, True)
+    benjamini_hochberg_txt = run("benjamini_hochberg_demo", benjamini_hochberg_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12026,6 +12028,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("kendall_tau.svg"), "A monotone but curved point cloud, with a subsample of pairs drawn as links: green joins concordant pairs (ordered the same way in both variables), red joins discordant pairs. The cloud is almost all green -- tau-b = 0.99 -- capturing the full monotone association a linear Pearson r (0.95) underrates, and where one outlier would crash r from 0.99 to 0.08, tau barely moves")
             + f'<div class="card">{pre(kendall_tau_txt)}</div>'
+            + '</div>'),
+        section(
+            "Multiple-testing correction: controlling the false-discovery rate",
+            "Run 100 tests at alpha=0.05 and you expect about 5 false positives even if nothing is real. "
+            "Corrections fix this along two axes. Bonferroni controls the family-wise error rate (the "
+            "chance of ANY false positive) by testing each hypothesis at alpha/m -- safe but brutally "
+            "conservative. Holm is a uniformly more powerful step-down version with the same guarantee. "
+            "Benjamini-Hochberg instead controls the false-discovery rate (the expected FRACTION of "
+            "rejections that are false): sort the p-values ascending, find the largest k with p_(k) <= "
+            "(k/m)*alpha, and reject the k smallest -- far more powerful when many effects are real, and "
+            "the standard in genomics and imaging. Validated: Bonferroni rejects exactly p <= alpha/m, "
+            "Holm rejects at least as many, BH at least as many again; on mixed null/signal data BH "
+            "recovers the signals while holding the false-discovery fraction near alpha; adjusted "
+            "p-values are monotone and in [0,1]; a single test reduces to the raw p-value. The "
+            "multiple-comparisons companion to the Mann-Whitney, Kruskal-Wallis, KS-test, and "
+            "permutation-test tools.",
+            '<div class="grid">'
+            + svg_card(out("benjamini_hochberg.svg"), "100 sorted p-values (yellow = true effect, gray = null). The sloped green BH line (k/m)*alpha climbs with rank, so BH rejects every point below it -- catching 15 real effects. The flat red Bonferroni cutoff alpha/m sits far lower and finds only 3. BH controls the fraction of false discoveries rather than forbidding any, trading a little error for much more power")
+            + f'<div class="card">{pre(benjamini_hochberg_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -622,6 +622,7 @@ ruins a long non-symplectic integration.
 | `src/mann_whitney.py` | Mann-Whitney U / Wilcoxon rank-sum test: nonparametric two-sample test with exact and normal p-values |
 | `src/kruskal_wallis.py` | Kruskal-Wallis H test: nonparametric one-way ANOVA with a from-scratch chi-squared p-value |
 | `src/kendall_tau.py` | Kendall's tau (a and b): rank correlation from concordant/discordant pairs, tie-corrected |
+| `src/benjamini_hochberg.py` | Multiple-testing corrections: Benjamini-Hochberg FDR, Bonferroni, and Holm |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1235,6 +1236,7 @@ ruins a long non-symplectic integration.
 | `examples/mann_whitney_demo.py` | Mann-Whitney holding significance where an outlier fools the t-test, with the exact U null |
 | `examples/kruskal_wallis_demo.py` | Three groups' pooled ranks and mean-rank spread, with a power sweep and the chi-squared null |
 | `examples/kendall_tau_demo.py` | Concordant/discordant pair links on a curved cloud, and tau beating Pearson under an outlier |
+| `examples/benjamini_hochberg_demo.py` | Sorted p-values against the BH step-up line vs the Bonferroni cutoff, with an FDR table |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14185,6 +14187,26 @@ Tau-b corrects for ties. Validated: +/-1 on perfect monotone data, ~0 for indepe
 association, monotone-transform invariant, tau-b reaches 1 with ties, C+D equals the untied pairs, and tau
 matches brute-force enumeration. The rank-correlation companion to the Spearman, Pearson, and Mann-Whitney
 tools.
+
+## Multiple-testing correction: controlling the false-discovery rate
+
+FDR and family-wise error corrections. `benjamini_hochberg.py`:
+
+```
+$ python examples/benjamini_hochberg_demo.py examples/output
+
+100 hypotheses: 15 true effects + 85 nulls, alpha=0.05.
+   method              rejected  true+  false+  FDR
+   Bonferroni                 3      3      0    0.000
+   Benjamini-Hochberg        16     15      1    0.062
+```
+
+Bonferroni/Holm control the chance of ANY false positive (conservative); Benjamini-Hochberg controls the
+expected FRACTION of false discoveries by rejecting the largest k with p_(k) <= (k/m)*alpha -- far more
+powerful when many effects are real. Validated: Bonferroni rejects exactly p<=alpha/m, Holm >= Bonferroni,
+BH >= Holm; on mixed data BH recovers the signals while holding FDR near alpha; adjusted p-values monotone
+and in [0,1]. The multiple-comparisons companion to the Mann-Whitney, Kruskal-Wallis, KS-test, and
+permutation-test tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

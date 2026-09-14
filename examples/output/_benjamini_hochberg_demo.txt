@@ -1,0 +1,18 @@
+Multiple-testing corrections -- FDR (Benjamini-Hochberg) vs FWER
+================================================================
+
+100 hypotheses: 15 true effects + 85 nulls, alpha=0.05.
+
+   method        rejected   true+   false+   FDR
+   ------------------------------------------------
+   uncorrected           18        15       3    0.167
+   Bonferroni             3         3       0    0.000
+   Holm                   3         3       0    0.000
+   Benjamini-Hochberg    16        15       1    0.062
+
+Uncorrected: ~5% of 85 nulls slip through as false positives.
+Bonferroni/Holm: control ANY false positive -> conservative, miss real effects.
+Benjamini-Hochberg: control the FRACTION of false discoveries -> recovers more signals.
+
+BH cutoff: reject the 16 smallest p-values (largest p rejected = 0.0044).
+Bonferroni cutoff: 0.00050 (alpha/m).
