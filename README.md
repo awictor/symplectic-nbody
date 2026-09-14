@@ -597,6 +597,7 @@ ruins a long non-symplectic integration.
 | `src/chirp_z.py` | Chirp Z-transform: z-transform on any spiral, zoom-FFT spectral analysis |
 | `src/cepstrum.py` | Cepstrum: log-spectrum FFT for pitch tracking and echo detection (quefrency peaks) |
 | `src/wiener_filter.py` | Wiener filtering: minimum-MSE denoising H=S/(S+N) and regularized deconvolution |
+| `src/spectrogram.py` | Short-time Fourier transform: windowed frames, magnitude spectrogram, ridge track |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1185,6 +1186,7 @@ ruins a long non-symplectic integration.
 | `examples/chirp_z_demo.py` | Coarse FFT vs zoom-FFT resolving two close tones |
 | `examples/cepstrum_demo.py` | Cepstral pitch peak and echo peak read off the quefrency axis |
 | `examples/wiener_filter_demo.py` | Noisy vs recovered vs clean signal + the per-frequency Wiener gain |
+| `examples/spectrogram_demo.py` | Time-frequency heatmap of a chirp + steady tone + late burst |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13570,6 +13572,24 @@ noise and 0 where signal vanishes, monotone in local SNR; denoising raises SNR ~
 clean signal passes unchanged; and regularized deconvolution recovers a strongly blurred signal far
 better than naive inverse filtering. Reuses the repo's Bluestein DFT. The signal-restoration companion
 to the FFT, cepstrum, and Savitzky-Golay tools.
+
+## Spectrogram: watching a spectrum change over time
+
+Time-frequency analysis by the short-time Fourier transform. `spectrogram.py`:
+
+```
+$ python examples/spectrogram_demo.py examples/output
+
+  chirp 10->70 Hz + steady 40 Hz + late 95 Hz burst, fs=256
+  STFT frame 128, hop 32, Hann -> 64 frames x 65 bins
+  bin resolution 2 Hz, time resolution 125 ms
+```
+
+The STFT windows overlapping frames and transforms each; stacking the magnitudes gives a time-frequency
+image. Validated: a steady tone gives a flat ridge, a chirp a rising one, a two-tone signal two ridges,
+Parseval holds per frame, the Hann window reduces leakage vs rectangular, and a silent signal gives a
+zero spectrogram. Reuses the repo's Bluestein DFT. The time-frequency companion to the FFT, chirp-Z,
+and cepstrum tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

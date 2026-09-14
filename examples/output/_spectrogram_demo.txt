@@ -1,0 +1,11 @@
+Spectrogram: short-time Fourier transform
+==================================================
+signal 2048 samples at 256 Hz: chirp 10->70 Hz + steady 40 Hz + late 95 Hz burst
+STFT: frame 128, hop 32, Hann window -> 64 frames x 65 bins
+bin resolution: 2.00 Hz, time resolution: 125.0 ms
+
+dominant-frequency ridge over time (first / mid / last frames):
+  start: 14.0 Hz, middle: 74.0 Hz, end: 128.0 Hz
+
+The uncertainty principle: a shorter frame sharpens timing but blurs frequency;
+a longer frame does the reverse. The Hann window suppresses spectral leakage.

@@ -639,6 +639,7 @@ def main():
     import chirp_z_demo
     import cepstrum_demo
     import wiener_filter_demo
+    import spectrogram_demo
 
     import plot_orbits
 
@@ -1247,6 +1248,7 @@ def main():
     chirp_z_txt = run("chirp_z_demo", chirp_z_demo.main, True)
     cepstrum_txt = run("cepstrum_demo", cepstrum_demo.main, True)
     wiener_filter_txt = run("wiener_filter_demo", wiener_filter_demo.main, True)
+    spectrogram_txt = run("spectrogram_demo", spectrogram_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11495,6 +11497,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("wiener_filter.svg"), "A noisy two-tone signal (red) cleaned by the Wiener filter: the recovered signal (green) tracks the true clean signal (yellow), because the frequency gain (bottom) spikes to ~1 at exactly the two signal bins and stays near 0 on the noise")
             + f'<div class="card">{pre(wiener_filter_txt)}</div>'
+            + '</div>'),
+        section(
+            "Spectrogram: watching a spectrum change over time",
+            "A plain Fourier transform says WHICH frequencies are present but not WHEN, smearing a rising "
+            "whistle and a steady hum into the same static spectrum. The short-time Fourier transform "
+            "chops the signal into overlapping frames, applies a smooth window to each, and transforms "
+            "them separately; stacking the magnitude spectra column by column gives a SPECTROGRAM -- a "
+            "time-frequency image where a chirp sweeps diagonally, a steady tone draws a horizontal "
+            "line, and a transient shows as a vertical streak. The central trade-off is the uncertainty "
+            "principle: a short window localizes events in time but blurs frequency, a long window does "
+            "the reverse; and the window shape (Hann/Hamming vs rectangular) trades main-lobe width for "
+            "far lower spectral leakage. Validated: a steady sinusoid gives a flat ridge at the right "
+            "bin, a linear chirp gives a monotonically rising ridge, a two-tone signal shows two "
+            "ridges, Parseval's relation holds per frame, the Hann window measurably reduces leakage "
+            "versus rectangular, a silent signal gives a zero spectrogram, and the frame/bin counts "
+            "match the framing. Reuses the repo's Bluestein DFT. The time-frequency companion to the "
+            "FFT, chirp-Z, and cepstrum tools.",
+            '<div class="grid">'
+            + svg_card(out("spectrogram.svg"), "The spectrogram of a synthetic signal: a diagonal ridge (a chirp sweeping upward), a horizontal line (a steady 40 Hz tone), and a bright block at upper-right (a 95 Hz burst that only appears in the last part of the signal)")
+            + f'<div class="card">{pre(spectrogram_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
