@@ -1,0 +1,25 @@
+Total least squares -- orthogonal regression for errors in both variables
+==========================================================================
+
+True line: y = 2.0 x + 1.0.  120 points, error in BOTH axes (sd 2.0, 2.0).
+
+   method   slope   intercept   |slope err|   minimizes
+   ------------------------------------------------------
+   OLS      1.639     0.801    0.361       vertical distance
+   TLS      2.056     0.957    0.056       perpendicular distance
+
+OLS attenuates the slope to 1.639 (regression dilution);
+TLS stays at 2.056, close to the true 2.0.
+
+Swap-invariance (fit x-on-y instead of y-on-x):
+   TLS slope, then 1/slope of swapped fit: 2.0560 vs 2.0560  (equal)
+   OLS slope, then 1/slope of swapped fit: 1.6394 vs 2.1797  (different!)
+
+OLS attenuation grows with x-error; TLS stays put:
+   x-error   OLS slope   TLS slope
+   ----------------------------------
+      0.0       2.029       2.055
+      0.5       2.013       2.062
+      1.0       1.929       2.056
+      2.0       1.626       1.999
+      3.0       1.273       1.886

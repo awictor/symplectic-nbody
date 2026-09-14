@@ -608,6 +608,7 @@ ruins a long non-symplectic integration.
 | `src/aaa_approx.py` | The AAA algorithm: near-optimal rational approximation, greedy support points, pole recovery |
 | `src/esprit_method.py` | ESPRIT: noise-robust subspace frequency estimation, super-resolving tones below the FFT bin |
 | `src/theil_sen.py` | Theil-Sen & Siegel robust regression: line fit by median of pairwise slopes, ~29-50% breakdown |
+| `src/total_least_squares.py` | Total least squares: orthogonal / errors-in-variables regression via the covariance eigenproblem |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1207,6 +1208,7 @@ ruins a long non-symplectic integration.
 | `examples/aaa_approx_demo.py` | AAA rational fit of a near-singular function beating an equal-order polynomial, with pole recovery |
 | `examples/esprit_method_demo.py` | ESPRIT resolving two tones 0.3 of an FFT bin apart, with the noise-robustness table vs Prony |
 | `examples/theil_sen_demo.py` | Theil-Sen line shrugging off 25% outliers next to OLS being dragged off, with a breakdown sweep |
+| `examples/total_least_squares_demo.py` | TLS holding the true slope vs OLS attenuating under errors in both axes, with an attenuation sweep |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13843,6 +13845,32 @@ exact recovery on a clean line, matches the analytic median of pairwise slopes, 
 true slope under 25% gross outliers (where OLS's intercept is dragged from 3 to 25), Siegel survives 40%,
 and the distribution-free slope confidence interval brackets the truth. The robust-regression companion to
 the RANSAC, ordinary-least-squares, and quantile tools.
+
+## Total least squares: orthogonal regression for errors in both variables
+
+The errors-in-variables line fit. `total_least_squares.py`:
+
+```
+$ python examples/total_least_squares_demo.py examples/output
+
+True line: y = 2.0 x + 1.0.  120 points, error in BOTH axes.
+   method   slope   intercept   minimizes
+   OLS      1.639     0.801     vertical distance
+   TLS      2.056     0.957     perpendicular distance
+
+OLS attenuation grows with x-error; TLS stays put:
+   x-error   OLS slope   TLS slope
+      2.0       1.626       1.999
+      3.0       1.273       1.886
+```
+
+Minimize perpendicular (not vertical) distances: center the data, and the best-fit direction is the top
+principal component while the line's normal is the covariance eigenvector for the smallest eigenvalue,
+which equals the mean squared orthogonal residual. Generalizes to hyperplanes and underlies Deming
+regression. Validated: exact recovery on a clean line, swap-invariance (where OLS is not), stays near the
+true slope when both axes are noisy (OLS attenuates), fitted normal orthogonal to the max-variance
+direction, and recovers a known 3-D plane. The errors-in-variables companion to the ordinary-least-squares,
+Theil-Sen, PCA-whitening, and SVD tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

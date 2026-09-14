@@ -650,6 +650,7 @@ def main():
     import aaa_approx_demo
     import esprit_method_demo
     import theil_sen_demo
+    import total_least_squares_demo
 
     import plot_orbits
 
@@ -1269,6 +1270,7 @@ def main():
     aaa_approx_txt = run("aaa_approx_demo", aaa_approx_demo.main, True)
     esprit_method_txt = run("esprit_method_demo", esprit_method_demo.main, True)
     theil_sen_txt = run("theil_sen_demo", theil_sen_demo.main, True)
+    total_least_squares_txt = run("total_least_squares_demo", total_least_squares_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11731,6 +11733,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("theil_sen.svg"), "60 points on y=2x+3 with 25% gross outliers (red dots, flung far above). The Theil-Sen line (yellow) sits exactly on the true line (green); ordinary least squares (red dashed) is dragged upward by the outliers, its intercept pulled from 3 to 25. The median of pairwise slopes simply ignores the bad points")
             + f'<div class="card">{pre(theil_sen_txt)}</div>'
+            + '</div>'),
+        section(
+            "Total least squares: orthogonal regression for errors in both variables",
+            "Ordinary least squares assumes x is exact and only y is noisy, so it minimizes VERTICAL "
+            "residuals -- but when both variables carry error, that biases the slope toward zero "
+            "(regression dilution), and swapping x and y gives a different line. Total least squares fits "
+            "the line minimizing PERPENDICULAR distances, a symmetric criterion: center the data, and the "
+            "best-fit direction is the top principal component while the line's normal is the eigenvector "
+            "of the covariance for the SMALLEST eigenvalue -- which equals the mean squared orthogonal "
+            "residual. It generalizes to fitting a hyperplane in any dimension and underlies Deming "
+            "regression in method-comparison studies. Validated: exact recovery on a clean line, the fit "
+            "is invariant when x and y are swapped (where OLS is not), it stays near the true slope 2.0 "
+            "(vs OLS attenuating to 1.6) when both axes are noisy, the fitted normal is orthogonal to the "
+            "max-variance direction, the smallest eigenvalue equals the mean squared perpendicular "
+            "residual, a vertical line is handled cleanly, and it recovers a known 3-D plane. The errors-"
+            "in-variables companion to the ordinary-least-squares, Theil-Sen, PCA-whitening, and SVD tools.",
+            '<div class="grid">'
+            + svg_card(out("total_least_squares.svg"), "120 points scattered around y=2x+1 with heavy error in BOTH axes. Total least squares (yellow) recovers the true line (green) by minimizing perpendicular distance, while ordinary least squares (red dashed) is flattened by regression dilution -- its slope attenuated toward zero because it only accounts for vertical error")
+            + f'<div class="card">{pre(total_least_squares_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
