@@ -546,6 +546,7 @@ ruins a long non-symplectic integration.
 | `src/resultant.py` | Resultant + discriminant via the Sylvester matrix (common/repeated roots, elimination) |
 | `src/pohlig_hellman.py` | Pohlig-Hellman discrete log on smooth-order groups (subgroups + CRT) |
 | `src/thiele.py` | Thiele rational interpolation by continued fractions (poles, no Runge blow-up) |
+| `src/clenshaw_curtis.py` | Clenshaw-Curtis quadrature: spectral integration at Chebyshev nodes |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1083,6 +1084,7 @@ ruins a long non-symplectic integration.
 | `examples/resultant_demo.py` | Common-root detection, discriminant classification, circle-line elimination |
 | `examples/pohlig_hellman_demo.py` | Cracking a smooth-order discrete log via subgroups + CRT vs a safe prime |
 | `examples/thiele_demo.py` | Thiele vs polynomial on the Runge function + pole reconstruction |
+| `examples/clenshaw_curtis_demo.py` | Spectral error cliff vs trapezoid + Chebyshev node clustering |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12402,6 +12404,27 @@ Because the Runge function is itself rational, Thiele reproduces it to machine p
 equispaced polynomial oscillates. Validated: passes through every node, recovers (x+1)/(x^2+1)
 off-node, reconstructs a genuine pole, and recovers polynomials exactly given enough nodes. The
 rational-interpolation companion to the barycentric-Lagrange, Pade, and spline tools.
+
+## Clenshaw-Curtis quadrature: spectral integration from Chebyshev nodes
+
+Integrate smooth functions to machine precision by sampling at Chebyshev points. `clenshaw_curtis.py`:
+
+```
+$ python examples/clenshaw_curtis_demo.py examples/output
+
+      n   Clenshaw-Curtis err     trapezoid err
+      4              3.10e-02          8.89e-03
+     16              8.02e-07          3.57e-04
+     32              1.56e-11          8.94e-05
+     64              0.00e+00          2.23e-05
+```
+
+Clenshaw-Curtis samples at cos(k pi/n) and integrates the Chebyshev interpolant; on smooth functions
+the error falls spectrally (faster than any power of 1/n) while the trapezoidal rule decays like
+O(1/n^2), and the nodes nest so doubling n reuses every sample. Validated: weights sum to the interval
+length, exact for polynomials up to degree n, matches e^x/arctan/sin integrals to machine precision,
+converges spectrally, and the nodes nest. The Chebyshev-node quadrature companion to the Gauss,
+Romberg, and tanh-sinh integrators.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

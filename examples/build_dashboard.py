@@ -588,6 +588,7 @@ def main():
     import resultant_demo
     import pohlig_hellman_demo
     import thiele_demo
+    import clenshaw_curtis_demo
 
     import plot_orbits
 
@@ -1145,6 +1146,7 @@ def main():
     resultant_txt = run("resultant_demo", resultant_demo.main, True)
     pohlig_hellman_txt = run("pohlig_hellman_demo", pohlig_hellman_demo.main, True)
     thiele_txt = run("thiele_demo", thiele_demo.main, True)
+    clenshaw_curtis_txt = run("clenshaw_curtis_demo", clenshaw_curtis_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10364,6 +10366,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("thiele.svg"), "The Runge function (green) with Thiele's rational interpolant (blue) lying exactly on it while the equispaced polynomial interpolant (orange) oscillates violently near the edges -- rational interpolation beats polynomial when the target has the right shape")
             + f'<div class="card">{pre(thiele_txt)}</div>'
+            + '</div>'),
+        section(
+            "Clenshaw-Curtis quadrature: spectral integration from Chebyshev nodes",
+            "Gaussian quadrature is optimal in degree, but its nodes need special computation and do "
+            "not reuse across orders. CLENSHAW-CURTIS (1960) trades a little optimality for enormous "
+            "convenience: it samples the integrand at the CHEBYSHEV EXTREME POINTS cos(k pi/n) -- "
+            "equispaced points projected onto a circle -- and integrates the interpolating polynomial. "
+            "On smooth functions it converges SPECTRALLY (faster than any power of 1/n), nearly "
+            "matching Gauss, and its nodes NEST (doubling n reuses every old sample), which makes it "
+            "the backbone of adaptive and sparse-grid integration. The weights come from integrating "
+            "the Chebyshev interpolant exactly -- a fixed cosine sum over the nodes, with the "
+            "endpoint-clustering that kills the Runge/endpoint error a uniform grid suffers. "
+            "Validated: the weights sum to the interval length, the rule is exact for polynomials up "
+            "to degree n, it matches known integrals (e^x, arctan, sin) to machine precision, its "
+            "error falls spectrally as n grows (far faster than the trapezoidal rule), and the nodes "
+            "for n and 2n nest. The Chebyshev-node quadrature companion to the Gauss, Romberg, and "
+            "tanh-sinh integrators.",
+            '<div class="grid">'
+            + svg_card(out("clenshaw_curtis.svg"), "Quadrature error vs node count on a smooth integrand: Clenshaw-Curtis (blue) falls off a spectral cliff to machine precision by n=32 while the trapezoidal rule (orange) crawls at O(1/n^2); below, the Chebyshev nodes clustering toward the endpoints")
+            + f'<div class="card">{pre(clenshaw_curtis_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

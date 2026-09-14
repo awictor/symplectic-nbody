@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420" font-family="monospace">
+<rect width="760" height="420" fill="#0d1117"/>
+<text x="20" y="26" fill="#e6edf3" font-size="15">Quadrature error vs node count: Clenshaw-Curtis (spectral) vs trapezoid (O(1/n^2))</text>
+<rect x="60" y="55" width="650" height="260" fill="none" stroke="#30363d"/>
+<line x1="60" y1="315.0" x2="710" y2="315.0" stroke="#161b22"/>
+<text x="54" y="318.0" fill="#8b949e" font-size="9" text-anchor="end">1e-16</text>
+<line x1="60" y1="279.1" x2="710" y2="279.1" stroke="#161b22"/>
+<text x="54" y="282.1" fill="#8b949e" font-size="9" text-anchor="end">1e-14</text>
+<line x1="60" y1="243.2" x2="710" y2="243.2" stroke="#161b22"/>
+<text x="54" y="246.2" fill="#8b949e" font-size="9" text-anchor="end">1e-12</text>
+<line x1="60" y1="207.4" x2="710" y2="207.4" stroke="#161b22"/>
+<text x="54" y="210.4" fill="#8b949e" font-size="9" text-anchor="end">1e-10</text>
+<line x1="60" y1="171.5" x2="710" y2="171.5" stroke="#161b22"/>
+<text x="54" y="174.5" fill="#8b949e" font-size="9" text-anchor="end">1e-8</text>
+<line x1="60" y1="135.6" x2="710" y2="135.6" stroke="#161b22"/>
+<text x="54" y="138.6" fill="#8b949e" font-size="9" text-anchor="end">1e-6</text>
+<line x1="60" y1="99.7" x2="710" y2="99.7" stroke="#161b22"/>
+<text x="54" y="102.7" fill="#8b949e" font-size="9" text-anchor="end">1e-4</text>
+<line x1="60" y1="63.8" x2="710" y2="63.8" stroke="#161b22"/>
+<text x="54" y="66.8" fill="#8b949e" font-size="9" text-anchor="end">1e-2</text>
+<polyline points="60.0,55.0 222.5,82.2 385.0,137.3 547.5,221.9 710.0,315.0" fill="none" stroke="#4dabf7" stroke-width="2"/>
+<circle cx="60.0" cy="55.0" r="3" fill="#4dabf7"/>
+<circle cx="222.5" cy="82.2" r="3" fill="#4dabf7"/>
+<circle cx="385.0" cy="137.3" r="3" fill="#4dabf7"/>
+<circle cx="547.5" cy="221.9" r="3" fill="#4dabf7"/>
+<circle cx="710.0" cy="315.0" r="3" fill="#4dabf7"/>
+<polyline points="60.0,64.7 222.5,79.0 385.0,89.8 547.5,100.6 710.0,111.4" fill="none" stroke="#ff922b" stroke-width="2"/>
+<circle cx="60.0" cy="64.7" r="3" fill="#ff922b"/>
+<circle cx="222.5" cy="79.0" r="3" fill="#ff922b"/>
+<circle cx="385.0" cy="89.8" r="3" fill="#ff922b"/>
+<circle cx="547.5" cy="100.6" r="3" fill="#ff922b"/>
+<circle cx="710.0" cy="111.4" r="3" fill="#ff922b"/>
+<text x="60.0" y="329" fill="#8b949e" font-size="9" text-anchor="middle">n=4</text>
+<text x="222.5" y="329" fill="#8b949e" font-size="9" text-anchor="middle">n=8</text>
+<text x="385.0" y="329" fill="#8b949e" font-size="9" text-anchor="middle">n=16</text>
+<text x="547.5" y="329" fill="#8b949e" font-size="9" text-anchor="middle">n=32</text>
+<text x="710.0" y="329" fill="#8b949e" font-size="9" text-anchor="middle">n=64</text>
+<rect x="550" y="61" width="12" height="3" fill="#4dabf7"/>
+<text x="566" y="65" fill="#e6edf3" font-size="10">Clenshaw-Curtis</text>
+<rect x="550" y="77" width="12" height="3" fill="#ff922b"/>
+<text x="566" y="81" fill="#e6edf3" font-size="10">trapezoid</text>
+<text x="60" y="360" fill="#8b949e" font-size="10">Clenshaw-Curtis nodes cluster toward the endpoints:</text>
+<circle cx="710.0" cy="370.0" r="3" fill="#06d6a0"/>
+<circle cx="703.8" cy="370.0" r="3" fill="#06d6a0"/>
+<circle cx="685.3" cy="370.0" r="3" fill="#06d6a0"/>
+<circle cx="655.2" cy="370.0" r="3" fill="#06d6a0"/>
+<circle cx="614.8" cy="370.0" r="3" fill="#06d6a0"/>
+<circle cx="565.6" cy="370.0" r="3" fill="#06d6a0"/>
+<circle cx="509.4" cy="370.0" r="3" fill="#06d6a0"/>
+<circle cx="448.4" cy="370.0" r="3" fill="#06d6a0"/>
+<circle cx="385.0" cy="370.0" r="3" fill="#06d6a0"/>
+<circle cx="321.6" cy="370.0" r="3" fill="#06d6a0"/>
+<circle cx="260.6" cy="370.0" r="3" fill="#06d6a0"/>
+<circle cx="204.4" cy="370.0" r="3" fill="#06d6a0"/>
+<circle cx="155.2" cy="370.0" r="3" fill="#06d6a0"/>
+<circle cx="114.8" cy="370.0" r="3" fill="#06d6a0"/>
+<circle cx="84.7" cy="370.0" r="3" fill="#06d6a0"/>
+<circle cx="66.2" cy="370.0" r="3" fill="#06d6a0"/>
+<circle cx="60.0" cy="370.0" r="3" fill="#06d6a0"/>
+</svg>

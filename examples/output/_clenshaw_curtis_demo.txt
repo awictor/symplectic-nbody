@@ -1,0 +1,18 @@
+Clenshaw-Curtis quadrature: spectral accuracy from Chebyshev-clustered nodes
+
+  integrand: e^-x / (2 + cos 3x) on [0.0, 2.0]
+  reference integral (n=512): 0.47679845656238
+
+        n   Clenshaw-Curtis err     trapezoid err
+        4              3.10e-02          8.89e-03
+        8              9.50e-04          1.43e-03
+       16              8.02e-07          3.57e-04
+       32              1.56e-11          8.94e-05
+       64              0.00e+00          2.23e-05
+
+  Clenshaw-Curtis error falls off a cliff (spectral) while trapezoid decays like
+  O(1/n^2). At n=32 Clenshaw-Curtis is already near machine precision.
+  Its nodes cluster toward the endpoints (Chebyshev extrema), killing edge error,
+  and they nest -- doubling n reuses every previous sample.
+
+  wrote examples/output\clenshaw_curtis.svg
