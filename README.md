@@ -598,6 +598,7 @@ ruins a long non-symplectic integration.
 | `src/cepstrum.py` | Cepstrum: log-spectrum FFT for pitch tracking and echo detection (quefrency peaks) |
 | `src/wiener_filter.py` | Wiener filtering: minimum-MSE denoising H=S/(S+N) and regularized deconvolution |
 | `src/spectrogram.py` | Short-time Fourier transform: windowed frames, magnitude spectrogram, ridge track |
+| `src/welch_psd.py` | Welch power spectral density: averaged overlapping periodograms, low variance |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1187,6 +1188,7 @@ ruins a long non-symplectic integration.
 | `examples/cepstrum_demo.py` | Cepstral pitch peak and echo peak read off the quefrency axis |
 | `examples/wiener_filter_demo.py` | Noisy vs recovered vs clean signal + the per-frequency Wiener gain |
 | `examples/spectrogram_demo.py` | Time-frequency heatmap of a chirp + steady tone + late burst |
+| `examples/welch_psd_demo.py` | Jagged periodogram vs smooth Welch PSD on two tones in noise |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13590,6 +13592,24 @@ image. Validated: a steady tone gives a flat ridge, a chirp a rising one, a two-
 Parseval holds per frame, the Hann window reduces leakage vs rectangular, and a silent signal gives a
 zero spectrogram. Reuses the repo's Bluestein DFT. The time-frequency companion to the FFT, chirp-Z,
 and cepstrum tools.
+
+## Welch's method: a low-variance power spectral density
+
+Averaged periodograms for a smooth spectrum estimate. `welch_psd.py`:
+
+```
+$ python examples/welch_psd_demo.py examples/output
+
+  two tones (25, 60 Hz) in white noise, fs=200, N=4096
+  periodogram CV 5.88 (hairy) -> Welch CV 1.45 (~16x variance reduction)
+  Welch peaks at [25.0, 60.2] Hz -- both tones cleanly resolved
+```
+
+Split into overlapping windowed segments, periodogram each, average -- variance falls ~K for K
+segments. Validated: a tone gives a sharp peak, Welch has far lower coefficient of variation than the
+raw periodogram, more segments reduce it further, white noise is roughly flat, the PSD integrates to
+the signal power, and two buried tones are resolved. Reuses the repo's Bluestein DFT. The
+spectral-estimation companion to the spectrogram, FFT, and Wiener-filter tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

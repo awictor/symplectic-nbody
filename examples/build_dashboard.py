@@ -640,6 +640,7 @@ def main():
     import cepstrum_demo
     import wiener_filter_demo
     import spectrogram_demo
+    import welch_psd_demo
 
     import plot_orbits
 
@@ -1249,6 +1250,7 @@ def main():
     cepstrum_txt = run("cepstrum_demo", cepstrum_demo.main, True)
     wiener_filter_txt = run("wiener_filter_demo", wiener_filter_demo.main, True)
     spectrogram_txt = run("spectrogram_demo", spectrogram_demo.main, True)
+    welch_psd_txt = run("welch_psd_demo", welch_psd_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11517,6 +11519,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("spectrogram.svg"), "The spectrogram of a synthetic signal: a diagonal ridge (a chirp sweeping upward), a horizontal line (a steady 40 Hz tone), and a bright block at upper-right (a 95 Hz burst that only appears in the last part of the signal)")
             + f'<div class="card">{pre(spectrogram_txt)}</div>'
+            + '</div>'),
+        section(
+            "Welch's method: a low-variance power spectral density",
+            "The raw periodogram |DFT(x)|^2 is an unbiased PSD estimate but a terrible one -- its "
+            "variance does NOT shrink as the signal lengthens, so it stays jagged no matter how much "
+            "data you collect. Welch's method trades a little frequency resolution for a lot of "
+            "variance reduction: split the signal into overlapping segments, window each, compute its "
+            "periodogram, and AVERAGE them. Averaging K roughly-independent segments cuts the variance "
+            "by about K, turning a hairy periodogram into a smooth, readable spectrum -- the standard "
+            "PSD estimator everywhere. Segment length sets the frequency resolution, the overlap "
+            "(commonly 50%) recovers data lost to windowing, and the window controls leakage with a "
+            "compensating normalization so the PSD still integrates to the true power. Validated: a "
+            "pure tone gives a sharp PSD peak at its frequency; Welch's estimate has far lower "
+            "coefficient of variation than the raw periodogram on white noise; more segments reduce it "
+            "further; a white-noise PSD is roughly flat; the PSD integrates to the signal power "
+            "(Parseval); two buried tones are resolved; and the PSD is non-negative. Reuses the repo's "
+            "Bluestein DFT. The spectral-estimation companion to the spectrogram, FFT, and Wiener-filter "
+            "tools.",
+            '<div class="grid">'
+            + svg_card(out("welch_psd.svg"), "Two tones (25 and 60 Hz) buried in white noise: the raw periodogram (top) is a hairy mess that never smooths out, while Welch's averaged estimate (bottom) is clean and the two tones stand clearly above the noise floor -- a ~16x variance reduction")
+            + f'<div class="card">{pre(welch_psd_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

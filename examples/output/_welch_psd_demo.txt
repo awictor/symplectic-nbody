@@ -1,0 +1,12 @@
+Welch's method: low-variance power spectral density
+======================================================
+signal: 25 Hz + 60 Hz tones in white noise, fs=200, N=4096
+
+raw periodogram: 1 segment, 2049 bins, coefficient of variation 5.881
+Welch: 31 overlapping 256-sample Hann segments averaged, CV 1.453
+  variance reduced ~16x by averaging 31 segments
+
+Welch PSD peaks at [25.0, 60.2] Hz (the two buried tones, cleanly resolved)
+
+The raw periodogram's variance never shrinks with more data -- it stays hairy.
+Welch trades a little frequency resolution for a dramatically smoother estimate.
