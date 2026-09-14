@@ -558,6 +558,7 @@ ruins a long non-symplectic integration.
 | `src/pca_whitening.py` | PCA + PCA/ZCA whitening: covariance eigendecomp, explained variance, identity-covariance transform |
 | `src/bch.py` | Binary BCH codes over GF(2^m): generator construction, syndrome/Berlekamp-Massey/Chien decoding |
 | `src/b_spline.py` | B-spline curves via Cox-de Boor: clamped/uniform knots, de Boor evaluation, local control |
+| `src/catmull_rom.py` | Interpolating Catmull-Rom splines: uniform/centripetal/chordal, provably no overshoot |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1107,6 +1108,7 @@ ruins a long non-symplectic integration.
 | `examples/pca_whitening_demo.py` | Anisotropic cloud with principal axes, PCA-whitened and ZCA-whitened side by side |
 | `examples/bch_demo.py` | BCH(15,7) codeword corrupted by 2 bit flips and decoded back, shown as a bit strip |
 | `examples/b_spline_demo.py` | Cubic B-spline over a control polygon + its Cox-de Boor basis functions |
+| `examples/catmull_rom_demo.py` | Uniform vs centripetal vs chordal through the same points, showing overshoot |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12703,6 +12705,28 @@ control hull, and a clamped knot vector makes it interpolate its endpoints -- wi
 is exactly a Bezier curve. Validated: partition of unity and non-negativity everywhere, local support
 on p+1 spans, de Boor == direct basis summation, endpoint interpolation, and exact reduction to the
 repo's Bezier evaluator. The piecewise-curve companion to the Bezier and low-discrepancy tools.
+
+## Catmull-Rom splines: interpolating curves and the centripetal fix
+
+Smooth curves that pass through every control point. `catmull_rom.py`:
+
+```
+$ python examples/catmull_rom_demo.py examples/output
+
+  knot spacing t_{i+1} - t_i = |P_{i+1} - P_i|^alpha  (0 uniform, 0.5 centripetal, 1 chordal)
+  Overshoot on a tight corner segment (x should stay in [10, 11]):
+           kind    x-min    x-max  overshoot
+        uniform   10.000   11.064     0.0640    (bulges past the corner, can loop)
+    centripetal   10.000   11.000     0.0000    (provably no overshoot)
+```
+
+On each segment the tangents come from the neighbouring points, giving a cubic Hermite piece; adjacent
+pieces share position and tangent (C^1) with local control. The knot spacing sets behaviour: uniform
+overshoots and forms cusps on uneven spacing, while centripetal (alpha=0.5, Yuksel-Schaefer-Keyser) is
+provably free of cusps and self-intersections. Validated: all three parameterizations interpolate every
+point, C^1 continuity at joins, uniform reduces to the classic (P_{i+1}-P_{i-1})/2 tangent, collinear
+points stay straight, and centripetal avoids the overshoot the uniform form shows on a sharp corner.
+The interpolating-curve companion to the B-spline and Bezier tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

@@ -600,6 +600,7 @@ def main():
     import pca_whitening_demo
     import bch_demo
     import b_spline_demo
+    import catmull_rom_demo
 
     import plot_orbits
 
@@ -1169,6 +1170,7 @@ def main():
     pca_whitening_txt = run("pca_whitening_demo", pca_whitening_demo.main, True)
     bch_txt = run("bch_demo", bch_demo.main, True)
     b_spline_txt = run("b_spline_demo", b_spline_demo.main, True)
+    catmull_rom_txt = run("catmull_rom_demo", catmull_rom_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10631,6 +10633,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("b_spline.svg"), "Left: a cubic B-spline (blue) over its control polygon (yellow); the clamped ends (green rings) are interpolated while interior points only bend the nearby curve. Right: the Cox-de Boor basis functions, colored by control index -- at most four overlap anywhere and they sum to one at every parameter")
             + f'<div class="card">{pre(b_spline_txt)}</div>'
+            + '</div>'),
+        section(
+            "Catmull-Rom splines: interpolating curves and the centripetal fix",
+            "Where a B-spline approximates its control points, a Catmull-Rom spline INTERPOLATES them "
+            "-- the curve threads through every point in order, which makes it the default for keyframe "
+            "animation, camera paths, and game geometry. On each segment the tangents are estimated "
+            "from the neighbouring points, giving a cubic Hermite piece, and adjacent pieces share "
+            "position and tangent, so the curve is C^1 with purely local control. The subtlety is "
+            "PARAMETERIZATION: the knot spacing t_{i+1} = t_i + |P_{i+1} - P_i|^alpha. Uniform spacing "
+            "(alpha=0) is simplest but overshoots and forms cusps or self-intersections when points "
+            "are unevenly spaced; the celebrated centripetal choice (alpha=0.5, Yuksel-Schaefer-Keyser) "
+            "is provably free of cusps and self-crossings and never overshoots -- the modern default. "
+            "Validated: all three parameterizations interpolate every control point, segments join with "
+            "matching position and tangent (C^1), the uniform form reduces to the classic "
+            "(P_{i+1}-P_{i-1})/2 tangent, collinear points stay straight, reversing the points reverses "
+            "the curve, and centripetal provably avoids the overshoot the uniform form exhibits on a "
+            "sharp corner. The interpolating-curve companion to the B-spline and Bezier tools.",
+            '<div class="grid">'
+            + svg_card(out("catmull_rom.svg"), "Three Catmull-Rom curves through the same yellow points. Near the tight corner the uniform curve (red) bulges past the control polygon and can loop; the centripetal curve (green) stays inside -- provably free of cusps and self-intersections")
+            + f'<div class="card">{pre(catmull_rom_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
