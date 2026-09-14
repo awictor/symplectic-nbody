@@ -1,0 +1,23 @@
+AKS: deterministic, unconditional, polynomial-time primality
+============================================================
+core identity: n is prime  <=>  (x + a)^n == x^n + a  in Z[x]  (gcd(a,n)=1)
+AKS checks it modulo (x^r - 1, n) for a small r and a bounded set of a.
+
+certificates (r = order parameter, a_bound = # polynomial checks):
+     n     prime?     r  a_bound
+    31      PRIME    29       25
+    33  composite    33        0
+    97      PRIME    59       47
+   100  composite  None     None
+   101      PRIME    53       47
+   561  composite    89        0
+  1009      PRIME   107      100
+
+the polynomial identity, made concrete for small n and r:
+  (x+1)^7 == x^7+1 mod (x^5-1,7)?  True   (n is prime)
+  (x+1)^9 == x^9+1 mod (x^5-1,9)?  False   (n is composite)
+  (x+1)^11 == x^11+1 mod (x^7-1,11)?  True   (n is prime)
+  (x+1)^15 == x^15+1 mod (x^7-1,15)?  False   (n is composite)
+
+Every prime satisfies the congruence for all a; every composite fails it for
+some a. AKS proved this can be checked in polynomial time -- primality is in P.

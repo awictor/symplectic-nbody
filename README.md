@@ -586,6 +586,7 @@ ruins a long non-symplectic integration.
 | `src/cipolla.py` | Cipolla's modular square root via GF(p^2) field exponentiation, both roots |
 | `src/baillie_psw.py` | Baillie-PSW primality: strong Miller-Rabin base 2 + strong Lucas, Jacobi symbol |
 | `src/lenstra_ecm.py` | Lenstra elliptic-curve factorization: random curves mod N, factor from failed inversion |
+| `src/aks_primality.py` | AKS deterministic polynomial-time primality: (x+a)^n == x^n+a mod (x^r-1, n) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1163,6 +1164,7 @@ ruins a long non-symplectic integration.
 | `examples/cipolla_demo.py` | The map x->x^2 mod p with the two square roots highlighted |
 | `examples/baillie_psw_demo.py` | How the Lucas half catches base-2 pseudoprimes Miller-Rabin misses |
 | `examples/lenstra_ecm_demo.py` | Factorizations of several numbers + an elliptic curve over a prime field |
+| `examples/aks_primality_demo.py` | The AKS polynomial identity coefficient grids, prime vs composite |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13347,6 +13349,25 @@ factorization defeats it -- unlike Pollard p-1. Validated: every factor divides 
 Baillie-PSW, the factors multiply back to N, it handles semiprimes, prime powers, and multi-factor
 numbers, it cracks a semiprime with non-smooth p-1, and the largest prime factor of 600851475143 is
 6857. The factorization companion to the Pollard-rho, Dixon, and Baillie-PSW tools.
+
+## AKS: primality is in P, by a polynomial congruence
+
+The first deterministic polynomial-time primality test. `aks_primality.py`:
+
+```
+$ python examples/aks_primality_demo.py examples/output
+
+  (x+1)^11 == x^11+1 mod (x^7-1,11)?  True   (prime)
+  (x+1)^15 == x^15+1 mod (x^7-1,15)?  False  (composite)
+  pi(500) = 95 (matches known); Carmichael 561 -> composite
+```
+
+AKS rests on the polynomial identity n prime <=> (x+a)^n == x^n+a in Z[x]; it checks this modulo
+(x^r-1, n) for a small r and bounded range of a, after ruling out perfect powers. Validated against
+deterministic trial division and Baillie-PSW for every n in a range (no errors), including Carmichael
+numbers and strong pseudoprimes; the polynomial identity holds for primes and fails for composites; and
+pi(500)=95. The deterministic-primality companion to the Baillie-PSW, Lucas-Lehmer, and Lenstra-ECM
+tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

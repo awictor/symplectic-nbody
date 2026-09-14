@@ -628,6 +628,7 @@ def main():
     import cipolla_demo
     import baillie_psw_demo
     import lenstra_ecm_demo
+    import aks_primality_demo
 
     import plot_orbits
 
@@ -1225,6 +1226,7 @@ def main():
     cipolla_txt = run("cipolla_demo", cipolla_demo.main, True)
     baillie_psw_txt = run("baillie_psw_demo", baillie_psw_demo.main, True)
     lenstra_ecm_txt = run("lenstra_ecm_demo", lenstra_ecm_demo.main, True)
+    aks_primality_txt = run("aks_primality_demo", aks_primality_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11251,6 +11253,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("lenstra_ecm.svg"), "The points of an elliptic curve over a small prime field form a finite group; ECM runs this same group arithmetic modulo a composite N, and a failed slope inversion -- a gcd that is neither 1 nor N -- reveals a prime factor")
             + f'<div class="card">{pre(lenstra_ecm_txt)}</div>'
+            + '</div>'),
+        section(
+            "AKS: primality is in P, by a polynomial congruence",
+            "For most of history it was an open question whether primality testing was in P at all -- "
+            "fast tests were probabilistic, deterministic ones slow. In 2002 Agrawal, Kayal, and Saxena "
+            "settled it: the AKS algorithm is deterministic (never wrong), unconditional (no unproven "
+            "hypotheses), and polynomial-time. It is a landmark of theoretical computer science, even "
+            "though ECPP and Baillie-PSW are faster in practice. AKS rests on a polynomial "
+            "generalization of Fermat's little theorem: n > 1 is prime if and only if "
+            "(x + a)^n == x^n + a in Z[x] for a coprime to n. Checking that identity fully is "
+            "expensive, so AKS checks it modulo a small polynomial x^r - 1 and modulo n, for a cleverly "
+            "chosen r and a bounded range of a -- after ruling out perfect powers and small shared "
+            "factors. Validated against deterministic trial division and the repo's Baillie-PSW test "
+            "for every integer in a range (no errors), including the Carmichael numbers and strong "
+            "pseudoprimes that fool probabilistic tests; the polynomial identity is confirmed to hold "
+            "for primes and FAIL for composites; perfect powers are detected; and pi(500) comes out to "
+            "the known 95. The deterministic-primality companion to the Baillie-PSW, Lucas-Lehmer, and "
+            "Lenstra-ECM tools.",
+            '<div class="grid">'
+            + svg_card(out("aks_primality.svg"), "The AKS polynomial identity mod (x^7-1, n): for the prime n=11 the coefficient vectors of (x+1)^n and x^n+1 are identical (consistent with prime), while for the composite n=15 they differ -- the theorem AKS turned into a polynomial-time algorithm")
+            + f'<div class="card">{pre(aks_primality_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
