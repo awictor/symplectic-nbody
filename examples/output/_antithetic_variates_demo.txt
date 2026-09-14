@@ -1,0 +1,20 @@
+Antithetic variates: pair each draw with its mirror
+======================================================
+estimate E[e^U], U ~ Uniform(0,1);  true = e - 1 = 1.718282
+each pair uses (U, 1-U): negatively correlated, so errors cancel
+
+antithetic estimate:        1.718675
+pair covariance Cov(f(U), f(1-U)): -0.2356  (negative -> helps)
+variance reduction factor:  0.03217
+effective sample multiplier:    31x
+
+reduction depends on the integrand's shape (monotone -> big win, symmetric -> none):
+         integrand   reduction    pair cov
+    e^U (monotone)     0.03284    -0.23270
+     3U+1 (linear)     0.00000    -0.74523
+sqrt(U) (monotone)     0.06985    -0.05149
+(U-0.5)^2 (symmetric)     2.00005     0.00561
+sin(2*pi*U) (periodic)     0.00000    -0.49509
+
+Monotone integrands have strongly negative pair covariance and shrink most;
+symmetric ones have f(U)=f(1-U), zero benefit -- know your integrand.

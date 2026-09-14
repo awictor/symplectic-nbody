@@ -615,6 +615,7 @@ def main():
     import slice_sampling_demo
     import importance_sampling_demo
     import control_variates_demo
+    import antithetic_variates_demo
 
     import plot_orbits
 
@@ -1199,6 +1200,7 @@ def main():
     slice_sampling_txt = run("slice_sampling_demo", slice_sampling_demo.main, True)
     importance_sampling_txt = run("importance_sampling_demo", importance_sampling_demo.main, True)
     control_variates_txt = run("control_variates_demo", control_variates_demo.main, True)
+    antithetic_variates_txt = run("antithetic_variates_demo", antithetic_variates_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10962,6 +10964,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("control_variates.svg"), "The estimator's spread over 400 runs: plain Monte Carlo (red) is wide, the control-variate estimator (green) is tightly concentrated on the true value -- same samples, a fraction of the variance, because the correlated control absorbs most of the noise")
             + f'<div class="card">{pre(control_variates_txt)}</div>'
+            + '</div>'),
+        section(
+            "Antithetic variates: pairing each sample with its mirror",
+            "Monte Carlo relies on independent samples, but antithetic variates breaks that "
+            "independence on purpose, helpfully. For each uniform draw U it also evaluates the mirror "
+            "draw 1 - U (for a normal draw Z, the reflection -Z) and averages the pair. Both are "
+            "uniform, so the pair average is still unbiased -- but U and 1 - U are NEGATIVELY "
+            "correlated, and when the integrand is MONOTONE that negative correlation carries through: "
+            "when f(U) runs high, f(1 - U) runs low, and the errors cancel in the average. The pair "
+            "variance is (Var(f) + Cov(f(U), f(1-U)))/2, so any negative covariance is pure profit on "
+            "top of the automatic factor of two from two evaluations. The catch is symmetry: if f is "
+            "symmetric about the midpoint, f(U) and f(1-U) are perfectly correlated and there is no "
+            "benefit at all. Validated: the estimate is unbiased (recovers e - 1 and e^{1/2}), a linear "
+            "integrand gives near-perfect cancellation (variance ~ 0), a strongly monotone integrand "
+            "gets a large reduction with negative pair covariance, a symmetric integrand shows no "
+            "reduction (correctly), an odd function of Z cancels exactly, and it works in several "
+            "dimensions. The variance-reduction companion to the control-variate, importance-sampling, "
+            "and Sobol tools.",
+            '<div class="grid">'
+            + svg_card(out("antithetic_variates.svg"), "Left: antithetic pairs on f(u)=e^u -- each green sample is linked to its low-valued red mirror, so their average hugs the mean. Right: over 400 runs the antithetic estimator (green) is far tighter around the true value than plain Monte Carlo (red)")
+            + f'<div class="card">{pre(antithetic_variates_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

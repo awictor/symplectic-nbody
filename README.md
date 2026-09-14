@@ -573,6 +573,7 @@ ruins a long non-symplectic integration.
 | `src/slice_sampling.py` | Slice sampling MCMC: stepping-out + shrinkage, self-tuning step size, 1-D & multivariate |
 | `src/importance_sampling.py` | Importance sampling: rare-event tail estimation, self-normalized IS, effective sample size |
 | `src/control_variates.py` | Control variates: optimal coefficient, 1-rho^2 variance reduction, multi-CV least squares |
+| `src/antithetic_variates.py` | Antithetic variates: mirror-paired sampling, monotone variance reduction, Gaussian reflection |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1137,6 +1138,7 @@ ruins a long non-symplectic integration.
 | `examples/slice_sampling_demo.py` | Bimodal density with the sampled histogram overlaid on the true curve |
 | `examples/importance_sampling_demo.py` | Rare-tail estimation table + the proposal shift into the tail |
 | `examples/control_variates_demo.py` | Reduction-vs-correlation table + tight vs wide estimator spread |
+| `examples/antithetic_variates_demo.py` | Mirror pairs on a curve + reduction-by-integrand-shape table |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13058,6 +13060,29 @@ matches 1 - rho^2 across several controls, c* equals Cov/Var and minimizes the c
 uncorrelated control gives no reduction while a correlated one gives a large one, and multiple control
 variates reduce variance at least as much as the best single one. The variance-reduction companion to
 the importance-sampling, antithetic, and Sobol tools.
+
+## Antithetic variates: pairing each sample with its mirror
+
+Variance reduction from negatively correlated mirror draws. `antithetic_variates.py`:
+
+```
+$ python examples/antithetic_variates_demo.py examples/output
+
+  estimate E[e^U], true = e - 1
+  pair covariance Cov(f(U), f(1-U)): -0.2356  (negative -> helps)
+  reduction 0.032 (31x)
+         integrand   reduction    pair cov
+    e^U (monotone)     0.033      -0.233
+     3U+1 (linear)     0.000      -0.745   (perfect cancellation)
+(U-0.5)^2 (symmetric)  2.000      +0.006   (no benefit)
+```
+
+Each pair averages f(U) and f(1-U); both are uniform (unbiased) but negatively correlated, so for a
+monotone integrand the errors cancel. Validated: the estimate is unbiased (recovers e-1 and e^{1/2}), a
+linear integrand cancels to ~0 variance, a monotone integrand gets a large reduction with negative pair
+covariance, a symmetric integrand shows no benefit, an odd function of Z cancels exactly, and it works
+in several dimensions. The variance-reduction companion to the control-variate, importance-sampling,
+and Sobol tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
