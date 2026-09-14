@@ -1,0 +1,26 @@
+Newton-Cotes closed quadrature rules
+============================================================
+rule         points  deg    error term  order
+trapezoid         2    1   -1/12 f^(2)    h^2
+simpson           3    3   -1/90 f^(4)    h^4
+simpson38         4    3   -3/80 f^(4)    h^4
+boole             5    5  -8/945 f^(6)    h^6
+weddle            7    6  -1/140 f^(6)    h^6
+
+Exactness on int_0^1 x^n dx = 1/(n+1):
+  n   trapezoid     simpson       boole       exact
+  0   1.0000000   1.0000000   1.0000000   1.0000000
+  1   0.5000000   0.5000000   0.5000000   0.5000000
+  2   0.5000000   0.3333333   0.3333333   0.3333333
+  3   0.5000000   0.2500000   0.2500000   0.2500000
+  4   0.5000000   0.2083333   0.2000000   0.2000000
+  5   0.5000000   0.1875000   0.1666667   0.1666667
+(zeros of error appear once n <= degree of the rule)
+
+Composite error, int_0^1 e^x dx = e-1 = 1.7182818285:
+  panels      trapezoid        simpson          boole
+       2       3.56e-02       3.70e-05       1.38e-08
+       8       2.24e-03       1.46e-07       3.39e-12
+      32       1.40e-04       5.69e-10       1.11e-15
+     128       8.74e-06       2.22e-12       6.66e-16
+Halving h: trapezoid err/4, Simpson err/16, Boole err/64.

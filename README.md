@@ -552,6 +552,7 @@ ruins a long non-symplectic integration.
 | `src/gram_schmidt.py` | Classical vs modified Gram-Schmidt orthogonalization + orthogonal polynomials |
 | `src/icp.py` | Iterative Closest Point registration (nearest-neighbour + Kabsch, unknown correspondence) |
 | `src/cross_correlation.py` | Cross/auto-correlation + matched filter (delay estimation, detection in noise) |
+| `src/newton_cotes.py` | Closed Newton-Cotes quadrature (trapezoid..Weddle): weights, degree of exactness, composite order |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1095,6 +1096,7 @@ ruins a long non-symplectic integration.
 | `examples/gram_schmidt_demo.py` | Classical collapse vs modified stability on Hilbert basis + Legendre |
 | `examples/icp_demo.py` | Registering a shuffled rotated/translated L-shape, RMSD 0.35 -> 1e-5 |
 | `examples/cross_correlation_demo.py` | Matched filter finding a chirp in noise + echo delay estimation |
+| `examples/newton_cotes_demo.py` | Degree-of-exactness table + composite convergence order on log-log axes |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12541,6 +12543,33 @@ computed by the repo's FFT in O(n log n). Validated: autocorrelation peaks at la
 energy, delays and periods are recovered exactly, FFT and direct methods agree, and the matched filter
 finds a pulse where a raw threshold fails. The detection-and-alignment companion to the FFT, Goertzel,
 and convolution tools.
+
+## Newton-Cotes: the equispaced quadrature family and degree of exactness
+
+Sample the integrand at equally spaced points and integrate the interpolating polynomial: that is
+Newton-Cotes. `newton_cotes.py`:
+
+```
+$ python examples/newton_cotes_demo.py examples/output
+
+  rule         points  deg    error term  order
+  trapezoid         2    1   -1/12 f^(2)    h^2
+  simpson           3    3   -1/90 f^(4)    h^4
+  boole             5    5  -8/945 f^(6)    h^6
+
+  Composite error, int_0^1 e^x dx, 32 panels:
+  trapezoid 1.4e-04   simpson 5.7e-10   boole 1.1e-15
+```
+
+A rule on n+1 equispaced points integrates every polynomial up to degree n exactly, and the
+even-point rules (Simpson, Boole) are exact one degree higher by symmetry, so Simpson's parabola
+nails cubics. The error is a high derivative times a power of the spacing, so composite Simpson
+converges as O(h^4) while the trapezoid crawls at O(h^2) and Boole races at O(h^6). Past about 8
+points the equispaced weights turn negative and the rules destabilize (the Runge phenomenon), which
+is why composite low-order rules -- and eventually Gauss and Clenshaw-Curtis -- displaced high-order
+Newton-Cotes. Validated: each rule is exact to its degree (and even-point rules one beyond), weights
+sum to the interval, composite orders match theory, and results agree with the repo's own trapezoid
+and Simpson. The equispaced companion to the Gauss, Romberg, and Clenshaw-Curtis integrators.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

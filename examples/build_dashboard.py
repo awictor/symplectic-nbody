@@ -594,6 +594,7 @@ def main():
     import gram_schmidt_demo
     import icp_demo
     import cross_correlation_demo
+    import newton_cotes_demo
 
     import plot_orbits
 
@@ -1157,6 +1158,7 @@ def main():
     gram_schmidt_txt = run("gram_schmidt_demo", gram_schmidt_demo.main, True)
     icp_txt = run("icp_demo", icp_demo.main, True)
     cross_correlation_txt = run("cross_correlation_demo", cross_correlation_demo.main, True)
+    newton_cotes_txt = run("newton_cotes_demo", newton_cotes_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10499,6 +10501,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("cross_correlation.svg"), "A chirp buried in noise (top) is invisible to a raw threshold -- its argmax is a noise spike -- but the matched-filter response (bottom) integrates the whole template into a sharp peak at the true pulse location")
             + f'<div class="card">{pre(cross_correlation_txt)}</div>'
+            + '</div>'),
+        section(
+            "Newton-Cotes: the equispaced quadrature family and degree of exactness",
+            "Sample the integrand at equally spaced points, integrate the interpolating polynomial: "
+            "that is Newton-Cotes. The trapezoid rule (2 points), Simpson's (3, a parabola), Simpson's "
+            "3/8 (4), Boole's (5) and Weddle's (7) are the low-order members, and their weights are the "
+            "integrals of the Lagrange basis polynomials. Each rule on n+1 points is exact for every "
+            "polynomial up to degree n, and the even-point rules are exact one degree HIGHER by "
+            "symmetry -- so Simpson's parabola integrates cubics exactly. The error scales as a high "
+            "derivative times a power of the spacing, so composite Simpson converges as O(h^4) while "
+            "the trapezoid crawls at O(h^2) and Boole races at O(h^6). Above about 8 points the "
+            "equispaced weights turn negative and the rules destabilize (Runge again), which is why "
+            "composite low-order rules -- and eventually Gauss and Clenshaw-Curtis -- won. Validated: "
+            "each rule is exact to its degree (and even-point rules one beyond), weights sum to the "
+            "interval, composite orders match the theory, and results agree with the repo's own "
+            "trapezoid and Simpson. The equispaced companion to the Gauss, Romberg, and "
+            "Clenshaw-Curtis integrators.",
+            '<div class="grid">'
+            + svg_card(out("newton_cotes_convergence.svg"), "Composite error vs panel count on log-log axes: each rule falls along a straight line whose slope is its convergence order -- trapezoid O(h^2), Simpson O(h^4), Boole O(h^6). Higher-order rules reach machine precision with an order of magnitude fewer panels")
+            + f'<div class="card">{pre(newton_cotes_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
