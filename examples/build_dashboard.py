@@ -602,6 +602,7 @@ def main():
     import b_spline_demo
     import catmull_rom_demo
     import nurbs_demo
+    import rbf_interpolation_demo
 
     import plot_orbits
 
@@ -1173,6 +1174,7 @@ def main():
     b_spline_txt = run("b_spline_demo", b_spline_demo.main, True)
     catmull_rom_txt = run("catmull_rom_demo", catmull_rom_demo.main, True)
     nurbs_txt = run("nurbs_demo", nurbs_demo.main, True)
+    rbf_interpolation_txt = run("rbf_interpolation_demo", rbf_interpolation_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10676,6 +10678,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("nurbs.svg"), "Left: a degree-2 NURBS (green) is an exact circle, while a polynomial B-spline through the same axis points (red dashed) cannot be; the corner weights sqrt(2)/2 do the bending. Right: raising one control point's weight (blue to red) pulls the curve steadily toward it")
             + f'<div class="card">{pre(nurbs_txt)}</div>'
+            + '</div>'),
+        section(
+            "Radial basis functions: smooth surfaces from scattered data",
+            "Given values at arbitrary, unstructured points -- no grid, any dimension -- RBF "
+            "interpolation builds a smooth function through all of them with one strikingly simple "
+            "idea: sum one basis function per data point, each depending only on the distance to that "
+            "point, s(x) = sum_i w_i phi(||x - x_i||). Because phi is radial, the method is oblivious "
+            "to dimension and to how the points are scattered, and the weights come from a single "
+            "linear system Phi w = f that forces exact interpolation. The kernel sets the character: "
+            "Gaussian and inverse-multiquadric are localized, multiquadric is the scattered-data "
+            "workhorse, and the thin-plate spline r^2 log r is literally the shape of a thin metal "
+            "sheet pinned at the data heights -- with a polynomial term that also makes it reproduce "
+            "linear functions exactly. Validated: every kernel reproduces its node values to machine "
+            "precision, the interpolant recovers smooth test functions between the nodes, the "
+            "thin-plate spline reproduces any linear function exactly everywhere, it works unchanged in "
+            "1-D/2-D/3-D, and refining the sampling drives the error to zero. The scattered-data "
+            "companion to the Gaussian-process, kriging, and spline tools.",
+            '<div class="grid">'
+            + svg_card(out("rbf_interpolation.svg"), "Left: a true two-bump surface. Right: the RBF reconstruction from only the 45 white-ringed scattered samples -- everywhere between them is interpolated purely from radial distances, with no grid and no dimension-specific code")
+            + f'<div class="card">{pre(rbf_interpolation_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

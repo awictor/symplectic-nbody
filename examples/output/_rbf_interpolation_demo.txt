@@ -1,0 +1,14 @@
+Radial basis function interpolation of scattered data
+========================================================
+45 scattered samples of a two-bump surface on [-1,1]^2
+
+                kernel    node err   RMS error   max error
+              gaussian    9.02e-16      0.0075      0.0412
+          multiquadric    4.07e-14      0.0066      0.0292
+  inverse_multiquadric    1.89e-15      0.0097      0.0489
+            thin_plate    1.11e-15      0.0202      0.0912
+
+All kernels interpolate the 45 nodes to machine precision; the RMS/max columns
+measure accuracy BETWEEN samples. Best here: multiquadric.
+
+The interpolant needs no grid and no dimension-specific code -- s(x) = sum w_i phi(|x - x_i|).

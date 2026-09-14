@@ -560,6 +560,7 @@ ruins a long non-symplectic integration.
 | `src/b_spline.py` | B-spline curves via Cox-de Boor: clamped/uniform knots, de Boor evaluation, local control |
 | `src/catmull_rom.py` | Interpolating Catmull-Rom splines: uniform/centripetal/chordal, provably no overshoot |
 | `src/nurbs.py` | Non-Uniform Rational B-Splines: exact circles/conics via control-point weights |
+| `src/rbf_interpolation.py` | Radial basis function interpolation: gaussian/multiquadric/thin-plate, any dimension |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1111,6 +1112,7 @@ ruins a long non-symplectic integration.
 | `examples/b_spline_demo.py` | Cubic B-spline over a control polygon + its Cox-de Boor basis functions |
 | `examples/catmull_rom_demo.py` | Uniform vs centripetal vs chordal through the same points, showing overshoot |
 | `examples/nurbs_demo.py` | Exact NURBS circle vs a polynomial B-spline + the weight knob pulling a curve |
+| `examples/rbf_interpolation_demo.py` | Two-bump surface reconstructed from 45 scattered samples (heatmap) |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12751,6 +12753,30 @@ basis is still a non-negative partition of unity, and equal weights collapse it 
 Validated: the NURBS circle lies on r=1 to machine precision, the ellipse satisfies its implicit
 equation, unit weights reproduce the B-spline evaluator, raising a weight pulls the curve toward that
 point, and the arc length matches 2*pi. The rational companion to the B-spline and Bezier tools.
+
+## Radial basis functions: smooth surfaces from scattered data
+
+Interpolate values at arbitrary points in any dimension. `rbf_interpolation.py`:
+
+```
+$ python examples/rbf_interpolation_demo.py examples/output
+
+  45 scattered samples of a two-bump surface on [-1,1]^2
+                kernel    node err   RMS error   max error
+              gaussian    9.0e-16      0.0075      0.0412
+          multiquadric    4.1e-14      0.0066      0.0292   (best between samples)
+            thin_plate    1.1e-15      0.0202      0.0912
+```
+
+The interpolant is s(x) = sum_i w_i phi(||x - x_i||): one radial basis function per data point, so it
+is oblivious to dimension and point layout. The weights solve a single linear system Phi w = f that
+forces exact interpolation. Gaussian and inverse-multiquadric are localized, multiquadric is the
+workhorse, and the thin-plate spline r^2 log r is the bending-energy-minimal sheet through the data,
+augmented with a polynomial that reproduces linear functions exactly. Validated: every kernel
+reproduces its node values to machine precision, smooth test functions are recovered between nodes,
+thin-plate reproduces linear functions exactly, it works in 1-D/2-D/3-D unchanged, and refining the
+sampling drives the error to zero. The scattered-data companion to the Gaussian-process, kriging, and
+spline tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
