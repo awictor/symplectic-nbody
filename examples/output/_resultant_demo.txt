@@ -1,0 +1,24 @@
+The resultant: detecting common roots without finding them
+
+  Res(p, q) = 0 iff p and q share a root:
+    Res[(x-1)(x-2), (x-2)(x-3)] = 0  ->  COMMON ROOT
+    Res[(x-1)(x-2), (x-3)(x-4)] = 12  ->  no common root
+    Res[x^2-2, x^2-2] = 0  ->  COMMON ROOT
+
+  The discriminant generalizes b^2 - 4ac to any degree:
+    polynomial              discriminant               meaning
+    x^2 - 5x + 6                       1  two real roots (2,3)
+    x^2 + 1                           -4          complex pair
+    (x-1)^2                            0           double root
+    x^3 - x                            4      three real roots
+    x^3 + x + 1                      -31 one real, two complex
+
+  Elimination: circle x^2+y^2=1 meets line y=x.
+  As polynomials in y: p = y^2 + (x^2-1), q = y - x.
+  Res_y(p, q) eliminates y, leaving a polynomial in x whose roots are the x-coordinates:
+    x = 0:  Res_y = -1   (this is 2x^2 - 1; zero at x = +/- 1/sqrt(2))
+    x = 1:  Res_y = 1   (this is 2x^2 - 1; zero at x = +/- 1/sqrt(2))
+    x = 1/2:  Res_y = -1/2   (this is 2x^2 - 1; zero at x = +/- 1/sqrt(2))
+  So the intersections are at x = +/- 1/sqrt(2) ~ +/- 0.707, as geometry demands.
+
+  wrote examples/output\resultant.svg

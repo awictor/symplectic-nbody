@@ -585,6 +585,7 @@ def main():
     import dirichlet_demo
     import egyptian_fraction_demo
     import sturm_demo
+    import resultant_demo
 
     import plot_orbits
 
@@ -1139,6 +1140,7 @@ def main():
     dirichlet_txt = run("dirichlet_demo", dirichlet_demo.main, True)
     egyptian_fraction_txt = run("egyptian_fraction_demo", egyptian_fraction_demo.main, True)
     sturm_txt = run("sturm_demo", sturm_demo.main, True)
+    resultant_txt = run("resultant_demo", resultant_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10298,6 +10300,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("sturm.svg"), "A degree-5 polynomial with its five Sturm-isolated real roots marked; the sign-change count V(x) drops 5,4,3,2,1,0 as x sweeps past each root -- an exact, roundoff-free count")
             + f'<div class="card">{pre(sturm_txt)}</div>'
+            + '</div>'),
+        section(
+            "The resultant and discriminant: common roots and repeated roots by determinant",
+            "Two polynomials share a common root if and only if a single number -- their RESULTANT -- "
+            "vanishes, decided from the coefficients alone WITHOUT computing any root. The resultant is "
+            "the determinant of the SYLVESTER MATRIX (shifted copies of the two coefficient rows), and "
+            "equals the product of all pairwise differences of the two root sets, so it is zero exactly "
+            "when a root coincides. The DISCRIMINANT is the self-case disc(p) = (-1)^{n(n-1)/2}/a_n * "
+            "Res(p, p'): it vanishes exactly for a REPEATED root, and its sign classifies the roots -- "
+            "every b^2-4ac is the discriminant of a quadratic, generalized to any degree. Because a "
+            "common factor forces a common root, the resultant is the engine of ELIMINATION: taking "
+            "Res of two bivariate equations in one variable eliminates it, leaving a single-variable "
+            "polynomial whose roots are the surviving coordinates. Validated with exact rational "
+            "arithmetic: the resultant is zero exactly for shared roots and equals the root-difference "
+            "product; the discriminant reproduces b^2-4ac and the cubic -4p^3-27q^2, is zero exactly "
+            "for repeated roots, and its sign counts real roots; and elimination on a circle-meets-line "
+            "system yields 2x^2-1. The elimination-theory companion to the Sturm and Durand-Kerner "
+            "root tools.",
+            '<div class="grid">'
+            + svg_card(out("resultant.svg"), "The Sylvester matrix of (x-1)(x-2) and (x-2)(x-3): its determinant, the resultant, is zero -- certifying that the two polynomials share the root x = 2 without ever solving them")
+            + f'<div class="card">{pre(resultant_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -543,6 +543,7 @@ ruins a long non-symplectic integration.
 | `src/dirichlet.py` | Dirichlet convolution + Mobius inversion; phi, mu, d, sigma identities |
 | `src/egyptian_fraction.py` | Greedy Fibonacci-Sylvester unit fractions + Engel expansion + Sylvester sequence |
 | `src/sturm.py` | Sturm's theorem: exact real-root counting + isolation via Sturm sequences |
+| `src/resultant.py` | Resultant + discriminant via the Sylvester matrix (common/repeated roots, elimination) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1077,6 +1078,7 @@ ruins a long non-symplectic integration.
 | `examples/dirichlet_demo.py` | The convolution identities + Mobius inversion recovering f from divisor sums |
 | `examples/egyptian_fraction_demo.py` | Greedy unit-fraction decompositions + Sylvester reciprocal race to 1 |
 | `examples/sturm_demo.py` | Isolating a degree-5 polynomial's real roots + V(x) dropping past each |
+| `examples/resultant_demo.py` | Common-root detection, discriminant classification, circle-line elimination |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12335,6 +12337,26 @@ gives any precision. Exact rational arithmetic throughout. Validated: the total 
 Durand-Kerner's distinct reals on 30 random polynomials, interval counts match a brute scan, isolating
 intervals each hold one root, and repeated roots count once. The exact real-root companion to the
 Durand-Kerner and Chebyshev tools.
+
+## The resultant and discriminant: common roots and repeated roots by determinant
+
+Decide whether two polynomials share a root -- from the coefficients, no root-finding. `resultant.py`:
+
+```
+$ python examples/resultant_demo.py examples/output
+
+  Res[(x-1)(x-2), (x-2)(x-3)] = 0  ->  COMMON ROOT
+  Res[(x-1)(x-2), (x-3)(x-4)] = 12 ->  no common root
+  disc(x^2-5x+6) = 1 (two real), disc(x^2+1) = -4 (complex pair), disc((x-1)^2) = 0
+  elimination (circle meets line y=x): Res_y = 2x^2 - 1
+```
+
+The resultant is the determinant of the Sylvester matrix and vanishes exactly when the two polynomials
+share a root; the discriminant is Res(p, p') and vanishes exactly for a repeated root, generalizing
+b^2-4ac. Taking the resultant of two bivariate equations eliminates a variable. Validated with exact
+rational arithmetic: common-root detection, the root-difference product, the cubic discriminant
+-4p^3-27q^2, sign-based real-root counting, and elimination on a circle-line system. The
+elimination-theory companion to the Sturm and Durand-Kerner tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
