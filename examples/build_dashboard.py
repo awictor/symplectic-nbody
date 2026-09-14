@@ -581,6 +581,7 @@ def main():
     import fibonacci_demo
     import lucas_lehmer_demo
     import dixon_demo
+    import sum_of_squares_demo
 
     import plot_orbits
 
@@ -1131,6 +1132,7 @@ def main():
     fibonacci_txt = run("fibonacci_demo", fibonacci_demo.main, True)
     lucas_lehmer_txt = run("lucas_lehmer_demo", lucas_lehmer_demo.main, True)
     dixon_txt = run("dixon_demo", dixon_demo.main, True)
+    sum_of_squares_txt = run("sum_of_squares_demo", sum_of_squares_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10208,6 +10210,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("dixon.svg"), "Dixon factoring 8051 = 83 x 97: the smooth relations x^2 mod N as exponent vectors mod 2 over the factor base {2,3,5,7} -- a subset XORing to all-zero is a perfect square, and its gcd reveals the factor 83")
             + f'<div class="card">{pre(dixon_txt)}</div>'
+            + '</div>'),
+        section(
+            "Sums of squares: Fermat's two-square theorem and Lagrange's four",
+            "Which integers are a sum of two squares, n = a^2 + b^2? FERMAT'S CHRISTMAS THEOREM (1640) "
+            "settles the primes: an odd prime is a sum of two squares iff it is 1 (mod 4) -- and the "
+            "reason is that in the GAUSSIAN INTEGERS Z[i] such a prime factors as (a+bi)(a-bi), while "
+            "primes 3 (mod 4) stay prime and cannot. A general n works iff every prime 3 (mod 4) in "
+            "its factorization has even exponent. CORNACCHIA'S ALGORITHM makes it constructive: find a "
+            "square root of -1 mod p (which exists exactly when p is 1 mod 4), run the Euclidean "
+            "algorithm on (p, r), and stop when the remainder drops below sqrt(p) -- that remainder and "
+            "its partner are a, b. Composite representations follow from the Brahmagupta-Fibonacci "
+            "identity (multiplication of Gaussian norms). LAGRANGE'S FOUR-SQUARE THEOREM caps it: every "
+            "non-negative integer is a sum of four squares, no exceptions. Validated exactly: the "
+            "two-square test matches brute force over n=0..3000, every representation squares and sums "
+            "to n, Fermat's criterion holds over the primes, Cornacchia yields a^2+b^2=p, and the "
+            "four-square decomposition is exact for every n tested (including the 4^a(8b+7) numbers "
+            "that genuinely need all four). The additive-number-theory companion to the tonelli-shanks "
+            "square roots and the Pollard-rho factorization tools.",
+            '<div class="grid">'
+            + svg_card(out("sum_of_squares.svg"), "The minimum number of squares summing to each n from 1 to 100: perfect squares (green), two squares (blue), three (yellow), and the 4^a(8b+7) numbers that need all four (red) -- Lagrange's theorem caps it at four for every integer")
+            + f'<div class="card">{pre(sum_of_squares_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

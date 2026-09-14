@@ -1,0 +1,30 @@
+Sums of squares: Fermat's two-square theorem and Lagrange's four-square theorem
+
+  primes as sums of two squares (Fermat: p = 2 or p = 1 mod 4):
+     prime  mod 4       a^2 + b^2
+         2      2   1^2 + 1^2 = 2
+         5      1   2^2 + 1^2 = 5
+        13      1   3^2 + 2^2 = 13
+        17      1   4^2 + 1^2 = 17
+        29      1   5^2 + 2^2 = 29
+        37      1   6^2 + 1^2 = 37
+        41      1   5^2 + 4^2 = 41
+         3      3   (not a sum of two squares)
+         7      3   (not a sum of two squares)
+        11      3   (not a sum of two squares)
+        19      3   (not a sum of two squares)
+
+  Cornacchia + Brahmagupta-Fibonacci build composite representations:
+    325 = 1^2 + 18^2 = 325
+    1105 = 9^2 + 32^2 = 1105
+    5525 = 14^2 + 73^2 = 5525
+
+  Lagrange: EVERY integer is a sum of four squares (the 4^a(8b+7) cases need all four):
+    7 = 1^2 + 1^2 + 1^2 + 2^2  (4 nonzero squares)
+    15 = 1^2 + 1^2 + 2^2 + 3^2  (4 nonzero squares)
+    23 = 2^2 + 1^2 + 3^2 + 3^2  (4 nonzero squares)
+    31 = 1^2 + 1^2 + 2^2 + 5^2  (4 nonzero squares)
+    127 = 1^2 + 1^2 + 2^2 + 11^2  (4 nonzero squares)
+    28 = 1^2 + 1^2 + 1^2 + 5^2  (4 nonzero squares)
+
+  wrote examples/output\sum_of_squares.svg

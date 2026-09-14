@@ -539,6 +539,7 @@ ruins a long non-symplectic integration.
 | `src/fibonacci.py` | Fast-doubling Fibonacci/Lucas, Pisano period, Zeckendorf, Cassini/GCD identities |
 | `src/lucas_lehmer.py` | Lucas-Lehmer Mersenne-prime test + general Lucas sequences + Baillie-PSW half |
 | `src/dixon.py` | Dixon's random-squares factorization: smooth relations + GF(2) linear algebra |
+| `src/sum_of_squares.py` | Sums of two/four squares: Fermat, Cornacchia, Lagrange (Gaussian integers) |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1069,6 +1070,7 @@ ruins a long non-symplectic integration.
 | `examples/fibonacci_demo.py` | Million-digit F_n, Pisano periods, F(10^100) mod m, Zeckendorf |
 | `examples/lucas_lehmer_demo.py` | Mersenne primes found by Lucas-Lehmer + the s_k recurrence |
 | `examples/dixon_demo.py` | Dixon factoring 8051 via smooth-relation exponent vectors over GF(2) |
+| `examples/sum_of_squares_demo.py` | Fermat two-square, Cornacchia, Lagrange four-square + min-squares grid |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12242,6 +12244,28 @@ subset summing to zero -- a perfect square on both sides, giving a factor by gcd
 sieve's engine. Validated: correct prime factorizations whose product is N, agreement with trial
 division on random N, primes and prime powers handled, and every GF(2) dependency yields a genuine
 congruence of squares. The subexponential-factoring companion to the Pollard-rho and Lucas-Lehmer
+tools.
+
+## Sums of squares: Fermat's two-square theorem and Lagrange's four
+
+Which n are a sum of two squares, and how to build the representation. `sum_of_squares.py`:
+
+```
+$ python examples/sum_of_squares_demo.py examples/output
+
+  primes as sums of two squares (Fermat: p = 2 or p = 1 mod 4):
+      13 = 3^2 + 2^2,   41 = 5^2 + 4^2,   7 (3 mod 4): not a sum of two squares
+  Cornacchia + Brahmagupta-Fibonacci: 1105 = 9^2 + 32^2
+  Lagrange: 7 = 1^2 + 1^2 + 1^2 + 2^2  (every integer is a sum of four squares)
+```
+
+Fermat: a prime is a sum of two squares iff p = 2 or p = 1 (mod 4) (because it factors in the Gaussian
+integers); a general n works iff every prime 3 (mod 4) has even exponent. Cornacchia constructs the
+representation via a square root of -1 and one Euclidean descent; composites follow from the
+Brahmagupta-Fibonacci identity. Lagrange caps it: every integer is a sum of four squares. Validated:
+the two-square test matches brute force over 0..3000, every representation is correct, Fermat's
+criterion holds over the primes, and the four-square decomposition is exact including the 4^a(8b+7)
+numbers that need all four. The additive-number-theory companion to the tonelli-shanks and Pollard-rho
 tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
