@@ -547,6 +547,7 @@ ruins a long non-symplectic integration.
 | `src/pohlig_hellman.py` | Pohlig-Hellman discrete log on smooth-order groups (subgroups + CRT) |
 | `src/thiele.py` | Thiele rational interpolation by continued fractions (poles, no Runge blow-up) |
 | `src/clenshaw_curtis.py` | Clenshaw-Curtis quadrature: spectral integration at Chebyshev nodes |
+| `src/richardson_extrapolation.py` | Richardson extrapolation: high-order derivatives/limits from low-order formulas |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1085,6 +1086,7 @@ ruins a long non-symplectic integration.
 | `examples/pohlig_hellman_demo.py` | Cracking a smooth-order discrete log via subgroups + CRT vs a safe prime |
 | `examples/thiele_demo.py` | Thiele vs polynomial on the Runge function + pole reconstruction |
 | `examples/clenshaw_curtis_demo.py` | Spectral error cliff vs trapezoid + Chebyshev node clustering |
+| `examples/richardson_extrapolation_demo.py` | Derivative tableau error 1e-2 -> 1e-16 + (1+h)^(1/h) -> e |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12425,6 +12427,28 @@ O(1/n^2), and the nodes nest so doubling n reuses every sample. Validated: weigh
 length, exact for polynomials up to degree n, matches e^x/arctan/sin integrals to machine precision,
 converges spectrally, and the nodes nest. The Chebyshev-node quadrature companion to the Gauss,
 Romberg, and tanh-sinh integrators.
+
+## Richardson extrapolation: high-order accuracy from a low-order formula
+
+Cancel the leading error term to turn a crude method into a high-order one. `richardson_extrapolation.py`:
+
+```
+$ python examples/richardson_extrapolation_demo.py examples/output
+
+  d/dx sin(x) at x=1, tableau error by column:
+         h  raw central diff, then extrapolations ->
+    0.5000  2.2e-02
+    0.1250  1.4e-03  4.4e-06  2.6e-08
+    0.0156  2.2e-05  1.1e-09  9.9e-14  5.6e-16  ...
+  (1+h)^(1/h) extrapolated -> 2.718281828459  (true e)
+```
+
+Combining estimates at two step sizes cancels the leading O(h^p) error, giving O(h^{2p}); iterating in
+a tableau kills each successive order. The central-difference derivative (second order) reaches machine
+precision from the same evaluations. Validated: derivatives of sin/exp/polynomials to near machine
+epsilon, limits like (1+h)^(1/h) -> e recovered, the tableau reproduces Romberg on a trapezoid ladder,
+and the diagonal converges at order 2, 4, 6. The error-cancellation companion to the Romberg quadrature
+and finite-difference tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

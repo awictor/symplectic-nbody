@@ -589,6 +589,7 @@ def main():
     import pohlig_hellman_demo
     import thiele_demo
     import clenshaw_curtis_demo
+    import richardson_extrapolation_demo
 
     import plot_orbits
 
@@ -1147,6 +1148,7 @@ def main():
     pohlig_hellman_txt = run("pohlig_hellman_demo", pohlig_hellman_demo.main, True)
     thiele_txt = run("thiele_demo", thiele_demo.main, True)
     clenshaw_curtis_txt = run("clenshaw_curtis_demo", clenshaw_curtis_demo.main, True)
+    richardson_extrapolation_txt = run("richardson_extrapolation_demo", richardson_extrapolation_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10386,6 +10388,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("clenshaw_curtis.svg"), "Quadrature error vs node count on a smooth integrand: Clenshaw-Curtis (blue) falls off a spectral cliff to machine precision by n=32 while the trapezoidal rule (orange) crawls at O(1/n^2); below, the Chebyshev nodes clustering toward the endpoints")
             + f'<div class="card">{pre(clenshaw_curtis_txt)}</div>'
+            + '</div>'),
+        section(
+            "Richardson extrapolation: high-order accuracy from a low-order formula",
+            "Many numerical estimates A(h) approach the truth as the step h shrinks, with error a POWER "
+            "SERIES in h. Refining h alone is slow and eventually loses to roundoff. RICHARDSON "
+            "EXTRAPOLATION (1911) instead COMBINES estimates at two step sizes to CANCEL the leading "
+            "error term: if A(h) has error O(h^p), then (t^p A(h/t) - A(h))/(t^p - 1) has error "
+            "O(h^{2p}). Iterate in a tableau and each column kills the next error order, so a handful "
+            "of cheap evaluations reach an accuracy direct refinement never could -- the engine inside "
+            "Romberg integration, Bulirsch-Stoer ODE solving, and high-order differentiation. The "
+            "classic case: the central difference for f'(x) is only second order, but its error has "
+            "only even powers of h, so extrapolation with p=2 gives a diagonal converging as h^2, h^4, "
+            "h^6 to machine precision from the same evaluations. Validated: the derivative of sin, "
+            "exp, and polynomials matches the analytic value to near machine precision (orders of "
+            "magnitude better than the raw central difference); limits like (1+h)^(1/h) -> e and "
+            "sin(h)/h -> 1 are recovered; the tableau reproduces Romberg on a trapezoid ladder; and "
+            "the diagonal's empirical convergence order is the predicted 2, 4, 6. The "
+            "error-cancellation companion to the Romberg quadrature and finite-difference tools.",
+            '<div class="grid">'
+            + svg_card(out("richardson_extrapolation.svg"), "The Richardson tableau for d/dx sin at x=1: the raw central-difference column (gray) has error ~1e-2, but each extrapolation column cancels the next error order until the diagonal reaches ~1e-16 -- machine precision from a second-order formula")
+            + f'<div class="card">{pre(richardson_extrapolation_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

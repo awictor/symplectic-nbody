@@ -1,0 +1,25 @@
+Richardson extrapolation: a 2nd-order formula driven to machine precision
+
+  d/dx sin(x) at x=1, true value cos(1) = 0.540302305868140
+
+  Richardson tableau (each column cancels the next error order):
+           h  raw central diff, then extrapolations ->
+      0.5000  2.2e-02
+      0.2500  5.6e-03  7.0e-05
+      0.1250  1.4e-03  4.4e-06  2.6e-08
+      0.0625  3.5e-04  2.7e-07  4.1e-10  1.4e-12
+      0.0312  8.8e-05  1.7e-08  6.4e-12  6.1e-15  5.6e-16
+      0.0156  2.2e-05  1.1e-09  9.9e-14  5.6e-16  6.7e-16  6.7e-16
+
+  first column (raw): error ~ 2.2e-02, only O(h^2)
+  bottom-right (extrapolated): error ~ 6.7e-16, near machine epsilon
+  -- from the SAME central-difference evaluations, no smaller h needed.
+
+  limit (1+h)^(1/h) as h->0:
+    raw at h=1:   2.000000
+    extrapolated: 2.718281828459   (true e = 2.718281828459)
+
+  This error cancellation is the engine inside Romberg integration and
+  Bulirsch-Stoer ODE solving -- cheap low-order evaluations, high-order result.
+
+  wrote examples/output\richardson_extrapolation.svg
