@@ -1,0 +1,25 @@
+Sturm's theorem: exact real-root counting and isolation
+
+  polynomial with real roots at [-2.0, -0.5, 1.0, 2.5, 4.0]
+  Sturm count: 5 real roots  (Durand-Kerner finds 5: [-2.0, -0.5, 1.0, 2.5, 4.0])
+
+  isolating intervals (each contains exactly one root):
+    (-2.000, -1.994)  ->  root ~ -2.00000000
+    (-0.502, -0.495)  ->  root ~ -0.50000000
+    (+0.997, +1.003)  ->  root ~ +1.00000000
+    (+2.496, +2.502)  ->  root ~ +2.50000000
+    (+3.994, +4.000)  ->  root ~ +4.00000000
+
+  sign-change count V(x) drops by 1 at each root (V(-inf) - V(+inf) = total):
+         x  V(x)
+        -5     5
+      -1.5     4
+         0     3
+       1.5     2
+         3     1
+         5     0
+
+  Every count is exact -- no roundoff, no missed or spurious roots. That reliability
+  is why Sturm sequences underpin certified real-root isolation.
+
+  wrote examples/output\sturm.svg

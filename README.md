@@ -542,6 +542,7 @@ ruins a long non-symplectic integration.
 | `src/sum_of_squares.py` | Sums of two/four squares: Fermat, Cornacchia, Lagrange (Gaussian integers) |
 | `src/dirichlet.py` | Dirichlet convolution + Mobius inversion; phi, mu, d, sigma identities |
 | `src/egyptian_fraction.py` | Greedy Fibonacci-Sylvester unit fractions + Engel expansion + Sylvester sequence |
+| `src/sturm.py` | Sturm's theorem: exact real-root counting + isolation via Sturm sequences |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1075,6 +1076,7 @@ ruins a long non-symplectic integration.
 | `examples/sum_of_squares_demo.py` | Fermat two-square, Cornacchia, Lagrange four-square + min-squares grid |
 | `examples/dirichlet_demo.py` | The convolution identities + Mobius inversion recovering f from divisor sums |
 | `examples/egyptian_fraction_demo.py` | Greedy unit-fraction decompositions + Sylvester reciprocal race to 1 |
+| `examples/sturm_demo.py` | Isolating a degree-5 polynomial's real roots + V(x) dropping past each |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -12313,6 +12315,26 @@ The Engel expansion gives an ascending form, and Sylvester's sequence is the fas
 expansion of 1. Validated with exact rational arithmetic: every decomposition sums back with strictly
 increasing denominators, the Engel expansion reconstructs the fraction, and Sylvester's reciprocals
 approach 1. The unit-fraction companion to the continued-fraction and Stern-Brocot tools.
+
+## Sturm's theorem: counting and isolating real roots exactly
+
+Count a polynomial's real roots in any interval with certainty, no roundoff. `sturm.py`:
+
+```
+$ python examples/sturm_demo.py examples/output
+
+  polynomial with real roots at [-2, -0.5, 1, 2.5, 4]
+  Sturm count: 5 real roots (Durand-Kerner agrees)
+  sign-change count V(x): -5 -> 5, 0 -> 3, +5 -> 0   (drops 1 per root)
+  isolated + refined: -2.00000000, -0.50000000, 1.00000000, 2.50000000, 4.00000000
+```
+
+The Sturm sequence is p, p', and negated division remainders; the number of distinct real roots in
+(a,b] equals V(a) - V(b), the drop in its sign-change count. Bisecting isolates each root; refinement
+gives any precision. Exact rational arithmetic throughout. Validated: the total count matches
+Durand-Kerner's distinct reals on 30 random polynomials, interval counts match a brute scan, isolating
+intervals each hold one root, and repeated roots count once. The exact real-root companion to the
+Durand-Kerner and Chebyshev tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

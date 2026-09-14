@@ -584,6 +584,7 @@ def main():
     import sum_of_squares_demo
     import dirichlet_demo
     import egyptian_fraction_demo
+    import sturm_demo
 
     import plot_orbits
 
@@ -1137,6 +1138,7 @@ def main():
     sum_of_squares_txt = run("sum_of_squares_demo", sum_of_squares_demo.main, True)
     dirichlet_txt = run("dirichlet_demo", dirichlet_demo.main, True)
     egyptian_fraction_txt = run("egyptian_fraction_demo", egyptian_fraction_demo.main, True)
+    sturm_txt = run("sturm_demo", sturm_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -10275,6 +10277,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("egyptian_fraction.svg"), "The greedy Egyptian decomposition of 4/13 into distinct unit fractions as shrinking coloured bars, plus Sylvester's reciprocal sums racing toward 1 (gap 1/2, 1/6, 1/42, 1/1806, ...) -- the fastest possible unit-fraction convergence")
             + f'<div class="card">{pre(egyptian_fraction_txt)}</div>'
+            + '</div>'),
+        section(
+            "Sturm's theorem: counting and isolating real roots exactly",
+            "How many real roots does a polynomial have in an interval? Numerical root-finders can miss "
+            "roots, double-count near-multiple ones, or invent spurious ones from roundoff. STURM'S "
+            "THEOREM (1829) answers with certainty using exact arithmetic: the number of distinct real "
+            "roots in (a, b] equals the DROP in the sign-change count of the STURM SEQUENCE between a "
+            "and b. That sequence is p, p', and thereafter the NEGATED remainder of polynomial "
+            "division -- a Euclidean chain (essentially gcd(p, p') with sign flips) whose sign-change "
+            "count V(x) is a monotone tally of roots passed, so real roots in (a,b] = V(a) - V(b). "
+            "Bisecting and re-counting ISOLATES each root in its own subinterval, refinable to any "
+            "precision -- a completely reliable real-root finder immune to iterative methods' failure "
+            "modes (dividing by gcd(p, p') first makes it squarefree, counting DISTINCT roots). "
+            "Validated with exact rational arithmetic: the total count matches the distinct real roots "
+            "from the repo's Durand-Kerner solver on 30 random polynomials; interval counts match a "
+            "brute sign-change scan; isolating intervals each hold exactly one root; repeated roots "
+            "count once; and known cases (x^2-2 -> 2, (x-1)(x-2)(x-3) -> 3, x^2+1 -> 0) hold. The exact "
+            "real-root companion to the Durand-Kerner and Chebyshev polynomial tools.",
+            '<div class="grid">'
+            + svg_card(out("sturm.svg"), "A degree-5 polynomial with its five Sturm-isolated real roots marked; the sign-change count V(x) drops 5,4,3,2,1,0 as x sweeps past each root -- an exact, roundoff-free count")
+            + f'<div class="card">{pre(sturm_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
