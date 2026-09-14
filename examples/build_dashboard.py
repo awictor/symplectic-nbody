@@ -646,6 +646,7 @@ def main():
     import arnoldi_demo
     import gauss_kronrod_demo
     import aberth_demo
+    import l1_trend_filter_demo
 
     import plot_orbits
 
@@ -1261,6 +1262,7 @@ def main():
     arnoldi_txt = run("arnoldi_demo", arnoldi_demo.main, True)
     gauss_kronrod_txt = run("gauss_kronrod_demo", gauss_kronrod_demo.main, True)
     aberth_txt = run("aberth_demo", aberth_demo.main, True)
+    l1_trend_filter_txt = run("l1_trend_filter_demo", l1_trend_filter_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11643,6 +11645,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("aberth.svg"), "Seven root estimates (colored trails) spiralling in from hollow circles on the Cauchy-bound circle to the true roots (white X's) of a degree-7 polynomial. The estimates repel each other so they never collide, locking onto all seven roots -- three real, two complex-conjugate pairs -- in 20 simultaneous sweeps")
             + f'<div class="card">{pre(aberth_txt)}</div>'
+            + '</div>'),
+        section(
+            "L1 trend filtering: piecewise-linear trends with automatic knots",
+            "The Hodrick-Prescott filter penalizes the SQUARED second difference of a trend, so it smooths "
+            "noise but rounds every corner -- a signal built from straight segments comes out curved. L1 "
+            "trend filtering (Kim, Koh, Boyd, Gorinevsky 2009) penalizes the ABSOLUTE second difference "
+            "instead, and because the L1 norm induces sparsity (the LASSO effect), the optimal second "
+            "difference is EXACTLY ZERO at most time steps -- and a zero second difference means three "
+            "collinear points. So the fit is automatically PIECEWISE LINEAR with a few kinks, and the "
+            "filter chooses both the slopes and the breakpoints. lambda is the single knob: near zero it "
+            "interpolates, huge it collapses to the least-squares line. Solved here by ADMM (soft-threshold "
+            "on z = Dx, a banded pentadiagonal x-update). Validated: a clean piecewise-linear signal and "
+            "its breakpoints are recovered, huge lambda gives the least-squares line, larger lambda yields "
+            "fewer kinks, it denoises 3x better than the raw noise, and its second difference is far "
+            "sparser than Hodrick-Prescott's on the same data. The sparse-trend companion to the "
+            "Hodrick-Prescott, total-variation, and ADMM/LASSO tools.",
+            '<div class="grid">'
+            + svg_card(out("l1_trend_filter.svg"), "The same noisy data (gray dots) fit two ways: L1 trend filtering (yellow) produces a piecewise-linear trend with sharp corners at the red kink markers, while Hodrick-Prescott (purple) rounds those corners into a smooth curve. L1's second difference is zero everywhere except the handful of detected knots; HP's is nonzero everywhere")
+            + f'<div class="card">{pre(l1_trend_filter_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

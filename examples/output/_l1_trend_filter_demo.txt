@@ -1,0 +1,20 @@
+L1 trend filtering -- piecewise-linear trend with automatic knots
+==================================================================
+
+Signal: piecewise-linear, 3 true breakpoints at [25, 50, 75].
+Noisy data RMSE from truth: 0.867
+L1 fit    RMSE from truth: 0.290   (3.0x cleaner)
+Detected kinks: [22, 29, 43, 48, 74, 75]
+
+lambda sweep -- larger lambda, fewer segments:
+   lambda   #kinks   RMSE-from-truth
+   ----------------------------------
+      0.1      82     0.689
+        1      18     0.345
+        4      10     0.284
+       20       6     0.292
+      100       7     0.600
+
+vs Hodrick-Prescott (L2 penalty on the same data):
+  L1 second-difference nonzeros: 6  (sparse -> sharp corners)
+  HP second-difference nonzeros: 60  (dense -> everywhere curved)

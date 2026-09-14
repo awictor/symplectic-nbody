@@ -604,6 +604,7 @@ ruins a long non-symplectic integration.
 | `src/arnoldi.py` | Arnoldi iteration: dominant eigenvalues of a large non-symmetric matrix from a Krylov subspace |
 | `src/gauss_kronrod.py` | Gauss-Kronrod quadrature: integration with a built-in error estimate and global adaptive subdivision |
 | `src/aberth.py` | Aberth-Ehrlich method: all polynomial roots simultaneously, with cubic convergence |
+| `src/l1_trend_filter.py` | L1 trend filtering: piecewise-linear trend with automatically-placed kinks, via ADMM |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1199,6 +1200,7 @@ ruins a long non-symplectic integration.
 | `examples/arnoldi_demo.py` | Ritz values converging to a 40x40 matrix's dominant eigenvalue, with the complex-plane spectrum |
 | `examples/gauss_kronrod_demo.py` | Adaptive Gauss-Kronrod panels swarming a narrow spike, with the polynomial-exactness ladder |
 | `examples/aberth_demo.py` | Seven root estimates spiralling in from a circle to the true roots, with the cubic-convergence table |
+| `examples/l1_trend_filter_demo.py` | L1 piecewise-linear fit with auto-placed kinks vs the smooth Hodrick-Prescott trend |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13735,6 +13737,30 @@ accumulates. Converges cubically (each sweep roughly triples the correct digits)
 real, complex-conjugate, repeated, and clustered roots to machine precision, satisfies Vieta's sum and
 product relations, matches the repo's Durand-Kerner solver, and reaches tolerance in far fewer sweeps. The
 polynomial-root companion to the Durand-Kerner and QR-algorithm tools.
+
+## L1 trend filtering: piecewise-linear trends with automatic knots
+
+The sparse-corner cousin of Hodrick-Prescott. `l1_trend_filter.py`:
+
+```
+$ python examples/l1_trend_filter_demo.py examples/output
+
+Signal: piecewise-linear, 3 true breakpoints at [25, 50, 75].
+Noisy data RMSE from truth: 0.867
+L1 fit    RMSE from truth: 0.290   (3.0x cleaner)
+
+vs Hodrick-Prescott (L2 penalty on the same data):
+  L1 second-difference nonzeros: 6   (sparse -> sharp corners)
+  HP second-difference nonzeros: 60  (dense -> everywhere curved)
+```
+
+Penalize the ABSOLUTE second difference instead of the squared one: the L1 norm forces the second
+difference to be exactly zero at most steps, so the fit is automatically piecewise linear with a few
+auto-placed kinks. lambda near zero interpolates; huge lambda collapses to the least-squares line. Solved
+by ADMM (soft-threshold on Dx, banded pentadiagonal x-update). Validated: recovers a clean piecewise-linear
+signal and its breakpoints, huge lambda gives the least-squares line, larger lambda yields fewer kinks,
+denoises 3x better than the raw noise, and its second difference is far sparser than Hodrick-Prescott's.
+The sparse-trend companion to the Hodrick-Prescott, total-variation, and ADMM/LASSO tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
