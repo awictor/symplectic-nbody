@@ -1,0 +1,25 @@
+Real Schur decomposition: A = Q T Q^T
+====================================================
+6x6 matrix reduced to real Schur form by shifted QR iteration
+
+T (quasi-upper-triangular; 2x2 blocks carry complex pairs):
+   +0.92  -0.58  +0.57  +1.08  +1.03  +0.79
+   +0.80  +0.67  -1.40  +0.17  +0.99  -0.45
+     .      .    -1.14  -0.56  -0.07  +0.02
+     .      .    -0.00  +0.74  -0.63  -0.10
+     .      .      .    +0.02  +0.01  -0.39
+     .      .      .      .    -0.04  -0.84
+
+eigenvalues read from the diagonal blocks:
+  -1.1352+0.0000i   (real)
+  -0.8603+0.0000i   (real)
+  +0.0244+0.0000i   (real)
+  +0.7402+0.0000i   (real)
+  +0.7959-0.6706i   (complex pair)
+  +0.7959+0.6706i   (complex pair)
+
+Q orthogonal?      True
+Q T Q^T == A?      max error 1.67e-15
+
+The Schur form always exists over the reals and uses only stable orthogonal
+transforms -- no ill-conditioned eigenvector basis. It is how eigenvalues are found.

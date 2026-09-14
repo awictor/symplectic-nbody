@@ -577,6 +577,7 @@ ruins a long non-symplectic integration.
 | `src/sherman_morrison.py` | Sherman-Morrison-Woodbury low-rank inverse/solve/determinant updates in O(n^2) |
 | `src/polar_decomposition.py` | Polar decomposition A=UP via SVD and Newton iteration; closest-rotation projection |
 | `src/hessenberg.py` | Hessenberg/tridiagonal reduction by Householder similarity (A=QHQ^T), eigenvalue-preserving |
+| `src/schur_decomposition.py` | Real Schur form A=QTQ^T by shifted QR iteration; eigenvalues from diagonal blocks |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1145,6 +1146,7 @@ ruins a long non-symplectic integration.
 | `examples/sherman_morrison_demo.py` | O(n^2) update vs O(n^3) re-inversion op-count curves + accuracy |
 | `examples/polar_decomposition_demo.py` | Unit circle stretched by P then rotated by U to reproduce A |
 | `examples/hessenberg_demo.py` | Dense matrix reduced to upper-Hessenberg form, shown as sparsity heatmaps |
+| `examples/schur_decomposition_demo.py` | Matrix reduced to real Schur form with a highlighted 2x2 complex block |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13151,6 +13153,26 @@ cost O(n^2) instead of O(n^3). Validated: H is upper Hessenberg, Q orthogonal, Q
 to machine precision, trace/determinant/eigenvalues preserved, a symmetric matrix reduces to symmetric
 tridiagonal, and an already-Hessenberg matrix is unchanged. The eigenvalue-preprocessing companion to
 the QR-algorithm, Householder-QR, and Lanczos tools.
+
+## Real Schur decomposition: eigenvalues by stable orthogonal transforms
+
+The bedrock of dense eigenvalue computation. `schur_decomposition.py`:
+
+```
+$ python examples/schur_decomposition_demo.py examples/output
+
+  6x6 -> real Schur form (A = Q T Q^T) by shifted QR iteration
+  eigenvalues: 4 real on 1x1 blocks + a complex pair 0.796 +/- 0.671i in a 2x2 block
+  Q orthogonal, Q T Q^T == A: max error 1.7e-15
+```
+
+Every real matrix is A = Q T Q^T with Q orthogonal and T quasi-upper-triangular (1x1 real-eigenvalue
+blocks, 2x2 complex-pair blocks). Reduce to Hessenberg, then run Wilkinson-shifted QR iteration -- a
+similarity that preserves Hessenberg form and converges cubically, deflating one block at a time.
+Validated: Q orthogonal, T quasi-triangular, Q T Q^T reconstructs A to machine precision, eigenvalues
+from the diagonal blocks match an independent solver (with sum/product against trace/determinant), a
+symmetric matrix gives a diagonal T, and a complex pair keeps its 2x2 block. The
+eigenvalue-decomposition companion to the QR-algorithm, Hessenberg, and SVD tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

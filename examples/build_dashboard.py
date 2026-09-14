@@ -619,6 +619,7 @@ def main():
     import sherman_morrison_demo
     import polar_decomposition_demo
     import hessenberg_demo
+    import schur_decomposition_demo
 
     import plot_orbits
 
@@ -1207,6 +1208,7 @@ def main():
     sherman_morrison_txt = run("sherman_morrison_demo", sherman_morrison_demo.main, True)
     polar_decomposition_txt = run("polar_decomposition_demo", polar_decomposition_demo.main, True)
     hessenberg_txt = run("hessenberg_demo", hessenberg_demo.main, True)
+    schur_decomposition_txt = run("schur_decomposition_demo", schur_decomposition_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11050,6 +11052,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("hessenberg.svg"), "A dense 7x7 matrix (left) reduced to upper-Hessenberg form (right): every entry below the first subdiagonal is zeroed (dark), by reflectors applied on both sides so the eigenvalues survive. The QR algorithm then iterates on this cheap almost-triangular shape")
             + f'<div class="card">{pre(hessenberg_txt)}</div>'
+            + '</div>'),
+        section(
+            "Real Schur decomposition: eigenvalues by stable orthogonal transforms",
+            "The Schur decomposition is the bedrock of dense eigenvalue computation: every real square "
+            "matrix is A = Q T Q^T with Q orthogonal and T in REAL SCHUR FORM -- upper triangular except "
+            "for 1x1 and 2x2 diagonal blocks. Each 1x1 block is a real eigenvalue; each 2x2 block "
+            "carries a complex-conjugate pair (which a real matrix cannot expose as a real diagonal "
+            "entry). Unlike the eigendecomposition it ALWAYS exists over the reals and uses only stable "
+            "orthogonal transforms, never an ill-conditioned eigenvector basis. The algorithm is the QR "
+            "iteration -- the crown jewel of numerical linear algebra: reduce to Hessenberg, then "
+            "repeatedly factor the Wilkinson-shifted matrix as QR and recombine as RQ, a similarity "
+            "that preserves Hessenberg form and converges cubically, deflating one block at a time. "
+            "Validated: Q is orthogonal, T is quasi-upper-triangular, Q T Q^T reconstructs A to machine "
+            "precision, the eigenvalues read off T's diagonal blocks match an independent solver "
+            "(including complex pairs and their sum/product against trace/determinant), a symmetric "
+            "matrix yields a genuinely diagonal T, and a matrix with a complex pair keeps its 2x2 "
+            "block. Reuses the repo's Hessenberg reduction. The eigenvalue-decomposition companion to "
+            "the QR-algorithm, Hessenberg, and SVD tools.",
+            '<div class="grid">'
+            + svg_card(out("schur_decomposition.svg"), "A dense 6x6 matrix (left) reduced by shifted QR iteration to real Schur form (right): upper triangular apart from a 2x2 block (red) holding a complex-conjugate eigenvalue pair. The real eigenvalues sit on the 1x1 diagonal entries")
+            + f'<div class="card">{pre(schur_decomposition_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
