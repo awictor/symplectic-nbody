@@ -635,6 +635,7 @@ def main():
     import domain_warping_demo
     import biconnected_demo
     import euler_tour_demo
+    import sqrt_decomposition_demo
 
     import plot_orbits
 
@@ -1239,6 +1240,7 @@ def main():
     domain_warping_txt = run("domain_warping_demo", domain_warping_demo.main, True)
     biconnected_txt = run("biconnected_demo", biconnected_demo.main, True)
     euler_tour_txt = run("euler_tour_demo", euler_tour_demo.main, True)
+    sqrt_decomposition_txt = run("sqrt_decomposition_demo", sqrt_decomposition_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -11405,6 +11407,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("euler_tour.svg"), "The tree (top) and its Euler-tour timeline (bottom): the subtree of node 1 (green) is exactly the contiguous span tour[1..4], so a subtree query becomes a range query on the flattened array")
             + f'<div class="card">{pre(euler_tour_txt)}</div>'
+            + '</div>'),
+        section(
+            "Square-root decomposition: range queries with almost no machinery",
+            "Between the naive O(n)-per-query array and the O(log n) segment tree sits a gloriously "
+            "simple idea: split the array into about sqrt(n) contiguous blocks of size sqrt(n) and "
+            "precompute an aggregate for each. A range query then touches at most two PARTIAL blocks at "
+            "the ends (walked element by element) plus a handful of WHOLE blocks in the middle (read "
+            "straight from the precomputed table), so it costs O(sqrt n) instead of O(n); a point "
+            "update refreshes just the one block it lands in. No recursion, no tree, no lazy "
+            "propagation -- the pragmatic choice when the operation is awkward for a segment tree, and "
+            "the foundation of Mo's algorithm. The sweet-spot block size is exactly sqrt(n), balancing "
+            "the O(s) partial walk against the O(n/s) whole blocks. Validated against a brute-force "
+            "array: random interleavings of updates and queries agree exactly for sum, min, and max; "
+            "the block aggregates stay consistent with the array after every update; single-element, "
+            "full-array, and cross-boundary ranges are correct; the block size is Theta(sqrt n); and "
+            "the empty and singleton cases are handled. The range-query companion to the segment-tree, "
+            "Fenwick-tree, and sparse-table tools.",
+            '<div class="grid">'
+            + svg_card(out("sqrt_decomposition.svg"), "A range query sum[2..13]: the two partial end blocks (green) are summed element by element, while the whole blocks in the middle (yellow) are read from the precomputed block-sum table -- only about 2*sqrt(n) elements and sqrt(n) blocks are ever touched")
+            + f'<div class="card">{pre(sqrt_decomposition_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

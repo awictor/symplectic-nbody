@@ -1,0 +1,18 @@
+Square-root decomposition: O(sqrt n) range queries
+======================================================
+array of 16 elements, block size 4, 4 blocks
+block sums: [9, 22, 21, 28]
+
+query sum[2..13]:
+  = left partial (indices 2..3)
+  + whole blocks 1..2 (from precomputed sums)
+  + right partial (indices 12..13)
+  = 64  (brute force: 64)
+
+cost: O(sqrt n) partial elements + O(sqrt n) whole blocks, vs O(n) naive.
+
+an update recomputes just one block:
+  after a[7] = 100, sum[6..8] = 107 (was 13)
+
+No tree, no recursion -- just an array plus a short block table; the pragmatic
+middle ground and the engine behind Mo's algorithm for offline range queries.

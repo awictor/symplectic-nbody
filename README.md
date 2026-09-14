@@ -593,6 +593,7 @@ ruins a long non-symplectic integration.
 | `src/domain_warping.py` | Domain warping: fBm sampled at noise-displaced coordinates, multi-level swirls |
 | `src/biconnected.py` | Biconnected components: Hopcroft-Tarjan block decomposition + block-cut tree |
 | `src/euler_tour.py` | Euler tour of a tree: tin/tout flattening, ancestor test, subtree ranges & sums |
+| `src/sqrt_decomposition.py` | Square-root decomposition: O(sqrt n) range sum/min/max queries + point update |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1177,6 +1178,7 @@ ruins a long non-symplectic integration.
 | `examples/domain_warping_demo.py` | Noise at 0, 1, 2 warp levels folding into marbled swirls |
 | `examples/biconnected_demo.py` | A graph's biconnected blocks colored + cut vertices ringed |
 | `examples/euler_tour_demo.py` | A tree and its tour timeline with a subtree shown as one contiguous span |
+| `examples/sqrt_decomposition_demo.py` | A range query split into partial-end and whole-block coverage |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -13490,6 +13492,24 @@ tests are interval containment and subtree sums are range sums. Validated: every
 contiguous interval of its size, the ancestor test matches a brute path-to-root check for all pairs
 across 60 random trees, entry times are a permutation, and subtree sums match brute force. The
 tree-flattening companion to the LCA, Fenwick-tree, and sparse-table tools.
+
+## Square-root decomposition: range queries with almost no machinery
+
+The pragmatic middle ground between naive scan and segment tree. `sqrt_decomposition.py`:
+
+```
+$ python examples/sqrt_decomposition_demo.py examples/output
+
+  16 elements, block size 4, block sums [9, 22, 21, 28]
+  sum[2..13] = left partial + whole blocks 1..2 + right partial = 64
+  update a[7]=100 recomputes just one block
+```
+
+Split into sqrt(n) blocks with precomputed aggregates; a query walks two partial end blocks and reads
+the whole middle blocks from the table, O(sqrt n). Validated against brute force: random interleaved
+updates and queries agree for sum/min/max, block aggregates stay consistent after every update,
+edge/cross-boundary ranges are correct, and the block size is Theta(sqrt n). The range-query companion
+to the segment-tree, Fenwick-tree, and sparse-table tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
