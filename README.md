@@ -647,6 +647,7 @@ ruins a long non-symplectic integration.
 | `src/tasep.py` | TASEP: driven lattice gas with the exactly-solved open-boundary phase diagram |
 | `src/bak_sneppen.py` | Bak-Sneppen model: self-organized criticality in evolution, avalanches, punctuated equilibrium |
 | `src/vicsek_flocking.py` | Vicsek model: self-propelled particles flocking, the order-disorder phase transition |
+| `src/deffuant_bounded.py` | Deffuant bounded-confidence: continuous opinion dynamics, consensus vs fragmentation |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1285,6 +1286,7 @@ ruins a long non-symplectic integration.
 | `examples/tasep_demo.py` | The TASEP phase diagram and per-phase density profiles vs the exact formulas |
 | `examples/bak_sneppen_demo.py` | The fitness gap climbing to f_c and the power-law avalanche-size distribution |
 | `examples/vicsek_flocking_demo.py` | Order parameter vs noise across the flocking transition, and aligned vs disordered snapshots |
+| `examples/deffuant_bounded_demo.py` | Opinion trajectories merging to consensus or splitting into camps as the threshold varies |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14735,6 +14737,24 @@ disorder at high noise, with a critical noise that rises with density. Validated
 order and high noise low, order decreases monotonically across the transition, every particle's speed
 stays constant, higher density raises the order, and the circular mean handles the 2pi wrap. The
 active-matter companion to the boids, Kuramoto, and Ising tools.
+
+## Deffuant bounded-confidence: consensus or fragmentation
+
+Continuous opinion dynamics with a listening threshold. `deffuant_bounded.py`:
+
+```
+$ python examples/deffuant_bounded_demo.py examples/output
+
+Confidence threshold d decides the outcome:
+   d=0.30 -> 2 clusters   d=0.20 -> 3 clusters   d=0.10 -> 5 clusters
+Mean opinion conserved: final 0.5250 (start 0.5).
+```
+
+Random pairs converge only if their opinions differ by less than d; the number of surviving opinion
+clusters is roughly 1/(2d). Validated: the mean opinion is conserved by every exchange, a large threshold
+yields one consensus and a small one fragments, the cluster count grows as the threshold shrinks, opinions
+stay in [0,1], and distant pairs never interact. The opinion-dynamics companion to the voter-model,
+Schelling, and Kuramoto tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

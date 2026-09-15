@@ -689,6 +689,7 @@ def main():
     import tasep_demo
     import bak_sneppen_demo
     import vicsek_flocking_demo
+    import deffuant_bounded_demo
 
     import plot_orbits
 
@@ -1347,6 +1348,7 @@ def main():
     tasep_txt = run("tasep_demo", tasep_demo.main, True)
     bak_sneppen_txt = run("bak_sneppen_demo", bak_sneppen_demo.main, True)
     vicsek_flocking_txt = run("vicsek_flocking_demo", vicsek_flocking_demo.main, True)
+    deffuant_bounded_txt = run("deffuant_bounded_demo", deffuant_bounded_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12559,6 +12561,24 @@ def main():
             '<div class="grid">'
             + svg_card(out("vicsek_flocking.svg"), "Two snapshots of 120 self-propelled particles (arrows = velocities). Left, at low noise: the particles have spontaneously aligned into a coherent green flock all pointing the same way (order ~1). Right, at high noise: headings are random red arrows in every direction (order ~0). The same local alignment rule flips between collective motion and disorder as the noise crosses the critical value")
             + f'<div class="card">{pre(vicsek_flocking_txt)}</div>'
+            + '</div>'),
+        section(
+            "Deffuant bounded-confidence: consensus or fragmentation",
+            "The voter model has discrete opinions copied wholesale; real opinions are continuous and shift "
+            "only toward views not too far from one's own. The Deffuant model (2000) captures this bounded "
+            "confidence: every agent holds an opinion in [0,1], and when a random pair differ by less than "
+            "a confidence threshold d, each moves a fraction toward the other; if they differ by more than "
+            "d, nothing happens -- the gap is unbridgeable. The threshold decides the outcome: a large d "
+            "(open-minded) collapses everyone to a single consensus, while a small d (echo chambers) "
+            "freezes into several separated camps, and the number of surviving clusters is roughly 1/(2d) "
+            "-- a clean link from individual open-mindedness to collective diversity. Validated: the mean "
+            "opinion is conserved by every symmetric exchange and preserved to the end, a large threshold "
+            "yields one consensus cluster while a small one fragments, the cluster count grows as the "
+            "threshold shrinks tracking 1/(2d), opinions stay in [0,1], and distant pairs never interact. "
+            "The opinion-dynamics companion to the voter-model, Schelling, and Kuramoto tools.",
+            '<div class="grid">'
+            + svg_card(out("deffuant_bounded.svg"), "Opinion trajectories over time (each line one person's view in [0,1]). Left, open-minded (d=0.4): every line spirals together into a single consensus. Right, narrow confidence (d=0.12): the lines split into several stable camps that never reconcile -- fragmentation emerging purely from how far people will listen")
+            + f'<div class="card">{pre(deffuant_bounded_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

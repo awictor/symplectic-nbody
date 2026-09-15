@@ -1,0 +1,19 @@
+Deffuant bounded-confidence -- when opinions merge, polarize, or fragment
+==========================================================================
+
+Random pairs converge only if their opinions differ by less than a threshold d.
+
+Confidence threshold d decides consensus vs fragmentation:
+   d       clusters   opinions (cluster means)
+   --------------------------------------------------
+   0.50       2       0.01, 0.53
+   0.30       2       0.15, 0.54
+   0.20       3       0.03, 0.28, 0.73
+   0.15       5       0.04, 0.21, 0.51, 0.77, 0.96
+   0.10       5       0.11, 0.32, 0.48, 0.70, 0.89
+
+Open-minded society (large d) -> one consensus; echo chambers (small d) -> many camps.
+The number of surviving opinion clusters is roughly 1/(2d).
+
+The population mean opinion is conserved by every symmetric exchange:
+  final mean = 0.5250 (uniform start mean 0.5), regardless of the outcome.
