@@ -629,6 +629,7 @@ ruins a long non-symplectic integration.
 | `src/ljung_box.py` | Ljung-Box & Box-Pierce portmanteau tests: is a series white noise or autocorrelated? |
 | `src/block_bootstrap.py` | Block bootstrap (moving/circular/stationary): resampling for dependent time-series data |
 | `src/wilcoxon_signed_rank.py` | Wilcoxon signed-rank test: robust paired nonparametric test with exact and normal p-values |
+| `src/friedman_test.py` | Friedman test: nonparametric repeated-measures ANOVA with Kendall's W concordance |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1249,6 +1250,7 @@ ruins a long non-symplectic integration.
 | `examples/ljung_box_demo.py` | ACF stems with white-noise bands for a clean vs autocorrelated series, and Q vs lags |
 | `examples/block_bootstrap_demo.py` | Block-bootstrap SE converging to the AR(1) long-run truth where the i.i.d. bootstrap fails |
 | `examples/wilcoxon_signed_rank_demo.py` | Wilcoxon holding significance where an outlier destroys the paired t-test, with the exact W+ null |
+| `examples/friedman_test_demo.py` | Four algorithms' within-block ranks across datasets, the treatment effect surviving block offsets |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14337,6 +14339,26 @@ shift -> tiny p, symmetric noise -> large p, exact and normal agree, scale-invar
 that flips the t-test, W+ + W- = n(n+1)/2, exact null sums to 2^n and is symmetric, and it agrees with the
 sign-flip permutation test. The paired nonparametric-testing companion to the Mann-Whitney,
 permutation-test, and sign-test tools.
+
+## Friedman test: nonparametric repeated-measures ANOVA
+
+Blocked rank-based comparison of k treatments. `friedman_test.py`:
+
+```
+$ python examples/friedman_test_demo.py examples/output
+
+15 datasets x 4 algorithms, each dataset with a big difficulty offset.
+Friedman Q = 43.88 (df=3), p = 1.6e-09, Kendall W = 0.975
+Average ranks: algo-A 1.00, algo-B 2.07, algo-C 2.93, algo-D 4.00
+Add per-block constant: Q unchanged (43.88 -> 43.88).
+```
+
+Rank the k treatments within each block, then test whether their rank sums differ (chi-squared, k-1 df).
+Ranking within blocks cancels block-to-block level differences, isolating the treatment effect. Validated:
+identical treatments -> small Q/large p, a superior treatment -> large Q/tiny p, additive block effects
+removed, k=2 reduces to a sign test, ties averaged, and Kendall's W in [0,1] hits 1 for perfect agreement.
+The repeated-measures nonparametric companion to the Kruskal-Wallis, Wilcoxon-signed-rank, and Mann-Whitney
+tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

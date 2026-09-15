@@ -671,6 +671,7 @@ def main():
     import ljung_box_demo
     import block_bootstrap_demo
     import wilcoxon_signed_rank_demo
+    import friedman_test_demo
 
     import plot_orbits
 
@@ -1311,6 +1312,7 @@ def main():
     ljung_box_txt = run("ljung_box_demo", ljung_box_demo.main, True)
     block_bootstrap_txt = run("block_bootstrap_demo", block_bootstrap_demo.main, True)
     wilcoxon_signed_rank_txt = run("wilcoxon_signed_rank_demo", wilcoxon_signed_rank_demo.main, True)
+    friedman_test_txt = run("friedman_test_demo", friedman_test_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12172,6 +12174,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("wilcoxon_signed_rank.svg"), "Top: a before/after dumbbell plot -- almost every subject increases (green), so W+ dominates. Bottom: the exact null distribution of W+ for n=12 over all 4096 sign patterns; the observed W+ (yellow) lands in the far red upper tail, giving a significant paired shift with no normality assumed and immunity to a single outlier")
             + f'<div class="card">{pre(wilcoxon_signed_rank_txt)}</div>'
+            + '</div>'),
+        section(
+            "Friedman test: nonparametric repeated-measures ANOVA",
+            "When the same subjects or matched blocks are measured under several conditions -- three drugs "
+            "per patient, four algorithms per dataset -- repeated-measures ANOVA tests whether the "
+            "conditions differ but assumes normal data. The Friedman test (1937) is its nonparametric "
+            "replacement and the blocked analogue of Kruskal-Wallis: it ranks the k treatments WITHIN "
+            "each block, then asks whether the treatments' rank sums differ, Q = 12/(nk(k+1)) sum "
+            "(R_j - n(k+1)/2)^2, chi-squared with k-1 df under the null. Ranking within blocks cancels "
+            "block-to-block level differences (a patient who scores high on everything), isolating the "
+            "treatment effect. Validated: identical treatments give small Q and large p, a superior "
+            "treatment gives large Q and tiny p, adding a constant to a whole block leaves Q unchanged "
+            "(block-effect removal), for k=2 it reduces to a sign-test comparison, ties are handled by "
+            "average ranks, and Kendall's W concordance lies in [0,1] and hits 1 for perfect agreement. "
+            "The repeated-measures nonparametric companion to the Kruskal-Wallis, Wilcoxon-signed-rank, "
+            "and Mann-Whitney tools.",
+            '<div class="grid">'
+            + svg_card(out("friedman_test.svg"), "Top: four algorithms' within-dataset ranks across 15 datasets, each on its own colored track -- despite huge per-dataset difficulty offsets, algo-A almost always ranks best and algo-D worst. Bottom: the average ranks (1.00, 2.07, 2.93, 4.00) spread cleanly apart, which is what Q measures; the block offsets cancel because ranking happens within each dataset")
+            + f'<div class="card">{pre(friedman_test_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

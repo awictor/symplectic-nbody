@@ -1,0 +1,28 @@
+Friedman test -- nonparametric repeated-measures ANOVA
+======================================================
+
+15 datasets x 4 algorithms. Each dataset has a large difficulty offset
+(a block effect ~10x the treatment differences).
+
+Friedman Q = 43.88 (df=3), p = 1.600e-09
+Kendall's W (concordance) = 0.975
+
+Average rank per algorithm (lower = better score more often):
+  algo-A: avg rank 1.00
+  algo-B: avg rank 2.07
+  algo-C: avg rank 2.93
+  algo-D: avg rank 4.00
+
+Ranking WITHIN each dataset cancels the difficulty offset, exposing the algorithm
+effect a raw-score ANOVA would drown in block-to-block variance.
+
+Add an arbitrary per-block constant: Q unchanged (43.88 -> 43.88).
+
+Power vs treatment spacing (15 blocks, block noise 10x):
+   spacing   Q        p-value
+   --------------------------------
+      0.0     0.84   8.399e-01
+      0.5    32.76   3.619e-07
+      1.0    39.40   1.428e-08
+      2.0    45.00   9.253e-10
+      4.0    45.00   9.253e-10
