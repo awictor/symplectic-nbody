@@ -640,6 +640,7 @@ ruins a long non-symplectic integration.
 | `src/ehrenfest_urn.py` | Ehrenfest urn: reversible Markov chain showing irreversible diffusion, entropy, and 2^N recurrence |
 | `src/polya_urn.py` | Polya's urn: reinforcement process with a random Beta-distributed limit, martingale, exchangeability |
 | `src/chinese_restaurant.py` | Chinese restaurant process: nonparametric partition prior, EPPF, alpha ln n table growth |
+| `src/stick_breaking.py` | Stick-breaking (GEM): explicit Dirichlet-process weights, geometric decay, concentration effect |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1271,6 +1272,7 @@ ruins a long non-symplectic integration.
 | `examples/ehrenfest_urn_demo.py` | A trajectory relaxing to N/2 with rising entropy, the binomial stationary law, and 2^N recurrence |
 | `examples/polya_urn_demo.py` | Fraction trajectories freezing into different random limits matching the Beta density |
 | `examples/chinese_restaurant_demo.py` | Expected tables growing as alpha ln n, and a realization's rich-get-richer cluster sizes |
+| `examples/stick_breaking_demo.py` | Unit sticks broken into DP weights at three concentrations, and the geometric-decay table |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14588,6 +14590,25 @@ Validated: mean tables match the harmonic-sum formula and grow like alpha ln n, 
 tables, the EPPF is exchangeable and matches the sequential seating probability, partition probabilities
 sum to 1, and alpha limits force one big table or all singletons. The Bayesian-nonparametric companion to
 the Polya-urn, Dirichlet, and Gaussian-mixture tools.
+
+## Stick-breaking: constructing a Dirichlet process
+
+The explicit weights of a Dirichlet process. `stick_breaking.py`:
+
+```
+$ python examples/stick_breaking_demo.py examples/output
+
+E[pi_k] = (1/(1+a))(a/(1+a))^(k-1):
+   k=1: a=1 -> 0.500, a=5 -> 0.167    k=5: a=1 -> 0.031, a=5 -> 0.080
+Weights for 95% mass: alpha 0.3 -> 1.9,  1.0 -> 4.0,  10 -> 31.1
+```
+
+Break Beta(1,alpha) fractions off a unit stick: pi_k = beta_k prod_{j<k}(1-beta_j). Weights are positive,
+sum to 1, and decay geometrically; small alpha snaps off big pieces, large alpha shaves thin slivers.
+Validated: partial sums approach 1, the mean of each weight matches the geometric formula, a smaller alpha
+needs fewer weights for 95% of the mass, sampling labels reproduces the weights as frequencies, and the
+residual stick has expected length (alpha/(1+alpha))^k. The Dirichlet-process-construction companion to the
+Chinese-restaurant, Polya-urn, and Dirichlet tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

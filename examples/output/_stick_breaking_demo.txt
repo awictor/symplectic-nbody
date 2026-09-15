@@ -1,0 +1,29 @@
+Stick-breaking (GEM) -- explicit Dirichlet-process weights off a unit stick
+==========================================================================
+
+Break Beta(1,alpha) fractions off a length-1 stick: pi_k = beta_k prod(1-beta_j).
+
+Expected weights decay geometrically, E[pi_k] = (1/(1+a))(a/(1+a))^(k-1):
+   k     alpha=1     alpha=5
+   ------------------------------
+   1     0.5000      0.1667
+   2     0.2500      0.1389
+   3     0.1250      0.1157
+   4     0.0625      0.0965
+   5     0.0312      0.0804
+   6     0.0156      0.0670
+   7     0.0078      0.0558
+
+Small alpha -> mass in a few big pieces; large alpha -> many thin, near-equal pieces.
+
+Weights needed to capture 95% of the mass (mean over 500 draws):
+   alpha    #weights for 95%
+   ------------------------------
+     0.3    1.9
+     1.0    4.0
+     3.0    10.0
+    10.0    31.1
+
+One realization (alpha=1, first 10 weights, sum=1.000):
+  0.761  0.021  0.085  0.010  0.118  0.001  0.003  0.002  0.000  0.000
+  first weight took 76% of the (truncated) mass -- rich-get-richer.

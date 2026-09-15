@@ -682,6 +682,7 @@ def main():
     import ehrenfest_urn_demo
     import polya_urn_demo
     import chinese_restaurant_demo
+    import stick_breaking_demo
 
     import plot_orbits
 
@@ -1333,6 +1334,7 @@ def main():
     ehrenfest_urn_txt = run("ehrenfest_urn_demo", ehrenfest_urn_demo.main, True)
     polya_urn_txt = run("polya_urn_demo", polya_urn_demo.main, True)
     chinese_restaurant_txt = run("chinese_restaurant_demo", chinese_restaurant_demo.main, True)
+    stick_breaking_txt = run("stick_breaking_demo", stick_breaking_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12408,6 +12410,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("chinese_restaurant.svg"), "Top: expected number of tables vs n for four concentrations -- each curve grows like alpha ln n (concave), so more alpha means more clusters. Bottom: one realization's cluster sizes (alpha=2, n=200) -- a few dominant tables (76, 35, 32...) trailing off into singletons, the rich-get-richer signature that lets the CRP discover the cluster count from the data")
             + f'<div class="card">{pre(chinese_restaurant_txt)}</div>'
+            + '</div>'),
+        section(
+            "Stick-breaking: constructing a Dirichlet process",
+            "The Chinese restaurant process describes a Dirichlet process by how customers cluster; the "
+            "stick-breaking construction (Sethuraman 1994; the GEM distribution) builds the same object "
+            "explicitly, as an infinite list of mixture weights. Take a unit stick, break off a "
+            "Beta(1,alpha) fraction for the first weight, break another such fraction off what remains for "
+            "the second, and so on forever: pi_k = beta_k prod_{j<k}(1-beta_j). The weights are positive, "
+            "sum to 1, and decay geometrically in expectation, E[pi_k] = (1/(1+alpha))(alpha/(1+alpha))^"
+            "{k-1}. A small alpha snaps off big pieces (a few dominant clusters); a large alpha shaves thin "
+            "slivers (many near-equal clusters) -- the same concentration alpha controls in the CRP. "
+            "Attaching a random atom to each weight yields a draw from a Dirichlet process, and this "
+            "construction is what makes DP mixtures tractable for truncated inference. Validated: the "
+            "weights are positive with partial sums approaching 1, the empirical mean of each weight "
+            "matches the geometric formula, a smaller alpha needs fewer weights to capture 95% of the mass, "
+            "sampling labels reproduces the weights as frequencies, and the residual stick after k breaks "
+            "has expected length (alpha/(1+alpha))^k. The Dirichlet-process-construction companion to the "
+            "Chinese-restaurant, Polya-urn, and Dirichlet tools.",
+            '<div class="grid">'
+            + svg_card(out("stick_breaking.svg"), "Three unit sticks broken into Dirichlet-process weights at increasing concentration alpha. At alpha=0.3 one coloured piece grabs most of the stick (a dominant cluster); at alpha=5 the stick shatters into many small near-equal pieces. These weights, with random atoms attached, ARE a sample from a Dirichlet process")
+            + f'<div class="card">{pre(stick_breaking_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
