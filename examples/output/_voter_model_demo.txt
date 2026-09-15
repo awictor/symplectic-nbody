@@ -1,0 +1,26 @@
+Voter model -- local imitation drives a population to consensus
+==============================================================
+
+Consensus probability equals the INITIAL +1 fraction (magnetization martingale):
+   initial +1 frac   P(+1 wins) empirical
+   ----------------------------------------
+    0.20             0.212
+    0.40             0.397
+    0.50             0.525
+    0.60             0.623
+    0.80             0.798
+
+Start 70% blue and blue wins ~70% of the time -- outcome is FAIR, not majority-take-all.
+
+Domains coarsen over time (30x30 grid, balanced start):
+   step        magnetization   #domains
+   ----------------------------------------
+      500      +0.062          61
+    33500      +0.307          20
+    67000      +0.400          21
+   100500      +0.402          23
+   133500      +0.191          9
+   200000      +0.304          18
+  reached consensus in 200000 steps -> everyone -1
+
+Magnetization wanders (a martingale) while domains merge; on a finite grid one opinion wins.

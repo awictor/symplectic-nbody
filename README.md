@@ -642,6 +642,7 @@ ruins a long non-symplectic integration.
 | `src/chinese_restaurant.py` | Chinese restaurant process: nonparametric partition prior, EPPF, alpha ln n table growth |
 | `src/stick_breaking.py` | Stick-breaking (GEM): explicit Dirichlet-process weights, geometric decay, concentration effect |
 | `src/sir_stochastic.py` | Stochastic SIR epidemic: Gillespie outbreak dynamics, R0 threshold, bimodal final size |
+| `src/voter_model.py` | Voter model: opinion dynamics to consensus, magnetization martingale, domain coarsening |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1275,6 +1276,7 @@ ruins a long non-symplectic integration.
 | `examples/chinese_restaurant_demo.py` | Expected tables growing as alpha ln n, and a realization's rich-get-richer cluster sizes |
 | `examples/stick_breaking_demo.py` | Unit sticks broken into DP weights at three concentrations, and the geometric-decay table |
 | `examples/sir_stochastic_demo.py` | Take-off vs fizzle epidemic trajectories and the bimodal final size vs the final-size equation |
+| `examples/voter_model_demo.py` | Opinion grid coarsening to consensus over four snapshots, and consensus probability = initial fraction |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14632,6 +14634,24 @@ Gillespie. The same R0>1 epidemic either fizzles (prob ~1/R0) or infects the fra
 major fraction matching the final-size equation; the minor probability is ~1/R0; S+I+R is conserved; and
 larger R0 raises both the major size and take-off probability. The epidemic-dynamics companion to the
 Gillespie-SSA, Galton-Watson, and reaction-diffusion tools.
+
+## The voter model: local imitation to consensus
+
+Opinion dynamics where the winner is chosen fairly. `voter_model.py`:
+
+```
+$ python examples/voter_model_demo.py examples/output
+
+Consensus probability = initial +1 fraction (martingale):
+   0.20 -> 0.212    0.50 -> 0.525    0.80 -> 0.798
+Domains coarsen 61 -> 9 -> consensus.
+```
+
+Each site copies a random neighbour, so domains coarsen to unanimous consensus. The mean opinion is a
+martingale, making P(+1 wins) equal to the initial +1 fraction -- fair, not majority-take-all. Validated:
+the expected magnetization is preserved over an update, consensus is reached on a finite grid, the
++1-consensus probability equals the initial fraction, domains coarsen, and a fully ordered start is
+absorbing. The interacting-particle-system companion to the Ising, Moran-process, and Gillespie tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

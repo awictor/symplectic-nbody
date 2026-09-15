@@ -4,17 +4,17 @@
 <text x="20" y="47" fill="#8b949e" font-size="12">a backtracking engine would blow up exponentially here; the NFA scales linearly</text>
 <line x1="60" y1="320" x2="720" y2="320" stroke="#30363d" stroke-width="1"/>
 <line x1="60" y1="320" x2="60" y2="70" stroke="#30363d" stroke-width="1"/>
-<polyline points="101.2,292.8 142.5,268.6 225.0,216.7 390.0,117.9 720.0,70.0" fill="none" stroke="#4dabf7" stroke-width="2"/>
-<circle cx="101.2" cy="292.8" r="4" fill="#ffd43b"/>
-<text x="101" y="283" fill="#8b949e" font-size="10" text-anchor="middle">0.1ms</text>
-<circle cx="142.5" cy="268.6" r="4" fill="#ffd43b"/>
-<text x="142" y="259" fill="#8b949e" font-size="10" text-anchor="middle">0.2ms</text>
-<circle cx="225.0" cy="216.7" r="4" fill="#ffd43b"/>
-<text x="225" y="207" fill="#8b949e" font-size="10" text-anchor="middle">0.4ms</text>
-<circle cx="390.0" cy="117.9" r="4" fill="#ffd43b"/>
-<text x="390" y="108" fill="#8b949e" font-size="10" text-anchor="middle">0.8ms</text>
+<polyline points="101.2,305.0 142.5,291.0 225.0,262.7 390.0,199.7 720.0,70.0" fill="none" stroke="#4dabf7" stroke-width="2"/>
+<circle cx="101.2" cy="305.0" r="4" fill="#ffd43b"/>
+<text x="101" y="295" fill="#8b949e" font-size="10" text-anchor="middle">0.1ms</text>
+<circle cx="142.5" cy="291.0" r="4" fill="#ffd43b"/>
+<text x="142" y="281" fill="#8b949e" font-size="10" text-anchor="middle">0.1ms</text>
+<circle cx="225.0" cy="262.7" r="4" fill="#ffd43b"/>
+<text x="225" y="253" fill="#8b949e" font-size="10" text-anchor="middle">0.3ms</text>
+<circle cx="390.0" cy="199.7" r="4" fill="#ffd43b"/>
+<text x="390" y="190" fill="#8b949e" font-size="10" text-anchor="middle">0.6ms</text>
 <circle cx="720.0" cy="70.0" r="4" fill="#ffd43b"/>
-<text x="720" y="60" fill="#8b949e" font-size="10" text-anchor="middle">1.0ms</text>
+<text x="720" y="60" fill="#8b949e" font-size="10" text-anchor="middle">1.2ms</text>
 <text x="390" y="350" fill="#8b949e" font-size="12" text-anchor="middle">input length n (characters)</text>
 <text x="20" y="68" fill="#8b949e" font-size="11">match time (ms)</text>
 </svg>

@@ -684,6 +684,7 @@ def main():
     import chinese_restaurant_demo
     import stick_breaking_demo
     import sir_stochastic_demo
+    import voter_model_demo
 
     import plot_orbits
 
@@ -1337,6 +1338,7 @@ def main():
     chinese_restaurant_txt = run("chinese_restaurant_demo", chinese_restaurant_demo.main, True)
     stick_breaking_txt = run("stick_breaking_demo", stick_breaking_demo.main, True)
     sir_stochastic_txt = run("sir_stochastic_demo", sir_stochastic_demo.main, True)
+    voter_model_txt = run("voter_model_demo", voter_model_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12452,6 +12454,24 @@ def main():
             '<div class="grid">'
             + svg_card(out("sir_stochastic.svg"), "Top: infected-count trajectories over many outbreaks at R0=2.5 -- red curves take off into a big epidemic peak, gray ones fizzle early, from the SAME parameters. Bottom: the histogram of final sizes is bimodal, a spike near zero (fizzles) plus a peak at the final-size-equation prediction z=0.89 (major outbreaks); chance alone decides which branch a single introduction follows")
             + f'<div class="card">{pre(sir_stochastic_txt)}</div>'
+            + '</div>'),
+        section(
+            "The voter model: local imitation to consensus",
+            "The voter model is the simplest opinion-dynamics interacting particle system. Every grid site "
+            "holds an opinion +1 or -1; at each step a random site copies a random neighbour -- pure social "
+            "imitation. The population coarsens into growing single-opinion domains until, on any finite "
+            "grid, it reaches unanimous consensus. Its exact features: the expected fraction of +1 is a "
+            "MARTINGALE (a copy is equally likely to flip either way, so the mean opinion is conserved), "
+            "which makes the probability that +1 eventually wins equal to its INITIAL fraction -- start "
+            "70% blue and blue wins 70% of the time, a fair outcome, not majority-take-all. Tracing "
+            "opinions backward turns the model into coalescing random walks (duality). Validated: the "
+            "expected magnetization is preserved over an update, the process reaches consensus on a finite "
+            "grid, the +1-consensus probability equals the initial +1 fraction, the opinion domains "
+            "coarsen over time, a fully ordered start is absorbing, and results are reproducible per seed. "
+            "The interacting-particle-system companion to the Ising, Moran-process, and Gillespie tools.",
+            '<div class="grid">'
+            + svg_card(out("voter_model.svg"), "A 40x40 opinion grid (blue = +1, red = -1) at four times: salt-and-pepper noise at the start coarsens into large domains that swallow one another as sites copy neighbours, heading toward consensus. Each copy conserves the mean opinion in expectation, so the eventual winner is chosen fairly by its initial share, not by which side started larger")
+            + f'<div class="card">{pre(voter_model_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
