@@ -28,7 +28,7 @@ def test_dashboard_builds():
     html = open(index, encoding="utf-8").read()
     assert html.startswith("<!DOCTYPE html>")
     assert "</html>" in html
-    assert html.count("<section>") == 639
+    assert html.count("<section>") == 640
     assert "<svg" in html  # at least one figure inlined
     low = html.lower()
     # the placeholder must be fully substituted

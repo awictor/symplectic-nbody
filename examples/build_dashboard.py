@@ -693,6 +693,7 @@ def main():
     import simpsons_paradox_demo
     import ballot_problem_demo
     import taylor_couette_demo
+    import hopfield_demo
 
     import plot_orbits
 
@@ -1355,6 +1356,7 @@ def main():
     simpsons_paradox_txt = run("simpsons_paradox_demo", simpsons_paradox_demo.main, True)
     ballot_problem_txt = run("ballot_problem_demo", ballot_problem_demo.main, True)
     taylor_couette_txt = run("taylor_couette_demo", taylor_couette_demo.main, True)
+    hopfield_txt = run("hopfield_demo", hopfield_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12647,6 +12649,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("taylor_couette.svg"), "Left: the exact azimuthal velocity v(r) = Ar + B/r across the gap for three drive configurations -- inner-only (red), solid-body (green), and fast-outer (blue) -- each pinned to its wall speeds by no-slip. Right: a cylinder cross-section showing that when the inner cylinder is spun past the critical Taylor number the smooth flow breaks into a ring of counter-rotating Taylor vortices (alternating red and blue)")
             + f'<div class="card">{pre(taylor_couette_txt)}</div>'
+            + '</div>'),
+        section(
+            "Hopfield networks: memory as energy descent",
+            "A Hopfield network (1982) stores patterns as the stable states of a recurrent network of "
+            "+/-1 neurons and recalls them by dynamics rather than lookup: show it a corrupted or partial "
+            "memory and the update rule rolls downhill through an energy landscape to the nearest stored "
+            "pattern. It is content-addressable -- the address of a memory is part of its content. Storage "
+            "is Hebbian, W_ij = (1/N) sum_m xi_i xi_j over the patterns, symmetric with zero diagonal; "
+            "retrieval flips each neuron to the sign of its local field, and because the weights are "
+            "symmetric this cannot increase the Lyapunov energy E = -1/2 sum W_ij s_i s_j, so the dynamics "
+            "always converge to a minimum in finite time -- no cycles. Two hard facts fall out: capacity "
+            "(above about 0.138 N random patterns the stored memories stop being stable as spurious minima "
+            "proliferate -- the Amit-Gutfreund-Sompolinsky load) and spurious mixture states (the network "
+            "invents attractors like sign(xi1 +/- xi2 +/- xi3) it was never taught). Validated: energy "
+            "never rises under an asynchronous flip, stored patterns are fixed points with lower energy "
+            "than random states, a corrupted cue is recalled exactly, recall accuracy collapses as the "
+            "load passes ~0.14, and an odd 3-pattern mixture is a genuine stable attractor. The "
+            "associative-memory companion to the Ising, simulated-annealing, and Boltzmann-machine tools.",
+            '<div class="grid">'
+            + svg_card(out("hopfield.svg"), "Top: a stored 5x5 letter 'T' shown with three pixels flipped (red cue) is fed to the network, which settles by energy descent to the exact stored memory (green), identical to the original (blue). Bottom: mean recall overlap (purple) as a function of the memory load p/N -- near-perfect until the load crosses the dashed Amit-Gutfreund-Sompolinsky line at p/N ~ 0.138, then collapsing as spurious minima take over")
+            + f'<div class="card">{pre(hopfield_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

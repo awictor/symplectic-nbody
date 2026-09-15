@@ -651,6 +651,7 @@ ruins a long non-symplectic integration.
 | `src/simpsons_paradox.py` | Simpson's paradox: detect rate reversals, correct with Mantel-Haenszel and standardization |
 | `src/ballot_problem.py` | Bertrand's ballot theorem: (p-q)/(p+q) via reflection principle, cycle lemma, Catalan numbers |
 | `src/taylor_couette.py` | Taylor-Couette flow: exact v(r)=Ar+B/r, Rayleigh centrifugal criterion, Taylor-vortex onset |
+| `src/hopfield.py` | Hopfield associative memory: Hebbian storage, energy descent, 0.138N capacity, spurious states |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1293,6 +1294,7 @@ ruins a long non-symplectic integration.
 | `examples/simpsons_paradox_demo.py` | The kidney-stone reversal: A wins every stratum but loses the pool until the confounder is fixed |
 | `examples/ballot_problem_demo.py` | The (p-q)/(p+q) law, three agreeing derivations, and good vs bad lattice paths |
 | `examples/taylor_couette_demo.py` | Velocity profiles for three drive configs, Rayleigh verdicts, and Taylor-number onset |
+| `examples/hopfield_demo.py` | Recall a corrupted 5x5 letter and watch recall accuracy collapse past the capacity line |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14822,6 +14824,25 @@ Phi = 4 A Omega, the torque, and the narrow-gap Taylor number. Validated analyti
 conditions to machine precision, solid-body gives B=0, the marginal line Omega2/Omega1 = (r1/r2)^2
 gives the potential vortex, and the stability verdicts match direct evaluation of L^2. The rotating-flow
 companion to the Rayleigh-Benard, Kelvin-Helmholtz, and Orr-Sommerfeld tools.
+
+## Hopfield networks: memory as energy descent
+
+Content-addressable memory that recalls patterns by rolling downhill. `hopfield.py`:
+
+```
+$ python examples/hopfield_demo.py examples/output
+
+Stored 3 letter bitmaps; each is a fixed point of the dynamics.
+Corrupted 'T' (3 of 25 pixels flipped) recalled with overlap +1.000.
+Recall accuracy vs load p/N (N=100):
+   0.05 -> 1.000    0.14 -> 0.964    0.30 -> 0.651   (collapse past ~0.138 N)
+```
+
+Hebbian storage W_ij = (1/N) sum_m xi_i xi_j, asynchronous updates that cannot raise the Lyapunov
+energy E = -1/2 sum W_ij s_i s_j, so recall always converges. Validated: energy monotone under flips,
+stored patterns are low-energy fixed points, corrupted cues recalled exactly, capacity collapse past
+the Amit-Gutfreund-Sompolinsky load ~0.138 N, and odd mixture states are genuine spurious attractors.
+The associative-memory companion to the Ising, simulated-annealing, and Boltzmann-machine tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

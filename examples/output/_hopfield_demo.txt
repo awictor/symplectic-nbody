@@ -1,0 +1,31 @@
+Hopfield network -- content-addressable memory by energy descent
+==========================================================================
+
+Stored 3 letter patterns in an N=25 neuron net (5x5 bitmaps).
+Each stored pattern is a fixed point: True. Energies:
+   'T'  E =  -11.200
+   'L'  E =  -11.200
+   'X'  E =  -11.040
+
+Show it a corrupted 'T' (3 of 25 pixels flipped) and let it settle:
+
+    corrupted cue     ->     recalled      (stored 'T')
+      ##.##          #####         #####
+      ..#..          ..#..         ..#..
+      ..#..          ..#..         ..#..
+      ..##.          ..#..         ..#..
+      #.#..          ..#..         ..#..
+
+  overlap with stored 'T' = +1.000  (1.0 = perfect recall).
+
+Capacity: recall accuracy vs load p/N (N=100, 10 flipped bits per cue):
+   load p/N     patterns     mean recall overlap
+   ----------------------------------------------
+    0.02           2         1.000  ##############################
+    0.05           5         1.000  ##############################
+    0.10          10         0.994  #############################
+    0.14          14         0.964  ############################
+    0.20          20         0.914  ###########################
+    0.30          30         0.651  ###################
+
+Recall stays near-perfect until the Amit-Gutfreund-Sompolinsky load p/N ~ 0.138, then collapses as spurious minima take over.
