@@ -680,6 +680,7 @@ def main():
     import moran_process_demo
     import replicator_dynamics_demo
     import ehrenfest_urn_demo
+    import polya_urn_demo
 
     import plot_orbits
 
@@ -1329,6 +1330,7 @@ def main():
     moran_process_txt = run("moran_process_demo", moran_process_demo.main, True)
     replicator_dynamics_txt = run("replicator_dynamics_demo", replicator_dynamics_demo.main, True)
     ehrenfest_urn_txt = run("ehrenfest_urn_demo", ehrenfest_urn_demo.main, True)
+    polya_urn_txt = run("polya_urn_demo", polya_urn_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12365,6 +12367,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("ehrenfest_urn.svg"), "Top: the count in urn A starting from all 50 balls, decaying irreversibly toward equilibrium N/2 (green dashed) then fluctuating -- despite every single move being reversible. Bottom: the stationary distribution is Binomial(N,1/2), so sharply peaked at N/2 that the all-in-one state has probability 2^-50 ~ 1e-15, a return you would wait 2^50 steps to see")
             + f'<div class="card">{pre(ehrenfest_urn_txt)}</div>'
+            + '</div>'),
+        section(
+            "Polya's urn: reinforcement and a random limit",
+            "The Ehrenfest urn has one deterministic equilibrium; Polya's urn does the opposite -- it "
+            "AMPLIFIES early chance into a permanent random outcome. Start with a black and b white balls; "
+            "each draw returns the ball plus c more of the SAME colour, so every draw makes that colour "
+            "likelier next time (rich-get-richer). The black fraction is a bounded MARTINGALE -- its "
+            "expectation stays a/(a+b) forever -- so it converges, but to a RANDOM limit: for c=1 that "
+            "limit is Beta(a,b) distributed, meaning two runs settle on two different stable fractions "
+            "fixed by the luck of the early draws. The draw sequence is EXCHANGEABLE (any reordering is "
+            "equally likely), and by de Finetti's theorem that is exactly what makes the process a mixture "
+            "over a random frequency -- the link to Beta-Bernoulli conjugacy, the Chinese restaurant "
+            "process, and Dirichlet processes. Validated: the expected fraction stays a/(a+b) at every "
+            "step, the empirical limit matches Beta(a,b) in mean and variance, reordered sequences are "
+            "equiprobable, a symmetric start spreads uniformly about 1/2, and larger c gives more spread. "
+            "The reinforcement-process companion to the Ehrenfest-urn, Dirichlet, and Beta tools.",
+            '<div class="grid">'
+            + svg_card(out("polya_urn.svg"), "Top: eight black-fraction trajectories from the same 2-black/3-white start -- each wanders early then locks onto its OWN random limit, all straddling the martingale value a/(a+b) (gray dashed). Bottom: the histogram of 4000 final fractions traces the Beta(2,3) density (yellow) exactly -- reinforcement freezes early randomness into a permanent Beta-distributed outcome")
+            + f'<div class="card">{pre(polya_urn_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -638,6 +638,7 @@ ruins a long non-symplectic integration.
 | `src/moran_process.py` | Moran process: finite-population fixation probabilities with selection, overlapping generations |
 | `src/replicator_dynamics.py` | Replicator dynamics: evolutionary game theory ODE on the simplex, Nash rest points, RPS cycles |
 | `src/ehrenfest_urn.py` | Ehrenfest urn: reversible Markov chain showing irreversible diffusion, entropy, and 2^N recurrence |
+| `src/polya_urn.py` | Polya's urn: reinforcement process with a random Beta-distributed limit, martingale, exchangeability |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1267,6 +1268,7 @@ ruins a long non-symplectic integration.
 | `examples/moran_process_demo.py` | Fixation probability vs starting count by selection, and single-mutant fixation approaching 1-1/r |
 | `examples/replicator_dynamics_demo.py` | Rock-paper-scissors orbits on the simplex, a dominant strategy sweeping, and an interior ESS |
 | `examples/ehrenfest_urn_demo.py` | A trajectory relaxing to N/2 with rising entropy, the binomial stationary law, and 2^N recurrence |
+| `examples/polya_urn_demo.py` | Fraction trajectories freezing into different random limits matching the Beta density |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14542,6 +14544,26 @@ mean return time 2^N. Validated: occupation matches Binomial(N,1/2), the mean co
 entropy rises, detailed balance holds to machine precision, the drift is linear and restoring, and mean
 recurrence equals 2^N. The reversible-Markov-chain companion to the Gillespie-SSA, Markov-chain, and
 Maxwell-Boltzmann tools.
+
+## Polya's urn: reinforcement and a random limit
+
+Rich-get-richer dynamics with a random Beta limit. `polya_urn.py`:
+
+```
+$ python examples/polya_urn_demo.py examples/output
+
+Start 2 black, 3 white; draw returns the ball + 1 of its colour.
+Ten runs freeze into DIFFERENT fractions: 0.036 .. 0.578.
+Limiting law Beta(2,3): mean emp 0.3999 / Beta 0.4000, var 0.0398 / 0.0400.
+Exchangeable: P(BWB) = P(BBW) = P(WBB) = 0.08571.
+```
+
+Each draw returns the ball plus c more of its colour, so colours reinforce. The black fraction is a
+martingale (expectation a/(a+b) forever) that converges to a RANDOM limit -- Beta(a,b) for c=1 -- and the
+draw sequence is exchangeable (de Finetti). Validated: expected fraction stays a/(a+b), the empirical limit
+matches Beta(a,b) in mean and variance, reordered sequences are equiprobable, a symmetric start spreads
+uniformly about 1/2, and larger c gives more spread. The reinforcement-process companion to the
+Ehrenfest-urn, Dirichlet, and Beta tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
