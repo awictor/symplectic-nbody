@@ -673,6 +673,7 @@ def main():
     import wilcoxon_signed_rank_demo
     import friedman_test_demo
     import gillespie_ssa_demo
+    import wright_fisher_demo
 
     import plot_orbits
 
@@ -1315,6 +1316,7 @@ def main():
     wilcoxon_signed_rank_txt = run("wilcoxon_signed_rank_demo", wilcoxon_signed_rank_demo.main, True)
     friedman_test_txt = run("friedman_test_demo", friedman_test_demo.main, True)
     gillespie_ssa_txt = run("gillespie_ssa_demo", gillespie_ssa_demo.main, True)
+    wright_fisher_txt = run("wright_fisher_demo", wright_fisher_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12217,6 +12219,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("gillespie_ssa.svg"), "A stochastic Lotka-Volterra predator-prey run. Top: prey (green) and predator (red) counts as exact step-function trajectories, each step a single reaction event -- sustained but noisy oscillation. Bottom: the phase-plane orbit wanders rather than tracing the ODE's closed loop, because demographic noise perturbs every cycle")
             + f'<div class="card">{pre(gillespie_ssa_txt)}</div>'
+            + '</div>'),
+        section(
+            "Wright-Fisher: genetic drift, fixation, and selection",
+            "In a finite population, pure chance in which individuals reproduce -- genetic drift -- pushes "
+            "an allele's frequency around until it either fixes (frequency 1) or is lost (0). The "
+            "Wright-Fisher model draws each generation's allele count as Binomial(2N, p'), a random walk "
+            "with absorbing barriers. Two exact results anchor it: a neutral allele's fixation "
+            "probability equals its current frequency (a martingale), and the drift variance is "
+            "p(1-p)/(2N), so small populations drift faster. With selection the fixation probability "
+            "rises above neutral and matches Kimura's diffusion formula; a new beneficial mutant fixes "
+            "with probability near 2s. Expected heterozygosity decays by 1 - 1/(2N) per generation. "
+            "Validated: neutral fixation equals the starting frequency across a range of p, selection "
+            "raises fixation and matches the Kimura formula, the drift variance matches p(1-p)/2N, "
+            "heterozygosity decays geometrically, every trajectory is absorbed, and smaller populations "
+            "fix faster. The population-genetics companion to the Gillespie-SSA, Moran-process, and "
+            "Markov-chain tools.",
+            '<div class="grid">'
+            + svg_card(out("wright_fisher.svg"), "25 neutral allele-frequency trajectories starting at p0=0.5 in a population of 2N=50. Each is a random walk to an absorbing barrier: about half climb to fixation (green) and half fall to loss (red), exactly as the martingale predicts -- yet any single lineage's fate is pure chance, and small populations reach a barrier fast")
+            + f'<div class="card">{pre(wright_fisher_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

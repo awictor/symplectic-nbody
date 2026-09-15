@@ -631,6 +631,7 @@ ruins a long non-symplectic integration.
 | `src/wilcoxon_signed_rank.py` | Wilcoxon signed-rank test: robust paired nonparametric test with exact and normal p-values |
 | `src/friedman_test.py` | Friedman test: nonparametric repeated-measures ANOVA with Kendall's W concordance |
 | `src/gillespie_ssa.py` | Gillespie's stochastic simulation algorithm: exact trajectories of a chemical reaction network |
+| `src/wright_fisher.py` | Wright-Fisher model: genetic drift, fixation probability, and selection in a finite population |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1253,6 +1254,7 @@ ruins a long non-symplectic integration.
 | `examples/wilcoxon_signed_rank_demo.py` | Wilcoxon holding significance where an outlier destroys the paired t-test, with the exact W+ null |
 | `examples/friedman_test_demo.py` | Four algorithms' within-block ranks across datasets, the treatment effect surviving block offsets |
 | `examples/gillespie_ssa_demo.py` | Stochastic Lotka-Volterra trajectories and phase orbit, and decay noise shrinking toward the ODE |
+| `examples/wright_fisher_demo.py` | Drift trajectories to fixation/loss, neutral fixation = p0, and the Kimura selection formula |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14384,6 +14386,27 @@ steady state, waiting times are exponential with the total propensity, reaction-
 propensity ratios, relative fluctuations shrink as population grows (the ODE limit), and Lotka-Volterra
 oscillates stochastically. The stochastic-kinetics companion to the reaction-diffusion, Markov-chain, and
 master-equation tools.
+
+## Wright-Fisher: genetic drift, fixation, and selection
+
+Allele-frequency dynamics in a finite population. `wright_fisher.py`:
+
+```
+$ python examples/wright_fisher_demo.py examples/output
+
+Neutral fixation probability = starting frequency:
+   p0=0.3 -> 0.301 (sim)   p0=0.7 -> 0.692 (sim)
+
+New beneficial mutant (2N=50), fixation vs Kimura formula:
+   s=0.05 -> 0.091 (sim) / 0.096 (Kimura)   [neutral = 0.02]
+```
+
+Each generation's allele count is Binomial(2N, p') -- a random walk with absorbing barriers at 0 and 1. A
+neutral allele fixes with probability equal to its current frequency (a martingale); drift variance is
+p(1-p)/(2N). Validated: neutral fixation equals p0, selection raises fixation and matches the Kimura
+diffusion formula, the drift variance matches p(1-p)/2N, heterozygosity decays by 1-1/(2N) per generation,
+every trajectory is absorbed, and smaller populations fix faster. The population-genetics companion to the
+Gillespie-SSA, Moran-process, and Markov-chain tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
