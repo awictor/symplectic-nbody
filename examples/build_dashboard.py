@@ -688,6 +688,7 @@ def main():
     import schelling_segregation_demo
     import tasep_demo
     import bak_sneppen_demo
+    import vicsek_flocking_demo
 
     import plot_orbits
 
@@ -1345,6 +1346,7 @@ def main():
     schelling_segregation_txt = run("schelling_segregation_demo", schelling_segregation_demo.main, True)
     tasep_txt = run("tasep_demo", tasep_demo.main, True)
     bak_sneppen_txt = run("bak_sneppen_demo", bak_sneppen_demo.main, True)
+    vicsek_flocking_txt = run("vicsek_flocking_demo", vicsek_flocking_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12536,6 +12538,27 @@ def main():
             '<div class="grid">'
             + svg_card(out("bak_sneppen.svg"), "Top: the least-fit species over time spikes up toward the self-organized threshold f_c ~ 0.667 (green dashed), then avalanches drag it back down -- the sawtooth of punctuated equilibrium. Bottom: avalanche sizes on log-log axes fall off in a near-straight line, the power-law signature of criticality reached with no parameter tuned")
             + f'<div class="card">{pre(bak_sneppen_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Vicsek model: flocking as a phase transition",
+            "A flock of starlings, a school of fish, a bacterial swarm: thousands moving as one with no "
+            "leader. The Vicsek model (1995) is the minimal physics of this active matter. N particles "
+            "move at constant speed on a periodic plane; each step every particle sets its heading to the "
+            "average heading of its neighbours within a radius, plus an angular noise kick eta. Nothing "
+            "else -- just noisy alignment -- yet a genuine phase transition emerges, controlled by the "
+            "noise. The polar order parameter phi = |mean unit velocity| runs from ~1 (aligned flock) to "
+            "~0 (disorder): at low noise the particles spontaneously break symmetry and flock, at high "
+            "noise alignment is destroyed, with a sharp critical noise between them that rises with "
+            "density. This was among the first demonstrations that a driven system of self-propelled "
+            "agents undergoes a symmetry-breaking transition like a magnet -- it launched the field of "
+            "active matter. Validated: low noise gives high order and high noise low order, order "
+            "decreases monotonically across the transition, every particle's speed stays constant, higher "
+            "density raises the order at fixed noise, the circular mean handles the 2pi wrap, and results "
+            "are reproducible per seed. The active-matter companion to the boids, Kuramoto, and Ising "
+            "tools.",
+            '<div class="grid">'
+            + svg_card(out("vicsek_flocking.svg"), "Two snapshots of 120 self-propelled particles (arrows = velocities). Left, at low noise: the particles have spontaneously aligned into a coherent green flock all pointing the same way (order ~1). Right, at high noise: headings are random red arrows in every direction (order ~0). The same local alignment rule flips between collective motion and disorder as the noise crosses the critical value")
+            + f'<div class="card">{pre(vicsek_flocking_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

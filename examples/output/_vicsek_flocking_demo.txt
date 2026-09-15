@@ -1,0 +1,28 @@
+Vicsek model -- self-propelled particles flocking, an order-disorder transition
+==============================================================================
+
+Each particle aligns to neighbours within radius r, plus angular noise eta. No leader.
+
+N=300, box=7.0, radius r=1.0, density rho=6.12.
+
+Order parameter phi vs noise eta (phi=1 aligned flock, phi=0 disorder):
+   eta     phi        regime
+   ----------------------------------
+   0.50    0.988      flock
+   1.50    0.890      flock
+   2.50    0.709      flock
+   3.50    0.452      critical
+   4.50    0.122      disorder
+   5.50    0.069      disorder
+   6.28    0.051      disorder
+
+Below the critical noise the flock spontaneously aligns; above it, motion is random.
+A symmetry-breaking phase transition -- like a magnet, but in a driven, moving system.
+
+Critical noise rises with density (more neighbours to align with):
+   N     density   phi at eta=3.0
+   ----------------------------------
+     80   1.63      0.399
+    160   3.27      0.535
+    320   6.53      0.626
+    640   13.06      0.652

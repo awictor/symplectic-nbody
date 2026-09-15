@@ -646,6 +646,7 @@ ruins a long non-symplectic integration.
 | `src/schelling_segregation.py` | Schelling segregation: mild individual preference producing emergent collective segregation |
 | `src/tasep.py` | TASEP: driven lattice gas with the exactly-solved open-boundary phase diagram |
 | `src/bak_sneppen.py` | Bak-Sneppen model: self-organized criticality in evolution, avalanches, punctuated equilibrium |
+| `src/vicsek_flocking.py` | Vicsek model: self-propelled particles flocking, the order-disorder phase transition |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1283,6 +1284,7 @@ ruins a long non-symplectic integration.
 | `examples/schelling_segregation_demo.py` | A random mixed grid segregating under a mild 1/3 tolerance, with the tau sweep |
 | `examples/tasep_demo.py` | The TASEP phase diagram and per-phase density profiles vs the exact formulas |
 | `examples/bak_sneppen_demo.py` | The fitness gap climbing to f_c and the power-law avalanche-size distribution |
+| `examples/vicsek_flocking_demo.py` | Order parameter vs noise across the flocking transition, and aligned vs disordered snapshots |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14714,6 +14716,25 @@ power-law avalanches -- the mechanism for punctuated equilibrium. Validated: the
 ~2/3, mean fitness rises and stays high, avalanches are heavy-tailed, each update replaces three adjacent
 species, and the critical state is independent of initial condition and ring size. The
 self-organized-criticality companion to the sandpile, forest-fire, and Ising tools.
+
+## The Vicsek model: flocking as a phase transition
+
+The founding model of active matter. `vicsek_flocking.py`:
+
+```
+$ python examples/vicsek_flocking_demo.py examples/output
+
+Order parameter phi vs noise eta (N=300, rho=6.1):
+   eta=0.5 -> 0.988 (flock)   eta=3.5 -> 0.452 (critical)   eta=5.5 -> 0.069 (disorder)
+Critical noise rises with density: rho 1.6 -> phi 0.40, rho 13 -> phi 0.65.
+```
+
+Particles move at constant speed and align to neighbours within a radius plus angular noise eta. The polar
+order phi = |mean unit velocity| undergoes a symmetry-breaking transition: aligned flock at low noise,
+disorder at high noise, with a critical noise that rises with density. Validated: low noise gives high
+order and high noise low, order decreases monotonically across the transition, every particle's speed
+stays constant, higher density raises the order, and the circular mean handles the 2pi wrap. The
+active-matter companion to the boids, Kuramoto, and Ising tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
