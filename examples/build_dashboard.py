@@ -687,6 +687,7 @@ def main():
     import voter_model_demo
     import schelling_segregation_demo
     import tasep_demo
+    import bak_sneppen_demo
 
     import plot_orbits
 
@@ -1343,6 +1344,7 @@ def main():
     voter_model_txt = run("voter_model_demo", voter_model_demo.main, True)
     schelling_segregation_txt = run("schelling_segregation_demo", schelling_segregation_demo.main, True)
     tasep_txt = run("tasep_demo", tasep_demo.main, True)
+    bak_sneppen_txt = run("bak_sneppen_demo", bak_sneppen_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12514,6 +12516,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("tasep.svg"), "Left: the TASEP phase diagram over the injection/ejection rates (alpha, beta) -- blue low-density, red high-density, green maximal-current, meeting at (1/2, 1/2). Right: steady-state density profiles per phase -- flat in the bulk at rho = alpha, 1-beta, or 1/2, bending only in thin boundary layers at the driven ends")
             + f'<div class="card">{pre(tasep_txt)}</div>'
+            + '</div>'),
+        section(
+            "Bak-Sneppen: evolution at the edge of chaos",
+            "Why is the fossil record punctuated -- long calm stretches broken by extinction bursts -- "
+            "rather than smoothly gradual? Bak and Sneppen (1993) gave a strikingly simple answer: "
+            "self-organized criticality in a coevolving ecosystem. Place N species on a ring, each with a "
+            "random fitness; at every step replace the LEAST-fit species AND its two neighbours (a "
+            "species' fate is coupled to its ecological neighbours) with fresh random fitnesses. With no "
+            "tuning, the system drives itself to a critical state: the minimum fitness climbs until nearly "
+            "all species sit above a self-organized threshold f_c (~0.667 for the 1-D ring), where the "
+            "smallest disturbance can cascade. Activity comes in AVALANCHES with a power-law size "
+            "distribution -- no characteristic scale -- the model's explanation for extinction bursts of "
+            "every magnitude and for punctuated equilibrium. Validated: the gap (running max of the "
+            "minimum fitness) climbs from ~0 and plateaus at ~2/3, the mean fitness rises and stays high, "
+            "avalanches span a wide heavy-tailed range, each update replaces exactly three adjacent "
+            "species, and the critical state is independent of the initial condition and ring size. The "
+            "self-organized-criticality companion to the sandpile, forest-fire, and Ising tools.",
+            '<div class="grid">'
+            + svg_card(out("bak_sneppen.svg"), "Top: the least-fit species over time spikes up toward the self-organized threshold f_c ~ 0.667 (green dashed), then avalanches drag it back down -- the sawtooth of punctuated equilibrium. Bottom: avalanche sizes on log-log axes fall off in a near-straight line, the power-law signature of criticality reached with no parameter tuned")
+            + f'<div class="card">{pre(bak_sneppen_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

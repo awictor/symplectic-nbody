@@ -1,0 +1,34 @@
+Bak-Sneppen model -- evolution self-organizes to the edge of chaos
+==================================================================
+
+N species on a ring; each step the LEAST-fit species and its 2 neighbours get
+fresh random fitness. No tuning -- the system finds its own critical state.
+
+Ring of 200 species, 400k updates:
+  self-organized threshold (gap): 0.665  (1-D theory f_c ~ 0.667)
+  final mean fitness: 0.809
+  fraction above f_c: 0.88
+
+The gap (running max of the minimum fitness) climbs to f_c and plateaus:
+   updates      gap so far
+   --------------------------
+        10      0.026
+       100      0.298
+      1000      0.533
+     10000      0.629
+    100000      0.665
+    400000      0.665
+
+Avalanche sizes (activity below a subcritical threshold) follow a power law:
+   size bin      count
+   --------------------------
+   1-1           1716 ###########
+   2-3           2292 ###############
+   4-7           2878 ###################
+   8-15          3314 ######################
+   16-31         3302 ######################
+   32-63         2539 #################
+   64-127        1127 #######
+   128+           217 #
+
+17385 avalanches, sizes 1..505: many tiny, a few huge -- scale-free.

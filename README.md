@@ -645,6 +645,7 @@ ruins a long non-symplectic integration.
 | `src/voter_model.py` | Voter model: opinion dynamics to consensus, magnetization martingale, domain coarsening |
 | `src/schelling_segregation.py` | Schelling segregation: mild individual preference producing emergent collective segregation |
 | `src/tasep.py` | TASEP: driven lattice gas with the exactly-solved open-boundary phase diagram |
+| `src/bak_sneppen.py` | Bak-Sneppen model: self-organized criticality in evolution, avalanches, punctuated equilibrium |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1281,6 +1282,7 @@ ruins a long non-symplectic integration.
 | `examples/voter_model_demo.py` | Opinion grid coarsening to consensus over four snapshots, and consensus probability = initial fraction |
 | `examples/schelling_segregation_demo.py` | A random mixed grid segregating under a mild 1/3 tolerance, with the tau sweep |
 | `examples/tasep_demo.py` | The TASEP phase diagram and per-phase density profiles vs the exact formulas |
+| `examples/bak_sneppen_demo.py` | The fitness gap climbing to f_c and the power-law avalanche-size distribution |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14692,6 +14694,26 @@ Particles hop right at rate 1 (one per site); injected left at rate alpha, eject
 (rho=1/2, J=1/4) phases. Validated by Monte Carlo: bulk density and current match the exact formulas in
 each phase, the current never exceeds 1/4, and full/empty starts relax to the same steady state. The
 nonequilibrium-statistical-mechanics companion to the Ising, sandpile, and reaction-diffusion tools.
+
+## Bak-Sneppen: evolution at the edge of chaos
+
+Self-organized criticality in coevolution. `bak_sneppen.py`:
+
+```
+$ python examples/bak_sneppen_demo.py examples/output
+
+Ring of 200 species, 400k updates:
+  self-organized threshold (gap): 0.665  (1-D theory f_c ~ 0.667)
+Gap climbs: 10 updates -> 0.03, 1000 -> 0.53, 100000 -> 0.665.
+17385 avalanches, sizes 1..505 -- power-law, scale-free.
+```
+
+Each step replaces the least-fit species and its two ring neighbours with fresh random fitness. With no
+tuning the minimum fitness climbs to a self-organized threshold f_c ~ 0.667, and activity comes in
+power-law avalanches -- the mechanism for punctuated equilibrium. Validated: the gap climbs from ~0 to
+~2/3, mean fitness rises and stays high, avalanches are heavy-tailed, each update replaces three adjacent
+species, and the critical state is independent of initial condition and ring size. The
+self-organized-criticality companion to the sandpile, forest-fire, and Ising tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
