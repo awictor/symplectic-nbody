@@ -635,6 +635,7 @@ ruins a long non-symplectic integration.
 | `src/coalescent.py` | Kingman's coalescent: backward-time gene genealogies, T_MRCA, and Watterson's estimator |
 | `src/hawkes_process.py` | Hawkes process: self-exciting point process with exponential kernel, Ogata thinning |
 | `src/galton_watson.py` | Galton-Watson branching process: extinction probability, criticality, lineage growth |
+| `src/moran_process.py` | Moran process: finite-population fixation probabilities with selection, overlapping generations |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1261,6 +1262,7 @@ ruins a long non-symplectic integration.
 | `examples/coalescent_demo.py` | A coalescent genealogy tree, E[TMRCA]/total-length vs theory, and Watterson theta estimation |
 | `examples/hawkes_process_demo.py` | The self-exciting intensity path spiking at each event, and rate amplified by 1/(1-n) |
 | `examples/galton_watson_demo.py` | Extinction as a PGF fixed-point cobweb, and lineages dying out or growing geometrically |
+| `examples/moran_process_demo.py` | Fixation probability vs starting count by selection, and single-mutant fixation approaching 1-1/r |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14474,6 +14476,28 @@ chance of unbounded growth (E[Z_n]=m^n). Validated: q is the smallest fixed poin
 certainly extinct while supercritical q<1, the empirical extinction frequency matches q, generation size
 grows as m^n, and binary fission matches the a/(1-a) formula. The branching-process companion to the
 Wright-Fisher, coalescent, and Hawkes-process tools.
+
+## Moran process: fixation in a finite population
+
+Overlapping-generations evolutionary dynamics. `moran_process.py`:
+
+```
+$ python examples/moran_process_demo.py examples/output
+
+Single advantageous mutant fixation (1-1/r)/(1-1/r^N):
+   r=1.5   N=12 -> 0.336   N=1000 -> 0.333   limit 1-1/r = 0.333
+   r=2.0   N=12 -> 0.500   N=1000 -> 0.500   limit = 0.500
+
+Validation (N=12, i0=3, r=1.5): formula 0.709, empirical 0.716.
+```
+
+Each step one individual reproduces (proportional to fitness) and one dies at random; the count of a
+mutant is an absorbing Markov chain. Neutral fixation rho_i = i/N; with fitness ratio r,
+rho_i = (1-r^-i)/(1-r^-N), and a single mutant fixes with probability approaching 1-1/r for large N.
+Validated: neutral fixation = i/N, empirical matches the closed form under selection, advantage raises and
+disadvantage lowers fixation, the single-mutant formula approaches 1-1/r, and every trajectory is
+absorbed. The finite-population-evolution companion to the Wright-Fisher, Galton-Watson, and coalescent
+tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

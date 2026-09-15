@@ -677,6 +677,7 @@ def main():
     import coalescent_demo
     import hawkes_process_demo
     import galton_watson_demo
+    import moran_process_demo
 
     import plot_orbits
 
@@ -1323,6 +1324,7 @@ def main():
     coalescent_txt = run("coalescent_demo", coalescent_demo.main, True)
     hawkes_process_txt = run("hawkes_process_demo", hawkes_process_demo.main, True)
     galton_watson_txt = run("galton_watson_demo", galton_watson_demo.main, True)
+    moran_process_txt = run("moran_process_demo", moran_process_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12300,6 +12302,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("galton_watson.svg"), "Left: extinction as a fixed point -- the offspring PGF G(s) (yellow) crosses the diagonal at q and 1, and the green cobweb iterating q=G(q) from 0 climbs to the smaller root q=0.40. Right: 30 lineages of the same supercritical process on a log scale -- about 40% hit zero and die (red), the rest escape and grow geometrically (green)")
             + f'<div class="card">{pre(galton_watson_txt)}</div>'
+            + '</div>'),
+        section(
+            "Moran process: fixation in a finite population",
+            "Wright-Fisher replaces the whole population each generation; the Moran process (1958) is the "
+            "overlapping-generations alternative -- each step ONE individual reproduces (proportional to "
+            "fitness) and ONE dies at random, keeping N fixed. This single-birth-single-death structure "
+            "makes it a clean absorbing Markov chain on the count i of type-A, with exact fixation "
+            "probabilities. Neutral: rho_i = i/N (a single mutant fixes with probability 1/N). With "
+            "relative fitness r, rho_i = (1 - r^-i)/(1 - r^-N), and a single advantageous mutant fixes "
+            "with probability approaching 1 - 1/r for large N -- so even a strongly-beneficial mutation is "
+            "far from guaranteed to take over. It underlies evolutionary game theory and cancer-evolution "
+            "models. Validated: neutral fixation equals i/N and a single mutant fixes with 1/N, the "
+            "empirical fixation frequency matches the closed-form rho_i under selection, advantageous "
+            "mutants fix more than neutral and deleterious less, the single-mutant formula approaches "
+            "1 - 1/r for large N, fixation is monotone in the starting count, and every trajectory is "
+            "absorbed. The finite-population-evolution companion to the Wright-Fisher, Galton-Watson, and "
+            "coalescent tools.",
+            '<div class="grid">'
+            + svg_card(out("moran_process.svg"), "Fixation probability of a mutant vs its starting count i in a population of N=12, for four fitness ratios. The neutral case (gray) is exactly the diagonal i/N; a fitness advantage (yellow, green) bends the curve up so even a single copy has a real chance, while a disadvantage (red) crushes small-i fixation toward zero -- selection reshapes the fair-game line")
+            + f'<div class="card">{pre(moran_process_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
