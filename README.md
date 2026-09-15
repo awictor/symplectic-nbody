@@ -641,6 +641,7 @@ ruins a long non-symplectic integration.
 | `src/polya_urn.py` | Polya's urn: reinforcement process with a random Beta-distributed limit, martingale, exchangeability |
 | `src/chinese_restaurant.py` | Chinese restaurant process: nonparametric partition prior, EPPF, alpha ln n table growth |
 | `src/stick_breaking.py` | Stick-breaking (GEM): explicit Dirichlet-process weights, geometric decay, concentration effect |
+| `src/sir_stochastic.py` | Stochastic SIR epidemic: Gillespie outbreak dynamics, R0 threshold, bimodal final size |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1273,6 +1274,7 @@ ruins a long non-symplectic integration.
 | `examples/polya_urn_demo.py` | Fraction trajectories freezing into different random limits matching the Beta density |
 | `examples/chinese_restaurant_demo.py` | Expected tables growing as alpha ln n, and a realization's rich-get-richer cluster sizes |
 | `examples/stick_breaking_demo.py` | Unit sticks broken into DP weights at three concentrations, and the geometric-decay table |
+| `examples/sir_stochastic_demo.py` | Take-off vs fizzle epidemic trajectories and the bimodal final size vs the final-size equation |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14609,6 +14611,27 @@ Validated: partial sums approach 1, the mean of each weight matches the geometri
 needs fewer weights for 95% of the mass, sampling labels reproduces the weights as frequencies, and the
 residual stick has expected length (alpha/(1+alpha))^k. The Dirichlet-process-construction companion to the
 Chinese-restaurant, Polya-urn, and Dirichlet tools.
+
+## Stochastic SIR: epidemic take-off or fizzle
+
+Gillespie-simulated epidemics with a bimodal outcome. `sir_stochastic.py`:
+
+```
+$ python examples/sir_stochastic_demo.py examples/output
+
+N=2000, R0=2.5. 500 outbreaks from ONE infective are bimodal:
+  210 minor (fizzle, mean size 1.7)   290 major (take off, 89% of N)
+  minor fraction 0.420 vs theory 1/R0 = 0.400
+
+Final-size equation 1-z=e^{-R0 z}: R0=2.5 -> 89.3%, R0=4 -> 98%.
+```
+
+Two reactions -- infection S+I->2I at rate beta S I/N, recovery I->R at rate gamma I -- simulated by
+Gillespie. The same R0>1 epidemic either fizzles (prob ~1/R0) or infects the fraction z solving
+1-z=exp(-R0 z). Validated: below threshold outbreaks stay tiny; above, the final size is bimodal with the
+major fraction matching the final-size equation; the minor probability is ~1/R0; S+I+R is conserved; and
+larger R0 raises both the major size and take-off probability. The epidemic-dynamics companion to the
+Gillespie-SSA, Galton-Watson, and reaction-diffusion tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

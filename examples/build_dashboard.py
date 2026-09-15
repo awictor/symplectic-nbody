@@ -683,6 +683,7 @@ def main():
     import polya_urn_demo
     import chinese_restaurant_demo
     import stick_breaking_demo
+    import sir_stochastic_demo
 
     import plot_orbits
 
@@ -1335,6 +1336,7 @@ def main():
     polya_urn_txt = run("polya_urn_demo", polya_urn_demo.main, True)
     chinese_restaurant_txt = run("chinese_restaurant_demo", chinese_restaurant_demo.main, True)
     stick_breaking_txt = run("stick_breaking_demo", stick_breaking_demo.main, True)
+    sir_stochastic_txt = run("sir_stochastic_demo", sir_stochastic_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12431,6 +12433,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("stick_breaking.svg"), "Three unit sticks broken into Dirichlet-process weights at increasing concentration alpha. At alpha=0.3 one coloured piece grabs most of the stick (a dominant cluster); at alpha=5 the stick shatters into many small near-equal pieces. These weights, with random atoms attached, ARE a sample from a Dirichlet process")
             + f'<div class="card">{pre(stick_breaking_txt)}</div>'
+            + '</div>'),
+        section(
+            "Stochastic SIR: epidemic take-off or fizzle",
+            "The deterministic SIR model predicts an outbreak whenever R0 = beta/gamma exceeds 1 -- but "
+            "early on, with a handful of infected, chance decides whether the same R0>1 epidemic takes off "
+            "or fizzles out. The stochastic SIR model captures this as a Markov jump process with two "
+            "reactions -- infection S+I->2I at rate beta S I/N, recovery I->R at rate gamma I -- simulated "
+            "exactly by Gillespie. It reveals a BIMODAL final epidemic size the ODE hides: either a minor "
+            "outbreak that dies out (probability ~1/R0 per initial infective) or a major one infecting a "
+            "predictable fraction z, where z solves the final-size equation 1 - z = exp(-R0 z), the same "
+            "fixed-point as a branching process's survival. Validated: below threshold outbreaks stay "
+            "tiny; above threshold the final size is bimodal with the major-outbreak fraction matching the "
+            "final-size equation; the minor-outbreak probability from one infective is close to 1/R0; total "
+            "S+I+R is conserved on every path; and a larger R0 gives a larger major outbreak and higher "
+            "take-off probability. The epidemic-dynamics companion to the Gillespie-SSA, Galton-Watson, and "
+            "reaction-diffusion tools.",
+            '<div class="grid">'
+            + svg_card(out("sir_stochastic.svg"), "Top: infected-count trajectories over many outbreaks at R0=2.5 -- red curves take off into a big epidemic peak, gray ones fizzle early, from the SAME parameters. Bottom: the histogram of final sizes is bimodal, a spike near zero (fizzles) plus a peak at the final-size-equation prediction z=0.89 (major outbreaks); chance alone decides which branch a single introduction follows")
+            + f'<div class="card">{pre(sir_stochastic_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

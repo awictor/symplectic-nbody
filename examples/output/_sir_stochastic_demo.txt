@@ -1,0 +1,29 @@
+Stochastic SIR epidemic -- take-off, fizzle, and the final-size threshold
+========================================================================
+
+Population N=2000, beta=0.5, gamma=0.2 -> R0 = 2.5.
+
+500 outbreaks from ONE infective (R0=2.5 > 1) are BIMODAL:
+  210 minor (fizzle out, mean size 1.7)
+  290 major (take off, mean size 1784 = 89% of N)
+  minor fraction 0.420 vs theory 1/R0 = 0.400
+
+Major-outbreak size solves the final-size equation 1 - z = exp(-R0 z):
+   R0     final fraction z    fraction infected
+   ----------------------------------------------
+    0.8   0.0000              0.0%
+    1.2   0.3137              31.4%
+    1.5   0.5828              58.3%
+    2.5   0.8926              89.3%
+    4.0   0.9802              98.0%
+    8.0   0.9997              100.0%
+
+Below R0=1 no epidemic; above, the fraction infected rises sharply toward 100%.
+
+Take-off (major outbreak) probability vs R0, from one infective:
+   R0     P(major) ~ 1 - 1/R0
+   ------------------------------
+    1.5   0.333
+    2.0   0.500
+    3.0   0.667
+    5.0   0.800
