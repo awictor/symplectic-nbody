@@ -675,6 +675,7 @@ def main():
     import gillespie_ssa_demo
     import wright_fisher_demo
     import coalescent_demo
+    import hawkes_process_demo
 
     import plot_orbits
 
@@ -1319,6 +1320,7 @@ def main():
     gillespie_ssa_txt = run("gillespie_ssa_demo", gillespie_ssa_demo.main, True)
     wright_fisher_txt = run("wright_fisher_demo", wright_fisher_demo.main, True)
     coalescent_txt = run("coalescent_demo", coalescent_demo.main, True)
+    hawkes_process_txt = run("hawkes_process_demo", hawkes_process_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12259,6 +12261,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("coalescent.svg"), "A coalescent genealogy for 8 samples (green, present) traced back to their most recent common ancestor (red). Each horizontal bar is a coalescence; the branches lengthen toward the top because with fewer lineages left the waiting times grow -- the final merge of the last two lineages spans most of the tree's depth")
             + f'<div class="card">{pre(coalescent_txt)}</div>'
+            + '</div>'),
+        section(
+            "Hawkes process: self-exciting events",
+            "A Poisson process fires events at a constant rate, independently -- but real event streams "
+            "CLUSTER: an earthquake triggers aftershocks, a neuron's spike raises its neighbours' odds, an "
+            "order provokes more orders. The Hawkes process models this with a conditional intensity that "
+            "jumps up after every event and decays: lambda(t) = mu + sum_{t_i<t} alpha exp(-beta(t-t_i)). "
+            "The branching ratio n = alpha/beta is the expected direct offspring per event; n < 1 is "
+            "stationary with long-run rate mu/(1-n) -- self-excitation amplifies the baseline by 1/(1-n), "
+            "the same geometric cascade as a branching process. Simulation uses Ogata's thinning with an "
+            "O(1) Markov intensity update. Validated: alpha=0 reduces to a Poisson process (count ~ mu*T), "
+            "the empirical rate matches mu/(1-n) across branching ratios, the intensity jumps by alpha at "
+            "each event and decays at rate beta, inter-event gaps are overdispersed vs Poisson "
+            "(clustering), a near-critical process produces far more events than its baseline, and the "
+            "two simulators agree. The self-exciting-point-process companion to the Gillespie-SSA, "
+            "Poisson, and Markov-chain tools.",
+            '<div class="grid">'
+            + svg_card(out("hawkes_process.svg"), "The conditional intensity lambda(t) (yellow) of a self-exciting Hawkes process over time: each event (red tick) makes it jump by alpha, then it decays back toward the baseline mu (gray dashed). Events bunch into bursts -- one triggers the next -- rather than spreading evenly as a flat Poisson rate would")
+            + f'<div class="card">{pre(hawkes_process_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

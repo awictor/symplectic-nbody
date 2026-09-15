@@ -633,6 +633,7 @@ ruins a long non-symplectic integration.
 | `src/gillespie_ssa.py` | Gillespie's stochastic simulation algorithm: exact trajectories of a chemical reaction network |
 | `src/wright_fisher.py` | Wright-Fisher model: genetic drift, fixation probability, and selection in a finite population |
 | `src/coalescent.py` | Kingman's coalescent: backward-time gene genealogies, T_MRCA, and Watterson's estimator |
+| `src/hawkes_process.py` | Hawkes process: self-exciting point process with exponential kernel, Ogata thinning |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1257,6 +1258,7 @@ ruins a long non-symplectic integration.
 | `examples/gillespie_ssa_demo.py` | Stochastic Lotka-Volterra trajectories and phase orbit, and decay noise shrinking toward the ODE |
 | `examples/wright_fisher_demo.py` | Drift trajectories to fixation/loss, neutral fixation = p0, and the Kimura selection formula |
 | `examples/coalescent_demo.py` | A coalescent genealogy tree, E[TMRCA]/total-length vs theory, and Watterson theta estimation |
+| `examples/hawkes_process_demo.py` | The self-exciting intensity path spiking at each event, and rate amplified by 1/(1-n) |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14430,6 +14432,26 @@ theta H_(n-1) (Watterson). Validated: mean T_MRCA and total length match theory,
 exponential with mean 1, early coalescences are faster than late, the segregating-site count matches theta
 H_(n-1), Watterson recovers theta, and every genealogy reduces to one MRCA in n-1 merges. The backward-time
 population-genetics companion to the Wright-Fisher, Gillespie-SSA, and Markov-chain tools.
+
+## Hawkes process: self-exciting events
+
+Clustered point processes where events beget events. `hawkes_process.py`:
+
+```
+$ python examples/hawkes_process_demo.py examples/output
+
+Branching ratio n = alpha/beta, stationary rate mu/(1-n):
+   alpha=0.0  n=0.00  rate 1.00   alpha=1.5  n=0.75  rate 4.00   alpha=1.8  n=0.90  rate 10.0
+
+Clustering: Hawkes gaps CV^2 = 1.68 (bursty) vs Poisson 0.96 (memoryless)
+```
+
+Each event bumps the conditional intensity by alpha, which decays at rate beta; the branching ratio
+n=alpha/beta amplifies the baseline rate by 1/(1-n). Simulated by Ogata thinning with an O(1) Markov
+update. Validated: alpha=0 gives a Poisson process, the empirical rate matches mu/(1-n) across branching
+ratios, the intensity jumps by alpha and decays at beta, inter-event gaps are overdispersed vs Poisson, and
+a near-critical process explodes in event count. The self-exciting-point-process companion to the
+Gillespie-SSA, Poisson, and Markov-chain tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
