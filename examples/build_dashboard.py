@@ -679,6 +679,7 @@ def main():
     import galton_watson_demo
     import moran_process_demo
     import replicator_dynamics_demo
+    import ehrenfest_urn_demo
 
     import plot_orbits
 
@@ -1327,6 +1328,7 @@ def main():
     galton_watson_txt = run("galton_watson_demo", galton_watson_demo.main, True)
     moran_process_txt = run("moran_process_demo", moran_process_demo.main, True)
     replicator_dynamics_txt = run("replicator_dynamics_demo", replicator_dynamics_demo.main, True)
+    ehrenfest_urn_txt = run("ehrenfest_urn_demo", ehrenfest_urn_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12344,6 +12346,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("replicator_dynamics.svg"), "Rock-paper-scissors on the strategy simplex (triangle with Rock/Paper/Scissors corners). Four colored orbits, each from a different starting mix, cycle as closed loops around the central Nash equilibrium (red) -- they never converge, because the conserved product x1 x2 x3 pins each orbit to a level curve, exactly like energy conservation in a frictionless oscillator")
             + f'<div class="card">{pre(replicator_dynamics_txt)}</div>'
+            + '</div>'),
+        section(
+            "The Ehrenfest urn: irreversibility from reversible moves",
+            "The Ehrenfests' 1907 toy model resolved a foundational paradox: how do time-reversible "
+            "molecular collisions produce irreversible diffusion and rising entropy, when Poincare says a "
+            "finite system must eventually recur? N balls split between two urns; each step moves one "
+            "random ball to the other urn. On the count k it is a birth-death chain: down with probability "
+            "k/N, up with (N-k)/N. Started all-in-one, the count relaxes rapidly toward the even split N/2 "
+            "-- diffusion and entropy emerge -- even though every move is reversible; the stationary law is "
+            "Binomial(N, 1/2), sharply peaked at N/2, and the chain satisfies detailed balance. Poincare is "
+            "honoured: the system does return to all-in-one, but the mean recurrence time is 2^N steps, "
+            "astronomically long, which is why gases never spontaneously un-mix. Validated: the occupation "
+            "histogram matches Binomial(N,1/2), the mean count relaxes toward N/2 and the entropy rises, "
+            "detailed balance holds to machine precision, the expected next count is a linear restoring "
+            "drift, and the mean recurrence time equals 2^N. The reversible-Markov-chain companion to the "
+            "Gillespie-SSA, Markov-chain, and Maxwell-Boltzmann tools.",
+            '<div class="grid">'
+            + svg_card(out("ehrenfest_urn.svg"), "Top: the count in urn A starting from all 50 balls, decaying irreversibly toward equilibrium N/2 (green dashed) then fluctuating -- despite every single move being reversible. Bottom: the stationary distribution is Binomial(N,1/2), so sharply peaked at N/2 that the all-in-one state has probability 2^-50 ~ 1e-15, a return you would wait 2^50 steps to see")
+            + f'<div class="card">{pre(ehrenfest_urn_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

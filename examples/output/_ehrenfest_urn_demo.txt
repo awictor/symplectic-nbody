@@ -1,0 +1,35 @@
+Ehrenfest urn -- irreversible diffusion from reversible microscopic moves
+==========================================================================
+
+50 balls, all starting in urn A. Each step moves one random ball to the other urn.
+
+A single trajectory (count in urn A) relaxes from N toward N/2 then fluctuates:
+   step     count A
+   ----------------------
+      0     50
+     20     34
+     50     26
+    100     24
+    200     28
+    400     28
+  equilibrium is N/2 = 25; fluctuations of order sqrt(N) ~ 7.1 persist.
+
+Stationary distribution is Binomial(N, 1/2) -- each ball independently in either urn:
+  peak at k=25 (=N/2), pi_peak=0.1123, pi at all-in-one=8.88e-16
+  detailed balance residual: 6.9e-18 (reversible chain)
+
+Entropy of the ensemble distribution rises as the gas spreads (Boltzmann's H-theorem):
+   step     entropy (bits)
+   ----------------------------
+      0     0.000
+      5     0.757
+     15     2.083
+     40     2.731
+    100     2.867
+
+Poincare recurrence IS satisfied -- but the mean return time to all-in-one is 2^N:
+   N= 10: mean recurrence = 2^10 = 1.024e+03 steps
+   N= 30: mean recurrence = 2^30 = 1.074e+09 steps
+   N= 50: mean recurrence = 2^50 = 1.126e+15 steps
+   N=100: mean recurrence = 2^100 = 1.268e+30 steps
+  (for N=100 that dwarfs the age of the universe -- why gases never un-mix).

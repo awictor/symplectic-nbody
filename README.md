@@ -637,6 +637,7 @@ ruins a long non-symplectic integration.
 | `src/galton_watson.py` | Galton-Watson branching process: extinction probability, criticality, lineage growth |
 | `src/moran_process.py` | Moran process: finite-population fixation probabilities with selection, overlapping generations |
 | `src/replicator_dynamics.py` | Replicator dynamics: evolutionary game theory ODE on the simplex, Nash rest points, RPS cycles |
+| `src/ehrenfest_urn.py` | Ehrenfest urn: reversible Markov chain showing irreversible diffusion, entropy, and 2^N recurrence |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1265,6 +1266,7 @@ ruins a long non-symplectic integration.
 | `examples/galton_watson_demo.py` | Extinction as a PGF fixed-point cobweb, and lineages dying out or growing geometrically |
 | `examples/moran_process_demo.py` | Fixation probability vs starting count by selection, and single-mutant fixation approaching 1-1/r |
 | `examples/replicator_dynamics_demo.py` | Rock-paper-scissors orbits on the simplex, a dominant strategy sweeping, and an interior ESS |
+| `examples/ehrenfest_urn_demo.py` | A trajectory relaxing to N/2 with rising entropy, the binomial stationary law, and 2^N recurrence |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14519,6 +14521,27 @@ frequencies stay on the simplex, a dominant strategy fixes, a two-strategy game 
 Nash mixed equilibrium, rock-paper-scissors orbits and conserves x1 x2 x3, pure/interior strategies are
 rest points, and mean fitness is non-decreasing for a symmetric game. The evolutionary-game-theory
 companion to the Moran-process, Wright-Fisher, and Lotka-Volterra tools.
+
+## The Ehrenfest urn: irreversibility from reversible moves
+
+The toy model behind the arrow of time. `ehrenfest_urn.py`:
+
+```
+$ python examples/ehrenfest_urn_demo.py examples/output
+
+50 balls, all in urn A -> count relaxes to N/2=25, then fluctuates.
+Entropy: 0.000 -> 2.867 bits as the gas spreads (H-theorem).
+Detailed balance residual: 6.9e-18 (reversible chain).
+Mean recurrence to all-in-one: 2^50 ~ 1.1e15 steps.
+```
+
+N balls, two urns; each step moves one random ball across. On the count it is a birth-death chain
+(down k/N, up (N-k)/N) whose stationary law is Binomial(N,1/2). Started all-in-one, the count relaxes
+irreversibly to N/2 with rising entropy -- yet every move is reversible, and Poincare recurrence holds with
+mean return time 2^N. Validated: occupation matches Binomial(N,1/2), the mean count relaxes to N/2 and
+entropy rises, detailed balance holds to machine precision, the drift is linear and restoring, and mean
+recurrence equals 2^N. The reversible-Markov-chain companion to the Gillespie-SSA, Markov-chain, and
+Maxwell-Boltzmann tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
