@@ -1,0 +1,25 @@
+Block bootstrap -- honest standard errors for correlated (time-series) data
+============================================================================
+
+AR(1) series, phi=0.8, n=400. Points are correlated: today ~ yesterday.
+
+Analytic long-run SE of the mean:  0.2500
+Naive i.i.d. bootstrap SE:         0.0829  (3.0x too small!)
+
+Block bootstrap SE vs block length L (moving-block):
+   L     block SE     vs analytic
+   ----------------------------------
+     1   0.0914      0.37x
+     2   0.1199      0.48x
+     5   0.1751      0.70x
+    10   0.2114      0.85x
+    20   0.2634      1.05x
+    40   0.2989      1.20x
+    80   0.2538      1.02x
+
+L=1 IS the i.i.d. bootstrap (too small); as L grows the block SE rises to the truth.
+
+The three variants at L=20:
+   moving     : SE = 0.2634
+   circular   : SE = 0.2534
+   stationary : SE = 0.2668

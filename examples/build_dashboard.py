@@ -669,6 +669,7 @@ def main():
     import pelt_changepoint_demo
     import mann_kendall_trend_demo
     import ljung_box_demo
+    import block_bootstrap_demo
 
     import plot_orbits
 
@@ -1307,6 +1308,7 @@ def main():
     pelt_changepoint_txt = run("pelt_changepoint_demo", pelt_changepoint_demo.main, True)
     mann_kendall_trend_txt = run("mann_kendall_trend_demo", mann_kendall_trend_demo.main, True)
     ljung_box_txt = run("ljung_box_demo", ljung_box_demo.main, True)
+    block_bootstrap_txt = run("block_bootstrap_demo", block_bootstrap_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12129,6 +12131,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("ljung_box.svg"), "Two autocorrelation functions with the 95% white-noise band (gray). Top: white-noise residuals -- every stem stays inside the band, so Ljung-Box fails to reject (Q=12, p=0.67). Bottom: an AR(1) series -- the stems decay slowly well outside the band, and Ljung-Box rejects white noise emphatically (Q=540, p=0)")
             + f'<div class="card">{pre(ljung_box_txt)}</div>'
+            + '</div>'),
+        section(
+            "Block bootstrap: honest error bars for correlated data",
+            "The ordinary bootstrap resamples data points one at a time -- valid only if they are "
+            "independent. Time series are correlated (today looks like yesterday), so point-by-point "
+            "resampling shatters the dependence and wildly UNDERESTIMATES the variance of the mean, "
+            "producing confidence intervals that are far too narrow. The block bootstrap (Kunsch 1989) "
+            "resamples contiguous blocks of length L instead, preserving the local correlation within "
+            "each block and breaking only the weaker across-block dependence. Variants: moving-block, "
+            "circular-block (wraps to remove end bias), and stationary (random geometric block lengths). "
+            "Validated: on independent data it reproduces the ordinary bootstrap's standard error; on a "
+            "positively autocorrelated AR(1) series its standard error of the mean is much larger than "
+            "the naive i.i.d. bootstrap's (correctly -- correlated data carry less information) and "
+            "approaches the analytic long-run value, and its confidence interval attains near-nominal "
+            "coverage where the i.i.d. interval under-covers; the stationary variant's mean block length "
+            "matches its parameter. The dependent-data-resampling companion to the bootstrap, Ljung-Box, "
+            "and Mann-Kendall tools.",
+            '<div class="grid">'
+            + svg_card(out("block_bootstrap.svg"), "Top: a smoothly-wandering AR(1) series (phi=0.8) -- strong positive autocorrelation. Bottom: the block-bootstrap standard error of the mean vs block length. At L=1 it equals the i.i.d. bootstrap (red, 3x too small); as blocks lengthen to capture the correlation it rises to the analytic long-run SE (green dashed). The naive bootstrap would report error bars a third of their true width")
+            + f'<div class="card">{pre(block_bootstrap_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

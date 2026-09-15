@@ -627,6 +627,7 @@ ruins a long non-symplectic integration.
 | `src/pelt_changepoint.py` | PELT: exact optimal multiple change-point detection in near-linear time via pruned DP |
 | `src/mann_kendall_trend.py` | Mann-Kendall trend test with Sen slope: nonparametric monotonic-trend detection |
 | `src/ljung_box.py` | Ljung-Box & Box-Pierce portmanteau tests: is a series white noise or autocorrelated? |
+| `src/block_bootstrap.py` | Block bootstrap (moving/circular/stationary): resampling for dependent time-series data |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1245,6 +1246,7 @@ ruins a long non-symplectic integration.
 | `examples/pelt_changepoint_demo.py` | PELT segmenting a noisy 4-level step signal, matching the exact DP, with a penalty sweep |
 | `examples/mann_kendall_trend_demo.py` | Mann-Kendall flagging a trend in skewed noisy data, Sen slope beating OLS under an outlier |
 | `examples/ljung_box_demo.py` | ACF stems with white-noise bands for a clean vs autocorrelated series, and Q vs lags |
+| `examples/block_bootstrap_demo.py` | Block-bootstrap SE converging to the AR(1) long-run truth where the i.i.d. bootstrap fails |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14291,6 +14293,26 @@ parameters) df under white noise. Validated: white noise gives small Q/large p, 
 a seasonal signal is flagged at its lag, Ljung-Box exceeds Box-Pierce, Q grows with lags when
 autocorrelation is real, and the df adjustment for fitted parameters tightens the p-value. The
 time-series-diagnostic companion to the Levinson-Durbin, Burg, CUSUM, and Mann-Kendall tools.
+
+## Block bootstrap: honest error bars for correlated data
+
+Resampling that respects autocorrelation. `block_bootstrap.py`:
+
+```
+$ python examples/block_bootstrap_demo.py examples/output
+
+AR(1) series, phi=0.8, n=400.
+Analytic long-run SE of the mean:  0.2500
+Naive i.i.d. bootstrap SE:         0.0829  (3.0x too small!)
+Block SE:  L=1 -> 0.09   L=20 -> 0.26   L=40 -> 0.30
+```
+
+Resample contiguous blocks of length L instead of single points, preserving local correlation. Variants:
+moving-block, circular-block (wraps to remove end bias), stationary (random geometric block lengths).
+Validated: reproduces the ordinary bootstrap on independent data; on AR(1) its SE is much larger than the
+naive i.i.d. bootstrap's and approaches the analytic long-run value, with near-nominal CI coverage where
+the i.i.d. interval under-covers; the stationary variant's mean block length matches its parameter. The
+dependent-data-resampling companion to the bootstrap, Ljung-Box, and Mann-Kendall tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
