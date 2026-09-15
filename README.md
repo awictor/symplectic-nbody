@@ -634,6 +634,7 @@ ruins a long non-symplectic integration.
 | `src/wright_fisher.py` | Wright-Fisher model: genetic drift, fixation probability, and selection in a finite population |
 | `src/coalescent.py` | Kingman's coalescent: backward-time gene genealogies, T_MRCA, and Watterson's estimator |
 | `src/hawkes_process.py` | Hawkes process: self-exciting point process with exponential kernel, Ogata thinning |
+| `src/galton_watson.py` | Galton-Watson branching process: extinction probability, criticality, lineage growth |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1259,6 +1260,7 @@ ruins a long non-symplectic integration.
 | `examples/wright_fisher_demo.py` | Drift trajectories to fixation/loss, neutral fixation = p0, and the Kimura selection formula |
 | `examples/coalescent_demo.py` | A coalescent genealogy tree, E[TMRCA]/total-length vs theory, and Watterson theta estimation |
 | `examples/hawkes_process_demo.py` | The self-exciting intensity path spiking at each event, and rate amplified by 1/(1-n) |
+| `examples/galton_watson_demo.py` | Extinction as a PGF fixed-point cobweb, and lineages dying out or growing geometrically |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14452,6 +14454,26 @@ update. Validated: alpha=0 gives a Poisson process, the empirical rate matches m
 ratios, the intensity jumps by alpha and decays at beta, inter-event gaps are overdispersed vs Poisson, and
 a near-critical process explodes in event count. The self-exciting-point-process companion to the
 Gillespie-SSA, Poisson, and Markov-chain tools.
+
+## Galton-Watson: extinction or explosion of a lineage
+
+Branching-process extinction probabilities. `galton_watson.py`:
+
+```
+$ python examples/galton_watson_demo.py examples/output
+
+   offspring dist        mean m   regime         q (extinction)
+   p0=.5 p1=.3 p2=.2       0.70   subcritical    1.0000
+   p0=.2 p1=.3 p2=.5       1.30   supercritical  0.4000
+   p0=.3 p2=.7 (fission)   1.40   supercritical  0.4286
+```
+
+The extinction probability q is the smallest fixed point of s = G(s) (G the offspring PGF), found by
+iterating q=G(q) from 0. Mean family size m sets the regime: m<=1 -> certain extinction, m>1 -> q<1 with a
+chance of unbounded growth (E[Z_n]=m^n). Validated: q is the smallest fixed point of G, sub/critical are
+certainly extinct while supercritical q<1, the empirical extinction frequency matches q, generation size
+grows as m^n, and binary fission matches the a/(1-a) formula. The branching-process companion to the
+Wright-Fisher, coalescent, and Hawkes-process tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

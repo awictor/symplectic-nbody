@@ -676,6 +676,7 @@ def main():
     import wright_fisher_demo
     import coalescent_demo
     import hawkes_process_demo
+    import galton_watson_demo
 
     import plot_orbits
 
@@ -1321,6 +1322,7 @@ def main():
     wright_fisher_txt = run("wright_fisher_demo", wright_fisher_demo.main, True)
     coalescent_txt = run("coalescent_demo", coalescent_demo.main, True)
     hawkes_process_txt = run("hawkes_process_demo", hawkes_process_demo.main, True)
+    galton_watson_txt = run("galton_watson_demo", galton_watson_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12280,6 +12282,24 @@ def main():
             '<div class="grid">'
             + svg_card(out("hawkes_process.svg"), "The conditional intensity lambda(t) (yellow) of a self-exciting Hawkes process over time: each event (red tick) makes it jump by alpha, then it decays back toward the baseline mu (gray dashed). Events bunch into bursts -- one triggers the next -- rather than spreading evenly as a flat Poisson rate would")
             + f'<div class="card">{pre(hawkes_process_txt)}</div>'
+            + '</div>'),
+        section(
+            "Galton-Watson: extinction or explosion of a lineage",
+            "A branching process starts from one individual, each leaving a random number of offspring from "
+            "a fixed distribution -- surnames, fission neutrons, early epidemic cases. The Galton-Watson "
+            "process (1874) answers the central question: what is the probability the line dies out? The "
+            "extinction probability q is the SMALLEST fixed point of s = G(s), where G is the offspring "
+            "probability generating function, found by iterating q = G(q) upward from 0. A sharp threshold "
+            "in the mean family size m governs everything: subcritical (m<1) and critical (m=1) go extinct "
+            "with certainty (q=1), while supercritical (m>1) has a positive chance 1-q of unbounded growth "
+            "and expected generation size m^n. Validated: q is the smallest fixed point of G, subcritical "
+            "and critical processes are certainly extinct while supercritical q<1, the empirical extinction "
+            "frequency matches the computed q, the mean generation size grows as m^n, and a binary-fission "
+            "distribution matches the classic a/(1-a) formula. The branching-process companion to the "
+            "Wright-Fisher, coalescent, and Hawkes-process tools.",
+            '<div class="grid">'
+            + svg_card(out("galton_watson.svg"), "Left: extinction as a fixed point -- the offspring PGF G(s) (yellow) crosses the diagonal at q and 1, and the green cobweb iterating q=G(q) from 0 climbs to the smaller root q=0.40. Right: 30 lineages of the same supercritical process on a log scale -- about 40% hit zero and die (red), the rest escape and grow geometrically (green)")
+            + f'<div class="card">{pre(galton_watson_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

@@ -1,0 +1,25 @@
+Galton-Watson branching process -- extinction or explosion?
+============================================================
+
+Extinction probability q = smallest fixed point of s = G(s):
+   offspring dist         mean m   regime         q (extinction)
+   --------------------------------------------------------------
+   p0=.5 p1=.3 p2=.2        0.70   subcritical    1.0000
+   p0=.25 p1=.5 p2=.25      1.00   critical       1.0000
+   p0=.2 p1=.3 p2=.5        1.30   supercritical  0.4000
+   p0=.3 p2=.7 (fission)    1.40   supercritical  0.4286
+   p0=.1 p1=.2 p2=.7        1.60   supercritical  0.1429
+
+Subcritical & critical (m<=1): certain extinction. Supercritical (m>1): q<1, chance of growth.
+
+Supercritical p0=.2 p1=.3 p2=.5 (m=1.3): theoretical q=0.400, empirical extinction=0.401 over 4000 lineages.
+
+Expected generation size E[Z_n] = m^n (supercritical growth):
+   n     m^n
+   ----------------
+    0        1.00
+    2        1.69
+    4        2.86
+    6        4.83
+    8        8.16
+   10       13.79
