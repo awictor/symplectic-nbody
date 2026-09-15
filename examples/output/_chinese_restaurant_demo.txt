@@ -1,0 +1,23 @@
+Chinese restaurant process -- clustering without a preset number of clusters
+============================================================================
+
+200 customers seated by 'sit at a table with prob n_k/(n-1+alpha), else new table'.
+
+Concentration alpha controls the number of clusters (E[K] = sum alpha/(alpha+i-1)):
+   alpha   E[K] formula   empirical mean   ~ alpha ln n
+   ------------------------------------------------------
+     0.5       3.63           3.60         2.65
+     1.0       5.88           5.82         5.30
+     3.0      13.16          13.14         15.89
+    10.0      30.93          30.93         52.98
+
+Table count grows LOGARITHMICALLY in n -- a few big clusters plus a long tail of small ones.
+
+One realization (alpha=2.0, n=200): 12 tables, sizes
+  [76, 35, 32, 22, 12, 10, 4, 3, 2, 2, 1, 1]
+  largest 76, 2 singletons -- the rich-get-richer signature.
+
+Exchangeability: partition probability depends only on block SIZES, not order.
+  seating [0, 0, 0, 1, 1] -> 0.013853
+  seating [0, 1, 0, 1, 0] -> 0.013853  (same blocks {3,2}, equal prob)
+  -> the CRP is the predictive rule of a Dirichlet process (Bayesian nonparametrics).

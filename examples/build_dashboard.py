@@ -681,6 +681,7 @@ def main():
     import replicator_dynamics_demo
     import ehrenfest_urn_demo
     import polya_urn_demo
+    import chinese_restaurant_demo
 
     import plot_orbits
 
@@ -1331,6 +1332,7 @@ def main():
     replicator_dynamics_txt = run("replicator_dynamics_demo", replicator_dynamics_demo.main, True)
     ehrenfest_urn_txt = run("ehrenfest_urn_demo", ehrenfest_urn_demo.main, True)
     polya_urn_txt = run("polya_urn_demo", polya_urn_demo.main, True)
+    chinese_restaurant_txt = run("chinese_restaurant_demo", chinese_restaurant_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12386,6 +12388,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("polya_urn.svg"), "Top: eight black-fraction trajectories from the same 2-black/3-white start -- each wanders early then locks onto its OWN random limit, all straddling the martingale value a/(a+b) (gray dashed). Bottom: the histogram of 4000 final fractions traces the Beta(2,3) density (yellow) exactly -- reinforcement freezes early randomness into a permanent Beta-distributed outcome")
             + f'<div class="card">{pre(polya_urn_txt)}</div>'
+            + '</div>'),
+        section(
+            "Chinese restaurant process: clustering with no preset count",
+            "How do you cluster data when the number of clusters is unknown? The Chinese restaurant process "
+            "(Aldous 1985) is the answer at the heart of Bayesian nonparametrics. Customers arrive one at "
+            "a time and sit at an occupied table with probability proportional to its current occupancy, or "
+            "start a new table with probability proportional to a concentration alpha -- the same "
+            "rich-get-richer reinforcement as Polya's urn, but over an unbounded number of categories. The "
+            "number of occupied tables grows like alpha ln n (logarithmically), giving a few big clusters "
+            "plus a long tail of small ones, and the induced distribution over partitions is EXCHANGEABLE "
+            "-- it depends only on the block sizes, not arrival order -- which is exactly what makes the "
+            "CRP the predictive rule of a Dirichlet process and the workhorse of infinite mixture models. "
+            "Validated: the mean number of tables matches the harmonic-sum formula and grows like alpha "
+            "ln n, larger alpha yields more tables, the partition probability (EPPF) is exchangeable and "
+            "matches the sequential seating probability, partition probabilities sum to 1, and alpha -> 0 "
+            "forces one big table while large alpha forces singletons. The Bayesian-nonparametric "
+            "companion to the Polya-urn, Dirichlet, and Gaussian-mixture tools.",
+            '<div class="grid">'
+            + svg_card(out("chinese_restaurant.svg"), "Top: expected number of tables vs n for four concentrations -- each curve grows like alpha ln n (concave), so more alpha means more clusters. Bottom: one realization's cluster sizes (alpha=2, n=200) -- a few dominant tables (76, 35, 32...) trailing off into singletons, the rich-get-richer signature that lets the CRP discover the cluster count from the data")
+            + f'<div class="card">{pre(chinese_restaurant_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

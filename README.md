@@ -639,6 +639,7 @@ ruins a long non-symplectic integration.
 | `src/replicator_dynamics.py` | Replicator dynamics: evolutionary game theory ODE on the simplex, Nash rest points, RPS cycles |
 | `src/ehrenfest_urn.py` | Ehrenfest urn: reversible Markov chain showing irreversible diffusion, entropy, and 2^N recurrence |
 | `src/polya_urn.py` | Polya's urn: reinforcement process with a random Beta-distributed limit, martingale, exchangeability |
+| `src/chinese_restaurant.py` | Chinese restaurant process: nonparametric partition prior, EPPF, alpha ln n table growth |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1269,6 +1270,7 @@ ruins a long non-symplectic integration.
 | `examples/replicator_dynamics_demo.py` | Rock-paper-scissors orbits on the simplex, a dominant strategy sweeping, and an interior ESS |
 | `examples/ehrenfest_urn_demo.py` | A trajectory relaxing to N/2 with rising entropy, the binomial stationary law, and 2^N recurrence |
 | `examples/polya_urn_demo.py` | Fraction trajectories freezing into different random limits matching the Beta density |
+| `examples/chinese_restaurant_demo.py` | Expected tables growing as alpha ln n, and a realization's rich-get-richer cluster sizes |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14564,6 +14566,28 @@ draw sequence is exchangeable (de Finetti). Validated: expected fraction stays a
 matches Beta(a,b) in mean and variance, reordered sequences are equiprobable, a symmetric start spreads
 uniformly about 1/2, and larger c gives more spread. The reinforcement-process companion to the
 Ehrenfest-urn, Dirichlet, and Beta tools.
+
+## Chinese restaurant process: clustering with no preset count
+
+A nonparametric prior over partitions. `chinese_restaurant.py`:
+
+```
+$ python examples/chinese_restaurant_demo.py examples/output
+
+   alpha   E[K] formula   empirical   ~ alpha ln n
+     1.0       5.88          5.82        5.30
+    10.0      30.93         30.93       52.98
+
+One realization (alpha=2, n=200): 12 tables, sizes [76,35,32,22,...,1,1].
+```
+
+Customers sit at a table with probability proportional to its occupancy, or start a new one with
+probability proportional to alpha (rich-get-richer over unbounded categories). The table count grows like
+alpha ln n, and the partition distribution is exchangeable -- the predictive rule of a Dirichlet process.
+Validated: mean tables match the harmonic-sum formula and grow like alpha ln n, larger alpha gives more
+tables, the EPPF is exchangeable and matches the sequential seating probability, partition probabilities
+sum to 1, and alpha limits force one big table or all singletons. The Bayesian-nonparametric companion to
+the Polya-urn, Dirichlet, and Gaussian-mixture tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
