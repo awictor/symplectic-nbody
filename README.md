@@ -644,6 +644,7 @@ ruins a long non-symplectic integration.
 | `src/sir_stochastic.py` | Stochastic SIR epidemic: Gillespie outbreak dynamics, R0 threshold, bimodal final size |
 | `src/voter_model.py` | Voter model: opinion dynamics to consensus, magnetization martingale, domain coarsening |
 | `src/schelling_segregation.py` | Schelling segregation: mild individual preference producing emergent collective segregation |
+| `src/tasep.py` | TASEP: driven lattice gas with the exactly-solved open-boundary phase diagram |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1279,6 +1280,7 @@ ruins a long non-symplectic integration.
 | `examples/sir_stochastic_demo.py` | Take-off vs fizzle epidemic trajectories and the bimodal final size vs the final-size equation |
 | `examples/voter_model_demo.py` | Opinion grid coarsening to consensus over four snapshots, and consensus probability = initial fraction |
 | `examples/schelling_segregation_demo.py` | A random mixed grid segregating under a mild 1/3 tolerance, with the tau sweep |
+| `examples/tasep_demo.py` | The TASEP phase diagram and per-phase density profiles vs the exact formulas |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14671,6 +14673,25 @@ to a random empty cell. Iterating, the average similarity climbs far above tau -
 wish. Validated: the mean similarity rises far above tau, the happy fraction climbs to ~1, a higher tau
 gives more segregation, moves conserve the empty and per-type counts, and tau=0 leaves the grid
 unsegregated. The agent-based-emergence companion to the voter-model, Ising, and cellular-automaton tools.
+
+## TASEP: a driven lattice gas with an exact phase diagram
+
+The exactly-solved nonequilibrium model. `tasep.py`:
+
+```
+$ python examples/tasep_demo.py examples/output
+
+   alpha beta   phase            rho (sim/exact)   J (sim/exact)
+   0.25  0.80   low-density      0.250/0.250      0.187/0.188
+   0.80  0.25   high-density     0.748/0.750      0.187/0.188
+   0.80  0.80   maximal-current  0.486/0.500      0.253/0.250
+```
+
+Particles hop right at rate 1 (one per site); injected left at rate alpha, ejected right at rate beta. The
+(alpha, beta) plane splits into low-density (rho=alpha), high-density (rho=1-beta), and maximal-current
+(rho=1/2, J=1/4) phases. Validated by Monte Carlo: bulk density and current match the exact formulas in
+each phase, the current never exceeds 1/4, and full/empty starts relax to the same steady state. The
+nonequilibrium-statistical-mechanics companion to the Ising, sandpile, and reaction-diffusion tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

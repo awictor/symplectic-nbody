@@ -1,0 +1,28 @@
+TASEP -- driven lattice gas with an exactly-solved nonequilibrium phase diagram
+==============================================================================
+
+Particles hop right at rate 1; injected left at rate alpha, ejected right at rate beta.
+
+Steady-state density and current vs the exact formulas:
+   alpha  beta   phase            rho (sim/exact)   J (sim/exact)
+   --------------------------------------------------------------
+   0.25  0.80   low-density      0.250/0.250      0.187/0.188
+   0.80  0.25   high-density     0.748/0.750      0.187/0.188
+   0.80  0.80   maximal-current  0.486/0.500      0.253/0.250
+   0.40  0.40   low-density      0.474/0.400      0.239/0.240
+
+Three phases: low-density (rho=alpha), high-density (rho=1-beta), maximal-current (rho=1/2).
+The maximal current J=1/4 is a hard ceiling on single-file transport.
+
+Phase map over (alpha, beta) -- L=low-density, H=high-density, M=maximal-current:
+        beta ->
+   a=0.9  HHHHMMMMM
+   a=0.8  HHHHMMMMM
+   a=0.7  HHHHMMMMM
+   a=0.6  HHHHMMMMM
+   a=0.5  HHHHMMMMM
+   a=0.4  HHHLLLLLL
+   a=0.3  HHLLLLLLL
+   a=0.2  HLLLLLLLL
+   a=0.1  LLLLLLLLL
+          123456789

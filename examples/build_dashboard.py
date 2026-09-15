@@ -686,6 +686,7 @@ def main():
     import sir_stochastic_demo
     import voter_model_demo
     import schelling_segregation_demo
+    import tasep_demo
 
     import plot_orbits
 
@@ -1341,6 +1342,7 @@ def main():
     sir_stochastic_txt = run("sir_stochastic_demo", sir_stochastic_demo.main, True)
     voter_model_txt = run("voter_model_demo", voter_model_demo.main, True)
     schelling_segregation_txt = run("schelling_segregation_demo", schelling_segregation_demo.main, True)
+    tasep_txt = run("tasep_demo", tasep_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12492,6 +12494,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("schelling_segregation.svg"), "A 50x50 grid of blue and red agents: a random mix (left, similarity 0.50) evolves under a mild 1/3 tolerance into large single-colour blocks (right, similarity 0.76). Every agent is content with a one-third minority, yet the population self-sorts into segregation -- macro-pattern from micro-motive, the canonical emergence result")
             + f'<div class="card">{pre(schelling_segregation_txt)}</div>'
+            + '</div>'),
+        section(
+            "TASEP: a driven lattice gas with an exact phase diagram",
+            "Nonequilibrium steady states -- systems held out of balance by a current -- are hard, and the "
+            "totally asymmetric simple exclusion process (TASEP) is their exactly-solved fruit-fly. "
+            "Particles hop right at rate 1 on a 1-D lattice, at most one per site; with open boundaries "
+            "they are injected at the left at rate alpha and removed at the right at rate beta. The "
+            "competition produces a genuine nonequilibrium phase transition in the (alpha, beta) plane: a "
+            "LOW-DENSITY phase (rho=alpha, entrance-limited), a HIGH-DENSITY phase (rho=1-beta, "
+            "exit-limited), and a MAXIMAL-CURRENT phase (rho=1/2, current 1/4, independent of the boundary "
+            "rates). TASEP models single-file transport everywhere -- ribosomes on mRNA, motor proteins, "
+            "single-lane traffic. Validated by random-sequential-update Monte Carlo: in each phase the "
+            "measured bulk density and current match the exact formulas (rho = alpha, 1-beta, or 1/2; "
+            "J = alpha(1-alpha), beta(1-beta), or 1/4), the current never exceeds 1/4, full and empty "
+            "initial conditions relax to the same steady state, and the phase classifier matches the "
+            "region. The nonequilibrium-statistical-mechanics companion to the Ising, sandpile, and "
+            "reaction-diffusion tools.",
+            '<div class="grid">'
+            + svg_card(out("tasep.svg"), "Left: the TASEP phase diagram over the injection/ejection rates (alpha, beta) -- blue low-density, red high-density, green maximal-current, meeting at (1/2, 1/2). Right: steady-state density profiles per phase -- flat in the bulk at rho = alpha, 1-beta, or 1/2, bending only in thin boundary layers at the driven ends")
+            + f'<div class="card">{pre(tasep_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
