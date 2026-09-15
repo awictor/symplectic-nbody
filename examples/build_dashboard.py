@@ -695,6 +695,7 @@ def main():
     import taylor_couette_demo
     import hopfield_demo
     import fitzhugh_nagumo_demo
+    import ornstein_uhlenbeck_demo
 
     import plot_orbits
 
@@ -1359,6 +1360,7 @@ def main():
     taylor_couette_txt = run("taylor_couette_demo", taylor_couette_demo.main, True)
     hopfield_txt = run("hopfield_demo", hopfield_demo.main, True)
     fitzhugh_nagumo_txt = run("fitzhugh_nagumo_demo", fitzhugh_nagumo_demo.main, True)
+    ornstein_uhlenbeck_txt = run("ornstein_uhlenbeck_demo", ornstein_uhlenbeck_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12696,6 +12698,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("fitzhugh_nagumo.svg"), "Left: the phase plane, with the cubic v-nullcline (yellow) and straight w-nullcline (green) crossing at the resting fixed point. A supra-threshold kick (red) loops far out into a spike before returning; a sub-threshold kick (blue) slides straight back to rest. Right: the same two kicks as voltage-vs-time traces plus a purple trace at injected current I=0.6 inside the Hopf window, where the neuron fires repetitively forever")
             + f'<div class="card">{pre(fitzhugh_nagumo_txt)}</div>'
+            + '</div>'),
+        section(
+            "Ornstein-Uhlenbeck: the mean-reverting random walk with exact everything",
+            "A free random walk wanders off to infinity; tie it to a lamppost with a spring and you get the "
+            "Ornstein-Uhlenbeck process -- the simplest process that both fluctuates and pulls back toward a "
+            "mean. It is the continuous-time AR(1) series, the velocity of a Brownian particle under "
+            "friction (its 1930 origin), and the Vasicek model of interest rates. The SDE dX = theta(mu - X)dt "
+            "+ sigma dW combines a restoring drift toward mu with white-noise kicks, and unlike almost every "
+            "other SDE it is exactly solvable: Gaussian at all times with closed forms for the mean "
+            "(exponential relaxation to mu at rate theta), the variance (climbing from 0 to sigma^2/2theta), "
+            "the stationary law Normal(mu, sigma^2/2theta), and the autocovariance (decaying like "
+            "e^{-theta|s|} with correlation time 1/theta). That makes it the perfect instrument to validate "
+            "a stochastic integrator against truth. This module provides the analytic moments, an exact "
+            "Gaussian stepper with no time-step error at any dt, the naive Euler-Maruyama stepper for "
+            "contrast, and empirical estimators. Validated: the Monte-Carlo mean and variance follow the "
+            "exponential-relaxation curves, the stationary histogram matches the Gaussian, the empirical "
+            "autocovariance decays like e^{-theta s}, and the exact stepper reproduces the analytic variance "
+            "at large dt exactly where Euler-Maruyama overshoots badly (it injects sigma^2 dt of variance "
+            "per step regardless of relaxation). The mean-reverting companion to the random-walk, Langevin, "
+            "and Kalman-filter tools.",
+            '<div class="grid">'
+            + svg_card(out("ornstein_uhlenbeck.svg"), "Top: four sample paths starting at x0=4 relax toward the mean mu=1, hugging the analytic mean curve (yellow) inside its plus/minus-one-standard-deviation band (blue) that widens from zero to the stationary spread. Bottom: variance per step versus the time step dt -- the exact Gaussian stepper (green) saturates at the true stationary variance, while the Euler-Maruyama scheme (red) injects sigma-squared times dt of variance every step and grows without bound, the discretization error laid bare")
+            + f'<div class="card">{pre(ornstein_uhlenbeck_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

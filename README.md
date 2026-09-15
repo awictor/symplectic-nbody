@@ -653,6 +653,7 @@ ruins a long non-symplectic integration.
 | `src/taylor_couette.py` | Taylor-Couette flow: exact v(r)=Ar+B/r, Rayleigh centrifugal criterion, Taylor-vortex onset |
 | `src/hopfield.py` | Hopfield associative memory: Hebbian storage, energy descent, 0.138N capacity, spurious states |
 | `src/fitzhugh_nagumo.py` | FitzHugh-Nagumo neuron: threshold excitability, phase-plane, Hopf onset of spiking |
+| `src/ornstein_uhlenbeck.py` | Ornstein-Uhlenbeck process: exact moments, stationary law, exact vs Euler stepper |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1297,6 +1298,7 @@ ruins a long non-symplectic integration.
 | `examples/taylor_couette_demo.py` | Velocity profiles for three drive configs, Rayleigh verdicts, and Taylor-number onset |
 | `examples/hopfield_demo.py` | Recall a corrupted 5x5 letter and watch recall accuracy collapse past the capacity line |
 | `examples/fitzhugh_nagumo_demo.py` | Phase-plane spike vs decay, threshold sweep, and the Hopf window of repetitive firing |
+| `examples/ornstein_uhlenbeck_demo.py` | Mean-reverting paths vs analytic band, and exact-stepper vs Euler variance |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14865,6 +14867,24 @@ Validated: RK4 is fourth-order, the fixed point satisfies both nullclines, the t
 rest-spike-rest sequence, sub- vs supra-threshold kicks behave correctly, and the refractory period
 suppresses a following stimulus. The excitable-media companion to the van der Pol, Hopfield, and
 reaction-diffusion tools.
+
+## Ornstein-Uhlenbeck: the mean-reverting random walk with exact everything
+
+The continuous-time AR(1) process, exactly solvable. `ornstein_uhlenbeck.py`:
+
+```
+$ python examples/ornstein_uhlenbeck_demo.py examples/output
+
+dX = theta(mu - X) dt + sigma dW ;  stationary law Normal(mu, sigma^2/2theta)
+mean relaxes exp to mu; variance climbs 0 -> sigma^2/2theta (MC tracks analytic to 3 digits)
+exact stepper vs Euler at dt=2:  Var = 0.177 (exact/analytic) vs 0.721 (Euler, biased high)
+```
+
+Gaussian at all times with closed forms for mean, variance, stationary law, and autocovariance
+(e^{-theta|s|}). An exact Gaussian stepper with no time-step error at any dt, plus Euler-Maruyama for
+contrast. Validated: MC moments follow the relaxation curves, the stationary histogram matches the
+Gaussian, the autocovariance decays exponentially, and the exact stepper matches truth at large dt
+where Euler overshoots. The mean-reverting companion to the random-walk, Langevin, and Kalman-filter tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

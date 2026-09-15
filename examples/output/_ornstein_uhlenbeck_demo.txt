@@ -1,0 +1,31 @@
+Ornstein-Uhlenbeck process -- the mean-reverting random walk
+==========================================================================
+
+  dX = theta (mu - X) dt + sigma dW      (spring pull to mu + white noise)
+  theta=1.0 (rate)   mu=1.0 (mean)   sigma=0.6 (noise)
+
+Exact solvability -- every moment in closed form:
+  correlation time 1/theta = 1.000
+  stationary law: Normal(mu=1.0, var=sigma^2/2theta=0.1800)
+
+Relaxation from x0=4 toward mu=1 -- Monte Carlo (6000 paths) tracks the analytic curves:
+    t      E[X_t] analytic   MC mean     Var analytic   MC var
+   ------------------------------------------------------------
+    0.2       3.4562        3.4577      0.0593       0.0590
+    0.5       2.8196        2.8207      0.1138       0.1133
+    1.0       2.1036        2.1046      0.1556       0.1542
+    2.0       1.4060        1.4075      0.1767       0.1799
+    4.0       1.0549        1.0551      0.1799       0.1839
+
+Mean decays exponentially to mu; variance climbs from 0 to the stationary value.
+
+Exact Gaussian stepper has NO time-step error; Euler-Maruyama is biased at large dt:
+    dt      analytic Var(dt)   exact stepper   Euler-Maruyama
+   ----------------------------------------------------------
+    0.1         0.0326          0.0327         0.0361
+    0.5         0.1138          0.1140         0.1803
+    1.0         0.1556          0.1559         0.3606
+    2.0         0.1767          0.1770         0.7211
+
+Euler injects sigma^2*dt of variance per step regardless of relaxation -> overshoots badly.
+The exact stepper matches truth at any dt because the OU transition is Gaussian.
