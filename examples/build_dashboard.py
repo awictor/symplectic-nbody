@@ -692,6 +692,7 @@ def main():
     import deffuant_bounded_demo
     import simpsons_paradox_demo
     import ballot_problem_demo
+    import taylor_couette_demo
 
     import plot_orbits
 
@@ -1353,6 +1354,7 @@ def main():
     deffuant_bounded_txt = run("deffuant_bounded_demo", deffuant_bounded_demo.main, True)
     simpsons_paradox_txt = run("simpsons_paradox_demo", simpsons_paradox_demo.main, True)
     ballot_problem_txt = run("ballot_problem_demo", ballot_problem_demo.main, True)
+    taylor_couette_txt = run("taylor_couette_demo", taylor_couette_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12622,6 +12624,29 @@ def main():
             '<div class="grid">'
             + svg_card(out("ballot_problem.svg"), "The vote count drawn as a lattice path, +1 for each A vote and -1 for each B. The green path stays strictly above the zero line the whole way -- A never loses the lead. The dashed red path touches zero at the second step, so the lead was surrendered. The reflection principle counts the bad (zero-touching) paths by mirroring their opening segment, and the good count collapses to the fraction (p-q)/(p+q) of every ordering")
             + f'<div class="card">{pre(ballot_problem_txt)}</div>'
+            + '</div>'),
+        section(
+            "Taylor-Couette flow: the exact profile and centrifugal instability",
+            "Fill the gap between two long concentric cylinders with a viscous fluid and spin them. At low "
+            "speed the Navier-Stokes equations collapse to a single ODE with an exact solution -- circular "
+            "Couette flow, v(r) = A r + B/r, a rigid-rotation term plus an irrotational vortex, with A and B "
+            "fixed by no-slip at each wall. It is one of the few exactly solvable viscous flows and the "
+            "textbook way to measure viscosity from torque. Wind the inner cylinder up, though, and the "
+            "smooth flow buckles into a stack of counter-rotating donut vortices -- Taylor vortices, G. I. "
+            "Taylor's 1923 confirmation of a theoretically predicted instability. The mechanism is "
+            "centrifugal: Rayleigh's inviscid criterion says the flow is stable exactly when the squared "
+            "specific angular momentum L^2 = (r^2 Omega)^2 does not decrease outward; when only the inner "
+            "cylinder spins it always does, so the flow is primed to overturn once viscosity can no longer "
+            "damp it -- above the critical Taylor number Ta_c ~ 1708, the same threshold as Rayleigh-Benard "
+            "convection. This module builds the exact profile, the Rayleigh discriminant Phi = 4 A Omega, "
+            "the torque, and the narrow-gap Taylor number, validated analytically: the profile hits both "
+            "boundary conditions to machine precision, solid-body rotation gives B = 0 and unconditional "
+            "stability, the marginal line Omega2/Omega1 = (r1/r2)^2 gives the potential vortex, and the "
+            "stability verdicts match direct evaluation of L^2. The rotating-flow companion to the "
+            "Rayleigh-Benard, Kelvin-Helmholtz, and Orr-Sommerfeld tools.",
+            '<div class="grid">'
+            + svg_card(out("taylor_couette.svg"), "Left: the exact azimuthal velocity v(r) = Ar + B/r across the gap for three drive configurations -- inner-only (red), solid-body (green), and fast-outer (blue) -- each pinned to its wall speeds by no-slip. Right: a cylinder cross-section showing that when the inner cylinder is spun past the critical Taylor number the smooth flow breaks into a ring of counter-rotating Taylor vortices (alternating red and blue)")
+            + f'<div class="card">{pre(taylor_couette_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

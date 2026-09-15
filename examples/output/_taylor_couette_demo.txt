@@ -1,0 +1,27 @@
+Taylor-Couette flow -- viscous fluid between two rotating cylinders
+==========================================================================
+
+Gap r1=1.0 to r2=2.0. Steady circular Couette flow: v(r) = A r + B/r,
+the only motion is azimuthal, fixed by no-slip at each wall.
+
+   configuration              A         B        Rayleigh verdict
+   --------------------------------------------------------------
+   inner spins, outer still   -1.667     6.667    UNSTABLE (centrifugal)
+   solid-body (both equal)     3.000     0.000    STABLE
+   outer spins faster          3.667    -2.667    STABLE
+
+Rayleigh's criterion: stable iff L^2 = (r^2 Omega)^2 does not fall outward.
+Inner-only rotation always fails it -> the flow is primed to overturn.
+
+Marginal (potential-vortex) line: Omega2/Omega1 = (r1/r2)^2 = 0.2500
+  On this line A=0, angular momentum is constant, Phi=0 everywhere.
+
+Viscosity delays the overturn until the Taylor number crosses Ta_c ~ 1708:
+   Omega1    gap d    nu      Taylor number    vortices?
+   ----------------------------------------------------
+       30     0.10    1.0             0.9     no
+       60     0.10    1.0             3.6     no
+      100     0.10    1.0            10.0     no
+     2000     0.10    1.0          4000.0     YES
+
+Below Ta_c viscosity damps the donut vortices; above it, Taylor's 1923 vortex stack appears.

@@ -650,6 +650,7 @@ ruins a long non-symplectic integration.
 | `src/deffuant_bounded.py` | Deffuant bounded-confidence: continuous opinion dynamics, consensus vs fragmentation |
 | `src/simpsons_paradox.py` | Simpson's paradox: detect rate reversals, correct with Mantel-Haenszel and standardization |
 | `src/ballot_problem.py` | Bertrand's ballot theorem: (p-q)/(p+q) via reflection principle, cycle lemma, Catalan numbers |
+| `src/taylor_couette.py` | Taylor-Couette flow: exact v(r)=Ar+B/r, Rayleigh centrifugal criterion, Taylor-vortex onset |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1291,6 +1292,7 @@ ruins a long non-symplectic integration.
 | `examples/deffuant_bounded_demo.py` | Opinion trajectories merging to consensus or splitting into camps as the threshold varies |
 | `examples/simpsons_paradox_demo.py` | The kidney-stone reversal: A wins every stratum but loses the pool until the confounder is fixed |
 | `examples/ballot_problem_demo.py` | The (p-q)/(p+q) law, three agreeing derivations, and good vs bad lattice paths |
+| `examples/taylor_couette_demo.py` | Velocity profiles for three drive configs, Rayleigh verdicts, and Taylor-number onset |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14800,6 +14802,26 @@ with probability (p-q)/(p+q), independent of the sizes. Proved by the reflection
 each zero-touching lattice path's opening segment across the axis and the counts subtract cleanly.
 Strict and weak counts, three independent derivations, and Catalan numbers, all checked against
 brute-force enumeration. The first-passage companion to the random-walk, Galton-board, and Catalan tools.
+
+## Taylor-Couette flow: the exact profile and centrifugal instability
+
+Viscous fluid between two rotating cylinders. `taylor_couette.py`:
+
+```
+$ python examples/taylor_couette_demo.py examples/output
+
+Circular Couette flow  v(r) = A r + B/r  (fixed by no-slip at each wall):
+   inner spins, outer still -> Rayleigh UNSTABLE (L^2 falls outward)
+   solid-body rotation      -> B = 0, unconditionally stable
+Viscosity delays the overturn until Ta > Ta_c ~ 1708:
+   Omega1=100 -> Ta=10 (no vortices)     Omega1=2000 -> Ta=4000 (Taylor vortices)
+```
+
+One of the few exactly solvable viscous flows. Build the profile, the Rayleigh discriminant
+Phi = 4 A Omega, the torque, and the narrow-gap Taylor number. Validated analytically: both boundary
+conditions to machine precision, solid-body gives B=0, the marginal line Omega2/Omega1 = (r1/r2)^2
+gives the potential vortex, and the stability verdicts match direct evaluation of L^2. The rotating-flow
+companion to the Rayleigh-Benard, Kelvin-Helmholtz, and Orr-Sommerfeld tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
