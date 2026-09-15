@@ -652,6 +652,7 @@ ruins a long non-symplectic integration.
 | `src/ballot_problem.py` | Bertrand's ballot theorem: (p-q)/(p+q) via reflection principle, cycle lemma, Catalan numbers |
 | `src/taylor_couette.py` | Taylor-Couette flow: exact v(r)=Ar+B/r, Rayleigh centrifugal criterion, Taylor-vortex onset |
 | `src/hopfield.py` | Hopfield associative memory: Hebbian storage, energy descent, 0.138N capacity, spurious states |
+| `src/fitzhugh_nagumo.py` | FitzHugh-Nagumo neuron: threshold excitability, phase-plane, Hopf onset of spiking |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1295,6 +1296,7 @@ ruins a long non-symplectic integration.
 | `examples/ballot_problem_demo.py` | The (p-q)/(p+q) law, three agreeing derivations, and good vs bad lattice paths |
 | `examples/taylor_couette_demo.py` | Velocity profiles for three drive configs, Rayleigh verdicts, and Taylor-number onset |
 | `examples/hopfield_demo.py` | Recall a corrupted 5x5 letter and watch recall accuracy collapse past the capacity line |
+| `examples/fitzhugh_nagumo_demo.py` | Phase-plane spike vs decay, threshold sweep, and the Hopf window of repetitive firing |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14843,6 +14845,26 @@ energy E = -1/2 sum W_ij s_i s_j, so recall always converges. Validated: energy 
 stored patterns are low-energy fixed points, corrupted cues recalled exactly, capacity collapse past
 the Amit-Gutfreund-Sompolinsky load ~0.138 N, and odd mixture states are genuine spurious attractors.
 The associative-memory companion to the Ising, simulated-annealing, and Boltzmann-machine tools.
+
+## FitzHugh-Nagumo: how a neuron spikes with just two variables
+
+The minimal excitable-cell model. `fitzhugh_nagumo.py`:
+
+```
+$ python examples/fitzhugh_nagumo_demo.py examples/output
+
+dv/dt = v - v^3/3 - w + I ;  dw/dt = eps (v + a - b w)
+rest (I=0): stable fixed point; small kick decays, kick past threshold -> spike (~2 units)
+inject current: fixed point unstable for I in (0.335, 1.415) -> repetitive firing (Hopf window)
+```
+
+Two variables, a cubic, and a slow recovery term reproduce threshold excitability, a refractory
+period, and relaxation oscillations -- none of them hard-coded. Integrated with RK4; fixed point from
+the cubic; stability from the 2x2 Jacobian trace/determinant; Hopf window from a current scan.
+Validated: RK4 is fourth-order, the fixed point satisfies both nullclines, the trace predicts the
+rest-spike-rest sequence, sub- vs supra-threshold kicks behave correctly, and the refractory period
+suppresses a following stimulus. The excitable-media companion to the van der Pol, Hopfield, and
+reaction-diffusion tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

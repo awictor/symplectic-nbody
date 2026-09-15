@@ -1,0 +1,34 @@
+FitzHugh-Nagumo -- the two-variable cartoon of a spiking neuron
+==========================================================================
+
+  dv/dt = v - v^3/3 - w + I     (fast voltage-like variable)
+  dw/dt = eps (v + a - b w)     (slow recovery, eps << 1)
+
+At rest (I=0): fixed point (v*,w*) = (-1.199, -0.624), stable = True.
+
+Threshold excitability -- a kick must clear the middle branch of the cubic to spike:
+   kick to v      peak v reached     spike?
+   --------------------------------------------
+   -1.099         -1.099          decays
+   -0.899         -0.899          decays
+   -0.699         -0.670          decays
+   -0.399         +1.771          SPIKE
+   +0.301         +1.827          SPIKE
+
+Small kicks decay straight back; past threshold the cubic amplifies the kick into a
+full ~2-unit spike before the slow recovery drags v home. No switch is hard-coded.
+
+Inject steady current I -> Hopf bifurcation -> repetitive firing (a relaxation oscillator):
+   fixed point is unstable for I in (0.335, 1.415) -- two Hopf points.
+   I        fixed pt      behaviour
+   ----------------------------------------
+   0.00     stable        rest
+   0.20     stable        rest
+   0.35     UNSTABLE      repetitive spiking
+   0.60     UNSTABLE      repetitive spiking
+   1.00     UNSTABLE      repetitive spiking
+   1.40     UNSTABLE      repetitive spiking
+   1.80     stable        rest
+
+Below and above the window the neuron rests; inside it fires forever -- the excitable
+cell has become an oscillator. Same equations, current is the only knob.

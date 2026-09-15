@@ -694,6 +694,7 @@ def main():
     import ballot_problem_demo
     import taylor_couette_demo
     import hopfield_demo
+    import fitzhugh_nagumo_demo
 
     import plot_orbits
 
@@ -1357,6 +1358,7 @@ def main():
     ballot_problem_txt = run("ballot_problem_demo", ballot_problem_demo.main, True)
     taylor_couette_txt = run("taylor_couette_demo", taylor_couette_demo.main, True)
     hopfield_txt = run("hopfield_demo", hopfield_demo.main, True)
+    fitzhugh_nagumo_txt = run("fitzhugh_nagumo_demo", fitzhugh_nagumo_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12670,6 +12672,30 @@ def main():
             '<div class="grid">'
             + svg_card(out("hopfield.svg"), "Top: a stored 5x5 letter 'T' shown with three pixels flipped (red cue) is fed to the network, which settles by energy descent to the exact stored memory (green), identical to the original (blue). Bottom: mean recall overlap (purple) as a function of the memory load p/N -- near-perfect until the load crosses the dashed Amit-Gutfreund-Sompolinsky line at p/N ~ 0.138, then collapsing as spurious minima take over")
             + f'<div class="card">{pre(hopfield_txt)}</div>'
+            + '</div>'),
+        section(
+            "FitzHugh-Nagumo: how a neuron spikes with just two variables",
+            "The Hodgkin-Huxley equations explain the nerve impulse with four coupled variables; FitzHugh "
+            "and Nagumo (1961-62) found the minimal cartoon that still spikes -- two variables, a cubic, "
+            "and a slow recovery term. The fast voltage-like variable v has cubic self-amplification, the "
+            "slow variable w turns the spike off, and the separation of timescales does all the work. Three "
+            "signatures of an excitable medium emerge with nothing hard-coded: a threshold (a small kick to "
+            "v decays straight back to rest, but a kick past the middle branch of the cubic nullcline is "
+            "amplified into a full spike -- the threshold IS that repelling branch, not a number); a "
+            "refractory period (just after a spike the elevated recovery variable suppresses a second "
+            "identical kick); and relaxation oscillations (inject enough steady current and the resting "
+            "fixed point loses stability through a Hopf bifurcation, so the cell can no longer rest and "
+            "instead fires repetitively). This module integrates the system with RK4, solves the cubic for "
+            "the fixed point, classifies its stability from the 2x2 Jacobian trace and determinant, and "
+            "scans the injected current for the two Hopf points bounding repetitive firing. Validated: RK4 "
+            "is fourth-order on an analytic test, the fixed point satisfies both nullclines to machine "
+            "precision, the Jacobian trace predicts the observed rest-spike-rest sequence as current grows, "
+            "a sub-threshold kick decays while a supra-threshold one spikes, and the refractory period "
+            "suppresses a closely following stimulus. The excitable-media companion to the van der Pol, "
+            "Hopfield, and reaction-diffusion tools.",
+            '<div class="grid">'
+            + svg_card(out("fitzhugh_nagumo.svg"), "Left: the phase plane, with the cubic v-nullcline (yellow) and straight w-nullcline (green) crossing at the resting fixed point. A supra-threshold kick (red) loops far out into a spike before returning; a sub-threshold kick (blue) slides straight back to rest. Right: the same two kicks as voltage-vs-time traces plus a purple trace at injected current I=0.6 inside the Hopf window, where the neuron fires repetitively forever")
+            + f'<div class="card">{pre(fitzhugh_nagumo_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
