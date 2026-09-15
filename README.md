@@ -648,6 +648,7 @@ ruins a long non-symplectic integration.
 | `src/bak_sneppen.py` | Bak-Sneppen model: self-organized criticality in evolution, avalanches, punctuated equilibrium |
 | `src/vicsek_flocking.py` | Vicsek model: self-propelled particles flocking, the order-disorder phase transition |
 | `src/deffuant_bounded.py` | Deffuant bounded-confidence: continuous opinion dynamics, consensus vs fragmentation |
+| `src/simpsons_paradox.py` | Simpson's paradox: detect rate reversals, correct with Mantel-Haenszel and standardization |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1287,6 +1288,7 @@ ruins a long non-symplectic integration.
 | `examples/bak_sneppen_demo.py` | The fitness gap climbing to f_c and the power-law avalanche-size distribution |
 | `examples/vicsek_flocking_demo.py` | Order parameter vs noise across the flocking transition, and aligned vs disordered snapshots |
 | `examples/deffuant_bounded_demo.py` | Opinion trajectories merging to consensus or splitting into camps as the threshold varies |
+| `examples/simpsons_paradox_demo.py` | The kidney-stone reversal: A wins every stratum but loses the pool until the confounder is fixed |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14755,6 +14757,28 @@ clusters is roughly 1/(2d). Validated: the mean opinion is conserved by every ex
 yields one consensus and a small one fragments, the cluster count grows as the threshold shrinks, opinions
 stay in [0,1], and distant pairs never interact. The opinion-dynamics companion to the voter-model,
 Schelling, and Kuramoto tools.
+
+## Simpson's paradox: when the aggregate lies
+
+An association that reverses when you split by a confounder. `simpsons_paradox.py`:
+
+```
+$ python examples/simpsons_paradox_demo.py examples/output
+
+Kidney-stone study (Charig 1986), treatment A vs B:
+  small stones:  A 93.1% > B 86.7%   (A wins)
+  large stones:  A 73.0% > B 68.8%   (A wins)
+  POOLED:        A 78.0% < B 82.6%   (B wins -- the paradox)
+
+naive pooled odds ratio = 0.748 (wrongly favours B)
+Mantel-Haenszel OR      = 1.447 (correctly favours A)
+```
+
+A wins both strata yet loses the pool, because A was handed most of the hard large-stone cases.
+Detect the reversal, explain it via the confounder's uneven allocation, and correct it with the
+Mantel-Haenszel stratified odds ratio or direct standardization -- both recover the within-stratum
+truth. Validated on the kidney-stone and Berkeley-admissions data plus a brute-force scan over 40k
+tables. The observational-bias companion to the contingency-table and logistic-regression tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

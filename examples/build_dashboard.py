@@ -690,6 +690,7 @@ def main():
     import bak_sneppen_demo
     import vicsek_flocking_demo
     import deffuant_bounded_demo
+    import simpsons_paradox_demo
 
     import plot_orbits
 
@@ -1349,6 +1350,7 @@ def main():
     bak_sneppen_txt = run("bak_sneppen_demo", bak_sneppen_demo.main, True)
     vicsek_flocking_txt = run("vicsek_flocking_demo", vicsek_flocking_demo.main, True)
     deffuant_bounded_txt = run("deffuant_bounded_demo", deffuant_bounded_demo.main, True)
+    simpsons_paradox_txt = run("simpsons_paradox_demo", simpsons_paradox_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12579,6 +12581,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("deffuant_bounded.svg"), "Opinion trajectories over time (each line one person's view in [0,1]). Left, open-minded (d=0.4): every line spirals together into a single consensus. Right, narrow confidence (d=0.12): the lines split into several stable camps that never reconcile -- fragmentation emerging purely from how far people will listen")
             + f'<div class="card">{pre(deffuant_bounded_txt)}</div>'
+            + '</div>'),
+        section(
+            "Simpson's paradox: when the aggregate lies",
+            "A treatment can look worse than its rival in the pooled data yet better in every single "
+            "subgroup -- both facts arithmetically true at once. It is not a small-sample fluke; it "
+            "happens with exact counts, and it is why raw numbers never settle a causal question. The "
+            "cause is a lurking confounder distributed unevenly across the groups being compared. This "
+            "module works on stratified 2x2 tables and does three things: DETECT a genuine reversal (one "
+            "group wins the aggregate while the other wins every stratum), EXPLAIN it via the confounder's "
+            "uneven allocation across groups, and CORRECT it with the confounder-adjusted comparison -- "
+            "the Mantel-Haenszel stratified odds ratio and direct standardization, both of which recover "
+            "the causally correct within-stratum direction. The classic case is the 1986 kidney-stone "
+            "study: open surgery (A) had a lower overall success rate than the less-invasive procedure (B) "
+            "yet did better on both small and large stones separately, because A was preferentially given "
+            "the hard large-stone cases. Validated on the kidney-stone and Berkeley-admissions datasets, "
+            "with a brute-force scan over 40k small tables confirming the reversal condition exactly. The "
+            "observational-bias companion to the contingency-table and logistic-regression tools.",
+            '<div class="grid">'
+            + svg_card(out("simpsons_paradox.svg"), "Success rate of treatment A (blue) vs B (yellow) across four views. In both the small-stone and large-stone strata the blue bar is taller (A wins), but in the POOLED bar B overtakes -- because A was handed most of the hard large-stone cases. The rightmost ADJUSTED bars, holding stone size fixed, flip the verdict back to A: the aggregate was the liar")
+            + f'<div class="card">{pre(simpsons_paradox_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

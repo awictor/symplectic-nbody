@@ -1,0 +1,25 @@
+Simpson's paradox -- kidney-stone treatments (Charig 1986)
+==========================================================================
+
+Treatment A (open surgery) vs B (less-invasive), success rates:
+
+   stratum         treatment A          treatment B         winner
+   --------------------------------------------------------------
+   small stones     81/ 87 =  93.1%   234/270 =  86.7%     A
+   large stones    192/263 =  73.0%    55/ 80 =  68.8%     A
+   --------------------------------------------------------------
+   POOLED          273/350 =  78.0%   289/350 =  82.6%     B
+
+  A wins BOTH strata, yet B wins the pooled total. Reversal detected: True.
+
+Why? The confounder (stone size) is allocated unevenly:
+   small stones    A sends  24.9% of its cases here, B sends  77.1%
+   large stones    A sends  75.1% of its cases here, B sends  22.9%
+  A got the hard cases (large stones, worse for everyone), dragging its pooled rate down.
+
+Which answer is real? The confounder-adjusted comparison:
+   naive pooled odds ratio  (A vs B) = 0.748   (< 1: wrongly favours B)
+   Mantel-Haenszel odds ratio        = 1.447   (> 1: correctly favours A)
+   standardized rates:  A = 83.3%,  B = 77.9%   (A ahead, matching every stratum)
+
+  Holding the confounder fixed recovers the within-group truth: treatment A is better.
