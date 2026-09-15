@@ -636,6 +636,7 @@ ruins a long non-symplectic integration.
 | `src/hawkes_process.py` | Hawkes process: self-exciting point process with exponential kernel, Ogata thinning |
 | `src/galton_watson.py` | Galton-Watson branching process: extinction probability, criticality, lineage growth |
 | `src/moran_process.py` | Moran process: finite-population fixation probabilities with selection, overlapping generations |
+| `src/replicator_dynamics.py` | Replicator dynamics: evolutionary game theory ODE on the simplex, Nash rest points, RPS cycles |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1263,6 +1264,7 @@ ruins a long non-symplectic integration.
 | `examples/hawkes_process_demo.py` | The self-exciting intensity path spiking at each event, and rate amplified by 1/(1-n) |
 | `examples/galton_watson_demo.py` | Extinction as a PGF fixed-point cobweb, and lineages dying out or growing geometrically |
 | `examples/moran_process_demo.py` | Fixation probability vs starting count by selection, and single-mutant fixation approaching 1-1/r |
+| `examples/replicator_dynamics_demo.py` | Rock-paper-scissors orbits on the simplex, a dominant strategy sweeping, and an interior ESS |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14498,6 +14500,25 @@ Validated: neutral fixation = i/N, empirical matches the closed form under selec
 disadvantage lowers fixation, the single-mutant formula approaches 1-1/r, and every trajectory is
 absorbed. The finite-population-evolution companion to the Wright-Fisher, Galton-Watson, and coalescent
 tools.
+
+## Replicator dynamics: evolutionary game theory
+
+Strategy frequencies evolving by relative fitness. `replicator_dynamics.py`:
+
+```
+$ python examples/replicator_dynamics_demo.py examples/output
+
+Rock-Paper-Scissors: product x1x2x3 conserved 0.03000..0.03000 (orbits forever)
+Dominant strategy: x1 -> 1.000 (sweeps to fixation)
+Hawk-Dove: x1=0.9 -> 0.500 (interior ESS, not fixation)
+```
+
+dx_i/dt = x_i((Ax)_i - x.Ax): above-average strategies grow, on the probability simplex forever. Rest
+points are Nash equilibria; stable ones are ESS. Integrated with a simplex-preserving RK4. Validated:
+frequencies stay on the simplex, a dominant strategy fixes, a two-strategy game converges to its interior
+Nash mixed equilibrium, rock-paper-scissors orbits and conserves x1 x2 x3, pure/interior strategies are
+rest points, and mean fitness is non-decreasing for a symmetric game. The evolutionary-game-theory
+companion to the Moran-process, Wright-Fisher, and Lotka-Volterra tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

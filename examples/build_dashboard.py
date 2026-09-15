@@ -678,6 +678,7 @@ def main():
     import hawkes_process_demo
     import galton_watson_demo
     import moran_process_demo
+    import replicator_dynamics_demo
 
     import plot_orbits
 
@@ -1325,6 +1326,7 @@ def main():
     hawkes_process_txt = run("hawkes_process_demo", hawkes_process_demo.main, True)
     galton_watson_txt = run("galton_watson_demo", galton_watson_demo.main, True)
     moran_process_txt = run("moran_process_demo", moran_process_demo.main, True)
+    replicator_dynamics_txt = run("replicator_dynamics_demo", replicator_dynamics_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12322,6 +12324,26 @@ def main():
             '<div class="grid">'
             + svg_card(out("moran_process.svg"), "Fixation probability of a mutant vs its starting count i in a population of N=12, for four fitness ratios. The neutral case (gray) is exactly the diagonal i/N; a fitness advantage (yellow, green) bends the curve up so even a single copy has a real chance, while a disadvantage (red) crushes small-i fixation toward zero -- selection reshapes the fair-game line")
             + f'<div class="card">{pre(moran_process_txt)}</div>'
+            + '</div>'),
+        section(
+            "Replicator dynamics: evolutionary game theory",
+            "How does a population's strategy mix change when success depends on what everyone else plays? "
+            "Replicator dynamics (Taylor & Jonker 1978) is the answer: a strategy grows in proportion to "
+            "how much its payoff beats the population average, dx_i/dt = x_i((Ax)_i - x.Ax), living forever "
+            "on the probability simplex. Its rest points include every Nash equilibrium, and a stable one "
+            "is an evolutionarily stable strategy. The dynamics reproduce game theory's outcomes: a "
+            "strictly dominant strategy sweeps to fixation, a coordination game settles into a pure "
+            "equilibrium, and rock-paper-scissors cycles forever around its interior equilibrium with a "
+            "conserved quantity (the product of frequencies), like energy in a Hamiltonian system. "
+            "Integrated with a simplex-preserving RK4 step. Validated: frequencies stay on the simplex, a "
+            "dominant strategy fixes, a two-strategy game converges to its interior Nash mixed "
+            "equilibrium from any start, rock-paper-scissors orbits and conserves x1 x2 x3, the interior "
+            "and pure strategies are rest points, and mean fitness is non-decreasing for a symmetric "
+            "game. The evolutionary-game-theory companion to the Moran-process, Wright-Fisher, and "
+            "Lotka-Volterra tools.",
+            '<div class="grid">'
+            + svg_card(out("replicator_dynamics.svg"), "Rock-paper-scissors on the strategy simplex (triangle with Rock/Paper/Scissors corners). Four colored orbits, each from a different starting mix, cycle as closed loops around the central Nash equilibrium (red) -- they never converge, because the conserved product x1 x2 x3 pins each orbit to a level curve, exactly like energy conservation in a frictionless oscillator")
+            + f'<div class="card">{pre(replicator_dynamics_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
