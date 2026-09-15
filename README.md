@@ -632,6 +632,7 @@ ruins a long non-symplectic integration.
 | `src/friedman_test.py` | Friedman test: nonparametric repeated-measures ANOVA with Kendall's W concordance |
 | `src/gillespie_ssa.py` | Gillespie's stochastic simulation algorithm: exact trajectories of a chemical reaction network |
 | `src/wright_fisher.py` | Wright-Fisher model: genetic drift, fixation probability, and selection in a finite population |
+| `src/coalescent.py` | Kingman's coalescent: backward-time gene genealogies, T_MRCA, and Watterson's estimator |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1255,6 +1256,7 @@ ruins a long non-symplectic integration.
 | `examples/friedman_test_demo.py` | Four algorithms' within-block ranks across datasets, the treatment effect surviving block offsets |
 | `examples/gillespie_ssa_demo.py` | Stochastic Lotka-Volterra trajectories and phase orbit, and decay noise shrinking toward the ODE |
 | `examples/wright_fisher_demo.py` | Drift trajectories to fixation/loss, neutral fixation = p0, and the Kimura selection formula |
+| `examples/coalescent_demo.py` | A coalescent genealogy tree, E[TMRCA]/total-length vs theory, and Watterson theta estimation |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14407,6 +14409,27 @@ p(1-p)/(2N). Validated: neutral fixation equals p0, selection raises fixation an
 diffusion formula, the drift variance matches p(1-p)/2N, heterozygosity decays by 1-1/(2N) per generation,
 every trajectory is absorbed, and smaller populations fix faster. The population-genetics companion to the
 Gillespie-SSA, Moran-process, and Markov-chain tools.
+
+## Kingman's coalescent: genealogies backward in time
+
+Gene genealogies traced from a sample to its MRCA. `coalescent.py`:
+
+```
+$ python examples/coalescent_demo.py examples/output
+
+   n     E[T_MRCA]   sim      E[total len]   sim
+    10      1.800   1.804      5.658      5.666
+    50      1.960   1.961      8.958      8.969
+
+Watterson theta_hat from segregating sites: true 5.0 -> 4.89
+```
+
+While k lineages remain, each pair coalesces at rate 1, so the wait to the next merge is exponential with
+rate k(k-1)/2. E[T_MRCA] = 2(1-1/n), expected total branch length = 2 H_(n-1), and E[segregating sites] =
+theta H_(n-1) (Watterson). Validated: mean T_MRCA and total length match theory, the n=2 time is
+exponential with mean 1, early coalescences are faster than late, the segregating-site count matches theta
+H_(n-1), Watterson recovers theta, and every genealogy reduces to one MRCA in n-1 merges. The backward-time
+population-genetics companion to the Wright-Fisher, Gillespie-SSA, and Markov-chain tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

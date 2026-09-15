@@ -674,6 +674,7 @@ def main():
     import friedman_test_demo
     import gillespie_ssa_demo
     import wright_fisher_demo
+    import coalescent_demo
 
     import plot_orbits
 
@@ -1317,6 +1318,7 @@ def main():
     friedman_test_txt = run("friedman_test_demo", friedman_test_demo.main, True)
     gillespie_ssa_txt = run("gillespie_ssa_demo", gillespie_ssa_demo.main, True)
     wright_fisher_txt = run("wright_fisher_demo", wright_fisher_demo.main, True)
+    coalescent_txt = run("coalescent_demo", coalescent_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12238,6 +12240,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("wright_fisher.svg"), "25 neutral allele-frequency trajectories starting at p0=0.5 in a population of 2N=50. Each is a random walk to an absorbing barrier: about half climb to fixation (green) and half fall to loss (red), exactly as the martingale predicts -- yet any single lineage's fate is pure chance, and small populations reach a barrier fast")
             + f'<div class="card">{pre(wright_fisher_txt)}</div>'
+            + '</div>'),
+        section(
+            "Kingman's coalescent: genealogies backward in time",
+            "Wright-Fisher runs forward; the coalescent (Kingman 1982) runs time BACKWARD, following a "
+            "sample's n lineages up the family tree as they merge -- coalesce -- into a common ancestor. "
+            "Its key fact: while k lineages remain, each pair coalesces at rate 1, so the wait to the next "
+            "merge is exponential with rate k(k-1)/2. The times shrink as k grows, so most of the tree's "
+            "depth is the last two lineages merging. Exact expectations follow: E[T_MRCA] = 2(1 - 1/n) "
+            "(approaching 2), and the expected total branch length is 2 H_(n-1), growing only "
+            "logarithmically -- so adding samples adds little history. Sprinkling mutations at rate "
+            "theta/2 per unit length gives E[segregating sites] = theta H_(n-1), the basis of Watterson's "
+            "estimator theta_hat = S / H_(n-1). Validated: mean T_MRCA matches 2(1-1/n), mean total "
+            "length matches 2 H_(n-1), the n=2 time is exponential with mean 1, early coalescences are "
+            "faster than late, the mean segregating-site count matches theta H_(n-1), Watterson recovers "
+            "theta, and every genealogy reduces to one MRCA in n-1 merges. The backward-time "
+            "population-genetics companion to the Wright-Fisher, Gillespie-SSA, and Markov-chain tools.",
+            '<div class="grid">'
+            + svg_card(out("coalescent.svg"), "A coalescent genealogy for 8 samples (green, present) traced back to their most recent common ancestor (red). Each horizontal bar is a coalescence; the branches lengthen toward the top because with fewer lineages left the waiting times grow -- the final merge of the last two lineages spans most of the tree's depth")
+            + f'<div class="card">{pre(coalescent_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

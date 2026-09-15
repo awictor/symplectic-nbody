@@ -1,0 +1,23 @@
+Kingman's coalescent -- gene genealogies backward in time
+==========================================================
+
+Coalescent expectations vs simulation (time in units of N generations):
+   n     E[T_MRCA]   sim      E[total len]   sim
+   ------------------------------------------------
+     2      1.000   1.000      2.000      1.999
+     5      1.600   1.598      4.167      4.162
+    10      1.800   1.804      5.658      5.666
+    20      1.900   1.899      7.095      7.089
+    50      1.960   1.961      8.958      8.969
+
+T_MRCA approaches 2 (most depth is the last two lineages merging);
+total length grows only as 2 H_(n-1) (logarithmically) -- adding samples adds little.
+
+Watterson's estimator of theta = 4 N mu from segregating sites S:
+   true theta   n    mean S    theta_hat = S / H_(n-1)
+   ------------------------------------------------
+        1.0    20     3.50    0.987
+        5.0    20    17.69    4.987
+       10.0    20    35.38    9.971
+
+S grows with both mutation rate and (log of) sample size; theta_hat inverts it.
