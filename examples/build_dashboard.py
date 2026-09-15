@@ -670,6 +670,7 @@ def main():
     import mann_kendall_trend_demo
     import ljung_box_demo
     import block_bootstrap_demo
+    import wilcoxon_signed_rank_demo
 
     import plot_orbits
 
@@ -1309,6 +1310,7 @@ def main():
     mann_kendall_trend_txt = run("mann_kendall_trend_demo", mann_kendall_trend_demo.main, True)
     ljung_box_txt = run("ljung_box_demo", ljung_box_demo.main, True)
     block_bootstrap_txt = run("block_bootstrap_demo", block_bootstrap_demo.main, True)
+    wilcoxon_signed_rank_txt = run("wilcoxon_signed_rank_demo", wilcoxon_signed_rank_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12151,6 +12153,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("block_bootstrap.svg"), "Top: a smoothly-wandering AR(1) series (phi=0.8) -- strong positive autocorrelation. Bottom: the block-bootstrap standard error of the mean vs block length. At L=1 it equals the i.i.d. bootstrap (red, 3x too small); as blocks lengthen to capture the correlation it rises to the analytic long-run SE (green dashed). The naive bootstrap would report error bars a third of their true width")
             + f'<div class="card">{pre(block_bootstrap_txt)}</div>'
+            + '</div>'),
+        section(
+            "Wilcoxon signed-rank: the robust paired test",
+            "The paired t-test averages the differences between matched measurements and assumes they are "
+            "normal -- so one data-entry error can flip its verdict. The Wilcoxon signed-rank test (1945) "
+            "makes the weaker assumption that the differences are symmetric about their median and uses "
+            "their RANKS: rank the absolute differences, then sum the ranks from positive differences "
+            "(W+). Zeros are dropped, tied magnitudes get average ranks. Under the null W+ has a symmetric "
+            "distribution -- exact for small samples by enumerating the 2^n sign patterns, normal with a "
+            "tie correction for larger. A single outlier moves W+ by at most one rank, where it would "
+            "swing the t-test's mean arbitrarily. Validated: a consistent shift gives a tiny p and "
+            "symmetric noise a large one, exact and normal p-values agree, the test is scale-invariant and "
+            "robust to an outlier that destroys the t-test (p 0.02 vs the t-test's 0.44), W+ + W- = "
+            "n(n+1)/2, zeros are dropped and ties averaged, the exact null sums to 2^n and is symmetric, "
+            "and it agrees with the sign-flip permutation test. The paired nonparametric-testing companion "
+            "to the Mann-Whitney, permutation-test, and sign-test tools.",
+            '<div class="grid">'
+            + svg_card(out("wilcoxon_signed_rank.svg"), "Top: a before/after dumbbell plot -- almost every subject increases (green), so W+ dominates. Bottom: the exact null distribution of W+ for n=12 over all 4096 sign patterns; the observed W+ (yellow) lands in the far red upper tail, giving a significant paired shift with no normality assumed and immunity to a single outlier")
+            + f'<div class="card">{pre(wilcoxon_signed_rank_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

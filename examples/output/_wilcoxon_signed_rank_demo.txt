@@ -1,0 +1,26 @@
+Wilcoxon signed-rank test -- robust paired comparison
+======================================================
+
+12 subjects, 'after - before' (a consistent improvement):
+  differences: [0.9, 0.7, 1.2, 0.9, 0.7, 1.6, 0.8, 1.5, 0.8, 1.5, 0.7, 1.3]
+  W+ = 78.0, W- = 0.0
+  Wilcoxon p (greater) = 0.0012 (normal-approx)
+  paired t-test p = 0.0000  (agrees here)
+
+One subject's difference is a data-entry error (-50):
+  Wilcoxon p (greater) = 0.0187  -- still sees the improvement
+  paired t-test  p     = 0.4445  -- outlier destroys it
+  The rank test caps the outlier's influence at one rank; the t-test averages it in.
+
+Exact null distribution of W+ for n=12 (2^12 = 4096 sign patterns):
+  W+ ranges 0..78, symmetric about 39
+  observed W+ = 78 sits in the extreme upper tail
+
+Power vs shift size (15 pairs, unit noise):
+   shift   Wilcoxon p
+   ----------------------
+     0.0   0.2078
+     0.3   0.0413
+     0.6   0.0043
+     1.0   0.0004
+     1.5   0.0001

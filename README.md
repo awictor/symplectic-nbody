@@ -628,6 +628,7 @@ ruins a long non-symplectic integration.
 | `src/mann_kendall_trend.py` | Mann-Kendall trend test with Sen slope: nonparametric monotonic-trend detection |
 | `src/ljung_box.py` | Ljung-Box & Box-Pierce portmanteau tests: is a series white noise or autocorrelated? |
 | `src/block_bootstrap.py` | Block bootstrap (moving/circular/stationary): resampling for dependent time-series data |
+| `src/wilcoxon_signed_rank.py` | Wilcoxon signed-rank test: robust paired nonparametric test with exact and normal p-values |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1247,6 +1248,7 @@ ruins a long non-symplectic integration.
 | `examples/mann_kendall_trend_demo.py` | Mann-Kendall flagging a trend in skewed noisy data, Sen slope beating OLS under an outlier |
 | `examples/ljung_box_demo.py` | ACF stems with white-noise bands for a clean vs autocorrelated series, and Q vs lags |
 | `examples/block_bootstrap_demo.py` | Block-bootstrap SE converging to the AR(1) long-run truth where the i.i.d. bootstrap fails |
+| `examples/wilcoxon_signed_rank_demo.py` | Wilcoxon holding significance where an outlier destroys the paired t-test, with the exact W+ null |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14313,6 +14315,28 @@ Validated: reproduces the ordinary bootstrap on independent data; on AR(1) its S
 naive i.i.d. bootstrap's and approaches the analytic long-run value, with near-nominal CI coverage where
 the i.i.d. interval under-covers; the stationary variant's mean block length matches its parameter. The
 dependent-data-resampling companion to the bootstrap, Ljung-Box, and Mann-Kendall tools.
+
+## Wilcoxon signed-rank: the robust paired test
+
+Distribution-free paired comparison. `wilcoxon_signed_rank.py`:
+
+```
+$ python examples/wilcoxon_signed_rank_demo.py examples/output
+
+12 subjects, after - before (consistent improvement):
+  Wilcoxon p = 0.0012      paired t-test p = 0.0000   (agree)
+
+One subject's difference is a data-entry error (-50):
+  Wilcoxon p = 0.0187  -- still sees it
+  t-test    p = 0.4445  -- outlier destroys it
+```
+
+Rank the absolute differences, sum the ranks from positive differences (W+); the null distribution is
+exact for small samples (2^n sign patterns) and tie-corrected-normal for large. Validated: consistent
+shift -> tiny p, symmetric noise -> large p, exact and normal agree, scale-invariant, robust to an outlier
+that flips the t-test, W+ + W- = n(n+1)/2, exact null sums to 2^n and is symmetric, and it agrees with the
+sign-flip permutation test. The paired nonparametric-testing companion to the Mann-Whitney,
+permutation-test, and sign-test tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
