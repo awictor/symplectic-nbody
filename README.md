@@ -643,6 +643,7 @@ ruins a long non-symplectic integration.
 | `src/stick_breaking.py` | Stick-breaking (GEM): explicit Dirichlet-process weights, geometric decay, concentration effect |
 | `src/sir_stochastic.py` | Stochastic SIR epidemic: Gillespie outbreak dynamics, R0 threshold, bimodal final size |
 | `src/voter_model.py` | Voter model: opinion dynamics to consensus, magnetization martingale, domain coarsening |
+| `src/schelling_segregation.py` | Schelling segregation: mild individual preference producing emergent collective segregation |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1277,6 +1278,7 @@ ruins a long non-symplectic integration.
 | `examples/stick_breaking_demo.py` | Unit sticks broken into DP weights at three concentrations, and the geometric-decay table |
 | `examples/sir_stochastic_demo.py` | Take-off vs fizzle epidemic trajectories and the bimodal final size vs the final-size equation |
 | `examples/voter_model_demo.py` | Opinion grid coarsening to consensus over four snapshots, and consensus probability = initial fraction |
+| `examples/schelling_segregation_demo.py` | A random mixed grid segregating under a mild 1/3 tolerance, with the tau sweep |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14652,6 +14654,23 @@ martingale, making P(+1 wins) equal to the initial +1 fraction -- fair, not majo
 the expected magnetization is preserved over an update, consensus is reached on a finite grid, the
 +1-consensus probability equals the initial fraction, domains coarsen, and a fully ordered start is
 absorbing. The interacting-particle-system companion to the Ising, Moran-process, and Gillespie tools.
+
+## Schelling segregation: mild preference, total segregation
+
+The founding emergence model. `schelling_segregation.py`:
+
+```
+$ python examples/schelling_segregation_demo.py examples/output
+
+40x40, 10% empty, tau=1/3: similarity 0.502 -> 0.756 (100% happy in 11 rounds).
+Segregation vs tau: 0.20->0.59, 0.33->0.75, 0.50->0.89, 0.60->0.97.
+```
+
+Two agent types plus empty cells; an unhappy agent (fewer than tau of its neighbours share its type) moves
+to a random empty cell. Iterating, the average similarity climbs far above tau -- segregation from a mild
+wish. Validated: the mean similarity rises far above tau, the happy fraction climbs to ~1, a higher tau
+gives more segregation, moves conserve the empty and per-type counts, and tau=0 leaves the grid
+unsegregated. The agent-based-emergence companion to the voter-model, Ising, and cellular-automaton tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

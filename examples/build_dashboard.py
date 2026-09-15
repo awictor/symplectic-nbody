@@ -685,6 +685,7 @@ def main():
     import stick_breaking_demo
     import sir_stochastic_demo
     import voter_model_demo
+    import schelling_segregation_demo
 
     import plot_orbits
 
@@ -1339,6 +1340,7 @@ def main():
     stick_breaking_txt = run("stick_breaking_demo", stick_breaking_demo.main, True)
     sir_stochastic_txt = run("sir_stochastic_demo", sir_stochastic_demo.main, True)
     voter_model_txt = run("voter_model_demo", voter_model_demo.main, True)
+    schelling_segregation_txt = run("schelling_segregation_demo", schelling_segregation_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12472,6 +12474,24 @@ def main():
             '<div class="grid">'
             + svg_card(out("voter_model.svg"), "A 40x40 opinion grid (blue = +1, red = -1) at four times: salt-and-pepper noise at the start coarsens into large domains that swallow one another as sites copy neighbours, heading toward consensus. Each copy conserves the mean opinion in expectation, so the eventual winner is chosen fairly by its initial share, not by which side started larger")
             + f'<div class="card">{pre(voter_model_txt)}</div>'
+            + '</div>'),
+        section(
+            "Schelling segregation: mild preference, total segregation",
+            "Schelling's 1971 model is the founding example of emergence in social science, with a "
+            "counterintuitive punchline: a population where everyone is happy in a mixed neighbourhood -- "
+            "demanding only that, say, a third of their neighbours share their type -- still self-organizes "
+            "into sharply segregated blocks. Two types of agent plus empty cells sit on a grid; an agent is "
+            "unhappy if the fraction of its occupied neighbours sharing its type falls below a tolerance "
+            "tau, and unhappy agents move to random empty cells. Iterating to equilibrium, the average "
+            "similarity climbs far above tau -- with tau=1/3 it reaches ~0.75, deep segregation from a mild "
+            "wish. Nobody wanted it; it emerges from the tiny local preference. Validated: from a random "
+            "start the mean similarity rises far above tau, the happy fraction climbs toward 1, a higher "
+            "tau produces more segregation, moves conserve the empty-cell and per-type counts, tau=0 "
+            "leaves the grid unsegregated, and results are reproducible per seed. The agent-based-emergence "
+            "companion to the voter-model, Ising, and cellular-automaton tools.",
+            '<div class="grid">'
+            + svg_card(out("schelling_segregation.svg"), "A 50x50 grid of blue and red agents: a random mix (left, similarity 0.50) evolves under a mild 1/3 tolerance into large single-colour blocks (right, similarity 0.76). Every agent is content with a one-third minority, yet the population self-sorts into segregation -- macro-pattern from micro-motive, the canonical emergence result")
+            + f'<div class="card">{pre(schelling_segregation_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
