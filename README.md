@@ -649,6 +649,7 @@ ruins a long non-symplectic integration.
 | `src/vicsek_flocking.py` | Vicsek model: self-propelled particles flocking, the order-disorder phase transition |
 | `src/deffuant_bounded.py` | Deffuant bounded-confidence: continuous opinion dynamics, consensus vs fragmentation |
 | `src/simpsons_paradox.py` | Simpson's paradox: detect rate reversals, correct with Mantel-Haenszel and standardization |
+| `src/ballot_problem.py` | Bertrand's ballot theorem: (p-q)/(p+q) via reflection principle, cycle lemma, Catalan numbers |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1289,6 +1290,7 @@ ruins a long non-symplectic integration.
 | `examples/vicsek_flocking_demo.py` | Order parameter vs noise across the flocking transition, and aligned vs disordered snapshots |
 | `examples/deffuant_bounded_demo.py` | Opinion trajectories merging to consensus or splitting into camps as the threshold varies |
 | `examples/simpsons_paradox_demo.py` | The kidney-stone reversal: A wins every stratum but loses the pool until the confounder is fixed |
+| `examples/ballot_problem_demo.py` | The (p-q)/(p+q) law, three agreeing derivations, and good vs bad lattice paths |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14779,6 +14781,25 @@ Detect the reversal, explain it via the confounder's uneven allocation, and corr
 Mantel-Haenszel stratified odds ratio or direct standardization -- both recover the within-stratum
 truth. Validated on the kidney-stone and Berkeley-admissions data plus a brute-force scan over 40k
 tables. The observational-bias companion to the contingency-table and logistic-regression tools.
+
+## Bertrand's ballot problem and the reflection principle
+
+The chance a lead is never lost. `ballot_problem.py`:
+
+```
+$ python examples/ballot_problem_demo.py examples/output
+
+P(A leads the entire count) = (p - q) / (p + q):
+   p=3, q=2  ->  1/5      p=6, q=1  ->  5/7      p=10, q=0 -> 1
+three derivations agree:  formula = reflection = cycle-lemma = brute force
+weak lead at p = q  ->  the Catalan numbers: 1, 1, 2, 5, 14, 42, 132, ...
+```
+
+A finishes with p votes and B with q < p; counted in random order, A is strictly ahead the whole way
+with probability (p-q)/(p+q), independent of the sizes. Proved by the reflection principle -- reflect
+each zero-touching lattice path's opening segment across the axis and the counts subtract cleanly.
+Strict and weak counts, three independent derivations, and Catalan numbers, all checked against
+brute-force enumeration. The first-passage companion to the random-walk, Galton-board, and Catalan tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 

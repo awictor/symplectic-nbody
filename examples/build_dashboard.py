@@ -691,6 +691,7 @@ def main():
     import vicsek_flocking_demo
     import deffuant_bounded_demo
     import simpsons_paradox_demo
+    import ballot_problem_demo
 
     import plot_orbits
 
@@ -1351,6 +1352,7 @@ def main():
     vicsek_flocking_txt = run("vicsek_flocking_demo", vicsek_flocking_demo.main, True)
     deffuant_bounded_txt = run("deffuant_bounded_demo", deffuant_bounded_demo.main, True)
     simpsons_paradox_txt = run("simpsons_paradox_demo", simpsons_paradox_demo.main, True)
+    ballot_problem_txt = run("ballot_problem_demo", ballot_problem_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12601,6 +12603,25 @@ def main():
             '<div class="grid">'
             + svg_card(out("simpsons_paradox.svg"), "Success rate of treatment A (blue) vs B (yellow) across four views. In both the small-stone and large-stone strata the blue bar is taller (A wins), but in the POOLED bar B overtakes -- because A was handed most of the hard large-stone cases. The rightmost ADJUSTED bars, holding stone size fixed, flip the verdict back to A: the aggregate was the liar")
             + f'<div class="card">{pre(simpsons_paradox_txt)}</div>'
+            + '</div>'),
+        section(
+            "Bertrand's ballot problem and the reflection principle",
+            "In an election A finishes with p votes and B with q < p, so A wins -- but with the votes "
+            "counted one at a time in random order, how often is A strictly ahead at every single moment "
+            "of the count? Bertrand's 1887 answer is astonishingly clean: (p - q) / (p + q), independent "
+            "of the sizes, depending only on the margin relative to turnout. A landslide is almost never "
+            "behind; a one-vote win leads throughout only 1/(p+q) of the time. The proof is the reflection "
+            "principle: encode the count as a lattice path (+1 per A vote, -1 per B vote) and count the bad "
+            "paths -- those that touch zero -- by reflecting their first-return segment across the axis, a "
+            "bijection that makes the counts subtract to exactly (p-q)/(p+q) of all orderings. Run with a "
+            "weak inequality (ties allowed) the same idea gives the ballot numbers, and at p = q the "
+            "Catalan numbers -- the count of Dyck paths and balanced parentheses. This module computes the "
+            "strict and weak counts, plus three independent derivations (closed form, reflection principle, "
+            "and the cycle lemma) that agree exactly, all checked against brute-force enumeration of every "
+            "vote ordering. The first-passage companion to the random-walk, Galton-board, and Catalan tools.",
+            '<div class="grid">'
+            + svg_card(out("ballot_problem.svg"), "The vote count drawn as a lattice path, +1 for each A vote and -1 for each B. The green path stays strictly above the zero line the whole way -- A never loses the lead. The dashed red path touches zero at the second step, so the lead was surrendered. The reflection principle counts the bad (zero-touching) paths by mirroring their opening segment, and the good count collapses to the fraction (p-q)/(p+q) of every ordering")
+            + f'<div class="card">{pre(ballot_problem_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",
