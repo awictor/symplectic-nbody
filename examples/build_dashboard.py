@@ -672,6 +672,7 @@ def main():
     import block_bootstrap_demo
     import wilcoxon_signed_rank_demo
     import friedman_test_demo
+    import gillespie_ssa_demo
 
     import plot_orbits
 
@@ -1313,6 +1314,7 @@ def main():
     block_bootstrap_txt = run("block_bootstrap_demo", block_bootstrap_demo.main, True)
     wilcoxon_signed_rank_txt = run("wilcoxon_signed_rank_demo", wilcoxon_signed_rank_demo.main, True)
     friedman_test_txt = run("friedman_test_demo", friedman_test_demo.main, True)
+    gillespie_ssa_txt = run("gillespie_ssa_demo", gillespie_ssa_demo.main, True)
 
     def out(name):
         return os.path.join(outdir, name)
@@ -12193,6 +12195,28 @@ def main():
             '<div class="grid">'
             + svg_card(out("friedman_test.svg"), "Top: four algorithms' within-dataset ranks across 15 datasets, each on its own colored track -- despite huge per-dataset difficulty offsets, algo-A almost always ranks best and algo-D worst. Bottom: the average ranks (1.00, 2.07, 2.93, 4.00) spread cleanly apart, which is what Q measures; the block offsets cancel because ranking happens within each dataset")
             + f'<div class="card">{pre(friedman_test_txt)}</div>'
+            + '</div>'),
+        section(
+            "Gillespie SSA: exact stochastic reaction kinetics",
+            "Deterministic rate equations describe reactions as smooth curves -- right when molecule "
+            "counts are huge, wrong when they are small, where reactions fire one at a time and chance "
+            "dominates (gene expression, epidemics from one case, systems near extinction). Gillespie's "
+            "algorithm (1976) simulates the EXACT stochastic dynamics as a continuous-time Markov jump "
+            "process: at each step compute every reaction's propensity, draw the waiting time to the next "
+            "event as an exponential with rate equal to the total propensity, pick which reaction fires "
+            "in proportion to its propensity, and apply its stoichiometry. Every trajectory is a valid "
+            "sample from the chemical master equation -- not an approximation -- capturing the noise, "
+            "bursts, and extinctions ODEs miss, and averaging many recovers the deterministic law at large "
+            "counts. Validated: a decay reaction's mean matches the analytic exponential and reaches "
+            "extinction, a reversible A<->B conserves total mass exactly on every path and relaxes to the "
+            "ODE steady state, waiting times are exponential with the total propensity, reaction-choice "
+            "frequencies match the propensity ratios, relative fluctuations shrink as population grows "
+            "(the ODE limit), and a Lotka-Volterra network oscillates stochastically. The "
+            "stochastic-kinetics companion to the reaction-diffusion, Markov-chain, and master-equation "
+            "tools.",
+            '<div class="grid">'
+            + svg_card(out("gillespie_ssa.svg"), "A stochastic Lotka-Volterra predator-prey run. Top: prey (green) and predator (red) counts as exact step-function trajectories, each step a single reaction event -- sustained but noisy oscillation. Bottom: the phase-plane orbit wanders rather than tracing the ODE's closed loop, because demographic noise perturbs every cycle")
+            + f'<div class="card">{pre(gillespie_ssa_txt)}</div>'
             + '</div>'),
         section(
             "Three-body stability map",

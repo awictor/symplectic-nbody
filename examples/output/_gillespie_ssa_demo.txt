@@ -1,0 +1,18 @@
+Gillespie SSA -- exact stochastic simulation of reaction networks
+==================================================================
+
+Decay A -> 0 (k=0.4): stochastic mean vs deterministic A0 exp(-kt).
+   A0     t=2 mean    ODE       rel. noise (sd/mean)
+   --------------------------------------------------
+     20       9.44       8.99    0.238
+    100      46.69      44.93    0.110
+   1000     449.71     449.33    0.034
+
+Small counts -> large relative noise (ODEs miss it); large counts -> ODE limit.
+
+Lotka-Volterra predator-prey (stochastic):
+  prey range  17..350,  predator range 9..354
+  4007 reaction events in t=[0,12] -- sustained noisy oscillation
+
+At state (prey=100, pred=50) total propensity a0 = 200.00;
+  next reaction waits an exponential time, mean 1/a0 = 0.0050. Statistically exact.

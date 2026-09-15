@@ -630,6 +630,7 @@ ruins a long non-symplectic integration.
 | `src/block_bootstrap.py` | Block bootstrap (moving/circular/stationary): resampling for dependent time-series data |
 | `src/wilcoxon_signed_rank.py` | Wilcoxon signed-rank test: robust paired nonparametric test with exact and normal p-values |
 | `src/friedman_test.py` | Friedman test: nonparametric repeated-measures ANOVA with Kendall's W concordance |
+| `src/gillespie_ssa.py` | Gillespie's stochastic simulation algorithm: exact trajectories of a chemical reaction network |
 | `src/roche.py` | Roche limit & tidal disruption of a rubble-pile satellite |
 | `src/tidal_heating.py` | Tidal heating: Io's volcanic power from orbital flexing |
 | `src/roche_lobe.py` | Roche lobes & binary mass-transfer stability (Eggleton) |
@@ -1251,6 +1252,7 @@ ruins a long non-symplectic integration.
 | `examples/block_bootstrap_demo.py` | Block-bootstrap SE converging to the AR(1) long-run truth where the i.i.d. bootstrap fails |
 | `examples/wilcoxon_signed_rank_demo.py` | Wilcoxon holding significance where an outlier destroys the paired t-test, with the exact W+ null |
 | `examples/friedman_test_demo.py` | Four algorithms' within-block ranks across datasets, the treatment effect surviving block offsets |
+| `examples/gillespie_ssa_demo.py` | Stochastic Lotka-Volterra trajectories and phase orbit, and decay noise shrinking toward the ODE |
 | `examples/roche_demo.py` | Survival curve across the Roche limit + a tidal-stream SVG |
 | `examples/tidal_heating_demo.py` | Galilean-moon heating table + heating-vs-eccentricity curve |
 | `examples/roche_lobe_demo.py` | Lobe radius & transfer stability vs mass ratio |
@@ -14359,6 +14361,29 @@ identical treatments -> small Q/large p, a superior treatment -> large Q/tiny p,
 removed, k=2 reduces to a sign test, ties averaged, and Kendall's W in [0,1] hits 1 for perfect agreement.
 The repeated-measures nonparametric companion to the Kruskal-Wallis, Wilcoxon-signed-rank, and Mann-Whitney
 tools.
+
+## Gillespie SSA: exact stochastic reaction kinetics
+
+Statistically exact chemical-master-equation trajectories. `gillespie_ssa.py`:
+
+```
+$ python examples/gillespie_ssa_demo.py examples/output
+
+Decay A -> 0 (k=0.4): stochastic mean vs ODE A0 exp(-kt)
+   A0      mean      ODE      rel. noise
+     20    9.44      8.99     0.238
+   1000  449.71    449.33     0.034
+
+Lotka-Volterra: prey 17..350, predator 9..354, 4007 reaction events.
+```
+
+At each step compute propensities, draw the next-event time as exponential with rate = total propensity,
+pick the reaction in proportion to its propensity, apply its stoichiometry. Validated: decay mean matches
+the analytic exponential and reaches extinction, A<->B conserves total mass exactly and relaxes to the ODE
+steady state, waiting times are exponential with the total propensity, reaction-choice frequencies match
+propensity ratios, relative fluctuations shrink as population grows (the ODE limit), and Lotka-Volterra
+oscillates stochastically. The stochastic-kinetics companion to the reaction-diffusion, Markov-chain, and
+master-equation tools.
 
 ## The Sunyaev-Zeldovich effect: clusters shadowing the CMB
 
